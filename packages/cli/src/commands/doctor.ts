@@ -133,6 +133,31 @@ export function registerDoctorCommand(program: Command): void {
         }
       }
 
+      // Check 10: MCP Fleet
+      try {
+        const { readdirSync: readDir, readFileSync: readFile } = await import('fs');
+        const { join: joinPath } = await import('path');
+        const { homedir: getHome } = await import('os');
+        const pidDir = joinPath(getHome(), '.borg', 'mcp-pids');
+        if (existsSync(pidDir)) {
+          const pidFiles = readDir(pidDir).filter(f => f.endsWith('.pid'));
+          let alive = 0;
+          for (const pf of pidFiles) {
+            try {
+              const pid = parseInt(readFile(joinPath(pidDir, pf), 'utf8').trim());
+              process.kill(pid, 0);
+              alive++;
+            } catch {}
+          }
+          checks++;
+          if (alive > 0) {
+            console.log(chalk.green('  ✓') + ` MCP Fleet: ${alive}/${pidFiles.length} servers alive`);
+          } else {
+            console.log(chalk.dim('  ○') + ' MCP Fleet: no servers spawned (use borg mcp connect-all)');
+          }
+        }
+      } catch {}
+
       // Summary
       console.log(chalk.bold(`\n  ${checks} checks, ${issues} issues found`));
       if (issues === 0) {
