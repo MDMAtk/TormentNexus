@@ -104,6 +104,49 @@ export function registerInfoCommand(program: Command): void {
       if (existsSync(resolve(home, 'AppData/Roaming/Code/User/settings.json'))) tools.push('VS Code');
       console.log(chalk.bold('  AI Tools:') + ` ${tools.length > 0 ? tools.join(', ') : 'none detected'}`);
 
+      // Memory
+      try {
+        const memRes = await fetch('http://127.0.0.1:4300/api/agent-memory/stats', { signal: AbortSignal.timeout(2000) });
+        if (memRes.ok) {
+          const memData = (await memRes.json()).data;
+          if (memData) console.log(chalk.bold('  Memory:  ') + `${memData.total ?? 0} entries (${memData.longTerm ?? 0} long-term, ${memData.working ?? 0} working)`);
+        }
+      } catch {}
+
+      // Cloud providers
+      try {
+        const cloudRes = await fetch('http://127.0.0.1:4000/trpc/cloudDev.listProviders', { signal: AbortSignal.timeout(2000) });
+        if (cloudRes.ok) {
+          const cloudProviders = (await cloudRes.json())?.result?.data ?? [];
+          if (cloudProviders.length > 0) {
+            const names = cloudProviders.filter((p: any) => p.enabled).map((p: any) => p.name);
+            console.log(chalk.bold('  Cloud:   ') + `${cloudProviders.length} providers` + (names.length > 0 ? ` (${names.join(', ')} active)` : ''));
+          }
+        }
+      } catch {}
+
+      // Harnesses
+      try {
+        const hRes = await fetch('http://127.0.0.1:4000/trpc/tools.detectCliHarnesses', { signal: AbortSignal.timeout(2000) });
+        if (hRes.ok) {
+          const harnesses = (await hRes.json())?.result?.data ?? [];
+          const installed = harnesses.filter((h: any) => h.installed !== false);
+          if (installed.length > 0) {
+            const names = installed.slice(0, 5).map((h: any) => h.name ?? h);
+            console.log(chalk.bold('  Harness:') + ` ${installed.length}/${harnesses.length} (${names.join(', ')}...)`);
+          }
+        }
+      } catch {}
+
+      // Sessions
+      try {
+        const sessRes = await fetch('http://127.0.0.1:4300/api/sessions', { signal: AbortSignal.timeout(2000) });
+        if (sessRes.ok) {
+          const sessions = (await sessRes.json())?.data ?? [];
+          if (sessions.length > 0) console.log(chalk.bold('  Sessions:') + ` ${sessions.length} discovered`);
+        }
+      } catch {}
+
       console.log('');
     });
 }
