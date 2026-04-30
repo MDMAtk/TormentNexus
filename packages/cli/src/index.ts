@@ -39,6 +39,8 @@ import { registerSwarmCommand } from './commands/swarm.js';
 import { registerMetricsCommand } from './commands/metrics.js';
 import { registerSkillsCommand } from './commands/skills.js';
 import { registerUpgradeCommand } from './commands/upgrade.js';
+import { registerPlanCommand } from './commands/plan.js';
+import { registerBrowserCommand } from './commands/browser.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -91,6 +93,8 @@ registerSwarmCommand(program);
 registerMetricsCommand(program);
 registerSkillsCommand(program);
 registerUpgradeCommand(program);
+registerPlanCommand(program);
+registerBrowserCommand(program);
 
 // Default action: show help if no command given
 program.action(() => {
