@@ -86,7 +86,7 @@ export function registerMcpCommand(program: Command): void {
         const res = await fetch('http://127.0.0.1:4000/trpc/mcp.connectServer', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name }),
+          body: JSON.stringify({ json: { name } }),
           signal: AbortSignal.timeout(15000),
         });
         if (res.ok) {
@@ -112,7 +112,7 @@ export function registerMcpCommand(program: Command): void {
         const res = await fetch('http://127.0.0.1:4000/trpc/mcp.disconnectServer', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name }),
+          body: JSON.stringify({ json: { name } }),
           signal: AbortSignal.timeout(10000),
         });
         if (res.ok) {
@@ -718,7 +718,7 @@ Supported clients:
             const res = await fetch('http://127.0.0.1:4000/trpc/mcp.connectServer', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name }),
+              body: JSON.stringify({ json: { name } }),
               signal: AbortSignal.timeout(parseInt(opts.timeout)),
             });
             if (res.ok) {
