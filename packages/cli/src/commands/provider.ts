@@ -45,7 +45,7 @@ export function registerProviderCommand(program: Command): void {
       }
 
       const table = new Table({
-        head: ['Provider', 'Status', 'Auth', 'Models', 'Quota Used', 'Quota Limit', 'Resets'],
+        head: ['Provider', 'Status', 'Auth', 'Default Model', 'Tasks', 'Quota', 'Resets'],
         style: { head: ['cyan'] },
       });
 
@@ -64,15 +64,27 @@ export function registerProviderCommand(program: Command): void {
           MISTRAL_API_KEY: 'mistral',
           OPENROUTER_API_KEY: 'openrouter',
         };
+
+        // Enrich with Go sidecar provider catalog
+        let goProviders: any[] = [];
+        try {
+          const gRes = await fetch('http://127.0.0.1:4300/api/providers/catalog', { signal: AbortSignal.timeout(3000) });
+          if (gRes.ok) goProviders = (await gRes.json()).data ?? [];
+        } catch {}
+        const goMap = new Map(goProviders.map((p: any) => [p.provider, p]));
+
         for (const [env, provider] of Object.entries(envMap)) {
           if (process.env[env]) {
             envProviders.push(provider);
+            const goInfo = goMap.get(provider);
+            const defaultModel = goInfo?.defaultModel ?? '-';
+            const tasks = goInfo?.preferredTasks?.join(', ') ?? '-';
             table.push([
               provider,
               chalk.green('● Available'),
               chalk.dim('env: ' + env),
-              '-',
-              '-',
+              defaultModel,
+              tasks,
               '-',
               '-',
             ]);
