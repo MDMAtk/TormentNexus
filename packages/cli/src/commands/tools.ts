@@ -160,6 +160,51 @@ Examples:
     });
 
   tools
+    .command('harnesses')
+    .description('List detected CLI harnesses (Aider, Claude Code, Codex, etc.)')
+    .option('--json', 'Output as JSON')
+    .action(async (opts) => {
+      const chalk = (await import('chalk')).default;
+      const Table = (await import('cli-table3')).default;
+
+      let harnesses: any[] = [];
+      try {
+        const res = await fetch('http://127.0.0.1:4000/trpc/tools.detectCliHarnesses', { signal: AbortSignal.timeout(5000) });
+        if (res.ok) {
+          const json = await res.json();
+          harnesses = json?.result?.data ?? [];
+        }
+      } catch {}
+
+      if (opts.json) {
+        console.log(JSON.stringify({ harnesses }, null, 2));
+        return;
+      }
+
+      console.log(chalk.bold.cyan(`\n  CLI Harnesses (${harnesses.length})\n`));
+
+      if (harnesses.length === 0) {
+        console.log(chalk.dim('  No harnesses detected.\n'));
+        return;
+      }
+
+      const table = new Table({
+        head: ['Harness', 'Version', 'Installed'],
+        style: { head: ['cyan'] },
+      });
+
+      for (const h of harnesses) {
+        const name = h.name ?? h;
+        const version = h.version ?? '-';
+        const installed = h.installed !== false ? chalk.green('✓') : chalk.dim('○');
+        table.push([name, version, installed]);
+      }
+
+      console.log(table.toString());
+      console.log('');
+    });
+
+  tools
     .command('info <name>')
     .description('Show detailed information about a specific tool')
     .option('--json', 'Output as JSON')
