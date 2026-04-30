@@ -249,13 +249,25 @@ Examples:
           console.log(chalk.dim('  Source:     ') + (server.source ?? 'unknown'));
           if (server.description) console.log(chalk.dim('  Description: ') + server.description);
           if (server.tags?.length) console.log(chalk.dim('  Tags:       ') + server.tags.join(', '));
-          if (server.tools?.length) {
-            console.log(chalk.dim('  Tool List:'));
-            for (const t of server.tools.slice(0, 20)) {
-              console.log(chalk.dim('    • ') + (t.name ?? t));
+          if (server.config?.command) console.log(chalk.dim('  Command:    ') + `${server.config.command} ${(server.config.args ?? []).join(' ')}`);
+
+          // Fetch tool details with descriptions
+          try {
+            const toolsRes = await fetch('http://127.0.0.1:4000/trpc/mcp.listTools', { signal: AbortSignal.timeout(5000) });
+            if (toolsRes.ok) {
+              const allTools = (await toolsRes.json())?.result?.data ?? [];
+              const serverTools = allTools.filter((t: any) => (t.server ?? t.serverName) === name);
+              if (serverTools.length > 0) {
+                console.log(chalk.dim(`\n  Tool Details (${serverTools.length}):`));
+                for (const t of serverTools.slice(0, 20)) {
+                  const desc = (t.description ?? '').substring(0, 80);
+                  console.log(`    ${chalk.cyan(t.name)}`);
+                  if (desc) console.log(chalk.dim(`      ${desc}`));
+                }
+                if (serverTools.length > 20) console.log(chalk.dim(`    ... and ${serverTools.length - 20} more`));
+              }
             }
-            if (server.tools.length > 20) console.log(chalk.dim(`    ... and ${server.tools.length - 20} more`));
-          }
+          } catch {}
         }
       } catch {
         console.log(chalk.dim('  Status:    ') + 'unknown (server not reachable)');
