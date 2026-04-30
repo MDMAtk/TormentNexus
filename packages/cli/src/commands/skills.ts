@@ -62,10 +62,7 @@ export function registerSkillsCommand(program: Command): void {
 
       let skill: any = {};
       try {
-        const res = await fetch(`${GO_URL}/api/skills/read`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name }),
+        const res = await fetch(`${GO_URL}/api/skills/read?name=${encodeURIComponent(name)}`, {
           signal: AbortSignal.timeout(5000),
         });
         if (res.ok) skill = (await res.json()).data ?? {};
@@ -77,18 +74,32 @@ export function registerSkillsCommand(program: Command): void {
       }
 
       console.log(chalk.bold.cyan(`\n  Skill: ${name}\n`));
-      if (!skill.name && !skill.id) {
+      if (!skill.content && !skill.name && !skill.id) {
         console.log(chalk.dim('  Skill not found.\n'));
         return;
       }
 
-      console.log(chalk.dim('  Name:        ') + (skill.name ?? skill.id ?? '-'));
-      console.log(chalk.dim('  Folder:      ') + (skill.folder ?? '-'));
-      if (skill.description) console.log(chalk.dim('  Description: ') + skill.description);
-      if (skill.trigger) console.log(chalk.dim('  Trigger:     ') + skill.trigger);
-      if (skill.instructions) {
+      if (skill.name || skill.id) {
+        console.log(chalk.dim('  Name:        ') + (skill.name ?? skill.id ?? '-'));
+        console.log(chalk.dim('  Folder:      ') + (skill.folder ?? '-'));
+        if (skill.description) console.log(chalk.dim('  Description: ') + skill.description);
+        if (skill.trigger) console.log(chalk.dim('  Trigger:     ') + skill.trigger);
+      }
+
+      if (Array.isArray(skill.content)) {
+        console.log(chalk.dim('\n  Content:\n'));
+        for (const part of skill.content) {
+          if (part.type === 'text') {
+            console.log(part.text);
+          }
+        }
+      } else if (skill.instructions) {
         const instr = typeof skill.instructions === 'string' ? skill.instructions : JSON.stringify(skill.instructions);
-        console.log(chalk.dim('  Instructions: ') + instr.substring(0, 200));
+        console.log(chalk.dim('\n  Instructions:\n'));
+        console.log(instr);
+      } else if (skill.content) {
+        console.log(chalk.dim('\n  Content:\n'));
+        console.log(skill.content);
       }
       console.log('');
     });
