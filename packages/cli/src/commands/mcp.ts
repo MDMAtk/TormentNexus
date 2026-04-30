@@ -699,7 +699,49 @@ Supported clients:
         if (opts.client && opts.client !== key) continue;
         const found = client.paths.find(p => existsSync(p));
         if (found) {
-          console.log(chalk.green(`  ✓ ${client.name}`) + chalk.dim(` (${found})`));
+          if (!opts.dryRun && ourServers.length > 0) {
+            try {
+              // Build the mcpServers object from our config
+              const mcpServers: Record<string, any> = {};
+              for (const s of ourServers) {
+                if (s.config?.command) {
+                  mcpServers[s.name] = {
+                    command: s.config.command,
+                    args: s.config.args ?? [],
+                  };
+                  if (s.config.env && Object.keys(s.config.env).length > 0) {
+                    mcpServers[s.name].env = s.config.env;
+                  }
+                }
+              }
+
+              if (Object.keys(mcpServers).length === 0) {
+                console.log(chalk.dim(`  ○ ${client.name}: no servers with commands to sync`));
+                continue;
+              }
+
+              // Read existing config
+              const existing = JSON.parse(readFileSync(found, 'utf8'));
+              const existingServers = client.format === 'settings' ? existing?.['mcp.servers'] ?? {} : existing?.mcpServers ?? {};
+              const newServers = { ...existingServers, ...mcpServers };
+              const addedCount = Object.keys(mcpServers).filter(k => !existingServers[k]).length;
+
+              // Write updated config
+              if (client.format === 'settings') {
+                existing['mcp.servers'] = newServers;
+                writeFileSync(found, JSON.stringify(existing, null, 2));
+              } else {
+                const merged = { ...existing, mcpServers: newServers };
+                writeFileSync(found, JSON.stringify(merged, null, 2));
+              }
+
+              console.log(chalk.green(`  ✓ ${client.name}`) + chalk.dim(` synced ${Object.keys(mcpServers).length} servers (${addedCount} new)`));
+            } catch (e: any) {
+              console.log(chalk.yellow(`  ⚠ ${client.name}: ${e.message}`));
+            }
+          } else {
+            console.log(chalk.green(`  ✓ ${client.name}`) + chalk.dim(` (${found})`));
+          }
         } else {
           console.log(chalk.dim(`  ○ ${client.name}: not found`));
         }
