@@ -73,6 +73,10 @@ function test(name, cmd, expectFn, timeout = 10000) {
   test('billing depleted', 'billing depleted', o => o.includes('Depleted') || o.includes('depleted'));
   test('tools harnesses', 'tools harnesses', o => o.includes('Harness') || o.includes('Aider'));
   test('memory stats count', 'memory stats', o => o.includes('14708') || o.includes('entries'));
+  test('context stats', 'context stats', o => o.includes('Context'));
+  test('context list', 'context list', o => o.includes('Context') || o.includes('harvested'));
+  test('knowledge stats', 'knowledge stats', o => o.includes('Knowledge'));
+  test('knowledge resources', 'knowledge resources', o => o.includes('Knowledge') || o.includes('resources'));
 
   console.log(`\n  ${passed} passed, ${failed} failed\n`);
   process.exit(failed > 0 ? 1 : 0);
