@@ -253,10 +253,13 @@ var (
 
 	rsFuncRe    = regexp.MustCompile(`(?:pub\s+)?fn\s+(\w+)`)
 	rsStructRe  = regexp.MustCompile(`(?:pub\s+)?struct\s+(\w+)`)
+
+	tsAbsoluteImportRe = regexp.MustCompile(`^@/|^\w`)
 )
 
 func (rgs *RepoGraphService) indexFile(graph *Graph, filePath string) {
 	relPath, _ := filepath.Rel(rgs.root, filePath)
+	relPath = filepath.ToSlash(relPath)
 
 	// Create file node
 	fileID := "file:" + relPath
@@ -268,27 +271,27 @@ func (rgs *RepoGraphService) indexFile(graph *Graph, filePath string) {
 		Language: languageFromExt(filepath.Ext(filePath)),
 	}
 	graph.Nodes[fileID] = fileNode
+	// ... index content ...
+}
 
-	// Read and parse
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		return
+func (rgs *RepoGraphService) resolveTSImport(currentFile, importPath string) string {
+	if tsAbsoluteImportRe.MatchString(importPath) {
+		return "import:" + importPath
 	}
-	if len(data) > 500*1024 {
-		return // Skip very large files
+	
+	dir := filepath.Dir(currentFile)
+	target := filepath.ToSlash(filepath.Clean(filepath.Join(dir, importPath)))
+	
+	// Try extensions
+	extensions := []string{".ts", ".tsx", ".js", ".jsx", "/index.ts", "/index.tsx"}
+	for _, ext := range extensions {
+		fullPath := target + ext
+		if _, ok := rgs.graph.Nodes["file:"+fullPath]; ok {
+			return "file:" + fullPath
+		}
 	}
-
-	ext := strings.ToLower(filepath.Ext(filePath))
-	switch ext {
-	case ".go":
-		rgs.indexGoFile(graph, relPath, string(data))
-	case ".ts", ".tsx", ".js", ".jsx":
-		rgs.indexTSFile(graph, relPath, string(data))
-	case ".py":
-		rgs.indexPythonFile(graph, relPath, string(data))
-	case ".rs":
-		rgs.indexRustFile(graph, relPath, string(data))
-	}
+	
+	return "import:" + importPath
 }
 
 func (rgs *RepoGraphService) indexGoFile(graph *Graph, relPath, content string) {
