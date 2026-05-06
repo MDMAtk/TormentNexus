@@ -80,6 +80,12 @@ if exist bin\borg.exe (
     start /B bin\borg.exe -port 4300 > nul 2>&1
 )
 
+REM Start Next.js dashboard in background
+set DASH_PORT=%BORG_DASH_PORT%
+if "%DASH_PORT%"=="" set DASH_PORT=3000
+echo Starting Next.js dashboard on port %DASH_PORT%...
+start /B cmd /c "cd apps\web && npx next dev --port %DASH_PORT% > nul 2>&1"
+
 REM Start TypeScript control plane
 set BORG_PORT=%BORG_PORT%
 if "%BORG_PORT%"=="" set BORG_PORT=4100
@@ -89,7 +95,7 @@ echo.
 echo   ✓ tRPC:  http://0.0.0.0:%BORG_PORT%/trpc
 echo   ✓ REST:  http://0.0.0.0:%BORG_PORT%/api
 echo   ✓ Go:    http://127.0.0.1:4300/api/index
-echo   ✓ Dashboard: http://localhost:3000/dashboard
+echo   ✓ Dashboard: http://localhost:%DASH_PORT%/dashboard
 echo.
 echo   Press Ctrl+C to stop all services.
 echo.

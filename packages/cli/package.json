@@ -6,7 +6,7 @@
         "borg": "./dist/cli/src/index.js"
     },
     "scripts": {
-        "build": "tsc",
+        "build": "node build.mjs",
         "dev": "tsx src/index.ts start --port 3100",
         "dev:server": "tsx src/index.ts start --port 3100",
         "start": "node dist/cli/src/index.js",

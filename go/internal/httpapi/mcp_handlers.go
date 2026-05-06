@@ -314,73 +314,86 @@ func (s *Server) handleMCPSync(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+
 // handleMCPServersList returns a combined view of runtime + configured servers.
 func (s *Server) handleMCPServersList(w http.ResponseWriter, r *http.Request) {
-	// Try upstream first
 	var result any
 	upstreamBase, err := s.callUpstreamJSON(r.Context(), "mcp.listServers", nil, &result)
 	if err == nil {
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,
-			"data": result,
+			"data":    result,
 			"bridge": map[string]any{
 				"upstreamBase": upstreamBase,
-				"procedure": "mcp.listServers",
+				"procedure":    "mcp.listServers",
 			},
 		})
 		return
 	}
 
-	// Fallback: combine runtime + configured from local Go data
 	view, _ := s.localMCPInventoryView()
-	_, summary, _ := s.localMCPSummary(r.Context())
+	_, cliSummary, _ := s.localMCPSummary(r.Context())
 
 	type serverEntry struct {
 		Name      string `json:"name"`
 		Status    string `json:"status"`
 		ToolCount int    `json:"toolCount"`
-		Config    any    `json:"config,omitempty"`
 	}
 
 	var servers []serverEntry
+	seen := make(map[string]bool)
 
-	// Add runtime servers from the inventory view
 	if view != nil {
-		for _, srv := range view.OverlayServers {
+		for name, srv := range view.PersistedOverlayRecords {
+			if seen[name] {
+				continue
+			}
+			seen[name] = true
+			status := "configured"
+			if srv.RuntimeConnected {
+				status = "connected"
+			}
 			servers = append(servers, serverEntry{
-				Name:      srv.ServerName,
-				Status:    "configured",
-				ToolCount: len(srv.AdvertisedTools),
+				Name:      srv.Name,
+				Status:    status,
+				ToolCount: srv.ToolCount,
+			})
+		}
+		for name, srv := range view.LiveOverlayRecords {
+			if seen[name] {
+				continue
+			}
+			seen[name] = true
+			status := "configured"
+			if srv.RuntimeConnected {
+				status = "connected"
+			}
+			servers = append(servers, serverEntry{
+				Name:      srv.Name,
+				Status:    status,
+				ToolCount: srv.ToolCount,
 			})
 		}
 	}
 
-	// Add servers from summary harnesses
-	if summary != nil {
-		for _, h := range summary.InstalledHarnesses {
-			found := false
-			for _, existing := range servers {
-				if existing.Name == h {
-					found = true
-					break
-				}
-			}
-			if !found {
-				servers = append(servers, serverEntry{
-					Name:   h,
-					Status: "available",
-				})
-			}
+	for _, h := range cliSummary.InstalledHarnesses {
+		if seen[h.ID] {
+			continue
 		}
+		seen[h.ID] = true
+		servers = append(servers, serverEntry{
+			Name:   h.ID,
+			Status: "available",
+		})
 	}
 
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
-		"data": servers,
+		"data":    servers,
 		"bridge": map[string]any{
-			"fallback": "go-local-mcp",
-			"procedure": "mcp.listServers",
-			"reason": "upstream unavailable; using local MCP inventory",
+			"fallback":  "go-local-mcp",
+			"procedure":  "mcp.listServers",
+			"reason":    "upstream unavailable; using local MCP inventory",
 		},
 	})
 }

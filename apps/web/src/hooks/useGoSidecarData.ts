@@ -20,12 +20,22 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 const GO_SIDECAR_BASE = process.env.NEXT_PUBLIC_GO_SIDECAR_URL || '';
 const GO_PROXY_PREFIX = '/api/go';
 
-/** Build a URL for the Go sidecar, using the Next.js proxy when no direct URL is set. */
+/**
+ * Build a URL for the Go sidecar.
+ *
+ * When a direct sidecar URL is configured, we use it as-is (path already
+ * includes /api/...).  When going through the Next.js catch-all proxy at
+ * /api/go/[...path], the proxy handler prepends /api/ to the captured path
+ * segments, so we must strip the leading /api here to avoid a double
+ * /api/api/... in the final URL.
+ */
 function sidecarUrl(path: string): string {
   if (GO_SIDECAR_BASE) {
     return `${GO_SIDECAR_BASE}${path}`;
   }
-  return `${GO_PROXY_PREFIX}${path}`;
+  // Strip leading /api so the proxy doesn't double it
+  const stripped = path.replace(/^\/api\//, '/');
+  return `${GO_PROXY_PREFIX}${stripped}`;
 }
 
 /** Fetch JSON from the Go sidecar with timeout. */
@@ -235,7 +245,7 @@ export function useGoSidecarDashboard(pollIntervalMs = 5000): GoSidecarDashboard
       fetchSidecar<GoStartupStatus>('/api/startup/status'),
       fetchSidecar<GoServerSummary[]>('/api/mcp/servers'),
       fetchSidecar<any>('/api/billing/status'),
-      fetchSidecar<GoSessionSummary[]>('/api/native/session/list'),
+      fetchSidecar<{ count: number; sessions: GoSessionSummary[] }>('/api/native/session/list'),
       fetchSidecar<any>('/api/health'),
     ]);
 
@@ -255,7 +265,7 @@ export function useGoSidecarDashboard(pollIntervalMs = 5000): GoSidecarDashboard
       servers: servers ?? [],
       providers,
       fallbackChain,
-      sessions: sessions ?? [],
+      sessions: (sessions as any)?.sessions ?? sessions ?? [],
       goVersion: healthData?.version ?? null,
       connected,
       lastFetchedAt: Date.now(),
@@ -294,7 +304,7 @@ export function useGoSidecarConnectivity(pollIntervalMs = 10000): {
           setState({
             connected: health !== null,
             version: health?.version ?? null,
-            uptime: health?.uptime ?? null,
+            uptime: health?.uptimeSec ?? health?.uptime ?? null,
           });
         }
       } catch {

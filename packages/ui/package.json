@@ -4,7 +4,7 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc",
+        "build": "node build.mjs",
         "lint": "eslint --no-eslintrc --no-inline-config --parser @typescript-eslint/parser \"src/**/*.{ts,tsx,js,mjs,cjs}\""
     },
     "dependencies": {
