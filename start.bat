@@ -99,6 +99,19 @@ REM Start TypeScript control plane
 set BORG_PORT=%BORG_PORT%
 if "%BORG_PORT%"=="" set BORG_PORT=4100
 
+REM Wait for dashboard to be ready
+echo   Waiting for dashboard to compile...
+set WAIT_COUNT=0
+:dash_wait
+if !WAIT_COUNT! GEQ 30 goto :dash_done
+curl -s -o nul -w "%%{http_code}" http://127.0.0.1:%DASH_PORT%/dashboard > "%TEMP%\borg_dash_wait.txt" 2>nul
+set /p DASH_READY=<"%TEMP%\borg_dash_wait.txt"
+if "!DASH_READY!"=="200" goto :dash_done
+    set /a WAIT_COUNT+=1
+    timeout /t 2 > nul
+    goto :dash_wait
+:dash_done
+
 REM Check if core is already running
 curl -s -o nul -w "%%{http_code}" http://127.0.0.1:%BORG_PORT%/health > "%TEMP%\borg_core_check.txt" 2>nul
 set /p CORE_CHECK=<"%TEMP%\borg_core_check.txt"

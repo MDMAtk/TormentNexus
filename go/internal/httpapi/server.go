@@ -629,6 +629,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/billing/fallback-history", s.handleBillingFallbackHistory)
 	s.mux.HandleFunc("/api/billing/fallback-history/clear", s.handleBillingClearFallbackHistory)
 	s.mux.HandleFunc("/api/mcp/status", s.handleMCPStatus)
+	s.mux.HandleFunc("/api/system/overview", s.handleSystemOverview)
 	s.mux.HandleFunc("/api/mcp/servers/runtime", s.handleMCPRuntimeServers)
 	s.mux.HandleFunc("/api/mcp/servers", s.handleMCPServersList)
 	s.mux.HandleFunc("/api/mcp/servers/configured", s.handleMCPConfiguredServers)

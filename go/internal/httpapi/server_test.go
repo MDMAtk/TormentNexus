@@ -49,6 +49,14 @@ func skipIfServerRunning(t *testing.T) {
 	}
 }
 
+func TestMain(m *testing.M) {
+	// Default: point upstream to a dead address so tests dont hit real TS core.
+	// Individual tests that need a real or mock upstream override this.
+	os.Setenv("BORG_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	os.Setenv("BORG_LOCK_PATH", os.TempDir() + "/borg-test-nonexistent.lock")
+	os.Exit(m.Run())
+}
+
 func TestHealthEndpoint(t *testing.T) {
 	server := New(config.Default(), stubDetector{})
 	request := httptest.NewRequest(http.MethodGet, "/api/health/server", nil)

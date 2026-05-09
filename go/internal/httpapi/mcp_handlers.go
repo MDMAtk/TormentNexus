@@ -1,8 +1,10 @@
 package httpapi
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
+	"time"
 	"os"
 	"strings"
 
@@ -191,7 +193,9 @@ func (s *Server) handleMCPSearchTools(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) handleMCPRuntimeServers(w http.ResponseWriter, r *http.Request) {
 	var result any
-	upstreamBase, err := s.callUpstreamJSON(r.Context(), "mcp.listServers", nil, &result)
+	ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
+	defer cancel()
+	upstreamBase, err := s.callUpstreamJSON(ctx, "mcp.listServers", nil, &result)
 	if err == nil {
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,
@@ -318,7 +322,9 @@ func (s *Server) handleMCPSync(w http.ResponseWriter, r *http.Request) {
 // handleMCPServersList returns a combined view of runtime + configured servers.
 func (s *Server) handleMCPServersList(w http.ResponseWriter, r *http.Request) {
 	var result any
-	upstreamBase, err := s.callUpstreamJSON(r.Context(), "mcp.listServers", nil, &result)
+	ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
+	defer cancel()
+	upstreamBase, err := s.callUpstreamJSON(ctx, "mcp.listServers", nil, &result)
 	if err == nil {
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,

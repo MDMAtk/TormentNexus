@@ -9,9 +9,9 @@ import {
 
 const REPO_ROOT = process.cwd();
 const WEB_PORT_CANDIDATES = [3000, 3010, 3020, 3030, 3040];
-const REQUEST_TIMEOUT_MS = Number(process.env.READINESS_TIMEOUT_MS || 4000);
+const REQUEST_TIMEOUT_MS = Number(process.env.READINESS_TIMEOUT_MS || 2000);
 const REQUEST_RETRIES = Number(process.env.READINESS_RETRIES || 1);
-const RETRY_DELAY_MS = Number(process.env.READINESS_RETRY_DELAY_MS || 700);
+const RETRY_DELAY_MS = Number(process.env.READINESS_RETRY_DELAY_MS || 500);
 const strictJsonMode = process.argv.includes('--strict-json');
 const softMode = process.argv.includes('--soft');
 const jsonMode = process.argv.includes('--json') || strictJsonMode;
