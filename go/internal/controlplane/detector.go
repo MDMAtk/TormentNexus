@@ -129,10 +129,16 @@ func (d *Detector) DetectAll(ctx context.Context) ([]Tool, error) {
 	d.inflight = wait
 	d.mu.Unlock()
 
-	tools := make([]Tool, 0, len(d.definitions))
-	for _, def := range d.definitions {
-		tools = append(tools, d.detectTool(ctx, def))
+	tools := make([]Tool, len(d.definitions))
+	var wg sync.WaitGroup
+	for i, def := range d.definitions {
+		wg.Add(1)
+		go func(idx int, d2 definition) {
+			defer wg.Done()
+			tools[idx] = d.detectTool(ctx, d2)
+		}(i, def)
 	}
+	wg.Wait()
 
 	d.mu.Lock()
 	d.cached = append([]Tool(nil), tools...)
