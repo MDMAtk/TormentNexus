@@ -195,9 +195,9 @@ export class SkillRegistry {
     async searchSkills(query: string) {
         const queryLower = query.toLowerCase();
         const matches = Array.from(this.skills.values())
-            .filter(s => 
-                s.id.toLowerCase().includes(queryLower) || 
-                s.name.toLowerCase().includes(queryLower) || 
+            .filter(s =>
+                s.id.toLowerCase().includes(queryLower) ||
+                s.name.toLowerCase().includes(queryLower) ||
                 s.description.toLowerCase().includes(queryLower)
             )
             .map(s => ({

@@ -1,5 +1,96 @@
 # Changelog
 
+## [1.0.0-alpha.61] - 2026-05-17
+
+### Added
+- **Autonomous Healer Loop (The Immune System)**:
+  - Upgraded `go/internal/healer/healer.go` to implement the full `diagnose -> fix -> verify -> retry` autonomous cycle.
+  - Integrated `CodeExecutor` to perform native verification via `npx tsc`, `npx vitest`, and `go test`.
+  - Added multi-turn feedback loop support, allowing the LLM to refine fixes based on compiler/test output.
+- **L2 Vault Integration**:
+  - Wired Healer service to the `controlplane.MemoryVault` for persistent intelligence harvesting.
+  - Every heal attempt is now committed to the SQLite-based L2 Vault, enabling fleet-wide shared learning.
+- **Phase 5 Scoping**:
+  - Authored updated `VISION.md` and `ROADMAP.md` focusing on the Nexus Kernel (Hypervisor) and HyperCode (Product) brand distinction.
+
+### Fixed
+- Go Healer: Resolved double-escaping of `fmt.Sprintf` tokens in generated code.
+- Go Kernel: Fixed undefined interface references for `MemoryVault` in the healer package.
+
+# Changelog
+
+## [1.0.0-alpha.60] - 2026-05-16
+
+### Added
+- **Phase 4: Deep Orchestration**:
+  - `ConsensusEngine`: Native Go implementation of weighted multi-model voting with L2 Vault logging.
+  - `PairOrchestrator`: Hardened state machine enforcing the `Planner -> Checker -> Implementer -> Critic` loop with recursive revisions.
+  - `QuotaManager`: Real-time token usage and credit tracking for all LLM providers.
+  - `ModelSelector`: Budget-aware waterfall routing that preemptively switches providers based on quota.
+  - `SessionSnapshots`: Support for cross-session snapshot/restore in `MemoryArchiver`.
+
+### Changed
+- `LLMService`: Integrated `GlobalQuotaTracker` to automatically update usage statistics after every generation.
+- `WaterfallRouter`: Refactored to utilize the `ModelSelector` for intelligent provider selection.
+- Documentation: Authored `docs/PHASE4_ORCHESTRATION.md` and updated `PROJECT_MEMORY.md`.
+
+
+## [1.0.0-alpha.59] - 2026-05-16
+
+### Added
+- **Phase 3: Fleet Orchestration**:
+  - `FleetManager`: New Go service to track PIDs, health, and resource usage of all active CLI/TIU sessions.
+  - `TrafficObserver`: Implemented passive background fact extraction from A2A traffic.
+  - Shared Organizational Memory: Learnings from one session are now automatically indexed in the L2 Vault and shared globally across the fleet.
+  - API: Added `/api/fleet/status` endpoint to the Go sidecar.
+
+### Changed
+- `A2ABroker`: Integrated `FleetSignalProcessor` hook to enable real-time traffic observation.
+- `MemoryReactor`: Added background biological decay and heat-based tiering loop.
+- `MCPServer`: Updated status and health endpoints to reflect fleet-wide state.
+- Documentation: Authored `docs/PHASE3_FLEET.md`.
+
+
+All notable changes to this project will be documented in this file.
+
+## [1.0.0-alpha.54] - 2026-05-12
+
+### Added
+- Native Go implementation of MCP Client Synchronization with full parity (Headers, BearerTokens).
+- Automated `zoomToFit` re-centering in `KnowledgeGraph` and `GraphPanel` components.
+- Comprehensive architecture documentation in `docs/ARCHITECTURE.md`.
+- Ecosystem overview and dormant submodule audit in `docs/ECOSYSTEM.md`.
+
+### Changed
+- Optimized `useResizeObserver` with `requestAnimationFrame` for smoother UI scaling.
+- Enhanced `DebateVisualizer` with real-time consensus agreement metrics and progress bars.
+- Hardened agent chat resilience and submission hooks in `Borg Supervisor`.
+
+### Fixed
+- UI regression where focus was stolen at an excessive rate during autonomous cycles.
+- Corrected `alt-enter` submission logic for modern "Antigravity" surfaces.
+
+## [1.0.0-alpha.52] - 2026-05-08
+
+### Added
+- **Predictive Tool Discovery**: Implemented `getPredictedToolAds` in `MCPServer` and integrated it into `McpWorkerAgent`. The agent now preemptively fetches relevant tools from the Go sidecar based on the task goal.
+- **Protocol Completion**: Synchronized all 57 monorepo packages to v1.0.0-alpha.52.
+- **Maintenance**: Refreshed `SUBMODULE_INVENTORY.md` and repository status.
+
+## [1.0.0-alpha.49] - 2026-05-04
+
+### Added
+- **Stream Status Indicator**: Real-time connectivity feedback in the Dashboard Navigation (Core TS, Go Sidecar, and Stream status).
+- **Go-Native MCP Sync**: Migrated Claude, Cursor, and VS Code configuration detection/syncing to the Go sidecar (Port 4300).
+- **Progressive Skill Disclosure**: Wired JIT Load/Unload controls in the Skills Dashboard to the Go-native SkillStore and ranking engine.
+- **Resilient Sidecar Bridge**: Implemented `NativeSidecarDaemon` and event buffering to ensure A2A signals survive socket drops.
+- **Standardized Responsive UI**: Integrated `useResizeObserver` hook into `KnowledgeGraph` and `GraphPanel`.
+
+### Changed
+- **CLI Go-API Binding**: Updated `borg mcp sync` to utilize the Go-native sync endpoints.
+- **Project Structure**: Cleaned up orphaned submodule references and synchronized monorepo-wide versions.
+
+
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://sumver.org/spec/v2.0.0.html).
@@ -35,6 +126,15 @@ and this project adheres to [Semantic Versioning](https://sumver.org/spec/v2.0.0
 ### Fixed
 - **TS Agent Stubs**: Repaired corrupted/concatenated `RiskEvaluator.ts` and `DebateEngine.ts` in `packages/agents`.
 - **Version Sync**: Synchronized all 57 `package.json` files and Go `buildinfo` to `1.0.0-alpha.46`.
+
+## [1.0.0-alpha.50] - 2026-05-02
+
+### Added
+- **Responsive Knowledge Graph**: Refactored `KnowledgeGraph` and `GraphPanel` using a new `useResizeObserver` hook for dynamic sizing.
+- **Go Sidecar Progressive Disclosure**: Ported LRU eviction and ranked search logic to the Go-native `SkillStore`.
+- **Real-time Swarm Visibility**: Added `swarmEvents` tRPC subscription and a corresponding `SwarmTranscript` UI component for live model turn visualization.
+- **MCP Sync Performance**: Migrated Claude/Cursor/VSCode config detection and synchronization to the Go sidecar (`internal/mcp/sync.go`).
+- **Version Sync**: Synchronized all 57 package.json files to v1.0.0-alpha.50.
 
 ## [1.0.0-alpha.45] - 2026-04-30
 
@@ -4461,7 +4561,7 @@ and this project adheres to [Semantic Versioning](https://sumver.org/spec/v2.0.0
 
 ## [2.7.46] - 2026-03-01
 ### Added
-- **Phase 86: Swarm Adaptive Rate Limiting**: 
+- **Phase 86: Swarm Adaptive Rate Limiting**:
 - Added `RateLimiter.ts` employing a token bucket algorithm to pace Mesh network API requests based on estimated tokens per minute (TPM) and requests per minute (RPM).
 - Integrated adaptive backoff into `SwarmOrchestrator` to catch provider 429s and pause execution gracefully. Added pulsing "THROTTLED" status to Swarm Dashboard.
 
@@ -4559,14 +4659,14 @@ and this project adheres to [Semantic Versioning](https://sumver.org/spec/v2.0.0
 ### Added
 - **Phase 76: Deep Ecosystem Integration (Open-WebUI)**:
   - Added `external/open-webui` as the 7th submodule, integrating the robust conversational interface natively into the workspace.
-  - **Frontend Sync**: Scaffolded `/dashboard/webui` Next.js page, embedding the interface into Borg's primary navigation system (`nav-config.ts`), marking it as a top-level native integration tab. 
-  - **Frontend Sync**: Scaffolded `/dashboard/webui` Next.js page, embedding the interface into borg's primary navigation system (`nav-config.ts`), marking it as a top-level native integration tab. 
+  - **Frontend Sync**: Scaffolded `/dashboard/webui` Next.js page, embedding the interface into Borg's primary navigation system (`nav-config.ts`), marking it as a top-level native integration tab.
+  - **Frontend Sync**: Scaffolded `/dashboard/webui` Next.js page, embedding the interface into borg's primary navigation system (`nav-config.ts`), marking it as a top-level native integration tab.
   - **Backend Sync**: Created `openWebUIRouter.ts` and exposed it via the main `AppRouter`, proxying native tooling and swarm capabilities into the WebUI backend architecture.
 
 - **Phase 6: React Native Mobile App (Native PWA Shell)**:
-  - Initialized an Expo React Native wrapper project via `npx create-expo-app` in `apps/mobile`. 
-  - Wired `react-native-webview` with dynamic screen padding to natively mount the Borg web dashboard onto iOS and Android platforms. 
-  - Wired `react-native-webview` with dynamic screen padding to natively mount the borg web dashboard onto iOS and Android platforms. 
+  - Initialized an Expo React Native wrapper project via `npx create-expo-app` in `apps/mobile`.
+  - Wired `react-native-webview` with dynamic screen padding to natively mount the Borg web dashboard onto iOS and Android platforms.
+  - Wired `react-native-webview` with dynamic screen padding to natively mount the borg web dashboard onto iOS and Android platforms.
 
 ### Changed
 - **Version Bump**: Incremented version to 2.7.34 to mark the completion of the baseline submodule integrations and mobile scaffolding.
@@ -4641,7 +4741,7 @@ and this project adheres to [Semantic Versioning](https://sumver.org/spec/v2.0.0
 - **Phase 64 Release Readiness**: Eliminated broad `@ts-ignore` usage in the persistence and UI layer for frontend parity and robustness.
 - **Type Safety Pass**: Removed 50+ `@ts-ignore` directives from `apps/web` and `packages/ui`.
 - **TRPC Router Typing**: Fixed generic TS inference errors in `appRouter` affecting `healerRouter` and `auditRouter`. Rewired all `SecurityPage`TRPC calls to correct `policies.*` and `audit.log` endpoints instead of previous untyped endpoints.
-- **Strict Compliance**: Both `packages/core` and `packages/ui` now successfully compile under `tsc --noEmit` locally with zero fallback mocks or stubs. 
+- **Strict Compliance**: Both `packages/core` and `packages/ui` now successfully compile under `tsc --noEmit` locally with zero fallback mocks or stubs.
 - **Browser Extension Bridge**: Implemented fuzzy text matching and validated the end-to-end local MCP click action logic in `@borg/browser-extension-pkg` background execution worker.
 - **Browser Extension Bridge**: Implemented fuzzy text matching and validated the end-to-end local MCP click action logic in `@borg/browser-extension-pkg` background execution worker.
 

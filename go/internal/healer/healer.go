@@ -17,6 +17,8 @@ import (
 	"time"
 
 	"github.com/borghq/borg-go/internal/ai"
+	"github.com/borghq/borg-go/internal/codeexec"
+	"github.com/borghq/borg-go/internal/controlplane"
 )
 
 // Diagnosis represents an LLM-generated diagnosis of an error.
@@ -31,10 +33,10 @@ type Diagnosis struct {
 
 // FixPlan represents a plan to fix a diagnosed error.
 type FixPlan struct {
-	ID           string              `json:"id"`
-	Diagnosis    Diagnosis           `json:"diagnosis"`
+	ID            string             `json:"id"`
+	Diagnosis     Diagnosis          `json:"diagnosis"`
 	FilesToModify []FileModification `json:"filesToModify"`
-	Explanation  string              `json:"explanation"`
+	Explanation   string             `json:"explanation"`
 }
 
 // FileModification represents a file to be modified by a fix.
@@ -45,10 +47,11 @@ type FileModification struct {
 
 // HealRecord tracks a single heal attempt.
 type HealRecord struct {
-	Timestamp int64    `json:"timestamp"`
-	Error     string   `json:"error"`
-	Fix       FixPlan  `json:"fix"`
-	Success   bool     `json:"success"`
+	Timestamp int64   `json:"timestamp"`
+	Error     string  `json:"error"`
+	Fix       FixPlan `json:"fix"`
+	Success   bool    `json:"success"`
+	Attempts  int     `json:"attempts"`
 }
 
 // HealerService provides self-healing capabilities.
@@ -57,18 +60,24 @@ type HealerService struct {
 	history  []HealRecord
 	provider ai.Provider
 	model    string
+	executor *codeexec.CodeExecutor
+	vault    controlplane.MemoryVault
 	onHeal   func(HealRecord)
 }
 
-// NewHealerService creates a new healer with the given LLM provider.
-// If provider is nil, auto-heal will be degraded (diagnosis only).
-func NewHealerService(provider ai.Provider, model string) *HealerService {
+// NewHealerService creates a new healer with the given LLM provider, executor and vault.
+func NewHealerService(provider ai.Provider, model string, executor *codeexec.CodeExecutor, vault controlplane.MemoryVault) *HealerService {
 	if model == "" {
 		model = "openrouter/auto"
+	}
+	if executor == nil {
+		executor = codeexec.NewCodeExecutor()
 	}
 	return &HealerService{
 		provider: provider,
 		model:    model,
+		executor: executor,
+		vault:    vault,
 	}
 }
 
@@ -148,8 +157,8 @@ func (hs *HealerService) GenerateFix(ctx context.Context, diag *Diagnosis) (*Fix
 
 	if hs.provider == nil {
 		return &FixPlan{
-			ID:        fmt.Sprintf("fix_%d", time.Now().UnixMilli()),
-			Diagnosis: *diag,
+			ID:          fmt.Sprintf("fix_%d", time.Now().UnixMilli()),
+			Diagnosis:   *diag,
 			Explanation: "No LLM provider available for fix generation",
 		}, nil
 	}
@@ -210,33 +219,98 @@ func (hs *HealerService) ApplyFix(plan *FixPlan) error {
 	return nil
 }
 
-// Heal performs a full heal cycle: diagnose → generate fix → apply.
+// HealAndVerify performs the core autonomous loop: diagnose -> fix -> verify -> retry.
+func (hs *HealerService) HealAndVerify(ctx context.Context, errorStr string, contextStr string, maxAttempts int) (bool, error) {
+	if maxAttempts <= 0 {
+		maxAttempts = 3
+	}
+
+	currentError := errorStr
+	currentContext := contextStr
+	attempts := 0
+
+	var lastPlan *FixPlan
+
+	for attempts < maxAttempts {
+		attempts++
+		diag, err := hs.AnalyzeError(ctx, currentError, currentContext)
+		if err != nil {
+			return false, err
+		}
+
+		if diag.Confidence < 0.6 {
+			return false, fmt.Errorf("confidence too low for auto-heal (%.2f)", diag.Confidence)
+		}
+
+		if diag.File == "" {
+			return false, fmt.Errorf("no file identified to fix")
+		}
+
+		plan, err := hs.GenerateFix(ctx, diag)
+		if err != nil {
+			return false, err
+		}
+		lastPlan = plan
+
+		if err := hs.ApplyFix(plan); err != nil {
+			hs.recordHeal(ctx, currentError, *plan, false, attempts)
+			return false, err
+		}
+
+		// Verify fix
+		vErr := hs.verifyFix(ctx, diag.File)
+		if vErr == nil {
+			hs.recordHeal(ctx, errorStr, *plan, true, attempts)
+			return true, nil
+		}
+
+		// Update context for next attempt
+		currentError = vErr.Error()
+		currentContext = fmt.Sprintf("Attempted fix: %s. But verification failed with: %s", plan.Explanation, currentError)
+	}
+
+	if lastPlan != nil {
+		hs.recordHeal(ctx, errorStr, *lastPlan, false, attempts)
+	}
+	return false, fmt.Errorf("max attempts reached without successful fix")
+}
+
+// verifyFix runs relevant tests or type checks to verify the fix.
+func (hs *HealerService) verifyFix(ctx context.Context, culpritFile string) error {
+	ext := filepath.Ext(culpritFile)
+
+	var commands []string
+	if ext == ".ts" {
+		testFile := strings.TrimSuffix(culpritFile, ".ts") + ".test.ts"
+		if _, err := os.Stat(testFile); err == nil {
+			commands = append(commands, fmt.Sprintf("npx vitest run %s", testFile))
+		} else {
+			commands = append(commands, fmt.Sprintf("npx tsc --noEmit %s", culpritFile))
+		}
+	} else if ext == ".go" {
+		dir := filepath.Dir(culpritFile)
+		commands = append(commands, fmt.Sprintf("go test -v %s", dir))
+	}
+
+	for _, cmdStr := range commands {
+		res, err := hs.executor.Execute(ctx, codeexec.ExecutionConfig{
+			Language: codeexec.Shell,
+			Code:     cmdStr,
+		})
+		if err != nil {
+			return err
+		}
+		if res.ExitCode != 0 {
+			return fmt.Errorf("verification command failed (%s): %s", cmdStr, res.Stderr)
+		}
+	}
+
+	return nil
+}
+
+// Heal performs a single heal cycle (deprecated in favor of HealAndVerify).
 func (hs *HealerService) Heal(ctx context.Context, errorStr string, contextStr string) (bool, error) {
-	diag, err := hs.AnalyzeError(ctx, errorStr, contextStr)
-	if err != nil {
-		return false, err
-	}
-
-	if diag.Confidence < 0.8 {
-		return false, fmt.Errorf("confidence too low for auto-heal (%.2f)", diag.Confidence)
-	}
-
-	if diag.File == "" {
-		return false, fmt.Errorf("no file identified to fix")
-	}
-
-	plan, err := hs.GenerateFix(ctx, diag)
-	if err != nil {
-		return false, err
-	}
-
-	if err := hs.ApplyFix(plan); err != nil {
-		hs.recordHeal(errorStr, *plan, false)
-		return false, err
-	}
-
-	hs.recordHeal(errorStr, *plan, true)
-	return true, nil
+	return hs.HealAndVerify(ctx, errorStr, contextStr, 1)
 }
 
 // AutoHeal performs a one-shot auto-heal on an error log string.
@@ -269,20 +343,20 @@ func (hs *HealerService) AutoHeal(ctx context.Context, errorLog string) (*HealRe
 	}
 
 	if err := hs.ApplyFix(plan); err != nil {
-		hs.recordHeal(errorLog, *plan, false)
+		hs.recordHeal(ctx, errorLog, *plan, false, 1)
 		return &HealResult{Success: false, File: filePath, Fix: diag.SuggestedFix}, err
 	}
 
-	hs.recordHeal(errorLog, *plan, true)
+	hs.recordHeal(ctx, errorLog, *plan, true, 1)
 	return &HealResult{Success: true, File: filePath, Fix: diag.SuggestedFix}, nil
 }
 
 // HealResult is the result of an auto-heal attempt.
 type HealResult struct {
-	Success    bool       `json:"success"`
-	File       string     `json:"file,omitempty"`
-	Fix        string     `json:"fix,omitempty"`
-	Diagnosis  *Diagnosis `json:"diagnosis,omitempty"`
+	Success   bool       `json:"success"`
+	File      string     `json:"file,omitempty"`
+	Fix       string     `json:"fix,omitempty"`
+	Diagnosis *Diagnosis `json:"diagnosis,omitempty"`
 }
 
 // GetHistory returns all heal records.
@@ -294,17 +368,33 @@ func (hs *HealerService) GetHistory() []HealRecord {
 	return result
 }
 
-func (hs *HealerService) recordHeal(errorStr string, plan FixPlan, success bool) {
+func (hs *HealerService) recordHeal(ctx context.Context, errorStr string, plan FixPlan, success bool, attempts int) {
 	record := HealRecord{
 		Timestamp: time.Now().UnixMilli(),
 		Error:     errorStr,
 		Fix:       plan,
 		Success:   success,
+		Attempts:  attempts,
 	}
 
 	hs.mu.Lock()
 	hs.history = append(hs.history, record)
 	hs.mu.Unlock()
+
+	// Persist to L2 Vault
+	if hs.vault != nil {
+		content, _ := json.Marshal(record)
+		entry := controlplane.L2VaultRecord{
+			ID:         fmt.Sprintf("heal-%s-%d", plan.ID, record.Timestamp),
+			SessionID:  "kernel-healer",
+			Type:       controlplane.MemoryLongTerm,
+			Content:    fmt.Sprintf("Heal Event: %s (Success: %v, Attempts: %d)\nFix: %s\nDetails: %s", plan.Diagnosis.Description, success, attempts, plan.Explanation, string(content)),
+			Importance: 0.8,
+			HeatScore:  100.0,
+			CreatedAt:  time.Now(),
+		}
+		_ = hs.vault.Commit(ctx, entry)
+	}
 
 	if hs.onHeal != nil {
 		hs.onHeal(record)

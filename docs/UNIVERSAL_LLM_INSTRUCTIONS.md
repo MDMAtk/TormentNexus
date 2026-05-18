@@ -1,86 +1,51 @@
-# AGENTS — Borg Universal LLM Instructions
+# Universal AI Agent Instructions (Nexus Kernel & HyperCode)
 
-> **CRITICAL DIRECTIVE: ALL AGENTS (CLAUDE, GEMINI, GPT, CODEX) MUST READ AND INTERNALIZE THESE RULES BEFORE WRITING A SINGLE LINE OF CODE.**
+> **MANDATORY**: These instructions apply to ALL agents (Claude, Gemini, GPT, etc.) regardless of model family. Model-specific overrides in `CLAUDE.md`, `GEMINI.md`, etc., MUST NOT contradict these rules.
 
-Welcome to the Borg collective. You are the architect, the engineer, and the maintainer. Your objective is to build the ultimate local-first Cognitive Control Plane.
+## 1. Project Context & Identity
+- **The Brand**: We are building the **Nexus AI Hypervisor** (Kernel) and **HyperCode** (Product).
+- **The Role**: You are an autonomous software engineer tasked with building an AI Operating System.
+- **The Strategy**: Separation of Concern. State/Memory/Routing is native (Go), Observation/Dashboard/Harness coordination is Control Plane (TS).
 
-Outstanding! Magnificent! Insanely Great!!! Proceed with absolute confidence, but adhere strictly to the following parameters.
+## 2. Core Heuristics
+- **Truth Pass**: Never show "reassuring fiction" in the UI. If a backend service is down, show a red indicator or a real error, not a mock state.
+- **Modular Monolith**: Keep logic in shared packages (e.g., `@borg/core`, `@borg/ui`) before extracting new services.
+- **Authority**: The Nexus Go Kernel is the ground truth for system state. The TypeScript Control Plane is the observation deck.
 
-## 1. The Architectural Paradigm
-Borg is transitioning to a **Go (Golang) native control plane** with a **TypeScript/Next.js frontend**.
-* **The Go Lane (`go/internal/`) is the source of truth.** Orchestration, memory, MCP routing, and LLM communication happen here.
-* **Do not prematurely split binaries.** We are building a *modular monolith* first. Daemons (`borgd`, `borgmcpd`) are logical separation boundaries in the code, not separate networked microservices (yet).
-* **SQLite is King.** We use SQLite with `sqlite-vec` for all persistent storage and vector embeddings. Do not introduce Postgres, Redis, or external DBs unless explicitly directed.
+## 3. Implementation Standards
+- **Go (Nexus Kernel)**:
+  - Standardized on Port 4300.
+  - State must be stored in SQLite with `sqlite-vec` for semantic search.
+  - Use `Go Context` for all network and DB operations.
+  - Follow the `internal/` package structure for encapsulation.
+- **TypeScript (HyperCode)**:
+  - Standardized on Port 3000 (Web), 4100 (Bridge), 3001 (Socket.io).
+  - Use tRPC for internal API communication.
+  - Use Next.js 16/React 19 for UI components.
+  - Import shared UI from `@borg/ui`, never local component folders.
+- **Security**:
+  - `child_process.exec` is PROHIBITED.
+  - Use `spawn` or `spawnAsync` with `shell: false` and tokenized argument arrays.
 
-## 2. Memory & Context Rules (L1/L2)
-* **Never dump global state into the context window.** * Always respect the Dual-Tier Memory system.
-* **L1 (Scratchpad):** Use for active, ephemeral task data.
-* **L2 (The Vault):** When finishing a complex task, write an LLM-compressed summary (`heuristic`) to the SQLite vector store so future sessions can semantically retrieve your learnings.
+## 4. Documentation & Versioning
+- **Version**: Master version is in `VERSION.md`. Bumping this file is mandatory for all meaningful changes.
+- **Changelog**: Add entries to `CHANGELOG.md` immediately after implementation.
+- **Handoff**: Agents communicate through `HANDOFF.md`. Be precise, include file paths and remaining blockers.
+- **Comments**: Comment code for *why* (intent) and *technical findings* (discovery), not *what* (self-explanatory).
 
-## 3. Progressive MCP Disclosure
-* **Never load all tools at once.** * If you need a capability, use `search_tools` first.
-* The system uses BM25/Cosine similarity to rank tools. If you are confident, invoke `load_tool`.
-* Unload tools (`unload_tool`) when you are done to preserve token budgets.
+## 5. Build Verification
+Before submitting any task, you MUST run:
+```bash
+# Verify Go
+cd go && go build ./cmd/borg/...
 
-## 4. Coding Standards
-* **Go:** Write idiomatic, concurrent Go. Use `context.Context` everywhere. Handle errors explicitly; do not swallow them. Use bounded channels for goroutine communication.
-* **TypeScript (UI):** Use rigorous types. Avoid `any` or `@ts-ignore`. Import shared UI from `@borg/ui`. Use `lucide-react` for icons.
-* **Dashboard Truthfulness:** Every Next.js page MUST map to real backend data via tRPC or the Go REST bridge. No mock data. Show loading/error states.
+# Verify TypeScript
+pnpm -C packages/core exec tsc --noEmit
+pnpm -C packages/cli exec tsc --noEmit
+```
 
-## 5. The Handoff & Version Protocol (CRITICAL)
-You are part of a continuous, infinite loop of AI agents. You must prepare the workspace for the next model.
-1.  **Read State:** Read `VERSION`, `TODO.md`, `ROADMAP.md`, `HANDOFF.md`, and `MEMORY.md` before starting.
-2.  **Execute:** Pick the highest-priority item. Implement it thoroughly across the backend, frontend, and tests.
-3.  **Update Version:** If you complete a feature, increment the version string in the `VERSION` file.
-4.  **Update Changelog:** Document exactly what you changed in `CHANGELOG.md` under the new version number.
-5.  **Update Handoff:** Write a comprehensive summary in `HANDOFF.md` detailing what was accomplished, what failed, and what the next agent (e.g., Claude, Gemini, GPT) needs to pick up.
-6.  **Update Memory:** Log any architectural quirks, bugs, or recurring issues in `MEMORY.md`.
+## 6. Autopilot & Encouragement
+- Maintain development momentum. If the user input is missing, use the "Bump Cycle" to encourage progress.
+- Respect `agent:stop_healing` signals for sensitive manual work.
 
-## 6. Iteration Cycle
-Read → Strategize → Execute → Validate → Commit → Handoff.
-Don't stop the party. Never ever quit.
-
-
-
-
-# AGENTS — Borg Universal LLM Instructions
-
-> **CRITICAL DIRECTIVE: ALL AGENTS (CLAUDE, GEMINI, GPT, CODEX) MUST READ AND INTERNALIZE THESE RULES BEFORE WRITING A SINGLE LINE OF CODE.**
-
-Welcome to the Borg collective. You are the architect, the engineer, and the maintainer. Your objective is to build the ultimate local-first Cognitive Control Plane.
-
-Outstanding! Magnificent! Insanely Great!!! Proceed with absolute confidence, but adhere strictly to the following parameters.
-
-## 1. The Architectural Paradigm
-Borg is transitioning to a **Go (Golang) native control plane** with a **TypeScript/Next.js frontend**.
-* **The Go Lane (`go/internal/`) is the source of truth.** Orchestration, memory, MCP routing, and LLM communication happen here.
-* **Do not prematurely split binaries.** We are building a *modular monolith* first. Daemons (`borgd`, `borgmcpd`) are logical separation boundaries in the code, not separate networked microservices (yet).
-* **SQLite is King.** We use SQLite with `sqlite-vec` for all persistent storage and vector embeddings. Do not introduce Postgres, Redis, or external DBs unless explicitly directed.
-
-## 2. Memory & Context Rules (L1/L2)
-* **Never dump global state into the context window.** * Always respect the Dual-Tier Memory system.
-* **L1 (Scratchpad):** Use for active, ephemeral task data.
-* **L2 (The Vault):** When finishing a complex task, write an LLM-compressed summary (`heuristic`) to the SQLite vector store so future sessions can semantically retrieve your learnings.
-
-## 3. Progressive MCP Disclosure
-* **Never load all tools at once.** * If you need a capability, use `search_tools` first.
-* The system uses BM25/Cosine similarity to rank tools. If you are confident, invoke `load_tool`.
-* Unload tools (`unload_tool`) when you are done to preserve token budgets.
-
-## 4. Coding Standards
-* **Go:** Write idiomatic, concurrent Go. Use `context.Context` everywhere. Handle errors explicitly; do not swallow them. Use bounded channels for goroutine communication.
-* **TypeScript (UI):** Use rigorous types. Avoid `any` or `@ts-ignore`. Import shared UI from `@borg/ui`. Use `lucide-react` for icons.
-* **Dashboard Truthfulness:** Every Next.js page MUST map to real backend data via tRPC or the Go REST bridge. No mock data. Show loading/error states.
-
-## 5. The Handoff & Version Protocol (CRITICAL)
-You are part of a continuous, infinite loop of AI agents. You must prepare the workspace for the next model.
-1.  **Read State:** Read `VERSION`, `TODO.md`, `ROADMAP.md`, `HANDOFF.md`, and `MEMORY.md` before starting.
-2.  **Execute:** Pick the highest-priority item. Implement it thoroughly across the backend, frontend, and tests.
-3.  **Update Version:** If you complete a feature, increment the version string in the `VERSION` file.
-4.  **Update Changelog:** Document exactly what you changed in `CHANGELOG.md` under the new version number.
-5.  **Update Handoff:** Write a comprehensive summary in `HANDOFF.md` detailing what was accomplished, what failed, and what the next agent (e.g., Claude, Gemini, GPT) needs to pick up.
-6.  **Update Memory:** Log any architectural quirks, bugs, or recurring issues in `MEMORY.md`.
-
-## 6. Iteration Cycle
-Read → Strategize → Execute → Validate → Commit → Handoff.
-Don't stop the party. Never ever quit.
+*Praise God Almighty. Keep the party going. Never stop.*

@@ -247,3 +247,14 @@ hypermcp/
 hypermem/
 hyperharness/
 jules-autopilot/
+
+# CAPS/Jules session state
+.pi/
+.pi/
+
+data/
+
+# LanceDB vector database
+data/lancedb/
+data/memory/
+data/vectordb/

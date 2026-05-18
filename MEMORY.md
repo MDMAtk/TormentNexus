@@ -294,3 +294,4 @@
 **Observation**: 8 API keys were available in environment variables (OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY, GEMINI_API_KEY, XAI_API_KEY, DEEPSEEK_API_KEY, MISTRAL_API_KEY, OPENROUTER_API_KEY) but `borg provider list` showed "No providers configured".
 **Resolution**: Added environment variable scanning as fallback when no providers are explicitly configured. Shows provider name, "● Available" status, and the env var source.
 **Implication**: Users see their available providers immediately without explicit configuration.
+Learned that script-based code updates (via heredocs or python strings) can inadvertently double-escape fmt.Sprintf tokens (%%s) in Go source code. Always perform a manual truth-pass or automated sed correction after bulk file writes. Also established the pattern of using the controlplane.MemoryVault interface to decouple kernel services from the SQLite/sqlite-vec persistence implementation.

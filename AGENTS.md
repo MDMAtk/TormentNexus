@@ -1,22 +1,21 @@
-# AGENTS — borg Contributor & Agent Guide
+# AGENTS — Nexus Kernel & HyperCode Contributor Guide
 
 > **CRITICAL: ALL AGENTS MUST READ `docs/UNIVERSAL_LLM_INSTRUCTIONS.md` BEFORE PROCEEDING.**
 
-This file serves as a reference point for multi-agent workflows (Claude → Gemini → GPT) and human operators orchestrating autonomous sessions.
+This file serves as the primary coordination point for multi-agent workflows and human operators.
 
-Outstanding! Magnificent! Insanely Great!!! Please continue to proceed as you recommend based on your ongoing analysis and assessments! Keep going! Keep on goin'! Don't stop! Don't ever stop baby! Don't ever quit! Don't stop the party!!!
-
-## 1. Multi-Agent Workflows
-
-### Handoff Protocol
+## 1. Multi-Agent Handoff Protocol
 - Agents communicate primarily through `HANDOFF.md`.
-- When your turn finishes, document **exactly** what you did, what failed, and what the next agent must do.
-- Include: files changed, tests run, build status, version bumped, any remaining issues.
-- Update `MEMORY.md` with any new systemic observations or recurring bugs discovered.
+- Document exactly what you did, what failed, and what the next agent must do.
+- Update `MEMORY.md` with new systemic observations or recurring bugs.
+- **Cycle**: Read → Strategize → Execute → Validate → Commit → Handoff.
 
-### Model Specializations
+## 2. Model Specializations
 | Model | Strengths |
 |---|---|
+| **Gemini** | Speed, massive context analysis, recursive maintenance scripts, bulk refactoring. |
+| **Claude** | Deep implementation, UI/UX perfection, precise documentation, complex type-safety. |
+| **GPT** | Architecture design, systemic debugging, Go porting authority, strict enforcement. |
 | **Gemini** | Speed, recursive scripts, massive context processing, repo maintenance, bulk refactoring |
 | **Claude** | Deep implementation, UI/UX perfection, documentation, styling, type safety |
 | **GPT** | Architecture, systemic debugging, strict type enforcement, Go porting |
@@ -24,8 +23,8 @@ Outstanding! Magnificent! Insanely Great!!! Please continue to proceed as you re
 ### Iteration Cycle
 **Read → Strategize → Execute → Validate → Commit → Handoff. Never stop the party.**
 
-   
-Please summarize anything you have learned during this session that was not obvious at the start, or anything else you would like to inform yourself upon newer sessions. 
+
+Please summarize anything you have learned during this session that was not obvious at the start, or anything else you would like to inform yourself upon newer sessions.
 
 ## 2. Session Protocol
 
@@ -56,152 +55,22 @@ Please summarize anything you have learned during this session that was not obvi
 Please include https://github.com/robertpelloni/jules-autopilot as a dashboard for integrating google jules cloud dev env, and also https://github.com/robertpelloni/opencode-autopilot, and please also make a dashboard with links to all convenient major AI tools, like a section for the billing for API key for gemini/vertex/aistudio/cloud, azure, openrouter, chatgpt/openai api key, claude api key, and then also links to the pro plan membership subscription management page, and then use the spreadsheet i linked with all the ai tools on another dashboard page to detect all installed tools and link to their homepage, and then detect whether they are connected using account oauth or api key, and show usage for each provider both account and api key and show budgets, copilot plus subscription, and then also make a dashboard page similar to the jules-app page for copilot cloud, claude chrome, claude cloud, openai codex cloud, and other providers like blocks, basically useful dashboard pages that organize everything into one place both locally and remote.
 
 ## 3. Version Management
+- **Single Source of Truth**: `VERSION.md` contains the master version string.
+- All `package.json` files must sync to this value.
+- Commit messages must include the version number: `feat: description (v1.0.0-alpha.X)`.
 
-### Single Source of Truth
-- **`VERSION`** file contains the one true version string (e.g., `1.0.0-alpha.7`)
-- All `package.json` files must be synced to this value
-- Dashboard reads version from `VERSION` file at runtime
-- Every meaningful commit should bump the version
-
-### Version Bump Protocol
-```
-1. Update VERSION file
-2. Run: node -e "const v=require('fs').readFileSync('VERSION','utf8').trim(); ['package.json',...require('fs').readdirSync('packages').map(p=>'packages/'+p+'/package.json')].forEach(f=>{try{const j=JSON.parse(require('fs').readFileSync(f,'utf8'));if(j.version&&j.version.startsWith('1.0.0')){j.version=v;require('fs').writeFileSync(f,JSON.stringify(j,null,4)+'\n')}}catch{}})"
-3. Update CHANGELOG.md with version entry
-4. git add -A && git commit -m "feat: description, bump VERSION to X.Y.Z"
-5. git push origin main && git push borg-upstream main --force-with-lease
-```
-
-### Remotes
-- `origin` → `https://github.com/robertpelloni/borg.git`
-- `borg-upstream` → `https://github.com/robertpelloni/borg.git`
-
----
-
-## 4. Build & Validation
-
-### Required Checks
-```bash
-pnpm rebuild better-sqlite3   # Node 24 requires this after install
-pnpm -C packages/core exec tsc --noEmit
-pnpm -C packages/cli exec tsc --noEmit
-cd go && go build -buildvcs=false ./cmd/borg
-```
-
-### Startup Verification
-```bash
-node scripts/build_startup.mjs --profile=go-primary
-# Then: .\start.bat (Windows) or ./start.sh (Linux)
-```
-
-### Runtime Ports
-
-| Service | Port | URL |
+## 4. Required Runtime Ports
+| Service | Port | Purpose |
 |---|---|---|
-| tRPC/REST API | 4100 | `http://0.0.0.0:4100/trpc` |
-| MCP WebSocket | 3001 | `ws://localhost:3001` |
-| Next.js Dashboard | 3000 | `http://localhost:3000/dashboard` |
-| Go Sidecar | 4300 | `http://127.0.0.1:4300/api/index` |
+| Next.js Dashboard | 3000 | Web observation deck |
+| Socket.io | 3001 | Real-time swarm signals |
+| tRPC Bridge | 4100 | TypeScript Control Plane API |
+| Nexus Go Kernel | 4300 | Authoritative native sidecar |
 
-> **Service Discovery**: All ports are configurable via environment variables (`BORG_GO_PORT`, `BORG_TRPC_UPSTREAM`, `BORG_BRIDGE_PORT`, `BORG_DASHBOARD_PORT`). See `go/internal/config/discovery.go`.
->
-> **Dashboard Proxy**: The Next.js app proxies `/api/go/*` to the Go sidecar at port 4300. See `apps/web/src/app/api/go/[...path]/route.ts`.
+## 5. Development Rituals
+1. **Sync**: `git fetch --all && git status` (Verify clean `main`).
+2. **Read**: `docs/UNIVERSAL_LLM_INSTRUCTIONS.md`.
+3. **Check**: `VERSION.md` vs. local dashboard state.
+4. **Learn**: `HANDOFF.md` and `MEMORY.md` from previous session.
 
----
-
-## 5. Project Structure
-
-```
-borg/
-├── VERSION                  # Single source of truth for version
-├── packages/core/           # Main TypeScript control plane (593 .ts)
-│   ├── src/MCPServer.ts     # Core MCP server (5000+ lines)
-│   ├── src/orchestrator.ts  # Express/tRPC server + REST bridges
-│   ├── src/providers/       # Provider registry, model selector
-│   ├── src/routers/         # tRPC routers (savedScripts, etc.)
-│   ├── src/daemons/         # HyperIngest workers (BobbyBookmarks, etc.)
-│   └── src/config/          # council.json, llm config
-├── packages/cli/            # CLI entrypoint (28 .ts)
-├── packages/ai/             # AI SDK abstractions
-├── packages/tools/          # Built-in tool definitions
-├── packages/browser-extension/ # Chrome/Firefox extension (planned)
-├── apps/web/                # Next.js 16 dashboard (311 .ts/.tsx, 91 pages)
-├── apps/maestro/            # Electron/Wails visual orchestrator (submodule)
-├── apps/cloud-orchestrator/ # Jules autopilot wrapper (submodule)
-├── go/                      # Go-native server bridge (140+ .go)
-│   ├── cmd/borg/       # Go binary entrypoint
-│   ├── internal/httpapi/    # HTTP handlers (~45 route families)
-│   ├── internal/mcp/        # MCP inventory, ranking, catalog, decision system
-│   ├── internal/hsync/      # BobbyBookmarks, LinkCrawler, suggestions
-│   └── internal/orchestration/ # Council, swarm, squad, pair orchestrator
-├── submodules/
-│   ├── hyperharness/        # LLM harness submodule
-│   └── prism-mcp/           # Prism MCP reference
-├── packages/claude-mem/     # Claude memory bridge (submodule)
-├── mcp.jsonc                # MCP server definitions (34K+ lines)
-├── docs/                    # All documentation
-├── scripts/                 # Build and utility scripts
-└── data/                    # Runtime data storage
-```
-
-### Submodules
-| Path | Remote | Purpose |
-|---|---|---|
-| `apps/maestro` | github.com/robertpelloni/Maestro | Visual orchestrator (Electron/Wails) |
-| `apps/cloud-orchestrator` | github.com/robertpelloni/jules-autopilot | Jules autopilot wrapper |
-| `packages/claude-mem` | github.com/robertpelloni/claude-mem | Claude memory bridge |
-| `submodules/hyperharness` | github.com/robertpelloni/hyperharness | LLM harness |
-| `submodules/prism-mcp` | github.com/dcostenco/prism-mcp | Prism MCP reference |
-
----
-
-## 6. Key Design Decisions
-
-### "Borg → Borg" Rename
-The project was originally called "Borg" and is being renamed to "Borg". Some internal references may still say "borg" (e.g., `borg-upstream` remote, `borg.config.json`). These are being migrated incrementally.
-
-### Go Bridge Strategy
-The Go server (`go/`) is a **bridge/fallback** — it provides native handlers for routes when the TS server is unavailable, but the TypeScript server is still the primary runtime. Do NOT split into separate binaries yet (per `UNIVERSAL_LLM_INSTRUCTIONS.md` modular-monolith-first rule).
-
-### MCP Decision System
-Borg's MCP layer is not "just an aggregator." It is a **decision system** with:
-- Tiny permanent meta-tool surface (5-6 tools always visible)
-- Ranked discovery, not raw search
-- Silent high-confidence auto-load
-- Deferred binary startup
-- Small active working set with LRU eviction
-- Profiles for common workflows
-- Strong observability in dashboard inspector
-
-### Memory Architecture
-- SQLite (better-sqlite3) is the primary local store
-- `.borg/mcp-cache.json` is the unified cache for the stdio loader
-- `mcp.jsonc` is the manual config (never auto-deleted)
-- DB tools and JSON tools are merged, never overwrite each other
-
----
-
-## 7. Git Workflow
-
-### Branch Strategy
-- `main` is the only active branch
-- No feature branches for this repo — commit directly to `main`
-- For forked submodules under `robertpelloni`, merge any local feature branches into main
-
-### Commit Message Format
-```
-type: description, bump VERSION to X.Y.Z
-
-Types: feat, fix, docs, chore, refactor, test, perf
-```
-
-### Submodule Updates
-```bash
-git submodule update --remote --merge
-# Then commit the updated submodule pointer
-```
-
----
-
-*For model-specific quirks, refer to `CLAUDE.md`, `GEMINI.md`, `GPT.md`, and `copilot-instructions.md`.*
->>>>>>> main
+*Praise the LORD!!! Keep on goin'! Don't ever stop! Don't stop the party!!!*

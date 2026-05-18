@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"github.com/borghq/borg-go/internal/codeexec"
 	"github.com/borghq/borg-go/internal/memorystore"
+	"github.com/borghq/borg-go/internal/ai"
 	"io"
 	"io/fs"
 	"math"
@@ -111,19 +112,33 @@ type Server struct {
 	directorNotes     *orchestration.DirectorNotesManager
 	expertManager     *hsync.ExpertManager
 	memoryArchiver    *memorystore.MemoryArchiver
+	fleetManager      *orchestration.FleetManagerPlus
+	consensusEngine   *orchestration.ConsensusEngine
+	quotaManager      *providers.QuotaManager
+	modelSelector     *providers.ModelSelector
 
 	// --- New Go-native services (alpha.32+) ---
-	eventBus         *eventbus.EventBus
-	metricsService   *metrics.MetricsService
-	sessionManager   *session.SessionManager
-	toolRegistry     *toolregistry.ToolRegistry
-	gitService       *gitservice.GitService
-	contextHarvester *ctxharvester.ContextHarvester
-	workspaceTracker *workspaces.WorkspaceTracker
-	processManager   *processmanager.ProcessManager
-	healerService    *healer.HealerService
-	cacheService     *cache.Cache
-	repoGraph        *repograph.RepoGraphService
+	eventBus          *eventbus.EventBus
+	metricsService    *metrics.MetricsService
+	sessionManager    *session.SessionManager
+	toolRegistry      *toolregistry.ToolRegistry
+	gitService        *gitservice.GitService
+	contextHarvester  *ctxharvester.ContextHarvester
+	workspaceTracker  *workspaces.WorkspaceTracker
+	processManager    *processmanager.ProcessManager
+	healerService     *healer.HealerService
+	cacheService      *cache.Cache
+	repoGraph         *repograph.RepoGraphService
+}
+
+// eventBusAdapter wraps *eventbus.EventBus so it satisfies the string-based
+// EmitEvent interface expected by the orchestration layer.
+type eventBusAdapter struct {
+	bus *eventbus.EventBus
+}
+
+func (a *eventBusAdapter) EmitEvent(eventType string, source string, payload interface{}) {
+	a.bus.EmitEvent(eventbus.SystemEventType(eventType), source, payload)
 }
 
 type providerFallbackEvent struct {
@@ -446,7 +461,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.skillStore = harnesses.NewSkillStore(cfg.MainConfigDir)
 	server.skillRegistry = skillregistry.NewSkillRegistry()
 	server.skillDecision = skillregistry.NewSkillDecisionSystem(skillregistry.DefaultSkillDecisionConfig(), server.skillRegistry)
-	server.pairOrchestrator = orchestration.NewPairOrchestrator()
+	server.pairOrchestrator = orchestration.NewPairOrchestrator(server.consensusEngine)
 	server.pairOrchestrator.SetupFrontierSquad()
 	server.directorNotes = orchestration.NewDirectorNotesManager()
 	server.expertManager = hsync.NewExpertManager(server.goDirector, server.mcpPredictor)
@@ -470,9 +485,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.coderAgent.Start(context.Background())
 	server.goDirector = orchestration.NewDirector(server.swarmController, server.coderAgent, server.a2aBroker)
 	server.mcpConfig = mcp.NewConfigManager(cfg.MainConfigDir)
-	server.memoryReactor = memorystore.NewMemoryReactor(cfg.WorkspaceRoot)
 	server.highValueIngestor = hsync.NewHighValueIngestor(filepath.Join(cfg.MainConfigDir, "metamcp.db"), server.skillStore, server.mcpConfig)
-	server.memoryArchiver = memorystore.NewMemoryArchiver(cfg.WorkspaceRoot)
 	server.swarmController = orchestration.NewSwarmController(server.a2aBroker)
 	server.mcpPredictor = mcp.NewToolPredictor(server.mcpAggregator)
 	server.supervisorManager.SetPredictor(server.mcpPredictor)
@@ -496,19 +509,30 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 
 	// --- Initialize new Go-native services ---
 	server.eventBus = eventbus.New(1000)
+	memoryVS, _ := memorystore.NewVectorStore(filepath.Join(cfg.ConfigDir, "memory.db"))
+	server.memoryReactor = memorystore.NewMemoryReactor(cfg.WorkspaceRoot, memoryVS)
+	server.memoryArchiver = memorystore.NewMemoryArchiver(cfg.WorkspaceRoot, memoryVS)
+	server.consensusEngine = orchestration.NewConsensusEngine(server.debateHistory, memoryVS)
 	server.eventBus.OnGlobal(func(ev eventbus.SystemEvent) {
 		if data, err := json.Marshal(ev); err == nil {
 			GlobalSSEBroker.Broadcast(data)
 		}
 	})
+	server.a2aBroker.SetEventBus(&eventBusAdapter{server.eventBus})
+	server.pairOrchestrator.SetEventBus(&eventBusAdapter{server.eventBus})
 	server.metricsService = metrics.NewMetricsService()
 	server.sessionManager = session.NewSessionManager(100)
+	server.fleetManager = orchestration.NewFleetManagerPlus(memoryVS, server.eventBus, server.supervisorManager)
+	server.a2aBroker.SetSignalProcessor(server.fleetManager)
+	server.quotaManager = providers.NewQuotaManager()
+	ai.GlobalQuotaTracker = server.quotaManager
+	server.modelSelector = providers.NewModelSelector(server.quotaManager)
 	server.toolRegistry = toolregistry.NewToolRegistry()
 	server.gitService = gitservice.NewGitService(cfg.WorkspaceRoot)
 	server.contextHarvester = ctxharvester.NewContextHarvester(nil)
 	server.workspaceTracker = workspaces.NewWorkspaceTracker("")
 	server.processManager = processmanager.NewProcessManager()
-	server.healerService = healer.NewHealerService(nil, "") // LLM provider wired later
+	server.healerService = healer.NewHealerService(nil, "", nil, memoryVS) // LLM provider wired later
 	server.cacheService = cache.New(cache.CacheOptions{MaxSize: 500, DefaultTTL: 60000})
 	server.repoGraph = repograph.NewRepoGraphService(cfg.WorkspaceRoot)
 
@@ -1197,6 +1221,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/repograph/search", s.handleRepoGraphSearch)
 
 	s.mux.HandleFunc("/api/sse", s.handleSSE)
+	s.mux.HandleFunc("/api/sse/history", s.handleSSEHistory)
 
 	// --- New Go-native handlers (alpha.11+) ---
 	s.registerSavedScriptRoutes()
@@ -2547,25 +2572,43 @@ func (s *Server) handleMCPExportClientConfig(w http.ResponseWriter, r *http.Requ
 
 func (s *Server) handleMCPSyncClientConfig(w http.ResponseWriter, r *http.Request) {
 	s.handleConfiguredServerMutation(w, r, "mcpServers.syncClientConfig", func(payload map[string]any) (any, error) {
-		client, _ := payload["client"].(string)
+		clientStr, _ := payload["client"].(string)
 		overridePath, _ := payload["path"].(string)
-		preview, err := s.localMCPExportClientConfig(client, overridePath)
+
+		servers := s.mcpConfig.GetServers()
+		var targetPath string
+		client := mcp.SupportedClient(clientStr)
+
+		if strings.TrimSpace(overridePath) != "" {
+			targetPath = overridePath
+		} else {
+			homeDir, _ := os.UserHomeDir()
+			appData := os.Getenv("APPDATA")
+			targets := mcp.ResolveClientTargets(homeDir, appData, s.cfg.WorkspaceRoot)
+			for _, t := range targets {
+				if t.Client == client {
+					targetPath = t.Path
+					break
+				}
+			}
+		}
+
+		if strings.TrimSpace(targetPath) == "" {
+			return nil, fmt.Errorf("unable to resolve target path for client: %s", clientStr)
+		}
+
+		res, err := mcp.SyncToClient(client, targetPath, servers)
 		if err != nil {
 			return nil, err
 		}
-		targetPath, _ := preview["targetPath"].(string)
-		jsonText, _ := preview["json"].(string)
-		if strings.TrimSpace(targetPath) == "" {
-			return nil, errors.New("missing client target path")
-		}
-		if err := os.MkdirAll(filepath.Dir(targetPath), 0o755); err != nil {
-			return nil, err
-		}
-		if err := os.WriteFile(targetPath, []byte(jsonText), 0o644); err != nil {
-			return nil, err
-		}
-		preview["written"] = true
-		return preview, nil
+
+		return map[string]any{
+			"client":      string(res.Client),
+			"targetPath":  res.TargetPath,
+			"serverCount": res.ServerCount,
+			"written":     res.Written,
+			"ok":          true,
+		}, nil
 	})
 }
 
@@ -6563,7 +6606,7 @@ func (s *Server) handleSkillsSearch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, fallbackErr := s.skillStore.SearchSkills(query)
+	res, fallbackErr := s.skillDecision.SearchAndLoad(r.Context(), query)
 	if fallbackErr != nil {
 		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": fallbackErr.Error()})
 		return
@@ -17008,87 +17051,74 @@ func nameForSyntheticUUID(servers map[string]any, uuid string) string {
 }
 
 func (s *Server) localMCPSyncTargets() ([]map[string]any, error) {
-	clients := []string{"claude-desktop", "cursor", "vscode"}
-	results := make([]map[string]any, 0, len(clients))
-	for _, client := range clients {
-		path, candidates, exists, err := s.resolveLocalClientConfigTarget(client, "")
-		if err != nil {
-			return nil, err
-		}
+	homeDir, _ := os.UserHomeDir()
+	appData := os.Getenv("APPDATA")
+	targets := mcp.ResolveClientTargets(homeDir, appData, s.cfg.WorkspaceRoot)
+
+	results := make([]map[string]any, 0, len(targets))
+	for _, t := range targets {
 		results = append(results, map[string]any{
-			"client":     client,
-			"path":       path,
-			"candidates": candidates,
-			"exists":     exists,
+			"client":     string(t.Client),
+			"path":       t.Path,
+			"candidates": t.Candidates,
+			"exists":     t.Exists,
 		})
 	}
 	return results, nil
 }
 
 func (s *Server) localMCPExportClientConfig(client string, overridePath string) (map[string]any, error) {
-	servers, err := s.localConfiguredMCPServers()
-	if err != nil {
-		return nil, err
+	servers := s.mcpConfig.GetServers()
+	homeDir, _ := os.UserHomeDir()
+	appData := os.Getenv("APPDATA")
+
+	targets := mcp.ResolveClientTargets(homeDir, appData, s.cfg.WorkspaceRoot)
+	var target *mcp.ResolvedTarget
+	for i := range targets {
+		if string(targets[i].Client) == client {
+			target = &targets[i]
+			break
+		}
 	}
-	targetPath, _, exists, err := s.resolveLocalClientConfigTarget(client, overridePath)
-	if err != nil {
-		return nil, err
+
+	if target == nil {
+		return nil, fmt.Errorf("unsupported client: %s", client)
 	}
-	document := map[string]any{
-		"mcpServers": buildClientConfigMCPServers(servers),
+
+	targetPath := target.Path
+	if strings.TrimSpace(overridePath) != "" {
+		targetPath = overridePath
 	}
+
+	// Use SyncToClient in a dry-run fashion or reconstruct preview
+	// For now, let's keep the preview logic simple but using Go types
+	docServers := make(map[string]any)
+	for name, cfg := range servers {
+		if cfg.Command != "" {
+			def := map[string]any{"command": cfg.Command}
+			if len(cfg.Args) > 0 {
+				def["args"] = cfg.Args
+			}
+			if len(cfg.Env) > 0 {
+				def["env"] = cfg.Env
+			}
+			docServers[name] = def
+		} else if cfg.URL != "" {
+			docServers[name] = map[string]any{"url": cfg.URL}
+		}
+	}
+
+	document := map[string]any{"mcpServers": docServers}
 	jsonText := prettyJSON(document) + "\n"
+
 	return map[string]any{
 		"client":      client,
 		"targetPath":  targetPath,
-		"existed":     exists,
-		"serverCount": len(document["mcpServers"].(map[string]any)),
+		"existed":     target.Exists,
+		"serverCount": len(docServers),
 		"document":    document,
 		"json":        jsonText,
 	}, nil
-}
-
-func (s *Server) resolveLocalClientConfigTarget(client string, overridePath string) (string, []string, bool, error) {
-	candidates := []string{}
-	if strings.TrimSpace(overridePath) != "" {
-		candidates = []string{overridePath}
-	} else {
-		homeDir, err := os.UserHomeDir()
-		if err != nil {
-			return "", nil, false, err
-		}
-		appData := os.Getenv("APPDATA")
-		if appData == "" {
-			appData = filepath.Join(homeDir, "AppData", "Roaming")
-		}
-		switch client {
-		case "claude-desktop":
-			candidates = []string{filepath.Join(appData, "Claude", "claude_desktop_config.json")}
-		case "cursor":
-			candidates = []string{
-				filepath.Join(appData, "Cursor", "User", "globalStorage", "mcp-servers.json"),
-				filepath.Join(appData, "Cursor", "User", "mcp.json"),
-			}
-		case "vscode":
-			candidates = []string{
-				filepath.Join(appData, "Code", "User", "globalStorage", "mcp-servers.json"),
-				filepath.Join(appData, "Code", "User", "settings.json"),
-				filepath.Join(s.cfg.WorkspaceRoot, ".vscode", "mcp.json"),
-			}
-		default:
-			return "", nil, false, errors.New("unsupported client")
-		}
-	}
-
-	for _, candidate := range candidates {
-		if _, err := os.Stat(candidate); err == nil {
-			return candidate, candidates, true, nil
-		}
-	}
-	if len(candidates) == 0 {
-		return "", nil, false, errors.New("no client config candidates")
-	}
-	return candidates[0], candidates, false, nil
 }
 
 func buildClientConfigMCPServers(servers []map[string]any) map[string]any {
@@ -18084,4 +18114,11 @@ func (s *Server) handleRepoGraphSearch(w http.ResponseWriter, r *http.Request) {
 
 	results := s.repoGraph.SearchSymbols(query, limit)
 	writeJSON(w, http.StatusOK, map[string]any{"success": true, "data": results})
+}
+
+func (s *Server) handleFleetStatus(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data":    s.fleetManager.GetFleetStatus(),
+	})
 }
