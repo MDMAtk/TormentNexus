@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"github.com/borghq/borg-go/internal/codeexec"
 	"github.com/borghq/borg-go/internal/memorystore"
+	"github.com/borghq/borg-go/internal/ai"
 	"io"
 	"io/fs"
 	"math"
@@ -111,6 +112,10 @@ type Server struct {
 	directorNotes     *orchestration.DirectorNotesManager
 	expertManager     *hsync.ExpertManager
 	memoryArchiver    *memorystore.MemoryArchiver
+	fleetManager      *orchestration.FleetManagerPlus
+	consensusEngine   *orchestration.ConsensusEngine
+	quotaManager      *providers.QuotaManager
+	modelSelector     *providers.ModelSelector
 
 	// --- New Go-native services (alpha.32+) ---
 	eventBus          *eventbus.EventBus
@@ -124,7 +129,6 @@ type Server struct {
 	healerService     *healer.HealerService
 	cacheService      *cache.Cache
 	repoGraph         *repograph.RepoGraphService
-	consensusEngine   *orchestration.ConsensusEngine
 }
 
 // eventBusAdapter wraps *eventbus.EventBus so it satisfies the string-based
@@ -457,7 +461,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.skillStore = harnesses.NewSkillStore(cfg.MainConfigDir)
 	server.skillRegistry = skillregistry.NewSkillRegistry()
 	server.skillDecision = skillregistry.NewSkillDecisionSystem(skillregistry.DefaultSkillDecisionConfig(), server.skillRegistry)
-	server.pairOrchestrator = orchestration.NewPairOrchestrator()
+	server.pairOrchestrator = orchestration.NewPairOrchestrator(server.consensusEngine)
 	server.pairOrchestrator.SetupFrontierSquad()
 	server.directorNotes = orchestration.NewDirectorNotesManager()
 	server.expertManager = hsync.NewExpertManager(server.goDirector, server.mcpPredictor)
@@ -481,11 +485,8 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.coderAgent.Start(context.Background())
 	server.goDirector = orchestration.NewDirector(server.swarmController, server.coderAgent, server.a2aBroker)
 	server.mcpConfig = mcp.NewConfigManager(cfg.MainConfigDir)
-	server.memoryReactor = memorystore.NewMemoryReactor(cfg.WorkspaceRoot)
 	server.highValueIngestor = hsync.NewHighValueIngestor(filepath.Join(cfg.MainConfigDir, "metamcp.db"), server.skillStore, server.mcpConfig)
-	server.memoryArchiver = memorystore.NewMemoryArchiver(cfg.WorkspaceRoot)
 	server.swarmController = orchestration.NewSwarmController(server.a2aBroker)
-	server.consensusEngine = orchestration.NewConsensusEngine(server.debateHistory)
 	server.mcpPredictor = mcp.NewToolPredictor(server.mcpAggregator)
 	server.supervisorManager.SetPredictor(server.mcpPredictor)
 
@@ -508,6 +509,10 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 
 	// --- Initialize new Go-native services ---
 	server.eventBus = eventbus.New(1000)
+	memoryVS, _ := memorystore.NewVectorStore(filepath.Join(cfg.ConfigDir, "memory.db"))
+	server.memoryReactor = memorystore.NewMemoryReactor(cfg.WorkspaceRoot, memoryVS)
+	server.memoryArchiver = memorystore.NewMemoryArchiver(cfg.WorkspaceRoot, memoryVS)
+	server.consensusEngine = orchestration.NewConsensusEngine(server.debateHistory, memoryVS)
 	server.eventBus.OnGlobal(func(ev eventbus.SystemEvent) {
 		if data, err := json.Marshal(ev); err == nil {
 			GlobalSSEBroker.Broadcast(data)
@@ -517,12 +522,17 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.pairOrchestrator.SetEventBus(&eventBusAdapter{server.eventBus})
 	server.metricsService = metrics.NewMetricsService()
 	server.sessionManager = session.NewSessionManager(100)
+	server.fleetManager = orchestration.NewFleetManagerPlus(memoryVS, server.eventBus, server.supervisorManager)
+	server.a2aBroker.SetSignalProcessor(server.fleetManager)
+	server.quotaManager = providers.NewQuotaManager()
+	ai.GlobalQuotaTracker = server.quotaManager
+	server.modelSelector = providers.NewModelSelector(server.quotaManager)
 	server.toolRegistry = toolregistry.NewToolRegistry()
 	server.gitService = gitservice.NewGitService(cfg.WorkspaceRoot)
 	server.contextHarvester = ctxharvester.NewContextHarvester(nil)
 	server.workspaceTracker = workspaces.NewWorkspaceTracker("")
 	server.processManager = processmanager.NewProcessManager()
-	server.healerService = healer.NewHealerService(nil, "") // LLM provider wired later
+	server.healerService = healer.NewHealerService(nil, "", nil, memoryVS) // LLM provider wired later
 	server.cacheService = cache.New(cache.CacheOptions{MaxSize: 500, DefaultTTL: 60000})
 	server.repoGraph = repograph.NewRepoGraphService(cfg.WorkspaceRoot)
 
@@ -573,8 +583,8 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/memory/add-history", s.handleMemoryAddHistory)
 	s.mux.HandleFunc("/api/code/exec", s.handleCodeExec)
 
-	s.mux.HandleFunc("/health", withCORS(s.handleHealth))
-	s.mux.HandleFunc("/version", withCORS(s.handleVersion))
+	s.mux.HandleFunc("/health", s.handleHealth)
+	s.mux.HandleFunc("/version", s.handleVersion)
 	s.mux.HandleFunc("/api/index", s.handleAPIIndex)
 	s.mux.HandleFunc("/api/health", s.handleHealth)
 	s.mux.HandleFunc("/api/health/server", s.handleHealth)
@@ -1215,21 +1225,6 @@ func (s *Server) registerRoutes() {
 
 	// --- New Go-native handlers (alpha.11+) ---
 	s.registerSavedScriptRoutes()
-}
-
-
-// withCORS wraps a handler to add CORS headers for dashboard-to-sidecar requests.
-func withCORS(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:3000")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-		if r.Method == "OPTIONS" {
-			w.WriteHeader(http.StatusNoContent)
-			return
-		}
-		next.ServeHTTP(w, r)
-	}
 }
 
 func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
@@ -18119,4 +18114,11 @@ func (s *Server) handleRepoGraphSearch(w http.ResponseWriter, r *http.Request) {
 
 	results := s.repoGraph.SearchSymbols(query, limit)
 	writeJSON(w, http.StatusOK, map[string]any{"success": true, "data": results})
+}
+
+func (s *Server) handleFleetStatus(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data":    s.fleetManager.GetFleetStatus(),
+	})
 }

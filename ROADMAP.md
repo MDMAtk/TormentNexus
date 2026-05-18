@@ -1,84 +1,52 @@
-# Roadmap
+# Roadmap: AI Hypervisor (Nexus & HyperCode)
 
-_Last updated: 2026-05-08, version 1.0.0-alpha.53_
+_Last updated: 2026-05-17, version 1.0.0-alpha.61_
 
 ## Status legend
 
-- **Stable** — production-intended, tested, maintained
-- **Beta** — usable, still evolving
-- **Experimental** — active R&D, not dependable
-- **Vision** — directional only
+- **Stable** — Production-intended, tested, maintained
+- **Beta** — Usable, still evolving
+- **Experimental** — Active R&D, not dependable
+- **Vision** — Directional only
 
-## Framing
+## Completed (v1.0.0-alpha.61)
 
-Borg has two jobs at once:
-1. ship a reliable local control plane,
-2. preserve a credible long-term vision for richer AI orchestration.
+### 1. Nexus Kernel: Active Memory Substrate (STABLE)
+- **Biological Tiered Memory**: L1 (Scratchpad), L2 (Vault), L3 (Archive) implementation in Go.
+- **Heat Mechanics**: Implemented utility-based scoring and temporal decay for all memories.
+- **Semantic Search**: Integrated `sqlite-vec` for hyper-fast, local-first context matching.
 
-This roadmap keeps those jobs separate.
+### 2. The Immune System: Autonomous Healing (BETA)
+- **Multi-turn Healer Loop**: Go-native `diagnose -> fix -> verify -> retry` pipeline.
+- **Native Verification**: Integrated `CodeExecutor` to run `tsc`, `vitest`, and `go test` autonomously.
+- **Intelligence Harvesting**: All healing attempts are now persisted to the L2 Vault for fleet-wide learning.
 
-## Completed (v1.0.0-alpha.53)
+### 3. Deep Orchestration & Budget Routing (STABLE)
+- **PairOrchestrator**: Hardened state machine for `Planner -> Implementer -> Tester -> Critic` turn cycles.
+- **Consensus Engine**: Weighted multi-model voting with persistent disagreement logging.
+- **Quota Manager**: Real-time token/credit tracking for budget-aware waterfall routing.
 
-### 1. Stabilize the CLI Control Surface
-- **31 top-level commands**: Full lifecycle management for MCP, Sessions, Providers, Knowledge, Swarm, and Cloud Dev.
-- **Truthful Data APIs**: CLI now queries live tRPC/Go sidecar endpoints.
+### 4. Infrastructure & Parity (STABLE)
+- **Go-Native MCP Sync**: Authority over Claude, Cursor, and VS Code configurations moved to Go Kernel.
+- **Progressive Skill Disclosure**: BM25/Cosine ranking engine for JIT skill loading.
+- **Stream Stabilization**: Exponential backoff and history replay for tRPC subscriptions.
 
-### 2. Autonomy & UI Automation
-- **Resilient Autopilot**: Fixed `alt-enter` / auto-accept regressions for Antigravity surfaces.
-- **Intelligent Bump Cycle**: Autopilot now rotates through encouragement sentences to maintain development loop momentum.
-- **Reduced Focus Stealing**: Optimized UI automation to avoid redundant `SetFocus()` calls.
+## Active Sprint: Phase 5 - Native Integration
 
-### 3. Infrastructure Health & Go Sidecar Parity
-- **Borg Doctor**: 10 automated diagnostic checks.
-- **Go Sidecar Parity**: 543 Go routes active.
-- **Go-native mcp sync**: Migrated config detection/syncing to Go sidecar (Port 4300).
-- **Go-native Skill Disclosure**: Ported LRU/ranking engine to SkillStore.
+### A. Universal Protocol & Attachment (BETA)
+- [ ] Implement `hypercode://` protocol handlers for deep-linking.
+- [ ] Browser Extension: Implement `hypercode-attach` to link web-based AI chats directly to the local Nexus Kernel.
+- [ ] Implement Global Command Hub (Cmd+K) for system-wide HyperCode access.
 
-### 3. Dashboard Observability & Responsiveness
-- **Responsive UI**: Knowledge Graph and Graph Panel refactored with useResizeObserver.
-- **Real-time Swarm Visibility**: SwarmTranscript component wired to hardened tRPC subscription with history replay.
-- **86/86 Pages Bound**: Next.js dashboard fully wired to tRPC.
+### B. UI Consolidation (EXPERIMENTAL)
+- [ ] Port Maestro logic to Wails/Tauri native runtime (replacing Electron).
+- [ ] Implement Intelligence Heatmap visualization for the L2 Vault.
+- [ ] Audit 86 dashboard pages for mobile-responsive styling.
 
-### 4. Continuous Integration & Resilience
-- **73/73 Tests Pass**: Smoke tests and CLI integration verified.
-- **Resilient Sidecar Bridge**: Implemented NativeSidecarDaemon with history-aware event buffering.
-- **Monorepo Version Sync**: Synchronized all 57 package.json files to v1.0.0-alpha.51.
-
-## Next
-
-### A. MCP operator improvements (STABLE)
-- ✅ Tool grouping and ranked search
-- ✅ Progressive tool disclosure
-- ✅ Auto-load with confidence thresholds
-- ✅ Working set with LRU + idle-first eviction
-- ✅ Catalog ingestion (Glama, Smithery, MCP.run, npm)
-- ✅ Supervisor tool prediction — preemptively inject tool ads based on conversation context
-
-### B. Tool parity with CLI harnesses (BETA)
-- ✅ Claude Code parity: Read, Write, Edit, MultiEdit, Bash, Glob, Grep, LS, WebFetch
-- ✅ Codex CLI parity: shell, apply_diff, create_file, view_file, list_directory, search_files
-- ✅ Gemini CLI parity: read_file, write_file, edit_file, list_directory, search
-- ✅ OpenCode/Pi parity: read, write, edit, bash, glob, grep, ls, web_fetch
-- [ ] Harness Parity Expansion (Cursor, Windsurf, Kiro, Goose, Crush, Codebuff)
-
-### C. Dashboard completeness (BETA)
-- ✅ Health page with real server health
-- ✅ Tools/Catalog page with real tool inventory
-- [ ] Mobile-responsive layout audit for all 86 pages
-- [ ] Memory Subsystem Plugin Architecture
-
-### D. Multi-model orchestration (VISION)
-- ✅ Neural Swarm Transcript
-- ✅ Rotating roles (PairOrchestrator)
-- [ ] Council debate and consensus protocols (Full automation with L2 Vault logging)
-- [ ] Intelligent Model Selection (Budget/Quota aware)
-
-## Later
-
-- mobile and desktop companion polish
-- Native UI replacement for Electron (Wails/Tauri)
-- Kernal-level file system watchers (eBPF)
-- Decentralized / P2P Memory Swarm
+### C. Agent Connectivity (VISION)
+- [ ] Implement A2A Mesh for cross-host agent collaboration.
+- [ ] Decentralized / P2P Memory Swarm for fleet-wide intelligence sync without centralized servers.
+- [ ] Context Compression: Native TOON format implementation for context-saving snapshots.
 
 ---
-*Keep the party going. Never stop. The collective grows.*
+*Outstanding! Magnificent! Insanely Great! The collective grows.*
