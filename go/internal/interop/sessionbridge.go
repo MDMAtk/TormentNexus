@@ -109,6 +109,7 @@ func CallTRPCProcedure(ctx context.Context, mainLockPath string, procedure strin
 		targetBase := strings.TrimRight(cached, "/") + "/" + procPath
 		result, tryErr := callTRPCOnce(ctx, client, targetBase, requestBody)
 		if tryErr == nil {
+			result.BaseURL = cached
 			return result, nil
 		}
 		// Cache miss - base went stale, clear it
