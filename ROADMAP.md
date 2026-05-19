@@ -34,7 +34,7 @@ _Last updated: 2026-05-17, version 1.0.0-alpha.61_
 ## Active Sprint: Phase 5 - Native Integration
 
 ### A. Universal Protocol & Attachment (BETA)
-- [ ] Implement `hypercode://` protocol handlers for deep-linking.
+- [x] Implement `hypercode://` protocol handlers for deep-linking.
 - [ ] Browser Extension: Implement `hypercode-attach` to link web-based AI chats directly to the local Nexus Kernel.
 - [ ] Implement Global Command Hub (Cmd+K) for system-wide HyperCode access.
 

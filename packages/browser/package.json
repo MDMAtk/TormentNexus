@@ -1,6 +1,6 @@
 {
   "name": "@borg/browser-legacy",
-  "version": "1.0.0-alpha.61",
+  "version": "1.0.0-alpha.62",
   "scripts": {
     "build": "echo \"stub package\""
   },

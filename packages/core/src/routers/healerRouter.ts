@@ -17,6 +17,20 @@ export const healerRouter = t.router({
     getHistory: t.procedure.query(async () => {
         try { return getHealerService()?.getHistory() ?? []; } catch { return []; }
     }),
+    vaultRecords: publicProcedure.input(z.object({ limit: z.number().optional() })).query(async ({ input }) => {
+        const SIDECAR_URL = process.env.BORG_SIDECAR_URL || 'http://127.0.0.1:4300';
+        try {
+            const limit = input?.limit || 50;
+            const res = await fetch(`${SIDECAR_URL}/api/native/healer/vault?limit=${limit}`);
+            if (res.ok) {
+                const json = await res.json();
+                return json.records || [];
+            }
+        } catch (e) {
+            console.warn('[healerRouter] Failed to fetch vault records from sidecar:', e);
+        }
+        return [];
+    }),
     subscribe: publicProcedure.subscription(() => {
         return observable<unknown>((emit) => {
             const onHeal = (data: unknown) => {

@@ -1,107 +1,79 @@
-<<<<<<< HEAD
-# Gemini-Specific Instructions
+# Gemini Guidelines & Specialist Protocols
 
 > **CRITICAL MANDATE: READ `docs/UNIVERSAL_LLM_INSTRUCTIONS.md` FIRST.**
 > This file contains only Gemini-specific overrides.
 
-## Role
+---
 
-Gemini is the **architect and analyst**.
+## 1. Dual Specialist Roles
 
-Best suited for:
-- large-scale repository analysis
-- cross-file and cross-submodule reasoning
-- broad documentation or consistency audits
-- failure triage across many related surfaces
+As Gemini, you act in a dual capacity depending on the scale and nature of the task:
 
-## Strengths
+### Architect & Analyst (High-Level Reasoning)
+- **Large-Context Analysis**: Retain and reasoning over hundreds of files in view at once.
+- **Pattern Recognition**: Identify configuration drift, code duplication, and modular boundaries.
+- **Failure Triage**: Deep auditing of multi-process systems to isolate root causes without speculative expansions.
 
-- **Large-context analysis** — hold many related files in view at once.
-- **Fast parallel inspection** — gather context across the workspace efficiently.
-- **Pattern recognition** — identify drift, duplication, and architectural inconsistencies.
+### Speed & Scale Specialist (Bulk Execution)
+- **Bulk Operations**: Perform recursive scripts, wide refactoring, and submodule synchronization.
+- **Go Porting & Parity**: Port legacy TypeScript handler interfaces to efficient, native Go structures.
 
-## Working style
+---
 
-- Prefer deep audits before proposing structural changes.
-- Use parallel read-only investigation when safe.
-- Distinguish clearly between current state, likely cause, and recommended next step.
-- Avoid turning analysis into speculative expansion.
+## 2. Session Protocol
 
-## Notes
+### Session Start
+1. Read `VERSION` file — verify it matches `package.json` and dashboard display.
+2. Read `HANDOFF.md` — pick up exactly where the previous agent left off.
+3. Read `MEMORY.md` — learn from accumulated observations.
+4. Run environment checks: verify a clean state on `main`.
 
-- Production-style build checks often catch issues that dev flows miss.
-- Keep conclusions grounded in code and docs that actually exist.
+### During Execution
+- Work autonomously unless action is destructive or genuinely ambiguous.
+- Prefer small, verifiable changes over broad rewrites.
+- Keep status labels and documentation honest.
+- After any `pnpm install`, run `pnpm rebuild better-sqlite3` on Node 24.
 
-## Binary-topology context
+### Session End
+1. Update `HANDOFF.md` with complete session summary.
+2. Update `MEMORY.md` with new observations.
+3. Bump `VERSION` file and sync all `package.json` files.
+4. Update `CHANGELOG.md` with what changed.
+5. Commit with version number in message: `feat: description (v1.0.0-alpha.X)`.
+6. Push to both remotes: `origin` and `borg-upstream`.
+7. Update `TODO.md` and `ROADMAP.md` if priorities changed.
 
-When analyzing future architecture, use this recommended target layout:
+---
 
-- `borg` / `borgd` for the core control plane
-- `hypermcpd` plus `hypermcp-indexer` for MCP routing and metadata work
-- `hypermemd` plus `hyperingest` for memory/session/resource/background ingestion
-- `hyperharness` / `hyperharnessd` for harness execution surfaces
-- `borg-web` and `borg-native` as client applications
+## 3. Binary-Topology Layout Context
 
-Use these ownership assumptions during analysis:
+When analyzing future system architectures, adhere to this recommended target layout:
 
-- `borgd` owns orchestration and operator-facing state
-- `hypermcpd` owns MCP lifecycle, routing, and inventory exposure
-- `hypermcp-indexer` owns scrape/probe/cache refresh jobs
-- `hypermemd` owns memory/session/resource persistence and serving
-- `hyperingest` owns imports, discovery, and normalization pipelines
-- `hyperharnessd` owns execution-loop runtime isolation
-- client apps should stay clients unless runtime evidence proves a boundary should move
+- `borg` / `borgd` for the core control plane.
+- `hypermcpd` plus `hypermcp-indexer` for MCP routing and metadata work.
+- `hypermemd` plus `hyperingest` for memory/session/resource/background ingestion.
+- `hyperharness` / `hyperharnessd` for harness execution surfaces.
+- `borg-web` and `borg-native` as client applications.
 
-Gemini should bias toward:
+### Ownership Assumptions
+- `borgd` owns orchestration and operator-facing state.
+- `hypermcpd` owns MCP lifecycle, routing, and inventory exposure.
+- `hypermcp-indexer` owns scrape/probe/cache refresh jobs.
+- `hypermemd` owns memory/session/resource persistence and serving.
+- `hyperingest` owns imports, discovery, and normalization pipelines.
+- `hyperharnessd` owns execution-loop runtime isolation.
+- Client apps stay clients unless runtime evidence proves a boundary should move.
 
-- validating whether a proposed binary boundary has a real ownership/lifecycle reason
-- identifying which packages are stable enough to extract cleanly
-- distinguishing modular-monolith package seams from true process seams
-- avoiding “split everything” recommendations unless the deployment/runtime evidence clearly supports it
-=======
-# Gemini Instructions
+---
 
-> **CRITICAL**: Read `docs/UNIVERSAL_LLM_INSTRUCTIONS.md` first. It contains the mandatory rules for all AI agents working on borg.
+## 4. Go Porting Guidelines
 
-## Gemini-Specific Directives
+- Follow `PORTING_MAP.md` for which handlers to port next.
+- Go handlers must act as truthful fallbacks reading real SQLite data. Never mock state.
+- **Pattern**: Try upstream TS server first, fall back to native Go state.
 
-### 1. Role Context
-You are Gemini, the **speed and scale** specialist for Borg. Your primary strengths are:
-- Massive context window — analyze entire codebases at once
-- Speed — rapid implementation of well-defined features
-- Recursive scripts — bulk refactoring, automation, repo maintenance
-- Python pipelines — data processing, bookmark ingestion, catalog management
-
-### 2. Session Workflow
-1. Read `VERSION`, `HANDOFF.md`, `MEMORY.md`, `TODO.md`
-2. Focus on bulk tasks: porting handlers to Go, updating submodules, bulk refactoring
-3. Use your context window to find cross-file regressions and inconsistencies
-4. Bump version, commit, push after each major change
-5. Update handoff with detailed breadcrumbs about what files were touched
-
-### 3. Strengths to Leverage
-- **Cross-file analysis**: Trace execution paths end-to-end across Go ↔ TypeScript boundaries
-- **Bulk operations**: Rename variables, update imports, refactor patterns across hundreds of files
-- **Submodule management**: Update all submodules, merge upstream changes, resolve conflicts
-- **Documentation**: Generate comprehensive documentation from code analysis
-
-### 4. Go Porting Guidelines
-- Follow `PORTING_MAP.md` for which handlers to port next
-- Go handlers should be truthful fallbacks — they read real SQLite data
-- Never pretend Go owns state it doesn't
-- Pattern: try upstream TS server first, fall back to native Go state
-
-### 5. Build Verification
+### Build Verification
 ```bash
 cd go && go build -buildvcs=false ./cmd/borg
 cd .. && pnpm -C packages/core exec tsc --noEmit
 ```
-
-### 6. Synergy
-- Use `HANDOFF.md` to communicate broad architectural discoveries to Claude and GPT
-- Leave clear breadcrumbs about what dependencies or edge files were touched during bulk operations
-- If you find architectural issues during bulk analysis, document them in `MEMORY.md`
-- If you notice UI inconsistencies, flag them for Claude
-
-*Keep this file scoped strictly to Gemini-specific heuristics. Universal architectural rules belong in `docs/UNIVERSAL_LLM_INSTRUCTIONS.md`.*
->>>>>>> main

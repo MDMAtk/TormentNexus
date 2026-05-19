@@ -32,3 +32,7 @@ func (r *MemoryReactor) startDecayLoop() {
 func (r *MemoryReactor) HandleFileChange(ctx context.Context, path string, content string) error {
 	return nil
 }
+
+func (r *MemoryReactor) VectorStore() *VectorStore {
+	return r.vectorStore
+}
