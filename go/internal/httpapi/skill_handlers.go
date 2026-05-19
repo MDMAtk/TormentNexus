@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
-
-	"github.com/borghq/borg-go/internal/skillregistry"
 )
 
 func (s *Server) handleSkillList(w http.ResponseWriter, r *http.Request) {
@@ -162,20 +160,19 @@ func (s *Server) handleSkillListLoaded(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (s *Server) handleSkillSetProfile(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
-		return
+func (s *Server) handleSkillSummary(w http.ResponseWriter, r *http.Request) {
+	skills := s.skillRegistry.List()
+	summary := make([]SkillSummary, len(skills))
+	for i, sk := range skills {
+		summary[i] = SkillSummary{
+			ID:     sk.ID,
+			Name:   sk.Name,
+			Folder: sk.Category,
+		}
 	}
 
-	var req struct {
-		Profile string `json:"profile"`
-	}
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON"})
-		return
-	}
-
-	s.skillDecision.SetProfile(skillregistry.SkillProfile(req.Profile))
-	writeJSON(w, http.StatusOK, map[string]any{"success": true, "profile": req.Profile})
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data":    summary,
+	})
 }
