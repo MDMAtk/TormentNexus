@@ -72,7 +72,7 @@ func runServe(args []string) int {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
-	detector := controlplane.NewDetector(1500*time.Millisecond, 5*time.Minute)
+	detector := controlplane.NewDetector(1500*time.Millisecond, 30*time.Minute)
 	server := httpapi.New(cfg, detector)
 
 	// Pre-warm caches in the background
