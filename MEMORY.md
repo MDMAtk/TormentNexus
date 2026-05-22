@@ -295,3 +295,13 @@
 **Resolution**: Added environment variable scanning as fallback when no providers are explicitly configured. Shows provider name, "● Available" status, and the env var source.
 **Implication**: Users see their available providers immediately without explicit configuration.
 Learned that script-based code updates (via heredocs or python strings) can inadvertently double-escape fmt.Sprintf tokens (%%s) in Go source code. Always perform a manual truth-pass or automated sed correction after bulk file writes. Also established the pattern of using the controlplane.MemoryVault interface to decouple kernel services from the SQLite/sqlite-vec persistence implementation.
+
+### 45. Healer History and Vault Count Bridge (Added 2026-05-21)
+Observation: The dashboard was showing 0 active pathogens and misleading vault record counts because the tRPC router was only querying the TypeScript HealerService, while the actual healing logic had been moved to Go.
+Resolution: Bridged `trpc.healer.getHistory` to the Go sidecar's `/api/native/healer/history`. Added `GetVaultCount` to the Go native `VectorStore` and updated `trpc.healer.vaultRecords` to return a `totalCount` property. Updated the Home and Healer dashboard views to use these new truthful metrics.
+Implication: The 'Immune System' status card now accurately reflects the real-time state and historical record of the Go-native healer.
+
+### 45. Healer History and Vault Count Bridge (Added 2026-05-21)
+Observation: The dashboard was showing 0 active pathogens and misleading vault record counts because the tRPC router was only querying the TypeScript HealerService, while the actual healing logic had been moved to Go.
+Resolution: Bridged `trpc.healer.getHistory` to the Go sidecar's `/api/native/healer/history`. Added `GetVaultCount` to the Go native `VectorStore` and updated `trpc.healer.vaultRecords` to return a `totalCount` property. Updated the Home and Healer dashboard views to use these new truthful metrics.
+Implication: The 'Immune System' status card now accurately reflects the real-time state and historical record of the Go-native healer.

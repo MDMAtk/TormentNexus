@@ -594,9 +594,12 @@ func (s *Server) handleNativeHealerVault(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	totalCount, _ := s.memoryReactor.VectorStore().GetVaultCount(r.Context())
+
 	writeJSON(w, http.StatusOK, map[string]interface{}{
-		"count":   len(records),
-		"records": records,
+		"count":      len(records),
+		"totalCount": totalCount,
+		"records":    records,
 	})
 }
 

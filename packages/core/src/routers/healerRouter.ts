@@ -14,6 +14,19 @@ export const healerRouter = t.router({
         return { success };
     }),
     getHistory: t.procedure.query(async () => {
+        const SIDECAR_URL = process.env.BORG_SIDECAR_URL || 'http://127.0.0.1:4300';
+        try {
+            const res = await fetch(`${SIDECAR_URL}/api/native/healer/history`);
+            if (res.ok) {
+                const json = await res.json();
+                if (json.history) {
+                    return json.history;
+                }
+            }
+        } catch (e) {
+            console.warn('[healerRouter] Failed to fetch healer history from sidecar, trying fallback:', e);
+        }
+
         try { return getHealerService()?.getHistory() ?? []; } catch { return []; }
     }),
     vaultRecords: publicProcedure.input(z.object({ limit: z.number().optional() }).optional()).query(async ({ input }) => {
@@ -23,22 +36,23 @@ export const healerRouter = t.router({
             const res = await fetch(`${SIDECAR_URL}/api/native/healer/vault?limit=${limit}`);
             if (res.ok) {
                 const json = await res.json();
-                if (json.records && json.records.length > 0) {
-                    return json.records;
-                }
+                return {
+                    records: json.records || [],
+                    totalCount: json.totalCount || (json.records ? json.records.length : 0)
+                };
             }
         } catch (e) {
             console.warn('[healerRouter] Failed to fetch vault records from sidecar, trying fallback:', e);
         }
 
         try {
-            // Fallback for getting records if go backend isn't mapped
             const service = getHealerService() as any;
             if (service && typeof service.getVaultRecords === 'function') {
-                return service.getVaultRecords();
+                const records = await service.getVaultRecords();
+                return { records, totalCount: records.length };
             }
         } catch { }
-        return [];
+        return { records: [], totalCount: 0 };
     }),
     subscribe: publicProcedure.subscription(() => {
         return observable<unknown>((emit) => {

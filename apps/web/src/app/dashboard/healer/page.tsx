@@ -23,10 +23,12 @@ export default function HealerDashboard() {
     const [limit, setLimit] = useState(30);
 
     // Fetch persistent L2 Vault records via tRPC
-    const { data: vaultRecords, isLoading: isVaultLoading, refetch: refetchVault } = trpc.healer.vaultRecords.useQuery(
+    const { data: vaultData, isLoading: isVaultLoading, refetch: refetchVault } = trpc.healer.vaultRecords.useQuery(
         { limit },
         { refetchInterval: 5000 } // Keep in sync every 5s
     );
+    const vaultRecords = vaultData?.records;
+    const totalVaultCount = vaultData?.totalCount ?? 0;
 
     // Derive active streams
     const history = events || [];
@@ -107,7 +109,7 @@ export default function HealerDashboard() {
                 <div className="bg-gray-900/60 backdrop-blur-md border border-gray-800 rounded-xl p-5 hover:border-gray-700 transition-all flex items-center justify-between">
                     <div>
                         <div className="text-xs text-gray-400 uppercase tracking-wider">Vault Records</div>
-                        <div className="text-3xl font-black text-blue-400 mt-1">{normalizedVault.length}</div>
+                        <div className="text-3xl font-black text-blue-400 mt-1">{totalVaultCount}</div>
                     </div>
                     <div className="p-3 bg-blue-500/10 rounded-lg text-blue-400 border border-blue-500/20">
                         <Database className="w-5 h-5" />
@@ -202,7 +204,7 @@ export default function HealerDashboard() {
                     <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
                         <h2 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
                             <Layers className="w-4 h-4 text-blue-400" />
-                            SQLite L2 Vector Vault ({normalizedVault.length})
+                            SQLite L2 Vector Vault ({totalVaultCount})
                         </h2>
                         <select 
                             value={limit} 

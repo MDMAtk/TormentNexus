@@ -407,16 +407,7 @@ function spawnTurboDev() {
     'dev',
     '--concurrency',
     '22',
-    '--filter=!mcp-superassistant',
-    '--filter=!@extension/hmr',
-    '--filter=!opencode-autopilot',
     '--filter=!@borg/cli',
-    '--filter=!@opencode-autopilot/cli',
-    '--filter=!@opencode-autopilot/server',
-    '--filter=!@opencode-autopilot/shared',
-    '--filter=!backend',
-    '--filter=!frontend',
-    '--filter=!@repo/*',
   ];
   const args = process.platform === 'win32'
     ? ['/d', '/s', '/c', 'pnpm', ...turboArgs]

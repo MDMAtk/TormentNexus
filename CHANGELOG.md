@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.0.0-alpha.63 (2026-05-21)
+
+### Features
+- **Dashboard Truth Pass**: Bridged Healer history to Go sidecar for real-time telemetry.
+- **Enhanced Vault Telemetry**: Added total record count to L2 Vault visualization.
+- **Go Kernel**: Implemented `GetVaultCount` in `VectorStore` to support dashboard metrics.
+
+### Fixes
+- Fixed misleading "Vault records" count on dashboard which previously only reflected the requested limit.
+- Fixed empty "Immune System" card when TypeScript healer was inactive but Go kernel was healing.
+
+
+## 1.0.0-alpha.63 (2026-05-21)
+
+### Features
+- **Dashboard Truth Pass**: Bridged Healer history to Go sidecar for real-time telemetry.
+- **Enhanced Vault Telemetry**: Added total record count to L2 Vault visualization.
+- **Go Kernel**: Implemented `GetVaultCount` in `VectorStore` to support dashboard metrics.
+
+### Fixes
+- Fixed misleading "Vault records" count on dashboard which previously only reflected the requested limit.
+- Fixed empty "Immune System" card when TypeScript healer was inactive but Go kernel was healing.
+
+
 ## [1.0.0-alpha.62] - 2026-05-19
 
 ### Added

@@ -240,7 +240,8 @@ export function DashboardHomeClient() {
   // ── Healer Status: derived from healer history and vault queries ──
   const healerStatus = useMemo<DashboardHealerSummary>(() => {
     const history = (healerHistoryQuery.data ?? []) as any[];
-    const vaultRecords = healerVaultQuery.data as any[] | undefined;
+    const vaultData = healerVaultQuery.data as { records: any[], totalCount: number } | undefined;
+    const vaultRecords = vaultData?.records;
     const activePathogens = history.filter((e: any) => !e.success).length;
     const resolvedCount = history.filter((e: any) => e.success).length;
     const total = activePathogens + resolvedCount;
@@ -249,7 +250,7 @@ export function DashboardHomeClient() {
     const lastHealTime = lastSuccess.length > 0
       ? new Date(lastSuccess[lastSuccess.length - 1]?.timestamp).toLocaleString()
       : null;
-    const vaultRecordCount = Array.isArray(vaultRecords) ? vaultRecords.length : 0;
+    const vaultRecordCount = vaultData?.totalCount ?? 0;
     const isLive = healerHistoryQuery.isSuccess || healerVaultQuery.isSuccess;
     return {
       activePathogens,
