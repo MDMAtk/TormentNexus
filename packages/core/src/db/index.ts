@@ -479,11 +479,17 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
             CREATE TABLE IF NOT EXISTS links_backlog (
                 uuid TEXT PRIMARY KEY,
                 url TEXT NOT NULL,
-                normalized_url TEXT NOT NULL,
-                source TEXT NOT NULL DEFAULT 'unknown',
+                normalized_url TEXT NOT NULL UNIQUE,
                 title TEXT,
                 description TEXT,
+                tags TEXT NOT NULL DEFAULT '[]',
+                source TEXT NOT NULL DEFAULT 'manual',
+                is_duplicate INTEGER NOT NULL DEFAULT 0,
+                duplicate_of TEXT,
                 research_status TEXT NOT NULL DEFAULT 'pending',
+                http_status INTEGER,
+                page_title TEXT,
+                page_description TEXT,
                 discovered_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
                 last_attempted_at INTEGER,
                 completed_at INTEGER,
@@ -500,6 +506,30 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
     } catch (err) {
         console.warn("[DB Migration] Failed to create missing tables:", err);
     }
+    // Add missing columns to links_backlog
+    try {
+        const lbCols = database.pragma("table_info(links_backlog)") as Array<{ name: string }>;
+        const lbExisting = new Set(lbCols.map((col) => col.name));
+        const lbMigrations: Array<[string, string]> = [
+            ["tags", "ALTER TABLE links_backlog ADD COLUMN tags TEXT NOT NULL DEFAULT '[]';"],
+            ["is_duplicate", "ALTER TABLE links_backlog ADD COLUMN is_duplicate INTEGER NOT NULL DEFAULT 0;"],
+            ["duplicate_of", "ALTER TABLE links_backlog ADD COLUMN duplicate_of TEXT;"],
+            ["http_status", "ALTER TABLE links_backlog ADD COLUMN http_status INTEGER;"],
+            ["page_title", "ALTER TABLE links_backlog ADD COLUMN page_title TEXT;"],
+            ["page_description", "ALTER TABLE links_backlog ADD COLUMN page_description TEXT;"],
+        ];
+        for (const [colName, sql] of lbMigrations) {
+            if (!lbExisting.has(colName)) {
+                database.exec(sql);
+            }
+        }
+        if (lbMigrations.some(([colName]) => !lbExisting.has(colName))) {
+            console.info("[DB Migration] Added missing columns to links_backlog table.");
+        }
+    } catch (err) {
+        console.warn("[DB Migration] Failed to alter links_backlog table:", err);
+    }
+
     // Add source_published_server_uuid column to mcp_servers if missing
     try {
         const tableInfo = database.pragma("table_info(mcp_servers)") as Array<{ name: string }>;
