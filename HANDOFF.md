@@ -1,27 +1,29 @@
-# Handoff - v1.0.0-alpha.62
+# Handoff - v1.0.0-alpha.63
 
 ## Summary
-Performed a project state audit and completed the protocol scaffolding implementation for the `hypercode://` handler in the Go kernel.
+Completed the **Dashboard Truth Pass** and **L2 Vault Visualization** by bridging the TypeScript control plane to the Go-native Healer Service and L2 Vault. The dashboard now reflects the absolute ground truth from the Go kernel's "Immune System".
 
 ## Accomplishments
-- **Project Rebranding (hypercode)**: 
-    - Successfully transformed 'borg', 'nexus', 'hypervisor', and 'aios' into 'hypercode' across the entire codebase (content, package names, Go module, and filenames).
-    - Rebranded 'borg' and 'borg' to 'borg' as per instructions, establishing 'borg' as the new name for the MCP registry and memory adapters.
-    - Merged `origin/jules` and `origin/nexus` branches.
-    - Consolidated `apps/borg-extension` into `apps/hypercode-extension`.
-    - Merged `.borg` hidden directory into `.hypercode`.
-    - Updated `packages/core` database default to `borg.db`.
-- **MCP Server & Stability**:
-    - Resolved a critical "Table already exists" race condition in `LanceDBStore` using a global initialization lock.
-    - Implemented multi-layered deduplication (Metadata + SHA-256) in `SessionImportService` to skip unchanged files and filter noise.
-    - Verified MCP aggregation of over 1,300 tools across 135 servers.
-- **Dashboard**: 
-    - Resolved a port conflict (moved to 3010) and verified the UI is responsive and correctly rebranded.
-    - Completed a full workspace build to ensure binary/compiled consistency.
+- **Go Healer Service Bridging**:
+    - Implemented `handleNativeHealerHeal` in the Go sidecar to support manual heal triggers.
+    - Added `GetVaultRecordCount` to the Go VectorStore to provide total record metrics.
+    - Updated `handleNativeHealerVault` to return both record slices and total counts.
+- **TS Router Refactoring**:
+    - Re-wired `healerRouter.ts` to fetch history, diagnoses, and vault records directly from the Go kernel via the sidecar API.
+    - Implemented snake_case to PascalCase mapping for Go-native vault records to ensure UI compatibility.
+    - Added `vaultRecordCount` query to support accurate metric cards in the Healer dashboard.
+- **Dashboard Synchronization**:
+    - Updated `DashboardHomeClient.tsx` to use the new `vaultRecordCount` and history queries.
+    - Verified that the "Immune System" card and Healer page now show real-time data from the Go kernel.
+- **Version Synchronization**:
+    - Bumped monorepo version to `1.0.0-alpha.63` across all `package.json` files and the `VERSION` file.
 
-## Blockers / Issues
-- The `hypercode-extension` build still fails due to Vite/esbuild resolution issues (pre-existing).
+## Current State
+- **Ground Truth**: The Go kernel is now the primary source of truth for the Immune System (Healer Service).
+- **Persistent Memory**: L2 Vault records from the Go SQLite/sqlite-vec store are successfully visualized in the Next.js frontend.
+- **Health**: The `HealerService` in Go is active and accessible via the sidecar bridge.
 
 ## Next Steps
-- Perform the **Dashboard Truth Pass**: Verify that the "Immune System" status card in the dashboard shows real-time data from the Go `HealerService`.
-- Wire the `vaultRecords` query to the Next.js frontend to show persistent heal history (L2 Vault Visualization).
+- **Autonomous Healing Verification**: Trigger a real failure (e.g., a lint error in a non-critical file) and monitor the Go `HealerService` as it performs the `diagnose -> fix -> verify` loop.
+- **L2 Heat Visualization**: Implement the 3D heatmap for vault records using the heat_score and importance metrics (P2 task).
+- **Consensus Loop**: Integrate the `HealerService` results into the multi-agent consensus loop to allow the swarm to "agree" on fixes.

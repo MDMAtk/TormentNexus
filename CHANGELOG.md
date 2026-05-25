@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0-alpha.63] - 2026-05-25
+
+### Added
+- **Native Healer & L2 Vault Bridging**:
+  - Implemented Go-native endpoints for `heal` and `vault/count` in the sidecar server.
+  - Re-wired the TypeScript `healerRouter` to delegate all health and history queries to the Go kernel.
+  - Unified the "Immune System" dashboard metrics with the Go `HealerService` state.
+- **Ground Truth Mapping**:
+  - Established field mapping (snake_case to PascalCase) for native records to ensure seamless UI integration without modifying the Go kernel's idiomatic output.
+
+### Changed
+- Updated all monorepo packages to version `1.0.0-alpha.63`.
+- Improved accuracy of the Healer Vault counters by implementing total count queries in the SQLite backend.
+
 ## [1.0.0-alpha.62] - 2026-05-19
 
 ### Added
