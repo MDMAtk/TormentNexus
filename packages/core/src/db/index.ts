@@ -434,6 +434,83 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
     } catch (err) {
         console.warn("[DB Migration] Failed to alter tools table:", err);
     }
+    // Add missing tables for hypercode-schema
+    try {
+        database.exec(`
+            CREATE TABLE IF NOT EXISTS workspace_secrets (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL,
+                created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+                updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+            );
+            CREATE TABLE IF NOT EXISTS published_mcp_servers (
+                uuid TEXT PRIMARY KEY,
+                canonical_id TEXT NOT NULL UNIQUE,
+                display_name TEXT NOT NULL,
+                description TEXT,
+                author TEXT,
+                repository_url TEXT,
+                homepage_url TEXT,
+                icon_url TEXT,
+                transport TEXT NOT NULL DEFAULT 'unknown',
+                install_method TEXT NOT NULL DEFAULT 'unknown',
+                auth_model TEXT NOT NULL DEFAULT 'unknown',
+                status TEXT NOT NULL DEFAULT 'discovered',
+                confidence INTEGER NOT NULL DEFAULT 0,
+                tags TEXT NOT NULL DEFAULT '[]',
+                categories TEXT NOT NULL DEFAULT '[]',
+                stars INTEGER,
+                last_seen_at INTEGER,
+                last_verified_at INTEGER,
+                created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+                updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+            );
+            CREATE TABLE IF NOT EXISTS council_debates (
+                uuid TEXT PRIMARY KEY,
+                session_id TEXT NOT NULL,
+                topic TEXT NOT NULL,
+                participants TEXT NOT NULL DEFAULT '[]',
+                rounds TEXT NOT NULL DEFAULT '[]',
+                consensus TEXT,
+                status TEXT NOT NULL DEFAULT 'pending',
+                created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+                updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+            );
+            CREATE TABLE IF NOT EXISTS links_backlog (
+                uuid TEXT PRIMARY KEY,
+                url TEXT NOT NULL,
+                normalized_url TEXT NOT NULL,
+                source TEXT NOT NULL DEFAULT 'unknown',
+                title TEXT,
+                description TEXT,
+                research_status TEXT NOT NULL DEFAULT 'pending',
+                discovered_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+                last_attempted_at INTEGER,
+                completed_at INTEGER,
+                error_message TEXT,
+                metadata TEXT NOT NULL DEFAULT '{}'
+            );
+            CREATE INDEX IF NOT EXISTS published_mcp_servers_canonical_id_idx ON published_mcp_servers(canonical_id);
+            CREATE INDEX IF NOT EXISTS council_debates_session_id_idx ON council_debates(session_id);
+            CREATE INDEX IF NOT EXISTS links_backlog_normalized_url_idx ON links_backlog(normalized_url);
+            CREATE INDEX IF NOT EXISTS links_backlog_source_idx ON links_backlog(source);
+            CREATE INDEX IF NOT EXISTS links_backlog_research_status_idx ON links_backlog(research_status);
+        `);
+        console.info("[DB Migration] Added missing tables: workspace_secrets, published_mcp_servers, council_debates, links_backlog");
+    } catch (err) {
+        console.warn("[DB Migration] Failed to create missing tables:", err);
+    }
+    // Add source_published_server_uuid column to mcp_servers if missing
+    try {
+        const tableInfo = database.pragma("table_info(mcp_servers)") as Array<{ name: string }>;
+        const hasSourcePublishedServerUuid = tableInfo.some((col) => col.name === "source_published_server_uuid");
+        if (!hasSourcePublishedServerUuid) {
+            database.exec(`ALTER TABLE mcp_servers ADD COLUMN source_published_server_uuid TEXT;`);
+            console.info("[DB Migration] Added 'source_published_server_uuid' column to mcp_servers table.");
+        }
+    } catch (err) {
+        console.warn("[DB Migration] Failed to alter mcp_servers table:", err);
+    }
 }
 
 // Default to SQLite local file
