@@ -524,6 +524,7 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
         ["import_session_id", "ALTER TABLE links_backlog ADD COLUMN import_session_id INTEGER;"],
         ["raw_payload", "ALTER TABLE links_backlog ADD COLUMN raw_payload TEXT;"],
         ["synced_at", "ALTER TABLE links_backlog ADD COLUMN synced_at INTEGER;"],
+        ["created_at", "ALTER TABLE links_backlog ADD COLUMN created_at INTEGER;"],
         ];
         for (const [colName, sql] of lbMigrations) {
             if (!lbExisting.has(colName)) {
