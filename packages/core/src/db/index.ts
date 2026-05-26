@@ -517,6 +517,13 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
             ["http_status", "ALTER TABLE links_backlog ADD COLUMN http_status INTEGER;"],
             ["page_title", "ALTER TABLE links_backlog ADD COLUMN page_title TEXT;"],
             ["page_description", "ALTER TABLE links_backlog ADD COLUMN page_description TEXT;"],
+        ["favicon_url", "ALTER TABLE links_backlog ADD COLUMN favicon_url TEXT;"],
+        ["researched_at", "ALTER TABLE links_backlog ADD COLUMN researched_at INTEGER;"],
+        ["cluster_id", "ALTER TABLE links_backlog ADD COLUMN cluster_id TEXT;"],
+        ["bobbybookmarks_bookmark_id", "ALTER TABLE links_backlog ADD COLUMN bobbybookmarks_bookmark_id INTEGER;"],
+        ["import_session_id", "ALTER TABLE links_backlog ADD COLUMN import_session_id INTEGER;"],
+        ["raw_payload", "ALTER TABLE links_backlog ADD COLUMN raw_payload TEXT;"],
+        ["synced_at", "ALTER TABLE links_backlog ADD COLUMN synced_at INTEGER;"],
         ];
         for (const [colName, sql] of lbMigrations) {
             if (!lbExisting.has(colName)) {
@@ -528,6 +535,18 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
         }
     } catch (err) {
         console.warn("[DB Migration] Failed to alter links_backlog table:", err);
+    }
+
+    // Add favicon_url column to published_mcp_servers if missing
+    try {
+        const pmsCols = database.pragma("table_info(published_mcp_servers)") as Array<{ name: string }>;
+        const hasFaviconUrl = pmsCols.some((col) => col.name === "favicon_url");
+        if (!hasFaviconUrl) {
+            database.exec(`ALTER TABLE published_mcp_servers ADD COLUMN favicon_url TEXT;`);
+            console.info("[DB Migration] Added 'favicon_url' column to published_mcp_servers table.");
+        }
+    } catch (err) {
+        console.warn("[DB Migration] Failed to alter published_mcp_servers table:", err);
     }
 
     // Add source_published_server_uuid column to mcp_servers if missing
