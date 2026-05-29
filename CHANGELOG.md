@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0-alpha.74] - 2026-05-29
+
+### Added
+- **Deep MCP.directory Scraping (28,534 unique servers)**:
+  - Extracted 1,797 server profiles directly from `mcp.directory` using high-performance concurrent crawler.
+  - Successfully harvested descriptions, categorizations, website links, exact package identifiers (NPM, PyPI, Docker), and precise JSON launch configurations.
+  - Added **502 new unique MCP servers** and updated **1,295 existing profiles** with high-fidelity metadata.
+  - Finalized registry: **28,534 unique MCP servers** in `borg.db`.
+
 ## [1.0.0-alpha.73] - 2026-05-29
 
 ### Added
