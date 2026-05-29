@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.0-alpha.69] - 2026-05-29
+
+### Added
+- **Online Registry Scraper (Awesome MCP Servers)**:
+  - Fetched and scraped active repositories listed in three popular awesome-mcp-servers lists on GitHub.
+  - Ingested **1,996 net-new MCP servers** and prunes/consolidated **629 existing servers** in `published_mcp_servers` inside `borg.db`.
+  - Generated dynamic configuration recipes for all newly scraped servers.
+
 ## [1.0.0-alpha.68] - 2026-05-29
 
 ### Added
