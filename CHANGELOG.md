@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0-alpha.73] - 2026-05-29
+
+### Added
+- **Massive MCP Registry Metadata Enrichment (28,032 unique servers)**:
+  - Fetched all 307 cursor-paginated pages from the official MCP registry (`registry.modelcontextprotocol.io`), extracting deep runtime dependencies and package metadata.
+  - Extracted **environment variables**, **auth models**, and **required secrets** for all official packages.
+  - Deep-scraped Smithery (`registry.smithery.ai`) for detailed `configSchema` structures.
+  - Enriched GitHub metadata (stars, topics, languages) for discovered servers.
+  - Final catalog: **28,032 unique MCP servers** in `borg.db`.
+  - Quality metrics: **9,726** high-confidence config recipes and **9,688** servers categorized with an explicit authentication model.
+
 ## [1.0.0-alpha.72] - 2026-05-29
 
 ### Added

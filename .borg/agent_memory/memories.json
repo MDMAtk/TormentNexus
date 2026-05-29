@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "savedAt": "2026-05-29T14:33:39.813Z",
+  "savedAt": "2026-05-29T18:00:51.412Z",
   "memories": [
     {
       "id": "af2df69ca8980522",
@@ -1699,57 +1699,6 @@
       "accessCount": 0
     },
     {
-      "id": "8e3fb71801adb801",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_status:\nFocus query: system_status\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_status"
-        ],
-        "toolName": "system_status",
-        "query": "system_status",
-        "matchedPaths": [],
-        "observationCount": 0,
-        "summaryCount": 2,
-        "preview": "JIT context: 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:09:26.783Z",
-      "accessedAt": "2026-05-29T14:09:26.783Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "53a94efeeeef1461",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: ., package.json\nPotentially relevant observations:\n- read_file completed — read_file completed in 4ms. { \"content\": [] } (discovery · read_file)\n- read_file completed — read_file completed in 4ms. { \"content\": [] } (discovery · read_file)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          ".",
-          "package.json"
-        ],
-        "observationCount": 2,
-        "summaryCount": 2,
-        "preview": "JIT context: 2 observations · 2 summarysummaries · 2 file hits"
-      },
-      "createdAt": "2026-05-29T14:09:26.855Z",
-      "accessedAt": "2026-05-29T14:09:26.855Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "3d2571ea616dd738",
       "type": "working",
       "namespace": "project",
@@ -1804,81 +1753,6 @@
       "createdAt": "2026-05-29T14:09:26.858Z",
       "accessedAt": "2026-05-29T14:09:26.858Z",
       "accessCount": 0
-    },
-    {
-      "id": "260426b3864244bf",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant session summaries:\n- *\u0002��#\u0000\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001\u0007version\u00011\u0000 (claude-code) ended with status imported. Working directory: C:/Users/hyper/AppData/Roaming/Claude/Session Storage Log tail: � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�� | � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001e�u�b\u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001 next-map-id\u000291\u0001Anamespace\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 0,
-        "summaryCount": 1,
-        "preview": "JIT context: 1 summary"
-      },
-      "createdAt": "2026-05-29T14:09:28.181Z",
-      "accessedAt": "2026-05-29T14:09:28.181Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "d9307725067e3c96",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_status:\nFocus query: system_status\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_status"
-        ],
-        "toolName": "system_status",
-        "query": "system_status",
-        "matchedPaths": [],
-        "observationCount": 0,
-        "summaryCount": 2,
-        "preview": "JIT context: 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:12:20.357Z",
-      "accessedAt": "2026-05-29T14:12:20.357Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "679a885f722cce87",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: ., package.json\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- read_file completed — read_file completed in 4ms. { \"content\": [] } (discovery · read_file)\n- read_file completed — read_file completed in 4ms. { \"content\": [] } (discovery · read_file)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          ".",
-          "package.json"
-        ],
-        "observationCount": 3,
-        "summaryCount": 2,
-        "preview": "JIT context: 3 observations · 2 summarysummaries · 2 file hits"
-      },
-      "createdAt": "2026-05-29T14:12:20.445Z",
-      "accessedAt": "2026-05-29T14:12:20.445Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "f58e5e8c4bbb110f",
@@ -1937,30 +1811,6 @@
       "accessCount": 0
     },
     {
-      "id": "5610fa3c558ee1f2",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant session summaries:\n- *\u0002��#\u0000\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001\u0007version\u00011\u0000 (claude-code) ended with status imported. Working directory: C:/Users/hyper/AppData/Roaming/Claude/Session Storage Log tail: � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�� | � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001e�u�b\u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001 next-map-id\u000291\u0001Anamespace\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 0,
-        "summaryCount": 1,
-        "preview": "JIT context: 1 summary"
-      },
-      "createdAt": "2026-05-29T14:12:22.866Z",
-      "accessedAt": "2026-05-29T14:12:22.866Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "f89502f684270a94",
       "type": "working",
       "namespace": "project",
@@ -2015,30 +1865,6 @@
       "accessCount": 0
     },
     {
-      "id": "956731b70f0c739e",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_diagnostics:\nFocus query: system_diagnostics\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_diagnostics"
-        ],
-        "toolName": "system_diagnostics",
-        "query": "system_diagnostics",
-        "matchedPaths": [],
-        "observationCount": 1,
-        "summaryCount": 2,
-        "preview": "JIT context: 1 observation · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:13:56.298Z",
-      "accessedAt": "2026-05-29T14:13:56.298Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "cd1883dea0f5b012",
       "type": "working",
       "namespace": "project",
@@ -2088,33 +1914,6 @@
       "createdAt": "2026-05-29T14:13:56.321Z",
       "accessedAt": "2026-05-29T14:13:56.321Z",
       "accessCount": 0
-    },
-    {
-      "id": "5cf29104e4ba921a",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: ., package.json\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- read_file completed — read_file completed in 4ms. { \"content\": [] } (discovery · read_file)\n- read_file completed — read_file completed in 4ms. { \"content\": [] } (discovery · read_file)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          ".",
-          "package.json"
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 2 file hits"
-      },
-      "createdAt": "2026-05-29T14:13:58.404Z",
-      "accessedAt": "2026-05-29T14:13:58.404Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "69d4af66e23af8e2",
@@ -2173,30 +1972,6 @@
       "accessCount": 0
     },
     {
-      "id": "8c017ceab18f21af",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- *\u0002��#\u0000\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001\u0007version\u00011\u0000 (claude-code) ended with status imported. Working directory: C:/Users/hyper/AppData/Roaming/Claude/Session Storage Log tail: � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�� | � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001e�u�b\u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001 next-map-id\u000291\u0001Anamespace\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 1,
-        "summaryCount": 1,
-        "preview": "JIT context: 1 observation · 1 summary"
-      },
-      "createdAt": "2026-05-29T14:13:59.784Z",
-      "accessedAt": "2026-05-29T14:13:59.784Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "acee8a7617f2dbbe",
       "type": "working",
       "namespace": "project",
@@ -2251,30 +2026,6 @@
       "accessCount": 0
     },
     {
-      "id": "4e144a6be20d6d1b",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_diagnostics:\nFocus query: system_diagnostics\nPotentially relevant observations:\n- system_diagnostics completed — system_diagnostics completed in 23ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_diagnostics"
-        ],
-        "toolName": "system_diagnostics",
-        "query": "system_diagnostics",
-        "matchedPaths": [],
-        "observationCount": 3,
-        "summaryCount": 2,
-        "preview": "JIT context: 3 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:14:58.154Z",
-      "accessedAt": "2026-05-29T14:14:58.154Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "af7a9081c22eee8b",
       "type": "working",
       "namespace": "project",
@@ -2324,33 +2075,6 @@
       "createdAt": "2026-05-29T14:14:58.180Z",
       "accessedAt": "2026-05-29T14:14:58.180Z",
       "accessCount": 0
-    },
-    {
-      "id": "1a6ace06f2550e1b",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: ., package.json\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- read_file completed — read_file completed in 4ms. { \"content\": [] } (discovery · read_file)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          ".",
-          "package.json"
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 2 file hits"
-      },
-      "createdAt": "2026-05-29T14:15:00.063Z",
-      "accessedAt": "2026-05-29T14:15:00.063Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "2a81e2eaea243bec",
@@ -2409,54 +2133,6 @@
       "accessCount": 0
     },
     {
-      "id": "84c00b15c4435382",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- *\u0002��#\u0000\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001\u0007version\u00011\u0000 (claude-code) ended with status imported. Working directory: C:/Users/hyper/AppData/Roaming/Claude/Session Storage Log tail: � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�� | � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001e�u�b\u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001 next-map-id\u000291\u0001Anamespace\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 2,
-        "summaryCount": 1,
-        "preview": "JIT context: 2 observations · 1 summary"
-      },
-      "createdAt": "2026-05-29T14:15:01.219Z",
-      "accessedAt": "2026-05-29T14:15:01.219Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "9c95cf26dbac0590",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_diagnostics:\nFocus query: system_diagnostics\nPotentially relevant observations:\n- system_diagnostics completed — system_diagnostics completed in 26ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 23ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_diagnostics"
-        ],
-        "toolName": "system_diagnostics",
-        "query": "system_diagnostics",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:16:32.608Z",
-      "accessedAt": "2026-05-29T14:16:32.608Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "6a6a957d4864bc72",
       "type": "working",
       "namespace": "project",
@@ -2506,32 +2182,6 @@
       "createdAt": "2026-05-29T14:16:32.632Z",
       "accessedAt": "2026-05-29T14:16:32.632Z",
       "accessCount": 0
-    },
-    {
-      "id": "93b500947cd36fef",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: .\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:17:32.612Z",
-      "accessedAt": "2026-05-29T14:17:32.612Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "389602a3ca9f7be7",
@@ -2588,30 +2238,6 @@
       "createdAt": "2026-05-29T14:17:32.613Z",
       "accessedAt": "2026-05-29T14:17:32.613Z",
       "accessCount": 0
-    },
-    {
-      "id": "1191fadb47b5df25",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- *\u0002��#\u0000\u0001\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001\u0007version\u00011\u0000 (claude-code) ended with status imported. Working directory: C:/Users/hyper/AppData/Roaming/Claude/Session Storage Log tail: � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�� | � \u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001e�u�b\u0000\u0001'\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0002\u0000\u0000\u0000\u0001 next-map-id\u000291\u0001Anamespace\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 2,
-        "summaryCount": 1,
-        "preview": "JIT context: 2 observations · 1 summary"
-      },
-      "createdAt": "2026-05-29T14:18:23.304Z",
-      "accessedAt": "2026-05-29T14:18:23.304Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "5105174274a0fa24",
@@ -3106,30 +2732,6 @@
       "accessCount": 0
     },
     {
-      "id": "3edf01f4f32b4ef7",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_diagnostics:\nFocus query: system_diagnostics\nPotentially relevant observations:\n- system_diagnostics completed — system_diagnostics completed in 24ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 26ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 23ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2147ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_diagnostics"
-        ],
-        "toolName": "system_diagnostics",
-        "query": "system_diagnostics",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:19:23.794Z",
-      "accessedAt": "2026-05-29T14:19:23.794Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "5a3eea87e483fc7e",
       "type": "working",
       "namespace": "project",
@@ -3179,32 +2781,6 @@
       "createdAt": "2026-05-29T14:19:23.816Z",
       "accessedAt": "2026-05-29T14:19:23.816Z",
       "accessCount": 0
-    },
-    {
-      "id": "8f7a6a814606300d",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: .\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\n- A TODO task tracking list for resolving packages/core compilation and tool verification. (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: A \nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:19:24.988Z",
-      "accessedAt": "2026-05-29T14:19:24.988Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "2d462061f27ccb8d",
@@ -3263,54 +2839,6 @@
       "accessCount": 0
     },
     {
-      "id": "f6ca425eaf84ceed",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2147ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- # Technical Implementation Plan: Resolve Typescript Compile Errors (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - Update `NativeSessionM\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 3,
-        "summaryCount": 2,
-        "preview": "JIT context: 3 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:19:26.134Z",
-      "accessedAt": "2026-05-29T14:19:26.134Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "f3b704f908cf2f7d",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_diagnostics:\nFocus query: system_diagnostics\nPotentially relevant observations:\n- system_diagnostics completed — system_diagnostics completed in 22ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 24ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 26ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 23ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_diagnostics"
-        ],
-        "toolName": "system_diagnostics",
-        "query": "system_diagnostics",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:20:36.377Z",
-      "accessedAt": "2026-05-29T14:20:36.377Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "7dbeaf763b8ac3e5",
       "type": "working",
       "namespace": "project",
@@ -3360,32 +2888,6 @@
       "createdAt": "2026-05-29T14:20:36.403Z",
       "accessedAt": "2026-05-29T14:20:36.403Z",
       "accessCount": 0
-    },
-    {
-      "id": "2d1a2594833e9863",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: .\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\n- A TODO task tracking list for resolving packages/core compilation and tool verification. (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: A \nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:20:39.097Z",
-      "accessedAt": "2026-05-29T14:20:39.097Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "8cab3f89ee8b7f42",
@@ -3444,54 +2946,6 @@
       "accessCount": 0
     },
     {
-      "id": "6e8c3e4188a4bda9",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2147ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- # Technical Implementation Plan: Resolve Typescript Compile Errors (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - Update `NativeSessionM\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 3,
-        "summaryCount": 2,
-        "preview": "JIT context: 3 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:20:40.429Z",
-      "accessedAt": "2026-05-29T14:20:40.429Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "153c7034aeff2e3d",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_diagnostics:\nFocus query: system_diagnostics\nPotentially relevant observations:\n- system_diagnostics completed — system_diagnostics completed in 26ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 22ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 24ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 26ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_diagnostics"
-        ],
-        "toolName": "system_diagnostics",
-        "query": "system_diagnostics",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:21:45.669Z",
-      "accessedAt": "2026-05-29T14:21:45.669Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "c0afa0027059fab7",
       "type": "working",
       "namespace": "project",
@@ -3541,32 +2995,6 @@
       "createdAt": "2026-05-29T14:21:45.699Z",
       "accessedAt": "2026-05-29T14:21:45.699Z",
       "accessCount": 0
-    },
-    {
-      "id": "b8577e9c0e24ad4d",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: .\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\n- A TODO task tracking list for resolving packages/core compilation and tool verification. (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: A \nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:21:49.332Z",
-      "accessedAt": "2026-05-29T14:21:49.332Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "12c7888e88d39c78",
@@ -3625,54 +3053,6 @@
       "accessCount": 0
     },
     {
-      "id": "118749b634c38bc9",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2147ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- # Technical Implementation Plan: Resolve Typescript Compile Errors (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - Update `NativeSessionM\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 3,
-        "summaryCount": 2,
-        "preview": "JIT context: 3 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:21:51.806Z",
-      "accessedAt": "2026-05-29T14:21:51.806Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "af2449f48c30f233",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for system_diagnostics:\nFocus query: system_diagnostics\nPotentially relevant observations:\n- system_diagnostics completed — system_diagnostics completed in 30ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 26ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 22ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\n- system_diagnostics completed — system_diagnostics completed in 24ms. ## 🩺 System Health Report | Component | Status | Details | |-----------|--------|---------| | Core API | ✅ ONLINE | Healthy | | Web UI | ❌ OFFLINE | Dashboard not running | | VS Cod (warning · system_diagnostics)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "system_diagnostics"
-        ],
-        "toolName": "system_diagnostics",
-        "query": "system_diagnostics",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:22:50.020Z",
-      "accessedAt": "2026-05-29T14:22:50.020Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "3ff1f69d2dbbc6f4",
       "type": "working",
       "namespace": "project",
@@ -3722,32 +3102,6 @@
       "createdAt": "2026-05-29T14:22:50.044Z",
       "accessedAt": "2026-05-29T14:22:50.044Z",
       "accessCount": 0
-    },
-    {
-      "id": "79ef1db76fd5a1e8",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for list_directory:\nFocus query: list_directory .\nRelevant files: .\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\n- A TODO task tracking list for resolving packages/core compilation and tool verification. (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: A \nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "list_directory"
-        ],
-        "toolName": "list_directory",
-        "query": "list_directory .",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:22:52.273Z",
-      "accessedAt": "2026-05-29T14:22:52.273Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "5085ba5a98fe1263",
@@ -3804,30 +3158,6 @@
       "createdAt": "2026-05-29T14:22:52.275Z",
       "accessedAt": "2026-05-29T14:22:52.275Z",
       "accessCount": 0
-    },
-    {
-      "id": "b80fcb9214f0304d",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for windows-mcp__SystemInfo:\nFocus query: windows-mcp__SystemInfo\nPotentially relevant observations:\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2147ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 1496ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\n- windows-mcp__SystemInfo failed — windows-mcp__SystemInfo failed after 2006ms. Failed to connect to downstream MCP server 'windows-mcp'. (warning · windows-mcp__SystemInfo)\nPotentially relevant session summaries:\n- # Technical Implementation Plan: Resolve Typescript Compile Errors (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - Update `NativeSessionM\n- - [ ] Update packages/core/tsconfig.json (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - [ ] Update packages/core/tsconfig.json | - [ ] F\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "windows-mcp__SystemInfo"
-        ],
-        "toolName": "windows-mcp__SystemInfo",
-        "query": "windows-mcp__SystemInfo",
-        "matchedPaths": [],
-        "observationCount": 3,
-        "summaryCount": 2,
-        "preview": "JIT context: 3 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:22:53.632Z",
-      "accessedAt": "2026-05-29T14:22:53.632Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "f07609a08e704023",
@@ -4115,30 +3445,6 @@
       "accessCount": 0
     },
     {
-      "id": "7cdbae78236a2a71",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for get_eviction_history:\nFocus query: get_eviction_history\nPotentially relevant session summaries:\n- # Technical Implementation Plan: Resolve Typescript Compile Errors (antigravity) ended with status imported. Working directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43 Log tail: - Update `NativeSessionM\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "get_eviction_history"
-        ],
-        "toolName": "get_eviction_history",
-        "query": "get_eviction_history",
-        "matchedPaths": [],
-        "observationCount": 0,
-        "summaryCount": 1,
-        "preview": "JIT context: 1 summary"
-      },
-      "createdAt": "2026-05-29T14:30:12.436Z",
-      "accessedAt": "2026-05-29T14:30:12.436Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "1edd714d0855e77c",
       "type": "working",
       "namespace": "project",
@@ -4239,58 +3545,6 @@
       "accessCount": 0
     },
     {
-      "id": "ec4db7486c6267c9",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__create_directory:\nFocus query: filesystem__create_directory\nRelevant files: .\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__create_directory"
-        ],
-        "toolName": "filesystem__create_directory",
-        "query": "filesystem__create_directory",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:30:14.794Z",
-      "accessedAt": "2026-05-29T14:30:14.794Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
-      "id": "82c401ec053f0cd0",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__directory_tree:\nFocus query: filesystem__directory_tree\nRelevant files: .\nPotentially relevant observations:\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__directory_tree"
-        ],
-        "toolName": "filesystem__directory_tree",
-        "query": "filesystem__directory_tree",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:30:29.803Z",
-      "accessedAt": "2026-05-29T14:30:29.803Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "96b6c022d82d6282",
       "type": "working",
       "namespace": "project",
@@ -4343,32 +3597,6 @@
       "createdAt": "2026-05-29T14:30:29.926Z",
       "accessedAt": "2026-05-29T14:30:29.926Z",
       "accessCount": 0
-    },
-    {
-      "id": "016bbb7718fef76e",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__edit_file:\nFocus query: filesystem__edit_file\nRelevant files: .\nPotentially relevant observations:\n- filesystem__create_directory failed — filesystem__create_directory failed after 15132ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__create_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 2ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__edit_file"
-        ],
-        "toolName": "filesystem__edit_file",
-        "query": "filesystem__edit_file",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:30:44.811Z",
-      "accessedAt": "2026-05-29T14:30:44.811Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "79867a2a2eef81e4",
@@ -4425,32 +3653,6 @@
       "accessCount": 0
     },
     {
-      "id": "980740577bf832e0",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__get_file_info:\nFocus query: filesystem__get_file_info\nRelevant files: .\nPotentially relevant observations:\n- filesystem__directory_tree failed — filesystem__directory_tree failed after 15146ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__directory_tree)\n- filesystem__create_directory failed — filesystem__create_directory failed after 15132ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__create_directory)\n- get_eviction_history completed — get_eviction_history completed in 108ms. [] (progress · get_eviction_history)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__get_file_info"
-        ],
-        "toolName": "filesystem__get_file_info",
-        "query": "filesystem__get_file_info",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:30:59.817Z",
-      "accessedAt": "2026-05-29T14:30:59.817Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "da15a05f7aad2944",
       "type": "working",
       "namespace": "project",
@@ -4503,32 +3705,6 @@
       "createdAt": "2026-05-29T14:30:59.948Z",
       "accessedAt": "2026-05-29T14:30:59.948Z",
       "accessCount": 0
-    },
-    {
-      "id": "e22eb3d9440864c8",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__list_allowed_directories:\nFocus query: filesystem__list_allowed_directories\nRelevant files: .\nPotentially relevant observations:\n- filesystem__edit_file failed — filesystem__edit_file failed after 15137ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__edit_file)\n- filesystem__directory_tree failed — filesystem__directory_tree failed after 15146ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__directory_tree)\n- filesystem__create_directory failed — filesystem__create_directory failed after 15132ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__create_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__list_allowed_directories"
-        ],
-        "toolName": "filesystem__list_allowed_directories",
-        "query": "filesystem__list_allowed_directories",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:31:14.826Z",
-      "accessedAt": "2026-05-29T14:31:14.826Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "222943cd82e4d9b0",
@@ -4587,32 +3763,6 @@
       "accessCount": 0
     },
     {
-      "id": "6a6f2e77cea234a6",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__list_directory:\nFocus query: filesystem__list_directory\nRelevant files: .\nPotentially relevant observations:\n- filesystem__directory_tree failed — filesystem__directory_tree failed after 15146ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__directory_tree)\n- filesystem__create_directory failed — filesystem__create_directory failed after 15132ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__create_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__list_directory"
-        ],
-        "toolName": "filesystem__list_directory",
-        "query": "filesystem__list_directory",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:31:29.833Z",
-      "accessedAt": "2026-05-29T14:31:29.833Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "75da50fa8c78477a",
       "type": "working",
       "namespace": "project",
@@ -4669,32 +3819,6 @@
       "accessCount": 0
     },
     {
-      "id": "39ec60b8d17ece0e",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__list_directory_with_sizes:\nFocus query: filesystem__list_directory_with_sizes\nRelevant files: .\nPotentially relevant observations:\n- filesystem__list_allowed_directories failed — filesystem__list_allowed_directories failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_allowed_directories)\n- filesystem__directory_tree failed — filesystem__directory_tree failed after 15146ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__directory_tree)\n- filesystem__create_directory failed — filesystem__create_directory failed after 15132ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__create_directory)\n- list_directory completed — list_directory completed in 1ms. { \"content\": [] } (discovery · list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__list_directory_with_sizes"
-        ],
-        "toolName": "filesystem__list_directory_with_sizes",
-        "query": "filesystem__list_directory_with_sizes",
-        "matchedPaths": [
-          "."
-        ],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries · 1 file hit"
-      },
-      "createdAt": "2026-05-29T14:31:44.846Z",
-      "accessedAt": "2026-05-29T14:31:44.846Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "5acc25ffabb0b284",
       "type": "working",
       "namespace": "project",
@@ -4747,30 +3871,6 @@
       "createdAt": "2026-05-29T14:31:44.994Z",
       "accessedAt": "2026-05-29T14:31:44.994Z",
       "accessCount": 0
-    },
-    {
-      "id": "af5fb7e764c8f21b",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__move_file:\nFocus query: filesystem__move_file\nPotentially relevant observations:\n- filesystem__list_directory failed — filesystem__list_directory failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory)\n- filesystem__list_allowed_directories failed — filesystem__list_allowed_directories failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_allowed_directories)\n- filesystem__get_file_info failed — filesystem__get_file_info failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__get_file_info)\n- filesystem__edit_file failed — filesystem__edit_file failed after 15137ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__edit_file)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__move_file"
-        ],
-        "toolName": "filesystem__move_file",
-        "query": "filesystem__move_file",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:31:59.852Z",
-      "accessedAt": "2026-05-29T14:31:59.852Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "eccf9cc4647098b4",
@@ -4829,30 +3929,6 @@
       "accessCount": 0
     },
     {
-      "id": "6ef5bdf5b1383201",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__read_file:\nFocus query: filesystem__read_file\nPotentially relevant observations:\n- filesystem__list_directory_with_sizes failed — filesystem__list_directory_with_sizes failed after 15170ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory_with_sizes)\n- filesystem__list_directory failed — filesystem__list_directory failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory)\n- filesystem__list_allowed_directories failed — filesystem__list_allowed_directories failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_allowed_directories)\n- filesystem__get_file_info failed — filesystem__get_file_info failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__get_file_info)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__read_file"
-        ],
-        "toolName": "filesystem__read_file",
-        "query": "filesystem__read_file",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:32:14.864Z",
-      "accessedAt": "2026-05-29T14:32:14.864Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "38c7dc3a36de997f",
       "type": "working",
       "namespace": "project",
@@ -4907,30 +3983,6 @@
       "accessCount": 0
     },
     {
-      "id": "3151a5c457335ece",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__read_media_file:\nFocus query: filesystem__read_media_file\nPotentially relevant observations:\n- filesystem__move_file failed — filesystem__move_file failed after 15159ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__move_file)\n- filesystem__list_directory_with_sizes failed — filesystem__list_directory_with_sizes failed after 15170ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory_with_sizes)\n- filesystem__list_directory failed — filesystem__list_directory failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory)\n- filesystem__list_allowed_directories failed — filesystem__list_allowed_directories failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_allowed_directories)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__read_media_file"
-        ],
-        "toolName": "filesystem__read_media_file",
-        "query": "filesystem__read_media_file",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:32:29.873Z",
-      "accessedAt": "2026-05-29T14:32:29.873Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "72d6f69475cdbdf4",
       "type": "working",
       "namespace": "project",
@@ -4983,30 +4035,6 @@
       "createdAt": "2026-05-29T14:32:30.026Z",
       "accessedAt": "2026-05-29T14:32:30.026Z",
       "accessCount": 0
-    },
-    {
-      "id": "ffb4fc8a77d02009",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__read_multiple_files:\nFocus query: filesystem__read_multiple_files\nPotentially relevant observations:\n- filesystem__read_file failed — filesystem__read_file failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_file)\n- filesystem__move_file failed — filesystem__move_file failed after 15159ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__move_file)\n- filesystem__list_directory_with_sizes failed — filesystem__list_directory_with_sizes failed after 15170ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory_with_sizes)\n- filesystem__list_directory failed — filesystem__list_directory failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__read_multiple_files"
-        ],
-        "toolName": "filesystem__read_multiple_files",
-        "query": "filesystem__read_multiple_files",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:32:44.887Z",
-      "accessedAt": "2026-05-29T14:32:44.887Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "43fa458be8d65488",
@@ -5088,30 +4116,6 @@
       "accessCount": 0
     },
     {
-      "id": "508773bc6ee70a70",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__read_text_file:\nFocus query: filesystem__read_text_file\nPotentially relevant observations:\n- filesystem__read_media_file failed — filesystem__read_media_file failed after 15164ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_media_file)\n- filesystem__read_file failed — filesystem__read_file failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_file)\n- filesystem__move_file failed — filesystem__move_file failed after 15159ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__move_file)\n- filesystem__list_directory_with_sizes failed — filesystem__list_directory_with_sizes failed after 15170ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__list_directory_with_sizes)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__read_text_file"
-        ],
-        "toolName": "filesystem__read_text_file",
-        "query": "filesystem__read_text_file",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:32:59.896Z",
-      "accessedAt": "2026-05-29T14:32:59.896Z",
-      "accessCount": 0,
-      "ttl": 1800000
-    },
-    {
       "id": "40661b7c24f0aa20",
       "type": "working",
       "namespace": "project",
@@ -5166,30 +4170,6 @@
       "createdAt": "2026-05-29T14:33:00.106Z",
       "accessedAt": "2026-05-29T14:33:00.106Z",
       "accessCount": 0
-    },
-    {
-      "id": "fa72e9bdbae31294",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__search_files:\nFocus query: filesystem__search_files\nPotentially relevant observations:\n- filesystem__read_multiple_files failed — filesystem__read_multiple_files failed after 15219ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_multiple_files)\n- filesystem__read_media_file failed — filesystem__read_media_file failed after 15164ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_media_file)\n- filesystem__read_file failed — filesystem__read_file failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_file)\n- filesystem__move_file failed — filesystem__move_file failed after 15159ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__move_file)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__search_files"
-        ],
-        "toolName": "filesystem__search_files",
-        "query": "filesystem__search_files",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:33:14.900Z",
-      "accessedAt": "2026-05-29T14:33:14.900Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "a4bed48371d79f59",
@@ -5269,30 +4249,6 @@
       "createdAt": "2026-05-29T14:33:29.465Z",
       "accessedAt": "2026-05-29T14:33:29.465Z",
       "accessCount": 0
-    },
-    {
-      "id": "e4bb4f74f9669ff2",
-      "type": "session",
-      "namespace": "project",
-      "content": "JIT tool context for filesystem__write_file:\nFocus query: filesystem__write_file\nPotentially relevant observations:\n- filesystem__read_text_file failed — filesystem__read_text_file failed after 15166ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_text_file)\n- filesystem__read_multiple_files failed — filesystem__read_multiple_files failed after 15219ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_multiple_files)\n- filesystem__read_media_file failed — filesystem__read_media_file failed after 15164ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_media_file)\n- filesystem__read_file failed — filesystem__read_file failed after 15161ms. Failed to connect to downstream MCP server 'filesystem'. (warning · filesystem__read_file)\nPotentially relevant session summaries:\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\n- { (hypercode) ended with status imported. Working directory: C:/Users/hyper/workspace/borg/.hypercode/handoffs Log tail: \"query\": \"filesystem__list_allowed_directories\", | \"matchedPaths\": [ | \".\" | ], | \"observationCount\": 2, | \"summaryCoun\nUse only the parts that still match the current intent; ignore stale context.",
-      "metadata": {
-        "source": "pre_tool_context",
-        "tags": [
-          "tool-context",
-          "pre-tool",
-          "filesystem__write_file"
-        ],
-        "toolName": "filesystem__write_file",
-        "query": "filesystem__write_file",
-        "matchedPaths": [],
-        "observationCount": 4,
-        "summaryCount": 2,
-        "preview": "JIT context: 4 observations · 2 summarysummaries"
-      },
-      "createdAt": "2026-05-29T14:33:29.907Z",
-      "accessedAt": "2026-05-29T14:33:29.907Z",
-      "accessCount": 0,
-      "ttl": 1800000
     },
     {
       "id": "37865a44708a6d1f",
@@ -5395,6 +4351,1216 @@
       },
       "createdAt": "2026-05-29T14:33:39.678Z",
       "accessedAt": "2026-05-29T14:33:39.678Z",
+      "accessCount": 0
+    },
+    {
+      "id": "6604219d56b41b33",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Comprehensive MCP metadata enricher — hits official registry with correct cursor pagination, enriches GitHub repos for s (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Comprehensive MCP metadata enricher — hits official registry with correct cursor pagination, enriches GitHub repos for stars/language/env vars, extracts Smithery config schemas, and adds new columns for richer metadata",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "08834ddb-4072-4f95-898f-46a001976fde",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/enrich_metadata.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:72f8e86f2836",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:72f8e86f2836",
+          "name": "Comprehensive MCP metadata enricher — hits official registry with correct cursor pagination, enriches GitHub repos for s",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780072698925.5364,
+          "stoppedAt": 1780075665686,
+          "lastActivityAt": 1780072698925.5364,
+          "logTail": [
+            "Comprehensive MCP metadata enricher — hits official registry with correct cursor pagination, enriches GitHub repos for stars/language/env vars, extracts Smithery config schemas, and adds new columns for richer metadata"
+          ],
+          "recordedAt": 1780075665730,
+          "contentHash": "session-1430312549"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:45.731Z",
+      "accessedAt": "2026-05-29T17:27:45.731Z",
+      "accessCount": 0
+    },
+    {
+      "id": "3ee25f508722cf71",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Fixed enrichment check script (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Fixed enrichment check script",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "eb1085b9-8125-43c0-8a78-1834465008f0",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/check_enrichment.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:89fc4b019264",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:89fc4b019264",
+          "name": "Fixed enrichment check script",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780072490664.2495,
+          "stoppedAt": 1780075668583,
+          "lastActivityAt": 1780072490664.2495,
+          "logTail": [
+            "Fixed enrichment check script"
+          ],
+          "recordedAt": 1780075668590,
+          "contentHash": "session-1562876050"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:48.591Z",
+      "accessedAt": "2026-05-29T17:27:48.591Z",
+      "accessCount": 0
+    },
+    {
+      "id": "a2f1bb2994d69df6",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Fixed enrichment check script",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "eb1085b9-8125-43c0-8a78-1834465008f0",
+        "sessionId": "imported:antigravity:89fc4b019264",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/check_enrichment.py.metadata.json",
+        "tags": [
+          "antigravity",
+          "memory"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T17:27:49.746Z",
+      "accessedAt": "2026-05-29T17:27:49.746Z",
+      "accessCount": 0
+    },
+    {
+      "id": "f15b933a726d222b",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Metadata audit script (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Metadata audit script",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "d852c866-c61a-498b-a7f8-46fd175e9303",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/audit_metadata.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:641e7d436694",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:641e7d436694",
+          "name": "Metadata audit script",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780072432298.9036,
+          "stoppedAt": 1780075670854,
+          "lastActivityAt": 1780072432298.9036,
+          "logTail": [
+            "Metadata audit script"
+          ],
+          "recordedAt": 1780075670858,
+          "contentHash": "session-1537638624"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:50.858Z",
+      "accessedAt": "2026-05-29T17:27:50.858Z",
+      "accessCount": 0
+    },
+    {
+      "id": "94bdadb20a985d61",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Comprehensive walkthrough of the v1.0.0-alpha.72 MCP registry expansion. Documents all 8 scraper waves, 58 source types, (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43\nLog tail: Comprehensive walkthrough of the v1.0.0-alpha.72 MCP registry expansion. Documents all 8 scraper waves, 58 source types, and the growth from 10,370 to 18,881 unique MCP servers in borg.db. Includes per-wave stats, source breakdown tables, a",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "618e215c-0f88-4663-9c64-2282743a30e9",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/walkthrough.md.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:4ab4daceaec1",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:4ab4daceaec1",
+          "name": "Comprehensive walkthrough of the v1.0.0-alpha.72 MCP registry expansion. Documents all 8 scraper waves, 58 source types,",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43",
+          "restartCount": 0,
+          "startedAt": 1780071778213.4888,
+          "stoppedAt": 1780075671966,
+          "lastActivityAt": 1780071778213.4888,
+          "logTail": [
+            "Comprehensive walkthrough of the v1.0.0-alpha.72 MCP registry expansion. Documents all 8 scraper waves, 58 source types, and the growth from 10,370 to 18,881 unique MCP servers in borg.db. Includes per-wave stats, source breakdown tables, a"
+          ],
+          "recordedAt": 1780075671972,
+          "contentHash": "session-1706760678"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:51.972Z",
+      "accessedAt": "2026-05-29T17:27:51.972Z",
+      "accessCount": 0
+    },
+    {
+      "id": "28b54795fd62ded4",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "# MCP Registry Expansion Walkthrough — v1.0.0-alpha.72 (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43\nLog tail: ## Files Changed | - `VERSION` → `1.0.0-alpha.72` | - `CHANGELOG.md` → Added alpha.72 entry | - `HANDOFF.md` → Updated with expansion details | - All 27 `package.json` files → Version synced via `sync-versions.mjs` | - `borg.db` → 18,881 rows in `published_mcp_servers` | ## Commit | ``` | 8fa4f93c5 feat: massive MCP registry expansion to 18,881 servers (v1.0.0-alpha.72)",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "058764e1-726a-49fb-9942-4f75c0f43d4e",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/walkthrough.md",
+        "sessionFormat": "md",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:da44993ab995",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:da44993ab995",
+          "name": "# MCP Registry Expansion Walkthrough — v1.0.0-alpha.72",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43",
+          "restartCount": 0,
+          "startedAt": 1780071778212.4895,
+          "stoppedAt": 1780075673152,
+          "lastActivityAt": 1780071778212.4895,
+          "logTail": [
+            "## Files Changed",
+            "- `VERSION` → `1.0.0-alpha.72`",
+            "- `CHANGELOG.md` → Added alpha.72 entry",
+            "- `HANDOFF.md` → Updated with expansion details",
+            "- All 27 `package.json` files → Version synced via `sync-versions.mjs`",
+            "- `borg.db` → 18,881 rows in `published_mcp_servers`",
+            "## Commit",
+            "```",
+            "8fa4f93c5 feat: massive MCP registry expansion to 18,881 servers (v1.0.0-alpha.72)"
+          ],
+          "recordedAt": 1780075673157,
+          "contentHash": "session-1263380971"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:53.157Z",
+      "accessedAt": "2026-05-29T17:27:53.157Z",
+      "accessCount": 0
+    },
+    {
+      "id": "856ece6985f3337f",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Scraper for atlas.json layers structure (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Scraper for atlas.json layers structure",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "041b6554-fc22-470b-aff3-c8de27a8535f",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_atlas_json.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:6731ce3658d7",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:6731ce3658d7",
+          "name": "Scraper for atlas.json layers structure",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780071631832.5503,
+          "stoppedAt": 1780075674351,
+          "lastActivityAt": 1780071631832.5503,
+          "logTail": [
+            "Scraper for atlas.json layers structure"
+          ],
+          "recordedAt": 1780075674357,
+          "contentHash": "session-942212189"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:54.357Z",
+      "accessedAt": "2026-05-29T17:27:54.357Z",
+      "accessCount": 0
+    },
+    {
+      "id": "39efd980216fa52f",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Deep bobbybookmarks file scraper — extracts GitHub links from all MD, TXT files and atlas.json (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Deep bobbybookmarks file scraper — extracts GitHub links from all MD, TXT files and atlas.json",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "eb910e15-28f5-4906-93a4-04d74cca5d4d",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_bobby_files.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:fbc59d70fd5f",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:fbc59d70fd5f",
+          "name": "Deep bobbybookmarks file scraper — extracts GitHub links from all MD, TXT files and atlas.json",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780071552502.511,
+          "stoppedAt": 1780075675529,
+          "lastActivityAt": 1780071552502.511,
+          "logTail": [
+            "Deep bobbybookmarks file scraper — extracts GitHub links from all MD, TXT files and atlas.json"
+          ],
+          "recordedAt": 1780075675533,
+          "contentHash": "session-1777992279"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:55.533Z",
+      "accessedAt": "2026-05-29T17:27:55.533Z",
+      "accessCount": 0
+    },
+    {
+      "id": "56dcf5b9dc7bed1f",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Final wave scraper targeting korchasa, best-of-mcp, registry.mcp.so, vibehackers, MCPNest, Docker Hub, and extended GitH (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Final wave scraper targeting korchasa, best-of-mcp, registry.mcp.so, vibehackers, MCPNest, Docker Hub, and extended GitHub topics",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "546d9f1d-7f99-492d-9aeb-0d4108397d2c",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_final_wave.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:9f12216fc7d6",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:9f12216fc7d6",
+          "name": "Final wave scraper targeting korchasa, best-of-mcp, registry.mcp.so, vibehackers, MCPNest, Docker Hub, and extended GitH",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780071479804.0122,
+          "stoppedAt": 1780075676669,
+          "lastActivityAt": 1780071479804.0122,
+          "logTail": [
+            "Final wave scraper targeting korchasa, best-of-mcp, registry.mcp.so, vibehackers, MCPNest, Docker Hub, and extended GitHub topics"
+          ],
+          "recordedAt": 1780075676673,
+          "contentHash": "session-35014734"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:56.674Z",
+      "accessedAt": "2026-05-29T17:27:56.674Z",
+      "accessCount": 0
+    },
+    {
+      "id": "97b34bfcc91fd68e",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Deep scraper targeting atlas.db full extraction, GitHub search extensions, NPM deep pagination, and directory tree walki (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Deep scraper targeting atlas.db full extraction, GitHub search extensions, NPM deep pagination, and directory tree walking",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "e7879380-cbc9-40f0-b0b4-087ca3de0f63",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_deep.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:b8a1124ca79f",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:b8a1124ca79f",
+          "name": "Deep scraper targeting atlas.db full extraction, GitHub search extensions, NPM deep pagination, and directory tree walki",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780071340177.2754,
+          "stoppedAt": 1780075677825,
+          "lastActivityAt": 1780071340177.2754,
+          "logTail": [
+            "Deep scraper targeting atlas.db full extraction, GitHub search extensions, NPM deep pagination, and directory tree walking"
+          ],
+          "recordedAt": 1780075677830,
+          "contentHash": "session-1267641433"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:57.830Z",
+      "accessedAt": "2026-05-29T17:27:57.830Z",
+      "accessCount": 0
+    },
+    {
+      "id": "6b8e9bdddb0e987a",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Official MCP registry scraper plus ever-works mega-list and additional sources (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Official MCP registry scraper plus ever-works mega-list and additional sources",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "2114fbe8-6d4d-452a-a95e-4f0cc1c021a9",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_official_registry.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:82e1f6826ae9",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:82e1f6826ae9",
+          "name": "Official MCP registry scraper plus ever-works mega-list and additional sources",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780071243392.0566,
+          "stoppedAt": 1780075678996,
+          "lastActivityAt": 1780071243392.0566,
+          "logTail": [
+            "Official MCP registry scraper plus ever-works mega-list and additional sources"
+          ],
+          "recordedAt": 1780075679000,
+          "contentHash": "session-680292142"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:27:59.000Z",
+      "accessedAt": "2026-05-29T17:27:59.000Z",
+      "accessCount": 0
+    },
+    {
+      "id": "f331948cf975b114",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Extended round-2 scraper covering additional NPM orgs, JSON lists, cursor.directory, Composio, OpenTools, Plugged.in, an (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Extended round-2 scraper covering additional NPM orgs, JSON lists, cursor.directory, Composio, OpenTools, Plugged.in, and MCPPedia",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "4eb42142-fa55-486b-9397-3246711dfae4",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_extended.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:7d1b4d21cad0",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:7d1b4d21cad0",
+          "name": "Extended round-2 scraper covering additional NPM orgs, JSON lists, cursor.directory, Composio, OpenTools, Plugged.in, an",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780071116566.3289,
+          "stoppedAt": 1780075680156,
+          "lastActivityAt": 1780071116566.3289,
+          "logTail": [
+            "Extended round-2 scraper covering additional NPM orgs, JSON lists, cursor.directory, Composio, OpenTools, Plugged.in, and MCPPedia"
+          ],
+          "recordedAt": 1780075680160,
+          "contentHash": "session-1402972800"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:28:00.160Z",
+      "accessedAt": "2026-05-29T17:28:00.160Z",
+      "accessCount": 0
+    },
+    {
+      "id": "b40ca2d6568270ba",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Comprehensive MCP directory scraper hitting PulseMCP, Glama, mcp.so, MCPHub, and other registries (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Comprehensive MCP directory scraper hitting PulseMCP, Glama, mcp.so, MCPHub, and other registries",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "729185f3-937c-4f9c-85ec-9775bd6b70d9",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_mcp_directories.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:aaeb8356c76b",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:aaeb8356c76b",
+          "name": "Comprehensive MCP directory scraper hitting PulseMCP, Glama, mcp.so, MCPHub, and other registries",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780070955934.1665,
+          "stoppedAt": 1780075681295,
+          "lastActivityAt": 1780070955934.1665,
+          "logTail": [
+            "Comprehensive MCP directory scraper hitting PulseMCP, Glama, mcp.so, MCPHub, and other registries"
+          ],
+          "recordedAt": 1780075681300,
+          "contentHash": "session-528634280"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:28:01.300Z",
+      "accessedAt": "2026-05-29T17:28:01.300Z",
+      "accessCount": 0
+    },
+    {
+      "id": "1279de64e3591478",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Find top MCP domains in atlas.db (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Find top MCP domains in atlas.db",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "b4f08618-a2fa-4d47-b078-e067a5df5fc0",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/find_domains.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:1714f9a07e57",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:1714f9a07e57",
+          "name": "Find top MCP domains in atlas.db",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780070820080.775,
+          "stoppedAt": 1780075682442,
+          "lastActivityAt": 1780070820080.775,
+          "logTail": [
+            "Find top MCP domains in atlas.db"
+          ],
+          "recordedAt": 1780075682445,
+          "contentHash": "session-1797423588"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:28:02.445Z",
+      "accessedAt": "2026-05-29T17:28:02.445Z",
+      "accessCount": 0
+    },
+    {
+      "id": "e7aab0b69b4f1635",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Advanced database scraper to extract and import all 6,759 GitHub repositories from atlas.db into published_mcp_servers i (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Advanced database scraper to extract and import all 6,759 GitHub repositories from atlas.db into published_mcp_servers in borg.db.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "32b566aa-395e-473f-b20f-1cca3e217d9f",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/ingest_all_atlas_github.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:2dfb9cd3bd14",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:2dfb9cd3bd14",
+          "name": "Advanced database scraper to extract and import all 6,759 GitHub repositories from atlas.db into published_mcp_servers i",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780069801461.765,
+          "stoppedAt": 1780075683592,
+          "lastActivityAt": 1780069801461.765,
+          "logTail": [
+            "Advanced database scraper to extract and import all 6,759 GitHub repositories from atlas.db into published_mcp_servers in borg.db."
+          ],
+          "recordedAt": 1780075683597,
+          "contentHash": "session-539404001"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:28:03.597Z",
+      "accessedAt": "2026-05-29T17:28:03.597Z",
+      "accessCount": 0
+    },
+    {
+      "id": "82eec697c04c5300",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Advanced database scraper to extract and import all 6,759 GitHub repositories from atlas.db into published_mcp_servers in borg.db.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "32b566aa-395e-473f-b20f-1cca3e217d9f",
+        "sessionId": "imported:antigravity:2dfb9cd3bd14",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/ingest_all_atlas_github.py.metadata.json",
+        "tags": [
+          "antigravity",
+          "memory",
+          "networking",
+          "database",
+          "mcp"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T17:28:04.770Z",
+      "accessedAt": "2026-05-29T17:28:04.770Z",
+      "accessCount": 0
+    },
+    {
+      "id": "a2cbd3ba0571acf2",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Ingestion script to extract additional MCP repository targets from bobbybookmarks raw text files and sync them to borg.d (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Ingestion script to extract additional MCP repository targets from bobbybookmarks raw text files and sync them to borg.db.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "57200137-fac2-4f6b-8c61-9b2f02d9d22b",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/ingest_text_lists.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:51dadc1c2578",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:51dadc1c2578",
+          "name": "Ingestion script to extract additional MCP repository targets from bobbybookmarks raw text files and sync them to borg.d",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780069725186.6594,
+          "stoppedAt": 1780075685893,
+          "lastActivityAt": 1780069725186.6594,
+          "logTail": [
+            "Ingestion script to extract additional MCP repository targets from bobbybookmarks raw text files and sync them to borg.db."
+          ],
+          "recordedAt": 1780075685897,
+          "contentHash": "session-1371768649"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:28:05.897Z",
+      "accessedAt": "2026-05-29T17:28:05.897Z",
+      "accessCount": 0
+    },
+    {
+      "id": "4df2891cb1fb588f",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Trigger script to execute live MCP catalog ingestion across all built-in adapters (Smithery, Glama, NPM, Github, etc.) w (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Trigger script to execute live MCP catalog ingestion across all built-in adapters (Smithery, Glama, NPM, Github, etc.) with absolute path.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "3317a83d-d93d-4e0f-9b0d-d81b5bedffd6",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/trigger_ingest.ts.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:2af51572257a",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:2af51572257a",
+          "name": "Trigger script to execute live MCP catalog ingestion across all built-in adapters (Smithery, Glama, NPM, Github, etc.) w",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780068776592.9336,
+          "stoppedAt": 1780075687017,
+          "lastActivityAt": 1780068776592.9336,
+          "logTail": [
+            "Trigger script to execute live MCP catalog ingestion across all built-in adapters (Smithery, Glama, NPM, Github, etc.) with absolute path."
+          ],
+          "recordedAt": 1780075687021,
+          "contentHash": "session-271853151"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:28:07.022Z",
+      "accessedAt": "2026-05-29T17:28:07.022Z",
+      "accessCount": 0
+    },
+    {
+      "id": "4f75dd84c67ece79",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Trigger script to execute live MCP catalog ingestion across all built-in adapters (Smithery, Glama, NPM, Github, etc.) with absolute path.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "3317a83d-d93d-4e0f-9b0d-d81b5bedffd6",
+        "sessionId": "imported:antigravity:2af51572257a",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/trigger_ingest.ts.metadata.json",
+        "tags": [
+          "antigravity",
+          "memory",
+          "mcp",
+          "ui"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T17:28:08.163Z",
+      "accessedAt": "2026-05-29T17:28:08.163Z",
+      "accessCount": 0
+    },
+    {
+      "id": "76c3b81f89e34da8",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Scraper script to extract repository links from awesome-mcp-servers raw markdowns and upsert them as canonical servers i (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Scraper script to extract repository links from awesome-mcp-servers raw markdowns and upsert them as canonical servers into borg.db.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "bfe94fba-0bb6-4bb4-9735-1348c839e413",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/scrape_awesome_lists.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:61ba82056dbf",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:61ba82056dbf",
+          "name": "Scraper script to extract repository links from awesome-mcp-servers raw markdowns and upsert them as canonical servers i",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780068655127.078,
+          "stoppedAt": 1780075689328,
+          "lastActivityAt": 1780068655127.078,
+          "logTail": [
+            "Scraper script to extract repository links from awesome-mcp-servers raw markdowns and upsert them as canonical servers into borg.db."
+          ],
+          "recordedAt": 1780075689331,
+          "contentHash": "session-1701854758"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T17:28:09.331Z",
+      "accessedAt": "2026-05-29T17:28:09.331Z",
+      "accessCount": 0
+    },
+    {
+      "id": "d7e338b719bb4612",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "- [x] Create `scratch/sync_mcp_catalog.py` script (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43\nLog tail: - [x] Create `scratch/sync_mcp_catalog.py` script | - [x] Implement MCP registry extraction from bookmarks.db and atlas.db | - [x] Implement MCP server URL normalization and deduplication logic | - [x] Implement feature extraction (tools) and recipe generation | - [x] Implement imported_sessions deduplication | - [x] Implement imported_session_memories deduplication | - [x] Execute validation run and print migration statistics",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "4976e6a6-0f4a-4451-87ae-a5b4c12b665d",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/task.md",
+        "sessionFormat": "md",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:c6692b4de997",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:c6692b4de997",
+          "name": "- [x] Create `scratch/sync_mcp_catalog.py` script",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43",
+          "restartCount": 0,
+          "startedAt": 1780067999489.991,
+          "stoppedAt": 1780077606854,
+          "lastActivityAt": 1780067999489.991,
+          "logTail": [
+            "- [x] Create `scratch/sync_mcp_catalog.py` script",
+            "- [x] Implement MCP registry extraction from bookmarks.db and atlas.db",
+            "- [x] Implement MCP server URL normalization and deduplication logic",
+            "- [x] Implement feature extraction (tools) and recipe generation",
+            "- [x] Implement imported_sessions deduplication",
+            "- [x] Implement imported_session_memories deduplication",
+            "- [x] Execute validation run and print migration statistics"
+          ],
+          "recordedAt": 1780077606871,
+          "contentHash": "session-924247083"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T18:00:06.872Z",
+      "accessedAt": "2026-05-29T18:00:06.872Z",
+      "accessCount": 0
+    },
+    {
+      "id": "69ae8326a7b6544f",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "- [x] Implement imported_sessions deduplication",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "4976e6a6-0f4a-4451-87ae-a5b4c12b665d",
+        "sessionId": "imported:antigravity:c6692b4de997",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/task.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "networking"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:17.419Z",
+      "accessedAt": "2026-05-29T18:00:17.419Z",
+      "accessCount": 0
+    },
+    {
+      "id": "1e186387877b03b4",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "- [x] Implement imported_session_memories deduplication",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "4976e6a6-0f4a-4451-87ae-a5b4c12b665d",
+        "sessionId": "imported:antigravity:c6692b4de997",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/task.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "networking"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:19.584Z",
+      "accessedAt": "2026-05-29T18:00:19.584Z",
+      "accessCount": 0
+    },
+    {
+      "id": "6affa1a06ab1bd91",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Database synchronization script to ingest new MCP servers, extract features (tools), generate baseline recipes, and dedu (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Database synchronization script to ingest new MCP servers, extract features (tools), generate baseline recipes, and deduplicate matching servers, sessions, memories, and prompts inside borg.db.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "02243631-b40b-4d14-ac2e-edb36ab80c1e",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/sync_mcp_catalog.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:7b48e502ce76",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:7b48e502ce76",
+          "name": "Database synchronization script to ingest new MCP servers, extract features (tools), generate baseline recipes, and dedu",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780067980878.4165,
+          "stoppedAt": 1780077621908,
+          "lastActivityAt": 1780067980878.4165,
+          "logTail": [
+            "Database synchronization script to ingest new MCP servers, extract features (tools), generate baseline recipes, and deduplicate matching servers, sessions, memories, and prompts inside borg.db."
+          ],
+          "recordedAt": 1780077621917,
+          "contentHash": "session-111688416"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T18:00:21.917Z",
+      "accessedAt": "2026-05-29T18:00:21.917Z",
+      "accessCount": 0
+    },
+    {
+      "id": "905df77378640626",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Checklist of tasks to ingest and consolidate MCP servers, sessions, memories, and prompts inside borg.db. (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43\nLog tail: Checklist of tasks to ingest and consolidate MCP servers, sessions, memories, and prompts inside borg.db.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "9e7bdbc6-aeda-4390-8180-8c342f596978",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/task.md.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:07d6c77a3a62",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:07d6c77a3a62",
+          "name": "Checklist of tasks to ingest and consolidate MCP servers, sessions, memories, and prompts inside borg.db.",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43",
+          "restartCount": 0,
+          "startedAt": 1780067973732.438,
+          "stoppedAt": 1780077624272,
+          "lastActivityAt": 1780067973732.438,
+          "logTail": [
+            "Checklist of tasks to ingest and consolidate MCP servers, sessions, memories, and prompts inside borg.db."
+          ],
+          "recordedAt": 1780077624281,
+          "contentHash": "session-1604136124"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T18:00:24.282Z",
+      "accessedAt": "2026-05-29T18:00:24.282Z",
+      "accessCount": 0
+    },
+    {
+      "id": "291c54f9dae75ddd",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Implementation plan to ingest new MCP servers from bobbybookmarks, extract and scrape their tools, and dedup/consolidate (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43\nLog tail: Implementation plan to ingest new MCP servers from bobbybookmarks, extract and scrape their tools, and dedup/consolidate matching servers, sessions, memories, and prompts inside the canonical borg.db database.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "97e4ea9f-a6fa-4a60-a177-347d5bb11446",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:ede9f2bfeb50",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:ede9f2bfeb50",
+          "name": "Implementation plan to ingest new MCP servers from bobbybookmarks, extract and scrape their tools, and dedup/consolidate",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43",
+          "restartCount": 0,
+          "startedAt": 1780067972136.0176,
+          "stoppedAt": 1780077626780,
+          "lastActivityAt": 1780067972136.0176,
+          "logTail": [
+            "Implementation plan to ingest new MCP servers from bobbybookmarks, extract and scrape their tools, and dedup/consolidate matching servers, sessions, memories, and prompts inside the canonical borg.db database."
+          ],
+          "recordedAt": 1780077626792,
+          "contentHash": "session-454287402"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T18:00:26.792Z",
+      "accessedAt": "2026-05-29T18:00:26.792Z",
+      "accessCount": 0
+    },
+    {
+      "id": "2bafe364b40bda74",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "# Implementation Plan - Ingest & Dedup MCP Server Catalog and Sessions/Memories (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43\nLog tail: 3. **Memory Deduplication**: | - Scan `imported_session_memories` and `web_memories` to identify duplicate memory fragments (same session, matching content/type). | - Clean up duplicates to streamline model context storage. | 4. **Prompt Deduplication**: | - Check tables storing saved scripts or prompts and clean up duplicates if any are found. | ## Verification Plan | ### Automated Run | - Run the python script safely using the environment python adapter. | - Verify total row counts in `published_mcp_servers`, `imported_sessions`, and `imported_session_memories` before and after the run. | - Log complete statistics of the number of servers added, servers consolidated, sessions deduplicated, and memories pruned.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "40bc1fbe-ddf3-49ee-8674-146515ec56c1",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md",
+        "sessionFormat": "md",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:9de77a58fb74",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:9de77a58fb74",
+          "name": "# Implementation Plan - Ingest & Dedup MCP Server Catalog and Sessions/Memories",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43",
+          "restartCount": 0,
+          "startedAt": 1780067972135.0015,
+          "stoppedAt": 1780077629137,
+          "lastActivityAt": 1780067972135.0015,
+          "logTail": [
+            "3. **Memory Deduplication**:",
+            "- Scan `imported_session_memories` and `web_memories` to identify duplicate memory fragments (same session, matching content/type).",
+            "- Clean up duplicates to streamline model context storage.",
+            "4. **Prompt Deduplication**:",
+            "- Check tables storing saved scripts or prompts and clean up duplicates if any are found.",
+            "## Verification Plan",
+            "### Automated Run",
+            "- Run the python script safely using the environment python adapter.",
+            "- Verify total row counts in `published_mcp_servers`, `imported_sessions`, and `imported_session_memories` before and after the run.",
+            "- Log complete statistics of the number of servers added, servers consolidated, sessions deduplicated, and memories pruned."
+          ],
+          "recordedAt": 1780077629148,
+          "contentHash": "session-734149420"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T18:00:29.149Z",
+      "accessedAt": "2026-05-29T18:00:29.149Z",
+      "accessCount": 0
+    },
+    {
+      "id": "9aac0c459d9b96e2",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "#### [NEW] [sync_mcp_catalog.py](file:///C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/sync_mcp_catalog.py)",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "40bc1fbe-ddf3-49ee-8674-146515ec56c1",
+        "sessionId": "imported:antigravity:9de77a58fb74",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "mcp"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:31.917Z",
+      "accessedAt": "2026-05-29T18:00:31.917Z",
+      "accessCount": 0
+    },
+    {
+      "id": "4d0eeb81d9184705",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "- Group `imported_sessions` by `title`, `source_path`, or `transcript_hash`.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "40bc1fbe-ddf3-49ee-8674-146515ec56c1",
+        "sessionId": "imported:antigravity:9de77a58fb74",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "networking"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:34.497Z",
+      "accessedAt": "2026-05-29T18:00:34.497Z",
+      "accessCount": 0
+    },
+    {
+      "id": "b59898170728717e",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "- Remove duplicate sessions while maintaining foreign key integrity for `imported_session_memories`.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "40bc1fbe-ddf3-49ee-8674-146515ec56c1",
+        "sessionId": "imported:antigravity:9de77a58fb74",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "networking"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:36.882Z",
+      "accessedAt": "2026-05-29T18:00:36.882Z",
+      "accessCount": 0
+    },
+    {
+      "id": "a5b95fb6c4415cd4",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "- Scan `imported_session_memories` and `web_memories` to identify duplicate memory fragments (same session, matching content/type).",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "40bc1fbe-ddf3-49ee-8674-146515ec56c1",
+        "sessionId": "imported:antigravity:9de77a58fb74",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "networking"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:39.207Z",
+      "accessedAt": "2026-05-29T18:00:39.207Z",
+      "accessCount": 0
+    },
+    {
+      "id": "b17d8a77af90f08f",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "- Verify total row counts in `published_mcp_servers`, `imported_sessions`, and `imported_session_memories` before and after the run.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "40bc1fbe-ddf3-49ee-8674-146515ec56c1",
+        "sessionId": "imported:antigravity:9de77a58fb74",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "networking",
+          "mcp"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:41.593Z",
+      "accessedAt": "2026-05-29T18:00:41.593Z",
+      "accessCount": 0
+    },
+    {
+      "id": "941d909d6a82383c",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "### Scratch Utility #### [NEW] [sync_mcp_catalog.py](file:///C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/sync_mcp_catalog.py) A comprehensive python script implementing: 1.",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "40bc1fbe-ddf3-49ee-8674-146515ec56c1",
+        "sessionId": "imported:antigravity:9de77a58fb74",
+        "path": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/implementation_plan.md",
+        "tags": [
+          "antigravity",
+          "memory",
+          "mcp"
+        ],
+        "section": "general",
+        "memoryKind": "memory",
+        "extractionSource": "heuristic"
+      },
+      "createdAt": "2026-05-29T18:00:43.952Z",
+      "accessedAt": "2026-05-29T18:00:43.952Z",
+      "accessCount": 0
+    },
+    {
+      "id": "36c5c70c3a1d7a5f",
+      "type": "long_term",
+      "namespace": "project",
+      "content": "Search atlas.db for MCP entries (antigravity) ended with status imported.\nWorking directory: C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch\nLog tail: Search atlas.db for MCP entries",
+      "metadata": {
+        "source": "session_import",
+        "sourceTool": "antigravity",
+        "importedSessionId": "460d6abc-85f2-4356-afbc-b0cf8dfea6d7",
+        "sourcePath": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch/read_db.py.metadata.json",
+        "sessionFormat": "json",
+        "section": "general",
+        "tags": [
+          "session-summary",
+          "antigravity",
+          "imported"
+        ],
+        "sessionId": "imported:antigravity:ffc1da5841a2",
+        "structuredSessionSummary": {
+          "sessionId": "imported:antigravity:ffc1da5841a2",
+          "name": "Search atlas.db for MCP entries",
+          "cliType": "antigravity",
+          "status": "imported",
+          "workingDirectory": "C:/Users/hyper/.gemini/antigravity/brain/e88bac4f-e064-4c4b-bf5f-17f3373dac43/scratch",
+          "restartCount": 0,
+          "startedAt": 1780067872199.347,
+          "stoppedAt": 1780077646410,
+          "lastActivityAt": 1780067872199.347,
+          "logTail": [
+            "Search atlas.db for MCP entries"
+          ],
+          "recordedAt": 1780077646417,
+          "contentHash": "session-1553028391"
+        },
+        "memoryKind": "session_summary"
+      },
+      "createdAt": "2026-05-29T18:00:46.417Z",
+      "accessedAt": "2026-05-29T18:00:46.417Z",
       "accessCount": 0
     }
   ]
