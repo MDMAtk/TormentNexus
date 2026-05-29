@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0-alpha.72] - 2026-05-29
+
+### Added
+- **Massive MCP Registry Expansion (18,881 unique servers)**:
+  - Executed 8 parallel scraper waves targeting all known MCP directories, registries, and community lists.
+  - **Sources scraped**: Official MCP Registry (`registry.modelcontextprotocol.io`), Smithery.ai (paginated, 294 servers), Glama.ai (99), PulseMCP, mcp.so, MCPHubX, NPM deep search (4,542 packages), GitHub Topics (11 topics × 5 pages), GitHub Search API (30+ queries), HackerNews MCP posts, PyPI, Docker Hub, Reddit MCP subreddits, `ever-works/awesome-mcp-servers`, `korchasa/awesome-mcp`, `tolkonepiu/best-of-mcp-servers`, `punkpeye/awesome-mcp-servers` (2,400+ repos), `wong2/awesome-mcp-servers`, `appcypher/awesome-mcp-servers`, `mcpso/servers`, `punkpeye/awesome-mcp-clients`, Cline marketplace, vibehackers.io, MCPNest, MCPPedia, and more.
+  - **Bobbybookmarks deep file mining**: Extracted GitHub repos from 13 category `.md` files (1.7MB AGENT_ORCHESTRATION_WORKFLOW, 514KB AI_AGENTS_FRAMEWORKS, 496KB CONNECTIVITY_MCP_A2A, etc.), 8 `.txt` files (1.2MB incoming_resources.txt), and all 14 atlas.json layers (13,412 entries).
+  - **atlas.db deep scan**: Re-extracted all GitHub URLs from all atlas.db entries (not just GitHub-hosted URLs).
+  - **Deduplication**: All 58 source types are deduplicated against canonical IDs (github/owner/repo, npm/package, docker/image, etc.).
+  - **Config recipes**: Auto-generated `npx`/`pip`/`docker` stdio recipes for all 18,877 servers with no existing recipe.
+  - Final catalog: **18,881 unique MCP servers** with **58 source types** and **18,877 config recipes** in `borg.db`.
+
 ## [1.0.0-alpha.71] - 2026-05-29
 
 ### Added
