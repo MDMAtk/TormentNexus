@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { McpmRegistry, RegistryItem } from '../skills/McpmRegistry.js';
 import { McpmInstaller } from '../skills/McpmInstaller.js';
 import { MeshService, SwarmMessage, SwarmMessageType } from '../mesh/MeshService.js';
-import { Registry } from '@hypercode/mcp-registry';
+import { Registry } from '@tormentnexus/mcp-registry';
 import path from 'path';
 
 export const MarketplaceEntrySchema = z.object({
@@ -70,7 +70,7 @@ export class MarketplaceService {
             id: item.name,
             name: item.name,
             description: "Official Skill",
-            author: "Borg Ecosystem",
+            author: "TormentNexus Ecosystem",
             type: 'skill', // Legacy are mostly skills
             source: 'official',
             url: item.url,
@@ -141,7 +141,7 @@ export class MarketplaceService {
             id: manifest.id || 'unknown',
             name: manifest.name || 'Unknown Tool',
             description: manifest.description || '',
-            author: manifest.author || 'Borg Ecosystem',
+            author: manifest.author || 'TormentNexus Ecosystem',
             type: manifest.type || 'tool',
             source: 'community',
             url: manifest.url,
@@ -161,7 +161,7 @@ export class MarketplaceService {
         // 1. Check if it's an MCP server installed in mcp.json
         try {
             // Assume mcp.json is near the root or in a config dir
-            // The default MetaMCP Controller writes to mcp.json in the current working directory or a specific config path
+            // The default TormentNexus Controller writes to mcp.json in the current working directory or a specific config path
             const mcpJsonPath = path.join(process.cwd(), 'mcp.json');
             const mcpJsonRaw = await fs.readFile(mcpJsonPath, 'utf-8');
             const mcpConfig = JSON.parse(mcpJsonRaw);

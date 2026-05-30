@@ -85,16 +85,16 @@ export function createDirectModeAgentRunner(llm: import('./compatibilityToolRunt
 export function getDirectModeCompatibilityTools(): Tool[] {
     return getCompatibilityToolDefinitions({
         descriptions: {
-            run_code: 'Hypercode-compatible alias for one-shot Hypercode code execution without manually enabling Code Mode.',
-            run_python: 'Hypercode-compatible alias for Hypercode sandboxed Python execution.',
-            run_agent: 'Hypercode-compatible autonomous tool-using agent loop backed by Hypercode native LLM and tool execution surfaces.',
-            save_memory: 'Hypercode-compatible alias for persisting agent memory through Hypercode native memory services.',
-            search_memory: 'Hypercode-compatible alias for searching Hypercode native memory services.',
-            save_script: 'Hypercode-compatible alias for persisting reusable scripts in Hypercode managed config.',
-            save_tool_set: 'Hypercode-compatible alias for saving the currently loaded Hypercode session tools as a named tool set.',
-            load_tool_set: 'Hypercode-compatible alias for loading a saved Hypercode tool set into the current session working set.',
-            toolset_list: 'List Hypercode-managed saved tool sets available to the current direct-mode session.',
-            import_mcp_config: 'Hypercode-compatible alias for importing MCP servers from Claude-style JSON config content.',
+            run_code: 'TormentNexus-compatible alias for one-shot TormentNexus code execution without manually enabling Code Mode.',
+            run_python: 'TormentNexus-compatible alias for TormentNexus sandboxed Python execution.',
+            run_agent: 'TormentNexus-compatible autonomous tool-using agent loop backed by TormentNexus native LLM and tool execution surfaces.',
+            save_memory: 'TormentNexus-compatible alias for persisting agent memory through TormentNexus native memory services.',
+            search_memory: 'TormentNexus-compatible alias for searching TormentNexus native memory services.',
+            save_script: 'TormentNexus-compatible alias for persisting reusable scripts in TormentNexus managed config.',
+            save_tool_set: 'TormentNexus-compatible alias for saving the currently loaded TormentNexus session tools as a named tool set.',
+            load_tool_set: 'TormentNexus-compatible alias for loading a saved TormentNexus tool set into the current session working set.',
+            toolset_list: 'List TormentNexus-managed saved tool sets available to the current direct-mode session.',
+            import_mcp_config: 'TormentNexus-compatible alias for importing MCP servers from Claude-style JSON config content.',
         },
     });
 }
@@ -146,7 +146,7 @@ export async function tryHandleDirectModeCompatibilityTool(
             args,
             agentRunner,
             delegatedToolCaller,
-            'Agent runner not available in Hypercode direct mode.',
+            'Agent runner not available in TormentNexus direct mode.',
         );
     }
 
@@ -178,7 +178,7 @@ export async function tryHandleDirectModeCompatibilityTool(
         return await executeCompatibleImportConfig(
             args,
             configImportService,
-            'Config import service not available in Hypercode direct mode.',
+            'Config import service not available in TormentNexus direct mode.',
         );
     }
 

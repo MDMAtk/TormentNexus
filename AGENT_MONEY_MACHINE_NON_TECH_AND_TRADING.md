@@ -5,7 +5,7 @@ _Analysis from 7,944-tool Atlas ecosystem — what agents can actually run_
 
 ## THE LANDSCAPE
 
-Forget "learn to code." The question is: **what businesses can a Borg-orchestrated
+Forget "learn to code." The question is: **what businesses can a TormentNexus-orchestrated
 agent swarm run while you sleep?** The Atlas proves the tools exist. Here is the
 complete menu, sorted by automation feasibility and money-on-the-table.
 
@@ -67,7 +67,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** Morning Brew sold for $75M. The Hustle sold for $30M. Both started as curated newsletters. AI can do 90% of the work: find the stories, summarize them, write the newsletter, A/B test subject lines, schedule sends. You provide the taste and niche selection. 5 niche newsletters at 10K subs each, $25 CPM = $1,250/issue x 4 weeks = $5K/month just from ads.
 
-> **Borg Advantage:** Deep Research + Memory = newsletter that gets smarter every week. Memory tracks which topics get highest open rates. Self-healing: if an RSS feed breaks, agent finds alternative sources.
+> **TormentNexus Advantage:** Deep Research + Memory = newsletter that gets smarter every week. Memory tracks which topics get highest open rates. Self-healing: if an RSS feed breaks, agent finds alternative sources.
 
 ---
 
@@ -106,7 +106,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** This is the lowest-risk, lowest-tech entry point. Zero inventory. AI generates designs. AI writes SEO-optimized listings. The math: if each design earns $0.50/month and you have 10,000 designs across 5 platforms, thats $25,000/month passive. The hard part is volume - you need thousands of designs. Agents make that possible.
 
-> **Borg Advantage:** This is pure volume + iteration. Borg manages 10,000+ designs as "skills" - load the trending-niche skill when researching, swap to upload skill when publishing. Memory tracks which niches, colors, phrases converted. Healer re-uploads if a platform rejects a design.
+> **TormentNexus Advantage:** This is pure volume + iteration. TormentNexus manages 10,000+ designs as "skills" - load the trending-niche skill when researching, swap to upload skill when publishing. Memory tracks which niches, colors, phrases converted. Healer re-uploads if a platform rejects a design.
 
 ---
 
@@ -136,7 +136,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 | Tool | Sig | Inn | Match | Description |
 |------|-----|-----|-------|-------------|
 | [SamMorrowDrums/remarkable-mcp](https://github.com/SamMorrowDrums/remarkable-mcp) | 96 | 10 | notebook | Enables seamless integration of reMarkable tablet with AI tools for en... |
-| [smallnest/mcp-prompt-server-go](https://github.com/smallnest/mcp-prompt-server-go) | 95 | 10 | template | A Borg project providing a powerful Model Context Protocol (MCP) promp... |
+| [smallnest/mcp-prompt-server-go](https://github.com/smallnest/mcp-prompt-server-go) | 95 | 10 | template | A TormentNexus project providing a powerful Model Context Protocol (MCP) promp... |
 | [xiaoguomeiyitian/toolbox](https://github.com/xiaoguomeiyitian/toolbox) | 95 | 10 | template | | An AI-powered automation tool development platform that provides mod... |
 | [siddhant-k-code/memory-journal-mcp-server](https://github.com/siddhant-k-code/memory-journal-mcp-server) | 95 | 9 | journal | A MCP server for searching and analyzing iCloud photo libraries. |
 | [kadykov/mcp-openapi-schema-explorer](https://github.com/kadykov/mcp-openapi-schema-explorer) | 95 | 9 | template | This resource provides a server that enables token-efficient access to... |
@@ -145,7 +145,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** KDP low-content books (journals, coloring books, puzzle books) require zero writing. AI generates the interior pages, designs the cover, writes the listing. Volume game: 100 books averaging $2 royalty = $200/month passive. 1,000 books = $2,000/month. People are doing this manually; agents 100x the output.
 
-> **Borg Advantage:** This is pure volume + SEO. Skill Decision System loads niche-research skill when finding categories, swaps to design skill when creating covers. Memory tracks which niches, which keywords, which cover styles convert.
+> **TormentNexus Advantage:** This is pure volume + SEO. Skill Decision System loads niche-research skill when finding categories, swaps to design skill when creating covers. Memory tracks which niches, which keywords, which cover styles convert.
 
 ---
 
@@ -185,7 +185,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** This is the most recession-proof hustle. Plumbers always need calls. The model: you generate the leads, the business pays per lead or per booked job. $50-150 per qualified lead. 10 clients x 20 leads/month = $10K-$30K/month. AI handles: building the sites, running the ads, answering the phones, booking the appointments. Human handles: the relationship with the business owner.
 
-> **Borg Advantage:** Multi-agent: one agent per client business, all sharing best practices via memory. Healer fixes broken landing pages. Progressive tool loading: Google Ads skills during bid optimization, phone skills during call handling.
+> **TormentNexus Advantage:** Multi-agent: one agent per client business, all sharing best practices via memory. Healer fixes broken landing pages. Progressive tool loading: Google Ads skills during bid optimization, phone skills during call handling.
 
 ---
 
@@ -218,13 +218,13 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 | [allvoicelab/allvoicelab-mcp](https://github.com/allvoicelab/allvoicelab-mcp) | 98 | 10 | content | AllVoiceLab MCP server enabling AI-driven text-to-speech, video transl... |
 | [zoharbabin/kaltura-mcp](https://github.com/zoharbabin/kaltura-mcp) | 98 | 10 | content | A secure, AI-powered server that integrates with Kaltura's API to enab... |
 | [gyoridavid/short-video-maker](https://github.com/gyoridavid/short-video-maker) | 98 | 10 | content | An open-source automated video creation tool that generates short-form... |
-| [infranodus/mcp-server-infranodus](https://github.com/infranodus/mcp-server-infranodus) | 98 | 10 | content | A Borg intelligence platform integrating InfraNodus knowledge graphs w... |
+| [infranodus/mcp-server-infranodus](https://github.com/infranodus/mcp-server-infranodus) | 98 | 10 | content | A TormentNexus intelligence platform integrating InfraNodus knowledge graphs w... |
 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 98 | 10 | content | An AI agent that aggregates and synthesizes information from Reddit, X... |
 | _+42 more_ | | | | |
 
 > **Real Talk:** Affiliate niche sites are the OG passive income model. "Best [product] 2024" articles earn $100-1,000/month each in Amazon commissions. 50 articles across 5 niches = $5K-$50K/month. AI writes 10x faster than humans. The challenge: Google helpful content update penalizes AI content. Solution: use AI for research + outline, human for final polish. Or: use AI to generate genuinely helpful comparison tables that humans couldnt build at scale.
 
-> **Borg Advantage:** Memory tracks which articles rank, which get traffic, which convert. Self-healing: if Google drops a page, healer agent diagnoses (thin content? bad links?) and fixes. Progressive skill loading: SEO skills during optimization, writing skills during content creation.
+> **TormentNexus Advantage:** Memory tracks which articles rank, which get traffic, which convert. Self-healing: if Google drops a page, healer agent diagnoses (thin content? bad links?) and fixes. Progressive skill loading: SEO skills during optimization, writing skills during content creation.
 
 ---
 
@@ -264,7 +264,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** Faceless YouTube channels (Reddit stories, motivational, facts, history) are generating $10K-$100K/month for creators. AI makes the ENTIRE pipeline autonomous: research trending topics, write script, generate voice, create visuals, edit video, add captions, post. 1 video/day x 5 channels = 150 videos/month. Scale to 10 channels = 300 videos/month. Only agents make this volume possible.
 
-> **Borg Advantage:** Volume game. Skill Decision loads trend-research skill in morning, video-production skill in afternoon, analytics skill at night. Memory remembers which video styles, which hooks, which topics performed. Healer re-renders if ffmpeg fails.
+> **TormentNexus Advantage:** Volume game. Skill Decision loads trend-research skill in morning, video-production skill in afternoon, analytics skill at night. Memory remembers which video styles, which hooks, which topics performed. Healer re-renders if ffmpeg fails.
 
 ---
 
@@ -304,7 +304,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** Rental arbitrage = lease a place long-term, sublet short-term on Airbnb. The math works when nightly rates average 2-3x the monthly rent/30. AI handles the 80% that is guest communication, pricing, and calendar management. Human handles: signing the lease, furnishing, physical cleaning. Start with 1 unit, scale to 5-10.
 
-> **Borg Advantage:** Dynamic pricing needs real-time market monitoring. Memory stores: which dates command premium pricing, which guests left good reviews, which cleaning teams are reliable. LLM Waterfall ensures guest messages never go unanswered.
+> **TormentNexus Advantage:** Dynamic pricing needs real-time market monitoring. Memory stores: which dates command premium pricing, which guests left good reviews, which cleaning teams are reliable. LLM Waterfall ensures guest messages never go unanswered.
 
 ---
 
@@ -344,7 +344,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** Retail arbitrage (buying clearance at Walmart, selling on Amazon) is the least tech-heavy entry point. Agent scans store apps for clearance, calculates ROI including FBA fees, and tells you exactly what to buy. Repricing is already fully automated by existing tools. The gap: nobody has an AI that ALSO writes your listings AND monitors reviews AND predicts demand.
 
-> **Borg Advantage:** Memory stores which products sold well, which categories are seasonal, which suppliers are reliable. Healer loop: if Amazon suspends a listing, agent diagnoses why and submits appeal.
+> **TormentNexus Advantage:** Memory stores which products sold well, which categories are seasonal, which suppliers are reliable. Healer loop: if Amazon suspends a listing, agent diagnoses why and submits appeal.
 
 ---
 
@@ -378,12 +378,12 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 | [Dianel555/gemini-superclaude-mcp-server](https://github.com/Dianel555/gemini-superclaude-mcp-server) | 95 | 9 | domain | This project is a complete rewrite of an MCP server designed to integr... |
 | [Dicklesworthstone/beads_viewer](https://github.com/Dicklesworthstone/beads_viewer) | 95 | 9 | pagerank | A high-performance, graph-aware Terminal User Interface and CLI tool f... |
 | [rinadelph/domain-mcp](https://github.com/rinadelph/domain-mcp) | 94 | 9 | domain | A MCP server enabling AI assistants to perform domain research tasks s... |
-| [modelcontextprotocol-servers/whois-mcp](https://github.com/modelcontextprotocol-servers/whois-mcp) | 94 | 9 | domain | AI-powered WHOIS lookup tool integrated into the Borg platform for aut... |
+| [modelcontextprotocol-servers/whois-mcp](https://github.com/modelcontextprotocol-servers/whois-mcp) | 94 | 9 | domain | AI-powered WHOIS lookup tool integrated into the TormentNexus platform for aut... |
 | _+21 more_ | | | | |
 
 > **Real Talk:** Domain flipping is old school but still works. AI edge: scan 100,000 expiring domains per day, evaluate each in seconds, auto-bid on the good ones. No human can compete with that speed. Average flip: buy at $10-100, sell at $200-2,000. 10 flips/month = $2K-$20K.
 
-> **Borg Advantage:** Speed is everything. Agent monitors drop lists 24/7. Memory tracks which domain categories, which TLDs, which price ranges have best ROI. LLM writes compelling Sedo listings.
+> **TormentNexus Advantage:** Speed is everything. Agent monitors drop lists 24/7. Memory tracks which domain categories, which TLDs, which price ranges have best ROI. LLM writes compelling Sedo listings.
 
 ---
 
@@ -422,7 +422,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** Pure arbitrage is mostly competed away by HFT firms. The remaining edge is: (1) cross-chain arbitrage (CEX vs DEX), (2) new token listing arbitrage, (3) geographical arbitrage (Korean premium). These all require speed that only agents provide.
 
-> **Borg Advantage:** Multi-exchange monitoring needs zero downtime. LLM Waterfall ensures the monitoring agent never sleeps. Memory tracks historical spread patterns to predict when to watch harder.
+> **TormentNexus Advantage:** Multi-exchange monitoring needs zero downtime. LLM Waterfall ensures the monitoring agent never sleeps. Memory tracks historical spread patterns to predict when to watch harder.
 
 ---
 
@@ -462,7 +462,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** Dropshipping is notorious for low margins and high ad costs. The AI advantage: (1) testing 50 products/week instead of 5, (2) AI-generated ad creative that A/B tests itself, (3) auto-pause losing ads before they burn budget. Most dropshippers fail because they cant test fast enough. Agents solve that.
 
-> **Borg Advantage:** Progressive Skill Disclosure loads product-research skills when sourcing, then swaps to ad-management skills when optimizing. Multi-agent: one agent finds products, another writes copy, a third manages ads. All share memory about what worked.
+> **TormentNexus Advantage:** Progressive Skill Disclosure loads product-research skills when sourcing, then swaps to ad-management skills when optimizing. Multi-agent: one agent finds products, another writes copy, a third manages ads. All share memory about what worked.
 
 ---
 
@@ -500,9 +500,9 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 | [Mrbaeksang/korea-stock-analyzer-mcp](https://github.com/Mrbaeksang/korea-stock-analyzer-mcp) | 95 | 9 | stock | This project implements a Model Context Protocol (MCP) server to integ... |
 | _+52 more_ | | | | |
 
-> **Real Talk:** The AI hedge fund concept (see virattt/ai-hedge-fund) is trending but unproven at retail scale. Real edge: multi-agent debate (Borg council) where one agent argues bull, another argues bear, and a critic agent decides. This mimics how real hedge fund investment committees work.
+> **Real Talk:** The AI hedge fund concept (see virattt/ai-hedge-fund) is trending but unproven at retail scale. Real edge: multi-agent debate (TormentNexus council) where one agent argues bull, another argues bear, and a critic agent decides. This mimics how real hedge fund investment committees work.
 
-> **Borg Advantage:** Council/Debate system = investment committee simulation. PairOrchestrator = one agent researches, another executes. Memory-Tool feedback = remember which indicators predicted which outcomes.
+> **TormentNexus Advantage:** Council/Debate system = investment committee simulation. PairOrchestrator = one agent researches, another executes. Memory-Tool feedback = remember which indicators predicted which outcomes.
 
 ---
 
@@ -541,7 +541,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 > **Real Talk:** As a SERVICE: offer to job seekers for $200-500/month. Agent applies to 500+ jobs per week with tailored resumes. As PERSONAL use: get yourself a better job. The tech exists right now: LinkedIn MCP + LLM tailoring + browser automation = auto-apply machine.
 
-> **Borg Advantage:** Session memory remembers which companies, which roles, which resume versions got responses. Multi-agent: researcher finds jobs, writer tailors documents, browser agent submits applications.
+> **TormentNexus Advantage:** Session memory remembers which companies, which roles, which resume versions got responses. Multi-agent: researcher finds jobs, writer tailors documents, browser agent submits applications.
 
 ---
 
@@ -579,9 +579,9 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 | [ai-agent-hub/ai-agent-marketplace-index-mcp](https://github.com/ai-agent-hub/ai-agent-marketplace-index-mcp) | 98 | 10 | dex | OneKey Agent Gateway simplifies access to commercial APIs, skills, and... |
 | _+138 more_ | | | | |
 
-> **Real Talk:** Most retail algo traders lose money. The edge comes from: (1) speed - agents react faster than humans, (2) discipline - no emotional trading, (3) memory - Borg remembers which strategies worked in which market conditions. Start with paper trading, never risk more than you can lose.
+> **Real Talk:** Most retail algo traders lose money. The edge comes from: (1) speed - agents react faster than humans, (2) discipline - no emotional trading, (3) memory - TormentNexus remembers which strategies worked in which market conditions. Start with paper trading, never risk more than you can lose.
 
-> **Borg Advantage:** LLM Waterfall means trading never stops even if one provider rate-limits. Tiered Memory remembers which strategies performed in which market regimes. Self-healing adjusts parameters when trades fail.
+> **TormentNexus Advantage:** LLM Waterfall means trading never stops even if one provider rate-limits. Tiered Memory remembers which strategies performed in which market regimes. Self-healing adjusts parameters when trades fail.
 
 ---
 
@@ -621,7 +621,7 @@ complete menu, sorted by automation feasibility and money-on-the-table.
 
 ## MCP SERVERS NEEDED PER HUSTLE
 
-Current borg.db has 68 MCP servers. Add these to unlock each hustle:
+Current tormentnexus.db has 68 MCP servers. Add these to unlock each hustle:
 
 **Crypto Trading Bot:**
 - `mcp-server-ccxt`

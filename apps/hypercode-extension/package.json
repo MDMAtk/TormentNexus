@@ -1,13 +1,13 @@
 {
-  "name": "hypercode-extension",
-  "version": "1.0.0-alpha.79",
-  "description": "Hypercode Extension",
+  "name": "tormentnexus-extension",
+  "version": "1.0.0-alpha.80",
+  "description": "TormentNexus Extension",
   "license": "MIT",
   "private": true,
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/srbhptl39/Hypercode-Extension.git"
+    "url": "https://github.com/srbhptl39/TormentNexus-Extension.git"
   },
   "type": "module",
   "scripts": {

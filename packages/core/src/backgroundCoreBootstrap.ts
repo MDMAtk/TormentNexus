@@ -101,7 +101,7 @@ export async function ensureDashboardRunning(log: (msg?: unknown) => void = () =
 
     const root = resolveMonorepoRoot(process.cwd()) || resolveMonorepoRoot(path.dirname(fileURLToPath(import.meta.url)));
     if (!root) {
-        log('[Hypercode Dashboard] Monorepo root not found. Skipping auto-start.');
+        log('[TormentNexus Dashboard] Monorepo root not found. Skipping auto-start.');
         return;
     }
 
@@ -114,11 +114,11 @@ export async function ensureDashboardRunning(log: (msg?: unknown) => void = () =
     const scriptToRun = hasStandalone ? startScript : devScript;
 
     if (!fs.existsSync(scriptToRun)) {
-        log(`[Hypercode Dashboard] Start script not found at ${scriptToRun}. Skipping auto-start.`);
+        log(`[TormentNexus Dashboard] Start script not found at ${scriptToRun}. Skipping auto-start.`);
         return;
     }
 
-    log(`[Hypercode Dashboard] Lazy spawning dashboard server via ${path.basename(scriptToRun)} on port ${dashboardPort}...`);
+    log(`[TormentNexus Dashboard] Lazy spawning dashboard server via ${path.basename(scriptToRun)} on port ${dashboardPort}...`);
     try {
         const child = spawn(process.execPath, [scriptToRun, '--port', String(dashboardPort), '--host', '127.0.0.1'], {
             detached: true,
@@ -127,13 +127,13 @@ export async function ensureDashboardRunning(log: (msg?: unknown) => void = () =
             cwd: webDir,
             env: {
                 ...process.env,
-                HYPERCODE_TRPC_UPSTREAM: 'http://127.0.0.1:4100/trpc',
+                TORMENTNEXUS_TRPC_UPSTREAM: 'http://127.0.0.1:4100/trpc',
             }
         });
         child.unref?.();
-        log(`[Hypercode Dashboard] Dashboard background server spawned successfully (PID: ${child.pid}).`);
+        log(`[TormentNexus Dashboard] Dashboard background server spawned successfully (PID: ${child.pid}).`);
     } catch (e: any) {
-        log(`[Hypercode Dashboard] Failed to spawn dashboard server: ${e.message}`);
+        log(`[TormentNexus Dashboard] Failed to spawn dashboard server: ${e.message}`);
     }
 }
 
@@ -155,7 +155,7 @@ export async function ensureBackgroundCoreRunning(
         ? (options.cliEntryPath ?? null)
         : resolveCliEntryPath();
     if (!cliEntryPath) {
-        log('[Hypercode Core] Background core bootstrap skipped: CLI entrypoint not found.');
+        log('[TormentNexus Core] Background core bootstrap skipped: CLI entrypoint not found.');
         return { status: 'launch-unavailable' };
     }
 

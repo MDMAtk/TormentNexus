@@ -14,12 +14,12 @@ async function runTest() {
         env: {
             ...process.env,
             NODE_ENV: "development",
-            HYPERCODE_PORT: "4100"
+            TORMENTNEXUS_PORT: "4100"
         }
     });
 
     const client = new Client(
-        { name: "hypercode-test-client", version: "1.0.0" },
+        { name: "tormentnexus-test-client", version: "1.0.0" },
         { capabilities: {} }
     );
 

@@ -1,14 +1,14 @@
 # AGENT-AUTOMATABLE SIDE HUSTLES & BUSINESSES
-_Analysis derived from 7,944-tool Atlas ecosystem + Borg infrastructure audit_
+_Analysis derived from 7,944-tool Atlas ecosystem + TormentNexus infrastructure audit_
 
 ---
 
 ## EXECUTIVE SUMMARY
 
-The Borg/Hypercode control plane + the Atlas tool ecosystem make it technically feasible
+The TormentNexus/TormentNexus control plane + the Atlas tool ecosystem make it technically feasible
 to fully automate 15+ side hustle categories. The key insight: **every hustle below
 maps to a pipeline of MCP servers, coding agents, and LLM workflows that already exist
-in the Atlas.** The missing piece is orchestration glue -- which is exactly what Borg provides.
+in the Atlas.** The missing piece is orchestration glue -- which is exactly what TormentNexus provides.
 
 **Automation Tier Rankings:**
 
@@ -50,7 +50,7 @@ in the Atlas.** The missing piece is orchestration glue -- which is exactly what
 | [allvoicelab/allvoicelab-mcp](https://github.com/allvoicelab/allvoicelab-mcp) | 98 | 10 | content | AllVoiceLab MCP server enabling AI-driven text-to-speech, vi... |
 | [zoharbabin/kaltura-mcp](https://github.com/zoharbabin/kaltura-mcp) | 98 | 10 | content | A secure, AI-powered server that integrates with Kaltura's A... |
 | [gyoridavid/short-video-maker](https://github.com/gyoridavid/short-video-maker) | 98 | 10 | content | An open-source automated video creation tool that generates ... |
-| [infranodus/mcp-server-infranodus](https://github.com/infranodus/mcp-server-infranodus) | 98 | 10 | content | A Borg intelligence platform integrating InfraNodus knowledg... |
+| [infranodus/mcp-server-infranodus](https://github.com/infranodus/mcp-server-infranodus) | 98 | 10 | content | A TormentNexus intelligence platform integrating InfraNodus knowledg... |
 | [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 98 | 10 | content | An AI agent that aggregates and synthesizes information from... |
 | [prathammanocha/wordpress-mcp-server](https://github.com/prathammanocha/wordpress-mcp-server) | 98 | 10 | wordpress | A comprehensive WordPress MCP server enabling AI-driven inte... |
 | [shinpr/sub-agents-mcp](https://github.com/shinpr/sub-agents-mcp) | 98 | 10 | markdown | Define task-specific AI sub-agents in Markdown for any MCP-c... |
@@ -297,7 +297,7 @@ in the Atlas.** The missing piece is orchestration glue -- which is exactly what
 
 - **Revenue Model:** Hourly ($50-$200/hr), fixed-price projects, ongoing maintenance contracts
 - **Monthly Range:** $5,000-$50,000
-- **Automation Level:** VERY HIGH - Claude Code + Borg orchestration can handle most coding tasks
+- **Automation Level:** VERY HIGH - Claude Code + TormentNexus orchestration can handle most coding tasks
 - **Agent Requirements:** Coding harness (Claude Code), git MCP, project management MCP, billing MCP
 - **Atlas Tool Count:** 91 relevant tools
 
@@ -393,7 +393,7 @@ in the Atlas.** The missing piece is orchestration glue -- which is exactly what
 
 - **Revenue Model:** Per-test-suite pricing, monthly retainer, per-bug bounty
 - **Monthly Range:** $2,000-$15,000
-- **Automation Level:** VERY HIGH - Borg healer + browser agents can run and diagnose tests autonomously
+- **Automation Level:** VERY HIGH - TormentNexus healer + browser agents can run and diagnose tests autonomously
 - **Agent Requirements:** Browser MCP, code executor, healer loop, test framework MCPs, report generator
 - **Atlas Tool Count:** 109 relevant tools
 
@@ -519,19 +519,19 @@ in the Atlas.** The missing piece is orchestration glue -- which is exactly what
 
 ---
 
-## BORG-SPECIFIC COMPETITIVE ADVANTAGES
+## TORMENTNEXUS-SPECIFIC COMPETITIVE ADVANTAGES
 
-What makes Borg/Hypercode uniquely suited to run these businesses:
+What makes TormentNexus/TormentNexus uniquely suited to run these businesses:
 
 1. **LLM Waterfall**: Automatic failover means your business pipeline never stops
-   - If OpenAI rate-limits, Borg cascades to OpenRouter, then LM Studio/Ollama
+   - If OpenAI rate-limits, TormentNexus cascades to OpenRouter, then LM Studio/Ollama
    - Critical for 24/7 automated services that cant afford downtime
 
 2. **Progressive MCP Tool Routing**: Only loads tools when needed
    - Content hustle loads writing+SEO tools, then swaps to analytics tools for reporting
    - No context window waste = more profitable per-token
 
-3. **Self-Healing Loop**: If an automated task breaks, Borg fixes itself
+3. **Self-Healing Loop**: If an automated task breaks, TormentNexus fixes itself
    - Blog post formatting breaks? Healer diagnoses, fixes, re-verifies
    - API integration fails? Healer patches the connector and retries
 
@@ -558,13 +558,13 @@ Based on automation level, revenue potential, and existing Atlas tool coverage:
 
 | Rank | Hustle | Why Start Here | Setup Time | First Revenue |
 |------|--------|---------------|------------|---------------|
-| 1 | **Research/Consulting Reports** | Deep research is LLMs strongest capability. Atlas has 164+ search/research MCPs. Borg has the orchestration. | 2-3 days | 1-2 weeks |
+| 1 | **Research/Consulting Reports** | Deep research is LLMs strongest capability. Atlas has 164+ search/research MCPs. TormentNexus has the orchestration. | 2-3 days | 1-2 weeks |
 | 2 | **Customer Support SaaS** | 90%+ of tier-1 tickets are repetitive. RAG + LLM = instant resolution. Recurring revenue. | 1-2 weeks | 2-4 weeks |
-| 3 | **Freelance Coding Agency** | Claude Code + Borg = 10x output. You can take 10x more contracts. | Immediate | 1 week |
+| 3 | **Freelance Coding Agency** | Claude Code + TormentNexus = 10x output. You can take 10x more contracts. | Immediate | 1 week |
 | 4 | **Content/SEO Blog Network** | LLM writes, SEO tool optimizes, scheduler publishes. Build 5-10 niche sites. | 3-5 days | 4-8 weeks |
 | 5 | **API Integration Agency** | Every business needs integrations. Agents can wire APIs faster than humans. | 1 week | 2-3 weeks |
 | 6 | **Translation Services** | Near-zero marginal cost. LLMs translate at human parity for major languages. | 1-2 days | 1-2 weeks |
-| 7 | **QA/Testing Service** | Borg healer + browser agents = automated test suites with self-healing. | 3-5 days | 2-4 weeks |
+| 7 | **QA/Testing Service** | TormentNexus healer + browser agents = automated test suites with self-healing. | 3-5 days | 2-4 weeks |
 | 8 | **Social Media Agency** | Content creation + scheduling + analytics all automatable. High retainer value. | 1-2 weeks | 3-6 weeks |
 | 9 | **Lead Gen/Outbound** | Scraping + personalization + sending = pipeline machine. But compliance needs HITL. | 1 week | 2-4 weeks |
 | 10 | **Video/Media (Faceless)** | Fully automated YouTube/TikTok channels. Higher setup cost but passive income. | 2-3 weeks | 4-12 weeks |
@@ -585,9 +585,9 @@ Based on automation level, revenue potential, and existing Atlas tool coverage:
 
 ---
 
-## BORG MCP SERVER RECOMMENDATIONS FOR EACH HUSTLE
+## TORMENTNEXUS MCP SERVER RECOMMENDATIONS FOR EACH HUSTLE
 
-Current borg.db has 68 MCP servers. Recommended additions by hustle:
+Current tormentnexus.db has 68 MCP servers. Recommended additions by hustle:
 
 **Research/Consulting:** `tavily-mcp, brave-search-mcp, searxng-mcp, perplexity-mcp, arxiv-mcp, pdf-reader-mcp`
 

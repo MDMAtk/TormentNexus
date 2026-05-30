@@ -54,7 +54,7 @@
   - Extracted 1,797 server profiles directly from `mcp.directory` using high-performance concurrent crawler.
   - Successfully harvested descriptions, categorizations, website links, exact package identifiers (NPM, PyPI, Docker), and precise JSON launch configurations.
   - Added **502 new unique MCP servers** and updated **1,295 existing profiles** with high-fidelity metadata.
-  - Finalized registry: **28,534 unique MCP servers** in `borg.db`.
+  - Finalized registry: **28,534 unique MCP servers** in `tormentnexus.db`.
 
 ## [1.0.0-alpha.73] - 2026-05-29
 
@@ -64,7 +64,7 @@
   - Extracted **environment variables**, **auth models**, and **required secrets** for all official packages.
   - Deep-scraped Smithery (`registry.smithery.ai`) for detailed `configSchema` structures.
   - Enriched GitHub metadata (stars, topics, languages) for discovered servers.
-  - Final catalog: **28,032 unique MCP servers** in `borg.db`.
+  - Final catalog: **28,032 unique MCP servers** in `tormentnexus.db`.
   - Quality metrics: **9,726** high-confidence config recipes and **9,688** servers categorized with an explicit authentication model.
 
 ## [1.0.0-alpha.72] - 2026-05-29
@@ -77,17 +77,17 @@
   - **atlas.db deep scan**: Re-extracted all GitHub URLs from all atlas.db entries (not just GitHub-hosted URLs).
   - **Deduplication**: All 58 source types are deduplicated against canonical IDs (github/owner/repo, npm/package, docker/image, etc.).
   - **Config recipes**: Auto-generated `npx`/`pip`/`docker` stdio recipes for all 18,877 servers with no existing recipe.
-  - Final catalog: **18,881 unique MCP servers** with **58 source types** and **18,877 config recipes** in `borg.db`.
+  - Final catalog: **18,881 unique MCP servers** with **58 source types** and **18,877 config recipes** in `tormentnexus.db`.
 
 ## [1.0.0-alpha.71] - 2026-05-29
 
 ### Added
-- **Aggressive Text Ingestion & Integration (Borg Repos, Reprocess Queue, Incoming Resources)**:
+- **Aggressive Text Ingestion & Integration (TormentNexus Repos, Reprocess Queue, Incoming Resources)**:
   - Scraped additional online repository listings and raw resources inside `bobbybookmarks` directory.
   - Successfully extracted **2,078 unique MCP repositories** across multiple raw list files.
   - Ingested **1,392 new, unique MCP servers** and prunes/consolidated **686 existing servers**.
   - Generated fallback stdio configurations for all 1,392 newly registered servers.
-  - Consolidated internal catalog database to hold **10,370 total unique MCP servers** under `published_mcp_servers` in `borg.db`.
+  - Consolidated internal catalog database to hold **10,370 total unique MCP servers** under `published_mcp_servers` in `tormentnexus.db`.
 
 ## [1.0.0-alpha.70] - 2026-05-29
 
@@ -96,21 +96,21 @@
   - Triggered the core ingestion engine across all active remote directory APIs.
   - Ingested **767 servers** successfully across Glama, Smithery, NPM, and GitHub registries.
   - Advanced 188 newly discovered servers to `normalized` and created 32 active recipes.
-  - Total internal catalog database now indexes **8,978 unique MCP servers** under `published_mcp_servers` inside `borg.db`.
+  - Total internal catalog database now indexes **8,978 unique MCP servers** under `published_mcp_servers` inside `tormentnexus.db`.
 
 ## [1.0.0-alpha.69] - 2026-05-29
 
 ### Added
 - **Online Registry Scraper (Awesome MCP Servers)**:
   - Fetched and scraped active repositories listed in three popular awesome-mcp-servers lists on GitHub.
-  - Ingested **1,996 net-new MCP servers** and prunes/consolidated **629 existing servers** in `published_mcp_servers` inside `borg.db`.
+  - Ingested **1,996 net-new MCP servers** and prunes/consolidated **629 existing servers** in `published_mcp_servers` inside `tormentnexus.db`.
   - Generated dynamic configuration recipes for all newly scraped servers.
 
 ## [1.0.0-alpha.68] - 2026-05-29
 
 ### Added
 - **MCP Catalog Registry Ingestion & Integration**:
-  - Integrated `bobbybookmarks` bookmarks database (`bookmarks.db` and `atlas.db`) into the central `borg.db` catalog.
+  - Integrated `bobbybookmarks` bookmarks database (`bookmarks.db` and `atlas.db`) into the central `tormentnexus.db` catalog.
   - Extracted **6,124 new, unique public MCP servers** and consolidated **72 existing servers** with rich descriptions, tags, and category taxonomies.
   - Automatically generated standard CLI stdio recipes for all newly ingested servers.
 - **Aggressive Session and Memory Deduplication**:
@@ -134,7 +134,7 @@
   - Fully resolved all TypeScript compilation errors across `packages/core` by introducing the missing `ProviderAuthTruth` definitions and aligning `ProviderAuthState` and `ProviderQuotaSnapshot` with the new environment-telemetry models.
   - Eliminated unused `@ts-expect-error` directives, achieving a 100% clean type check.
 - **Verification of Merged Feature Branches**:
-  - Conducted deep graph audits and verified that all local and remote branches (`jules-...`, `nexus-...`) have been successfully merged into `main` with absolutely zero progress or feature regressions.
+  - Conducted deep graph audits and verified that all local and remote branches (`jules-...`, `tormentnexus-...`) have been successfully merged into `main` with absolutely zero progress or feature regressions.
 
 ## [1.0.0-alpha.63] - 2026-05-25
 
@@ -153,9 +153,9 @@
 ## [1.0.0-alpha.62] - 2026-05-19
 
 ### Added
-- **Deep Link Protocol Scheme (`hypercode://`) in Go**:
-  - Built robust URI handling for `hypercode://attach?session=ID` and `hypercode://create?cliType=aider` commands.
-  - Implemented single-instance CLI dispatcher. Clicking deep links routes actions through the active `hypercoded` daemon via HTTP REST.
+- **Deep Link Protocol Scheme (`tormentnexus://`) in Go**:
+  - Built robust URI handling for `tormentnexus://attach?session=ID` and `tormentnexus://create?cliType=aider` commands.
+  - Implemented single-instance CLI dispatcher. Clicking deep links routes actions through the active `tormentnexusd` daemon via HTTP REST.
 - **SQLite L2 Vector Vault Visualizer**:
   - Implemented persistent database queries (`GetAllVaultRecords`) in Go fetching chronic vault memories ordered by importance and heat.
   - Wired the new tRPC `vaultRecords` query to the Next.js control plane to hook persistent SQLite vector records into the UI.
@@ -166,7 +166,7 @@
   - Resolved merge conflict markers and aligned role guidelines across `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `GPT.md`, and `copilot-instructions.md` under `docs/UNIVERSAL_LLM_INSTRUCTIONS.md`.
 
 ### Changed
-- Standardized documentation identity to Hypercode Kernel & HyperCode.
+- Standardized documentation identity to TormentNexus Kernel & TormentNexus.
 - Replaced git merge conflict markers across multiple internal Kotlin and Markdown files with unified content logic.
 
 ## [1.0.0-alpha.61] - 2026-05-17
@@ -178,7 +178,7 @@
   - L2 Vault persistence: All healing events and extracted facts are saved as long-term memory for fleet-wide intelligence sharing.
 
 ### Changed
-- Standardized documentation identity to Hypercode Kernel & HyperCode.
+- Standardized documentation identity to TormentNexus Kernel & TormentNexus.
 - Updated `VERSION.md`, `ROADMAP.md`, and `TODO.md` to reflect Phase 5 active sprint goals.
 - Unified `docs/UNIVERSAL_LLM_INSTRUCTIONS.md` as the single source of truth for all AI agents.
 - Resolved merge conflict markers and aligned role guidelines across `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `GPT.md`, and `copilot-instructions.md`.
@@ -187,7 +187,7 @@
 
 ### Added
 - Fully integrated Go-native `MemoryManager` into the core TS control plane.
-- Wires up `sqlite-vec` storage backend, replacing the deprecated `@hypercode/hypercode` implementation.
+- Wires up `sqlite-vec` storage backend, replacing the deprecated `@tormentnexus/tormentnexus` implementation.
 - Dual-tier cache invalidation for the L1/L2 memory boundaries.
 
 ### Changed

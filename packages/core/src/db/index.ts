@@ -452,7 +452,7 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
     } catch (err) {
         console.warn("[DB Migration] Failed to alter imported_sessions table:", err);
     }
-    // Add missing tables for hypercode-schema
+    // Add missing tables for tormentnexus-schema
     try {
         database.exec(`
             CREATE TABLE IF NOT EXISTS workspace_secrets (
@@ -692,7 +692,7 @@ function initializeSchema(database: InstanceType<typeof Database>): void {
 }
 
 // Default to SQLite local file
-const dbPath = process.env.DATABASE_URL || "borg.db";
+const dbPath = process.env.DATABASE_URL || "tormentnexus.db";
 
 // Ensure we are using absolute path if it is a local file
 const resolvedDbPath = dbPath.startsWith("file:")

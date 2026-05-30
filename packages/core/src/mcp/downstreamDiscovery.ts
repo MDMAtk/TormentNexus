@@ -54,7 +54,7 @@ export function isSameServerInstance(
     params: { name?: string; url?: string | null },
     namespaceUuid: string,
 ): boolean {
-    return params.name === `hypercode-unified-${namespaceUuid}`;
+    return params.name === `tormentnexus-unified-${namespaceUuid}`;
 }
 
 async function visitEligibleServers(
@@ -107,11 +107,11 @@ async function visitEligibleServers(
 
             const actualServerName =
                 session.client.getServerVersion()?.name || params.name || '';
-            const ourServerName = `hypercode-unified-${context.namespaceUuid}`;
+            const ourServerName = `tormentnexus-unified-${context.namespaceUuid}`;
 
             if (actualServerName === ourServerName) {
                 console.log(
-                    `Skipping self-referencing Hypercode server in ${logScope}: "${actualServerName}"`,
+                    `Skipping self-referencing TormentNexus server in ${logScope}: "${actualServerName}"`,
                 );
                 return;
             }

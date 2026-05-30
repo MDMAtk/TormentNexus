@@ -12,10 +12,10 @@ async function main() {
     redirectProtocolUnsafeConsoleMethods();
 
     process.on('unhandledRejection', (reason) => {
-        console.error('[Hypercode Core] Unhandled promise rejection:', reason);
+        console.error('[TormentNexus Core] Unhandled promise rejection:', reason);
     });
     process.on('uncaughtException', (error) => {
-        console.error('[Hypercode Core] Uncaught exception:', error);
+        console.error('[TormentNexus Core] Uncaught exception:', error);
         process.exit(1);
     });
 
@@ -23,7 +23,7 @@ async function main() {
         // PHASE 1: Immediately connect stdio transport with a lightweight MCP server.
         // This ensures the client (e.g., Gemini CLI) receives its initialize response
         // within ~500ms instead of waiting 30-60s for the full MCPServer to load.
-        console.error('[Hypercode Core] Phase 1: Connecting stdio transport immediately...');
+        console.error('[TormentNexus Core] Phase 1: Connecting stdio transport immediately...');
 
         const { Server } = await import('@modelcontextprotocol/sdk/server/index.js');
         const { StdioServerTransport } = await import('@modelcontextprotocol/sdk/server/stdio.js');
@@ -33,7 +33,7 @@ async function main() {
         let serverReady = false;
 
         const lightweightServer = new Server(
-            { name: "hypercode-core", version: "0.99.1" },
+            { name: "tormentnexus-core", version: "0.99.1" },
             { capabilities: { tools: {}, prompts: {}, resources: {} } }
         );
 
@@ -47,7 +47,7 @@ async function main() {
             const deadline = Date.now() + maxWaitMs;
             while (!serverReady) {
                 if (Date.now() >= deadline) {
-                    console.error('[Hypercode Core] Timed out waiting for MCPServer to initialize');
+                    console.error('[TormentNexus Core] Timed out waiting for MCPServer to initialize');
                     break;
                 }
                 await new Promise(r => setTimeout(r, pollIntervalMs));
@@ -57,14 +57,14 @@ async function main() {
                     const tools = await mcpServer.getDirectModeTools();
                     return { tools };
                 } catch (e: any) {
-                    console.error('[Hypercode Core] Error in delegated tools/list:', e.message);
+                    console.error('[TormentNexus Core] Error in delegated tools/list:', e.message);
                 }
             }
             // Fallback: return a loading indicator if server init timed out
             return {
                 tools: [{
-                    name: "hypercode_loading",
-                    description: "HyperCode is still initializing. Please retry in a moment.",
+                    name: "tormentnexus_loading",
+                    description: "TormentNexus is still initializing. Please retry in a moment.",
                     inputSchema: { type: "object", properties: {} }
                 }]
             };
@@ -85,7 +85,7 @@ async function main() {
                 try {
                     return await mcpServer.executeTool(request.params.name, request.params.arguments ?? {});
                 } catch (e: any) {
-                    console.error('[Hypercode Core] Error in delegated tools/call:', e.message);
+                    console.error('[TormentNexus Core] Error in delegated tools/call:', e.message);
                     return {
                         content: [{ type: "text", text: `Error executing tool: ${e.message}` }],
                         isError: true,
@@ -93,7 +93,7 @@ async function main() {
                 }
             }
             return {
-                content: [{ type: "text", text: `HyperCode is still initializing. Please retry in a few seconds.` }],
+                content: [{ type: "text", text: `TormentNexus is still initializing. Please retry in a few seconds.` }],
                 isError: true,
             };
         });
@@ -107,10 +107,10 @@ async function main() {
 
         const stdioTransport = new StdioServerTransport();
         await lightweightServer.connect(stdioTransport);
-        console.error('[Hypercode Core] Phase 1 complete: Stdio transport connected.');
+        console.error('[TormentNexus Core] Phase 1 complete: Stdio transport connected.');
 
         // PHASE 2: Load the heavy MCPServer module in the background.
-        console.error('[Hypercode Core] Phase 2: Loading full MCPServer (this takes 10-30s)...');
+        console.error('[TormentNexus Core] Phase 2: Loading full MCPServer (this takes 10-30s)...');
         const startTime = Date.now();
 
         const { ensureBackgroundCoreRunning } = await import('./backgroundCoreBootstrap.js');
@@ -119,32 +119,32 @@ async function main() {
             log: (message, ...optionalParams) => console.error(message, ...optionalParams),
         }).then((result) => {
             if (result.status === 'spawned') {
-                console.error(`[Hypercode Core] Background control-plane bootstrap requested (PID: ${result.pid ?? 'unknown'}).`);
+                console.error(`[TormentNexus Core] Background control-plane bootstrap requested (PID: ${result.pid ?? 'unknown'}).`);
             }
         }).catch((error) => {
-            console.error('[Hypercode Core] Background control-plane bootstrap failed:', error);
+            console.error('[TormentNexus Core] Background control-plane bootstrap failed:', error);
         });
 
         const { MCPServer } = await import('./MCPServer.js');
         const elapsed = Date.now() - startTime;
-        console.error(`[Hypercode Core] MCPServer module loaded in ${elapsed}ms.`);
+        console.error(`[TormentNexus Core] MCPServer module loaded in ${elapsed}ms.`);
 
         // Create MCPServer with skipStdio since we already connected the transport
         mcpServer = new MCPServer({ skipWebsocket: true, skipStdio: true });
         await mcpServer.start();
 
         serverReady = true;
-        console.error(`[Hypercode Core] Phase 2 complete: Full server ready in ${Date.now() - startTime}ms.`);
-        console.error("[Hypercode Core] MCP Server Stdio Entry Point Started.");
+        console.error(`[TormentNexus Core] Phase 2 complete: Full server ready in ${Date.now() - startTime}ms.`);
+        console.error("[TormentNexus Core] MCP Server Stdio Entry Point Started.");
 
         // Notify client to reload tools list now that the full server is initialized
         try {
             await lightweightServer.notification({
                 method: "notifications/tools/list_changed"
             });
-            console.error("[Hypercode Core] Sent notifications/tools/list_changed to client successfully.");
+            console.error("[TormentNexus Core] Sent notifications/tools/list_changed to client successfully.");
         } catch (notificationErr: any) {
-            console.error("[Hypercode Core] Failed to send notifications/tools/list_changed:", notificationErr.message);
+            console.error("[TormentNexus Core] Failed to send notifications/tools/list_changed:", notificationErr.message);
         }
 
     } catch (err) {
