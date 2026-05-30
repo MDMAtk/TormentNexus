@@ -248,7 +248,7 @@ export class NormalizedQuotaService extends QuotaService {
         }
 
         this.revokedProviders.delete(provider);
-        const standardAuthState = this.registry.getAuthStates(process.env).find(s => s.provider === provider);
+        const standardAuthState = this.registry.getAuthStates(this.lastEnv).find(s => s.provider === provider);
 
         this.snapshots.set(provider, {
             ...snapshot,

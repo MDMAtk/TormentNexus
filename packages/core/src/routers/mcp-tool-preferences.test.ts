@@ -17,6 +17,8 @@ describe('mcp tool preferences helpers', () => {
             importantTools: ['github__issues', 'browser__open'],
             alwaysLoadedTools: ['browser__open'],
             autoLoadMinConfidence: 0.99,
+            maxLoadedTools: 16,
+            maxHydratedSchemas: 8,
         });
     });
 
@@ -29,6 +31,8 @@ describe('mcp tool preferences helpers', () => {
             importantTools: ['github__issues'],
             alwaysLoadedTools: ['browser__open'],
             autoLoadMinConfidence: 0.9,
+            maxLoadedTools: 16,
+            maxHydratedSchemas: 8,
         });
     });
 
@@ -117,6 +121,8 @@ describe('mcp tool preferences helpers', () => {
             importantTools: ['github__issues'],
             alwaysLoadedTools: ['browser__open'],
             autoLoadMinConfidence: 0.9,
+            maxLoadedTools: 16,
+            maxHydratedSchemas: 8,
         })).toEqual({
             unrelated: true,
             toolSelection: {
@@ -124,6 +130,8 @@ describe('mcp tool preferences helpers', () => {
                 importantTools: ['github__issues'],
                 alwaysLoadedTools: ['browser__open'],
                 autoLoadMinConfidence: 0.9,
+                maxLoadedTools: 16,
+                maxHydratedSchemas: 8,
             },
         });
     });

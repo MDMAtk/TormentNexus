@@ -395,6 +395,7 @@ export class GlamaAiAdapter implements CatalogSourceAdapter {
         try {
             // Glama returns a paginated or flat list — try each candidate URL
             let servers: GlamaServer[] = [];
+            let lastError: unknown;
             for (const url of this.candidateUrls) {
                 try {
                     const payload = await safeFetch(url) as any;
@@ -407,9 +408,15 @@ export class GlamaAiAdapter implements CatalogSourceAdapter {
                         servers = candidates;
                         break;
                     }
-                } catch {
-                    // Try next URL
+                } catch (error) {
+                    if (!lastError) {
+                        lastError = error;
+                    }
                 }
+            }
+
+            if (servers.length === 0 && lastError) {
+                throw lastError;
             }
 
             result.fetched = servers.length;

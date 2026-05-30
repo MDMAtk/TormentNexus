@@ -182,4 +182,64 @@ export const settingsRouter = t.router({
             throw new Error(`Failed to persist key: ${getErrorMessage(e)}`);
         }
     }),
+
+    /** Remove an API key or environment variable */
+    removeProviderKey: publicProcedure.input(z.object({
+        provider: z.string(),
+    })).mutation(async ({ input }) => {
+        const providers = [
+            { id: 'openai', envVar: 'OPENAI_API_KEY' },
+            { id: 'anthropic', envVar: 'ANTHROPIC_API_KEY' },
+            { id: 'gemini', envVar: 'GEMINI_API_KEY' },
+            { id: 'google', envVar: 'GEMINI_API_KEY' },
+            { id: 'xai', envVar: 'XAI_API_KEY' },
+            { id: 'deepseek', envVar: 'DEEPSEEK_API_KEY' },
+            { id: 'mistral', envVar: 'MISTRAL_API_KEY' },
+            { id: 'openrouter', envVar: 'OPENROUTER_API_KEY' },
+            { id: 'copilot', envVar: 'COPILOT_API_KEY' },
+            { id: 'cohere', envVar: 'COHERE_API_KEY' },
+            { id: 'groq', envVar: 'GROQ_API_KEY' },
+            { id: 'together', envVar: 'TOGETHER_API_KEY' },
+            { id: 'fireworks', envVar: 'FIREWORKS_API_KEY' },
+            { id: 'google-oauth', envVar: 'GOOGLE_OAUTH_ACCESS_TOKEN' },
+        ];
+
+        const target = providers.find(p => p.id === input.provider);
+        if (!target) {
+            throw new Error(`Unknown provider ID: ${input.provider}`);
+        }
+
+        const envKey = target.envVar;
+        const existsInMemory = !!process.env[envKey];
+        delete process.env[envKey];
+
+        const rootDir = process.cwd();
+        const envPath = path.join(rootDir, '.env');
+
+        try {
+            if (fs.existsSync(envPath)) {
+                let envContent = fs.readFileSync(envPath, 'utf8');
+                const regex = new RegExp(`^${envKey}=.*\\n?`, 'm');
+                if (regex.test(envContent)) {
+                    envContent = envContent.replace(regex, '');
+                    fs.writeFileSync(envPath, envContent, 'utf8');
+                }
+            }
+
+            const coreEnvPath = path.join(rootDir, 'packages', 'core', '.env');
+            if (fs.existsSync(coreEnvPath)) {
+                let coreEnvContent = fs.readFileSync(coreEnvPath, 'utf8');
+                const regex = new RegExp(`^${envKey}=.*\\n?`, 'm');
+                if (regex.test(coreEnvContent)) {
+                    coreEnvContent = coreEnvContent.replace(regex, '');
+                    fs.writeFileSync(coreEnvPath, coreEnvContent, 'utf8');
+                }
+            }
+
+            return { success: true, removedKey: envKey, removedAny: existsInMemory };
+        } catch (e: unknown) {
+            console.error('[settingsRouter] Failed to remove environment variable', e);
+            throw new Error(`Failed to remove key: ${getErrorMessage(e)}`);
+        }
+    }),
 });

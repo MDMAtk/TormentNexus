@@ -42,7 +42,7 @@ describe('memoryRouter truthfulness', () => {
         const { memoryRouter } = await import('./memoryRouter.js');
         const caller = memoryRouter.createCaller({});
 
-        await expect(caller.getCrossSessionMemoryLinks({ memoryId: 'mem-1', limit: 4 })).rejects.toMatchObject<Partial<TRPCError>>({
+        await expect(caller.getCrossSessionMemoryLinks({ sessionId: 'session-1', memoryId: 'mem-1', limit: 4 })).rejects.toMatchObject<Partial<TRPCError>>({
             message: 'Cross-session memory links is unavailable: Agent memory service does not support this operation',
         });
     });

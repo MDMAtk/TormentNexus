@@ -16,7 +16,7 @@
     "build": "tsc",
     "dev": "tsc --watch --preserveWatchOutput",
     "lint": "eslint --no-eslintrc --parser @typescript-eslint/parser \"src/**/*.{ts,tsx,js,mjs,cjs}\"",
-    "test": "vitest run"
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",

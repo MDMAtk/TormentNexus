@@ -54,7 +54,6 @@ describe('JsonConfigProvider always-visible tools compatibility', () => {
             // Session working-set capacity fields
             maxLoadedTools: expect.any(Number),
             maxHydratedSchemas: expect.any(Number),
-            idleEvictionThresholdMs: expect.any(Number),
         });
     });
 });

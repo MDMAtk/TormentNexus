@@ -23,6 +23,7 @@ export enum SwarmMessageType {
 
 export interface SwarmMessage {
     id: string;
+    correlationId?: string;
     sender: string;
     target?: string;
     type: SwarmMessageType;
@@ -194,7 +195,8 @@ export class MeshService extends EventEmitter {
     public sendResponse(originalMsg: SwarmMessage, type: SwarmMessageType, payload: unknown) {
         // Respond directly to the sender of the original message
         const response: SwarmMessage = {
-            id: originalMsg.id, // Preserve the ID so the receiver can match the response
+            id: crypto.randomUUID(),
+            correlationId: originalMsg.id, // Preserve the ID so the receiver can match the response
             sender: this.nodeId,
             target: originalMsg.sender,
             type,

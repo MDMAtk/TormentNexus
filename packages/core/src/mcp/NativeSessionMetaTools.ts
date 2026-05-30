@@ -173,6 +173,33 @@ export class NativeSessionMetaTools {
         if (name === 'list_loaded_tools') {
             return await executeListLoadedToolsCompatibility(this.workingSet);
         }
+        if (name === 'list_all_tools') {
+            const baseToolNames = new Set(this.listToolDefinitions().map((t) => t.name));
+            const toolsList = Array.from(this.catalog.values())
+                .filter((tool) => !baseToolNames.has(tool.name))
+                .map((tool) => {
+                    const searchableTool = tool as SearchableTool;
+                    const loaded = this.workingSet.isLoaded(tool.name);
+                    return {
+                        name: tool.name,
+                        description: tool.description ?? '',
+                        alwaysOn: Boolean(searchableTool.alwaysOn),
+                        loaded,
+                        inputSchema: tool.inputSchema ?? { type: 'object', properties: {} },
+                    };
+                });
+
+            const summary = {
+                total: toolsList.length,
+                loaded: toolsList.filter((t) => t.loaded).length,
+                alwaysOn: toolsList.filter((t) => t.alwaysOn).length,
+            };
+
+            return createTextResult(JSON.stringify({
+                summary,
+                tools: toolsList,
+            }));
+        }
         if (name === 'set_capacity') {
             const maxLoadedTools = typeof args.maxLoadedTools === 'number' ? args.maxLoadedTools : undefined;
             const maxHydratedSchemas = typeof args.maxHydratedSchemas === 'number' ? args.maxHydratedSchemas : undefined;

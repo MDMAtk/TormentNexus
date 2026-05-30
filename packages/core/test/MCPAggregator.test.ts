@@ -65,7 +65,7 @@ describe('MCPAggregator', () => {
             source: 'config',
         });
         aggregator.warmAdvertisedServers();
-        await Promise.resolve();
+        await new Promise((resolve) => setTimeout(resolve, 10));
 
         const servers = await aggregator.listServers();
         const warmed = servers.find((server) => server.name === 'test-server');

@@ -79,6 +79,26 @@ describe('SessionSupervisor', () => {
             restartDelayMs: 1_000,
             backoffMultiplier: 2,
             maxBackoffMs: 10_000,
+            detectExecutionEnvironment: async () => ({
+                os: 'win32',
+                summary: {
+                    ready: true,
+                    preferredShellId: 'pwsh',
+                    preferredShellLabel: 'PowerShell 7',
+                    shellCount: 1,
+                    verifiedShellCount: 1,
+                    toolCount: 0,
+                    verifiedToolCount: 0,
+                    harnessCount: 0,
+                    verifiedHarnessCount: 0,
+                    supportsPowerShell: true,
+                    supportsPosixShell: false,
+                    notes: [],
+                },
+                shells: [],
+                tools: [],
+                harnesses: [],
+            }),
         });
 
         const session = await supervisor.createSession({
@@ -207,6 +227,26 @@ describe('SessionSupervisor', () => {
             rootDir: tempDir,
             persistencePath: path.join(tempDir, 'session-supervisor.json'),
             spawnProcess: () => new FakeProcess(),
+            detectExecutionEnvironment: async () => ({
+                os: 'win32',
+                summary: {
+                    ready: true,
+                    preferredShellId: 'pwsh',
+                    preferredShellLabel: 'PowerShell 7',
+                    shellCount: 1,
+                    verifiedShellCount: 1,
+                    toolCount: 0,
+                    verifiedToolCount: 0,
+                    harnessCount: 0,
+                    verifiedHarnessCount: 0,
+                    supportsPowerShell: true,
+                    supportsPosixShell: false,
+                    notes: [],
+                },
+                shells: [],
+                tools: [],
+                harnesses: [],
+            }),
         });
 
         const session = await supervisor.createSession({

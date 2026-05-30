@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import fs from 'node:fs/promises';
+import { TRPCError } from '@trpc/server';
+import { formatOptionalSqliteFailure } from '../db/sqliteAvailability.js';
 import { t, publicProcedure, adminProcedure, getMcpAggregator, getMcpServer } from '../lib/trpc-core.js';
 import { getCachedToolInventory } from '../mcp/cachedToolInventory.js';
 import { parseNamespacedToolName } from '../mcp/namespaces.js';
@@ -12,6 +14,14 @@ import {
     readToolPreferencesFromSettings,
     type ToolPreferences,
 } from './mcp-tool-preferences.js';
+
+function handleTrpcError(action: string, error: unknown): never {
+    throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: formatOptionalSqliteFailure(action, error),
+    });
+}
+
 
 type McpToolCallResult = {
     content?: Array<{ type?: string; text?: string }>;
@@ -256,8 +266,8 @@ export const mcpRouter = t.router({
                     },
                 };
             });
-        } catch {
-            return [];
+        } catch (error) {
+            handleTrpcError('MCP inventory is unavailable', error);
         }
     }),
 
@@ -285,8 +295,8 @@ export const mcpRouter = t.router({
                 alwaysOn: Boolean(tool.alwaysOn),
                 inputSchema: tool.inputSchema ?? null,
             }));
-        } catch {
-            return [];
+        } catch (error) {
+            handleTrpcError('MCP inventory is unavailable', error);
         }
     }),
 
@@ -294,8 +304,8 @@ export const mcpRouter = t.router({
         const aggregator = getMcpAggregator();
         try {
             return await aggregator?.getTrafficEvents?.() ?? [];
-        } catch {
-            return [];
+        } catch (error) {
+            handleTrpcError('MCP traffic is unavailable', error);
         }
     }),
 
@@ -635,7 +645,7 @@ export const mcpRouter = t.router({
             });
 
             return mergeToolPreferences(mappedLiveTools, preferences, tools);
-        } catch {
+        } catch (error) {
             toolSelectionTelemetry.record({
                 type: 'search',
                 query: input.query,
@@ -644,7 +654,7 @@ export const mcpRouter = t.router({
                 status: 'error',
                 message: 'search failed',
             });
-            return [];
+            handleTrpcError('MCP tool search is unavailable', error);
         }
     }),
 
@@ -692,8 +702,8 @@ export const mcpRouter = t.router({
         try {
             const result = await server.executeTool('get_eviction_history', {});
             return parseToolJson<Array<{ toolName: string; timestamp: number; tier: string }>>(result, []);
-        } catch {
-            return [];
+        } catch (error) {
+            handleTrpcError('MCP eviction history is unavailable', error);
         }
     }),
 
@@ -710,11 +720,8 @@ export const mcpRouter = t.router({
                 ok: true,
                 message: getToolTextContent(result) || 'Eviction history cleared.',
             };
-        } catch {
-            return {
-                ok: false,
-                message: 'Failed to clear eviction history.',
-            };
+        } catch (error) {
+            handleTrpcError('Failed to clear eviction history', error);
         }
     }),
 
@@ -1044,29 +1051,37 @@ export const mcpRouter = t.router({
     getStatus: publicProcedure.query(async () => {
         const aggregator = getMcpAggregator();
 
+        let cachedInventory;
         try {
-            const [{ servers, tools }, liveServers, liveTools] = await Promise.all([
-                getCachedToolInventory(),
+            cachedInventory = await getCachedToolInventory();
+        } catch (error) {
+            handleTrpcError('MCP inventory is unavailable', error);
+        }
+
+        let liveServers: any[] = [];
+        let liveTools: any[] = [];
+        try {
+            [liveServers, liveTools] = await Promise.all([
                 aggregator?.listServers?.() ?? Promise.resolve([]),
                 aggregator?.listAggregatedTools?.() ?? Promise.resolve([]),
             ]);
-
-            const effectiveServerCount = liveServers.length > 0
-                ? liveServers.length
-                : servers.length;
-            const effectiveToolCount = liveTools.length > 0
-                ? liveTools.length
-                : tools.length;
-
-            return {
-                initialized: Boolean(aggregator),
-                serverCount: effectiveServerCount,
-                toolCount: effectiveToolCount,
-                connectedCount: liveServers.filter((s) => s.status === 'connected').length,
-            };
-        } catch {
-            return { initialized: false, serverCount: 0, toolCount: 0, connectedCount: 0 };
+        } catch (error) {
+            handleTrpcError('MCP status is unavailable', error);
         }
+
+        const effectiveServerCount = liveServers.length > 0
+            ? liveServers.length
+            : cachedInventory.servers.length;
+        const effectiveToolCount = liveTools.length > 0
+            ? liveTools.length
+            : cachedInventory.tools.length;
+
+        return {
+            initialized: Boolean(aggregator),
+            serverCount: effectiveServerCount,
+            toolCount: effectiveToolCount,
+            connectedCount: liveServers.filter((s) => s.status === 'connected').length,
+        };
     }),
 
     /** Connect to a configured MCP server */
