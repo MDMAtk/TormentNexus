@@ -42,7 +42,27 @@ async function validateServer(server) {
 
     try {
         if (server.args) {
-            argsParsed = JSON.parse(server.args).map(arg => reconcileNaming(arg));
+            argsParsed = JSON.parse(server.args).map(arg => {
+                let resolved = reconcileNaming(arg);
+                if (typeof resolved === 'string') {
+                    if (resolved.includes("YOUR_CONTEXT7_KEY_HERE")) {
+                        resolved = resolved.replace("YOUR_CONTEXT7_KEY_HERE", process.env.CONTEXT7_API_KEY || "YOUR_KEY_HERE");
+                    }
+                    if (resolved.includes("YOUR_GEMINI_KEY_HERE")) {
+                        resolved = resolved.replace("YOUR_GEMINI_KEY_HERE", process.env.MCP_LLM_GOOGLE_API_KEY || "YOUR_KEY_HERE");
+                    }
+                    if (resolved.includes("YOUR_AV_KEY_HERE")) {
+                        resolved = resolved.replace("YOUR_AV_KEY_HERE", process.env.AV_API_KEY || "YOUR_KEY_HERE");
+                    }
+                    if (resolved.includes("YOUR_STORAGE_PATH_HERE")) {
+                        resolved = resolved.replace("YOUR_STORAGE_PATH_HERE", path.resolve(process.cwd(), "arxiv_storage"));
+                    }
+                    if (resolved.includes("YOUR_SSE_KEY_HERE")) {
+                        resolved = resolved.replace("YOUR_SSE_KEY_HERE", "default-key");
+                    }
+                }
+                return resolved;
+            });
         }
     } catch (e) {
         console.warn(`[Validator] Failed to parse args for ${server.name}:`, e.message);
@@ -64,10 +84,20 @@ async function validateServer(server) {
             childEnv[key] = process.env[key] || "YOUR_KEY_HERE";
         }
     } else if (typeof envParsed === 'object' && envParsed !== null) {
-        childEnv = { ...process.env, ...envParsed };
+        for (const [key, value] of Object.entries(envParsed)) {
+            if (process.env[key] && (!value || value.includes("YOUR_") || value === "YOUR_KEY_HERE")) {
+                childEnv[key] = process.env[key];
+            } else {
+                childEnv[key] = value;
+            }
+        }
     }
 
-    // Set custom mock api keys so servers don't crash instantly on initialization
+    // Set custom mock/real api keys so servers don't crash instantly on initialization
+    if (!childEnv.GEMINI_API_KEY && process.env.MCP_LLM_GOOGLE_API_KEY) {
+        childEnv.GEMINI_API_KEY = process.env.MCP_LLM_GOOGLE_API_KEY;
+    }
+
     const fallbackKeys = [
         "OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY", "OPENROUTER_API_KEY", 
         "TAVILY_API_KEY", "FIRECRAWL_API_KEY", "OCTAGON_API_KEY", "MEM0_API_KEY"
@@ -121,10 +151,10 @@ async function validateServer(server) {
     );
 
     try {
-        // Run connection with a 8 second deadline
+        // Run connection with a 60 second deadline
         await Promise.race([
             client.connect(transport),
-            new Promise((_, reject) => setTimeout(() => reject(new Error("Connection timeout (8s)")), 8000))
+            new Promise((_, reject) => setTimeout(() => reject(new Error("Connection timeout (60s)")), 60000))
         ]);
 
         console.log(`[Validator] Connected successfully! Listing tools...`);
