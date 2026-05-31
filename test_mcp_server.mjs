@@ -43,22 +43,40 @@ async function runTest() {
         const statusResult = await client.callTool({
             name: "router_status",
             arguments: {}
-        }, { timeout: 120000 }); // 2 minute timeout
+        }, undefined, { timeout: 120000 }); // 2 minute timeout
         console.log("Result:", JSON.stringify(statusResult, null, 2));
+
+        // 2.5. Call Native Tool: system_diagnostics
+        console.log("\n--- 2.5. Calling Native Tool: system_diagnostics ---");
+        try {
+            const sysStatusResult = await client.callTool({
+                name: "system_diagnostics",
+                arguments: {}
+            }, undefined, { timeout: 60000 });
+            console.log("Result:", JSON.stringify(sysStatusResult, null, 2));
+        } catch (e) {
+            console.error("system_diagnostics call failed:", e.message || String(e));
+        }
 
         // 3. Call Standard Tool: list_directory
         console.log("\n--- 3. Calling Standard Tool: list_directory ---");
-        const listDirResult = await client.callTool({
-            name: "list_directory",
-            arguments: { path: "." }
-        }, { timeout: 60000 });
-        // Just show summary of result to avoid large output
-        if (listDirResult.isError) {
-            console.log("Error:", listDirResult.content[0].text);
-        } else {
-            const text = listDirResult.content[0].text;
-            console.log(`Success! Result length: ${text.length} chars.`);
-            console.log("Preview:", text.substring(0, 100) + "...");
+        try {
+            const listDirResult = await client.callTool({
+                name: "list_directory",
+                arguments: { path: "." }
+            }, undefined, { timeout: 60000 });
+            console.log("listDirResult output:", JSON.stringify(listDirResult, null, 2));
+            if (listDirResult.isError) {
+                console.log("Error returned by tool.");
+            } else if (listDirResult.content && listDirResult.content.length > 0) {
+                const text = listDirResult.content[0].text;
+                console.log(`Success! Result length: ${text?.length || 0} chars.`);
+                console.log("Preview:", (text || "").substring(0, 100) + "...");
+            } else {
+                console.log("Success! (Empty content array returned)");
+            }
+        } catch (e) {
+            console.log("list_directory call failed:", e.message || String(e));
         }
 
         // 4. Call Aggregated Tool: windows-mcp__SystemInfo (if available)

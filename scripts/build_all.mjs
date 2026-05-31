@@ -12,7 +12,7 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -312,11 +312,25 @@ function runBrowserExtensionBuilds() {
     printStep("Browser-extension dependencies installed via --ignore-scripts fallback.");
   }
 
+  // Update .env file to set CLI_CEB_DEV=false for production builds
+  const envPath = path.join(extensionRoot, ".env");
+  if (existsSync(envPath)) {
+    try {
+      let envContent = readFileSync(envPath, "utf-8");
+      envContent = envContent.replace(/CLI_CEB_DEV=true/g, "CLI_CEB_DEV=false");
+      writeFileSync(envPath, envContent, "utf-8");
+      printStep("Enforced CLI_CEB_DEV=false in browser extension .env file");
+    } catch (err) {
+      console.error("[build] Failed to write to .env:", err.message);
+    }
+  }
+
   printStep("Building TormentNexus browser extension for Chromium/Chrome/Edge...");
   const chromiumBuild = runPnpm(["run", "base-build"], {
     cwd: extensionRoot,
     env: {
       ...process.env,
+      NODE_ENV: "production",
       CLI_CEB_DEV: "false",
       CLI_CEB_FIREFOX: "false",
     },
@@ -338,6 +352,7 @@ function runBrowserExtensionBuilds() {
     cwd: extensionRoot,
     env: {
       ...process.env,
+      NODE_ENV: "production",
       CLI_CEB_DEV: "false",
       CLI_CEB_FIREFOX: "true",
     },
