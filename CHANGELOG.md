@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0-alpha.90] - 2026-06-02
+### Added
+- **Verified Tool Expansion Batch 4**:
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **240 verified servers** and **2,612 tools** inside `tormentnexus.db`.
+  - Registered new servers include `"figma-mcp"` (5 tools), `"ifconfig-mcp"` (2 tools), `"mcp-starter"` (1 tool), `"mcp-echo-server"` (1 tool), `"terry-mcp"` (1 tool), and `"hyper-mcp-shell"` (1 tool).
+  - Maintained complete stability across the automated batch validation loop, successfully handling browser-based Playwright installer timeouts and dependency errors gracefully.
+- **Monorepo Version Release Sync**:
+  - Synchronized and rebuilt all 34 package manifests in the monorepo to the new `1.0.0-alpha.90` release specification.
+
 ## [1.0.0-alpha.89] - 2026-06-01
 ### Added
 - **Verified Tool Expansion Batch 3**:
