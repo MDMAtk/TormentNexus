@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0-alpha.94] - 2026-06-02
+### Added
+- **Verified Tool Expansion Batch 8**:
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **248 verified servers** and **2,761 tools** inside `tormentnexus.db`.
+  - Registered new servers include `"protakeoff-mcp-server"` (73 tools) and `"contribbot-mcp"` (41 tools).
+  - Exceptionally expanded capabilities by adding **114 new tools** in a single run, verifying highly comprehensive API schema endpoints stably.
+- **Monorepo Version Release Sync**:
+  - Synchronized and rebuilt all 34 package manifests in the monorepo to the new `1.0.0-alpha.94` release specification.
+
 ## [1.0.0-alpha.93] - 2026-06-02
 ### Added
 - **Verified Tool Expansion Batch 7**:
