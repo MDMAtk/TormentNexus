@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0-alpha.95] - 2026-06-02
+### Added
+- **Verified Tool Expansion Batch 9**:
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **249 verified servers** and **2,775 tools** inside `tormentnexus.db`.
+  - Registered new servers include `"tekom-recruiting-mcp"` (14 tools).
+  - Exceptionally cleared more NPM packages and maintained highly stable loop processing.
+- **Monorepo Version Release Sync**:
+  - Synchronized and rebuilt all 34 package manifests in the monorepo to the new `1.0.0-alpha.95` release specification.
+
 ## [1.0.0-alpha.94] - 2026-06-02
 ### Added
 - **Verified Tool Expansion Batch 8**:
