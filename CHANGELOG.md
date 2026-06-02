@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.0-alpha.92] - 2026-06-02
+### Added
+- **Verified Tool Expansion Batch 6**:
+  - Processed another 100 candidate backlog items from the deep queue (`task-9230`), maintaining stable tool state counts of **243 verified servers** and **2,618 tools** inside `tormentnexus.db`.
+  - Cleared more unresolvable external packages and maintained solid direct stdio operational integrity.
+- **Monorepo Version Release Sync**:
+  - Synchronized and rebuilt all 34 package manifests in the monorepo to the new `1.0.0-alpha.92` release specification.
+
 ## [1.0.0-alpha.91] - 2026-06-02
 ### Added
 - **Verified Tool Expansion Batch 5**:
