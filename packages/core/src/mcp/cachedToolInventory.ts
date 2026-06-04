@@ -216,10 +216,21 @@ export async function getCachedToolInventory() {
         // MERGE both sources so they don't cross-contaminate but both are available
         const mergedServers = [...configSnapshot.servers, ...databaseSnapshot.servers];
         const mergedTools = [...configSnapshot.tools, ...databaseSnapshot.tools];
+        
+        // Build toolCounts keyed by SERVER NAME (not UUID) for efficient lookup in MCPServer.ts
         const mergedToolCounts = new Map<string, number>();
         
-        for (const [key, val] of configSnapshot.toolCounts.entries()) mergedToolCounts.set(key, val);
-        for (const [key, val] of databaseSnapshot.toolCounts.entries()) mergedToolCounts.set(key, val);
+        // Add config snapshot counts (keyed by server name)
+        for (const [key, val] of configSnapshot.toolCounts.entries()) {
+            // Config uses "config:name" format, extract actual name
+            const nameKey = key.startsWith('config:') ? key.replace('config:', '') : key;
+            mergedToolCounts.set(nameKey, val);
+        }
+        // Add database snapshot counts (keyed by server name)
+        for (const server of databaseSnapshot.servers) {
+            const count = databaseSnapshot.toolCounts.get(server.uuid) ?? 0;
+            mergedToolCounts.set(server.name, count);
+        }
 
         const source: CachedMcpInventorySource = mergedTools.length > 0 ? 'database' : 'empty';
 
