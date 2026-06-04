@@ -395,7 +395,107 @@
         }
       ],
       "trend": "stable"
+    },
+    "packages\\core\\src\\mcp\\MCPAggregator.ts": {
+      "latest": {
+        "commit": "30f85091c",
+        "timestamp": "2026-06-04T12:26:07.848Z",
+        "mi": 15.6,
+        "cognitive": 240,
+        "nesting": 5,
+        "lines": 460,
+        "maxCyclomatic": 20,
+        "entropy": 7.21
+      },
+      "history": [
+        {
+          "commit": "30f85091c",
+          "timestamp": "2026-06-04T12:26:07.848Z",
+          "mi": 15.6,
+          "cognitive": 240,
+          "nesting": 5,
+          "lines": 460,
+          "maxCyclomatic": 20,
+          "entropy": 7.21
+        }
+      ],
+      "trend": "stable"
+    },
+    "packages\\core\\src\\routers\\mcpRouter.ts": {
+      "latest": {
+        "commit": "30f85091c",
+        "timestamp": "2026-06-04T12:27:04.261Z",
+        "mi": 2.9,
+        "cognitive": 342,
+        "nesting": 6,
+        "lines": 1040,
+        "maxCyclomatic": 112,
+        "entropy": 7.76
+      },
+      "history": [
+        {
+          "commit": "30f85091c",
+          "timestamp": "2026-06-04T12:27:04.261Z",
+          "mi": 2.9,
+          "cognitive": 342,
+          "nesting": 6,
+          "lines": 1040,
+          "maxCyclomatic": 112,
+          "entropy": 7.76
+        }
+      ],
+      "trend": "stable"
+    },
+    "packages\\core\\src\\mcp\\cachedToolInventory.ts": {
+      "latest": {
+        "commit": "30f85091c",
+        "timestamp": "2026-06-04T12:27:25.792Z",
+        "mi": 22.3,
+        "cognitive": 41,
+        "nesting": 3,
+        "lines": 216,
+        "maxCyclomatic": 36,
+        "entropy": 7.09
+      },
+      "history": [
+        {
+          "commit": "30f85091c",
+          "timestamp": "2026-06-04T12:27:25.792Z",
+          "mi": 22.3,
+          "cognitive": 41,
+          "nesting": 3,
+          "lines": 216,
+          "maxCyclomatic": 36,
+          "entropy": 7.09
+        }
+      ],
+      "trend": "stable"
+    },
+    "packages\\core\\src\\db\\repositories\\mcp-servers.repo.ts": {
+      "latest": {
+        "commit": "30f85091c",
+        "timestamp": "2026-06-04T12:55:27.704Z",
+        "mi": 9.7,
+        "cognitive": 342,
+        "nesting": 6,
+        "lines": 788,
+        "maxCyclomatic": 46,
+        "entropy": 7.45
+      },
+      "history": [
+        {
+          "commit": "30f85091c",
+          "timestamp": "2026-06-04T12:55:27.704Z",
+          "mi": 9.7,
+          "cognitive": 342,
+          "nesting": 6,
+          "lines": 788,
+          "maxCyclomatic": 46,
+          "entropy": 7.45
+        }
+      ],
+      "trend": "stable"
     }
   },
-  "capturedAt": "2026-06-04T11:10:25.134Z"
+  "capturedAt": "2026-06-04T12:55:33.483Z"
 }
