@@ -2,11 +2,12 @@
 const nextConfig = {
 	// Skip static generation for pages that need runtime data
 	output: "standalone",
+	distDir: ".next-build",
 
 	// Skip static page generation
 	skipTrailingSlashRedirect: true,
-  // Allow cross-origin dev requests from Go sidecar proxy
-  allowedDevOrigins: ["127.0.0.1"],
+	// Allow cross-origin dev requests from Go sidecar proxy
+	allowedDevOrigins: ["127.0.0.1"],
 
 	// Disable static optimization for all pages
 	images: {

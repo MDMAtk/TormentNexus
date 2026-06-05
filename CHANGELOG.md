@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0-alpha.113] - 2026-06-05
+### Added
+- **Category 9: Finance & Crypto (DexPaprika MCP) Reimplementation**:
+  - Reimplemented all 17 DexPaprika MCP server tools natively in Go (`dexpaprika.go`).
+  - Added unit test coverage for mocked Coinpaprika endpoints and client-side limit filtering.
+  - Registered all tool mappings in the Go control plane registry and removed the submodule.
+- **Category 10: Weather & Location (NWS Weather MCP) Reimplementation**:
+  - Reimplemented all 7 National Weather Service (NWS) weather tools natively in Go (`nws_weather.go`).
+  - Added unit test coverage mocking NWS API endpoints for forecasts, alerts, observations, WFO discussions, and zone forecasts.
+  - Registered all tool mappings in the Go control plane registry and removed the submodule.
+
 ## [1.0.0-alpha.112] - 2026-06-05
 ### Added
 - **Category 8: Cloud & DevOps (Vercel MCP) Reimplementation**:

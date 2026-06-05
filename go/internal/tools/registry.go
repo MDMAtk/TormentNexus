@@ -87,6 +87,36 @@ func (r *Registry) registerAll() {
 	r.handlers["vercel_create_env_var"] = HandleVercelCreateEnvVar
 	r.handlers["vercel_delete_env_var"] = HandleVercelDeleteEnvVar
 
+	// DexPaprika MCP Tools (Finance & Crypto)
+	r.handlers["getCapabilities"] = HandleDexPaprikaGetCapabilities
+	r.handlers["getNetworks"] = HandleDexPaprikaGetNetworks
+	r.handlers["getStats"] = HandleDexPaprikaGetStats
+	r.handlers["search"] = HandleDexPaprikaSearch
+	r.handlers["getNetworkDexes"] = HandleDexPaprikaGetNetworkDexes
+	r.handlers["getNetworkPools"] = HandleDexPaprikaGetNetworkPools
+	r.handlers["getDexPools"] = HandleDexPaprikaGetDexPools
+	r.handlers["getNetworkPoolsFilter"] = HandleDexPaprikaGetNetworkPoolsFilter
+	r.handlers["getPoolDetails"] = HandleDexPaprikaGetPoolDetails
+	r.handlers["getPoolOHLCV"] = HandleDexPaprikaGetPoolOHLCV
+	r.handlers["getPoolTransactions"] = HandleDexPaprikaGetPoolTransactions
+	r.handlers["getTokenDetails"] = HandleDexPaprikaGetTokenDetails
+	r.handlers["getTokenPools"] = HandleDexPaprikaGetTokenPools
+	r.handlers["getTokenMultiPrices"] = HandleDexPaprikaGetTokenMultiPrices
+	r.handlers["filterNetworkTokens"] = HandleDexPaprikaFilterNetworkTokens
+	r.handlers["getTopTokens"] = HandleDexPaprikaGetTopTokens
+	r.handlers["submitFeedback"] = HandleDexPaprikaSubmitFeedback
+
+	// National Weather Service (NWS) MCP Tools (Weather & Location)
+	r.handlers["nws_get_forecast"] = HandleNWSGetForecast
+	r.handlers["nws_search_alerts"] = HandleNWSSearchAlerts
+	r.handlers["nws_get_observations"] = HandleNWSGetObservations
+	r.handlers["nws_find_stations"] = HandleNWSFindStations
+	r.handlers["nws_list_alert_types"] = HandleNWSListAlertTypes
+	r.handlers["nws_get_office_discussion"] = HandleNWSGetOfficeDiscussion
+	r.handlers["nws_get_zone_forecast"] = HandleNWSGetZoneForecast
+
+
+
 
 
 

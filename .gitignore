@@ -66,6 +66,7 @@ audit-*.jsonl
 
 # === Next.js / Turbopack ===
 .next/
+.next-build/
 .next-dev*/
 **/.next-dev*/
 .turbo/
