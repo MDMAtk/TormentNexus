@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.0.0-alpha.117] - 2026-06-05
+### Added
+- **Category 12: Provider Abstraction Layer (pal-mcp-server) Reimplementation**:
+  - Reimplemented all eight PAL (Provider Abstraction Layer) tools (`chat`, `thinkdeep`, `planner`, `consensus`, `codereview`, `precommit`, `debug`, `challenge`) natively in Go (`pal.go`).
+  - Integrated support for live multi-model LLM API execution across OpenAI, OpenRouter, and Gemini-compatible endpoints, backed by unified simulation fallbacks.
+  - Added unit test suite checking parameter formats and simulated outputs for PAL tools.
+  - Registered all handlers in the Go control plane registry and verified sidecar compilation.
+
+## [1.0.0-alpha.116] - 2026-06-05
+### Added
+- **Category 11: AST Code Intelligence (ast-grep-mcp) Reimplementation**:
+  - Reimplemented all four ast-grep MCP server tools (`ast_grep_dump_syntax_tree`, `ast_grep_test_match_code_rule`, `ast_grep_find_code`, `ast_grep_find_code_by_rule`) natively in Go (`ast_grep.go`).
+  - Added unit test suite validating AST pattern match and code scan tool logic.
+  - Registered all handlers in the Go control plane registry and verified sidecar compilation.
+
 ## [1.0.0-alpha.115] - 2026-06-05
 ### Added
 - **Phase 113 — Predictive Conversational Tool Injection**:

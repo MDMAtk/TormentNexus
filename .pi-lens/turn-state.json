@@ -1,6 +1,37 @@
 {
-  "files": {},
+  "files": {
+    "packages/cli/src/commands/mcp.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 1534
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-06-05T03:34:03.628Z"
+    },
+    "packages/core/src/mcp/MCPAggregator.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 664
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-06-05T03:34:04.727Z"
+    },
+    "packages/core/src/MCPServer.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 5832
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-06-05T03:34:06.279Z"
+    }
+  },
   "turnCycles": 0,
   "maxCycles": 3,
-  "lastUpdated": "2026-06-05T01:55:08.122Z"
+  "lastUpdated": "2026-06-05T03:34:06.280Z"
 }

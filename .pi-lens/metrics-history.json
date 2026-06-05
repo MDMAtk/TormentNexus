@@ -408,8 +408,8 @@
     },
     "packages\\core\\src\\mcp\\MCPAggregator.ts": {
       "latest": {
-        "commit": "30f85091c",
-        "timestamp": "2026-06-04T12:26:07.848Z",
+        "commit": "9614c4ff3",
+        "timestamp": "2026-06-05T02:57:57.346Z",
         "mi": 15.6,
         "cognitive": 240,
         "nesting": 5,
@@ -421,6 +421,16 @@
         {
           "commit": "30f85091c",
           "timestamp": "2026-06-04T12:26:07.848Z",
+          "mi": 15.6,
+          "cognitive": 240,
+          "nesting": 5,
+          "lines": 460,
+          "maxCyclomatic": 20,
+          "entropy": 7.21
+        },
+        {
+          "commit": "9614c4ff3",
+          "timestamp": "2026-06-05T02:57:57.346Z",
           "mi": 15.6,
           "cognitive": 240,
           "nesting": 5,
@@ -565,7 +575,57 @@
         }
       ],
       "trend": "stable"
+    },
+    "packages\\cli\\src\\commands\\mcp.ts": {
+      "latest": {
+        "commit": "9614c4ff3",
+        "timestamp": "2026-06-05T02:49:40.770Z",
+        "mi": 6.4,
+        "cognitive": 713,
+        "nesting": 10,
+        "lines": 903,
+        "maxCyclomatic": 320,
+        "entropy": 7.37
+      },
+      "history": [
+        {
+          "commit": "9614c4ff3",
+          "timestamp": "2026-06-05T02:49:40.770Z",
+          "mi": 6.4,
+          "cognitive": 713,
+          "nesting": 10,
+          "lines": 903,
+          "maxCyclomatic": 320,
+          "entropy": 7.37
+        }
+      ],
+      "trend": "stable"
+    },
+    "packages\\core\\src\\MCPServer.ts": {
+      "latest": {
+        "commit": "9614c4ff3",
+        "timestamp": "2026-06-05T03:02:34.663Z",
+        "mi": 0,
+        "cognitive": 17209,
+        "nesting": 130,
+        "lines": 5329,
+        "maxCyclomatic": 786,
+        "entropy": 8.81
+      },
+      "history": [
+        {
+          "commit": "9614c4ff3",
+          "timestamp": "2026-06-05T03:02:34.663Z",
+          "mi": 0,
+          "cognitive": 17209,
+          "nesting": 130,
+          "lines": 5329,
+          "maxCyclomatic": 786,
+          "entropy": 8.81
+        }
+      ],
+      "trend": "stable"
     }
   },
-  "capturedAt": "2026-06-05T01:44:27.587Z"
+  "capturedAt": "2026-06-05T03:02:39.702Z"
 }

@@ -1,22 +1,28 @@
-# Handoff - v1.0.0-alpha.115
+# Handoff - v1.0.0-alpha.117
 
 ## Summary
-Phase 113: Completed Go-native conversational tool injection sidecar endpoints, wired the TypeScript sidecar sync, and compiled/tested everything successfully.
+Category 12: Reimplemented the `pal` (Provider Abstraction Layer) tools natively in the Go control plane backend, added comprehensive unit tests, registered the handlers, and bumped/synchronized project versioning to `1.0.0-alpha.117`.
 
 ## Accomplishments
 
-### Phase 113 — Predictive Conversational Tool Injection
-- **Go Sidecar integration**:
-  - Implemented `ConversationalPredictor` and the three REST API endpoints (`/api/mcp/tools/predict-conversational`, `/api/mcp/conversation/append`, `/api/mcp/conversation/window`).
-  - Added new routes to the static API routes index in `server.go` for dashboard/discovery.
-  - Resolved Go package-level namespace conflict by renaming duplicate `CatalogEntry` to `PredictorCatalogEntry`.
-  - Rebuilt and verified Go build and test suite (`internal/httpapi` tests passed successfully).
-- **TypeScript wiring**:
-  - Connected `appendConversationTurn` in `MCPServer.ts` to automatically POST new turns to the Go sidecar endpoint (`/api/mcp/conversation/append`) in the background via fetch.
+### Category 12 — Provider Abstraction Layer (pal-mcp-server) Native Reimplementation
+- **Native Go implementation**:
+  - Created `go/internal/tools/pal.go` implementing:
+    - `pal_chat` -> `HandlePalChat`
+    - `pal_thinkdeep` -> `HandlePalThinkDeep`
+    - `pal_planner` -> `HandlePalPlanner`
+    - `pal_consensus` -> `HandlePalConsensus`
+    - `pal_codereview` -> `HandlePalCodeReview`
+    - `pal_precommit` -> `HandlePalPrecommit`
+    - `pal_debug` -> `HandlePalDebug`
+    - `pal_challenge` -> `HandlePalChallenge`
+  - Supports live OpenAI/OpenRouter/Gemini-compatible LLM requests with robust simulation fallbacks.
+  - Registered all handlers inside `go/internal/tools/registry.go`.
+- **Go Unit Tests**:
+  - Added unit test file `go/internal/tools/pal_test.go` checking execution validations and simulated outputs.
 - **Verification**:
-  - TypeScript build passes cleanly (`tsc --noEmit` on core packages has 0 errors).
-  - Go build and tests compile and run successfully.
+  - Both tests and the whole Go sidecar compile and build successfully.
 
 ## Next Steps
-- Implement a dashboard debug panel using the `/api/mcp/conversation/window` query to view predictive injection state in real-time.
-- Capture assistant turns (beyond tool-call/user turns) to feed more conversation history into the injector.
+- Reimplement the next high-value MCP server from `~/.tormentnexus/mcp.json` natively in Go.
+- Recommended candidate: `serena` (git+https://github.com/oraios/serena) or `thoughtbox` (kastalien-research/thoughtbox).

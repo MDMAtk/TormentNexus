@@ -23,6 +23,56 @@
     },
     {
       "type": "file",
+      "name": "scripts/audit.cjs",
+      "file": "scripts/audit.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.mjs",
+      "file": "scripts/audit.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/build_startup.mjs",
+      "file": "scripts/build_startup.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/embedder-healthcheck.mjs",
+      "file": "scripts/embedder-healthcheck.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/health-check.cjs",
+      "file": "scripts/health-check.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/smoke-test.cjs",
+      "file": "scripts/smoke-test.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/sync-versions.mjs",
+      "file": "scripts/sync-versions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-cli.cjs",
+      "file": "scripts/test-cli.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-workflow.cjs",
+      "file": "scripts/test-workflow.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/trpc-audit.mjs",
+      "file": "scripts/trpc-audit.mjs"
+    },
+    {
+      "type": "file",
       "name": "scratch/bulk_validate_mcp_servers.mjs",
       "file": "scratch/bulk_validate_mcp_servers.mjs"
     },
@@ -110,56 +160,6 @@
       "type": "file",
       "name": "scratch/validate_mcp_servers.mjs",
       "file": "scratch/validate_mcp_servers.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.cjs",
-      "file": "scripts/audit.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.mjs",
-      "file": "scripts/audit.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/build_startup.mjs",
-      "file": "scripts/build_startup.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/embedder-healthcheck.mjs",
-      "file": "scripts/embedder-healthcheck.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/health-check.cjs",
-      "file": "scripts/health-check.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/smoke-test.cjs",
-      "file": "scripts/smoke-test.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/sync-versions.mjs",
-      "file": "scripts/sync-versions.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-cli.cjs",
-      "file": "scripts/test-cli.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-workflow.cjs",
-      "file": "scripts/test-workflow.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/trpc-audit.mjs",
-      "file": "scripts/trpc-audit.mjs"
     },
     {
       "type": "file",
@@ -533,6 +533,16 @@
     },
     {
       "type": "file",
+      "name": "packages/ui/src/hooks/use-terminal-available.ts",
+      "file": "packages/ui/src/hooks/use-terminal-available.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/ui/src/hooks/useSubmoduleHealth.ts",
+      "file": "packages/ui/src/hooks/useSubmoduleHealth.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/ui/src/components/activity-content.tsx",
       "file": "packages/ui/src/components/activity-content.tsx"
     },
@@ -710,16 +720,6 @@
       "type": "file",
       "name": "packages/ui/src/components/wallet-connect.tsx",
       "file": "packages/ui/src/components/wallet-connect.tsx"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/hooks/use-terminal-available.ts",
-      "file": "packages/ui/src/hooks/use-terminal-available.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/hooks/useSubmoduleHealth.ts",
-      "file": "packages/ui/src/hooks/useSubmoduleHealth.ts"
     },
     {
       "type": "file",
@@ -1013,11 +1013,6 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/mesh/protocol.ts",
-      "file": "packages/core/src/mesh/protocol.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/middleware/AuthMiddleware.ts",
       "file": "packages/core/src/middleware/AuthMiddleware.ts"
     },
@@ -1025,6 +1020,11 @@
       "type": "file",
       "name": "packages/core/src/middleware/RateLimiterMiddleware.ts",
       "file": "packages/core/src/middleware/RateLimiterMiddleware.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/mesh/protocol.ts",
+      "file": "packages/core/src/mesh/protocol.ts"
     },
     {
       "type": "file",
@@ -1040,11 +1040,6 @@
       "type": "file",
       "name": "packages/core/src/orchestrator/MetaOrchestrator.ts",
       "file": "packages/core/src/orchestrator/MetaOrchestrator.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/routers/promptsRouter.ts",
-      "file": "packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -1065,6 +1060,11 @@
       "type": "file",
       "name": "packages/core/src/scripts/verify_research_recursion.ts",
       "file": "packages/core/src/scripts/verify_research_recursion.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/routers/promptsRouter.ts",
+      "file": "packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -1373,13 +1373,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/dev-utils/index.mts",
-      "file": "apps/tormentnexus-extension/packages/dev-utils/index.mts"
+      "name": "apps/tormentnexus-extension/packages/env/index.mts",
+      "file": "apps/tormentnexus-extension/packages/env/index.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/index.mts",
-      "file": "apps/tormentnexus-extension/packages/env/index.mts"
+      "name": "apps/tormentnexus-extension/packages/dev-utils/index.mts",
+      "file": "apps/tormentnexus-extension/packages/dev-utils/index.mts"
     },
     {
       "type": "file",
@@ -1403,13 +1403,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
-      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
+      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
+      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
-      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
+      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
+      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
     },
     {
       "type": "file",
@@ -1463,11 +1463,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts",
-      "file": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/env/lib/const.ts",
       "file": "apps/tormentnexus-extension/packages/env/lib/const.ts"
     },
@@ -1480,6 +1475,11 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/env/lib/types.ts",
       "file": "apps/tormentnexus-extension/packages/env/lib/types.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts",
+      "file": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts"
     },
     {
       "type": "file",
@@ -1658,16 +1658,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
     },
@@ -1675,6 +1665,16 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts"
     },
     {
       "type": "file",
@@ -1700,36 +1700,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -1770,6 +1740,36 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts",
       "file": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -6956,6 +6956,30 @@
       "name": "ResearchResult",
       "file": "packages/core/src/services/DeepResearchService.ts",
       "line": 29
+    },
+    {
+      "type": "export",
+      "name": "ConversationalToolInjectorOptions",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 20
+    },
+    {
+      "type": "export",
+      "name": "ConversationTurn",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 31
+    },
+    {
+      "type": "export",
+      "name": "CatalogEntry",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 37
+    },
+    {
+      "type": "export",
+      "name": "PredictionResult",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 48
     },
     {
       "type": "export",
@@ -11659,6 +11683,30 @@
     },
     {
       "type": "export",
+      "name": "ConversationalToolInjectorOptions",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 20
+    },
+    {
+      "type": "export",
+      "name": "ConversationTurn",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 31
+    },
+    {
+      "type": "export",
+      "name": "CatalogEntry",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 37
+    },
+    {
+      "type": "export",
+      "name": "PredictionResult",
+      "file": "packages/core/src/mcp/ConversationalToolInjector.ts",
+      "line": 48
+    },
+    {
+      "type": "export",
       "name": "ToolContextObservationCandidate",
       "file": "packages/core/src/services/toolContextMemory.ts",
       "line": 1
@@ -12569,6 +12617,56 @@
     },
     {
       "type": "file",
+      "name": "scripts/audit.cjs",
+      "file": "scripts/audit.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.mjs",
+      "file": "scripts/audit.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/build_startup.mjs",
+      "file": "scripts/build_startup.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/embedder-healthcheck.mjs",
+      "file": "scripts/embedder-healthcheck.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/health-check.cjs",
+      "file": "scripts/health-check.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/smoke-test.cjs",
+      "file": "scripts/smoke-test.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/sync-versions.mjs",
+      "file": "scripts/sync-versions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-cli.cjs",
+      "file": "scripts/test-cli.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-workflow.cjs",
+      "file": "scripts/test-workflow.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/trpc-audit.mjs",
+      "file": "scripts/trpc-audit.mjs"
+    },
+    {
+      "type": "file",
       "name": "scratch/bulk_validate_mcp_servers.mjs",
       "file": "scratch/bulk_validate_mcp_servers.mjs"
     },
@@ -12656,56 +12754,6 @@
       "type": "file",
       "name": "scratch/validate_mcp_servers.mjs",
       "file": "scratch/validate_mcp_servers.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.cjs",
-      "file": "scripts/audit.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.mjs",
-      "file": "scripts/audit.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/build_startup.mjs",
-      "file": "scripts/build_startup.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/embedder-healthcheck.mjs",
-      "file": "scripts/embedder-healthcheck.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/health-check.cjs",
-      "file": "scripts/health-check.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/smoke-test.cjs",
-      "file": "scripts/smoke-test.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/sync-versions.mjs",
-      "file": "scripts/sync-versions.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-cli.cjs",
-      "file": "scripts/test-cli.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-workflow.cjs",
-      "file": "scripts/test-workflow.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/trpc-audit.mjs",
-      "file": "scripts/trpc-audit.mjs"
     },
     {
       "type": "file",
@@ -13079,6 +13127,16 @@
     },
     {
       "type": "file",
+      "name": "packages/ui/src/hooks/use-terminal-available.ts",
+      "file": "packages/ui/src/hooks/use-terminal-available.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/ui/src/hooks/useSubmoduleHealth.ts",
+      "file": "packages/ui/src/hooks/useSubmoduleHealth.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/ui/src/components/activity-content.tsx",
       "file": "packages/ui/src/components/activity-content.tsx"
     },
@@ -13256,16 +13314,6 @@
       "type": "file",
       "name": "packages/ui/src/components/wallet-connect.tsx",
       "file": "packages/ui/src/components/wallet-connect.tsx"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/hooks/use-terminal-available.ts",
-      "file": "packages/ui/src/hooks/use-terminal-available.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/hooks/useSubmoduleHealth.ts",
-      "file": "packages/ui/src/hooks/useSubmoduleHealth.ts"
     },
     {
       "type": "file",
@@ -13559,11 +13607,6 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/mesh/protocol.ts",
-      "file": "packages/core/src/mesh/protocol.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/middleware/AuthMiddleware.ts",
       "file": "packages/core/src/middleware/AuthMiddleware.ts"
     },
@@ -13571,6 +13614,11 @@
       "type": "file",
       "name": "packages/core/src/middleware/RateLimiterMiddleware.ts",
       "file": "packages/core/src/middleware/RateLimiterMiddleware.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/mesh/protocol.ts",
+      "file": "packages/core/src/mesh/protocol.ts"
     },
     {
       "type": "file",
@@ -13586,11 +13634,6 @@
       "type": "file",
       "name": "packages/core/src/orchestrator/MetaOrchestrator.ts",
       "file": "packages/core/src/orchestrator/MetaOrchestrator.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/routers/promptsRouter.ts",
-      "file": "packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -13611,6 +13654,11 @@
       "type": "file",
       "name": "packages/core/src/scripts/verify_research_recursion.ts",
       "file": "packages/core/src/scripts/verify_research_recursion.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/routers/promptsRouter.ts",
+      "file": "packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -13919,13 +13967,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/dev-utils/index.mts",
-      "file": "apps/tormentnexus-extension/packages/dev-utils/index.mts"
+      "name": "apps/tormentnexus-extension/packages/env/index.mts",
+      "file": "apps/tormentnexus-extension/packages/env/index.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/index.mts",
-      "file": "apps/tormentnexus-extension/packages/env/index.mts"
+      "name": "apps/tormentnexus-extension/packages/dev-utils/index.mts",
+      "file": "apps/tormentnexus-extension/packages/dev-utils/index.mts"
     },
     {
       "type": "file",
@@ -13949,13 +13997,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
-      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
+      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
+      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
-      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
+      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
+      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
     },
     {
       "type": "file",
@@ -14009,11 +14057,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts",
-      "file": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/env/lib/const.ts",
       "file": "apps/tormentnexus-extension/packages/env/lib/const.ts"
     },
@@ -14026,6 +14069,11 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/env/lib/types.ts",
       "file": "apps/tormentnexus-extension/packages/env/lib/types.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts",
+      "file": "apps/tormentnexus-extension/packages/dev-utils/lib/logger.ts"
     },
     {
       "type": "file",
@@ -14204,16 +14252,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
     },
@@ -14221,6 +14259,16 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts"
     },
     {
       "type": "file",
@@ -14246,36 +14294,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -14316,6 +14334,36 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts",
       "file": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -15698,5 +15746,5 @@
       "line": 4
     }
   ],
-  "summary": "Found 1368 issues"
+  "summary": "Found 1372 issues"
 }

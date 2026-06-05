@@ -115,10 +115,31 @@ func (r *Registry) registerAll() {
 	r.handlers["nws_get_office_discussion"] = HandleNWSGetOfficeDiscussion
 	r.handlers["nws_get_zone_forecast"] = HandleNWSGetZoneForecast
 
+	// ast-grep-mcp Tools (Category 11)
+	r.handlers["ast_grep_dump_syntax_tree"] = HandleDumpSyntaxTree
+	r.handlers["ast_grep_test_match_code_rule"] = HandleTestMatchCodeRule
+	r.handlers["ast_grep_find_code"] = HandleFindCode
+	r.handlers["ast_grep_find_code_by_rule"] = HandleFindCodeByRule
 
+	// PAL Tools (Category 12)
+	r.handlers["pal_chat"] = HandlePalChat
+	r.handlers["pal_thinkdeep"] = HandlePalThinkDeep
+	r.handlers["pal_planner"] = HandlePalPlanner
+	r.handlers["pal_consensus"] = HandlePalConsensus
+	r.handlers["pal_codereview"] = HandlePalCodeReview
+	r.handlers["pal_precommit"] = HandlePalPrecommit
+	r.handlers["pal_debug"] = HandlePalDebug
+	r.handlers["pal_challenge"] = HandlePalChallenge
 
-
-
+	// Short/alias mappings for PAL tools without prefix
+	r.handlers["chat"] = HandlePalChat
+	r.handlers["thinkdeep"] = HandlePalThinkDeep
+	r.handlers["planner"] = HandlePalPlanner
+	r.handlers["consensus"] = HandlePalConsensus
+	r.handlers["codereview"] = HandlePalCodeReview
+	r.handlers["precommit"] = HandlePalPrecommit
+	r.handlers["debug"] = HandlePalDebug
+	r.handlers["challenge"] = HandlePalChallenge
 
 	// Claude Code Aliases
 	r.handlers["Read"] = HandleRead
