@@ -1,7 +1,7 @@
 {
   "version": 1,
   "projectRoot": "C:/Users/hyper/workspace/tormentnexus",
-  "generatedAt": "2026-06-05T14:35:25.571Z",
+  "generatedAt": "2026-06-05T20:17:19.824Z",
   "seq": 52,
   "files": {},
   "symbols": {},
@@ -71,6 +71,40 @@
       "python",
       "go",
       "cxx"
+    ]
+  },
+  "conventions": {
+    "frameworks": [
+      {
+        "id": "next",
+        "confidence": "medium",
+        "signals": [
+          "package.json:dependencies.next"
+        ]
+      },
+      {
+        "id": "vitest",
+        "confidence": "high",
+        "signals": [
+          "package.json:devDependencies.vitest"
+        ]
+      }
+    ],
+    "testRunners": [
+      "vitest"
+    ],
+    "buildTools": [
+      "next"
+    ],
+    "agentDocs": [
+      {
+        "filePath": "AGENTS.md",
+        "lineCount": 62
+      },
+      {
+        "filePath": "CLAUDE.md",
+        "lineCount": 90
+      }
     ]
   }
 }
