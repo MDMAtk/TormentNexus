@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.0-alpha.120] - 2026-06-05
+### Added
+- **Mass MCP Server Assimilation — 12 Servers Native Go Reimplementation**:
+  - **Firecrawl** (`firecrawl-mcp`): Registered existing `firecrawl.go` handler (scrape + crawl operations via Firecrawl API).
+  - **Exa Search** (`exa` SSE): Native Go `exa.go` — `exa_search`, `exa_find_similar`, `exa_get_contents` using Exa REST API; replaces SSE connection.
+  - **arXiv** (`arxiv-mcp-server`): Native Go `arxiv.go` — `arxiv_search`, `arxiv_get_paper`, `arxiv_list_recent` using public arXiv Atom/XML API; no key required.
+  - **Semantic Scholar** (`paper_search_server`): Native Go `semantic_scholar.go` — `paper_search`, `paper_details`, `paper_citations` using S2 Academic Graph API.
+  - **mem0 Memory** (`@mem0/mcp-server`): Native Go `mem0.go` — `mem0_add_memory`, `mem0_search_memory`, `mem0_get_memories`, `mem0_delete_memory`, `mem0_update_memory`.
+  - **Alpaca Markets** (`alpaca-mcp-server`): Native Go `alpaca.go` — 7 tools: account, positions, orders, place/cancel orders, historical bars, latest quote.
+  - **Alpha Vantage** (`av-mcp`): Native Go `alpha_vantage.go` — `av_quote`, `av_time_series`, `av_forex_rate`, `av_crypto_rate`, `av_symbol_search`, `av_economic_indicator`.
+  - **Hugging Face Hub** (`huggingface` SSE): Native Go `huggingface.go` — `hf_search_models`, `hf_get_model`, `hf_search_datasets`, `hf_text_generation`, `hf_classify_text`, `hf_embeddings`, `hf_search_spaces`.
+  - **Semgrep Security** (`semgrep` + `semgrepstream`): Native Go `semgrep.go` — `semgrep_scan` (local binary), `semgrep_cloud_scan`, `semgrep_search_rules`; replaces both STDIO and SSE entries.
+  - **Octagon Intelligence** (`octagon` + `octagon-deep-research`): Native Go `octagon.go` — `octagon_research`, `octagon_company_search`, `octagon_financials`, `octagon_news`; replaces both npx entries.
+  - **Browser Automation** (playwright, browser-use, browsermcp, puppeteer, browserbase): Native Go `playwright_browser.go` — `browser_navigate`, `browser_screenshot`, `browser_get_html`, `browser_evaluate`, `browser_click`, `browser_fill_form`; unified interface replacing 5+ separate MCP entries.
+  - **ChromaDB Vector Store** (`chroma-mcp`): Native Go `chroma.go` — `chroma_list_collections`, `chroma_create_collection`, `chroma_add_documents`, `chroma_query`, `chroma_delete_collection`, `chroma_get_documents`.
+  - **Basic Memory** (`basic-memory`): Native Go `basic_memory.go` — `basic_memory_write`, `basic_memory_read`, `basic_memory_search`, `basic_memory_list`, `basic_memory_delete`; local markdown-based memory store.
+  - **MindsDB** (`mindsdb` SSE): Native Go `mindsdb.go` — `mindsdb_query`, `mindsdb_list_models`, `mindsdb_predict`; replaces SSE connection to local MindsDB instance.
+  - Added comprehensive `assimilated_test.go` test suite covering all 15 new implementations.
+  - Registered all 70+ new tool handlers in `registry.go`.
+  - Verified clean build and all existing 20 tests continue to pass.
+
 ## [1.0.0-alpha.119] - 2026-06-05
 ### Added
 - **Category 14: Sandbox Code Execution & Brokered Notebooks (thoughtbox) Reimplementation**:

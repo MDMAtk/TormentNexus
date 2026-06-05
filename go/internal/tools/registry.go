@@ -180,6 +180,115 @@ func (r *Registry) registerAll() {
 	r.handlers["thoughtbox_search"] = HandleThoughtboxSearch
 	r.handlers["thoughtbox_execute"] = HandleThoughtboxExecute
 	r.handlers["thoughtbox_peer_notebook"] = HandleThoughtboxPeerNotebook
+
+	// Fetch Tool (Assimilated)
+	r.handlers["fetch"] = HandleFetch
+
+	// Tavily Tools (Assimilated)
+	r.handlers["tavily-search"] = HandleTavilySearch
+
+	// Chrome DevTools Tools (Assimilated)
+	r.handlers["chrome-devtools"] = HandleChromeDevTools
+
+	// Firecrawl Tools (Assimilated from firecrawl-mcp)
+	r.handlers["firecrawl_scrape"] = HandleFirecrawl
+	r.handlers["firecrawl_crawl"] = HandleFirecrawl
+	r.handlers["firecrawl"] = HandleFirecrawl
+
+	// Exa Search Tools (Assimilated from SSE exa)
+	r.handlers["exa_search"] = HandleExaSearch
+	r.handlers["exa_find_similar"] = HandleExaFindSimilar
+	r.handlers["exa_get_contents"] = HandleExaGetContents
+
+	// arXiv Tools (Assimilated from arxiv-mcp-server)
+	r.handlers["arxiv_search"] = HandleArxivSearch
+	r.handlers["arxiv_get_paper"] = HandleArxivGetPaper
+	r.handlers["arxiv_list_recent"] = HandleArxivListRecent
+
+	// Semantic Scholar Tools (Assimilated from paper_search_server)
+	r.handlers["paper_search"] = HandleSemanticScholarSearch
+	r.handlers["paper_details"] = HandleSemanticScholarGetPaper
+	r.handlers["paper_citations"] = HandleSemanticScholarGetCitations
+	r.handlers["semantic_scholar_search"] = HandleSemanticScholarSearch
+	r.handlers["semantic_scholar_paper"] = HandleSemanticScholarGetPaper
+
+	// mem0 Memory Tools (Assimilated from @mem0/mcp-server)
+	r.handlers["mem0_add_memory"] = HandleMem0AddMemory
+	r.handlers["mem0_search_memory"] = HandleMem0SearchMemory
+	r.handlers["mem0_get_memories"] = HandleMem0GetMemories
+	r.handlers["mem0_delete_memory"] = HandleMem0DeleteMemory
+	r.handlers["mem0_update_memory"] = HandleMem0UpdateMemory
+	r.handlers["add_memory"] = HandleMem0AddMemory
+	r.handlers["search_memory"] = HandleMem0SearchMemory
+
+	// Alpaca Trading Tools (Assimilated from alpaca-mcp-server)
+	r.handlers["alpaca_get_account"] = HandleAlpacaGetAccount
+	r.handlers["alpaca_get_positions"] = HandleAlpacaGetPositions
+	r.handlers["alpaca_get_orders"] = HandleAlpacaGetOrders
+	r.handlers["alpaca_place_order"] = HandleAlpacaPlaceOrder
+	r.handlers["alpaca_cancel_order"] = HandleAlpacaCancelOrder
+	r.handlers["alpaca_get_bars"] = HandleAlpacaGetBars
+	r.handlers["alpaca_get_latest_quote"] = HandleAlpacaGetLatestQuote
+
+	// Alpha Vantage Financial Tools (Assimilated from av-mcp)
+	r.handlers["av_quote"] = HandleAVGlobalQuote
+	r.handlers["av_time_series"] = HandleAVTimeSeries
+	r.handlers["av_forex_rate"] = HandleAVForexRate
+	r.handlers["av_crypto_rate"] = HandleAVCryptoRate
+	r.handlers["av_symbol_search"] = HandleAVSearch
+	r.handlers["av_economic_indicator"] = HandleAVEconomicIndicator
+	r.handlers["alpha_vantage_quote"] = HandleAVGlobalQuote
+
+	// Hugging Face Hub Tools (Assimilated from SSE huggingface)
+	r.handlers["hf_search_models"] = HandleHFSearchModels
+	r.handlers["hf_get_model"] = HandleHFGetModel
+	r.handlers["hf_search_datasets"] = HandleHFSearchDatasets
+	r.handlers["hf_text_generation"] = HandleHFTextGeneration
+	r.handlers["hf_classify_text"] = HandleHFClassification
+	r.handlers["hf_embeddings"] = HandleHFEmbeddings
+	r.handlers["hf_search_spaces"] = HandleHFSearchSpaces
+
+	// Semgrep Security Tools (Assimilated from semgrep + semgrepstream)
+	r.handlers["semgrep_scan"] = HandleSemgrepScan
+	r.handlers["semgrep_cloud_scan"] = HandleSemgrepCloudScan
+	r.handlers["semgrep_search_rules"] = HandleSemgrepRuleSearch
+
+	// Octagon Financial Intelligence (Assimilated from octagon + octagon-deep-research)
+	r.handlers["octagon_research"] = HandleOctagonResearch
+	r.handlers["octagon_company_search"] = HandleOctagonCompanySearch
+	r.handlers["octagon_financials"] = HandleOctagonFinancials
+	r.handlers["octagon_news"] = HandleOctagonNews
+
+	// Browser Automation Tools (Assimilated from playwright/browser-use/browsermcp/puppeteer/browserbase)
+	r.handlers["browser_navigate"] = HandleBrowserNavigate
+	r.handlers["browser_screenshot"] = HandleBrowserScreenshot
+	r.handlers["browser_get_html"] = HandleBrowserGetHTML
+	r.handlers["browser_evaluate"] = HandleBrowserEvaluate
+	r.handlers["browser_click"] = HandleBrowserClick
+	r.handlers["browser_fill_form"] = HandleBrowserFillForm
+
+	// ChromaDB Vector Store Tools (Assimilated from chroma-mcp)
+	r.handlers["chroma_list_collections"] = HandleChromaListCollections
+	r.handlers["chroma_create_collection"] = HandleChromaCreateCollection
+	r.handlers["chroma_add_documents"] = HandleChromaAddDocuments
+	r.handlers["chroma_query"] = HandleChromaQuery
+	r.handlers["chroma_delete_collection"] = HandleChromaDeleteCollection
+	r.handlers["chroma_get_documents"] = HandleChromaGetCollection
+
+	// Basic Memory Tools (Assimilated from basic-memory)
+	r.handlers["basic_memory_write"] = HandleBasicMemoryWrite
+	r.handlers["basic_memory_read"] = HandleBasicMemoryRead
+	r.handlers["basic_memory_search"] = HandleBasicMemorySearch
+	r.handlers["basic_memory_list"] = HandleBasicMemoryList
+	r.handlers["basic_memory_delete"] = HandleBasicMemoryDelete
+	r.handlers["memory_write"] = HandleBasicMemoryWrite
+	r.handlers["memory_read"] = HandleBasicMemoryRead
+	r.handlers["memory_search"] = HandleBasicMemorySearch
+
+	// MindsDB ML Database Tools (Assimilated from SSE mindsdb)
+	r.handlers["mindsdb_query"] = HandleMindsDBQuery
+	r.handlers["mindsdb_list_models"] = HandleMindsDBListModels
+	r.handlers["mindsdb_predict"] = HandleMindsDBPredict
 }
 
 func (r *Registry) Execute(ctx context.Context, name string, args map[string]interface{}) (ToolResponse, error) {

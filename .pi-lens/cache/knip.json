@@ -188,6 +188,11 @@
     },
     {
       "type": "file",
+      "name": "go/internal/tools/thoughtbox_sandbox.js",
+      "file": "go/internal/tools/thoughtbox_sandbox.js"
+    },
+    {
+      "type": "file",
       "name": "packages/supervisor/src/index.ts",
       "file": "packages/supervisor/src/index.ts"
     },
@@ -723,11 +728,6 @@
     },
     {
       "type": "file",
-      "name": "packages/ui/src/lib/server-supervisor.ts",
-      "file": "packages/ui/src/lib/server-supervisor.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/ui/src/types/enterprise.ts",
       "file": "packages/ui/src/types/enterprise.ts"
     },
@@ -740,6 +740,11 @@
       "type": "file",
       "name": "packages/ui/src/types/submodule.ts",
       "file": "packages/ui/src/types/submodule.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/ui/src/lib/server-supervisor.ts",
+      "file": "packages/ui/src/lib/server-supervisor.ts"
     },
     {
       "type": "file",
@@ -868,6 +873,11 @@
     },
     {
       "type": "file",
+      "name": "packages/ui/src/lib/jules/provider.tsx",
+      "file": "packages/ui/src/lib/jules/provider.tsx"
+    },
+    {
+      "type": "file",
       "name": "packages/ui/src/lib/hooks/use-autopilot.ts",
       "file": "packages/ui/src/lib/hooks/use-autopilot.ts"
     },
@@ -880,11 +890,6 @@
       "type": "file",
       "name": "packages/ui/src/lib/hooks/use-hardware.ts",
       "file": "packages/ui/src/lib/hooks/use-hardware.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/lib/jules/provider.tsx",
-      "file": "packages/ui/src/lib/jules/provider.tsx"
     },
     {
       "type": "file",
@@ -1208,6 +1213,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -1298,11 +1308,6 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/orchestrator/council/routes/ws.ts",
       "file": "packages/core/src/orchestrator/council/routes/ws.ts"
     },
@@ -1373,11 +1378,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/index.mts",
-      "file": "apps/tormentnexus-extension/packages/env/index.mts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/dev-utils/index.mts",
       "file": "apps/tormentnexus-extension/packages/dev-utils/index.mts"
     },
@@ -1400,6 +1400,11 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/module-manager/index.mts",
       "file": "apps/tormentnexus-extension/packages/module-manager/index.mts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/index.mts",
+      "file": "apps/tormentnexus-extension/packages/env/index.mts"
     },
     {
       "type": "file",
@@ -1460,21 +1465,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/utils/plugins/make-manifest-plugin.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/utils/plugins/make-manifest-plugin.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/lib/const.ts",
-      "file": "apps/tormentnexus-extension/packages/env/lib/const.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/lib/index.ts",
-      "file": "apps/tormentnexus-extension/packages/env/lib/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/lib/types.ts",
-      "file": "apps/tormentnexus-extension/packages/env/lib/types.ts"
     },
     {
       "type": "file",
@@ -1545,6 +1535,21 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/module-manager/lib/runModuleManager.ts",
       "file": "apps/tormentnexus-extension/packages/module-manager/lib/runModuleManager.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/lib/const.ts",
+      "file": "apps/tormentnexus-extension/packages/env/lib/const.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/lib/index.ts",
+      "file": "apps/tormentnexus-extension/packages/env/lib/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/lib/types.ts",
+      "file": "apps/tormentnexus-extension/packages/env/lib/types.ts"
     },
     {
       "type": "file",
@@ -1658,16 +1663,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts"
     },
@@ -1675,6 +1670,16 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
     },
     {
       "type": "file",
@@ -1725,6 +1730,26 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/shared/lib/hooks/useStorage.tsx",
       "file": "apps/tormentnexus-extension/packages/shared/lib/hooks/useStorage.tsx"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/Logger.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/Logger.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/storage.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/storage.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/types.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/types.ts"
     },
     {
       "type": "file",
@@ -1783,13 +1808,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts"
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts"
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts"
     },
     {
       "type": "file",
@@ -1800,6 +1825,16 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/websocket/WebSocketTransport.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/websocket/WebSocketTransport.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/pages/content/src/components/sidebar/styles/sidebar.css",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/styles/sidebar.css"
+    },
+    {
+      "type": "file",
+      "name": "packages/browser-extension/stub.ts",
+      "file": "packages/browser-extension/stub.ts"
     },
     {
       "type": "file",
@@ -1950,6 +1985,12 @@
     },
     {
       "type": "devDependency",
+      "name": "turbo",
+      "file": "package.json",
+      "line": 39
+    },
+    {
+      "type": "devDependency",
       "name": "xmlchars",
       "file": "package.json",
       "line": 42
@@ -2058,6 +2099,12 @@
     },
     {
       "type": "dependency",
+      "name": "@trpc/server",
+      "file": "apps/web/package.json",
+      "line": 38
+    },
+    {
+      "type": "dependency",
       "name": "@xyflow/react",
       "file": "apps/web/package.json",
       "line": 39
@@ -2085,12 +2132,6 @@
       "name": "@tailwindcss/oxide",
       "file": "apps/web/package.json",
       "line": 56
-    },
-    {
-      "type": "devDependency",
-      "name": "@types/recharts",
-      "file": "apps/web/package.json",
-      "line": 61
     },
     {
       "type": "devDependency",
@@ -2238,6 +2279,18 @@
     },
     {
       "type": "dependency",
+      "name": "@trpc/client",
+      "file": "packages/ui/package.json",
+      "line": 33
+    },
+    {
+      "type": "dependency",
+      "name": "@trpc/server",
+      "file": "packages/ui/package.json",
+      "line": 35
+    },
+    {
+      "type": "dependency",
       "name": "date-fns",
       "file": "packages/ui/package.json",
       "line": 41
@@ -2247,6 +2300,12 @@
       "name": "mini-svg-data-uri",
       "file": "packages/ui/package.json",
       "line": 44
+    },
+    {
+      "type": "dependency",
+      "name": "react-dom",
+      "file": "packages/ui/package.json",
+      "line": 48
     },
     {
       "type": "dependency",
@@ -2277,6 +2336,12 @@
       "name": "zustand",
       "file": "packages/ui/package.json",
       "line": 62
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/react-dom",
+      "file": "packages/ui/package.json",
+      "line": 66
     },
     {
       "type": "dependency",
@@ -2370,6 +2435,12 @@
     },
     {
       "type": "dependency",
+      "name": "pg",
+      "file": "packages/core/package.json",
+      "line": 79
+    },
+    {
+      "type": "dependency",
       "name": "sharp",
       "file": "packages/core/package.json",
       "line": 81
@@ -2439,6 +2510,12 @@
       "name": "@tormentnexus/ai",
       "file": "packages/memory/package.json",
       "line": 21
+    },
+    {
+      "type": "dependency",
+      "name": "apache-arrow",
+      "file": "packages/memory/package.json",
+      "line": 24
     },
     {
       "type": "dependency",
@@ -2598,18 +2675,6 @@
     },
     {
       "type": "devDependency",
-      "name": "@types/eslint__eslintrc",
-      "file": "apps/tormentnexus-extension/package.json",
-      "line": 60
-    },
-    {
-      "type": "devDependency",
-      "name": "@types/eslint__js",
-      "file": "apps/tormentnexus-extension/package.json",
-      "line": 61
-    },
-    {
-      "type": "devDependency",
       "name": "autoprefixer",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 66
@@ -2634,9 +2699,27 @@
     },
     {
       "type": "devDependency",
+      "name": "eslint",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 70
+    },
+    {
+      "type": "devDependency",
       "name": "eslint-config-airbnb-typescript",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 71
+    },
+    {
+      "type": "devDependency",
+      "name": "eslint-config-prettier",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 72
+    },
+    {
+      "type": "devDependency",
+      "name": "eslint-plugin-import",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 74
     },
     {
       "type": "devDependency",
@@ -2658,6 +2741,18 @@
     },
     {
       "type": "devDependency",
+      "name": "husky",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 83
+    },
+    {
+      "type": "devDependency",
+      "name": "jsdom",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 84
+    },
+    {
+      "type": "devDependency",
       "name": "lint-staged",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 85
@@ -2676,6 +2771,12 @@
     },
     {
       "type": "devDependency",
+      "name": "prettier",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 88
+    },
+    {
+      "type": "devDependency",
       "name": "run-script-os",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 90
@@ -2685,6 +2786,12 @@
       "name": "tslib",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 92
+    },
+    {
+      "type": "devDependency",
+      "name": "vite",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 96
     },
     {
       "type": "dependency",
@@ -2807,6 +2914,18 @@
       "line": 167
     },
     {
+      "type": "devDependency",
+      "name": "tsup",
+      "file": "apps/vscode/package.json",
+      "line": 168
+    },
+    {
+      "type": "devDependency",
+      "name": "vsce",
+      "file": "apps/vscode/package.json",
+      "line": 170
+    },
+    {
       "type": "dependency",
       "name": "@anthropic-ai/sdk",
       "file": "packages/ai/package.json",
@@ -2855,6 +2974,12 @@
       "line": 32
     },
     {
+      "type": "devDependency",
+      "name": "vitest",
+      "file": "packages/ai/package.json",
+      "line": 34
+    },
+    {
       "type": "unlisted",
       "name": "postcss",
       "file": "apps/web/postcss.config.mjs"
@@ -2873,15 +2998,69 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/index.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/index.ts",
+      "line": 19
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/render_prescript",
+      "file": "apps/tormentnexus-extension/pages/content/src/index.ts",
+      "line": 35
+    },
+    {
+      "type": "export",
+      "name": "AnalyticsService",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics-service.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics-service.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/analytics-listener.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/events/event-bus.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/connection.store.ts",
       "line": 5
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/connection.store.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/ui.store.ts",
       "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/ui.store.ts",
+      "line": 13
     },
     {
       "type": "unlisted",
@@ -2897,6 +3076,12 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/adapter.store.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/context.store.ts",
       "line": 1
@@ -2909,15 +3094,153 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/main-initializer.ts",
+      "line": 23
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/index.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/plugin-registry.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/initializer.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/circuit-breaker.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/context-bridge.ts",
+      "line": 16
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/error-handler.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/performance.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/ui-initializer.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/index.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/index.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/events/event-handlers.ts",
+      "line": 40
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/utils/helpers.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/events/event-system.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/resource.store.ts",
       "line": 5
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/resource.store.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/hooks/useStores.ts",
       "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useEventBus.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useAdapter.ts",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useShadowDomStyles.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useSidebarPlugin.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useMcpCommunication.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useMcpCommunication.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/sidebar.plugin.ts",
+      "line": 5
     },
     {
       "type": "unlisted",
@@ -2945,6 +3268,102 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/gemini.adapter.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/grok.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/openrouter.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/deepseek.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/aistudio.adapter.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/mistral.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/ghcopilot.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/plugin-context.ts",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/chatgpt.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/kimi.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/qwenchat.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/SidebarManager.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/SidebarManager.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/SidebarManager.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/base/BaseSidebarManager.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/base/BaseSidebarManager.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
       "name": "@rollup/plugin-typescript",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/rollup.config.js",
       "line": 1
@@ -2969,6 +3388,24 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/automation.service.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/memory-capture.service.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/tormentnexus-kernel-button.ts",
+      "line": 14
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/extension-storage.ts",
       "line": 1
@@ -2978,6 +3415,12 @@
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/app.store.ts",
       "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/app.store.ts",
+      "line": 9
     },
     {
       "type": "unlisted",
@@ -2999,6 +3442,12 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createUISlice.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createConfigSlice.ts",
       "line": 1
@@ -3011,9 +3460,21 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createToolSlice.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createResourceSlice.ts",
       "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createResourceSlice.ts",
+      "line": 2
     },
     {
       "type": "unlisted",
@@ -3023,9 +3484,21 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createConnectionSlice.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createAdapterSlice.ts",
       "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createAdapterSlice.ts",
+      "line": 4
     },
     {
       "type": "unlisted",
@@ -3053,9 +3526,21 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/prompt.store.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/profile.store.ts",
       "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/profile.store.ts",
+      "line": 7
     },
     {
       "type": "unlisted",
@@ -3065,9 +3550,405 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/tool.store.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/utils/dom.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/utils/shadowDom.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/InstructionManager.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/InstructionManager.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/InstructionManager.tsx",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/InputArea/InputArea.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/InputArea/InputArea.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/InputArea/InputArea.tsx",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/services",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Help/Help.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Help/Help.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Help/Help.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
       "name": "react-virtuoso",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
       "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Dashboard/Dashboard.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Dashboard/Dashboard.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Dashboard/Dashboard.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroList.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroList.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroList.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/System/SystemInfo.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/CommandPalette/CommandPalette.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/CommandPalette/CommandPalette.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/CommandPalette/CommandPalette.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Onboarding/Onboarding.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Onboarding/Onboarding.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Onboarding/Onboarding.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/PromptTemplates/PromptTemplates.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ResourceBrowser/index.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ResourceBrowser/index.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ResourceBrowser/index.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/index.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/NotificationCenter.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/NotificationCenter.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/NotificationCenter.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Toast.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Toast.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 22
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 23
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 29
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 30
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 31
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 32
     },
     {
       "type": "unlisted",
@@ -3077,14 +3958,68 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
       "name": "framer-motion",
       "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
       "line": 2
     },
     {
       "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/render_prescript",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ui/button.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "class-variance-authority",
       "file": "apps/tormentnexus-extension/pages/content/src/components/ui/button.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ui/card.tsx",
       "line": 3
     },
     {
@@ -3101,6 +4036,96 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ui/dialog.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/index.ts",
+      "line": 23
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/RichRenderer.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/SchemaRenderer.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ContextManager/ContextManager.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ContextManager/ContextManager.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ContextManager/ContextManager.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Debugger/Debugger.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Debugger/Debugger.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Debugger/Debugger.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/hooks/backgroundCommunication.ts",
+      "line": 19
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/fixed_schema_test.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/instructionGenerator.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/instructionGeneratorJson.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/schema_test.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "@xyflow/react",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/nodes/ToolNode.tsx",
       "line": 2
@@ -3113,15 +4138,267 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroBuilder.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "@xyflow/react",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroBuilder.tsx",
       "line": 16
     },
     {
       "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/ThemeSelector.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/ThemeSelector.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Icon.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Input.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/ResizeHandle.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Select.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Textarea.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Toggle.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/ToggleWithoutLabel.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Typography.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/aistudio/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/aistudio/chatInputHandler.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/aistudio/index.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/chatgpt/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/chatgpt/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/chatgpt/index.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/deepseek/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/deepseek/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/deepseek/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/index.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/index.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/grok/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/grok/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/grok/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/index.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/perplexity/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/perplexity/chatInputHandler.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/perplexity/index.ts",
+      "line": 14
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/t3chat/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/t3chat/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/t3chat/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/defaultConfigs/config-manager.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/mcpexecute/storage.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
       "name": "@src/stores",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/mcpexecute/storage.ts",
       "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/functionResult.ts",
+      "line": 5
     },
     {
       "type": "unlisted",
@@ -3137,6 +4414,48 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts",
+      "line": 19
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/utils/index.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/components.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/jsonFunctionParser.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
       "name": "cheerio",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/functionParser.ts",
       "line": 4
@@ -3146,6 +4465,54 @@
       "name": "cheerio",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/parameterParser.ts",
       "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/functionHistory.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/utils/themeDetector.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/functionBlock.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/utils/dom.ts",
+      "line": 2
+    },
+    {
+      "type": "export",
+      "name": "trackUrlChange",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 331
+    },
+    {
+      "type": "export",
+      "name": "trackPageView",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 349
+    },
+    {
+      "type": "export",
+      "name": "trackError",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 370
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 15
     },
     {
       "type": "export",
@@ -4319,6 +5686,30 @@
     },
     {
       "type": "export",
+      "name": "ServerErrorTracker",
+      "file": "packages/core/src/services/server-error-tracker.service.ts",
+      "line": 13
+    },
+    {
+      "type": "export",
+      "name": "ServerCrashInfo",
+      "file": "packages/core/src/services/server-error-tracker.service.ts",
+      "line": 6
+    },
+    {
+      "type": "export",
+      "name": "ServerHealthService",
+      "file": "packages/core/src/services/server-health.service.ts",
+      "line": 28
+    },
+    {
+      "type": "export",
+      "name": "detectSessionExecutionPolicy",
+      "file": "packages/core/src/services/session-execution-policy.ts",
+      "line": 198
+    },
+    {
+      "type": "export",
       "name": "LinksBacklogRepository",
       "file": "packages/core/src/db/repositories/links-backlog.repo.ts",
       "line": 73
@@ -4349,30 +5740,6 @@
     },
     {
       "type": "export",
-      "name": "ServerErrorTracker",
-      "file": "packages/core/src/services/server-error-tracker.service.ts",
-      "line": 13
-    },
-    {
-      "type": "export",
-      "name": "ServerCrashInfo",
-      "file": "packages/core/src/services/server-error-tracker.service.ts",
-      "line": 6
-    },
-    {
-      "type": "export",
-      "name": "ServerHealthService",
-      "file": "packages/core/src/services/server-health.service.ts",
-      "line": 28
-    },
-    {
-      "type": "export",
-      "name": "detectSessionExecutionPolicy",
-      "file": "packages/core/src/services/session-execution-policy.ts",
-      "line": 198
-    },
-    {
-      "type": "export",
       "name": "Logger",
       "file": "packages/tormentnexus-supervisor/src/logger.ts",
       "line": 6
@@ -4388,66 +5755,6 @@
       "name": "ANTIGRAVITY_LABEL_HINTS",
       "file": "packages/tormentnexus-supervisor/src/decision_logic.ts",
       "line": 5
-    },
-    {
-      "type": "export",
-      "name": "AnalyticsService",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics-service.ts",
-      "line": 12
-    },
-    {
-      "type": "export",
-      "name": "Logger",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 33
-    },
-    {
-      "type": "export",
-      "name": "LoggerStorage",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 34
-    },
-    {
-      "type": "export",
-      "name": "LogLevel",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 35
-    },
-    {
-      "type": "export",
-      "name": "getGlobalLogger",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 49
-    },
-    {
-      "type": "export",
-      "name": "default",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 98
-    },
-    {
-      "type": "export",
-      "name": "ILogger",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
-    },
-    {
-      "type": "export",
-      "name": "ILoggerStorage",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
-    },
-    {
-      "type": "export",
-      "name": "LoggerConfig",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
-    },
-    {
-      "type": "export",
-      "name": "LogLevelString",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
     },
     {
       "type": "export",
@@ -5486,24 +6793,6 @@
       "name": "rateLimit",
       "file": "packages/core/src/orchestrator/council/middleware/rate-limit.ts",
       "line": 35
-    },
-    {
-      "type": "export",
-      "name": "trackUrlChange",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
-      "line": 331
-    },
-    {
-      "type": "export",
-      "name": "trackPageView",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
-      "line": 349
-    },
-    {
-      "type": "export",
-      "name": "trackError",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
-      "line": 370
     },
     {
       "type": "export",
@@ -7115,6 +8404,96 @@
     },
     {
       "type": "export",
+      "name": "CachedCapabilities",
+      "file": "packages/core/src/services/AgentCapabilityRegistry.ts",
+      "line": 3
+    },
+    {
+      "type": "export",
+      "name": "ConnectionMemoryRecord",
+      "file": "packages/core/src/services/agentMemoryConnections.ts",
+      "line": 53
+    },
+    {
+      "type": "export",
+      "name": "MemoryPivotKind",
+      "file": "packages/core/src/services/agentMemoryPivot.ts",
+      "line": 4
+    },
+    {
+      "type": "export",
+      "name": "PivotMemoryRecord",
+      "file": "packages/core/src/services/agentMemoryPivot.ts",
+      "line": 16
+    },
+    {
+      "type": "export",
+      "name": "TimelineMemoryRecord",
+      "file": "packages/core/src/services/agentMemoryTimeline.ts",
+      "line": 8
+    },
+    {
+      "type": "export",
+      "name": "InstallSurfaceArtifactStatus",
+      "file": "packages/core/src/services/install-surface-detection.ts",
+      "line": 5
+    },
+    {
+      "type": "export",
+      "name": "ValidationOutput",
+      "file": "packages/core/src/services/published-catalog-validator.ts",
+      "line": 40
+    },
+    {
+      "type": "export",
+      "name": "SessionBootstrapObservation",
+      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
+      "line": 1
+    },
+    {
+      "type": "export",
+      "name": "SessionBootstrapSummary",
+      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
+      "line": 9
+    },
+    {
+      "type": "export",
+      "name": "SessionBootstrapPayload",
+      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
+      "line": 13
+    },
+    {
+      "type": "export",
+      "name": "StructuredUserPrompt",
+      "file": "packages/core/src/services/sessionPromptMemory.ts",
+      "line": 12
+    },
+    {
+      "type": "export",
+      "name": "StructuredSessionSummary",
+      "file": "packages/core/src/services/sessionSummaryMemory.ts",
+      "line": 19
+    },
+    {
+      "type": "export",
+      "name": "SessionToolWorkingSetOptions",
+      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
+      "line": 1
+    },
+    {
+      "type": "export",
+      "name": "LoadedToolState",
+      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
+      "line": 6
+    },
+    {
+      "type": "export",
+      "name": "WorkingSetEvictionEvent",
+      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
+      "line": 14
+    },
+    {
+      "type": "export",
       "name": "WebMemory",
       "file": "packages/core/src/db/repositories/browser-data.repo.ts",
       "line": 11
@@ -7211,93 +8590,33 @@
     },
     {
       "type": "export",
-      "name": "CachedCapabilities",
-      "file": "packages/core/src/services/AgentCapabilityRegistry.ts",
-      "line": 3
+      "name": "CanonicalMemoryFormat",
+      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
+      "line": 17
     },
     {
       "type": "export",
-      "name": "ConnectionMemoryRecord",
-      "file": "packages/core/src/services/agentMemoryConnections.ts",
-      "line": 53
+      "name": "ProviderMemoryFormat",
+      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
+      "line": 18
     },
     {
       "type": "export",
-      "name": "MemoryPivotKind",
-      "file": "packages/core/src/services/agentMemoryPivot.ts",
-      "line": 4
-    },
-    {
-      "type": "export",
-      "name": "PivotMemoryRecord",
-      "file": "packages/core/src/services/agentMemoryPivot.ts",
-      "line": 16
-    },
-    {
-      "type": "export",
-      "name": "TimelineMemoryRecord",
-      "file": "packages/core/src/services/agentMemoryTimeline.ts",
-      "line": 8
-    },
-    {
-      "type": "export",
-      "name": "InstallSurfaceArtifactStatus",
-      "file": "packages/core/src/services/install-surface-detection.ts",
-      "line": 5
-    },
-    {
-      "type": "export",
-      "name": "ValidationOutput",
-      "file": "packages/core/src/services/published-catalog-validator.ts",
-      "line": 40
-    },
-    {
-      "type": "export",
-      "name": "SessionBootstrapObservation",
-      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
-      "line": 1
-    },
-    {
-      "type": "export",
-      "name": "SessionBootstrapSummary",
-      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
-      "line": 9
-    },
-    {
-      "type": "export",
-      "name": "SessionBootstrapPayload",
-      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
-      "line": 13
-    },
-    {
-      "type": "export",
-      "name": "StructuredUserPrompt",
-      "file": "packages/core/src/services/sessionPromptMemory.ts",
-      "line": 12
-    },
-    {
-      "type": "export",
-      "name": "StructuredSessionSummary",
-      "file": "packages/core/src/services/sessionSummaryMemory.ts",
+      "name": "MemoryInterchangeFormat",
+      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
       "line": 19
     },
     {
       "type": "export",
-      "name": "SessionToolWorkingSetOptions",
-      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
-      "line": 1
+      "name": "MemoryProviderMode",
+      "file": "packages/core/src/services/memory/MemoryManager.ts",
+      "line": 5
     },
     {
       "type": "export",
-      "name": "LoadedToolState",
-      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
-      "line": 6
-    },
-    {
-      "type": "export",
-      "name": "WorkingSetEvictionEvent",
-      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
-      "line": 14
+      "name": "RedundantMemoryProviderName",
+      "file": "packages/core/src/services/memory/RedundantMemoryManager.ts",
+      "line": 28
     },
     {
       "type": "export",
@@ -7394,36 +8713,6 @@
       "name": "RotationRoom",
       "file": "packages/core/src/orchestrator/council/services/rotation-room.ts",
       "line": 88
-    },
-    {
-      "type": "export",
-      "name": "CanonicalMemoryFormat",
-      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
-      "line": 17
-    },
-    {
-      "type": "export",
-      "name": "ProviderMemoryFormat",
-      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
-      "line": 18
-    },
-    {
-      "type": "export",
-      "name": "MemoryInterchangeFormat",
-      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
-      "line": 19
-    },
-    {
-      "type": "export",
-      "name": "MemoryProviderMode",
-      "file": "packages/core/src/services/memory/MemoryManager.ts",
-      "line": 5
-    },
-    {
-      "type": "export",
-      "name": "RedundantMemoryProviderName",
-      "file": "packages/core/src/services/memory/RedundantMemoryManager.ts",
-      "line": 28
     },
     {
       "type": "export",
@@ -7873,6 +9162,30 @@
   "unusedExports": [
     {
       "type": "export",
+      "name": "AnalyticsService",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics-service.ts",
+      "line": 12
+    },
+    {
+      "type": "export",
+      "name": "trackUrlChange",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 331
+    },
+    {
+      "type": "export",
+      "name": "trackPageView",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 349
+    },
+    {
+      "type": "export",
+      "name": "trackError",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 370
+    },
+    {
+      "type": "export",
       "name": "getWebDevPortMarkerPath",
       "file": "scripts/dev_tabby_ready_helpers.mjs",
       "line": 300
@@ -9043,6 +10356,30 @@
     },
     {
       "type": "export",
+      "name": "ServerErrorTracker",
+      "file": "packages/core/src/services/server-error-tracker.service.ts",
+      "line": 13
+    },
+    {
+      "type": "export",
+      "name": "ServerCrashInfo",
+      "file": "packages/core/src/services/server-error-tracker.service.ts",
+      "line": 6
+    },
+    {
+      "type": "export",
+      "name": "ServerHealthService",
+      "file": "packages/core/src/services/server-health.service.ts",
+      "line": 28
+    },
+    {
+      "type": "export",
+      "name": "detectSessionExecutionPolicy",
+      "file": "packages/core/src/services/session-execution-policy.ts",
+      "line": 198
+    },
+    {
+      "type": "export",
       "name": "LinksBacklogRepository",
       "file": "packages/core/src/db/repositories/links-backlog.repo.ts",
       "line": 73
@@ -9073,30 +10410,6 @@
     },
     {
       "type": "export",
-      "name": "ServerErrorTracker",
-      "file": "packages/core/src/services/server-error-tracker.service.ts",
-      "line": 13
-    },
-    {
-      "type": "export",
-      "name": "ServerCrashInfo",
-      "file": "packages/core/src/services/server-error-tracker.service.ts",
-      "line": 6
-    },
-    {
-      "type": "export",
-      "name": "ServerHealthService",
-      "file": "packages/core/src/services/server-health.service.ts",
-      "line": 28
-    },
-    {
-      "type": "export",
-      "name": "detectSessionExecutionPolicy",
-      "file": "packages/core/src/services/session-execution-policy.ts",
-      "line": 198
-    },
-    {
-      "type": "export",
       "name": "Logger",
       "file": "packages/tormentnexus-supervisor/src/logger.ts",
       "line": 6
@@ -9112,66 +10425,6 @@
       "name": "ANTIGRAVITY_LABEL_HINTS",
       "file": "packages/tormentnexus-supervisor/src/decision_logic.ts",
       "line": 5
-    },
-    {
-      "type": "export",
-      "name": "AnalyticsService",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics-service.ts",
-      "line": 12
-    },
-    {
-      "type": "export",
-      "name": "Logger",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 33
-    },
-    {
-      "type": "export",
-      "name": "LoggerStorage",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 34
-    },
-    {
-      "type": "export",
-      "name": "LogLevel",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 35
-    },
-    {
-      "type": "export",
-      "name": "getGlobalLogger",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 49
-    },
-    {
-      "type": "export",
-      "name": "default",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 98
-    },
-    {
-      "type": "export",
-      "name": "ILogger",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
-    },
-    {
-      "type": "export",
-      "name": "ILoggerStorage",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
-    },
-    {
-      "type": "export",
-      "name": "LoggerConfig",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
-    },
-    {
-      "type": "export",
-      "name": "LogLevelString",
-      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
-      "line": 36
     },
     {
       "type": "export",
@@ -10210,24 +11463,6 @@
       "name": "rateLimit",
       "file": "packages/core/src/orchestrator/council/middleware/rate-limit.ts",
       "line": 35
-    },
-    {
-      "type": "export",
-      "name": "trackUrlChange",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
-      "line": 331
-    },
-    {
-      "type": "export",
-      "name": "trackPageView",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
-      "line": 349
-    },
-    {
-      "type": "export",
-      "name": "trackError",
-      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
-      "line": 370
     },
     {
       "type": "export",
@@ -11839,6 +13074,96 @@
     },
     {
       "type": "export",
+      "name": "CachedCapabilities",
+      "file": "packages/core/src/services/AgentCapabilityRegistry.ts",
+      "line": 3
+    },
+    {
+      "type": "export",
+      "name": "ConnectionMemoryRecord",
+      "file": "packages/core/src/services/agentMemoryConnections.ts",
+      "line": 53
+    },
+    {
+      "type": "export",
+      "name": "MemoryPivotKind",
+      "file": "packages/core/src/services/agentMemoryPivot.ts",
+      "line": 4
+    },
+    {
+      "type": "export",
+      "name": "PivotMemoryRecord",
+      "file": "packages/core/src/services/agentMemoryPivot.ts",
+      "line": 16
+    },
+    {
+      "type": "export",
+      "name": "TimelineMemoryRecord",
+      "file": "packages/core/src/services/agentMemoryTimeline.ts",
+      "line": 8
+    },
+    {
+      "type": "export",
+      "name": "InstallSurfaceArtifactStatus",
+      "file": "packages/core/src/services/install-surface-detection.ts",
+      "line": 5
+    },
+    {
+      "type": "export",
+      "name": "ValidationOutput",
+      "file": "packages/core/src/services/published-catalog-validator.ts",
+      "line": 40
+    },
+    {
+      "type": "export",
+      "name": "SessionBootstrapObservation",
+      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
+      "line": 1
+    },
+    {
+      "type": "export",
+      "name": "SessionBootstrapSummary",
+      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
+      "line": 9
+    },
+    {
+      "type": "export",
+      "name": "SessionBootstrapPayload",
+      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
+      "line": 13
+    },
+    {
+      "type": "export",
+      "name": "StructuredUserPrompt",
+      "file": "packages/core/src/services/sessionPromptMemory.ts",
+      "line": 12
+    },
+    {
+      "type": "export",
+      "name": "StructuredSessionSummary",
+      "file": "packages/core/src/services/sessionSummaryMemory.ts",
+      "line": 19
+    },
+    {
+      "type": "export",
+      "name": "SessionToolWorkingSetOptions",
+      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
+      "line": 1
+    },
+    {
+      "type": "export",
+      "name": "LoadedToolState",
+      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
+      "line": 6
+    },
+    {
+      "type": "export",
+      "name": "WorkingSetEvictionEvent",
+      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
+      "line": 14
+    },
+    {
+      "type": "export",
       "name": "WebMemory",
       "file": "packages/core/src/db/repositories/browser-data.repo.ts",
       "line": 11
@@ -11935,93 +13260,33 @@
     },
     {
       "type": "export",
-      "name": "CachedCapabilities",
-      "file": "packages/core/src/services/AgentCapabilityRegistry.ts",
-      "line": 3
+      "name": "CanonicalMemoryFormat",
+      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
+      "line": 17
     },
     {
       "type": "export",
-      "name": "ConnectionMemoryRecord",
-      "file": "packages/core/src/services/agentMemoryConnections.ts",
-      "line": 53
+      "name": "ProviderMemoryFormat",
+      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
+      "line": 18
     },
     {
       "type": "export",
-      "name": "MemoryPivotKind",
-      "file": "packages/core/src/services/agentMemoryPivot.ts",
-      "line": 4
-    },
-    {
-      "type": "export",
-      "name": "PivotMemoryRecord",
-      "file": "packages/core/src/services/agentMemoryPivot.ts",
-      "line": 16
-    },
-    {
-      "type": "export",
-      "name": "TimelineMemoryRecord",
-      "file": "packages/core/src/services/agentMemoryTimeline.ts",
-      "line": 8
-    },
-    {
-      "type": "export",
-      "name": "InstallSurfaceArtifactStatus",
-      "file": "packages/core/src/services/install-surface-detection.ts",
-      "line": 5
-    },
-    {
-      "type": "export",
-      "name": "ValidationOutput",
-      "file": "packages/core/src/services/published-catalog-validator.ts",
-      "line": 40
-    },
-    {
-      "type": "export",
-      "name": "SessionBootstrapObservation",
-      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
-      "line": 1
-    },
-    {
-      "type": "export",
-      "name": "SessionBootstrapSummary",
-      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
-      "line": 9
-    },
-    {
-      "type": "export",
-      "name": "SessionBootstrapPayload",
-      "file": "packages/core/src/services/sessionBootstrapMemory.ts",
-      "line": 13
-    },
-    {
-      "type": "export",
-      "name": "StructuredUserPrompt",
-      "file": "packages/core/src/services/sessionPromptMemory.ts",
-      "line": 12
-    },
-    {
-      "type": "export",
-      "name": "StructuredSessionSummary",
-      "file": "packages/core/src/services/sessionSummaryMemory.ts",
+      "name": "MemoryInterchangeFormat",
+      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
       "line": 19
     },
     {
       "type": "export",
-      "name": "SessionToolWorkingSetOptions",
-      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
-      "line": 1
+      "name": "MemoryProviderMode",
+      "file": "packages/core/src/services/memory/MemoryManager.ts",
+      "line": 5
     },
     {
       "type": "export",
-      "name": "LoadedToolState",
-      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
-      "line": 6
-    },
-    {
-      "type": "export",
-      "name": "WorkingSetEvictionEvent",
-      "file": "packages/core/src/services/tormentnexus-session-working-set.service.ts",
-      "line": 14
+      "name": "RedundantMemoryProviderName",
+      "file": "packages/core/src/services/memory/RedundantMemoryManager.ts",
+      "line": 28
     },
     {
       "type": "export",
@@ -12118,36 +13383,6 @@
       "name": "RotationRoom",
       "file": "packages/core/src/orchestrator/council/services/rotation-room.ts",
       "line": 88
-    },
-    {
-      "type": "export",
-      "name": "CanonicalMemoryFormat",
-      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
-      "line": 17
-    },
-    {
-      "type": "export",
-      "name": "ProviderMemoryFormat",
-      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
-      "line": 18
-    },
-    {
-      "type": "export",
-      "name": "MemoryInterchangeFormat",
-      "file": "packages/core/src/services/memory/MemoryExportImportService.ts",
-      "line": 19
-    },
-    {
-      "type": "export",
-      "name": "MemoryProviderMode",
-      "file": "packages/core/src/services/memory/MemoryManager.ts",
-      "line": 5
-    },
-    {
-      "type": "export",
-      "name": "RedundantMemoryProviderName",
-      "file": "packages/core/src/services/memory/RedundantMemoryManager.ts",
-      "line": 28
     },
     {
       "type": "export",
@@ -12782,6 +14017,11 @@
     },
     {
       "type": "file",
+      "name": "go/internal/tools/thoughtbox_sandbox.js",
+      "file": "go/internal/tools/thoughtbox_sandbox.js"
+    },
+    {
+      "type": "file",
       "name": "packages/supervisor/src/index.ts",
       "file": "packages/supervisor/src/index.ts"
     },
@@ -13317,11 +14557,6 @@
     },
     {
       "type": "file",
-      "name": "packages/ui/src/lib/server-supervisor.ts",
-      "file": "packages/ui/src/lib/server-supervisor.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/ui/src/types/enterprise.ts",
       "file": "packages/ui/src/types/enterprise.ts"
     },
@@ -13334,6 +14569,11 @@
       "type": "file",
       "name": "packages/ui/src/types/submodule.ts",
       "file": "packages/ui/src/types/submodule.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/ui/src/lib/server-supervisor.ts",
+      "file": "packages/ui/src/lib/server-supervisor.ts"
     },
     {
       "type": "file",
@@ -13462,6 +14702,11 @@
     },
     {
       "type": "file",
+      "name": "packages/ui/src/lib/jules/provider.tsx",
+      "file": "packages/ui/src/lib/jules/provider.tsx"
+    },
+    {
+      "type": "file",
       "name": "packages/ui/src/lib/hooks/use-autopilot.ts",
       "file": "packages/ui/src/lib/hooks/use-autopilot.ts"
     },
@@ -13474,11 +14719,6 @@
       "type": "file",
       "name": "packages/ui/src/lib/hooks/use-hardware.ts",
       "file": "packages/ui/src/lib/hooks/use-hardware.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/lib/jules/provider.tsx",
-      "file": "packages/ui/src/lib/jules/provider.tsx"
     },
     {
       "type": "file",
@@ -13802,6 +15042,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -13892,11 +15137,6 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/orchestrator/council/routes/ws.ts",
       "file": "packages/core/src/orchestrator/council/routes/ws.ts"
     },
@@ -13967,11 +15207,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/index.mts",
-      "file": "apps/tormentnexus-extension/packages/env/index.mts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/dev-utils/index.mts",
       "file": "apps/tormentnexus-extension/packages/dev-utils/index.mts"
     },
@@ -13994,6 +15229,11 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/module-manager/index.mts",
       "file": "apps/tormentnexus-extension/packages/module-manager/index.mts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/index.mts",
+      "file": "apps/tormentnexus-extension/packages/env/index.mts"
     },
     {
       "type": "file",
@@ -14054,21 +15294,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/utils/plugins/make-manifest-plugin.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/utils/plugins/make-manifest-plugin.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/lib/const.ts",
-      "file": "apps/tormentnexus-extension/packages/env/lib/const.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/lib/index.ts",
-      "file": "apps/tormentnexus-extension/packages/env/lib/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/env/lib/types.ts",
-      "file": "apps/tormentnexus-extension/packages/env/lib/types.ts"
     },
     {
       "type": "file",
@@ -14139,6 +15364,21 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/module-manager/lib/runModuleManager.ts",
       "file": "apps/tormentnexus-extension/packages/module-manager/lib/runModuleManager.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/lib/const.ts",
+      "file": "apps/tormentnexus-extension/packages/env/lib/const.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/lib/index.ts",
+      "file": "apps/tormentnexus-extension/packages/env/lib/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/env/lib/types.ts",
+      "file": "apps/tormentnexus-extension/packages/env/lib/types.ts"
     },
     {
       "type": "file",
@@ -14252,16 +15492,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initClient.ts"
     },
@@ -14269,6 +15499,16 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/initializers/initReloadServer.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
     },
     {
       "type": "file",
@@ -14319,6 +15559,26 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/shared/lib/hooks/useStorage.tsx",
       "file": "apps/tormentnexus-extension/packages/shared/lib/hooks/useStorage.tsx"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/Logger.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/Logger.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/storage.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/storage.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/shared/lib/logger/types.ts",
+      "file": "apps/tormentnexus-extension/packages/shared/lib/logger/types.ts"
     },
     {
       "type": "file",
@@ -14377,13 +15637,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts"
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/streamable-http/StreamableHttpPlugin.ts"
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts"
     },
     {
       "type": "file",
@@ -14394,6 +15654,16 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/websocket/WebSocketTransport.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/websocket/WebSocketTransport.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/pages/content/src/components/sidebar/styles/sidebar.css",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/styles/sidebar.css"
+    },
+    {
+      "type": "file",
+      "name": "packages/browser-extension/stub.ts",
+      "file": "packages/browser-extension/stub.ts"
     },
     {
       "type": "file",
@@ -14546,6 +15816,12 @@
     },
     {
       "type": "devDependency",
+      "name": "turbo",
+      "file": "package.json",
+      "line": 39
+    },
+    {
+      "type": "devDependency",
       "name": "xmlchars",
       "file": "package.json",
       "line": 42
@@ -14654,6 +15930,12 @@
     },
     {
       "type": "dependency",
+      "name": "@trpc/server",
+      "file": "apps/web/package.json",
+      "line": 38
+    },
+    {
+      "type": "dependency",
       "name": "@xyflow/react",
       "file": "apps/web/package.json",
       "line": 39
@@ -14681,12 +15963,6 @@
       "name": "@tailwindcss/oxide",
       "file": "apps/web/package.json",
       "line": 56
-    },
-    {
-      "type": "devDependency",
-      "name": "@types/recharts",
-      "file": "apps/web/package.json",
-      "line": 61
     },
     {
       "type": "devDependency",
@@ -14834,6 +16110,18 @@
     },
     {
       "type": "dependency",
+      "name": "@trpc/client",
+      "file": "packages/ui/package.json",
+      "line": 33
+    },
+    {
+      "type": "dependency",
+      "name": "@trpc/server",
+      "file": "packages/ui/package.json",
+      "line": 35
+    },
+    {
+      "type": "dependency",
       "name": "date-fns",
       "file": "packages/ui/package.json",
       "line": 41
@@ -14843,6 +16131,12 @@
       "name": "mini-svg-data-uri",
       "file": "packages/ui/package.json",
       "line": 44
+    },
+    {
+      "type": "dependency",
+      "name": "react-dom",
+      "file": "packages/ui/package.json",
+      "line": 48
     },
     {
       "type": "dependency",
@@ -14873,6 +16167,12 @@
       "name": "zustand",
       "file": "packages/ui/package.json",
       "line": 62
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/react-dom",
+      "file": "packages/ui/package.json",
+      "line": 66
     },
     {
       "type": "dependency",
@@ -14966,6 +16266,12 @@
     },
     {
       "type": "dependency",
+      "name": "pg",
+      "file": "packages/core/package.json",
+      "line": 79
+    },
+    {
+      "type": "dependency",
       "name": "sharp",
       "file": "packages/core/package.json",
       "line": 81
@@ -15035,6 +16341,12 @@
       "name": "@tormentnexus/ai",
       "file": "packages/memory/package.json",
       "line": 21
+    },
+    {
+      "type": "dependency",
+      "name": "apache-arrow",
+      "file": "packages/memory/package.json",
+      "line": 24
     },
     {
       "type": "dependency",
@@ -15194,18 +16506,6 @@
     },
     {
       "type": "devDependency",
-      "name": "@types/eslint__eslintrc",
-      "file": "apps/tormentnexus-extension/package.json",
-      "line": 60
-    },
-    {
-      "type": "devDependency",
-      "name": "@types/eslint__js",
-      "file": "apps/tormentnexus-extension/package.json",
-      "line": 61
-    },
-    {
-      "type": "devDependency",
       "name": "autoprefixer",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 66
@@ -15230,9 +16530,27 @@
     },
     {
       "type": "devDependency",
+      "name": "eslint",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 70
+    },
+    {
+      "type": "devDependency",
       "name": "eslint-config-airbnb-typescript",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 71
+    },
+    {
+      "type": "devDependency",
+      "name": "eslint-config-prettier",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 72
+    },
+    {
+      "type": "devDependency",
+      "name": "eslint-plugin-import",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 74
     },
     {
       "type": "devDependency",
@@ -15254,6 +16572,18 @@
     },
     {
       "type": "devDependency",
+      "name": "husky",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 83
+    },
+    {
+      "type": "devDependency",
+      "name": "jsdom",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 84
+    },
+    {
+      "type": "devDependency",
       "name": "lint-staged",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 85
@@ -15272,6 +16602,12 @@
     },
     {
       "type": "devDependency",
+      "name": "prettier",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 88
+    },
+    {
+      "type": "devDependency",
       "name": "run-script-os",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 90
@@ -15281,6 +16617,12 @@
       "name": "tslib",
       "file": "apps/tormentnexus-extension/package.json",
       "line": 92
+    },
+    {
+      "type": "devDependency",
+      "name": "vite",
+      "file": "apps/tormentnexus-extension/package.json",
+      "line": 96
     },
     {
       "type": "dependency",
@@ -15403,6 +16745,18 @@
       "line": 167
     },
     {
+      "type": "devDependency",
+      "name": "tsup",
+      "file": "apps/vscode/package.json",
+      "line": 168
+    },
+    {
+      "type": "devDependency",
+      "name": "vsce",
+      "file": "apps/vscode/package.json",
+      "line": 170
+    },
+    {
       "type": "dependency",
       "name": "@anthropic-ai/sdk",
       "file": "packages/ai/package.json",
@@ -15449,6 +16803,12 @@
       "name": "eslint",
       "file": "packages/ai/package.json",
       "line": 32
+    },
+    {
+      "type": "devDependency",
+      "name": "vitest",
+      "file": "packages/ai/package.json",
+      "line": 34
     }
   ],
   "unlistedDeps": [
@@ -15471,15 +16831,63 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/index.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/index.ts",
+      "line": 19
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/render_prescript",
+      "file": "apps/tormentnexus-extension/pages/content/src/index.ts",
+      "line": 35
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics-service.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/analytics-listener.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/events/event-bus.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/connection.store.ts",
       "line": 5
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/connection.store.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/ui.store.ts",
       "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/ui.store.ts",
+      "line": 13
     },
     {
       "type": "unlisted",
@@ -15495,6 +16903,12 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/adapter.store.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/context.store.ts",
       "line": 1
@@ -15507,15 +16921,153 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/main-initializer.ts",
+      "line": 23
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/index.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/plugin-registry.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/initializer.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/circuit-breaker.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/context-bridge.ts",
+      "line": 16
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/error-handler.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/performance.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/core/ui-initializer.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/index.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/index.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/events/event-handlers.ts",
+      "line": 40
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/utils/helpers.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/events/event-system.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/resource.store.ts",
       "line": 5
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/resource.store.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/hooks/useStores.ts",
       "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useEventBus.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useAdapter.ts",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useShadowDomStyles.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useSidebarPlugin.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useMcpCommunication.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/hooks/useMcpCommunication.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/sidebar.plugin.ts",
+      "line": 5
     },
     {
       "type": "unlisted",
@@ -15543,6 +17095,102 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/gemini.adapter.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/grok.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/openrouter.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/deepseek.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/aistudio.adapter.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/mistral.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/ghcopilot.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/plugin-context.ts",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/chatgpt.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/kimi.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/qwenchat.adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/SidebarManager.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/SidebarManager.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/SidebarManager.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/base/BaseSidebarManager.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/base/BaseSidebarManager.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
       "name": "@rollup/plugin-typescript",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/rollup.config.js",
       "line": 1
@@ -15567,6 +17215,24 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/automation.service.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/memory-capture.service.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/services/tormentnexus-kernel-button.ts",
+      "line": 14
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/extension-storage.ts",
       "line": 1
@@ -15576,6 +17242,12 @@
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/app.store.ts",
       "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/app.store.ts",
+      "line": 9
     },
     {
       "type": "unlisted",
@@ -15597,6 +17269,12 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createUISlice.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createConfigSlice.ts",
       "line": 1
@@ -15609,9 +17287,21 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createToolSlice.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createResourceSlice.ts",
       "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createResourceSlice.ts",
+      "line": 2
     },
     {
       "type": "unlisted",
@@ -15621,9 +17311,21 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createConnectionSlice.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createAdapterSlice.ts",
       "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/slices/createAdapterSlice.ts",
+      "line": 4
     },
     {
       "type": "unlisted",
@@ -15651,9 +17353,21 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/prompt.store.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
       "name": "zustand",
       "file": "apps/tormentnexus-extension/pages/content/src/stores/profile.store.ts",
       "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/profile.store.ts",
+      "line": 7
     },
     {
       "type": "unlisted",
@@ -15663,9 +17377,405 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/stores/tool.store.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/utils/dom.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/utils/shadowDom.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/InstructionManager.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/InstructionManager.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/InstructionManager.tsx",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ServerStatus/ServerStatus.tsx",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/AvailableTools/AvailableTools.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/InputArea/InputArea.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/InputArea/InputArea.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/InputArea/InputArea.tsx",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/services",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/Settings.tsx",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Help/Help.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Help/Help.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Help/Help.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
       "name": "react-virtuoso",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Activity/ActivityLog.tsx",
       "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Dashboard/Dashboard.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Dashboard/Dashboard.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Dashboard/Dashboard.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroList.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroList.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroList.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/System/SystemInfo.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/CommandPalette/CommandPalette.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/CommandPalette/CommandPalette.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/CommandPalette/CommandPalette.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Onboarding/Onboarding.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Onboarding/Onboarding.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Onboarding/Onboarding.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/PromptTemplates/PromptTemplates.tsx",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ResourceBrowser/index.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ResourceBrowser/index.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ResourceBrowser/index.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/index.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/NotificationCenter.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/NotificationCenter.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/NotificationCenter.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Toast.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Toast.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 22
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 23
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 29
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 30
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/types",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 31
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Sidebar.tsx",
+      "line": 32
     },
     {
       "type": "unlisted",
@@ -15675,14 +17785,68 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/events",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
       "name": "framer-motion",
       "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
       "line": 2
     },
     {
       "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/render_prescript",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ui/button.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "class-variance-authority",
       "file": "apps/tormentnexus-extension/pages/content/src/components/ui/button.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ui/card.tsx",
       "line": 3
     },
     {
@@ -15699,6 +17863,96 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/ui/dialog.tsx",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/index.ts",
+      "line": 23
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/RichRenderer.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/SchemaRenderer.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ContextManager/ContextManager.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ContextManager/ContextManager.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ContextManager/ContextManager.tsx",
+      "line": 6
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Debugger/Debugger.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Debugger/Debugger.tsx",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Debugger/Debugger.tsx",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/hooks/backgroundCommunication.ts",
+      "line": 19
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/fixed_schema_test.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/instructionGenerator.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/instructionGeneratorJson.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Instructions/schema_test.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "@xyflow/react",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/nodes/ToolNode.tsx",
       "line": 2
@@ -15711,15 +17965,267 @@
     },
     {
       "type": "unlisted",
+      "name": "@src/stores",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroBuilder.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "@xyflow/react",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Macros/MacroBuilder.tsx",
       "line": 16
     },
     {
       "type": "unlisted",
+      "name": "@src/hooks",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/ThemeSelector.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/Settings/ThemeSelector.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Icon.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Input.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/ResizeHandle.tsx",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Select.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Textarea.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Toggle.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/ToggleWithoutLabel.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/lib",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/Typography.tsx",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/aistudio/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/aistudio/chatInputHandler.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/aistudio/index.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/chatgpt/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/chatgpt/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/chatgpt/index.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/deepseek/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/deepseek/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/deepseek/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/index.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/gemini/index.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/grok/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/grok/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/grok/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/index.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/perplexity/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/perplexity/chatInputHandler.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/perplexity/index.ts",
+      "line": 14
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/utils",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/t3chat/chatInputHandler.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/t3chat/chatInputHandler.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@src/components",
+      "file": "apps/tormentnexus-extension/pages/content/src/components/websites/t3chat/index.ts",
+      "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/defaultConfigs/config-manager.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/mcpexecute/storage.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
       "name": "@src/stores",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/mcpexecute/storage.ts",
       "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/functionResult.ts",
+      "line": 5
     },
     {
       "type": "unlisted",
@@ -15735,6 +18241,48 @@
     },
     {
       "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts",
+      "line": 19
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/utils/index.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/components.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/jsonFunctionParser.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
       "name": "cheerio",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/functionParser.ts",
       "line": 4
@@ -15744,7 +18292,37 @@
       "name": "cheerio",
       "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/parameterParser.ts",
       "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/functionHistory.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/utils/themeDetector.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/renderer/functionBlock.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/pages/content/src/render_prescript/src/utils/dom.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@extension/shared",
+      "file": "apps/tormentnexus-extension/chrome-extension/utils/analytics.ts",
+      "line": 15
     }
   ],
-  "summary": "Found 1372 issues"
+  "summary": "Found 1588 issues"
 }
