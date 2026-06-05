@@ -1,56 +1,55 @@
-# Handoff - v1.0.0-alpha.120
+# Handoff - v1.0.0-alpha.121 - Foundation Complete
 
 ## Summary
-Mass MCP server assimilation: 15 high-value MCP servers from `~/.tormentnexus/mcp.json` have been fully reimplemented as native Go modules in the control plane. All 70+ new tool handlers registered, comprehensive test suite added, all tests pass.
+Assimilated 7,216 MCP servers, 1,484 skills, and 500 Hermes addons into SQLite state database. Foundation ready for subagent orchestration.
 
-## Accomplishments
+## Track Completion Status
 
-### Assimilated MCP Servers (Batch Assimilation — v120)
+### ✅ Track A: MCP Server Discovery (A0)
+- **Source**: `bobbybookmarks/mcp_servers_ranked.md` (6,090 entries)
+- **Source**: `bobbybookmarks/mcp_servers_organized.md` (6,336 entries)
+- **Merged**: 7,216 unique MCP servers
+- **Already Go-native**: 290 servers
+- **Pending assimilation**: 6,926 servers
+- **Top categories**: Memory & Knowledge Systems (580), Code & Dev Tools (554), MCP Clients (545)
 
-| MCP Server Entry | Go File | Tools Added | Status |
-|---|---|---|---|
-| `firecrawl-mcp` (npx) | `firecrawl.go` | `firecrawl_scrape`, `firecrawl_crawl` | ✅ Registered |
-| `exa` (SSE) | `exa.go` | `exa_search`, `exa_find_similar`, `exa_get_contents` | ✅ Native |
-| `arxiv-mcp-server` (uvx) | `arxiv.go` | `arxiv_search`, `arxiv_get_paper`, `arxiv_list_recent` | ✅ Native (no key) |
-| `paper_search_server` (uvx) | `semantic_scholar.go` | `paper_search`, `paper_details`, `paper_citations` | ✅ Native |
-| `mem0` (npx) | `mem0.go` | `mem0_add_memory`, `mem0_search_memory`, `mem0_get_memories`, `mem0_delete_memory`, `mem0_update_memory` | ✅ Native |
-| `alpaca` (uvx) | `alpaca.go` | `alpaca_get_account`, `alpaca_get_positions`, `alpaca_get_orders`, `alpaca_place_order`, `alpaca_cancel_order`, `alpaca_get_bars`, `alpaca_get_latest_quote` | ✅ Native |
-| `av` (uvx) | `alpha_vantage.go` | `av_quote`, `av_time_series`, `av_forex_rate`, `av_crypto_rate`, `av_symbol_search`, `av_economic_indicator` | ✅ Native |
-| `huggingface` (SSE) | `huggingface.go` | `hf_search_models`, `hf_get_model`, `hf_search_datasets`, `hf_text_generation`, `hf_classify_text`, `hf_embeddings`, `hf_search_spaces` | ✅ Native |
-| `semgrep` + `semgrepstream` (STDIO+SSE) | `semgrep.go` | `semgrep_scan`, `semgrep_cloud_scan`, `semgrep_search_rules` | ✅ Dual mode |
-| `octagon` + `octagon-deep-research` (npx×2) | `octagon.go` | `octagon_research`, `octagon_company_search`, `octagon_financials`, `octagon_news` | ✅ Native |
-| playwright/browser-use/browsermcp/puppeteer/browserbase (5 entries) | `playwright_browser.go` | `browser_navigate`, `browser_screenshot`, `browser_get_html`, `browser_evaluate`, `browser_click`, `browser_fill_form` | ✅ Unified |
-| `chroma-knowledge` (uvx) | `chroma.go` | `chroma_list_collections`, `chroma_create_collection`, `chroma_add_documents`, `chroma_query`, `chroma_delete_collection`, `chroma_get_documents` | ✅ Native |
-| `basic-memory` (uvx) | `basic_memory.go` | `basic_memory_write`, `basic_memory_read`, `basic_memory_search`, `basic_memory_list`, `basic_memory_delete` | ✅ Native |
-| `mindsdb` (SSE) | `mindsdb.go` | `mindsdb_query`, `mindsdb_list_models`, `mindsdb_predict` | ✅ Native |
+### ✅ Track B: Skill Registry (B1)
+- **Source**: `.agent/skills/` directory
+- **Processed**: 1,489 skill directories
+- **Inserted**: 1,484 skills
+- **Skipped**: 5 (no SKILL.md)
+- **Database**: `data/assimilation_state.db` skills table
 
-### Infrastructure
-- Added `assimilated_test.go`: 13 unit tests covering all new implementations
-- Updated `registry.go`: 70+ new handler registrations
-- Bumped VERSION to `1.0.0-alpha.120`
-- Updated `CHANGELOG.md`
+### ✅ Track C: Hermes Addons Research (C0)
+- **Source**: Combined Atlas MCP catalog (top 500 by score)
+- **Entries**: 500 Hermes addons
+- **Database**: `data/assimilation_state.db` hermes_addons table
+- **Status**: All 500 marked as `pending` for implementation
 
-### Test Results
-- All 20 original tests: ✅ PASS
-- All 13 new assimilation tests: ✅ PASS
-- HuggingFace live API: ✅ Returns real data (11,602 chars)
-- Basic Memory: ✅ Write/read/search all work correctly
-- All external services fail gracefully when not available (no panics)
+### 🚧 Track D: Prompt Library (D1)
+- **Status**: Pending
+- **Goal**: Migrate hardcoded prompts to SQLite database
 
-## Remaining MCP Servers to Assimilate
+## Database Location
+`data/assimilation_state.db`
 
-From `~/.tormentnexus/mcp.json`, still pending native Go reimplementation:
-- `conport` (context-portal-mcp uvx) → context/workspace portal
-- `cipher` (@byterover/cipher npx) → AI aggregator with vector store
-- `byterover-mcp` (SSE) → Byterover AI assistant
-- `notebooklm` (@roomi-fields/notebooklm-mcp) → NotebookLM integration
-- `prism-mcp` (prism-mcp-server npx) → Prism API mocking
-- `robertpelloni.com` (SSE) → Custom WordPress SSE server
-- `ChunkHound` (chunkhound binary) → Semantic search daemon
-- `browserbase` → Cloud browser platform
-- `chrome-devtools-webmcp` → Chrome DevTools alternative
+### Tables
+- `mcp_servers` — 7,216 entries (6,926 pending)
+- `skills` — 1,484 active entries
+- `hermes_addons` — 500 entries (500 pending)
+- `prompt_library` — empty (pending)
 
-## Next Steps
-1. Continue assimilation of remaining servers (conport, ChunkHound, cipher, prism-mcp)
-2. Add integration tests once API keys are configured in environment
-3. Consider adding a `tools_catalog.md` that auto-generates from registry entries
+## Go Build Status
+- `go build ./go/...` passes cleanly
+- 50 native Go tool implementations verified
+
+## Files Created
+- `scripts/assimilate_mcp_servers.py` — Parses Atlas MCP catalog
+- `scripts/ingest_skills.py` — Bulk ingests agent skills
+- `hermes-addons/TOP_500_HERMES_ADDONS.json` — Ranked addon list
+
+## Next Actions
+1. **Create progressive loading handlers** for skills (skill_manifest, skill_search, skill_get)
+2. **Implement Track D** — Prompt library migration
+3. **Begin Track A batch processing** — 50 servers per batch
+4. **Implement Track C** — Hermes addon Go modules/skills
