@@ -540,7 +540,32 @@
         }
       ],
       "trend": "stable"
+    },
+    "scratch\\mark_all_servers_always_on.mjs": {
+      "latest": {
+        "commit": "3e4137a8f",
+        "timestamp": "2026-06-05T01:44:22.565Z",
+        "mi": 45.9,
+        "cognitive": 18,
+        "nesting": 4,
+        "lines": 53,
+        "maxCyclomatic": 8,
+        "entropy": 5.17
+      },
+      "history": [
+        {
+          "commit": "3e4137a8f",
+          "timestamp": "2026-06-05T01:44:22.565Z",
+          "mi": 45.9,
+          "cognitive": 18,
+          "nesting": 4,
+          "lines": 53,
+          "maxCyclomatic": 8,
+          "entropy": 5.17
+        }
+      ],
+      "trend": "stable"
     }
   },
-  "capturedAt": "2026-06-04T23:49:00.539Z"
+  "capturedAt": "2026-06-05T01:44:27.587Z"
 }

@@ -61,4 +61,5 @@ export * from "./components/IntegratedTerminal";
 export * from "./components/SystemStatus";
 export * from "./components/StreamStatus";
 export * from "./components/ui/sonner-toaster";
+export * from "./components/enterprise/EnterpriseComponentRegistry";
 

@@ -2,10 +2,7 @@
 
 import React from 'react';
 import { WorkflowDesigner } from "@/components/designer/WorkflowDesigner";
-import { AuditLogViewer } from "@/components/enterprise/AuditLogViewer";
-import { RbacManager } from "@/components/enterprise/RbacManager";
 import { NodeManager } from "@/components/enterprise/NodeManager";
-import { OidcConfig } from "@/components/enterprise/OidcConfig";
 import { Marketplace } from "@/components/enterprise/Marketplace";
 import { ToolInventory } from "@/components/enterprise/ToolInventory";
 import { A2AMesh } from "@/components/enterprise/A2AMesh";
@@ -17,8 +14,25 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { ShieldCheck, Workflow, History, Users, ShoppingBag, Network, Database, Cpu, Server } from "lucide-react";
+import { enterpriseRegistry } from './EnterpriseComponentRegistry';
 
 export function EnterpriseView() {
+  const OidcConfig = enterpriseRegistry.OidcConfig || (() => (
+    <div className="text-center py-10 text-slate-500 border border-dashed border-slate-800 rounded bg-slate-950">
+      Enterprise SSO is not enabled. Please upgrade your license to unlock OIDC and SAML single sign-on.
+    </div>
+  ));
+  const RbacManager = enterpriseRegistry.RbacManager || (() => (
+    <div className="text-center py-10 text-slate-500 border border-dashed border-slate-800 rounded bg-slate-950">
+      Role-Based Access Control is not enabled. Please upgrade your license to manage user roles.
+    </div>
+  ));
+  const AuditLogViewer = enterpriseRegistry.AuditLogViewer || (() => (
+    <div className="text-center py-10 text-slate-500 border border-dashed border-slate-800 rounded bg-slate-950">
+      Audit Trail is not enabled. Please upgrade your license to view event logs.
+    </div>
+  ));
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

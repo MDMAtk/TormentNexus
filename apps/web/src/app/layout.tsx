@@ -23,8 +23,15 @@ export const metadata: Metadata = {
 };
 
 import { TRPCProvider } from "../utils/TRPCProvider";
-import { Toaster } from "@tormentnexus/ui";
+import { Toaster, enterpriseRegistry } from "@tormentnexus/ui";
 import { Navigation } from "../components/Navigation";
+import { OidcConfig, RbacManager, AuditLogViewer } from "@tormentnexus/enterprise";
+
+// Bind the enterprise compliance components to the runtime registry
+enterpriseRegistry.OidcConfig = OidcConfig;
+enterpriseRegistry.RbacManager = RbacManager;
+enterpriseRegistry.AuditLogViewer = AuditLogViewer;
+
 
 function getVersionLabel(): string {
   const roots = [process.cwd(), resolve(process.cwd(), '..'), resolve(process.cwd(), '..', '..')];

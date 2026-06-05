@@ -23,56 +23,6 @@
     },
     {
       "type": "file",
-      "name": "scripts/audit.cjs",
-      "file": "scripts/audit.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.mjs",
-      "file": "scripts/audit.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/build_startup.mjs",
-      "file": "scripts/build_startup.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/embedder-healthcheck.mjs",
-      "file": "scripts/embedder-healthcheck.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/health-check.cjs",
-      "file": "scripts/health-check.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/smoke-test.cjs",
-      "file": "scripts/smoke-test.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/sync-versions.mjs",
-      "file": "scripts/sync-versions.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-cli.cjs",
-      "file": "scripts/test-cli.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-workflow.cjs",
-      "file": "scripts/test-workflow.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/trpc-audit.mjs",
-      "file": "scripts/trpc-audit.mjs"
-    },
-    {
-      "type": "file",
       "name": "scratch/bulk_validate_mcp_servers.mjs",
       "file": "scratch/bulk_validate_mcp_servers.mjs"
     },
@@ -90,6 +40,11 @@
       "type": "file",
       "name": "scratch/ingest_all_sessions.mjs",
       "file": "scratch/ingest_all_sessions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scratch/mark_all_servers_always_on.mjs",
+      "file": "scratch/mark_all_servers_always_on.mjs"
     },
     {
       "type": "file",
@@ -155,6 +110,56 @@
       "type": "file",
       "name": "scratch/validate_mcp_servers.mjs",
       "file": "scratch/validate_mcp_servers.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.cjs",
+      "file": "scripts/audit.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.mjs",
+      "file": "scripts/audit.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/build_startup.mjs",
+      "file": "scripts/build_startup.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/embedder-healthcheck.mjs",
+      "file": "scripts/embedder-healthcheck.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/health-check.cjs",
+      "file": "scripts/health-check.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/smoke-test.cjs",
+      "file": "scripts/smoke-test.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/sync-versions.mjs",
+      "file": "scripts/sync-versions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-cli.cjs",
+      "file": "scripts/test-cli.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-workflow.cjs",
+      "file": "scripts/test-workflow.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/trpc-audit.mjs",
+      "file": "scripts/trpc-audit.mjs"
     },
     {
       "type": "file",
@@ -748,11 +753,6 @@
     },
     {
       "type": "file",
-      "name": "packages/ui/src/components/enterprise/AuditLogViewer.tsx",
-      "file": "packages/ui/src/components/enterprise/AuditLogViewer.tsx"
-    },
-    {
-      "type": "file",
       "name": "packages/ui/src/components/enterprise/DataResidencyConfig.tsx",
       "file": "packages/ui/src/components/enterprise/DataResidencyConfig.tsx"
     },
@@ -780,16 +780,6 @@
       "type": "file",
       "name": "packages/ui/src/components/enterprise/NodeManager.tsx",
       "file": "packages/ui/src/components/enterprise/NodeManager.tsx"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/components/enterprise/OidcConfig.tsx",
-      "file": "packages/ui/src/components/enterprise/OidcConfig.tsx"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/components/enterprise/RbacManager.tsx",
-      "file": "packages/ui/src/components/enterprise/RbacManager.tsx"
     },
     {
       "type": "file",
@@ -983,6 +973,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
+      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/db/schema.ts",
       "file": "packages/core/src/db/schema.ts"
     },
@@ -990,11 +985,6 @@
       "type": "file",
       "name": "packages/core/src/db/tormentnexus-schema.pg.ts",
       "file": "packages/core/src/db/tormentnexus-schema.pg.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
-      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
     },
     {
       "type": "file",
@@ -1008,6 +998,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/lib/mcpHelper.ts",
+      "file": "packages/core/src/lib/mcpHelper.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/llm/GoogleLLMClient.ts",
       "file": "packages/core/src/llm/GoogleLLMClient.ts"
     },
@@ -1015,11 +1010,6 @@
       "type": "file",
       "name": "packages/core/src/llm/types.ts",
       "file": "packages/core/src/llm/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/lib/mcpHelper.ts",
-      "file": "packages/core/src/lib/mcpHelper.ts"
     },
     {
       "type": "file",
@@ -1053,6 +1043,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/routers/promptsRouter.ts",
+      "file": "packages/core/src/routers/promptsRouter.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/scripts/assimilateLibrary.ts",
       "file": "packages/core/src/scripts/assimilateLibrary.ts"
     },
@@ -1070,11 +1065,6 @@
       "type": "file",
       "name": "packages/core/src/scripts/verify_research_recursion.ts",
       "file": "packages/core/src/scripts/verify_research_recursion.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/routers/promptsRouter.ts",
-      "file": "packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -1218,11 +1208,6 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -1310,6 +1295,11 @@
       "type": "file",
       "name": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts",
       "file": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
     },
     {
       "type": "file",
@@ -1413,13 +1403,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
-      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
+      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
+      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
-      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
+      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
+      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
     },
     {
       "type": "file",
@@ -1623,6 +1613,11 @@
     },
     {
       "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts"
+    },
+    {
+      "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/config.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/config.ts"
     },
@@ -1640,11 +1635,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/primitives.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/primitives.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts"
     },
     {
       "type": "file",
@@ -1678,11 +1668,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
     },
@@ -1690,6 +1675,11 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts"
     },
     {
       "type": "file",
@@ -1710,6 +1700,36 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -1750,36 +1770,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts",
       "file": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -1974,145 +1964,163 @@
       "type": "dependency",
       "name": "@dnd-kit/modifiers",
       "file": "apps/web/package.json",
-      "line": 16
+      "line": 17
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-avatar",
       "file": "apps/web/package.json",
-      "line": 19
+      "line": 20
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-dialog",
       "file": "apps/web/package.json",
-      "line": 20
+      "line": 21
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-dropdown-menu",
       "file": "apps/web/package.json",
-      "line": 21
+      "line": 22
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-icons",
       "file": "apps/web/package.json",
-      "line": 22
+      "line": 23
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-label",
       "file": "apps/web/package.json",
-      "line": 23
+      "line": 24
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-popover",
       "file": "apps/web/package.json",
-      "line": 24
+      "line": 25
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-select",
       "file": "apps/web/package.json",
-      "line": 26
+      "line": 27
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-separator",
       "file": "apps/web/package.json",
-      "line": 27
+      "line": 28
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-slider",
       "file": "apps/web/package.json",
-      "line": 28
+      "line": 29
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-slot",
       "file": "apps/web/package.json",
-      "line": 29
+      "line": 30
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-switch",
       "file": "apps/web/package.json",
-      "line": 30
+      "line": 31
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-tabs",
       "file": "apps/web/package.json",
-      "line": 31
+      "line": 32
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-tooltip",
       "file": "apps/web/package.json",
-      "line": 32
+      "line": 33
     },
     {
       "type": "dependency",
       "name": "@radix-ui/themes",
       "file": "apps/web/package.json",
-      "line": 33
+      "line": 34
     },
     {
       "type": "dependency",
       "name": "@trpc/react-query",
       "file": "apps/web/package.json",
-      "line": 36
+      "line": 37
     },
     {
       "type": "dependency",
       "name": "@xyflow/react",
       "file": "apps/web/package.json",
-      "line": 38
+      "line": 39
     },
     {
       "type": "dependency",
       "name": "cmdk",
       "file": "apps/web/package.json",
-      "line": 41
+      "line": 42
     },
     {
       "type": "dependency",
       "name": "date-fns",
       "file": "apps/web/package.json",
-      "line": 42
+      "line": 43
     },
     {
       "type": "dependency",
       "name": "react-force-graph-2d",
       "file": "apps/web/package.json",
-      "line": 49
+      "line": 50
     },
     {
       "type": "devDependency",
       "name": "@tailwindcss/oxide",
       "file": "apps/web/package.json",
-      "line": 55
+      "line": 56
     },
     {
       "type": "devDependency",
       "name": "@types/recharts",
       "file": "apps/web/package.json",
-      "line": 60
+      "line": 61
     },
     {
       "type": "devDependency",
       "name": "eslint",
       "file": "apps/web/package.json",
-      "line": 61
+      "line": 62
     },
     {
       "type": "devDependency",
       "name": "eslint-config-next",
       "file": "apps/web/package.json",
-      "line": 62
+      "line": 63
+    },
+    {
+      "type": "dependency",
+      "name": "@tormentnexus/core",
+      "file": "packages/enterprise/package.json",
+      "line": 11
+    },
+    {
+      "type": "dependency",
+      "name": "react-dom",
+      "file": "packages/enterprise/package.json",
+      "line": 14
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/react-dom",
+      "file": "packages/enterprise/package.json",
+      "line": 19
     },
     {
       "type": "dependency",
@@ -6879,6 +6887,24 @@
     },
     {
       "type": "export",
+      "name": "BobbyBookmarksBookmark",
+      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "export",
+      "name": "BobbyBookmarksSyncReport",
+      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
+      "line": 24
+    },
+    {
+      "type": "export",
+      "name": "BobbyBookmarksAdapterOptions",
+      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
+      "line": 33
+    },
+    {
+      "type": "export",
       "name": "ToolRunner",
       "file": "packages/core/src/orchestrator/SystemWorkflows.ts",
       "line": 4
@@ -7188,24 +7214,6 @@
       "name": "TimelineMemoryRecord",
       "file": "packages/core/src/services/agentMemoryTimeline.ts",
       "line": 8
-    },
-    {
-      "type": "export",
-      "name": "BobbyBookmarksBookmark",
-      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
-      "line": 3
-    },
-    {
-      "type": "export",
-      "name": "BobbyBookmarksSyncReport",
-      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
-      "line": 24
-    },
-    {
-      "type": "export",
-      "name": "BobbyBookmarksAdapterOptions",
-      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
-      "line": 33
     },
     {
       "type": "export",
@@ -11579,6 +11587,24 @@
     },
     {
       "type": "export",
+      "name": "BobbyBookmarksBookmark",
+      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
+      "line": 3
+    },
+    {
+      "type": "export",
+      "name": "BobbyBookmarksSyncReport",
+      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
+      "line": 24
+    },
+    {
+      "type": "export",
+      "name": "BobbyBookmarksAdapterOptions",
+      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
+      "line": 33
+    },
+    {
+      "type": "export",
       "name": "ToolRunner",
       "file": "packages/core/src/orchestrator/SystemWorkflows.ts",
       "line": 4
@@ -11888,24 +11914,6 @@
       "name": "TimelineMemoryRecord",
       "file": "packages/core/src/services/agentMemoryTimeline.ts",
       "line": 8
-    },
-    {
-      "type": "export",
-      "name": "BobbyBookmarksBookmark",
-      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
-      "line": 3
-    },
-    {
-      "type": "export",
-      "name": "BobbyBookmarksSyncReport",
-      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
-      "line": 24
-    },
-    {
-      "type": "export",
-      "name": "BobbyBookmarksAdapterOptions",
-      "file": "packages/core/src/services/bobby-bookmarks-adapter.ts",
-      "line": 33
     },
     {
       "type": "export",
@@ -12561,56 +12569,6 @@
     },
     {
       "type": "file",
-      "name": "scripts/audit.cjs",
-      "file": "scripts/audit.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.mjs",
-      "file": "scripts/audit.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/build_startup.mjs",
-      "file": "scripts/build_startup.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/embedder-healthcheck.mjs",
-      "file": "scripts/embedder-healthcheck.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/health-check.cjs",
-      "file": "scripts/health-check.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/smoke-test.cjs",
-      "file": "scripts/smoke-test.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/sync-versions.mjs",
-      "file": "scripts/sync-versions.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-cli.cjs",
-      "file": "scripts/test-cli.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-workflow.cjs",
-      "file": "scripts/test-workflow.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/trpc-audit.mjs",
-      "file": "scripts/trpc-audit.mjs"
-    },
-    {
-      "type": "file",
       "name": "scratch/bulk_validate_mcp_servers.mjs",
       "file": "scratch/bulk_validate_mcp_servers.mjs"
     },
@@ -12628,6 +12586,11 @@
       "type": "file",
       "name": "scratch/ingest_all_sessions.mjs",
       "file": "scratch/ingest_all_sessions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scratch/mark_all_servers_always_on.mjs",
+      "file": "scratch/mark_all_servers_always_on.mjs"
     },
     {
       "type": "file",
@@ -12693,6 +12656,56 @@
       "type": "file",
       "name": "scratch/validate_mcp_servers.mjs",
       "file": "scratch/validate_mcp_servers.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.cjs",
+      "file": "scripts/audit.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.mjs",
+      "file": "scripts/audit.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/build_startup.mjs",
+      "file": "scripts/build_startup.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/embedder-healthcheck.mjs",
+      "file": "scripts/embedder-healthcheck.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/health-check.cjs",
+      "file": "scripts/health-check.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/smoke-test.cjs",
+      "file": "scripts/smoke-test.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/sync-versions.mjs",
+      "file": "scripts/sync-versions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-cli.cjs",
+      "file": "scripts/test-cli.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-workflow.cjs",
+      "file": "scripts/test-workflow.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/trpc-audit.mjs",
+      "file": "scripts/trpc-audit.mjs"
     },
     {
       "type": "file",
@@ -13286,11 +13299,6 @@
     },
     {
       "type": "file",
-      "name": "packages/ui/src/components/enterprise/AuditLogViewer.tsx",
-      "file": "packages/ui/src/components/enterprise/AuditLogViewer.tsx"
-    },
-    {
-      "type": "file",
       "name": "packages/ui/src/components/enterprise/DataResidencyConfig.tsx",
       "file": "packages/ui/src/components/enterprise/DataResidencyConfig.tsx"
     },
@@ -13318,16 +13326,6 @@
       "type": "file",
       "name": "packages/ui/src/components/enterprise/NodeManager.tsx",
       "file": "packages/ui/src/components/enterprise/NodeManager.tsx"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/components/enterprise/OidcConfig.tsx",
-      "file": "packages/ui/src/components/enterprise/OidcConfig.tsx"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/components/enterprise/RbacManager.tsx",
-      "file": "packages/ui/src/components/enterprise/RbacManager.tsx"
     },
     {
       "type": "file",
@@ -13521,6 +13519,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
+      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/db/schema.ts",
       "file": "packages/core/src/db/schema.ts"
     },
@@ -13528,11 +13531,6 @@
       "type": "file",
       "name": "packages/core/src/db/tormentnexus-schema.pg.ts",
       "file": "packages/core/src/db/tormentnexus-schema.pg.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
-      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
     },
     {
       "type": "file",
@@ -13546,6 +13544,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/lib/mcpHelper.ts",
+      "file": "packages/core/src/lib/mcpHelper.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/llm/GoogleLLMClient.ts",
       "file": "packages/core/src/llm/GoogleLLMClient.ts"
     },
@@ -13553,11 +13556,6 @@
       "type": "file",
       "name": "packages/core/src/llm/types.ts",
       "file": "packages/core/src/llm/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/lib/mcpHelper.ts",
-      "file": "packages/core/src/lib/mcpHelper.ts"
     },
     {
       "type": "file",
@@ -13591,6 +13589,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/routers/promptsRouter.ts",
+      "file": "packages/core/src/routers/promptsRouter.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/scripts/assimilateLibrary.ts",
       "file": "packages/core/src/scripts/assimilateLibrary.ts"
     },
@@ -13608,11 +13611,6 @@
       "type": "file",
       "name": "packages/core/src/scripts/verify_research_recursion.ts",
       "file": "packages/core/src/scripts/verify_research_recursion.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/routers/promptsRouter.ts",
-      "file": "packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -13756,11 +13754,6 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -13848,6 +13841,11 @@
       "type": "file",
       "name": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts",
       "file": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
     },
     {
       "type": "file",
@@ -13951,13 +13949,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
-      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
+      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
+      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/index.mts",
-      "file": "apps/tormentnexus-extension/packages/storage/index.mts"
+      "name": "apps/tormentnexus-extension/packages/shared/index.mts",
+      "file": "apps/tormentnexus-extension/packages/shared/index.mts"
     },
     {
       "type": "file",
@@ -14161,6 +14159,11 @@
     },
     {
       "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts"
+    },
+    {
+      "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/config.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/config.ts"
     },
@@ -14178,11 +14181,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/primitives.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/types/primitives.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts"
     },
     {
       "type": "file",
@@ -14216,11 +14214,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts",
-      "file": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/refresh.ts"
     },
@@ -14228,6 +14221,11 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/injections/reload.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts",
+      "file": "apps/tormentnexus-extension/packages/hmr/lib/interpreter/index.ts"
     },
     {
       "type": "file",
@@ -14248,6 +14246,36 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts",
       "file": "apps/tormentnexus-extension/packages/hmr/lib/plugins/watch-rebuild-plugin.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
+      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -14288,36 +14316,6 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts",
       "file": "apps/tormentnexus-extension/packages/shared/src/types/toolCall.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/base.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/enums.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/base/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/exampleThemeStorage.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts",
-      "file": "apps/tormentnexus-extension/packages/storage/lib/impl/index.ts"
     },
     {
       "type": "file",
@@ -14514,145 +14512,163 @@
       "type": "dependency",
       "name": "@dnd-kit/modifiers",
       "file": "apps/web/package.json",
-      "line": 16
+      "line": 17
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-avatar",
       "file": "apps/web/package.json",
-      "line": 19
+      "line": 20
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-dialog",
       "file": "apps/web/package.json",
-      "line": 20
+      "line": 21
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-dropdown-menu",
       "file": "apps/web/package.json",
-      "line": 21
+      "line": 22
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-icons",
       "file": "apps/web/package.json",
-      "line": 22
+      "line": 23
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-label",
       "file": "apps/web/package.json",
-      "line": 23
+      "line": 24
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-popover",
       "file": "apps/web/package.json",
-      "line": 24
+      "line": 25
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-select",
       "file": "apps/web/package.json",
-      "line": 26
+      "line": 27
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-separator",
       "file": "apps/web/package.json",
-      "line": 27
+      "line": 28
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-slider",
       "file": "apps/web/package.json",
-      "line": 28
+      "line": 29
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-slot",
       "file": "apps/web/package.json",
-      "line": 29
+      "line": 30
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-switch",
       "file": "apps/web/package.json",
-      "line": 30
+      "line": 31
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-tabs",
       "file": "apps/web/package.json",
-      "line": 31
+      "line": 32
     },
     {
       "type": "dependency",
       "name": "@radix-ui/react-tooltip",
       "file": "apps/web/package.json",
-      "line": 32
+      "line": 33
     },
     {
       "type": "dependency",
       "name": "@radix-ui/themes",
       "file": "apps/web/package.json",
-      "line": 33
+      "line": 34
     },
     {
       "type": "dependency",
       "name": "@trpc/react-query",
       "file": "apps/web/package.json",
-      "line": 36
+      "line": 37
     },
     {
       "type": "dependency",
       "name": "@xyflow/react",
       "file": "apps/web/package.json",
-      "line": 38
+      "line": 39
     },
     {
       "type": "dependency",
       "name": "cmdk",
       "file": "apps/web/package.json",
-      "line": 41
+      "line": 42
     },
     {
       "type": "dependency",
       "name": "date-fns",
       "file": "apps/web/package.json",
-      "line": 42
+      "line": 43
     },
     {
       "type": "dependency",
       "name": "react-force-graph-2d",
       "file": "apps/web/package.json",
-      "line": 49
+      "line": 50
     },
     {
       "type": "devDependency",
       "name": "@tailwindcss/oxide",
       "file": "apps/web/package.json",
-      "line": 55
+      "line": 56
     },
     {
       "type": "devDependency",
       "name": "@types/recharts",
       "file": "apps/web/package.json",
-      "line": 60
+      "line": 61
     },
     {
       "type": "devDependency",
       "name": "eslint",
       "file": "apps/web/package.json",
-      "line": 61
+      "line": 62
     },
     {
       "type": "devDependency",
       "name": "eslint-config-next",
       "file": "apps/web/package.json",
-      "line": 62
+      "line": 63
+    },
+    {
+      "type": "dependency",
+      "name": "@tormentnexus/core",
+      "file": "packages/enterprise/package.json",
+      "line": 11
+    },
+    {
+      "type": "dependency",
+      "name": "react-dom",
+      "file": "packages/enterprise/package.json",
+      "line": 14
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/react-dom",
+      "file": "packages/enterprise/package.json",
+      "line": 19
     },
     {
       "type": "dependency",
@@ -15682,5 +15698,5 @@
       "line": 4
     }
   ],
-  "summary": "Found 1367 issues"
+  "summary": "Found 1368 issues"
 }
