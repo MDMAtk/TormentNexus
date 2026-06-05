@@ -1,25 +1,24 @@
 # TODO
 
-_Last updated: 2026-06-04, version 1.0.0-alpha.102_
+_Last updated: 2026-06-05, version 1.0.0-alpha.114_
 
 ## P0 — Must do now (Stability, Testing & Validation)
 
 - [x] **MCP Server Testing**: Developed automated testing script (`scratch/test_mcp_connection.mjs`) - tRPC endpoints returning correct data (56 servers, 10,226 tools)
 - [x] **Tool Count Fix**: Fixed core bug in `packages/core/src/mcp/cachedToolInventory.ts` - tool counts now correctly keyed by server name instead of UUID
 - [x] **Conflict Resolution Clean Pass**: Verified no duplicate conflict markers in dashboard or server modules
-- [ ] **Clean Build Gate**: `pnpm build` blocked by Windows EBUSY file lock on Next.js `.next/standalone` directory (14/15 packages build successfully)
+- [x] **Clean Build Gate**: Bypassed Windows EBUSY folder lock on Next.js `.next` folder by renaming target before purging, enabling 100% clean builds across monorepo
 
 ## P1 — Should do next (Features & Parity)
 
-- [ ] **Tabby & Warp Active Launcher**: Implement a custom command launcher in `@tormentnexus/core` that automatically uses `tabby` and `warp` when initiating a local visual CLI agent.
-- [ ] **Offline License Validation**: Implement the Go-native cryptographic public-key verifier that loads the `tormentnexus.lic` signed YAML license block and asserts valid seat limits.
-- [ ] **Bobbybookmarks Ingestion**: Update bobbybookmarks database syncing triggers to enrich the local tool catalog on startup automatically.
+- [x] **Tabby & Warp Active Launcher**: Built detection and active wrapping for Tabby and Warp shell clients inside `@tormentnexus/core` launcher
+- [x] **Offline License Validation**: Implemented offline license signature validator inside Go sidecar using Ed25519 cryptography
+- [x] **Bobbybookmarks Ingestion**: Configured automatic sync call triggers to pull backlogs upon MCPServer startup
 
-## Completed in v1.0.0-alpha.100
+## P2 — Enterprise Readiness & Platform Enhancements
 
-- [x] Fixed tool count mismatch bug in `packages/core/src/mcp/cachedToolInventory.ts` - `buildDatabaseSnapshot()` now creates toolCounts map keyed by server name
-- [x] tRPC `/trpc/mcp.getStatus` endpoint now correctly reports 56 servers and 10,226 tools
-- [x] Search tools endpoint working with proper result counts and scoring
+- [ ] **Proprietary Compliance Separation**: Separate compliance logic (SSO/OIDC configuration, Role-Based Access Control views, audit trail logger) into a dedicated enterprise boundary
+- [ ] **Decentralized P2P Memory Sync**: Implement gossip protocol sync for local network memory shares
 
 ---
 *Keep the party going. Never stop. Don't stop the party!!!*
