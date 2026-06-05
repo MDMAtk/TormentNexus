@@ -1,22 +1,24 @@
-# Handoff - v1.0.0-alpha.113
+# Handoff - v1.0.0-alpha.114
 
 ## Summary
-Successfully completed Category 9 (Finance & Crypto - DexPaprika MCP) and Category 10 (Weather & Location - National Weather Service MCP) of the systematic Go assimilation plan. Both servers are now natively implemented in Go within the control plane, fully tested, and all referenced submodules have been de-initialized. This marks the complete port of all top 10 targeted MCP categories natively to Go!
+Successfully resolved all system integration and platform compatibility issues, including Next.js standalone build locks on Windows, Go license signature validation, active Tabby/Warp terminal shell wrapping, and automatic background BobbyBookmarks ingestion on server start.
 
 ## Accomplishments
-- **Category 9: Finance & Crypto (DexPaprika MCP)**:
-  - Ported all 17 Coinpaprika DexPaprika MCP tool handlers natively into Go under `go/internal/tools/dexpaprika.go` supporting parameter validation, client-side pagination/limit filtering, and network synonyms mapping.
-  - Added full test coverage in `go/internal/tools/dexpaprika_test.go` and registered the 17 new handlers in `go/internal/tools/registry.go`.
-  - De-initialized and removed the `submodules/dexpaprika-mcp` submodule.
-- **Category 10: Weather & Location (NWS Weather MCP)**:
-  - Ported all 7 National Weather Service MCP tool handlers natively into Go under `go/internal/tools/nws_weather.go` supporting Haversine distance calculations, compass bearings, coordinate-to-grid cache points resolution, WFO product list/detail fetching, and zone forecast lookup.
-  - Added full test coverage in `go/internal/tools/nws_weather_test.go` and registered the 7 new handlers in `go/internal/tools/registry.go`.
-  - De-initialized and removed the `submodules/nws-weather-mcp-server` submodule.
+- **P0 Clean Build Gate (Windows EBUSY Fix)**:
+  - Created [clean-build.mjs](file:///c:/Users/hyper/workspace/borg/apps/web/scripts/clean-build.mjs) to handle atomic folder renaming of `.next` prior to directory deletion, preventing file locks and build failures under Windows.
+  - Linked the script to `apps/web/package.json`.
+- **P1 Offline License Validation (Go sidecar)**:
+  - Implemented offline cryptographic license verification in Go sidecar utilizing Ed25519 signatures checked against public key `9a9d5d9cc7acebbbf80adfe9005586c3f6496e82e7fa300920b831397c1cb763`.
+  - Added unit test cases for license formatting, valid holder credentials, expiration dates, seats, and invalid key parameters.
+- **P1 Tabby & Warp Active Launcher**:
+  - Implemented active detection and launch wrapping of terminal commands for Tabby and Warp terminals on Windows inside [ProcessManager.ts](file:///c:/Users/hyper/workspace/borg/packages/core/src/services/ProcessManager.ts).
+- **P1 BobbyBookmarks Ingestion Automation**:
+  - Wired [BobbyBookmarksBacklogAdapter](file:///c:/Users/hyper/workspace/borg/packages/core/src/services/bobby-bookmarks-adapter.ts) sync trigger to boot up asynchronously in `MCPServer.ts` start process.
+- **Turbo JSON Fix**:
+  - Removed deprecated/unknown key `extends` from `apps/tormentnexus-extension/turbo.json` to fix monorepo compilation failures.
 - **Verification**:
-  - Ran clean Go tests (`go test -v ./internal/tools/...`) and confirmed compilation of Go sidecar daemon.
-  - Ran Next.js package typechecks and validated workspace integration.
-- **Monorepo Version Synchronization**:
-  - Bumped monorepo and package manifests to version `v1.0.0-alpha.113` using `node scripts/sync-versions.mjs`.
+  - Verified Next.js, extension, and monorepo compile cleanly through `pnpm build`.
+  - Bumped version across the monorepo to `1.0.0-alpha.114` using `node scripts/sync-versions.mjs`.
 
 ## Next Steps
-- Open conversation with operator/developer to align on the next set of feature integrations, distributed debugging, or multi-agent debate coordination modules.
+- Continue with further sidecar enhancements or feature requirements defined by the operator.

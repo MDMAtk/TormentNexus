@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0-alpha.114] - 2026-06-05
+### Added
+- **P0 Clean Build Gate (Windows EBUSY Fix)**: Added folder renaming step in Next.js build cleanup script to prevent Windows directory lock conflicts.
+- **P1 Offline License Validation**: Implemented offline license signature validator in Go sidecar using Ed25519 cryptography.
+- **P1 Tabby & Warp Active Launcher**: Added detection and wrapping parameters for Tabby and Warp shell clients inside `@tormentnexus/core`.
+- **P1 Bobbybookmarks Ingestion Automation**: Automated BobbyBookmarks backlog synchronization on startup in MCPServer.
+
 ## [1.0.0-alpha.113] - 2026-06-05
 ### Added
 - **Category 9: Finance & Crypto (DexPaprika MCP) Reimplementation**:

@@ -1,11 +1,11 @@
 {
   "name": "@tormentnexus/web",
-  "version": "1.0.0-alpha.113",
+  "version": "1.0.0-alpha.114",
   "private": true,
   "scripts": {
     "dev": "node ./scripts/dev.mjs",
     "dev:auto": "node ./scripts/dev-auto.mjs",
-    "build": "next build",
+    "build": "node ./scripts/clean-build.mjs && next build",
     "start": "next start",
     "lint": "echo \"Linting skipped\""
   },

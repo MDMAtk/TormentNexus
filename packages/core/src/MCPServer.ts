@@ -70,6 +70,7 @@ import { WorkflowEngine } from "./orchestrator/WorkflowEngine.js";
 import { AgentMemoryService } from "./services/AgentMemoryService.js";
 import { SessionImportService } from "./services/SessionImportService.js";
 import { MemoryManager } from "./services/MemoryManager.js"; // Use legacy MemoryManager
+import { BobbyBookmarksBacklogAdapter } from "./services/bobby-bookmarks-adapter.js";
 mcpServerDebugLog("[MCPServer] ✓ Phase 51/53 Infrastructure");
 import { SkillAssimilationService } from "./services/SkillAssimilationService.js";
 import { MarketplaceService } from "./services/MarketplaceService.js";
@@ -4827,6 +4828,28 @@ ${env.tools
 		this.sessionImportService
 			.scanAndImport()
 			.catch((e) => console.error("[SessionImport] Failed:", e));
+
+		// Trigger automatic BobbyBookmarks sync in the background on startup
+		try {
+			const bobbyAdapter = new BobbyBookmarksBacklogAdapter({
+				baseUrl: "https://bobbybookmarks.com",
+				perPage: 100,
+				includeDuplicates: true,
+				includeResearched: true,
+			});
+			bobbyAdapter
+				.sync()
+				.then((report) => {
+					console.log(
+						`[BobbyBookmarks] Sync completed on startup. Fetched: ${report.fetched}, Upserted: ${report.upserted}`,
+					);
+				})
+				.catch((e) => {
+					console.error("[BobbyBookmarks] Sync failed on startup:", e);
+				});
+		} catch (err) {
+			console.error("[BobbyBookmarks] Adapter initialization failed:", err);
+		}
 
 		// Build Graph in Background
 		this.autoTestService.repoGraph

@@ -1,5 +1,7 @@
-import { spawn, ChildProcess } from 'child_process';
+import { spawn, ChildProcess, execSync } from 'child_process';
 import { EventEmitter } from 'events';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export interface ProcessConfig {
     sessionId: string;
@@ -15,6 +17,42 @@ export interface ProcessOutput {
     type: 'stdout' | 'stderr';
 }
 
+function findTerminalEmulator(): 'tabby' | 'warp' | null {
+    if (process.env.TERM_PROGRAM === 'Tabby') return 'tabby';
+    if (process.env.TERM_PROGRAM === 'Warp') return 'warp';
+
+    const localAppData = process.env.LOCALAPPDATA || '';
+    const programFiles = process.env.PROGRAMFILES || '';
+
+    const tabbyPaths = [
+        path.join(localAppData, 'Programs', 'Tabby', 'Tabby.exe'),
+        path.join(localAppData, 'Programs', 'Tabby', 'tabby.exe')
+    ];
+    for (const p of tabbyPaths) {
+        if (fs.existsSync(p)) return 'tabby';
+    }
+
+    const warpPaths = [
+        path.join(localAppData, 'Warp', 'Warp.exe'),
+        path.join(programFiles, 'Warp', 'Warp.exe')
+    ];
+    for (const p of warpPaths) {
+        if (fs.existsSync(p)) return 'warp';
+    }
+
+    try {
+        execSync(process.platform === 'win32' ? 'where tabby' : 'which tabby', { stdio: 'ignore' });
+        return 'tabby';
+    } catch {}
+
+    try {
+        execSync(process.platform === 'win32' ? 'where warp-terminal' : 'which warp-terminal', { stdio: 'ignore' });
+        return 'warp';
+    } catch {}
+
+    return null;
+}
+
 export class ProcessManager extends EventEmitter {
     private activeProcesses: Map<string, ChildProcess> = new Map();
 
@@ -22,10 +60,24 @@ export class ProcessManager extends EventEmitter {
      * Spawns a new process and tracks its output.
      */
     async spawn(config: ProcessConfig): Promise<{ pid: number; success: boolean }> {
-        console.log(`[Core:Process] Spawning: ${config.command} ${config.args.join(' ')}`);
+        const emulator = findTerminalEmulator();
+        let cmd = config.command;
+        let args = config.args;
+
+        if (emulator === 'tabby') {
+            console.log(`[Core:Process] Detected Tabby: wrapping command`);
+            cmd = 'tabby';
+            args = ['run', config.command, ...config.args];
+        } else if (emulator === 'warp') {
+            console.log(`[Core:Process] Detected Warp: wrapping command`);
+            cmd = 'warp-terminal';
+            args = ['--', config.command, ...config.args];
+        }
+
+        console.log(`[Core:Process] Spawning: ${cmd} ${args.join(' ')}`);
         
         try {
-            const child = spawn(config.command, config.args, {
+            const child = spawn(cmd, args, {
                 cwd: config.cwd,
                 env: { ...process.env, ...config.env },
                 shell: true

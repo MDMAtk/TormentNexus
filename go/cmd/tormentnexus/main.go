@@ -18,8 +18,10 @@ import (
 	"github.com/tormentnexushq/tormentnexus-go/internal/config"
 	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
 	"github.com/tormentnexushq/tormentnexus-go/internal/httpapi"
+	"github.com/tormentnexushq/tormentnexus-go/internal/license"
 	"github.com/tormentnexushq/tormentnexus-go/internal/lockfile"
 	"github.com/tormentnexushq/tormentnexus-go/internal/sessionimport"
+	"path/filepath"
 )
 
 func main() {
@@ -94,6 +96,19 @@ func runServe(args []string) int {
 	if err := fs.Parse(args); err != nil {
 		log.Printf("failed to parse flags: %v", err)
 		return 2
+	}
+
+	// Verify offline license if present in workspace root
+	licPath := filepath.Join(cfg.WorkspaceRoot, "tormentnexus.lic")
+	if _, err := os.Stat(licPath); err == nil {
+		lic, err := license.VerifyLicense(cfg.WorkspaceRoot)
+		if err != nil {
+			log.Printf("License validation failed: %v", err)
+			return 1
+		}
+		log.Printf("Licensed to: %s (Seats: %d, Expires: %s)", lic.Holder, lic.Seats, lic.ExpiresAt.Format(time.RFC822))
+	} else {
+		log.Printf("No tormentnexus.lic license file found. Running under free limitations.")
 	}
 
 	record := lockfile.Record{
