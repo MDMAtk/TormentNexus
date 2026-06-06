@@ -496,6 +496,14 @@ func (r *Registry) registerAll() {
 	r.handlers["mimir_retrieve"] = HandleMimirRetrieve
 	r.handlers["mimir_connect"] = HandleMimirConnect
 	r.handlers["mimir_forget"] = HandleMimirForget
+
+	// Sysmon — system monitoring
+	r.handlers["sysmon_overview"] = HandleSysmonOverview
+	r.handlers["sysmon_health"] = HandleSysmonHealth
+	r.handlers["sysmon_top"] = HandleSysmonTop
+	r.handlers["sysmon_disk"] = HandleSysmonDisk
+	r.handlers["sysmon_network"] = HandleSysmonNetwork
+	r.handlers["sysmon_find"] = HandleSysmonFind
 }
 
 func (r *Registry) Execute(ctx context.Context, name string, args map[string]interface{}) (ToolResponse, error) {
