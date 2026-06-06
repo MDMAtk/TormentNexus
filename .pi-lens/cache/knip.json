@@ -18,11 +18,6 @@
     },
     {
       "type": "file",
-      "name": "cli/mcp-router-cli.ts",
-      "file": "cli/mcp-router-cli.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/comprehensive_mcp_test.mjs",
       "file": "borg/comprehensive_mcp_test.mjs"
     },
@@ -35,6 +30,61 @@
       "type": "file",
       "name": "borg/tormentnexus.mjs",
       "file": "borg/tormentnexus.mjs"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli.ts",
+      "file": "cli/mcp-router-cli.ts"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.cjs",
+      "file": "scripts/audit.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.mjs",
+      "file": "scripts/audit.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/build_startup.mjs",
+      "file": "scripts/build_startup.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/embedder-healthcheck.mjs",
+      "file": "scripts/embedder-healthcheck.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/health-check.cjs",
+      "file": "scripts/health-check.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/smoke-test.cjs",
+      "file": "scripts/smoke-test.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/sync-versions.mjs",
+      "file": "scripts/sync-versions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-cli.cjs",
+      "file": "scripts/test-cli.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-workflow.cjs",
+      "file": "scripts/test-workflow.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/trpc-audit.mjs",
+      "file": "scripts/trpc-audit.mjs"
     },
     {
       "type": "file",
@@ -128,68 +178,8 @@
     },
     {
       "type": "file",
-      "name": "scripts/audit.cjs",
-      "file": "scripts/audit.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.mjs",
-      "file": "scripts/audit.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/build_startup.mjs",
-      "file": "scripts/build_startup.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/embedder-healthcheck.mjs",
-      "file": "scripts/embedder-healthcheck.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/health-check.cjs",
-      "file": "scripts/health-check.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/smoke-test.cjs",
-      "file": "scripts/smoke-test.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/sync-versions.mjs",
-      "file": "scripts/sync-versions.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-cli.cjs",
-      "file": "scripts/test-cli.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-workflow.cjs",
-      "file": "scripts/test-workflow.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/trpc-audit.mjs",
-      "file": "scripts/trpc-audit.mjs"
-    },
-    {
-      "type": "file",
       "name": "apps/borg-extension/eslint.config.js",
       "file": "apps/borg-extension/eslint.config.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/mcp-router-cli-mock.ts",
-      "file": "cli/mcp-router-cli/mcp-router-cli-mock.ts"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/mcp-router-cli.ts",
-      "file": "cli/mcp-router-cli/mcp-router-cli.ts"
     },
     {
       "type": "file",
@@ -368,6 +358,16 @@
     },
     {
       "type": "file",
+      "name": "cli/mcp-router-cli/mcp-router-cli-mock.ts",
+      "file": "cli/mcp-router-cli/mcp-router-cli-mock.ts"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/mcp-router-cli.ts",
+      "file": "cli/mcp-router-cli/mcp-router-cli.ts"
+    },
+    {
+      "type": "file",
       "name": "docs/fixtures/verify-fixtures.mjs",
       "file": "docs/fixtures/verify-fixtures.mjs"
     },
@@ -495,11 +495,6 @@
       "type": "file",
       "name": "packages/supervisor/src/index.ts",
       "file": "packages/supervisor/src/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js",
-      "file": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js"
     },
     {
       "type": "file",
@@ -708,6 +703,11 @@
     },
     {
       "type": "file",
+      "name": "borg/packages/tsconfig/src/index.ts",
+      "file": "borg/packages/tsconfig/src/index.ts"
+    },
+    {
+      "type": "file",
       "name": "borg/packages/tormentnexus-supervisor/src/index.ts",
       "file": "borg/packages/tormentnexus-supervisor/src/index.ts"
     },
@@ -733,13 +733,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/tsconfig/src/index.ts",
-      "file": "borg/packages/tsconfig/src/index.ts"
+      "name": "borg/packages/types/src/index.ts",
+      "file": "borg/packages/types/src/index.ts"
     },
     {
       "type": "file",
-      "name": "borg/packages/types/src/index.ts",
-      "file": "borg/packages/types/src/index.ts"
+      "name": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js",
+      "file": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js"
     },
     {
       "type": "file",
@@ -1358,6 +1358,11 @@
     },
     {
       "type": "file",
+      "name": "borg/packages/core/src/routers/promptsRouter.ts",
+      "file": "borg/packages/core/src/routers/promptsRouter.ts"
+    },
+    {
+      "type": "file",
       "name": "borg/packages/core/src/scripts/assimilateLibrary.ts",
       "file": "borg/packages/core/src/scripts/assimilateLibrary.ts"
     },
@@ -1375,11 +1380,6 @@
       "type": "file",
       "name": "borg/packages/core/src/scripts/verify_research_recursion.ts",
       "file": "borg/packages/core/src/scripts/verify_research_recursion.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/core/src/routers/promptsRouter.ts",
-      "file": "borg/packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -1480,6 +1480,16 @@
       "type": "file",
       "name": "borg/packages/memory/src/services/CogneeClient.ts",
       "file": "borg/packages/memory/src/services/CogneeClient.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/layout.tsx",
+      "file": "borg/packages/ui/src/app/layout.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/page.tsx",
+      "file": "borg/packages/ui/src/app/page.tsx"
     },
     {
       "type": "file",
@@ -1673,16 +1683,6 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/layout.tsx",
-      "file": "borg/packages/ui/src/app/layout.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/page.tsx",
-      "file": "borg/packages/ui/src/app/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/packages/ui/src/lib/server-supervisor.ts",
       "file": "borg/packages/ui/src/lib/server-supervisor.ts"
     },
@@ -1705,41 +1705,6 @@
       "type": "file",
       "name": "borg/packages/ui/src/types/trpc-react-query.d.ts",
       "file": "borg/packages/ui/src/types/trpc-react-query.d.ts"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js",
-      "file": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/db/index.js",
-      "file": "cli/mcp-router-cli/packages/core/src/db/index.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/db/schema.js",
-      "file": "cli/mcp-router-cli/packages/core/src/db/schema.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js"
     },
     {
       "type": "file",
@@ -1908,16 +1873,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/forgot-password/page.tsx",
-      "file": "borg/apps/web/src/app/forgot-password/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/app/guide/page.tsx",
-      "file": "borg/apps/web/src/app/guide/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/layout.tsx",
       "file": "borg/apps/web/src/app/dashboard/layout.tsx"
     },
@@ -1925,6 +1880,16 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/forgot-password/page.tsx",
+      "file": "borg/apps/web/src/app/forgot-password/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/guide/page.tsx",
+      "file": "borg/apps/web/src/app/guide/page.tsx"
     },
     {
       "type": "file",
@@ -1963,6 +1928,11 @@
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/components/memory/MemoryGraph.tsx",
+      "file": "borg/apps/web/src/components/memory/MemoryGraph.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/components/mcp/EditEndpoint.tsx",
       "file": "borg/apps/web/src/components/mcp/EditEndpoint.tsx"
     },
@@ -1990,11 +1960,6 @@
       "type": "file",
       "name": "borg/apps/web/src/components/mcp/nav-config.ts",
       "file": "borg/apps/web/src/components/mcp/nav-config.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/components/memory/MemoryGraph.tsx",
-      "file": "borg/apps/web/src/components/memory/MemoryGraph.tsx"
     },
     {
       "type": "file",
@@ -2143,11 +2108,6 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "borg/packages/core/src/skills/adapters/SkillImporter.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "borg/packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -2235,6 +2195,171 @@
       "type": "file",
       "name": "borg/packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts",
       "file": "borg/packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "borg/packages/core/src/skills/adapters/SkillImporter.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/agents/page.tsx",
+      "file": "borg/packages/ui/src/app/agents/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/autopilot/page.tsx",
+      "file": "borg/packages/ui/src/app/autopilot/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/cli-dashboard/page.tsx",
+      "file": "borg/packages/ui/src/app/cli-dashboard/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/code-executor/page.tsx",
+      "file": "borg/packages/ui/src/app/code-executor/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/conductor/page.tsx",
+      "file": "borg/packages/ui/src/app/conductor/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/context/page.tsx",
+      "file": "borg/packages/ui/src/app/context/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/council/page.tsx",
+      "file": "borg/packages/ui/src/app/council/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/enterprise/page.tsx",
+      "file": "borg/packages/ui/src/app/enterprise/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/hardware/page.tsx",
+      "file": "borg/packages/ui/src/app/hardware/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/harness/page.tsx",
+      "file": "borg/packages/ui/src/app/harness/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/hooks/page.tsx",
+      "file": "borg/packages/ui/src/app/hooks/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/inspector/page.tsx",
+      "file": "borg/packages/ui/src/app/inspector/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/jules/layout.tsx",
+      "file": "borg/packages/ui/src/app/jules/layout.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/marketplace/page.tsx",
+      "file": "borg/packages/ui/src/app/marketplace/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp/page.tsx",
+      "file": "borg/packages/ui/src/app/mcp/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-decision/page.tsx",
+      "file": "borg/packages/ui/src/app/mcp-decision/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts",
+      "file": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-router/page.tsx",
+      "file": "borg/packages/ui/src/app/mcp-router/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-router/status-cards.tsx",
+      "file": "borg/packages/ui/src/app/mcp-router/status-cards.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcpenetes/page.tsx",
+      "file": "borg/packages/ui/src/app/mcpenetes/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/memory/page.tsx",
+      "file": "borg/packages/ui/src/app/memory/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/memory-manager/page.tsx",
+      "file": "borg/packages/ui/src/app/memory-manager/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mining/page.tsx",
+      "file": "borg/packages/ui/src/app/mining/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/project/page.tsx",
+      "file": "borg/packages/ui/src/app/project/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/prompts/page.tsx",
+      "file": "borg/packages/ui/src/app/prompts/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/research/page.tsx",
+      "file": "borg/packages/ui/src/app/research/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/secrets/page.tsx",
+      "file": "borg/packages/ui/src/app/secrets/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/sessions/page.tsx",
+      "file": "borg/packages/ui/src/app/sessions/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/shark/page.tsx",
+      "file": "borg/packages/ui/src/app/shark/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/squads/page.tsx",
+      "file": "borg/packages/ui/src/app/squads/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/supervisor/page.tsx",
+      "file": "borg/packages/ui/src/app/supervisor/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/submodules/page.tsx",
+      "file": "borg/packages/ui/src/app/submodules/page.tsx"
     },
     {
       "type": "file",
@@ -2363,168 +2488,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/agents/page.tsx",
-      "file": "borg/packages/ui/src/app/agents/page.tsx"
+      "name": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx",
+      "file": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/autopilot/page.tsx",
-      "file": "borg/packages/ui/src/app/autopilot/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/cli-dashboard/page.tsx",
-      "file": "borg/packages/ui/src/app/cli-dashboard/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/code-executor/page.tsx",
-      "file": "borg/packages/ui/src/app/code-executor/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/conductor/page.tsx",
-      "file": "borg/packages/ui/src/app/conductor/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/context/page.tsx",
-      "file": "borg/packages/ui/src/app/context/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/council/page.tsx",
-      "file": "borg/packages/ui/src/app/council/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/enterprise/page.tsx",
-      "file": "borg/packages/ui/src/app/enterprise/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/hardware/page.tsx",
-      "file": "borg/packages/ui/src/app/hardware/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/harness/page.tsx",
-      "file": "borg/packages/ui/src/app/harness/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/hooks/page.tsx",
-      "file": "borg/packages/ui/src/app/hooks/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/inspector/page.tsx",
-      "file": "borg/packages/ui/src/app/inspector/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/jules/layout.tsx",
-      "file": "borg/packages/ui/src/app/jules/layout.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/marketplace/page.tsx",
-      "file": "borg/packages/ui/src/app/marketplace/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp/page.tsx",
-      "file": "borg/packages/ui/src/app/mcp/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-decision/page.tsx",
-      "file": "borg/packages/ui/src/app/mcp-decision/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts",
-      "file": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-router/page.tsx",
-      "file": "borg/packages/ui/src/app/mcp-router/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-router/status-cards.tsx",
-      "file": "borg/packages/ui/src/app/mcp-router/status-cards.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcpenetes/page.tsx",
-      "file": "borg/packages/ui/src/app/mcpenetes/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/memory/page.tsx",
-      "file": "borg/packages/ui/src/app/memory/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mining/page.tsx",
-      "file": "borg/packages/ui/src/app/mining/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/memory-manager/page.tsx",
-      "file": "borg/packages/ui/src/app/memory-manager/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/project/page.tsx",
-      "file": "borg/packages/ui/src/app/project/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/prompts/page.tsx",
-      "file": "borg/packages/ui/src/app/prompts/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/research/page.tsx",
-      "file": "borg/packages/ui/src/app/research/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/secrets/page.tsx",
-      "file": "borg/packages/ui/src/app/secrets/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/sessions/page.tsx",
-      "file": "borg/packages/ui/src/app/sessions/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/shark/page.tsx",
-      "file": "borg/packages/ui/src/app/shark/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/squads/page.tsx",
-      "file": "borg/packages/ui/src/app/squads/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/submodules/page.tsx",
-      "file": "borg/packages/ui/src/app/submodules/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/supervisor/page.tsx",
-      "file": "borg/packages/ui/src/app/supervisor/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/lib/jules/provider.tsx",
-      "file": "borg/packages/ui/src/lib/jules/provider.tsx"
+      "name": "borg/packages/ui/src/pages/memory/MemoryManager.tsx",
+      "file": "borg/packages/ui/src/pages/memory/MemoryManager.tsx"
     },
     {
       "type": "file",
@@ -2540,6 +2510,11 @@
       "type": "file",
       "name": "borg/packages/ui/src/lib/hooks/use-hardware.ts",
       "file": "borg/packages/ui/src/lib/hooks/use-hardware.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/lib/jules/provider.tsx",
+      "file": "borg/packages/ui/src/lib/jules/provider.tsx"
     },
     {
       "type": "file",
@@ -2568,13 +2543,38 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx",
-      "file": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx"
+      "name": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js",
+      "file": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/pages/memory/MemoryManager.tsx",
-      "file": "borg/packages/ui/src/pages/memory/MemoryManager.tsx"
+      "name": "cli/mcp-router-cli/packages/core/src/db/index.js",
+      "file": "cli/mcp-router-cli/packages/core/src/db/index.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/db/schema.js",
+      "file": "cli/mcp-router-cli/packages/core/src/db/schema.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js"
     },
     {
       "type": "file",
@@ -3118,18 +3118,23 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/config/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/config/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/command/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/command/page.tsx"
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/config/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/config/page.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/context/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/context/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/copilot/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/copilot/page.tsx"
     },
     {
       "type": "file",
@@ -3148,23 +3153,18 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/copilot/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/copilot/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/director/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/director/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/evolution/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/evolution/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/events/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/events/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/events/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/events/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/evolution/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/evolution/page.tsx"
     },
     {
       "type": "file",
@@ -3183,6 +3183,11 @@
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/jules/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/jules/page.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/integrations/integration-catalog.ts",
       "file": "borg/apps/web/src/app/dashboard/integrations/integration-catalog.ts"
     },
@@ -3190,11 +3195,6 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/integrations/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/integrations/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/jules/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/jules/page.tsx"
     },
     {
       "type": "file",
@@ -3228,11 +3228,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/metrics/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/metrics/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/memory/memory-dashboard-utils.ts",
       "file": "borg/apps/web/src/app/dashboard/memory/memory-dashboard-utils.ts"
     },
@@ -3240,6 +3235,11 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/memory/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/memory/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/metrics/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/metrics/page.tsx"
     },
     {
       "type": "file",
@@ -3278,11 +3278,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/settings/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/settings/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/session/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/session/page.tsx"
     },
@@ -3303,8 +3298,18 @@
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/settings/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/settings/page.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/skills/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/skills/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/squads/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/squads/page.tsx"
     },
     {
       "type": "file",
@@ -3315,11 +3320,6 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/submodules/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/submodules/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/squads/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/squads/page.tsx"
     },
     {
       "type": "file",
@@ -3403,13 +3403,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/system/route.ts",
-      "file": "borg/packages/ui/src/app/api/system/route.ts"
+      "name": "borg/packages/ui/src/app/api/supervisor/route.ts",
+      "file": "borg/packages/ui/src/app/api/supervisor/route.ts"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/supervisor/route.ts",
-      "file": "borg/packages/ui/src/app/api/supervisor/route.ts"
+      "name": "borg/packages/ui/src/app/api/system/route.ts",
+      "file": "borg/packages/ui/src/app/api/system/route.ts"
     },
     {
       "type": "file",
@@ -3468,6 +3468,11 @@
     },
     {
       "type": "file",
+      "name": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx",
+      "file": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/packages/ui/src/lib/orchestration/providers/anthropic.ts",
       "file": "borg/packages/ui/src/lib/orchestration/providers/anthropic.ts"
     },
@@ -3493,11 +3498,6 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx",
-      "file": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts",
       "file": "borg/apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts"
     },
@@ -3518,13 +3518,13 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts"
     },
     {
       "type": "file",
@@ -3543,18 +3543,13 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx"
     },
     {
       "type": "file",
@@ -3570,6 +3565,11 @@
       "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/components/ui/dialog.tsx",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/components/ui/dialog.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx"
     },
     {
       "type": "file",
@@ -3663,8 +3663,8 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/api/auth/forgot-password/route.ts",
-      "file": "borg/apps/web/src/app/api/auth/forgot-password/route.ts"
+      "name": "borg/apps/web/src/app/api/auth/reset-password/route.ts",
+      "file": "borg/apps/web/src/app/api/auth/reset-password/route.ts"
     },
     {
       "type": "file",
@@ -3673,8 +3673,8 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/api/auth/reset-password/route.ts",
-      "file": "borg/apps/web/src/app/api/auth/reset-password/route.ts"
+      "name": "borg/apps/web/src/app/api/auth/forgot-password/route.ts",
+      "file": "borg/apps/web/src/app/api/auth/forgot-password/route.ts"
     },
     {
       "type": "file",
@@ -3713,11 +3713,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/ai-tools/ai-tool-directory.ts",
       "file": "borg/apps/web/src/app/dashboard/mcp/ai-tools/ai-tool-directory.ts"
     },
@@ -3728,18 +3723,18 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/audit/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/audit/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx"
     },
     {
       "type": "file",
@@ -3750,6 +3745,11 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/endpoints/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/endpoints/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx"
     },
     {
       "type": "file",
@@ -3783,23 +3783,23 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/settings/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/settings/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx"
     },
     {
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/system/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/system/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx"
     },
     {
       "type": "file",
@@ -3838,13 +3838,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/memory/snapshots/route.ts",
-      "file": "borg/packages/ui/src/app/api/memory/snapshots/route.ts"
+      "name": "borg/packages/ui/src/app/api/memory/search/route.ts",
+      "file": "borg/packages/ui/src/app/api/memory/search/route.ts"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/memory/search/route.ts",
-      "file": "borg/packages/ui/src/app/api/memory/search/route.ts"
+      "name": "borg/packages/ui/src/app/api/memory/snapshots/route.ts",
+      "file": "borg/packages/ui/src/app/api/memory/snapshots/route.ts"
     },
     {
       "type": "file",
@@ -4118,16 +4118,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts"
     },
@@ -4135,6 +4125,16 @@
       "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/index.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts"
     },
     {
       "type": "file",
@@ -4203,31 +4203,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/functionParser.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/functionParser.ts"
     },
@@ -4255,6 +4230,31 @@
       "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/parseUtils.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/parseUtils.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts"
     },
     {
       "type": "file",
@@ -4968,6 +4968,11 @@
     },
     {
       "type": "file",
+      "name": "packages/ui/src/lib/stores/session-keeper.ts",
+      "file": "packages/ui/src/lib/stores/session-keeper.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/ui/src/lib/orchestration/debate.ts",
       "file": "packages/ui/src/lib/orchestration/debate.ts"
     },
@@ -4985,11 +4990,6 @@
       "type": "file",
       "name": "packages/ui/src/lib/orchestration/types.ts",
       "file": "packages/ui/src/lib/orchestration/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/lib/stores/session-keeper.ts",
-      "file": "packages/ui/src/lib/stores/session-keeper.ts"
     },
     {
       "type": "file",
@@ -5053,6 +5053,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
+      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/db/schema.ts",
       "file": "packages/core/src/db/schema.ts"
     },
@@ -5088,23 +5093,8 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
-      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/mesh/protocol.ts",
       "file": "packages/core/src/mesh/protocol.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/middleware/AuthMiddleware.ts",
-      "file": "packages/core/src/middleware/AuthMiddleware.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/middleware/RateLimiterMiddleware.ts",
-      "file": "packages/core/src/middleware/RateLimiterMiddleware.ts"
     },
     {
       "type": "file",
@@ -5120,6 +5110,16 @@
       "type": "file",
       "name": "packages/core/src/orchestrator/MetaOrchestrator.ts",
       "file": "packages/core/src/orchestrator/MetaOrchestrator.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/middleware/AuthMiddleware.ts",
+      "file": "packages/core/src/middleware/AuthMiddleware.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/middleware/RateLimiterMiddleware.ts",
+      "file": "packages/core/src/middleware/RateLimiterMiddleware.ts"
     },
     {
       "type": "file",
@@ -5288,6 +5288,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -5375,11 +5380,6 @@
       "type": "file",
       "name": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts",
       "file": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
     },
     {
       "type": "file",
@@ -5508,13 +5508,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/zipper/index.mts",
-      "file": "apps/tormentnexus-extension/packages/zipper/index.mts"
+      "name": "apps/tormentnexus-extension/pages/content/vite.config.mts",
+      "file": "apps/tormentnexus-extension/pages/content/vite.config.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/pages/content/vite.config.mts",
-      "file": "apps/tormentnexus-extension/pages/content/vite.config.mts"
+      "name": "apps/tormentnexus-extension/packages/zipper/index.mts",
+      "file": "apps/tormentnexus-extension/packages/zipper/index.mts"
     },
     {
       "type": "file",
@@ -5673,26 +5673,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts"
     },
@@ -5720,6 +5700,26 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/utils/schemaValidator.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/utils/schemaValidator.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts"
     },
     {
       "type": "file",
@@ -7217,6 +7217,60 @@
     },
     {
       "type": "export",
+      "name": "isProcessRunning",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 125
+    },
+    {
+      "type": "export",
+      "name": "isPortFree",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 134
+    },
+    {
+      "type": "export",
+      "name": "registerStartCommand",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 336
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusStartLockRecord",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 45
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusStartLockHandle",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 56
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusStartLifecycleHandlers",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 65
+    },
+    {
+      "type": "unlisted",
+      "name": "commander",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 27
+    },
+    {
+      "type": "unlisted",
+      "name": "chalk",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 321
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/core",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 278
+    },
+    {
+      "type": "export",
       "name": "isSameServerInstance",
       "file": "borg/packages/core/src/mcp/downstreamDiscovery.ts",
       "line": 53
@@ -8416,60 +8470,6 @@
       "line": 5
     },
     {
-      "type": "export",
-      "name": "isProcessRunning",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 125
-    },
-    {
-      "type": "export",
-      "name": "isPortFree",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 134
-    },
-    {
-      "type": "export",
-      "name": "registerStartCommand",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 336
-    },
-    {
-      "type": "export",
-      "name": "TormentNexusStartLockRecord",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 45
-    },
-    {
-      "type": "export",
-      "name": "TormentNexusStartLockHandle",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 56
-    },
-    {
-      "type": "export",
-      "name": "TormentNexusStartLifecycleHandlers",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 65
-    },
-    {
-      "type": "unlisted",
-      "name": "commander",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 27
-    },
-    {
-      "type": "unlisted",
-      "name": "chalk",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 321
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/core",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 278
-    },
-    {
       "type": "unlisted",
       "name": "react-dom",
       "file": "borg/apps/web/src/app/dashboard/dashboard-home-view.test.tsx",
@@ -9305,30 +9305,6 @@
     },
     {
       "type": "unlisted",
-      "name": "@xyflow/react",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "@xyflow/react",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.test.ts",
-      "line": 4
-    },
-    {
-      "type": "unlisted",
-      "name": "clsx",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "tailwind-merge",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
       "name": "@extension/shared",
       "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/gemini.adapter.ts",
       "line": 4
@@ -9422,6 +9398,30 @@
       "name": "@src/components",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/base/BaseSidebarManager.tsx",
       "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@xyflow/react",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@xyflow/react",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.test.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "clsx",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "tailwind-merge",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
+      "line": 2
     },
     {
       "type": "unlisted",
@@ -10110,14 +10110,14 @@
     {
       "type": "unlisted",
       "name": "@src/lib",
-      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/RichRenderer.tsx",
-      "line": 2
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/SchemaRenderer.tsx",
+      "line": 3
     },
     {
       "type": "unlisted",
       "name": "@src/lib",
-      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/SchemaRenderer.tsx",
-      "line": 3
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/RichRenderer.tsx",
+      "line": 2
     },
     {
       "type": "unlisted",
@@ -11848,6 +11848,120 @@
       "line": 15
     },
     {
+      "type": "unlisted",
+      "name": "express",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "cors",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@trpc/server",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/tools",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/agents",
+      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/adk",
+      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
+      "line": 3
+    },
+    {
+      "type": "export",
+      "name": "Opinion",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 4
+    },
+    {
+      "type": "export",
+      "name": "Vote",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 11
+    },
+    {
+      "type": "export",
+      "name": "CouncilAgent",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 28
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/ai",
+      "file": "borg/packages/core/src/services/DarwinService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/services/ProjectTracker.ts",
+      "line": 26
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/security/SandboxService.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "duck-duck-scrape",
+      "file": "borg/packages/core/src/services/ResearchService.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/ai",
+      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/agents",
+      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
+      "line": 18
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/ai",
+      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "jsdom",
+      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
+      "line": 2
+    },
+    {
       "type": "export",
       "name": "ToolSetSchema",
       "file": "borg/packages/core/src/types/tormentnexus/tool-sets.zod.ts",
@@ -11986,24 +12100,6 @@
       "line": 2
     },
     {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/security/SandboxService.ts",
-      "line": 4
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/agents",
-      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/adk",
-      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
-      "line": 3
-    },
-    {
       "type": "export",
       "name": "Skill",
       "file": "borg/packages/core/src/skills/SkillRegistry.ts",
@@ -12020,36 +12116,6 @@
       "name": "gray-matter",
       "file": "borg/packages/core/src/skills/SkillRegistry.ts",
       "line": 5
-    },
-    {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/ai",
-      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
-      "line": 3
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/agents",
-      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
-      "line": 18
-    },
-    {
-      "type": "unlisted",
-      "name": "duck-duck-scrape",
-      "file": "borg/packages/core/src/services/ResearchService.ts",
-      "line": 4
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/ai",
-      "file": "borg/packages/core/src/services/DarwinService.ts",
-      "line": 2
     },
     {
       "type": "unlisted",
@@ -12167,12 +12233,6 @@
     },
     {
       "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/services/ProjectTracker.ts",
-      "line": 26
-    },
-    {
-      "type": "unlisted",
       "name": "@tormentnexus/agents",
       "file": "borg/packages/core/src/commands/lib/SystemCommands.ts",
       "line": 2
@@ -12194,30 +12254,6 @@
       "name": "@tormentnexus/search",
       "file": "borg/packages/core/src/services/DeepResearchService.ts",
       "line": 3
-    },
-    {
-      "type": "export",
-      "name": "Opinion",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 4
-    },
-    {
-      "type": "export",
-      "name": "Vote",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 11
-    },
-    {
-      "type": "export",
-      "name": "CouncilAgent",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 28
-    },
-    {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 2
     },
     {
       "type": "unlisted",
@@ -12268,42 +12304,6 @@
       "line": 17
     },
     {
-      "type": "unlisted",
-      "name": "express",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 5
-    },
-    {
-      "type": "unlisted",
-      "name": "cors",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 7
-    },
-    {
-      "type": "unlisted",
-      "name": "@trpc/server",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 9
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/tools",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 13
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/ai",
-      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "jsdom",
-      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
-      "line": 2
-    },
-    {
       "type": "export",
       "name": "initializeEventBus",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/events/event-bus.ts",
@@ -12332,6 +12332,264 @@
       "name": "@extension/shared",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/events/event-handlers.ts",
       "line": 40
+    },
+    {
+      "type": "export",
+      "name": "startCouncilServer",
+      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
+      "line": 331
+    },
+    {
+      "type": "unlisted",
+      "name": "hono",
+      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@hono/node-server",
+      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
+      "line": 4
+    },
+    {
+      "type": "export",
+      "name": "CodeExecutorService",
+      "file": "borg/packages/core/src/services/CodeExecutorService.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/services/CodeExecutorService.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/suggestionsRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "export",
+      "name": "SymbolGraphNode",
+      "file": "borg/packages/core/src/routers/graphRouter.ts",
+      "line": 6
+    },
+    {
+      "type": "export",
+      "name": "SymbolGraphLink",
+      "file": "borg/packages/core/src/routers/graphRouter.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/graphRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/testsRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/contextRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/commandsRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/symbolsRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/autoDevRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/shellRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/skillsRouter.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/pulseRouter.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/knowledgeRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/agentMemoryRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/planRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/supervisorRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/lspRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/healerRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@trpc/server",
+      "file": "borg/packages/core/src/routers/healerRouter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/darwinRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/autonomyRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/directorRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/directorConfigRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/auditRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/expertRouter.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@trpc/server",
+      "file": "borg/packages/core/src/routers/expertRouter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/systemProcedures.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/savedScriptsRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/agentRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/agents",
+      "file": "borg/packages/core/src/routers/agentRouter.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@trpc/server",
+      "file": "borg/packages/core/src/routers/agentRouter.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/meshRouter.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/marketplaceRouter.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/swarmRouter.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/openWebUIRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/infrastructureRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/codeModeRouter.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/routers/workspaceRouter.ts",
+      "line": 1
     },
     {
       "type": "export",
@@ -13346,264 +13604,6 @@
       "name": "uuid",
       "file": "borg/packages/core/src/agents/BaseAgent.ts",
       "line": 2
-    },
-    {
-      "type": "export",
-      "name": "startCouncilServer",
-      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
-      "line": 331
-    },
-    {
-      "type": "unlisted",
-      "name": "hono",
-      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@hono/node-server",
-      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
-      "line": 4
-    },
-    {
-      "type": "export",
-      "name": "CodeExecutorService",
-      "file": "borg/packages/core/src/services/CodeExecutorService.ts",
-      "line": 5
-    },
-    {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/services/CodeExecutorService.ts",
-      "line": 3
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/suggestionsRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "export",
-      "name": "SymbolGraphNode",
-      "file": "borg/packages/core/src/routers/graphRouter.ts",
-      "line": 6
-    },
-    {
-      "type": "export",
-      "name": "SymbolGraphLink",
-      "file": "borg/packages/core/src/routers/graphRouter.ts",
-      "line": 15
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/graphRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/testsRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/contextRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/commandsRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/symbolsRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/autoDevRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/shellRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/skillsRouter.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/pulseRouter.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/knowledgeRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/agentMemoryRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/planRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/supervisorRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/lspRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/healerRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@trpc/server",
-      "file": "borg/packages/core/src/routers/healerRouter.ts",
-      "line": 3
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/darwinRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/autonomyRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/directorRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/directorConfigRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/auditRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/expertRouter.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "@trpc/server",
-      "file": "borg/packages/core/src/routers/expertRouter.ts",
-      "line": 3
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/systemProcedures.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/savedScriptsRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/agentRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/agents",
-      "file": "borg/packages/core/src/routers/agentRouter.ts",
-      "line": 3
-    },
-    {
-      "type": "unlisted",
-      "name": "@trpc/server",
-      "file": "borg/packages/core/src/routers/agentRouter.ts",
-      "line": 4
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/meshRouter.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/marketplaceRouter.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/swarmRouter.ts",
-      "line": 7
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/openWebUIRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/infrastructureRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/codeModeRouter.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/routers/workspaceRouter.ts",
-      "line": 1
     },
     {
       "type": "export",
@@ -15641,18 +15641,6 @@
     },
     {
       "type": "export",
-      "name": "trpcUpstream",
-      "file": "borg/apps/web/src/lib/trpc-upstream.ts",
-      "line": 3
-    },
-    {
-      "type": "export",
-      "name": "runtime",
-      "file": "borg/apps/web/src/app/api/trpc/[trpc]/route.ts",
-      "line": 3
-    },
-    {
-      "type": "export",
       "name": "TORMENTNEXUS_IMPLEMENTATION_FILES",
       "file": "borg/apps/web/src/app/dashboard/memory/tormentnexus/tormentnexus-status.ts",
       "line": 147
@@ -15698,6 +15686,18 @@
       "name": "TormentNexusOperatorGuidance",
       "file": "borg/apps/web/src/app/dashboard/memory/tormentnexus/tormentnexus-status.ts",
       "line": 54
+    },
+    {
+      "type": "export",
+      "name": "trpcUpstream",
+      "file": "borg/apps/web/src/lib/trpc-upstream.ts",
+      "line": 3
+    },
+    {
+      "type": "export",
+      "name": "runtime",
+      "file": "borg/apps/web/src/app/api/trpc/[trpc]/route.ts",
+      "line": 3
     },
     {
       "type": "export",
@@ -18125,6 +18125,12 @@
     },
     {
       "type": "export",
+      "name": "adminProcedure",
+      "file": "borg/packages/core/src/trpc.ts",
+      "line": 1
+    },
+    {
+      "type": "export",
       "name": "normalizeDiscoveredToolMetadata",
       "file": "borg/packages/core/src/mcp/serverMetadataCache.ts",
       "line": 80
@@ -18284,12 +18290,6 @@
       "name": "ConfigImportService",
       "file": "borg/packages/core/src/services/config-import.service.ts",
       "line": 42
-    },
-    {
-      "type": "export",
-      "name": "adminProcedure",
-      "file": "borg/packages/core/src/trpc.ts",
-      "line": 1
     },
     {
       "type": "export",
@@ -21437,12 +21437,6 @@
     },
     {
       "type": "export",
-      "name": "TormentNexusLogEntry",
-      "file": "borg/packages/core/src/services/log-store.service.ts",
-      "line": 1
-    },
-    {
-      "type": "export",
       "name": "MCPServerStatus",
       "file": "borg/packages/core/src/mcp/types.ts",
       "line": 37
@@ -21452,6 +21446,12 @@
       "name": "MCPServerWarmupStatus",
       "file": "borg/packages/core/src/mcp/types.ts",
       "line": 39
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusLogEntry",
+      "file": "borg/packages/core/src/services/log-store.service.ts",
+      "line": 1
     },
     {
       "type": "export",
@@ -21904,6 +21904,42 @@
       "name": "SurfaceDetectionOptions",
       "file": "borg/packages/tormentnexus-supervisor/src/ui_automation.ts",
       "line": 85
+    },
+    {
+      "type": "export",
+      "name": "isProcessRunning",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 125
+    },
+    {
+      "type": "export",
+      "name": "isPortFree",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 134
+    },
+    {
+      "type": "export",
+      "name": "registerStartCommand",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 336
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusStartLockRecord",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 45
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusStartLockHandle",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 56
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusStartLifecycleHandlers",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 65
     },
     {
       "type": "export",
@@ -22600,42 +22636,6 @@
       "name": "ValidationOutput",
       "file": "borg/packages/core/src/services/published-catalog-validator.ts",
       "line": 40
-    },
-    {
-      "type": "export",
-      "name": "isProcessRunning",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 125
-    },
-    {
-      "type": "export",
-      "name": "isPortFree",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 134
-    },
-    {
-      "type": "export",
-      "name": "registerStartCommand",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 336
-    },
-    {
-      "type": "export",
-      "name": "TormentNexusStartLockRecord",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 45
-    },
-    {
-      "type": "export",
-      "name": "TormentNexusStartLockHandle",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 56
-    },
-    {
-      "type": "export",
-      "name": "TormentNexusStartLifecycleHandlers",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 65
     },
     {
       "type": "export",
@@ -23905,6 +23905,24 @@
     },
     {
       "type": "export",
+      "name": "Opinion",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 4
+    },
+    {
+      "type": "export",
+      "name": "Vote",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 11
+    },
+    {
+      "type": "export",
+      "name": "CouncilAgent",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 28
+    },
+    {
+      "type": "export",
       "name": "ToolSetSchema",
       "file": "borg/packages/core/src/types/tormentnexus/tool-sets.zod.ts",
       "line": 14
@@ -24025,24 +24043,6 @@
     },
     {
       "type": "export",
-      "name": "Opinion",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 4
-    },
-    {
-      "type": "export",
-      "name": "Vote",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 11
-    },
-    {
-      "type": "export",
-      "name": "CouncilAgent",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 28
-    },
-    {
-      "type": "export",
       "name": "ConversationalToolInjectorOptions",
       "file": "borg/packages/core/src/mcp/ConversationalToolInjector.ts",
       "line": 20
@@ -24082,6 +24082,30 @@
       "name": "cleanupGlobalEventHandlers",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/events/event-handlers.ts",
       "line": 140
+    },
+    {
+      "type": "export",
+      "name": "startCouncilServer",
+      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
+      "line": 331
+    },
+    {
+      "type": "export",
+      "name": "CodeExecutorService",
+      "file": "borg/packages/core/src/services/CodeExecutorService.ts",
+      "line": 5
+    },
+    {
+      "type": "export",
+      "name": "SymbolGraphNode",
+      "file": "borg/packages/core/src/routers/graphRouter.ts",
+      "line": 6
+    },
+    {
+      "type": "export",
+      "name": "SymbolGraphLink",
+      "file": "borg/packages/core/src/routers/graphRouter.ts",
+      "line": 15
     },
     {
       "type": "export",
@@ -25018,30 +25042,6 @@
       "name": "AgentResult",
       "file": "borg/packages/core/src/agents/BaseAgent.ts",
       "line": 11
-    },
-    {
-      "type": "export",
-      "name": "startCouncilServer",
-      "file": "borg/packages/core/src/orchestrator/council/node-index.ts",
-      "line": 331
-    },
-    {
-      "type": "export",
-      "name": "CodeExecutorService",
-      "file": "borg/packages/core/src/services/CodeExecutorService.ts",
-      "line": 5
-    },
-    {
-      "type": "export",
-      "name": "SymbolGraphNode",
-      "file": "borg/packages/core/src/routers/graphRouter.ts",
-      "line": 6
-    },
-    {
-      "type": "export",
-      "name": "SymbolGraphLink",
-      "file": "borg/packages/core/src/routers/graphRouter.ts",
-      "line": 15
     },
     {
       "type": "export",
@@ -26137,18 +26137,6 @@
     },
     {
       "type": "export",
-      "name": "trpcUpstream",
-      "file": "borg/apps/web/src/lib/trpc-upstream.ts",
-      "line": 3
-    },
-    {
-      "type": "export",
-      "name": "runtime",
-      "file": "borg/apps/web/src/app/api/trpc/[trpc]/route.ts",
-      "line": 3
-    },
-    {
-      "type": "export",
       "name": "TORMENTNEXUS_IMPLEMENTATION_FILES",
       "file": "borg/apps/web/src/app/dashboard/memory/tormentnexus/tormentnexus-status.ts",
       "line": 147
@@ -26194,6 +26182,18 @@
       "name": "TormentNexusOperatorGuidance",
       "file": "borg/apps/web/src/app/dashboard/memory/tormentnexus/tormentnexus-status.ts",
       "line": 54
+    },
+    {
+      "type": "export",
+      "name": "trpcUpstream",
+      "file": "borg/apps/web/src/lib/trpc-upstream.ts",
+      "line": 3
+    },
+    {
+      "type": "export",
+      "name": "runtime",
+      "file": "borg/apps/web/src/app/api/trpc/[trpc]/route.ts",
+      "line": 3
     },
     {
       "type": "export",
@@ -28621,6 +28621,12 @@
     },
     {
       "type": "export",
+      "name": "adminProcedure",
+      "file": "borg/packages/core/src/trpc.ts",
+      "line": 1
+    },
+    {
+      "type": "export",
       "name": "normalizeDiscoveredToolMetadata",
       "file": "borg/packages/core/src/mcp/serverMetadataCache.ts",
       "line": 80
@@ -28780,12 +28786,6 @@
       "name": "ConfigImportService",
       "file": "borg/packages/core/src/services/config-import.service.ts",
       "line": 42
-    },
-    {
-      "type": "export",
-      "name": "adminProcedure",
-      "file": "borg/packages/core/src/trpc.ts",
-      "line": 1
     },
     {
       "type": "export",
@@ -31933,12 +31933,6 @@
     },
     {
       "type": "export",
-      "name": "TormentNexusLogEntry",
-      "file": "borg/packages/core/src/services/log-store.service.ts",
-      "line": 1
-    },
-    {
-      "type": "export",
       "name": "MCPServerStatus",
       "file": "borg/packages/core/src/mcp/types.ts",
       "line": 37
@@ -31948,6 +31942,12 @@
       "name": "MCPServerWarmupStatus",
       "file": "borg/packages/core/src/mcp/types.ts",
       "line": 39
+    },
+    {
+      "type": "export",
+      "name": "TormentNexusLogEntry",
+      "file": "borg/packages/core/src/services/log-store.service.ts",
+      "line": 1
     },
     {
       "type": "export",
@@ -32304,11 +32304,6 @@
     },
     {
       "type": "file",
-      "name": "cli/mcp-router-cli.ts",
-      "file": "cli/mcp-router-cli.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/comprehensive_mcp_test.mjs",
       "file": "borg/comprehensive_mcp_test.mjs"
     },
@@ -32321,6 +32316,61 @@
       "type": "file",
       "name": "borg/tormentnexus.mjs",
       "file": "borg/tormentnexus.mjs"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli.ts",
+      "file": "cli/mcp-router-cli.ts"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.cjs",
+      "file": "scripts/audit.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/audit.mjs",
+      "file": "scripts/audit.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/build_startup.mjs",
+      "file": "scripts/build_startup.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/embedder-healthcheck.mjs",
+      "file": "scripts/embedder-healthcheck.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/health-check.cjs",
+      "file": "scripts/health-check.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/smoke-test.cjs",
+      "file": "scripts/smoke-test.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/sync-versions.mjs",
+      "file": "scripts/sync-versions.mjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-cli.cjs",
+      "file": "scripts/test-cli.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/test-workflow.cjs",
+      "file": "scripts/test-workflow.cjs"
+    },
+    {
+      "type": "file",
+      "name": "scripts/trpc-audit.mjs",
+      "file": "scripts/trpc-audit.mjs"
     },
     {
       "type": "file",
@@ -32414,68 +32464,8 @@
     },
     {
       "type": "file",
-      "name": "scripts/audit.cjs",
-      "file": "scripts/audit.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/audit.mjs",
-      "file": "scripts/audit.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/build_startup.mjs",
-      "file": "scripts/build_startup.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/embedder-healthcheck.mjs",
-      "file": "scripts/embedder-healthcheck.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/health-check.cjs",
-      "file": "scripts/health-check.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/smoke-test.cjs",
-      "file": "scripts/smoke-test.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/sync-versions.mjs",
-      "file": "scripts/sync-versions.mjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-cli.cjs",
-      "file": "scripts/test-cli.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/test-workflow.cjs",
-      "file": "scripts/test-workflow.cjs"
-    },
-    {
-      "type": "file",
-      "name": "scripts/trpc-audit.mjs",
-      "file": "scripts/trpc-audit.mjs"
-    },
-    {
-      "type": "file",
       "name": "apps/borg-extension/eslint.config.js",
       "file": "apps/borg-extension/eslint.config.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/mcp-router-cli-mock.ts",
-      "file": "cli/mcp-router-cli/mcp-router-cli-mock.ts"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/mcp-router-cli.ts",
-      "file": "cli/mcp-router-cli/mcp-router-cli.ts"
     },
     {
       "type": "file",
@@ -32654,6 +32644,16 @@
     },
     {
       "type": "file",
+      "name": "cli/mcp-router-cli/mcp-router-cli-mock.ts",
+      "file": "cli/mcp-router-cli/mcp-router-cli-mock.ts"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/mcp-router-cli.ts",
+      "file": "cli/mcp-router-cli/mcp-router-cli.ts"
+    },
+    {
+      "type": "file",
       "name": "docs/fixtures/verify-fixtures.mjs",
       "file": "docs/fixtures/verify-fixtures.mjs"
     },
@@ -32781,11 +32781,6 @@
       "type": "file",
       "name": "packages/supervisor/src/index.ts",
       "file": "packages/supervisor/src/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js",
-      "file": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js"
     },
     {
       "type": "file",
@@ -32994,6 +32989,11 @@
     },
     {
       "type": "file",
+      "name": "borg/packages/tsconfig/src/index.ts",
+      "file": "borg/packages/tsconfig/src/index.ts"
+    },
+    {
+      "type": "file",
       "name": "borg/packages/tormentnexus-supervisor/src/index.ts",
       "file": "borg/packages/tormentnexus-supervisor/src/index.ts"
     },
@@ -33019,13 +33019,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/tsconfig/src/index.ts",
-      "file": "borg/packages/tsconfig/src/index.ts"
+      "name": "borg/packages/types/src/index.ts",
+      "file": "borg/packages/types/src/index.ts"
     },
     {
       "type": "file",
-      "name": "borg/packages/types/src/index.ts",
-      "file": "borg/packages/types/src/index.ts"
+      "name": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js",
+      "file": "cli/mcp-router-cli/cli/mcp-router-cli/mcp-router-cli.js"
     },
     {
       "type": "file",
@@ -33644,6 +33644,11 @@
     },
     {
       "type": "file",
+      "name": "borg/packages/core/src/routers/promptsRouter.ts",
+      "file": "borg/packages/core/src/routers/promptsRouter.ts"
+    },
+    {
+      "type": "file",
       "name": "borg/packages/core/src/scripts/assimilateLibrary.ts",
       "file": "borg/packages/core/src/scripts/assimilateLibrary.ts"
     },
@@ -33661,11 +33666,6 @@
       "type": "file",
       "name": "borg/packages/core/src/scripts/verify_research_recursion.ts",
       "file": "borg/packages/core/src/scripts/verify_research_recursion.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/core/src/routers/promptsRouter.ts",
-      "file": "borg/packages/core/src/routers/promptsRouter.ts"
     },
     {
       "type": "file",
@@ -33766,6 +33766,16 @@
       "type": "file",
       "name": "borg/packages/memory/src/services/CogneeClient.ts",
       "file": "borg/packages/memory/src/services/CogneeClient.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/layout.tsx",
+      "file": "borg/packages/ui/src/app/layout.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/page.tsx",
+      "file": "borg/packages/ui/src/app/page.tsx"
     },
     {
       "type": "file",
@@ -33959,16 +33969,6 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/layout.tsx",
-      "file": "borg/packages/ui/src/app/layout.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/page.tsx",
-      "file": "borg/packages/ui/src/app/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/packages/ui/src/lib/server-supervisor.ts",
       "file": "borg/packages/ui/src/lib/server-supervisor.ts"
     },
@@ -33991,41 +33991,6 @@
       "type": "file",
       "name": "borg/packages/ui/src/types/trpc-react-query.d.ts",
       "file": "borg/packages/ui/src/types/trpc-react-query.d.ts"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js",
-      "file": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/db/index.js",
-      "file": "cli/mcp-router-cli/packages/core/src/db/index.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/db/schema.js",
-      "file": "cli/mcp-router-cli/packages/core/src/db/schema.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js"
-    },
-    {
-      "type": "file",
-      "name": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js",
-      "file": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js"
     },
     {
       "type": "file",
@@ -34194,16 +34159,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/forgot-password/page.tsx",
-      "file": "borg/apps/web/src/app/forgot-password/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/app/guide/page.tsx",
-      "file": "borg/apps/web/src/app/guide/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/layout.tsx",
       "file": "borg/apps/web/src/app/dashboard/layout.tsx"
     },
@@ -34211,6 +34166,16 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/forgot-password/page.tsx",
+      "file": "borg/apps/web/src/app/forgot-password/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/guide/page.tsx",
+      "file": "borg/apps/web/src/app/guide/page.tsx"
     },
     {
       "type": "file",
@@ -34249,6 +34214,11 @@
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/components/memory/MemoryGraph.tsx",
+      "file": "borg/apps/web/src/components/memory/MemoryGraph.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/components/mcp/EditEndpoint.tsx",
       "file": "borg/apps/web/src/components/mcp/EditEndpoint.tsx"
     },
@@ -34276,11 +34246,6 @@
       "type": "file",
       "name": "borg/apps/web/src/components/mcp/nav-config.ts",
       "file": "borg/apps/web/src/components/mcp/nav-config.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/components/memory/MemoryGraph.tsx",
-      "file": "borg/apps/web/src/components/memory/MemoryGraph.tsx"
     },
     {
       "type": "file",
@@ -34429,11 +34394,6 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "borg/packages/core/src/skills/adapters/SkillImporter.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "borg/packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -34521,6 +34481,171 @@
       "type": "file",
       "name": "borg/packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts",
       "file": "borg/packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "borg/packages/core/src/skills/adapters/SkillImporter.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/agents/page.tsx",
+      "file": "borg/packages/ui/src/app/agents/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/autopilot/page.tsx",
+      "file": "borg/packages/ui/src/app/autopilot/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/cli-dashboard/page.tsx",
+      "file": "borg/packages/ui/src/app/cli-dashboard/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/code-executor/page.tsx",
+      "file": "borg/packages/ui/src/app/code-executor/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/conductor/page.tsx",
+      "file": "borg/packages/ui/src/app/conductor/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/context/page.tsx",
+      "file": "borg/packages/ui/src/app/context/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/council/page.tsx",
+      "file": "borg/packages/ui/src/app/council/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/enterprise/page.tsx",
+      "file": "borg/packages/ui/src/app/enterprise/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/hardware/page.tsx",
+      "file": "borg/packages/ui/src/app/hardware/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/harness/page.tsx",
+      "file": "borg/packages/ui/src/app/harness/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/hooks/page.tsx",
+      "file": "borg/packages/ui/src/app/hooks/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/inspector/page.tsx",
+      "file": "borg/packages/ui/src/app/inspector/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/jules/layout.tsx",
+      "file": "borg/packages/ui/src/app/jules/layout.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/marketplace/page.tsx",
+      "file": "borg/packages/ui/src/app/marketplace/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp/page.tsx",
+      "file": "borg/packages/ui/src/app/mcp/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-decision/page.tsx",
+      "file": "borg/packages/ui/src/app/mcp-decision/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts",
+      "file": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-router/page.tsx",
+      "file": "borg/packages/ui/src/app/mcp-router/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcp-router/status-cards.tsx",
+      "file": "borg/packages/ui/src/app/mcp-router/status-cards.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mcpenetes/page.tsx",
+      "file": "borg/packages/ui/src/app/mcpenetes/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/memory/page.tsx",
+      "file": "borg/packages/ui/src/app/memory/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/memory-manager/page.tsx",
+      "file": "borg/packages/ui/src/app/memory-manager/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/mining/page.tsx",
+      "file": "borg/packages/ui/src/app/mining/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/project/page.tsx",
+      "file": "borg/packages/ui/src/app/project/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/prompts/page.tsx",
+      "file": "borg/packages/ui/src/app/prompts/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/research/page.tsx",
+      "file": "borg/packages/ui/src/app/research/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/secrets/page.tsx",
+      "file": "borg/packages/ui/src/app/secrets/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/sessions/page.tsx",
+      "file": "borg/packages/ui/src/app/sessions/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/shark/page.tsx",
+      "file": "borg/packages/ui/src/app/shark/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/squads/page.tsx",
+      "file": "borg/packages/ui/src/app/squads/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/supervisor/page.tsx",
+      "file": "borg/packages/ui/src/app/supervisor/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/app/submodules/page.tsx",
+      "file": "borg/packages/ui/src/app/submodules/page.tsx"
     },
     {
       "type": "file",
@@ -34649,168 +34774,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/agents/page.tsx",
-      "file": "borg/packages/ui/src/app/agents/page.tsx"
+      "name": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx",
+      "file": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/autopilot/page.tsx",
-      "file": "borg/packages/ui/src/app/autopilot/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/cli-dashboard/page.tsx",
-      "file": "borg/packages/ui/src/app/cli-dashboard/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/code-executor/page.tsx",
-      "file": "borg/packages/ui/src/app/code-executor/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/conductor/page.tsx",
-      "file": "borg/packages/ui/src/app/conductor/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/context/page.tsx",
-      "file": "borg/packages/ui/src/app/context/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/council/page.tsx",
-      "file": "borg/packages/ui/src/app/council/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/enterprise/page.tsx",
-      "file": "borg/packages/ui/src/app/enterprise/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/hardware/page.tsx",
-      "file": "borg/packages/ui/src/app/hardware/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/harness/page.tsx",
-      "file": "borg/packages/ui/src/app/harness/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/hooks/page.tsx",
-      "file": "borg/packages/ui/src/app/hooks/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/inspector/page.tsx",
-      "file": "borg/packages/ui/src/app/inspector/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/jules/layout.tsx",
-      "file": "borg/packages/ui/src/app/jules/layout.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/marketplace/page.tsx",
-      "file": "borg/packages/ui/src/app/marketplace/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp/page.tsx",
-      "file": "borg/packages/ui/src/app/mcp/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-decision/page.tsx",
-      "file": "borg/packages/ui/src/app/mcp-decision/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts",
-      "file": "borg/packages/ui/src/app/mcp-router/mcp-commands.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-router/page.tsx",
-      "file": "borg/packages/ui/src/app/mcp-router/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcp-router/status-cards.tsx",
-      "file": "borg/packages/ui/src/app/mcp-router/status-cards.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mcpenetes/page.tsx",
-      "file": "borg/packages/ui/src/app/mcpenetes/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/memory/page.tsx",
-      "file": "borg/packages/ui/src/app/memory/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/mining/page.tsx",
-      "file": "borg/packages/ui/src/app/mining/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/memory-manager/page.tsx",
-      "file": "borg/packages/ui/src/app/memory-manager/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/project/page.tsx",
-      "file": "borg/packages/ui/src/app/project/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/prompts/page.tsx",
-      "file": "borg/packages/ui/src/app/prompts/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/research/page.tsx",
-      "file": "borg/packages/ui/src/app/research/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/secrets/page.tsx",
-      "file": "borg/packages/ui/src/app/secrets/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/sessions/page.tsx",
-      "file": "borg/packages/ui/src/app/sessions/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/shark/page.tsx",
-      "file": "borg/packages/ui/src/app/shark/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/squads/page.tsx",
-      "file": "borg/packages/ui/src/app/squads/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/submodules/page.tsx",
-      "file": "borg/packages/ui/src/app/submodules/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/app/supervisor/page.tsx",
-      "file": "borg/packages/ui/src/app/supervisor/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/packages/ui/src/lib/jules/provider.tsx",
-      "file": "borg/packages/ui/src/lib/jules/provider.tsx"
+      "name": "borg/packages/ui/src/pages/memory/MemoryManager.tsx",
+      "file": "borg/packages/ui/src/pages/memory/MemoryManager.tsx"
     },
     {
       "type": "file",
@@ -34826,6 +34796,11 @@
       "type": "file",
       "name": "borg/packages/ui/src/lib/hooks/use-hardware.ts",
       "file": "borg/packages/ui/src/lib/hooks/use-hardware.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/packages/ui/src/lib/jules/provider.tsx",
+      "file": "borg/packages/ui/src/lib/jules/provider.tsx"
     },
     {
       "type": "file",
@@ -34854,13 +34829,38 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx",
-      "file": "borg/packages/ui/src/pages/code-executor/CodeExecutor.tsx"
+      "name": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js",
+      "file": "cli/mcp-router-cli/packages/core/src/db/DatabaseManager.js"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/pages/memory/MemoryManager.tsx",
-      "file": "borg/packages/ui/src/pages/memory/MemoryManager.tsx"
+      "name": "cli/mcp-router-cli/packages/core/src/db/index.js",
+      "file": "cli/mcp-router-cli/packages/core/src/db/index.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/db/schema.js",
+      "file": "cli/mcp-router-cli/packages/core/src/db/schema.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/ConfigurationService.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/MCPRegistryService.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/McpSessionService.js"
+    },
+    {
+      "type": "file",
+      "name": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js",
+      "file": "cli/mcp-router-cli/packages/core/src/services/ServerRegistryService.js"
     },
     {
       "type": "file",
@@ -35404,18 +35404,23 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/config/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/config/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/command/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/command/page.tsx"
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/config/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/config/page.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/context/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/context/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/copilot/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/copilot/page.tsx"
     },
     {
       "type": "file",
@@ -35434,23 +35439,18 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/copilot/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/copilot/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/director/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/director/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/evolution/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/evolution/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/events/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/events/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/events/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/events/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/evolution/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/evolution/page.tsx"
     },
     {
       "type": "file",
@@ -35469,6 +35469,11 @@
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/jules/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/jules/page.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/integrations/integration-catalog.ts",
       "file": "borg/apps/web/src/app/dashboard/integrations/integration-catalog.ts"
     },
@@ -35476,11 +35481,6 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/integrations/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/integrations/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/jules/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/jules/page.tsx"
     },
     {
       "type": "file",
@@ -35514,11 +35514,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/metrics/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/metrics/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/memory/memory-dashboard-utils.ts",
       "file": "borg/apps/web/src/app/dashboard/memory/memory-dashboard-utils.ts"
     },
@@ -35526,6 +35521,11 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/memory/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/memory/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/metrics/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/metrics/page.tsx"
     },
     {
       "type": "file",
@@ -35564,11 +35564,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/settings/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/settings/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/session/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/session/page.tsx"
     },
@@ -35589,8 +35584,18 @@
     },
     {
       "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/settings/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/settings/page.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/skills/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/skills/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/squads/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/squads/page.tsx"
     },
     {
       "type": "file",
@@ -35601,11 +35606,6 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/submodules/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/submodules/page.tsx"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/squads/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/squads/page.tsx"
     },
     {
       "type": "file",
@@ -35689,13 +35689,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/system/route.ts",
-      "file": "borg/packages/ui/src/app/api/system/route.ts"
+      "name": "borg/packages/ui/src/app/api/supervisor/route.ts",
+      "file": "borg/packages/ui/src/app/api/supervisor/route.ts"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/supervisor/route.ts",
-      "file": "borg/packages/ui/src/app/api/supervisor/route.ts"
+      "name": "borg/packages/ui/src/app/api/system/route.ts",
+      "file": "borg/packages/ui/src/app/api/system/route.ts"
     },
     {
       "type": "file",
@@ -35754,6 +35754,11 @@
     },
     {
       "type": "file",
+      "name": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx",
+      "file": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx"
+    },
+    {
+      "type": "file",
       "name": "borg/packages/ui/src/lib/orchestration/providers/anthropic.ts",
       "file": "borg/packages/ui/src/lib/orchestration/providers/anthropic.ts"
     },
@@ -35779,11 +35784,6 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx",
-      "file": "borg/packages/ui/src/pages/mcp/decision/DecisionSystem.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts",
       "file": "borg/apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/sse/SSEPlugin.ts"
     },
@@ -35804,13 +35804,13 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts"
     },
     {
       "type": "file",
@@ -35829,18 +35829,13 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/Spotlight.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/mcpPopover.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/Spotlight/SpotlightManager.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx"
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/mcpPopover/PopoverPortal.tsx"
     },
     {
       "type": "file",
@@ -35856,6 +35851,11 @@
       "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/components/ui/dialog.tsx",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/components/ui/dialog.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/ToolResultWidget/ToolResultWidget.tsx"
     },
     {
       "type": "file",
@@ -35949,8 +35949,8 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/api/auth/forgot-password/route.ts",
-      "file": "borg/apps/web/src/app/api/auth/forgot-password/route.ts"
+      "name": "borg/apps/web/src/app/api/auth/reset-password/route.ts",
+      "file": "borg/apps/web/src/app/api/auth/reset-password/route.ts"
     },
     {
       "type": "file",
@@ -35959,8 +35959,8 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/api/auth/reset-password/route.ts",
-      "file": "borg/apps/web/src/app/api/auth/reset-password/route.ts"
+      "name": "borg/apps/web/src/app/api/auth/forgot-password/route.ts",
+      "file": "borg/apps/web/src/app/api/auth/forgot-password/route.ts"
     },
     {
       "type": "file",
@@ -35999,11 +35999,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/ai-tools/ai-tool-directory.ts",
       "file": "borg/apps/web/src/app/dashboard/mcp/ai-tools/ai-tool-directory.ts"
     },
@@ -36014,18 +36009,18 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/audit/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/audit/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/api-keys/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/agent/page.tsx"
     },
     {
       "type": "file",
@@ -36036,6 +36031,11 @@
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/endpoints/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/endpoints/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/catalog/page.tsx"
     },
     {
       "type": "file",
@@ -36069,23 +36069,23 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/settings/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/settings/page.tsx"
     },
     {
       "type": "file",
-      "name": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx",
-      "file": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx"
+      "name": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/search/page.tsx"
     },
     {
       "type": "file",
       "name": "borg/apps/web/src/app/dashboard/mcp/system/page.tsx",
       "file": "borg/apps/web/src/app/dashboard/mcp/system/page.tsx"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx",
+      "file": "borg/apps/web/src/app/dashboard/mcp/tool-sets/page.tsx"
     },
     {
       "type": "file",
@@ -36124,13 +36124,13 @@
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/memory/snapshots/route.ts",
-      "file": "borg/packages/ui/src/app/api/memory/snapshots/route.ts"
+      "name": "borg/packages/ui/src/app/api/memory/search/route.ts",
+      "file": "borg/packages/ui/src/app/api/memory/search/route.ts"
     },
     {
       "type": "file",
-      "name": "borg/packages/ui/src/app/api/memory/search/route.ts",
-      "file": "borg/packages/ui/src/app/api/memory/search/route.ts"
+      "name": "borg/packages/ui/src/app/api/memory/snapshots/route.ts",
+      "file": "borg/packages/ui/src/app/api/memory/snapshots/route.ts"
     },
     {
       "type": "file",
@@ -36404,16 +36404,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/chatInputHandler.ts"
     },
@@ -36421,6 +36411,16 @@
       "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/index.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/openrouter/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/chatInputHandler.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/components/websites/kagi/index.ts"
     },
     {
       "type": "file",
@@ -36489,31 +36489,6 @@
     },
     {
       "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts"
-    },
-    {
-      "type": "file",
-      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts",
-      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts"
-    },
-    {
-      "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/functionParser.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/functionParser.ts"
     },
@@ -36541,6 +36516,31 @@
       "type": "file",
       "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/parseUtils.ts",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/parser/parseUtils.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/functionResultObserver.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/index.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/mutationObserver.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/stalledStreamHandler.ts"
+    },
+    {
+      "type": "file",
+      "name": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts",
+      "file": "borg/apps/tormentnexus-extension/pages/content/src/render_prescript/src/observer/streamObserver.ts"
     },
     {
       "type": "file",
@@ -37254,6 +37254,11 @@
     },
     {
       "type": "file",
+      "name": "packages/ui/src/lib/stores/session-keeper.ts",
+      "file": "packages/ui/src/lib/stores/session-keeper.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/ui/src/lib/orchestration/debate.ts",
       "file": "packages/ui/src/lib/orchestration/debate.ts"
     },
@@ -37271,11 +37276,6 @@
       "type": "file",
       "name": "packages/ui/src/lib/orchestration/types.ts",
       "file": "packages/ui/src/lib/orchestration/types.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/ui/src/lib/stores/session-keeper.ts",
-      "file": "packages/ui/src/lib/stores/session-keeper.ts"
     },
     {
       "type": "file",
@@ -37339,6 +37339,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
+      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/db/schema.ts",
       "file": "packages/core/src/db/schema.ts"
     },
@@ -37374,23 +37379,8 @@
     },
     {
       "type": "file",
-      "name": "packages/core/src/daemons/NativeSidecarDaemon.ts",
-      "file": "packages/core/src/daemons/NativeSidecarDaemon.ts"
-    },
-    {
-      "type": "file",
       "name": "packages/core/src/mesh/protocol.ts",
       "file": "packages/core/src/mesh/protocol.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/middleware/AuthMiddleware.ts",
-      "file": "packages/core/src/middleware/AuthMiddleware.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/middleware/RateLimiterMiddleware.ts",
-      "file": "packages/core/src/middleware/RateLimiterMiddleware.ts"
     },
     {
       "type": "file",
@@ -37406,6 +37396,16 @@
       "type": "file",
       "name": "packages/core/src/orchestrator/MetaOrchestrator.ts",
       "file": "packages/core/src/orchestrator/MetaOrchestrator.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/middleware/AuthMiddleware.ts",
+      "file": "packages/core/src/middleware/AuthMiddleware.ts"
+    },
+    {
+      "type": "file",
+      "name": "packages/core/src/middleware/RateLimiterMiddleware.ts",
+      "file": "packages/core/src/middleware/RateLimiterMiddleware.ts"
     },
     {
       "type": "file",
@@ -37574,6 +37574,11 @@
     },
     {
       "type": "file",
+      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
+      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
+    },
+    {
+      "type": "file",
       "name": "packages/core/src/services/A2A/A2ANegotiator.ts",
       "file": "packages/core/src/services/A2A/A2ANegotiator.ts"
     },
@@ -37661,11 +37666,6 @@
       "type": "file",
       "name": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts",
       "file": "packages/core/src/services/tormentnexus-middleware/tool-overrides.functional.ts"
-    },
-    {
-      "type": "file",
-      "name": "packages/core/src/skills/adapters/SkillImporter.ts",
-      "file": "packages/core/src/skills/adapters/SkillImporter.ts"
     },
     {
       "type": "file",
@@ -37794,13 +37794,13 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/packages/zipper/index.mts",
-      "file": "apps/tormentnexus-extension/packages/zipper/index.mts"
+      "name": "apps/tormentnexus-extension/pages/content/vite.config.mts",
+      "file": "apps/tormentnexus-extension/pages/content/vite.config.mts"
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/pages/content/vite.config.mts",
-      "file": "apps/tormentnexus-extension/pages/content/vite.config.mts"
+      "name": "apps/tormentnexus-extension/packages/zipper/index.mts",
+      "file": "apps/tormentnexus-extension/packages/zipper/index.mts"
     },
     {
       "type": "file",
@@ -37959,26 +37959,6 @@
     },
     {
       "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts"
-    },
-    {
-      "type": "file",
-      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts",
-      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts"
-    },
-    {
-      "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/plugins/ITransportPlugin.ts"
     },
@@ -38006,6 +37986,26 @@
       "type": "file",
       "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/utils/schemaValidator.ts",
       "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/utils/schemaValidator.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/EventEmitter.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpClient.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/McpManager.ts"
+    },
+    {
+      "type": "file",
+      "name": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts",
+      "file": "apps/tormentnexus-extension/chrome-extension/src/mcpclient/core/PluginRegistry.ts"
     },
     {
       "type": "file",
@@ -39393,6 +39393,24 @@
     },
     {
       "type": "unlisted",
+      "name": "commander",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 27
+    },
+    {
+      "type": "unlisted",
+      "name": "chalk",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 321
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/core",
+      "file": "borg/packages/cli/src/commands/start.ts",
+      "line": 278
+    },
+    {
+      "type": "unlisted",
       "name": "@modelcontextprotocol/sdk",
       "file": "borg/packages/core/src/mcp/downstreamDiscovery.ts",
       "line": 10
@@ -39897,24 +39915,6 @@
     },
     {
       "type": "unlisted",
-      "name": "commander",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 27
-    },
-    {
-      "type": "unlisted",
-      "name": "chalk",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 321
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/core",
-      "file": "borg/packages/cli/src/commands/start.ts",
-      "line": 278
-    },
-    {
-      "type": "unlisted",
       "name": "react-dom",
       "file": "borg/apps/web/src/app/dashboard/dashboard-home-view.test.tsx",
       "line": 2
@@ -40299,30 +40299,6 @@
     },
     {
       "type": "unlisted",
-      "name": "@xyflow/react",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "@xyflow/react",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.test.ts",
-      "line": 4
-    },
-    {
-      "type": "unlisted",
-      "name": "clsx",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "tailwind-merge",
-      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
       "name": "@extension/shared",
       "file": "apps/tormentnexus-extension/pages/content/src/plugins/adapters/gemini.adapter.ts",
       "line": 4
@@ -40416,6 +40392,30 @@
       "name": "@src/components",
       "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/base/BaseSidebarManager.tsx",
       "line": 11
+    },
+    {
+      "type": "unlisted",
+      "name": "@xyflow/react",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@xyflow/react",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/macro.runner.test.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "clsx",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "tailwind-merge",
+      "file": "apps/tormentnexus-extension/pages/content/src/lib/utils.ts",
+      "line": 2
     },
     {
       "type": "unlisted",
@@ -41104,14 +41104,14 @@
     {
       "type": "unlisted",
       "name": "@src/lib",
-      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/RichRenderer.tsx",
-      "line": 2
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/SchemaRenderer.tsx",
+      "line": 3
     },
     {
       "type": "unlisted",
       "name": "@src/lib",
-      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/SchemaRenderer.tsx",
-      "line": 3
+      "file": "apps/tormentnexus-extension/pages/content/src/components/sidebar/ui/RichRenderer.tsx",
+      "line": 2
     },
     {
       "type": "unlisted",
@@ -42027,6 +42027,102 @@
     },
     {
       "type": "unlisted",
+      "name": "express",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 5
+    },
+    {
+      "type": "unlisted",
+      "name": "cors",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@trpc/server",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 9
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/tools",
+      "file": "borg/packages/core/src/orchestrator.ts",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/agents",
+      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/adk",
+      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/services/CouncilService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/ai",
+      "file": "borg/packages/core/src/services/DarwinService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/services/ProjectTracker.ts",
+      "line": 26
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/security/SandboxService.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "duck-duck-scrape",
+      "file": "borg/packages/core/src/services/ResearchService.ts",
+      "line": 4
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/ai",
+      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
+      "line": 3
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/agents",
+      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
+      "line": 18
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/ai",
+      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "jsdom",
+      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
+      "line": 2
+    },
+    {
+      "type": "unlisted",
       "name": "zod",
       "file": "borg/packages/core/src/types/tormentnexus/tool-sets.zod.ts",
       "line": 12
@@ -42117,24 +42213,6 @@
     },
     {
       "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/security/SandboxService.ts",
-      "line": 4
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/agents",
-      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/adk",
-      "file": "borg/packages/core/src/orchestrator/SquadService.ts",
-      "line": 3
-    },
-    {
-      "type": "unlisted",
       "name": "fast-glob",
       "file": "borg/packages/core/src/skills/SkillRegistry.ts",
       "line": 2
@@ -42144,36 +42222,6 @@
       "name": "gray-matter",
       "file": "borg/packages/core/src/skills/SkillRegistry.ts",
       "line": 5
-    },
-    {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/ai",
-      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
-      "line": 3
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/agents",
-      "file": "borg/packages/core/src/suggestions/SuggestionService.ts",
-      "line": 18
-    },
-    {
-      "type": "unlisted",
-      "name": "duck-duck-scrape",
-      "file": "borg/packages/core/src/services/ResearchService.ts",
-      "line": 4
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/ai",
-      "file": "borg/packages/core/src/services/DarwinService.ts",
-      "line": 2
     },
     {
       "type": "unlisted",
@@ -42231,12 +42279,6 @@
     },
     {
       "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/services/ProjectTracker.ts",
-      "line": 26
-    },
-    {
-      "type": "unlisted",
       "name": "@tormentnexus/agents",
       "file": "borg/packages/core/src/commands/lib/SystemCommands.ts",
       "line": 2
@@ -42252,12 +42294,6 @@
       "name": "@tormentnexus/search",
       "file": "borg/packages/core/src/services/DeepResearchService.ts",
       "line": 3
-    },
-    {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/services/CouncilService.ts",
-      "line": 2
     },
     {
       "type": "unlisted",
@@ -42285,42 +42321,6 @@
     },
     {
       "type": "unlisted",
-      "name": "express",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 5
-    },
-    {
-      "type": "unlisted",
-      "name": "cors",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 7
-    },
-    {
-      "type": "unlisted",
-      "name": "@trpc/server",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 9
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/tools",
-      "file": "borg/packages/core/src/orchestrator.ts",
-      "line": 13
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/ai",
-      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "jsdom",
-      "file": "borg/packages/core/src/services/memory/ResearchWorker.ts",
-      "line": 2
-    },
-    {
-      "type": "unlisted",
       "name": "@extension/shared",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/events/event-bus.ts",
       "line": 2
@@ -42330,84 +42330,6 @@
       "name": "@extension/shared",
       "file": "borg/apps/tormentnexus-extension/pages/content/src/events/event-handlers.ts",
       "line": 40
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/types/tormentnexus/config-schemas.zod.ts",
-      "line": 19
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/types/tormentnexus/endpoints.zod.ts",
-      "line": 18
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/types/tormentnexus/mcp-servers.zod.ts",
-      "line": 18
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/types/tormentnexus/namespaces.zod.ts",
-      "line": 18
-    },
-    {
-      "type": "unlisted",
-      "name": "zod",
-      "file": "borg/packages/core/src/types/tormentnexus/server-health.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@modelcontextprotocol/sdk",
-      "file": "borg/packages/core/src/mcp/compatibilityToolDefinitions.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@modelcontextprotocol/sdk",
-      "file": "borg/packages/core/src/mcp/compatibilityToolRuntime.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@modelcontextprotocol/sdk",
-      "file": "borg/packages/core/src/mcp/toolAccessGuards.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@modelcontextprotocol/sdk",
-      "file": "borg/packages/core/src/mcp/savedScriptExecution.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "@modelcontextprotocol/sdk",
-      "file": "borg/packages/core/src/mcp/toolSetCompatibility.ts",
-      "line": 1
-    },
-    {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/agents/swarm/SwarmOrchestrator.ts",
-      "line": 15
-    },
-    {
-      "type": "unlisted",
-      "name": "@tormentnexus/ai",
-      "file": "borg/packages/core/src/agents/swarm/SwarmOrchestrator.ts",
-      "line": 17
-    },
-    {
-      "type": "unlisted",
-      "name": "uuid",
-      "file": "borg/packages/core/src/agents/BaseAgent.ts",
-      "line": 2
     },
     {
       "type": "unlisted",
@@ -42642,6 +42564,84 @@
       "name": "zod",
       "file": "borg/packages/core/src/routers/workspaceRouter.ts",
       "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/types/tormentnexus/config-schemas.zod.ts",
+      "line": 19
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/types/tormentnexus/endpoints.zod.ts",
+      "line": 18
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/types/tormentnexus/mcp-servers.zod.ts",
+      "line": 18
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/types/tormentnexus/namespaces.zod.ts",
+      "line": 18
+    },
+    {
+      "type": "unlisted",
+      "name": "zod",
+      "file": "borg/packages/core/src/types/tormentnexus/server-health.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@modelcontextprotocol/sdk",
+      "file": "borg/packages/core/src/mcp/compatibilityToolDefinitions.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@modelcontextprotocol/sdk",
+      "file": "borg/packages/core/src/mcp/compatibilityToolRuntime.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@modelcontextprotocol/sdk",
+      "file": "borg/packages/core/src/mcp/toolAccessGuards.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@modelcontextprotocol/sdk",
+      "file": "borg/packages/core/src/mcp/savedScriptExecution.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "@modelcontextprotocol/sdk",
+      "file": "borg/packages/core/src/mcp/toolSetCompatibility.ts",
+      "line": 1
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/agents/swarm/SwarmOrchestrator.ts",
+      "line": 15
+    },
+    {
+      "type": "unlisted",
+      "name": "@tormentnexus/ai",
+      "file": "borg/packages/core/src/agents/swarm/SwarmOrchestrator.ts",
+      "line": 17
+    },
+    {
+      "type": "unlisted",
+      "name": "uuid",
+      "file": "borg/packages/core/src/agents/BaseAgent.ts",
+      "line": 2
     },
     {
       "type": "unlisted",

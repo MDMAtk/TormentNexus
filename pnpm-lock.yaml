@@ -1097,9 +1097,6 @@ importers:
       '@tormentnexus/core':
         specifier: workspace:*
         version: link:../core
-      '@tormentnexus/enterprise':
-        specifier: workspace:*
-        version: link:../enterprise
       '@trpc/client':
         specifier: ^11.8.1
         version: 11.8.1(@trpc/server@11.8.1(typescript@5.9.3))(typescript@5.9.3)

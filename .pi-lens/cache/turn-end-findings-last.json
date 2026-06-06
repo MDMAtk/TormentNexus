@@ -1,6 +1,6 @@
 {
-  "signature": "scripts/ingest_skills.py::ℹ️ Advisory — no action required this turn:\nCode-quality warnings introduced/touched this turn: 14 across 1 file(s).\nTop rules: python-thread-global-write×10, python-unsafe-regex×3, bare-except×1\nDetails written to .pi-lens/cache/code-quality-warnings.json\nNo action required unless you are already refactoring these areas.",
-  "sessionId": "lens-mq1d89k6-23450959",
-  "projectSeqStart": 66,
-  "projectSeqEnd": 68
+  "signature": "go/internal/tools/grants_mcp.go::📐 Cascade errors in 2 neighbor file(s) — fix before finishing turn:\n<diagnostics file=\"internal/tools/webpeel.go\" reason=\"fallback\">\n  line 26, col 2 rule=cascade:UnusedImport: \"net/url\" imported and not used\n</diagnostics>\n<diagnostics file=\"internal/tools/context_server.go\" reason=\"fallback\">\n  line 30, col 2 rule=cascade:UnusedImport: \"time\" imported and not used\n</diagnostics>",
+  "sessionId": "lens-mq1mpb5i-5b3aa6c2",
+  "projectSeqStart": 112,
+  "projectSeqEnd": 113
 }

@@ -10,6 +10,7 @@ import { Button } from '@tormentnexus/ui';
 import { ScrollArea } from '@tormentnexus/ui';
 import { Shield, Lock, Rocket, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
+import { OidcConfig, RbacManager } from '@tormentnexus/enterprise';
 
 interface AuditLogEntry {
     timestamp: number;
@@ -143,6 +144,8 @@ export default function SecurityPage() {
                 <TabsList>
                     <TabsTrigger value="audit">Audit Logs</TabsTrigger>
                     <TabsTrigger value="policies">Policies</TabsTrigger>
+                    <TabsTrigger value="oidc">Identity Providers (SSO)</TabsTrigger>
+                    <TabsTrigger value="rbac">RBAC Manager</TabsTrigger>
                 </TabsList>
 
                 {/* AUDIT LOGS TAB */}
@@ -236,6 +239,16 @@ export default function SecurityPage() {
                             </div>
                         </CardContent>
                     </Card>
+                </TabsContent>
+
+                {/* OIDC TAB */}
+                <TabsContent value="oidc" className="space-y-4">
+                    <OidcConfig />
+                </TabsContent>
+
+                {/* RBAC TAB */}
+                <TabsContent value="rbac" className="space-y-4">
+                    <RbacManager />
                 </TabsContent>
             </Tabs>
         </div>
