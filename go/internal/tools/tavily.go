@@ -23,7 +23,7 @@ func HandleTavilySearch(ctx context.Context, args map[string]interface{}) (ToolR
 		return err("TAVILY_API_KEY environment variable is not set")
 	}
 
-	searchDepth, _ := getString(args, "search_depth")
+	searchDepth := getStringValue(args, "search_depth")
 	if searchDepth == "" {
 		searchDepth = "basic"
 	}

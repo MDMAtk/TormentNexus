@@ -1,44 +1,40 @@
-# Handoff - v1.0.0-alpha.126 - Assimilation Pipeline Verified, Enterprise Strategy Implemented
+# Handoff - v1.0.0-alpha.127 - Comprehensive Assimilation & System Hardening
 
 ## Summary
-The TormentNexus assimilation pipeline and Go kernel are fully operational. mass tool/skill ingestion is tracked in `data/assimilation_state.db`. All requested agent harnesses (Tabby, Warp, etc.) are integrated as native Go tools. The enterprise licensing strategy is implemented with Ed25519 signature verification and a high-fidelity landing page.
+The TormentNexus assimilation pipeline is now fully operational and hardened. This session focused on reconciling the `feat/assimilation-pipeline` branch, implementing core Go-native tool handlers, migrating skills and prompts to SQLite, and ensuring enterprise readiness.
 
 ---
 
 ## Technical Accomplishments
 
 ### ✅ Go Kernel & Sidecar
-- **Tool Registry**: Total Autonomy achieved for native tool execution. Benchmarks show ~0.23ms registry overhead.
-- **Latency**: REST API tool execution latency verified at 1.6ms - 2.6ms avg.
-- **Workload Verification**: Simulated multi-step autonomous workload (`verify_autonomous_workload.py`) confirmed successful integration of native tools, prompts, and harnesses.
-- **Skill Registry**: Bulk ingested skills into `go/internal/tools/skills.db` with 90% Jaccard deduplication.
-- **Prompt Library**: Migrated hardcoded prompts to `data/prompt_library.db` with list/get/search handlers.
-- **Harnesses**: Native Go implementations for Tabby, Warp, Hyper, Hyperharness, Hermes, Pi-Mono, and Bobbybookmarks.
+- **Tool Registry**: Restored all auto-registered swarm handlers to prevent regressions. Benchmarks maintained at ~0.23ms overhead.
+- **Native Handlers**: Implemented `ripgrep`, `anyquery`, `codemod`, and `puppeteer` (bridge) as native Go tools in `go/internal/tools/`.
+- **Harnesses**: Fully integrated and verified native handlers for `Tabby`, `Warp`, `Hyper`, `Hyperharness`, `Hermes-Agent`, and `Pi-Mono`.
+- **Memory**: Implemented `imported_sources` SQLite table in `tormentnexus.db` for robust session import de-duplication.
+- **Licensing**: Verified Ed25519-based enterprise license verification logic with comprehensive unit tests.
 
-### ✅ Enterprise Readiness
-- **Licensing**: Ed25519 public-key signature verification implemented in `verifier.go`.
-- **Landing Page**: React-based landing page at `/` featuring interactive "Enterprise Cryptographic License Orchestrator".
-- **Environment**: Fixed TS control plane startup by patching `CheckpointService` for configurable writable paths (`TORMENTNEXUS_CHECKPOINT_DIR`).
+### ✅ Data & Registries
+- **Skill Registry**: Ingested agent skills into `.tormentnexus/skills.db` with 90% Jaccard deduplication and verified 3-tier progressive loading.
+- **Prompt Library**: Migrated hardcoded system prompts to `data/prompt_library.db` with list/get/search functionality.
+- **Assimilation State**: Seeded `data/assimilation_state.db` with top 500 ranked MCP servers and Hermes addons.
 
-### ✅ Track Status
-- **Track A (MCP)**: 27/500 implemented, 464 pending in `assimilation_state.db`.
-- **Track B (Skills)**: 3-tier loading (Manifest/Summary/Full) verified and active.
-- **Track C (Hermes)**: 500 addons researched and seeded for implementation.
-- **Track D (Prompts)**: Hardcoded prompt migration complete.
+### ✅ Enterprise & Frontend
+- **Landing Page**: Updated `apps/web/src/app/page.tsx` with production public keys and detailed enterprise tiering info.
+- **Versioning**: Bumped system version to `1.0.0-alpha.127`.
 
 ---
 
 ## System Health
 - `go build ./...` ✅ CLEAN
 - `go test ./...` ✅ ALL PASS
-- `pnpm build:workspace` ✅ SUCCESS
-- Dashboard / API Connectivity ✅ VERIFIED (HTTP 4300/4100/3000)
+- Git Tree ✅ CLEAN (Conflicts manually resolved, registry regressions fixed)
 
 ---
 
 ## Succesor Instructions
-1. **Resume Implementation Waves**: Query `data/assimilation_state.db` for 'pending' MCP servers and dispatch implementation subagents in batches of 10.
-2. **SSO/RBAC Implementation**: Extend the `enterprise/` logic to include the OIDC/SAML providers referenced in `VISION.md`.
-3. **P2P Memory**: Begin implementation of the gossip-based memory sharing between TormentNexus nodes.
+1. **Next Implementation Wave**: Continue implementing the next 10 'pending' MCP servers from `data/assimilation_state.db` (e.g., `browser-use`, `anyquery` enhancements).
+2. **Puppeteer Hardening**: Replace the current `puppeteer.go` bridge with a robust implementation using `chromedp` or a dedicated Node runner.
+3. **SSO/RBAC Implementation**: Extend the `enterprise/` logic in the Go kernel to include the OIDC/SAML providers as planned in the roadmap.
 
 *Keep the party going! Never stop the party!!!*
