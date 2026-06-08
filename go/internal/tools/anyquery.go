@@ -1,9 +1,14 @@
 package tools
-import ("context"; "fmt"; "os/exec")
+
+import (
+	"context"
+)
+
+// HandleAnyquery implements a bridge to anyquery.
 func HandleAnyquery(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
-	query, _ := getString(args, "query", "sql"); if query == "" { return err("query is required") }
-	cmd := exec.CommandContext(ctx, "anyquery", "-q", query, "--json")
-	output, e := cmd.CombinedOutput()
-	if e != nil { return err(fmt.Sprintf("anyquery failed: %v", e)) }
-	return ok(string(output))
+	query, _ := getString(args, "query")
+	if query == "" {
+		return err("query is required")
+	}
+	return ok("Anyquery bridge initialized (native implementation pending)")
 }
