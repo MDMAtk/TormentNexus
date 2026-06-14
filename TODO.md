@@ -1,6 +1,6 @@
 # TODO
 
-_Last updated: 2026-06-14, version 1.0.0-alpha.128_
+_Last updated: 2026-06-14, version 1.0.0-alpha.129_
 
 ## P0 — Must do now (Stability, Testing & Validation)
 - [x] **Track A: MCP Discovery**: Execute discovery script to rank top 500 MCP servers and seed state DB.
@@ -11,8 +11,10 @@ _Last updated: 2026-06-14, version 1.0.0-alpha.128_
 
 ## P1 — Should do next (Integrations)
 - [x] **Harness Integration**: Integrate Tabby, Warp, Hyper, Hyperharness, Hermes Agent, and Pi-Mono.
-- [ ] **A2A Skill Registry**: Map assimilated skills into the FreeLLM A2A registry as `AgentSkill` structs so swarm agents can discover and use them via `findAgentForSkill(skillID)`.
+- [x] **A2A Skill Registry**: Map assimilated skills into the FreeLLM A2A registry as `AgentSkill` structs so swarm agents can discover and use them via `findAgentForSkill(skillID)`.
 - [ ] **Skill HTTP API**: Wire the skill store into the Go sidecar's HTTP API endpoints (`/api/skills/list`, `/api/skills/get`, `/api/skills/search`).
+- [ ] **Browser Automation MCP**: Finalize tests and add optional args (`fullPage`, `timeout`) for browser handlers.
+- [ ] **ChunkHound / Probe Integration**: Implement remaining assimilated MCP search tools as native handlers.
 - [ ] **Bobbybookmarks Sync**: Configure automatic sync call triggers for catalog scraping.
 - [ ] **Enterprise Landing**: Create product landing page for self-hosted and enterprise tiers.
 

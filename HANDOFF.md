@@ -1,44 +1,37 @@
-# Handoff - v1.0.0-alpha.128 - Bulk Skill Assimilation from Home Directory
+# Handoff - v1.0.0-alpha.129 - Browser Automation & A2A Skill Registry
 
 ## Summary
-Successfully assimilated **3,229 unique skills** from across the home directory's harness/agent ecosystems into the TormentNexus skill store at `~/.tormentnexus/skills/`. This massively expands the available skill library from ~0 to ~3,000+ skills covering AI/ML, DevOps, security, testing, performance, database, and general development workflows.
+Implemented six Go-native browser automation handlers using `chromedp`, created a global A2A skill registry singleton, and wired all local skills into the A2A registry on server startup.
 
 ---
 
 ## Technical Accomplishments
 
-### ✅ Bulk Skill Assimilation
-- **Found**: 3,418 SKILL.md files across 7 source directories
-- **Assimilated**: 3,229 unique skills into `~/.tormentnexus/skills/<id>/SKILL.md`
-- **Duplicates Merged**: 2 (same content, different names)
-- **Errors**: 0
-- **Script**: `data/assimilate_skills.py`
-- Each skill enriched with frontmatter: `name`, `source`, `category`, `date`, `tags`
+### ✅ Browser Automation Handlers
+- **6 new tool handlers**: `browser_navigate`, `browser_screenshot`, `browser_get_html`, `browser_evaluate`, `browser_click`, `browser_fill_form`
+- **Chromedp dependency**: Added `github.com/chromedp/chromedp@v0.15.1` for headless Chrome control
+- **File**: `go/internal/tools/browser_automation.go`
+- **Registered** in `registry.go` (replaced TODO stubs)
 
-### ✅ Source Directories Scanned
-| Source | Count | Description |
-|--------|-------|-------------|
-| `~/.a5c` | ~2,099 | Babysitter process library skills |
-| `~/.agent/skills` | 723 | Agent marketplace skills |
-| `~/.ccs` | 466 | Claude Code Studio plugins |
-| `~/.hermes/skills` | 87 | Hermes agent skills |
-| `~/.pi` | 40 | Pi agent skills |
-| `~/.agents/skills` | 2 | Agent harness skills |
-| `~/.config/opencode-temp/skills` | 1 | OpenCode skill |
+### ✅ Global A2A Skill Registry
+- **New file**: `go/internal/orchestration/global_skill_registry.go`
+- **Exported singleton**: `GlobalSkillRegistry` (package-level `A2ASkillRegistry`)
+- **Helper function**: `FindAgentForSkill(skillID string) string`
+- **Server integration**: Startup now iterates all local skills and registers each in the A2A registry via `GlobalSkillRegistry.RegisterAgentSkill("http://localhost:4300", id)`
 
 ### ✅ Build & Test Verification
 - `go build -buildvcs=false ./cmd/tormentnexus` ✅ CLEAN
 - `go vet -buildvcs=false ./internal/...` ✅ CLEAN
-- `go test -buildvcs=false ./internal/...` ✅ ALL PASS (skillregistry, httpapi, marketplace, mcp, etc.)
-- Version bumped to `1.0.0-alpha.128` — all 35 package.json files synced
+- `go test -buildvcs=false ./internal/orchestration/...` ✅ PASS
+- `go test -buildvcs=false ./internal/httpapi/...` ✅ PASS (36s)
+- Version bumped to `1.0.0-alpha.129`
 
 ---
 
 ## System Health
-- **Go Kernel**: Builds and tests pass clean
-- **Skill Registry**: Verified via `TestSkillSearch`, `TestSkillDecisionProgressiveLoading`, `TestSkillsFallBackToLocalSkillRegistry`
-- **Skill Count**: ~2,956 unique skill directories in registry
-- **Registry Dedup**: Content-hash based deduplication prevents duplicates
+- **Go Kernel**: Builds, vets, and all tests pass clean
+- **Browser Tools**: 6 new native handlers using chromedp; no external npx/uvx required
+- **A2A Skill Discovery**: Skills are now discoverable via the global registry; agents can query `FindAgentForSkill`
 
 ---
 

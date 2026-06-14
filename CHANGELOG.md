@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0-alpha.129] - 2026-06-14
+### Added
+- Browser automation MCP handlers (`browser_navigate`, `browser_screenshot`, `browser_get_html`, `browser_evaluate`, `browser_click`, `browser_fill_form`) implemented natively with `chromedp`.
+- Global A2A skill registry singleton (`orchestration.GlobalSkillRegistry`) with `FindAgentForSkill` helper.
+- Server startup now registers all local skills in the A2A registry on initialization.
+### Changed
+- `registry.go`: Enabled six browser tool registrations (replaced TODO stubs).
+- `server.go`: Populates A2A skill registry during startup.
+- `global_skill_registry.go`: Created new file exposing global A2A registry.
+- `browser_automation.go`: Created new file with six browser handlers.
+- `go.mod`: Added `github.com/chromedp/chromedp@v0.15.1` dependency.
+
 ## [1.0.0-alpha.128] - 2026-06-14
 ### Added
 - **Bulk Skill Assimilation**: Assimilated **3,229 unique skills** from home directory harness ecosystems into `~/.tormentnexus/skills/`.

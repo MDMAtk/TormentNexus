@@ -513,6 +513,13 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 		}
 	}
 
+	// Register all local skills as provided by this sidecar in the A2A skill registry
+	if skillIDs, err := server.skillStore.ListSkills(); err == nil {
+		for _, id := range skillIDs {
+			orchestration.GlobalSkillRegistry.RegisterAgentSkill("http://localhost:4300", id)
+		}
+	}
+
 	server.coderAgent = orchestration.NewCoderAgent(server.a2aBroker, cfg.WorkspaceRoot)
 	server.coderAgent.Start(context.Background())
 	server.goDirector = orchestration.NewDirector(server.swarmController, server.coderAgent, server.a2aBroker)
