@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -11,7 +14,7 @@ import (
 func HandleGetRepos(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
 	query, _ :=getString(args, "query")
 	if query == "" {
-		query = "stars:>10000"
+
 	}
 	url := fmt.Sprintf("https://api.github.com/search/repositories?q=%s&sort=stars&order=desc", query)
 	req, e := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -31,11 +34,11 @@ func HandleGetRepos(ctx context.Context, args map[string]interface{}) (ToolRespo
 		return err("failed to read response: " + e.Error())
 }
 
-	var result map[string]interface{}
-	if e := json.Unmarshal(body, &result); e != nil {
+	var result map[string]interface{	if e := json.Unmarshal(body, &result); e != nil {
 		return err("failed")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
 }

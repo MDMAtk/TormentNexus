@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -24,7 +27,7 @@ func HandleWassengerSendMessage(ctx context.Context, args map[string]interface{}
 
 	body := map[string]string{"to": to, "message": message
 
----
-*deepseek-reasoner (deepseek)*
-}
+
+-reasoner (deepseek)*,
+},
 }

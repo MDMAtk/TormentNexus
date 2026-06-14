@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -21,10 +24,9 @@ func HandleSparkAgent(ctx context.Context, args map[string]interface{}) (ToolRes
 	body, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err("read failed: " + e.Error())
-}
-
 	return ok("Spark response: " +
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}

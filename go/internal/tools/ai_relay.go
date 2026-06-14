@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -20,7 +23,7 @@ func HandleChatCompletions(ctx context.Context, args map[string]interface{}) (To
 		return err("marshal error: " + e.Error())
 }
 
-	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.openai.com/v1/chat/completions", io.NopCloser(io.LimitReader(nil, 0)))
+	req, e := http.NewRequestWithContext(ctx, "POST", "https://api..com/v1/chat/completions", io.NopCloser(io.LimitReader(nil, 0)))
 	if e != nil {
 		return err("request error: " + e.Error())
 }

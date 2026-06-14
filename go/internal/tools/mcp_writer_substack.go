@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -19,7 +22,7 @@ func HandleWriteSubstackPost(ctx context.Context, args map[string]interface{}) (
 		return err("Missing required args: title, body, token, publication")
 }
 
-	payload := fmt.Sprintf(`{"title":"%s","body":"%s","publication":"%s"}`, title, strings.ReplaceAll(body, `"`, `\"`), pub)")
+	payload := fmt.Sprintf(`{"title":"%s","body":"%s","publication":"%s"}`, title, strings.ReplaceAll(body, `"`, `\"`), pub)
 	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.substack.com/api/v1/posts", strings.NewReader(payload))
 	if e != nil {
 		return err(fmt.Sprintf("Failed to create request: %v", e))
@@ -38,12 +41,8 @@ func HandleWriteSubstackPost(ctx context.Context, args map[string]interface{}) (
 	bodyBytes, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err(fmt.Sprintf("Failed to read response: %v", e))
-}
-
 	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
 		return err(fmt.Sprintf("API error %d: %s", resp.StatusCode, string(bodyBytes)))
-}
-
 	return ok("Post written successfully")
 }
 
@@ -70,14 +69,11 @@ func HandleListSubstackPublications(ctx context.Context, args map[string]interfa
 	bodyBytes, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err(fmt.Sprintf("Failed to read response: %v", e))
-}
-
 	if resp.StatusCode != http.StatusOK {
 		return err(fmt.Sprintf("API error %d: %s", resp.StatusCode, string(bodyBytes)))
 }
 
-	var data []map[string]interface{}
-	if e := json.Unmarshal(bodyBytes, &data); e != nil {
+	var data []map[string]interface{	if e := json.Unmarshal(bodyBytes, &data); e != nil {
 		return err(fmt.Sprintf("Failed to parse JSON: %v", e))
 }
 
@@ -86,7 +82,11 @@ func HandleListSubstackPublications(ctx context.Context, args map[string]interfa
 		if name, found := pub["name"].(string); found {
 			names = append(names, name)
 
-	}
-	return ok(strings.Join(names, ", "))
+		return ok(strings.Join(names, ", "))
+}
+}
+}
+}
+}
 }
 }

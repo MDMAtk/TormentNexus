@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -7,12 +10,12 @@ import (
 
 type ManifestItem struct {
     Name        string `json:"name"`
-    Description string `json:"description"`
+    Description string `json:"description"`,
 }
 
 type Manifest struct {
     Tools    []ManifestItem `json:"tools"`
-    Profiles []string       `json:"profiles"`
+    Profiles []string       `json:"profiles"`,
 }
 
 func HandleToolManifest(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
@@ -27,12 +30,10 @@ func HandleToolManifest(ctx context.Context, args map[string]interface{}) (ToolR
     data, e := json.Marshal(manifest)
     if e != nil {
         return err("failed to marshal manifest")
-}
-
     return ToolResponse{
 }
         Content: []ContentItem{
             {Type: "text", Text: string(data)},
         },
-    }, nil
+    }, nil,
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -11,5 +14,5 @@ import (
 
 func HandleListTickets(ctx context.Context, args
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*

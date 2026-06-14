@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -15,7 +18,6 @@ func HandleGetTime(ctx context.Context, args map[string]interface{}) (ToolRespon
 	switch format {
 	case "unix":
 		return ok(time.Unix(t.Unix(), 0).String())
-}
 	default:
 		return ok(t.Format(format))
 
@@ -25,7 +27,7 @@ func HandleEcho(ctx context.Context, args map[string]interface{}) (ToolResponse,
 	text, _ :=getString(args, "text")
 	if text == "" {
 		return err("text parameter is required")
-}
-
 	return ok(text)
+}
+}
 }

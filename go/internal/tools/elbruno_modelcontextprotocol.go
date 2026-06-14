@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -31,8 +34,5 @@ func HandleSearchTools(ctx context.Context, args map[string]interface{}) (ToolRe
 }
 
 	var result map[string]interface{}
-	e = json.NewDecoder(resp.Body
-
----
-*deepseek-reasoner (deepseek)*
+
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -41,5 +44,6 @@ func HandleListUnits(ctx context.Context, args map[string]interface{}) (ToolResp
 		units = append(units, u)
 
 	return ok(fmt.Sprintf("Available units: %v", units))
+}
 }
 }

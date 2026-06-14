@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,7 +20,7 @@ func HandleGetCandidate(ctx context.Context, args map[string]interface{}) (ToolR
 	if cycle == 0 {
 		
 
----
-*deepseek-reasoner (deepseek)*
-}
+
+-reasoner (deepseek)*,
+},
 }

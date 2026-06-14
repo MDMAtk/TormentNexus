@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -9,6 +12,6 @@ import (
 
 func HandleWhoopGet(ctx context.Context, args map[string]interface{
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

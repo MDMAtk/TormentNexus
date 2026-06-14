@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -24,6 +27,6 @@ func HandleExecuteGraphQL(ctx context.Context, args map[string]interface{}) (Too
 
 	req, e := http.NewRequestWithContext(ctx, "POST", endpoint, io.N
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

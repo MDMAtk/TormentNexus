@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -16,6 +19,6 @@ func HandleGetMarketTicker(ctx context.Context, args map[string]interface{}) (To
 	url := fmt.Sprintf("https://www.okx.com/api/v5/market/ticker?instId=%s", instId)
 	req, e := http.NewRequestWithContext
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

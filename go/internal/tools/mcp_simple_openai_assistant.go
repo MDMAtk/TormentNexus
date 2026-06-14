@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -27,7 +30,7 @@ func HandleCreateAssistant(ctx context.Context, args map[string]interface{}) (To
 		return err("Failed to marshal request body: " + e.Error())
 }
 
-	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.openai.com/v1/assistants", nil)
+	req, e := http.NewRequestWithContext(ctx, "POST", "https://api..com/v1/assistants", nil)
 	if e != nil {
 		return err("Failed to create request: " + e.Error())
 }

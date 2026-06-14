@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -22,7 +25,7 @@ func HandleClaudeCode(ctx context.Context, args map[string]interface{}) (ToolRes
 
 	baseURL := os.Getenv("CLAUDE_API_URL")
 	if baseURL == "" {
-		baseURL = "https://api.anthropic.com/v1"
+
 	}
 	body := map[string]interface{}{
 		"model":      getString(args, "model"),
@@ -30,12 +33,10 @@ func HandleClaudeCode(ctx context.Context, args map[string]interface{}) (ToolRes
 		"messages": []map[string]string{
 			{"role": "user", "content": prompt},
 		},
-	}
-	if body["model"].(string) == "" {
-		body["model"] = "claude-3-5-sonnet-20241022"
-	}
-	if body["max_tokens"].(int) == 0 {
-		body["max_tokens"] = 1024
+		if body["model"].(string) == "" {
+
+		if body["max_tokens"].(int) == 0 {
+
 	}
 	jsonBody, e := json.Marshal(body)
 	if e != nil {
@@ -56,9 +57,11 @@ func HandleClaudeCode(ctx context.Context, args map[string]interface{}) (ToolRes
 }
 
 	defer resp.Body.Close()
-	var result map[string]interface{}
-	if e := json.NewDecoder(res
+	var result map[string]interface{	if e := json.NewDecoder(res
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
+}
+}
+}
 }

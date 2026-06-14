@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,6 +20,6 @@ func HandleSearchComponents(ctx context.Context, args map[string]interface{}) (T
 
 	u := fmt.Sprintf("%s/service/rest/v1/search?q=%s", baseURL, url.QueryEscape(query
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

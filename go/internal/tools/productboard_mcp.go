@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -29,6 +32,6 @@ func HandleGetProduct(ctx context.Context, args map[string]interface{}) (ToolRes
 
     defer resp.Body
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

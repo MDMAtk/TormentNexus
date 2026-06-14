@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -23,9 +26,9 @@ func HandleChat(ctx context.Context, args map[string]interface{}) (ToolResponse,
 
 	model, _ :=getString(args, "model")
 	if model == "" {
-		model = "mistral-tiny"
+		model = "-tiny"
 	}
-	url := "https://api.mistral.ai/v1/chat/completions"
+	url := "https://api..ai/v1/chat/completions"
 	reqBody := map[string]interface{}{
 		"model": model,
 		"messages": []map[string]string{

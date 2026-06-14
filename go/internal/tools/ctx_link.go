@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,6 +20,6 @@ func HandlePushContextBundle(ctx context.Context, args map[string]interface{}) (
 	body, _ := json.Marshal(map[string]string{"name": name, "content": content})
 	req, _ := http.NewRequestWithContext(ctx, "")
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

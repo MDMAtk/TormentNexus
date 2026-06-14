@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -20,8 +23,8 @@ func HandleGenerateImage(ctx context.Context, args map[string]interface{}) (Tool
 		return err("OPENAI_API_KEY not set")
 }
 
-	body := fmt.Sprintf(`{"model":"dall-e-3","prompt":"%s","n":1,"size":"1024x1024"}`, strings.ReplaceAll(prompt, `"`, `\"`))")
-	req, e := http.NewRequestWithContext(ctx, http.MethodPost, "https://api.openai.com/v1/images/generations", strings.NewReader(body))
+	body := fmt.Sprintf(`{"model":"dall-e-3","prompt":"%s","n":1,"size":"1024x1024"}`, strings.ReplaceAll(prompt, `"`, `\"`))
+	req, e := http.NewRequestWithContext(ctx, http.MethodPost, "https://api..com/v1/images/generations", strings.NewReader(body))
 	if e != nil {
 		return err("failed to create request: " + e.Error())
 }
@@ -36,17 +39,15 @@ func HandleGenerateImage(ctx context.Context, args map[string]interface{}) (Tool
 	defer resp.Body.Close()
 	var result struct {
 		Data []struct {
-			URL string `json:"url"`
-		} `json:"data"`
+			URL string `json:"url"`,
+		} `json:"data"`,
 	}
 	e = json.NewDecoder(resp.Body).Decode(&result)
 	if e != nil {
 		return err("decode failed: " + e.Error())
-}
-
 	if len(result.Data) == 0 {
 		return err("no image returned")
-}
-
 	return success("Image generated: " + result.Data[0].URL)
+}
+}
 }

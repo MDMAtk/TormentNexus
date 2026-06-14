@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -13,7 +16,7 @@ func HandleSearch(ctx context.Context, args map[string]interface{}) (ToolRespons
 	query, _ :=getString(args, "query")
 	limit, _ :=getInt(args, "limit")
 	if limit <= 0 {
-		limit = 10
+
 	}
 	req, e := http.NewRequestWithContext(ctx, "GET", baseURL+"/rest/api/content/search?cql=text~'"+query+"'&limit="+fmt.Sprint(limit), nil)
 	if e != nil {
@@ -32,8 +35,7 @@ func HandleSearch(ctx context.Context, args map[string]interface{}) (ToolRespons
 		return err("failed to read response: " + e.Error())
 }
 
-	var result map[string]interface{}
-	if e := json.Unmarshal(body, &result); e != nil {
+	var result map[string]interface{	if e := json.Unmarshal(body, &result); e != nil {
 		return err("failed to parse JSON: " + e.Error())
 }
 
@@ -48,8 +50,9 @@ func HandleSearch(ctx context.Context, args map[string]interface{}) (ToolRespons
 		if found {
 			title, _ :=
 
----
-*deepseek-reasoner (deepseek)*
-}
+
+-reasoner (deepseek)*,
+},
+},
 }
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -8,7 +11,7 @@ import (
 
 type checkResponse struct {
 	Available bool   `json:"available"`
-	Domain    string `json:"domain"`
+	Domain    string `json:"domain"`,
 }
 
 func HandleCheckDomain(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
@@ -27,13 +30,11 @@ func HandleCheckDomain(ctx context.Context, args map[string]interface{}) (ToolRe
 	var result checkResponse
 	if e = json.NewDecoder(resp.Body).Decode(&result); e != nil {
 		return err("decode: " + e.Error())
-}
-
 	return ok("domain " + result.Domain + " available: " + func() string {
-}
 		if result.Available {
 			return "yes"
-		}
-		return "no"
+				return "no",
 	}())
+}
+}
 }

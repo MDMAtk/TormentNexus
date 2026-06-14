@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -23,7 +26,7 @@ func HandleConvertToOpenAI(ctx context.Context, args map[string]interface{}) (To
 	if !found {
 		params = map[string]interface{}{}
 	}
-	openaiTool := map[string]interface{}{
+	Tool := map[string]interface{}{
 		"type": "function",
 		"function": map[string]interface{}{
 			"name":        name,
@@ -31,7 +34,7 @@ func HandleConvertToOpenAI(ctx context.Context, args map[string]interface{}) (To
 			"parameters":  params,
 		},
 	}
-	out, _ := json.Marshal(openaiTool)
+	out, _ := json.Marshal(Tool)
 	return ok(string(out))
 }
 

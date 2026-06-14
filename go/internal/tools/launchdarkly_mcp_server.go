@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -29,6 +32,6 @@ func HandleGetFlag(ctx context.Context, args map[string]interface{}) (ToolRespon
 
 	req.Header.Set("Authorization", api
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

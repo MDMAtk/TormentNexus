@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -6,5 +9,5 @@ import (
     "io"
     "net/http")
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*

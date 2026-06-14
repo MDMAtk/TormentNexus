@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -16,7 +19,7 @@ func HandleSearch(ctx context.Context, args map[string]interface{}) (ToolRespons
 	}
 	limit, _ :=getInt(args, "limit")
 	if limit <= 0 {
-		limit = 5
+
 	}
 	u, e := url.Parse("http://localhost:8080/search")
 	if e != nil {
@@ -40,13 +43,13 @@ func HandleSearch(ctx context.Context, args map[string]interface{}) (ToolRespons
 		return err("failed to read response")
 	}
 	var result struct {
-		Results []string `json:"results"`
-	}
-	if e = json.Unmarshal(body, &result); e != nil {
+		Results []string `json:"results"`,
+		if e = json.Unmarshal(body, &result); e != nil {
 		return err("failed to parse response")
-	}
-	return ok(fmt.Sprintf("Found %d results: %v", len
+		return ok(fmt.Sprintf("Found %d results: %v", len,
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
+}

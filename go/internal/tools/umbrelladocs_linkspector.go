@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -14,7 +17,7 @@ func HandleCheckLinks(ctx context.Context, args map[string]interface{}) (ToolRes
 		return err("missing 'content' argument")
 }
 
-	urlRegex := regexp.MustCompile(`https?://[^\s"'<>]+`)")
+	urlRegex := regexp.MustCompile(`https?://[^\s"'<>]+`)
 	matches := urlRegex.FindAllString(content, -1)
 	var broken []string
 	for _, url := range matches {
@@ -23,13 +26,13 @@ func HandleCheckLinks(ctx context.Context, args map[string]interface{}) (ToolRes
 		if e != nil {
 			broken = append(broken, url)
 			cancel()
-			continue
+			continue,
 		}
 		resp, e := http.DefaultClient.Do(req)
 		if e != nil {
 			broken = append(broken, url)
 			cancel()
-			continue
+			continue,
 		}
 		resp.Body.Close()
 		if resp.StatusCode >= 400 {

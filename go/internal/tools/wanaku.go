@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -10,6 +13,6 @@ func HandleWanakuInfo(ctx context.Context, args map[string]interface{}) (ToolRes
 	name, _ :=getString(args, "name")
 	if name == ""
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

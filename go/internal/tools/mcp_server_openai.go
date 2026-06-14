@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -14,7 +17,7 @@ func HandleListModels(ctx context.Context, args map[string]interface{}) (ToolRes
 		return err("api_key is required")
 }
 
-	req, e := http.NewRequestWithContext(ctx, "GET", "https://api.openai.com/v1/models", nil)
+	req, e := http.NewRequestWithContext(ctx, "GET", "https://api..com/v1/models", nil)
 	if e != nil {
 		return err(fmt.Sprintf("failed to create request: %v", e))
 }
@@ -67,7 +70,7 @@ func HandleChatCompletion(ctx context.Context, args map[string]interface{}) (Too
 		"messages": messages,
 	}
 	jsonBody, _ := json.Marshal(body)
-	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.openai.com/v1/chat/completions", bytes.NewReader(jsonBody))
+	req, e := http.NewRequestWithContext(ctx, "POST", "https://api..com/v1/chat/completions", bytes.NewReader(jsonBody))
 	if e != nil {
 		return err(fmt.Sprintf("failed to create request: %v", e))
 }

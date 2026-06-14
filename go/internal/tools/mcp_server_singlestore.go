@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -24,7 +27,7 @@ func HandleQuery(ctx context.Context, args map[string]interface{}) (ToolResponse
 }
 
 	url := fmt.Sprintf("https://%s:443/api/v2/query?database=%s", host, db)
-	body := fmt.Sprintf(`{"query":"%s"}`, strings.ReplaceAll(query, `"`, `\"`))")
+	body := fmt.Sprintf(`{"query":"%s"}`, strings.ReplaceAll(query, `"`, `\"`))
 	req, e := http.NewRequestWithContext(ctx, "POST", url, strings.NewReader(body))
 	if e != nil {
 		return err(fmt.Sprintf("failed to create request: %v", e))
@@ -41,14 +44,11 @@ func HandleQuery(ctx context.Context, args map[string]interface{}) (ToolResponse
 	data, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err(fmt.Sprintf("failed to read response: %v", e))
-}
-
 	if resp.StatusCode != 200 {
 		return err(fmt.Sprintf("API error %d: %s", resp.StatusCode, string(data)))
 }
 
-	var result interface{}
-	if e := json.Unmarshal(data, &result); e != nil {
+	var result interface{	if e := json.Unmarshal(data, &result); e != nil {
 		return err(fmt.Sprintf("invalid JSON response: %v", e))
 }
 
@@ -83,17 +83,18 @@ func HandleListTables(ctx context.Context, args map[string]interface{}) (ToolRes
 	data, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err(fmt.Sprintf("failed to read response: %v", e))
-}
-
 	if resp.StatusCode != 200 {
 		return err(fmt.Sprintf("API error %d: %s", resp.StatusCode, string(data)))
 }
 
-	var result interface{}
-	if e := json.Unmarshal(data, &result); e != nil {
+	var result interface{	if e := json.Unmarshal(data, &result); e != nil {
 		return err(fmt.Sprintf("invalid JSON response: %v", e))
 }
 
 	jsonBytes, _ := json.MarshalIndent(result, "", "  ")
 	return ok(string(jsonBytes))
+}
+}
+}
+}
 }

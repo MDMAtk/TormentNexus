@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -27,8 +30,7 @@ func HandleBankSearch(ctx context.Context, args map[string]interface{}) (ToolRes
 		return err("read failed: " + e.Error())
 }
 
-	var result map[string]interfact{}
-	if e := json.Unmarshal(body, &result); e != nil {
+	var result map[string]interfact{	if e := json.Unmarshal(body, &result); e != nil {
 		return err("parse failed: " + e.Error())
 }
 
@@ -39,4 +41,5 @@ func HandleBankSearch(ctx context.Context, args map[string]interface{}) (ToolRes
 
 	out, _ := json.Marshal(data)
 	return ok(string(out))
+}
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -26,11 +29,8 @@ func HandleGetStockPrice(ctx context.Context, args map[string]interface{}) (Tool
 		return err("Failed to read response: " + e.Error())
 }
 
-	var result map[string]interface{}
-	if e := json.Unmarshal(body, &result); e != nil {
+	var result map[string]interface{	if e := json.Unmarshal(body, &result); e != nil {
 		return err("Failed to parse JSON: " + e.Error())
-}
-
 	if note, found := result["Note"]; found {
 		return err(note.(string))
 }
@@ -40,6 +40,8 @@ func HandleGetStockPrice(ctx context.Context, args map[string]interface{}) (Tool
 		return err("No quote data")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
+}
 }

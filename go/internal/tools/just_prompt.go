@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -23,7 +26,7 @@ func HandleJustPrompt(ctx context.Context, args map[string]interface{}) (ToolRes
 	if e != nil {
 		return err("failed to marshal request")
 	}
-	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.openai.com/v1/chat/completions", strings.NewReader(string(body)))
+	req, e := http.NewRequestWithContext(ctx, "POST", "https://api..com/v1/chat/completions", strings.NewReader(string(body)))
 	if e != nil {
 		return err("failed to create request")
 	}

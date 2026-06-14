@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -16,14 +19,14 @@ func HandleX(ctx context.Context, args map[string]interface{}) (ToolResponse, er
 }
 
 		mini, _ :=getBool(args, "mini")
-		cmdArgs := []string{"xcodebuild", "-project", project, "-scheme", scheme}
-		if mini {
+		cmdArgs := []string{"xcodebuild", "-project", project, "-scheme", scheme		if mini {
 			cmdArgs = append(cmdArgs, "-quiet")
 
 		cmd := exec.CommandContext(ctx, cmd
 
----
-*deepseek-reasoner (deepseek)*
-}
+
+-reasoner (deepseek)*,
+},
+},
 }
 }

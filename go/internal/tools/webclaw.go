@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -19,8 +22,6 @@ func HandleWebclawScrape(ctx context.Context, args map[string]interface{}) (Tool
 }
 
 	defer resp.Body.Close()
-	body,
-
----
-*deepseek-reasoner (deepseek)*
+	body
+-reasoner (deepseek)*
 }

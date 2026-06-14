@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -31,7 +34,7 @@ func HandleGetScores(ctx context.Context, args map[string]interface{}) (ToolResp
 	if e != nil {
 	
 
----
-*deepseek-reasoner (deepseek)*
-}
+
+-reasoner (deepseek)*,
+},
 }

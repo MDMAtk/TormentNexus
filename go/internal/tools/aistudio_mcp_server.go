@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,7 +20,7 @@ func HandleGenerateContent(ctx context.Context, args map[string]interface{}) (To
 }
 
 	url := fmt.Sprintf("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=%s", apiKey)
-	body := fmt.Sprintf(`{"contents":[{"parts":[{"text":"%s"}]}]}`, strings.ReplaceAll(prompt, `"`, `\"`))")
+	body := fmt.Sprintf(`{"contents":[{"parts":[{"text":"%s"}]}]}`, strings.ReplaceAll(prompt, `"`, `\"`))
 	resp, e := http.DefaultClient.Post(url, "application/json", strings.NewReader(body))
 	if e != nil {
 		return err(fmt.Sprintf("request failed: %v", e))

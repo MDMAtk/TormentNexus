@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -31,16 +34,13 @@ func HandleSearch(ctx context.Context, args map[string]interface{}) (ToolRespons
 }
 
 	defer resp.Body.Close()
-	var result map[string]interface{}
-	if e := json.NewDecoder(resp.Body).Decode(&result); e != nil {
+	var result map[string]interface{	if e := json.NewDecoder(resp.Body).Decode(&result); e != nil {
 		return err("decode: " + e.Error())
 }
 
 	data, e := json.Marshal(result)
 	if e != nil {
 		return err("marshal: " + e.Error())
-}
-
 	return ok(string(data))
 }
 
@@ -71,7 +71,8 @@ func HandlePlay(ctx context.Context, args map[string]interface{}) (ToolResponse,
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		return err("status " + resp.Status)
-}
-
 	return ok("playback started")
+}
+}
+}
 }

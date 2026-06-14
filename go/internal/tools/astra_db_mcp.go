@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -41,12 +44,11 @@ func HandleExecuteQuery(ctx context.Context, args map[string]interface{}) (ToolR
 	respBody, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err("read response error: " + e.Error())
-}
-
 	if resp.StatusCode != http.StatusOK {
 		return err("API error: " +
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
 }

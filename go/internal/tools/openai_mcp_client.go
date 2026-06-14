@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -12,7 +15,7 @@ func HandleX(ctx context.Context, args map[string]interface{}) (ToolResponse, er
 	prompt, _ :=getString(args, "prompt")
 	data := map[string]interface{}{"model": model, "prompt": prompt}
 	body, _ := json.Marshal(data)
-	resp, e := http.DefaultClient.Post("https://api.openai.com/v1/engines/"+model+"/completions", "application/json", bytes.NewBuffer(body))
+	resp, e := http.DefaultClient.Post("https://api..com/v1/engines/"+model+"/completions", "application/json", bytes.NewBuffer(body))
 	if e != nil {
 		return err("failed to call OpenAI API")
 }

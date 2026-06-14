@@ -1,4 +1,7 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*

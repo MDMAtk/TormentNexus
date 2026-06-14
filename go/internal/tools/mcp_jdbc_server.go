@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -16,7 +19,7 @@ func HandleExecuteQuery(ctx context.Context, args map[string]interface{}) (ToolR
 
 	url, _ :=getString(args, "url")
 	if url == "" {
-		url = "http://localhost:8080/query"
+
 	}
 	reqBody, e := json.Marshal(map[string]string{"query": query})
 	if e != nil {
@@ -31,6 +34,6 @@ func HandleExecuteQuery(ctx context.Context, args map[string]interface{}) (ToolR
 	defer resp.Body.Close()
 	if resp.StatusCode != http.Status
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

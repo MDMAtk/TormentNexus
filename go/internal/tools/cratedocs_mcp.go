@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -20,13 +23,13 @@ func HandleSearchCrates(ctx context.Context, args map[string]interface{}) (ToolR
 	defer resp.Body.Close()
 	var result struct {
 		Crates []struct {
-			Name string `json:"name"`
-		} `json:"crates"`
-	}
-	if e := json.NewDecoder(resp.Body).Decode(&result); e != nil {
-		return e
+			Name string `json:"name"`,
+		} `json:"crates"`,
+		if e := json.NewDecoder(resp.Body).Decode(&result); e != nil {
+		return e,
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
 }

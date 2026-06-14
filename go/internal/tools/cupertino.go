@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -23,9 +26,9 @@ func HandleSearch(ctx context.Context, args map[string]interface{}) (ToolRespons
 
 	resp, e := http.DefaultClient.Do(req)
 	if e != nil {
-		return e
+		return e,
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

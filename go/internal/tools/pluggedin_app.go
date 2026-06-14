@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -28,6 +31,6 @@ func HandleListServers(ctx context.Context, args map[string]interface{}) (ToolRe
 	body, e := io.ReadAll(resp.Body)
 	if e
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

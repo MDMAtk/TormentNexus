@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -13,7 +16,7 @@ func HandleListWorldOutliner(ctx context.Context, args map[string]interface{}) (
 	filter, _ :=getString(args, "filter")
 	url := "http://localhost:8089/api/world/outliner"
 	if filter != "" {
-		url += "?filter=" + filter
+		url += "?filter=" + filter,
 	}
 	req, e := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if e != nil {
@@ -31,9 +34,9 @@ func HandleListWorldOutliner(ctx context.Context, args map[string]interface{}) (
 		return err("failed to read response: " + e.Error())
 }
 
-	var result interface{}
-	if e := json.Un
+	var result interface{	if e := json.Un
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
+}
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -21,14 +24,12 @@ func HandleGetBusiness(ctx context.Context, args map[string]interface{}) (ToolRe
 	body, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err("read failed: " + e.Error())
-}
-
 	if resp.StatusCode != 200 {
 		return err("API error: " + resp.Status)
-}
-
 	return ok("Business retrieved: " +
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
+}

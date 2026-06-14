@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -25,7 +28,7 @@ func HandleChatCompletions(ctx context.Context, args map[string]interface{}) (To
 
 	endpoint, _ :=getString(args, "endpoint")
 	if endpoint == "" {
-		endpoint = "https://api.openai.com/v1/chat/completions"
+		endpoint = "https://api..com/v1/chat/completions"
 	}
 	req, e := http.NewRequestWithContext(ctx, "POST", endpoint, bytes.NewReader(body))
 	if e != nil {

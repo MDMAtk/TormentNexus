@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -20,7 +23,7 @@ func HandleFiberyApi(ctx context.Context, args map[string]interface{}) (ToolResp
 	url := fmt.Sprintf("https://api.fibery.io/api/v2%s", path)
 	var body *strings.Reader
 	if bodyStr != "" {
-		body = strings.NewReader(bodyStr)
+
 	} else {
 		body = strings.NewReader("")
 
@@ -38,10 +41,10 @@ func HandleFiberyApi(ctx context.Context, args map[string]interface{}) (ToolResp
 		return err("request failed: " + e.Error())
 }
 
-	defer resp
+	defer resp()
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }
 }
 }

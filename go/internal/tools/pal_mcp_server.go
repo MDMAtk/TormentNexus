@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -30,7 +33,7 @@ func HandleGenerateText(ctx context.Context, args map[string]interface{}) (ToolR
 		return err("failed to marshal request: " + e.Error())
 }
 
-	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.openai.com/v1/chat/completions", bytes.NewReader(body))
+	req, e := http.NewRequestWithContext(ctx, "POST", "https://api..com/v1/chat/completions", bytes.NewReader(body))
 	if e != nil {
 		return err("failed to create request: " + e.Error())
 }

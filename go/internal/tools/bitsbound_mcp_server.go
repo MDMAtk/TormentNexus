@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -10,6 +13,6 @@ import (
 func HandleAnalyzeContract(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
 	address, _ :=getString(args, "contract_address")
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

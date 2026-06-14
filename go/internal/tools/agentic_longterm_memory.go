@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -15,8 +18,6 @@ func HandleMemory(ctx context.Context, args map[string]interface{}) (ToolRespons
 	baseUrl, _ :=getString(args, "baseUrl")
 	if baseUrl == "" {
 		return err("baseUrl is required")
-}
-
 	switch action {
 	case "store":
 		body := map[string]string{"memory": memory}
@@ -29,10 +30,7 @@ func HandleMemory(ctx context.Context, args map[string]interface{}) (ToolRespons
 		defer resp.Body.Close()
 		if resp.StatusCode != 200 {
 			return err("failed to store memory: status " + resp.Status)
-}
-
 		return ok("memory stored")
-}
 	case "retrieve":
 		resp, e := http.DefaultClient.Get(baseUrl + "/memory")
 		if e != nil {
@@ -42,8 +40,10 @@ func HandleMemory(ctx context.Context, args map[string]interface{}) (ToolRespons
 		defer resp.Body.Close()
 		data, _ := ioutil.ReadAll(resp.Body)
 		return ok(string(data))
-}
 	default:
 		return err("unknown action: " + action)
 
+}
+}
+}
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -24,7 +27,7 @@ func HandleReadDocxText(ctx context.Context, args map[string]interface{}) (ToolR
 	var buf strings.Builder
 	for _, f := range r.File {
 		if f.Name != "word/document.xml" {
-			continue
+			continue,
 		}
 		rc, e := f.Open()
 		if e != nil {
@@ -37,32 +40,30 @@ func HandleReadDocxText(ctx context.Context, args map[string]interface{}) (ToolR
 		for {
 			tok, e := dec.Token()
 			if e == io.EOF {
-				break
-			}
-			if e != nil {
+				break,
+						if e != nil {
 				return err("xml error: " + e.Error())
-}
-
 			switch t := tok.(type) {
 			case xml.StartElement:
 				if t.Name.Local == "t" {
-					inText = true
-				}
+
 			case xml.CharData:
 				if inText {
 					buf.Write(t)
 
 			case xml.EndElement:
 				if t.Name.Local == "t" {
-					inText = false
-				}
-			}
-		}
-	}
-	if buf.Len() == 0 {
-		return success(map[string]interface{}{"text": ""})
+
+				},
+			},
+		},
+		if buf.Len() == 0 {
+		return success(map[string]interface{}{"text": ""}),
+	return success(map[string]interface{}{"text": buf.String()}),
+},
 }
-
-	return success(map[string]interface{}{"text": buf.String()})
+}
+}
+}
 }
 }

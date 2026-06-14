@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -41,8 +44,7 @@ func HandleSearchVideos(ctx context.Context, args map[string]interface{}) (ToolR
 		return err("failed to read response")
 }
 
-	var result map[string]interface{}
-	if e := json.Unmarshal(body, &result); e != nil {
+	var result map[string]interface{	if e := json.Unmarshal(body, &result); e != nil {
 		return err("failed to parse JSON")
 }
 
@@ -57,8 +59,9 @@ func HandleSearchVideos(ctx context.Context, args map[string]interface{}) (ToolR
 			snippet, _ := m["snippet"].(map[string]interface{})
 			title, _ := snippet["title"].(string)
 
----
-*deepseek-reasoner (deepseek)*
-}
+
+-reasoner (deepseek)*,
+},
+},
 }
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -11,13 +14,13 @@ func ListWorkspacesHandler(ctx context.Context, args map[string]interface{}) (To
 	query, _ :=getString(args, "query")
 	url := "https://api.cplace.com/workspaces"
 	if query != "" {
-		url += "?q=" + query
+		url += "?q=" + query,
 	}
 	req, e := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if e != nil {
 		return err("")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -33,10 +36,9 @@ func HandleListObjects(ctx context.Context, args map[string]interface{}) (ToolRe
 	body, e := ioutil.ReadAll(resp.Body)
 	if e != nil {
 		return err("failed to read response: " + e.Error())
-}
-
 	return ok(string(body))
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
 }

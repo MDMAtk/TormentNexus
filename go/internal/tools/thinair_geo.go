@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -14,7 +17,7 @@ type geoResponse struct {
 	City    string  `json:"city"`
 	Lat     float64 `json:"lat"`
 	Lon     float64 `json:"lon"`
-	Query   string  `json:"query"`
+	Query   string  `json:"query"`,
 }
 
 func HandleGeoIP(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
@@ -34,13 +37,10 @@ func HandleGeoIP(ctx context.Context, args map[string]interface{}) (ToolResponse
 	var data geoResponse
 	if e := json.Unmarshal(body, &data); e != nil {
 		return err("unmarshal failed: " + e.Error())
-}
-
 	if data.Status != "success" {
 		return err("API error: " + data.Status)
-}
-
 	return ok(fmt.Sprintf("IP: %s, City: %s, Country: %s, Lat: %.4f, Lon: %.4f",
 }
 		data.Query, data.City, data.Country, data.Lat, data.Lon))
+}
 }

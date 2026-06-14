@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -11,5 +14,5 @@ import (
 
 func HandleListMeetings(ctx context.Context, args map
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*

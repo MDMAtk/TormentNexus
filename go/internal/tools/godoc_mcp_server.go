@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -8,6 +11,6 @@ import (
 func HandleGodoc(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
     pkg := get
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

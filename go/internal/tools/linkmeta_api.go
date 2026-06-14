@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -30,15 +33,14 @@ func HandleGetLinkmeta(ctx context.Context, args map[string]interface{}) (ToolRe
 	titleRe := regexp.MustCompile(`<title[^>]*>([^<]+)</title>`)
 	matches := titleRe.FindStringSubmatch(string(body))
 	if len(matches) >= 2 {
-		title = matches[1]
+
 	}
 
 	description := ""
-	descRe := regexp.MustCompile(`<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']`)")
+	descRe := regexp.MustCompile(`<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']`)
 	matches = descRe.FindStringSubmatch(string(body))
 	if len(matches) >= 2 {
-		description = matches[1]
-	}
-
-	return ok(fmt.Sprintf("Title: %s\nDescription: %s", title, description))
+
+		return ok(fmt.Sprintf("Title: %s\nDescription: %s", title, description))
+}
 }

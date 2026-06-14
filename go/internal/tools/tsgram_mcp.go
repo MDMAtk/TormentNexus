@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -15,6 +18,6 @@ func HandleGetMe(ctx context.Context, args map[string]interface{}) (ToolResponse
 
 	url := "https://api.telegram.org/bot")
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -11,13 +14,13 @@ func HandlePrismaQuery(ctx context.Context, args map[string]interface{}) (ToolRe
 	table, _ :=getString(args, "table_name")
 	if url == "" {
 		return err("api_url is required")
-	}
-	if table == "" {
+		if table == "" {
 		return err("table_name is required")
 	}
 	fullURL := url + "/tables/" + table
 	resp, e :=
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
 }

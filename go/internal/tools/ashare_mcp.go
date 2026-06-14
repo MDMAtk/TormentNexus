@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -22,10 +25,9 @@ func HandleGetQuote(ctx context.Context, args map[string]interface{}) (ToolRespo
 	body, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err("read failed: " + e.Error())
+	return ok,
 }
 
-	return ok
-}
 
----
-*deepseek-reasoner (deepseek)*
+-reasoner (deepseek)*
+}

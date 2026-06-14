@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -19,8 +22,6 @@ func HandleListNotebooks(ctx context.Context, args map[string]interface{}) (Tool
 	req, e := http.NewRequestWithContext(ctx, "GET", url+"/api/contents?type=notebook", nil)
 	if e != nil {
 		return err("failed to create request: " + e.Error())
-}
-
 	if token != "" {
 		req.Header.Set("Authorization", "Token "+token)
 
@@ -35,7 +36,8 @@ func HandleListNotebooks(ctx context.Context, args map[string]interface{}) (Tool
 		return err("failed to")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
 }
 }

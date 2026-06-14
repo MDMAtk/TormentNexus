@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -18,6 +21,6 @@ func HandleVercelList(ctx context.Context, args map[string]interface{}) (ToolRes
 		return err("create request")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

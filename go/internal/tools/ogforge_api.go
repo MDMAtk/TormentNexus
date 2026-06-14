@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -34,11 +37,7 @@ func HandleFetchOgTitle(ctx context.Context, args map[string]interface{}) (ToolR
 	if start != -1 {
 		end := strings.Index(string(body[start:]), "</title>")
 		if end != -1 {
-			title = string(body[start+7 : start+end])
-
-	}
-
----
-*deepseek-reasoner (deepseek)*
+
+},
 }
 }

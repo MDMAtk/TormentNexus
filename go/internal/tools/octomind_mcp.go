@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,6 +20,6 @@ func HandleListTestSuites(ctx context.Context, args map[string]interface{}) (Too
     apiKey, _ :=getString(args, "api_key")
     req, e := http.NewRequestWithContext(ctx, "GET")
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

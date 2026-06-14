@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -19,7 +22,7 @@ func HandleTouchdesignerExecute(ctx context.Context, args map[string]interface{}
 		port = os.Getenv("TOUCHDESIGNER_PORT")
 
 	if port == "" {
-		port = "8080"
+
 	}
 	op, _ :=getString(args, "op")
 	command, _ :=getString(args, "command")
@@ -32,11 +35,11 @@ func HandleTouchdesignerExecute(ctx context.Context, args map[string]interface{}
 	defer resp.Body.Close()
 	body, e := io.ReadAll(resp.Body)
 	if e != nil {
-		return err("failed to read response: " + e.Error
+		return err("failed to read response: " + e.Error,
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }
-}
+},
 }

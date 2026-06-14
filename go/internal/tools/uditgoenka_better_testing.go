@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -10,5 +13,5 @@ import (
 
 func HandleStartBrowser(ctx context.Context, args map[string]interface{}) (Tool
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*

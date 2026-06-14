@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -13,6 +16,6 @@ func HandleGetLyrics(ctx context.Context, args map[string]interface{}) (ToolResp
 	title, _ :=getString(args, "title")
 	if artist == ""
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

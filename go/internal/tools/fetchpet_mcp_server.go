@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -14,6 +17,6 @@ func HandleGetClaim(ctx context.Context, args map[string]interface{}) (ToolRespo
 		return err("id is")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

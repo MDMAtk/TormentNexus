@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -20,11 +23,11 @@ func HandleListStories(ctx context.Context, args map[string]interface{}) (ToolRe
 }
 
 	defer resp.Body.Close()
-	var stories []map[string]interface{}
-	if e := json.NewDecoder(resp.Body).Decode(&stories); e != nil {
+	var stories []map[string]interface{	if e := json.NewDecoder(resp.Body).Decode(&stories); e != nil {
 		return err(fmt.Sprintf("")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
 }

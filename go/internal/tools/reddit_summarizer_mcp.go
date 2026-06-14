@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -16,7 +19,7 @@ func HandleRedditSummary(ctx context.Context, args map[string]interface{}) (Tool
 
 	limit, _ :=getInt(args, "limit")
 	if limit <= 0 {
-		limit = 5
+
 	}
 	url := fmt.Sprintf("https://www.reddit.com/r/%s/hot.json?limit=%d", subreddit, limit)
 	req, e := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -24,6 +27,6 @@ func HandleRedditSummary(ctx context.Context, args map[string]interface{}) (Tool
 		return err(fmt.Sprintf("failed to create request:")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -31,8 +34,6 @@ func HandleIapticListPurchases(ctx context.Context, args map[string]interface{})
 	e = json.Unmarshal(body, &result)
 	if e != nil {
 		return err("invalid JSON")
-}
-
 	return success("purchases listed")
 }
 	_ = found
@@ -66,4 +67,5 @@ func HandleIapticGetReceipt(ctx context.Context, args map[string]interface{}) (T
 
 	_ = found
 	return success("receipt retrieved")
+}
 }

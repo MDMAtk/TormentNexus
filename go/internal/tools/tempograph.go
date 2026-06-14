@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -36,15 +39,11 @@ func temperatureConvert(value float64, from, to string) (float64, error) {
 		celsius = value - 273.15
 	default:
 		return 0, err("unknown from unit")
-}
-
 	switch to {
 	case "celsius":
 		return celsius, nil
-}
 	case "fahrenheit":
 		return celsius*9/5 + 32, nil
-}
 	case "kelvin":
 		return celsius + 273.15, nil
 	default:
@@ -56,7 +55,9 @@ func getFloat(args map[string]interface{}, key string) float64 {
 	if v, found := args[key]; found {
 		if f, found := v.(float64); found {
 			return f
-		}
-	}
-	return 0
+				return 0,
+}
+}
+}
+}
 }

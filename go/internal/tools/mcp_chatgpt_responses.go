@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -26,7 +29,7 @@ func HandleChatgptSend(ctx context.Context, args map[string]interface{}) (ToolRe
 		},
 		"max_tokens": 500,
 	})
-	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.openai.com/v1/chat/completions", bytes.NewReader(body))
+	req, e := http.NewRequestWithContext(ctx, "POST", "https://api..com/v1/chat/completions", bytes.NewReader(body))
 	if e != nil {
 		return err("failed to create request: " + e.Error())
 }

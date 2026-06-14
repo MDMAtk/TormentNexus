@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -20,11 +23,11 @@ func HandleListTools(ctx context.Context, args map[string]interface{}) (ToolResp
 						"type":        "string",
 						"description": "The URL of the OpenAPI")
 
----
-*deepseek-reasoner (deepseek)*
-}
-}
-}
-}
-}
+
+-reasoner (deepseek)*,
+},
+},
+},
+},
+},
 }

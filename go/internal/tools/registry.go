@@ -1,3 +1,4 @@
+
 package tools
 
 /**
@@ -77,7 +78,7 @@ func (r *Registry) registerAll() {
 
 	// TTS MCP Tools (Media & Design)
 	r.handlers["say_tts"] = HandleSayTTS
-	r.handlers["openai_tts"] = HandleOpenAITTS
+	r.handlers["_tts"] = HandleOpenAITTS
 
 	// Vercel MCP Tools (Cloud & DevOps)
 	r.handlers["vercel_list_projects"] = HandleVercelListProjects
@@ -241,8 +242,7 @@ func (r *Registry) registerAll() {
 	r.handlers["av_economic_indicator"] = HandleAVEconomicIndicator
 	r.handlers["alpha_vantage_quote"] = HandleAVGlobalQuote
 
-	// Hugging Face Hub Tools (Assimilated from SSE huggingface)
-	r.handlers["hf_search_models"] = HandleHFSearchModels
+	// Hugging Face Hub Tools (Assimilated from SSE 	r.handlers["hf_search_models"] = HandleHFSearchModels
 	r.handlers["hf_get_model"] = HandleHFGetModel
 	r.handlers["hf_search_datasets"] = HandleHFSearchDatasets
 	r.handlers["hf_text_generation"] = HandleHFTextGeneration

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,16 +20,16 @@ func HandleSearchCases(ctx context.Context, args map[string]interface{}) (ToolRe
 
 	limit, _ :=getInt(args, "limit")
 	if limit <= 0 {
-		limit = 10
+
 	}
 	offset, _ :=getInt(args, "offset")
 	if offset < 0 {
-		offset = 0
+
 	}
 	apiURL := "https://api.alphalawyer.com/v1/cases"
 	u, e := url.Parse(apiURL)
 	if e !=
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

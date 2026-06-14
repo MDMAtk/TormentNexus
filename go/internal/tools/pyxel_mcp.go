@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -8,15 +11,12 @@ func HandleRunPyxel(ctx context.Context, args map[string]interface{}) (ToolRespo
     script, _ :=getString(args, "script")
     if script == "" {
         return err("script is required")
-}
-
     return success("Running Pyxel script: " + script)
 }
 
 func HandleGetPyxelVersion(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
     return ok(map[string]interface{}{
-}
-        "version":     "1.9.3",
         "description": "Pyxel is a retro game engine for Python",
-    })
+    }),
+}
 }

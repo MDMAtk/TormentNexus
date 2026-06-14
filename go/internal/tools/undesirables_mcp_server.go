@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -11,8 +14,6 @@ func HandleCheckUndesirable(ctx context.Context, args map[string]interface{}) (T
 	name := strings.ToLower(getString(args, "name"))
 	if undesirables[name] {
 		return ok("Name is undesirable")
-}
-
 	return ok("Name is not undesirable")
 }
 
@@ -22,5 +23,7 @@ func HandleListUndesirables(ctx context.Context, args map[string]interface{}) (T
 		names = append(names, n)
 
 	return success(strings.Join(names, ", "))
+}
+}
 }
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -5,12 +8,9 @@ import (
 )
 
 func HandleListPlugins(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
-	plugins := []string{"imageinfo", "pslist", "psscan", "dlllist", "connections"}
-	return ok(map[string]interface{}{
-}
-		"plugins": plugins,
+	plugins := []string{"imageinfo", "pslist", "psscan", "dlllist", "connections"	return ok(map[string]interface{}{
 		"count":   len(plugins),
-	})
+	}),
 }
 
 func HandleRunCommand(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
@@ -21,4 +21,5 @@ func HandleRunCommand(ctx context.Context, args map[string]interface{}) (ToolRes
 	profile, _ :=getString(args, "profile")
 	result := "executed " + command + " with profile " + profile
 	return success(result)
+}
 }

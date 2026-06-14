@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -38,19 +41,17 @@ func HandleGetJiraIssue(ctx context.Context, args map[string]interface{}) (ToolR
 	body, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err("read: " + e.Error())
-}
-
 	if resp.StatusCode != 200 {
 		return err("API error: " + string(body))
 }
 
-	var data map[string]interface{}
-	if e := json.Unmarshal(body, &data); e != nil {
+	var data map[string]interface{	if e := json.Unmarshal(body, &data); e != nil {
 		return err("parse: " + e.Error())
-}
-
 	return ok(fmt.Sprintf("")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
+}
+}
+}

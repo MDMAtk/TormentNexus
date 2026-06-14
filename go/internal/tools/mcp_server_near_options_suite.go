@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -13,6 +16,6 @@ func HandleGetNearOptionPrice(ctx context.Context, args map[string]interface{}) 
 	active, _ :=getBool(args, "active")
 	extra, found := args
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

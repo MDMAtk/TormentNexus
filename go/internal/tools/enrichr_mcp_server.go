@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -26,12 +29,9 @@ func HandleEnrichr(ctx context.Context, args map[string]interface{}) (ToolRespon
     defer resp1.Body.Close()
 
     var submitResp struct {
-        UserListID int `json:"userListId"`
-    }
-    if e := json.NewDecoder(resp1.Body).Decode(&submitResp); e != nil {
+        UserListID int `json:"userListId"`,
+        if e := json.NewDecoder(resp1.Body).Decode(&submitResp); e != nil {
         return err("decode failed: " + e.Error())
-}
-
     if submitResp.UserListID == 0 {
         return err("enrichment failed")
 }
@@ -43,11 +43,13 @@ func HandleEnrichr(ctx context.Context, args map[string]interface{}) (ToolRespon
 
     defer resp2.Body.Close()
 
-    var results interface{}
-    if e := json.NewDecoder(resp2.Body).Decode(&results); e != nil {
-        return
+    var results interface{    if e := json.NewDecoder(resp2.Body).Decode(&results); e != nil {
+        return,
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
+}
+}
+}
 }

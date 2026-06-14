@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 // HandleX provides information about the MCP-102 tutorial

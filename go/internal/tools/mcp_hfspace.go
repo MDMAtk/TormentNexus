@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -7,8 +10,7 @@ import (
 )
 
 func HandleSpaces(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
-	resp, e := http.DefaultClient.Get("https://huggingface.co/api/spaces?limit=5")
-	if e != nil {
+	resp, e := http.DefaultClient.Get("https://	if e != nil {
 		return err("Failed to fetch spaces: " + e.Error())
 }
 
@@ -27,8 +29,7 @@ func HandleSpace(ctx context.Context, args map[string]interface{}) (ToolResponse
 		return err("Missing required argument: space")
 }
 
-	url := "https://huggingface.co/api/spaces/" + space
-	resp, e := http.DefaultClient.Get(url)
+	url := "https://	resp, e := http.DefaultClient.Get(url)
 	if e != nil {
 		return err("Failed to fetch space: " + e.Error())
 }

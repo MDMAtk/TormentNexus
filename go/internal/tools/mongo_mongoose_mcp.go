@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -12,8 +15,6 @@ func HandleFind(ctx context.Context, args map[string]interface{}) (ToolResponse,
 	data, found := mockDB[col]
 	if !found {
 		return err("collection not found")
-}
-
 	return ok(fmt.Sprintf("Found %d documents in %s", len(data), col))
 }
 
@@ -22,4 +23,6 @@ func HandleInsert(ctx context.Context, args map[string]interface{}) (ToolRespons
 	// ignore document data for brevity
 	mockDB[col] = append(mockDB[col], map[string]interface{}{"inserted": true})
 	return success("inserted")
+}
+}
 }

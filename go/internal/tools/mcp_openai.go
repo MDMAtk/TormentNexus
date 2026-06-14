@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -14,7 +17,7 @@ func HandleListModels(ctx context.Context, args map[string]interface{}) (ToolRes
 		return err("missing api_key")
 }
 
-	req, e := http.NewRequestWithContext(ctx, "GET", "https://api.openai.com/v1/models", nil)
+	req, e := http.NewRequestWithContext(ctx, "GET", "https://api..com/v1/models", nil)
 	if e != nil {
 		return err("failed to create request: " + e.Error())
 }
@@ -57,7 +60,7 @@ func HandleCreateCompletion(ctx context.Context, args map[string]interface{}) (T
 		return err("failed to marshal payload: " + e.Error())
 }
 
-	req, e := http.NewRequestWithContext(ctx, "POST", "https://api.openai.com/v1/completions", nil)
+	req, e := http.NewRequestWithContext(ctx, "POST", "https://api..com/v1/completions", nil)
 	if e != nil {
 		return err("failed to create request: " + e.Error())
 }

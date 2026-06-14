@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -41,7 +44,7 @@ func HandleGenerateImage(ctx context.Context, args map[string]interface{}) (Tool
 		return err(fmt.Sprintf("failed to marshal request: %v", e))
 }
 
-	url := fmt.Sprintf("%s/openai/deployments/dall-e-3/images/generations?api-version=2024-02-01", endpoint)
+	url := fmt.Sprintf("%s//deployments/dall-e-3/images/generations?api-version=2024-02-01", endpoint)
 	req, e := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(jsonBody))
 	if e != nil {
 		return err(fmt.Sprintf("failed to create request: %v", e))

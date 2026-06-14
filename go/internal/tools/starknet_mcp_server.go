@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -13,6 +16,6 @@ func HandleGetBlock(ctx context.Context, args map[string]interface{}) (ToolRespo
 	blockNum, _ :=getInt(args, "block_number")
 	url := "https://")
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -24,6 +27,6 @@ func HandleQueryToolingApi(ctx context.Context, args map[string]interface{}) (To
 	u := fmt.Sprintf("%s/services/data/v60.0/tooling/query?q=%s", base, url.QueryEscape(query))
 	req, e
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

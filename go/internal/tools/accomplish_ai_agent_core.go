@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -6,7 +9,7 @@ import (
 )
 
 func HandleListProviders(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
-    providers := []string{"openai", "anthropic", "local"}
+    providers := []string{"", "anthropic", "local"}
     data, _ := json.Marshal(providers)
     return success(string(data))
 }

@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -9,11 +12,10 @@ func HandleFritzboxAction(ctx context.Context, args map[string]interface{}) (Too
 	switch action {
 	case "info":
 		return ok("FritzBox system info: Model FRITZ!Box 7590, Firmware 07.29, Uptime 5d12h")
-}
 	case "calls":
 		return ok("Recent calls: 2 missed, 3 incoming, 1 outgoing")
-}
 	default:
 		return err("Unknown action: " + action)
 
+}
 }

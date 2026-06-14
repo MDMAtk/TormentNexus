@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,14 +20,13 @@ func HandleListMCPResources(ctx context.Context, args map[string]interface{}) (T
 	return ok(sb.String())
 }
 
-}
-
 func HandleGetMCPResource(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
 	name, _ :=getString(args, "name")
 	desc, found := resourceMap[name]
 	if !found {
 		return err("resource not found: " + name)
-}
-
 	return ok(fmt.Sprintf("Resource: %s\nDescription: %s", name, desc))
+}
+}
+}
 }

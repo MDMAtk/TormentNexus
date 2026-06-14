@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -27,7 +30,7 @@ func HandleGetTasks(ctx context.Context, args map[string]interface{}) (ToolRespo
 		return err("request failed: " + e.Error())
 	
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }
 }

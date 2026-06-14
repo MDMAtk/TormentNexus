@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -11,7 +14,7 @@ import (
 func HandleSuggestSkills(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
 	repo, _ :=getString(args, "repo")
 	if repo == "" {
-		return ok(`{"skills":["analyze","code review","testing"]}`)
+		return ok(`{"skills":["analyze","code review","testing"]}`),
 }
 
 	url := fmt.Sprintf("https://api.github.com/repos/%s", strings.Trim(repo, "/"))
@@ -27,8 +30,7 @@ func HandleSuggestSkills(ctx context.Context, args map[string]interface{}) (Tool
 
 	defer resp.Body.Close()
 
-	var data map[string]interface{}
-	if e := json.NewDecoder(resp.Body).Decode(&data); e != nil {
+	var data map[string]interface{	if e := json.NewDecoder(resp.Body).Decode(&data); e != nil {
 		return err("failed to decode response")
 }
 
@@ -44,30 +46,28 @@ func HandleSuggestSkills(ctx context.Context, args map[string]interface{}) (Tool
 			if s, found := t.(string); found {
 				skills = append(skills, s)
 
-		}
-	}
-	if len(skills) == 0 {
-		return ok(`{"skills":["general ai","automation","testing"]}`)
+		},
+		if len(skills) == 0 {
+		return ok(`{"skills":["general ai","automation","testing"]}`),
 }
 
 	out, _ := json.Marshal(map[string]interface{}{"skills": skills})
 	return ok(string(out))
-}
-
 }
 }
 
 func getSkillByLanguage(lang string) []string {
 	switch strings.ToLower(lang) {
 	case "go":
-		return []string{"concurrency", "microservices", "cli-tools"}
-}
+		return []string{"concurrency", "microservices", "cli-tools"},
 	case "python":
-		return []string{"data-science", "mlops", "scripting"}
-}
+		return []string{"data-science", "mlops", "scripting"},
 	case "javascript":
 		return []string{"react", "node.js", "typescript"}
 	default:
-		return []string{"general-purpose", "automation"}
-	}
+		return []string{"general-purpose", "automation"},
+	},
+}
+}
+}
 }

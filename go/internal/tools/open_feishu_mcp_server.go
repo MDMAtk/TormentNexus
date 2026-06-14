@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -21,7 +24,7 @@ func HandleSendMessage(ctx context.Context, args map[string]interface{}) (ToolRe
 		"msg_type":   "text",
 		"content":    fmt.Sprintf(`{"text":"%s"}`,
 
----
-*deepseek-reasoner (deepseek)*
-}
+
+-reasoner (deepseek)*,
+},
 }

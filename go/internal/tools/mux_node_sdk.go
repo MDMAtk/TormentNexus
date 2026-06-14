@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -10,6 +13,6 @@ func HandleMuxAsset(ctx context.Context, args map[string]interface{}) (ToolRespo
 	assetID, _ :=getString(args, "asset_id")
 	if assetID
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*,
 }

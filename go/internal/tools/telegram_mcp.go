@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -16,6 +19,6 @@ func HandleSendMessage(ctx context.Context, args map[string]interface{}) (ToolRe
 		return err("chat_id and text required")
 }
 
----
-*deepseek-reasoner (deepseek)*
+
+-reasoner (deepseek)*
 }

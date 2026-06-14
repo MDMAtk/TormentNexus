@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -17,8 +20,6 @@ func HandleCloneRepo(ctx context.Context, args map[string]interface{}) (ToolResp
 	out, e := exec.CommandContext(ctx, "git", "clone", repoURL).CombinedOutput()
 	if e != nil {
 		return err(fmt.Sprintf("clone failed: %s", string(out)))
-}
-
 	return ok(fmt.Sprintf("Cloned %s", repoURL))
 }
 
@@ -30,26 +31,26 @@ func HandleSearchDocs(ctx context.Context, args map[string]interface{}) (ToolRes
 
 	root, _ :=getString(args, "root")
 	if root == "" {
-		root = "."
+
 	}
 	var results []string
 	e := filepath.Walk(root, func(path string, info any, e error) error {
 		if e != nil {
 			return nil
-		}
-		if info.IsDir() {
-			return nil
+				if info.IsDir() {
+			return nil,
 		}
 		data, e := exec.CommandContext(ctx, "grep", "-l", query, path).Output()
 		if e == nil {
 			results = append(results, path)
 
-		return nil
+		return nil,
 	})
 	if e != nil {
 		return err(fmt.Sprintf("search failed: %v", e))
-}
-
 	return ok(fmt.Sprintf("Found %d files: %s", len(results), strings.Join(results, ", ")))
+}
+}
+}
 }
 }

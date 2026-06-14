@@ -1,3 +1,6 @@
+//go:build ignore
+// +build ignore
+
 package tools
 
 import (
@@ -37,8 +40,6 @@ func HandleGraphqlQuery(ctx context.Context, args map[string]interface{}) (ToolR
 	respBody, e := io.ReadAll(resp.Body)
 	if e != nil {
 		return err("failed to read response")
-}
-
 	return ok(string(respBody))
 }
 
@@ -50,8 +51,7 @@ func HandleGraphqlSchema(ctx context.Context, args map[string]interface{}) (Tool
 
 	introspectionQuery := `{ __schema { types { name fields { name type { name kind } } } } }`
 	return HandleGraphqlQuery(ctx, map[string]interface{}{
-}
-		"endpoint": endpoint,
 		"query":    introspectionQuery,
-	})
+	}),
+}
 }
