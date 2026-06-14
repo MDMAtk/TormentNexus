@@ -116,8 +116,7 @@ appwrite_utils_temp/
 **/.cli_startup_marker
 .tormentnexus_boot_check
 **/.tormentnexus_boot_check
-.tormentnexus/skills/
-.tormentnexus/db/
+# .tormentnexus/skills/ and .tormentnexus/db/ are internal registry — tracked
 .tormentnexus/agent_memory/
 .tormentnexus/handoffs/
 .tormentnexus/memory/
@@ -137,14 +136,8 @@ apps/web/.tormentnexus-dev-port.json
 apps/web/.tormentnexus-dev-port.json
 
 # === Database runtime ===
-*.db
-*.db-journal
-*.db-shm
-*.db-wal
-!go/internal/httpapi/testdata/**
-resources.db
-**/resources.db
-**/context.db
+# .db files are the internal registry — always track
+# resources.db and context.db are internal registries — tracked
 
 # === LanceDB / Vector data ===
 data/
@@ -198,7 +191,7 @@ jules-autopilot/
 # === Misc generated ===
 **/dist-chromium/
 **/dist-firefox/
-tormentnexus.db
+# tormentnexus.db is the primary registry DB — tracked
 tmp_*.ts
 tmp_*.tsx
 tmp_*.js
@@ -228,3 +221,14 @@ nul
 # Pi project-local packages (if using pi install -l)
 .pi/npm/
 go_backup/
+
+# === Large/cache DB files (too large for git, or temporary restore artifacts) ===
+provider_metrics.db
+tormentnexus_restored.db
+old_db_restored.db
+db_v1_*.db
+db_v2_*.db
+db_v3_*.db
+db_v4_*.db
+db_v5_*.db
+scratch/
