@@ -45,112 +45,112 @@ func (r *Registry) registerAll() {
 	r.handlers["ls"] = HandleLS
 	r.handlers["list_directory"] = HandleLS
 	r.handlers["web_fetch"] = HandleWebFetch
-// TODO: 	r.handlers["ingest_git"] = HandleGitIngest
-// TODO: 	r.handlers["sqlite_get_catalog"] = HandleSqliteGetCatalog
-// TODO: 	r.handlers["sqlite_execute"] = HandleSqliteExecute
+	r.handlers["ingest_git"] = HandleGitIngest
+	r.handlers["sqlite_get_catalog"] = HandleSqliteGetCatalog
+	r.handlers["sqlite_execute"] = HandleSqliteExecute
 	r.handlers["search"] = HandleDDGSearch
 	r.handlers["fetch_content"] = HandleDDGFetchContent
-// TODO: 	r.handlers["slack_list_channels"] = HandleSlackListChannels
-// TODO: 	r.handlers["slack_post_message"] = HandleSlackPostMessage
-// TODO: 	r.handlers["slack_reply_to_thread"] = HandleSlackReplyToThread
-// TODO: 	r.handlers["slack_add_reaction"] = HandleSlackAddReaction
-// TODO: 	r.handlers["slack_get_channel_history"] = HandleSlackGetChannelHistory
-// TODO: 	r.handlers["slack_get_thread_replies"] = HandleSlackGetThreadReplies
-// TODO: 	r.handlers["slack_get_users"] = HandleSlackGetUsers
-// TODO: 	r.handlers["slack_get_user_profile"] = HandleSlackGetUserProfile
+	r.handlers["slack_list_channels"] = HandleSlackListChannels
+	r.handlers["slack_post_message"] = HandleSlackPostMessage
+	r.handlers["slack_reply_to_thread"] = HandleSlackReplyToThread
+	r.handlers["slack_add_reaction"] = HandleSlackAddReaction
+	r.handlers["slack_get_channel_history"] = HandleSlackGetChannelHistory
+	r.handlers["slack_get_thread_replies"] = HandleSlackGetThreadReplies
+	r.handlers["slack_get_users"] = HandleSlackGetUsers
+	r.handlers["slack_get_user_profile"] = HandleSlackGetUserProfile
 
 	// Filesystem MCP Tools
-// TODO: 	r.handlers["read_text_file"] = HandleReadTextFile
-// TODO: 	r.handlers["create_directory"] = HandleCreateDirectory
-// TODO: 	r.handlers["list_directory"] = HandleListDirectory
-// TODO: 	r.handlers["list_directory_with_sizes"] = HandleListDirectoryWithSizes
-// TODO: 	r.handlers["directory_tree"] = HandleDirectoryTree
-// TODO: 	r.handlers["move_file"] = HandleMoveFile
-// TODO: 	r.handlers["get_file_info"] = HandleGetFileInfo
-// TODO: 	r.handlers["search_files"] = HandleSearchFiles
+	r.handlers["read_text_file"] = HandleReadTextFile
+	r.handlers["create_directory"] = HandleCreateDirectory
+	r.handlers["list_directory"] = HandleListDirectory
+	r.handlers["list_directory_with_sizes"] = HandleListDirectoryWithSizes
+	r.handlers["directory_tree"] = HandleDirectoryTree
+	r.handlers["move_file"] = HandleMoveFile
+	r.handlers["get_file_info"] = HandleGetFileInfo
+	r.handlers["search_files"] = HandleSearchFiles
 
 	// Ollama MCP Tools (AI & LLM Integration)
-// TODO: 	r.handlers["list_local_models"] = HandleListLocalModels
-// TODO: 	r.handlers["local_llm_chat"] = HandleLocalLLMChat
-// TODO: 	r.handlers["ollama_health_check"] = HandleOllamaHealthCheck
-// TODO: 	r.handlers["system_resource_check"] = HandleSystemResourceCheck
+	r.handlers["list_local_models"] = HandleListLocalModels
+	r.handlers["local_llm_chat"] = HandleLocalLLMChat
+	r.handlers["ollama_health_check"] = HandleOllamaHealthCheck
+	r.handlers["system_resource_check"] = HandleSystemResourceCheck
 
 	// TTS MCP Tools (Media & Design)
-// TODO: 	r.handlers["say_tts"] = HandleSayTTS
-// TODO: 	r.handlers["openai_tts"] = HandleOpenAITTS
+	r.handlers["say_tts"] = HandleSayTTS
+	r.handlers["openai_tts"] = HandleOpenAITTS
 
 	// Vercel MCP Tools (Cloud & DevOps)
-// TODO: 	r.handlers["vercel_list_projects"] = HandleVercelListProjects
-// TODO: 	r.handlers["vercel_get_project"] = HandleVercelGetProject
-// TODO: 	r.handlers["vercel_list_deployments"] = HandleVercelListDeployments
-// TODO: 	r.handlers["vercel_get_deployment"] = HandleVercelGetDeployment
-// TODO: 	r.handlers["vercel_cancel_deployment"] = HandleVercelCancelDeployment
-// TODO: 	r.handlers["vercel_list_env_vars"] = HandleVercelListEnvVars
-// TODO: 	r.handlers["vercel_create_env_var"] = HandleVercelCreateEnvVar
-// TODO: 	r.handlers["vercel_delete_env_var"] = HandleVercelDeleteEnvVar
+	r.handlers["vercel_list_projects"] = HandleVercelListProjects
+	r.handlers["vercel_get_project"] = HandleVercelGetProject
+	r.handlers["vercel_list_deployments"] = HandleVercelListDeployments
+	r.handlers["vercel_get_deployment"] = HandleVercelGetDeployment
+	r.handlers["vercel_cancel_deployment"] = HandleVercelCancelDeployment
+	r.handlers["vercel_list_env_vars"] = HandleVercelListEnvVars
+	r.handlers["vercel_create_env_var"] = HandleVercelCreateEnvVar
+	r.handlers["vercel_delete_env_var"] = HandleVercelDeleteEnvVar
 
 	// DexPaprika MCP Tools (Finance & Crypto)
-// TODO: 	r.handlers["getCapabilities"] = HandleDexPaprikaGetCapabilities
-// TODO: 	r.handlers["getNetworks"] = HandleDexPaprikaGetNetworks
-// TODO: 	r.handlers["getStats"] = HandleDexPaprikaGetStats
-// TODO: 	r.handlers["search"] = HandleDexPaprikaSearch
-// TODO: 	r.handlers["getNetworkDexes"] = HandleDexPaprikaGetNetworkDexes
-// TODO: 	r.handlers["getNetworkPools"] = HandleDexPaprikaGetNetworkPools
-// TODO: 	r.handlers["getDexPools"] = HandleDexPaprikaGetDexPools
-// TODO: 	r.handlers["getNetworkPoolsFilter"] = HandleDexPaprikaGetNetworkPoolsFilter
-// TODO: 	r.handlers["getPoolDetails"] = HandleDexPaprikaGetPoolDetails
-// TODO: 	r.handlers["getPoolOHLCV"] = HandleDexPaprikaGetPoolOHLCV
-// TODO: 	r.handlers["getPoolTransactions"] = HandleDexPaprikaGetPoolTransactions
-// TODO: 	r.handlers["getTokenDetails"] = HandleDexPaprikaGetTokenDetails
-// TODO: 	r.handlers["getTokenPools"] = HandleDexPaprikaGetTokenPools
-// TODO: 	r.handlers["getTokenMultiPrices"] = HandleDexPaprikaGetTokenMultiPrices
-// TODO: 	r.handlers["filterNetworkTokens"] = HandleDexPaprikaFilterNetworkTokens
-// TODO: 	r.handlers["getTopTokens"] = HandleDexPaprikaGetTopTokens
-// TODO: 	r.handlers["submitFeedback"] = HandleDexPaprikaSubmitFeedback
+	r.handlers["getCapabilities"] = HandleDexPaprikaGetCapabilities
+	r.handlers["getNetworks"] = HandleDexPaprikaGetNetworks
+	r.handlers["getStats"] = HandleDexPaprikaGetStats
+	r.handlers["search"] = HandleDexPaprikaSearch
+	r.handlers["getNetworkDexes"] = HandleDexPaprikaGetNetworkDexes
+	r.handlers["getNetworkPools"] = HandleDexPaprikaGetNetworkPools
+	r.handlers["getDexPools"] = HandleDexPaprikaGetDexPools
+	r.handlers["getNetworkPoolsFilter"] = HandleDexPaprikaGetNetworkPoolsFilter
+	r.handlers["getPoolDetails"] = HandleDexPaprikaGetPoolDetails
+	r.handlers["getPoolOHLCV"] = HandleDexPaprikaGetPoolOHLCV
+	r.handlers["getPoolTransactions"] = HandleDexPaprikaGetPoolTransactions
+	r.handlers["getTokenDetails"] = HandleDexPaprikaGetTokenDetails
+	r.handlers["getTokenPools"] = HandleDexPaprikaGetTokenPools
+	r.handlers["getTokenMultiPrices"] = HandleDexPaprikaGetTokenMultiPrices
+	r.handlers["filterNetworkTokens"] = HandleDexPaprikaFilterNetworkTokens
+	r.handlers["getTopTokens"] = HandleDexPaprikaGetTopTokens
+	r.handlers["submitFeedback"] = HandleDexPaprikaSubmitFeedback
 
 	// National Weather Service (NWS) MCP Tools (Weather & Location)
-// TODO: 	r.handlers["nws_get_forecast"] = HandleNWSGetForecast
-// TODO: 	r.handlers["nws_search_alerts"] = HandleNWSSearchAlerts
-// TODO: 	r.handlers["nws_get_observations"] = HandleNWSGetObservations
-// TODO: 	r.handlers["nws_find_stations"] = HandleNWSFindStations
-// TODO: 	r.handlers["nws_list_alert_types"] = HandleNWSListAlertTypes
-// TODO: 	r.handlers["nws_get_office_discussion"] = HandleNWSGetOfficeDiscussion
-// TODO: 	r.handlers["nws_get_zone_forecast"] = HandleNWSGetZoneForecast
+	r.handlers["nws_get_forecast"] = HandleNWSGetForecast
+	r.handlers["nws_search_alerts"] = HandleNWSSearchAlerts
+	r.handlers["nws_get_observations"] = HandleNWSGetObservations
+	r.handlers["nws_find_stations"] = HandleNWSFindStations
+	r.handlers["nws_list_alert_types"] = HandleNWSListAlertTypes
+	r.handlers["nws_get_office_discussion"] = HandleNWSGetOfficeDiscussion
+	r.handlers["nws_get_zone_forecast"] = HandleNWSGetZoneForecast
 
 	// ast-grep-mcp Tools (Category 11)
-// TODO: 	r.handlers["ast_grep_dump_syntax_tree"] = HandleDumpSyntaxTree
-// TODO: 	r.handlers["ast_grep_test_match_code_rule"] = HandleTestMatchCodeRule
-// TODO: 	r.handlers["ast_grep_find_code"] = HandleFindCode
-// TODO: 	r.handlers["ast_grep_find_code_by_rule"] = HandleFindCodeByRule
+	r.handlers["ast_grep_dump_syntax_tree"] = HandleDumpSyntaxTree
+	r.handlers["ast_grep_test_match_code_rule"] = HandleTestMatchCodeRule
+	r.handlers["ast_grep_find_code"] = HandleFindCode
+	r.handlers["ast_grep_find_code_by_rule"] = HandleFindCodeByRule
 
 	// PAL Tools (Category 12)
-// TODO: 	r.handlers["pal_chat"] = HandlePalChat
-// TODO: 	r.handlers["pal_thinkdeep"] = HandlePalThinkDeep
-// TODO: 	r.handlers["pal_planner"] = HandlePalPlanner
-// TODO: 	r.handlers["pal_consensus"] = HandlePalConsensus
-// TODO: 	r.handlers["pal_codereview"] = HandlePalCodeReview
-// TODO: 	r.handlers["pal_precommit"] = HandlePalPrecommit
-// TODO: 	r.handlers["pal_debug"] = HandlePalDebug
-// TODO: 	r.handlers["pal_challenge"] = HandlePalChallenge
+	r.handlers["pal_chat"] = HandlePalChat
+	r.handlers["pal_thinkdeep"] = HandlePalThinkDeep
+	r.handlers["pal_planner"] = HandlePalPlanner
+	r.handlers["pal_consensus"] = HandlePalConsensus
+	r.handlers["pal_codereview"] = HandlePalCodeReview
+	r.handlers["pal_precommit"] = HandlePalPrecommit
+	r.handlers["pal_debug"] = HandlePalDebug
+	r.handlers["pal_challenge"] = HandlePalChallenge
 
 	// Short/alias mappings for PAL tools without prefix
-// TODO: 	r.handlers["chat"] = HandlePalChat
-// TODO: 	r.handlers["thinkdeep"] = HandlePalThinkDeep
-// TODO: 	r.handlers["planner"] = HandlePalPlanner
-// TODO: 	r.handlers["consensus"] = HandlePalConsensus
-// TODO: 	r.handlers["codereview"] = HandlePalCodeReview
-// TODO: 	r.handlers["precommit"] = HandlePalPrecommit
-// TODO: 	r.handlers["debug"] = HandlePalDebug
-// TODO: 	r.handlers["challenge"] = HandlePalChallenge
+	r.handlers["chat"] = HandlePalChat
+	r.handlers["thinkdeep"] = HandlePalThinkDeep
+	r.handlers["planner"] = HandlePalPlanner
+	r.handlers["consensus"] = HandlePalConsensus
+	r.handlers["codereview"] = HandlePalCodeReview
+	r.handlers["precommit"] = HandlePalPrecommit
+	r.handlers["debug"] = HandlePalDebug
+	r.handlers["challenge"] = HandlePalChallenge
 
 	// Serena Tools (Category 13)
-// TODO: 	r.handlers["get_symbols_overview"] = HandleGetSymbolsOverview
-// TODO: 	r.handlers["find_symbol"] = HandleFindSymbol
-// TODO: 	r.handlers["find_referencing_symbols"] = HandleFindReferencingSymbols
-// TODO: 	r.handlers["find_implementations"] = HandleFindImplementations
-// TODO: 	r.handlers["find_declaration"] = HandleFindDeclaration
-// TODO: 	r.handlers["rename_symbol"] = HandleRenameSymbol
-// TODO: 	r.handlers["onboarding"] = HandleOnboarding
+	r.handlers["get_symbols_overview"] = HandleGetSymbolsOverview
+	r.handlers["find_symbol"] = HandleFindSymbol
+	r.handlers["find_referencing_symbols"] = HandleFindReferencingSymbols
+	r.handlers["find_implementations"] = HandleFindImplementations
+	r.handlers["find_declaration"] = HandleFindDeclaration
+	r.handlers["rename_symbol"] = HandleRenameSymbol
+	r.handlers["onboarding"] = HandleOnboarding
 
 	// Claude Code Aliases
 	r.handlers["Read"] = HandleRead
@@ -179,440 +179,440 @@ func (r *Registry) registerAll() {
 	r.handlers["glob_pi"] = HandleGlob
 
 	// Thoughtbox Tools (Category 14)
-// TODO: 	r.handlers["thoughtbox_search"] = HandleThoughtboxSearch
-// TODO: 	r.handlers["thoughtbox_execute"] = HandleThoughtboxExecute
-// TODO: 	r.handlers["thoughtbox_peer_notebook"] = HandleThoughtboxPeerNotebook
+	r.handlers["thoughtbox_search"] = HandleThoughtboxSearch
+	r.handlers["thoughtbox_execute"] = HandleThoughtboxExecute
+	r.handlers["thoughtbox_peer_notebook"] = HandleThoughtboxPeerNotebook
 
 	// Fetch Tool (Assimilated)
-// TODO: 	r.handlers["fetch"] = HandleFetch
+	r.handlers["fetch"] = HandleFetch
 
 	// Tavily Tools (Assimilated)
-// TODO: 	r.handlers["tavily-search"] = HandleTavilySearch
+	r.handlers["tavily-search"] = HandleTavilySearch
 
 	// Chrome DevTools Tools (Assimilated)
-// TODO: 	r.handlers["chrome-devtools"] = HandleChromeDevTools
+	r.handlers["chrome-devtools"] = HandleChromeDevTools
 
 	// Firecrawl Tools (Assimilated from firecrawl-mcp)
-// TODO: 	r.handlers["firecrawl_scrape"] = HandleFirecrawl
-// TODO: 	r.handlers["firecrawl_crawl"] = HandleFirecrawl
-// TODO: 	r.handlers["firecrawl"] = HandleFirecrawl
+	r.handlers["firecrawl_scrape"] = HandleFirecrawl
+	r.handlers["firecrawl_crawl"] = HandleFirecrawl
+	r.handlers["firecrawl"] = HandleFirecrawl
 
 	// Exa Search Tools (Assimilated from SSE exa)
-// TODO: 	r.handlers["exa_search"] = HandleExaSearch
-// TODO: 	r.handlers["exa_find_similar"] = HandleExaFindSimilar
-// TODO: 	r.handlers["exa_get_contents"] = HandleExaGetContents
+	r.handlers["exa_search"] = HandleExaSearch
+	r.handlers["exa_find_similar"] = HandleExaFindSimilar
+	r.handlers["exa_get_contents"] = HandleExaGetContents
 
 	// arXiv Tools (Assimilated from arxiv-mcp-server)
-// TODO: 	r.handlers["arxiv_search"] = HandleArxivSearch
-// TODO: 	r.handlers["arxiv_get_paper"] = HandleArxivGetPaper
-// TODO: 	r.handlers["arxiv_list_recent"] = HandleArxivListRecent
+	r.handlers["arxiv_search"] = HandleArxivSearch
+	r.handlers["arxiv_get_paper"] = HandleArxivGetPaper
+	r.handlers["arxiv_list_recent"] = HandleArxivListRecent
 
 	// Semantic Scholar Tools (Assimilated from paper_search_server)
-// TODO: 	r.handlers["paper_search"] = HandleSemanticScholarSearch
-// TODO: 	r.handlers["paper_details"] = HandleSemanticScholarGetPaper
-// TODO: 	r.handlers["paper_citations"] = HandleSemanticScholarGetCitations
-// TODO: 	r.handlers["semantic_scholar_search"] = HandleSemanticScholarSearch
-// TODO: 	r.handlers["semantic_scholar_paper"] = HandleSemanticScholarGetPaper
+	r.handlers["paper_search"] = HandleSemanticScholarSearch
+	r.handlers["paper_details"] = HandleSemanticScholarGetPaper
+	r.handlers["paper_citations"] = HandleSemanticScholarGetCitations
+	r.handlers["semantic_scholar_search"] = HandleSemanticScholarSearch
+	r.handlers["semantic_scholar_paper"] = HandleSemanticScholarGetPaper
 
 	// mem0 Memory Tools (Assimilated from @mem0/mcp-server)
-// TODO: 	r.handlers["mem0_add_memory"] = HandleMem0AddMemory
-// TODO: 	r.handlers["mem0_search_memory"] = HandleMem0SearchMemory
-// TODO: 	r.handlers["mem0_get_memories"] = HandleMem0GetMemories
-// TODO: 	r.handlers["mem0_delete_memory"] = HandleMem0DeleteMemory
-// TODO: 	r.handlers["mem0_update_memory"] = HandleMem0UpdateMemory
-// TODO: 	r.handlers["add_memory"] = HandleMem0AddMemory
-// TODO: 	r.handlers["search_memory"] = HandleMem0SearchMemory
+	r.handlers["mem0_add_memory"] = HandleMem0AddMemory
+	r.handlers["mem0_search_memory"] = HandleMem0SearchMemory
+	r.handlers["mem0_get_memories"] = HandleMem0GetMemories
+	r.handlers["mem0_delete_memory"] = HandleMem0DeleteMemory
+	r.handlers["mem0_update_memory"] = HandleMem0UpdateMemory
+	r.handlers["add_memory"] = HandleMem0AddMemory
+	r.handlers["search_memory"] = HandleMem0SearchMemory
 
 	// Alpaca Trading Tools (Assimilated from alpaca-mcp-server)
-// TODO: 	r.handlers["alpaca_get_account"] = HandleAlpacaGetAccount
-// TODO: 	r.handlers["alpaca_get_positions"] = HandleAlpacaGetPositions
-// TODO: 	r.handlers["alpaca_get_orders"] = HandleAlpacaGetOrders
-// TODO: 	r.handlers["alpaca_place_order"] = HandleAlpacaPlaceOrder
-// TODO: 	r.handlers["alpaca_cancel_order"] = HandleAlpacaCancelOrder
-// TODO: 	r.handlers["alpaca_get_bars"] = HandleAlpacaGetBars
-// TODO: 	r.handlers["alpaca_get_latest_quote"] = HandleAlpacaGetLatestQuote
+	r.handlers["alpaca_get_account"] = HandleAlpacaGetAccount
+	r.handlers["alpaca_get_positions"] = HandleAlpacaGetPositions
+	r.handlers["alpaca_get_orders"] = HandleAlpacaGetOrders
+	r.handlers["alpaca_place_order"] = HandleAlpacaPlaceOrder
+	r.handlers["alpaca_cancel_order"] = HandleAlpacaCancelOrder
+	r.handlers["alpaca_get_bars"] = HandleAlpacaGetBars
+	r.handlers["alpaca_get_latest_quote"] = HandleAlpacaGetLatestQuote
 
 	// Alpha Vantage Financial Tools (Assimilated from av-mcp)
-// TODO: 	r.handlers["av_quote"] = HandleAVGlobalQuote
-// TODO: 	r.handlers["av_time_series"] = HandleAVTimeSeries
-// TODO: 	r.handlers["av_forex_rate"] = HandleAVForexRate
-// TODO: 	r.handlers["av_crypto_rate"] = HandleAVCryptoRate
-// TODO: 	r.handlers["av_symbol_search"] = HandleAVSearch
-// TODO: 	r.handlers["av_economic_indicator"] = HandleAVEconomicIndicator
-// TODO: 	r.handlers["alpha_vantage_quote"] = HandleAVGlobalQuote
+	r.handlers["av_quote"] = HandleAVGlobalQuote
+	r.handlers["av_time_series"] = HandleAVTimeSeries
+	r.handlers["av_forex_rate"] = HandleAVForexRate
+	r.handlers["av_crypto_rate"] = HandleAVCryptoRate
+	r.handlers["av_symbol_search"] = HandleAVSearch
+	r.handlers["av_economic_indicator"] = HandleAVEconomicIndicator
+	r.handlers["alpha_vantage_quote"] = HandleAVGlobalQuote
 
 	// Hugging Face Hub Tools (Assimilated from SSE huggingface)
-// TODO: 	r.handlers["hf_search_models"] = HandleHFSearchModels
-// TODO: 	r.handlers["hf_get_model"] = HandleHFGetModel
-// TODO: 	r.handlers["hf_search_datasets"] = HandleHFSearchDatasets
-// TODO: 	r.handlers["hf_text_generation"] = HandleHFTextGeneration
-// TODO: 	r.handlers["hf_classify_text"] = HandleHFClassification
-// TODO: 	r.handlers["hf_embeddings"] = HandleHFEmbeddings
-// TODO: 	r.handlers["hf_search_spaces"] = HandleHFSearchSpaces
+	r.handlers["hf_search_models"] = HandleHFSearchModels
+	r.handlers["hf_get_model"] = HandleHFGetModel
+	r.handlers["hf_search_datasets"] = HandleHFSearchDatasets
+	r.handlers["hf_text_generation"] = HandleHFTextGeneration
+	r.handlers["hf_classify_text"] = HandleHFClassification
+	r.handlers["hf_embeddings"] = HandleHFEmbeddings
+	r.handlers["hf_search_spaces"] = HandleHFSearchSpaces
 
 	// Semgrep Security Tools (Assimilated from semgrep + semgrepstream)
-// TODO: 	r.handlers["semgrep_scan"] = HandleSemgrepScan
-// TODO: 	r.handlers["semgrep_cloud_scan"] = HandleSemgrepCloudScan
-// TODO: 	r.handlers["semgrep_search_rules"] = HandleSemgrepRuleSearch
+	r.handlers["semgrep_scan"] = HandleSemgrepScan
+	r.handlers["semgrep_cloud_scan"] = HandleSemgrepCloudScan
+	r.handlers["semgrep_search_rules"] = HandleSemgrepRuleSearch
 
 	// Octagon Financial Intelligence (Assimilated from octagon + octagon-deep-research)
-// TODO: 	r.handlers["octagon_research"] = HandleOctagonResearch
-// TODO: 	r.handlers["octagon_company_search"] = HandleOctagonCompanySearch
-// TODO: 	r.handlers["octagon_financials"] = HandleOctagonFinancials
-// TODO: 	r.handlers["octagon_news"] = HandleOctagonNews
+	r.handlers["octagon_research"] = HandleOctagonResearch
+	r.handlers["octagon_company_search"] = HandleOctagonCompanySearch
+	r.handlers["octagon_financials"] = HandleOctagonFinancials
+	r.handlers["octagon_news"] = HandleOctagonNews
 
 	// Browser Automation Tools (Assimilated from playwright/browser-use/browsermcp/puppeteer/browserbase)
-r.handlers["browser_navigate"] = HandleBrowserNavigate
-r.handlers["browser_screenshot"] = HandleBrowserScreenshot
+	r.handlers["browser_navigate"] = HandleBrowserNavigate
+	r.handlers["browser_screenshot"] = HandleBrowserScreenshot
 	r.handlers["browser_get_html"] = HandleBrowserGetHTML
 	r.handlers["browser_evaluate"] = HandleBrowserEvaluate
 	r.handlers["browser_click"] = HandleBrowserClick
 	r.handlers["browser_fill_form"] = HandleBrowserFillForm
 
 	// ChromaDB Vector Store Tools (Assimilated from chroma-mcp)
-// TODO: 	r.handlers["chroma_list_collections"] = HandleChromaListCollections
-// TODO: 	r.handlers["chroma_create_collection"] = HandleChromaCreateCollection
-// TODO: 	r.handlers["chroma_add_documents"] = HandleChromaAddDocuments
-// TODO: 	r.handlers["chroma_query"] = HandleChromaQuery
-// TODO: 	r.handlers["chroma_delete_collection"] = HandleChromaDeleteCollection
-// TODO: 	r.handlers["chroma_get_documents"] = HandleChromaGetCollection
+	r.handlers["chroma_list_collections"] = HandleChromaListCollections
+	r.handlers["chroma_create_collection"] = HandleChromaCreateCollection
+	r.handlers["chroma_add_documents"] = HandleChromaAddDocuments
+	r.handlers["chroma_query"] = HandleChromaQuery
+	r.handlers["chroma_delete_collection"] = HandleChromaDeleteCollection
+	r.handlers["chroma_get_documents"] = HandleChromaGetCollection
 
 	// Basic Memory Tools (Assimilated from basic-memory)
-// TODO: 	r.handlers["basic_memory_write"] = HandleBasicMemoryWrite
-// TODO: 	r.handlers["basic_memory_read"] = HandleBasicMemoryRead
-// TODO: 	r.handlers["basic_memory_search"] = HandleBasicMemorySearch
-// TODO: 	r.handlers["basic_memory_list"] = HandleBasicMemoryList
-// TODO: 	r.handlers["basic_memory_delete"] = HandleBasicMemoryDelete
-// TODO: 	r.handlers["memory_write"] = HandleBasicMemoryWrite
-// TODO: 	r.handlers["memory_read"] = HandleBasicMemoryRead
-// TODO: 	r.handlers["memory_search"] = HandleBasicMemorySearch
+	r.handlers["basic_memory_write"] = HandleBasicMemoryWrite
+	r.handlers["basic_memory_read"] = HandleBasicMemoryRead
+	r.handlers["basic_memory_search"] = HandleBasicMemorySearch
+	r.handlers["basic_memory_list"] = HandleBasicMemoryList
+	r.handlers["basic_memory_delete"] = HandleBasicMemoryDelete
+	r.handlers["memory_write"] = HandleBasicMemoryWrite
+	r.handlers["memory_read"] = HandleBasicMemoryRead
+	r.handlers["memory_search"] = HandleBasicMemorySearch
 
 	// MindsDB ML Database Tools (Assimilated from SSE mindsdb)
-// TODO: 	r.handlers["mindsdb_query"] = HandleMindsDBQuery
-// TODO: 	r.handlers["mindsdb_list_models"] = HandleMindsDBListModels
-// TODO: 	r.handlers["mindsdb_predict"] = HandleMindsDBPredict
+	r.handlers["mindsdb_query"] = HandleMindsDBQuery
+	r.handlers["mindsdb_list_models"] = HandleMindsDBListModels
+	r.handlers["mindsdb_predict"] = HandleMindsDBPredict
 
 	// ═══════════════════════════════════════════════════════════════
 	// ASSIMILATED MCP SERVERS — Phase 2: Full Native Reimplementation
 	// ═══════════════════════════════════════════════════════════════
 
-	// GitHub Copilot API Tools (Assimilated from github SSE)// TODO: 
-// TODO: 	r.handlers["github_list_repos"] = HandleGithubListRepos
-// TODO: 	r.handlers["github_get_repo"] = HandleGithubGetRepo
-// TODO: 	r.handlers["github_create_issue"] = HandleGithubCreateIssue
-// TODO: 	r.handlers["github_list_issues"] = HandleGithubListIssues
-// TODO: 	r.handlers["github_create_pr"] = HandleGithubCreatePR
-// TODO: 	r.handlers["github_code_search"] = HandleGithubCodeSearch
-// TODO: 	r.handlers["github_get_file_contents"] = HandleGithubGetFileContents
-// TODO: 	r.handlers["github_create_or_update_file"] = HandleGithubCreateOrUpdateFile
-// TODO: 	r.handlers["github_list_branches"] = HandleGithubListBranches
-// TODO: 	r.handlers["github_list_workflows"] = HandleGithubListWorkflows
-// TODO: 	r.handlers["github_trigger_workflow"] = HandleGithubTriggerWorkflow
-// TODO: 	r.handlers["github_copilot_chat"] = HandleGithubCopilotChat
+	// GitHub Copilot API Tools (Assimilated from github SSE)
+	r.handlers["github_list_repos"] = HandleGithubListRepos
+	r.handlers["github_get_repo"] = HandleGithubGetRepo
+	r.handlers["github_create_issue"] = HandleGithubCreateIssue
+	r.handlers["github_list_issues"] = HandleGithubListIssues
+	r.handlers["github_create_pr"] = HandleGithubCreatePR
+	r.handlers["github_code_search"] = HandleGithubCodeSearch
+	r.handlers["github_get_file_contents"] = HandleGithubGetFileContents
+	r.handlers["github_create_or_update_file"] = HandleGithubCreateOrUpdateFile
+	r.handlers["github_list_branches"] = HandleGithubListBranches
+	r.handlers["github_list_workflows"] = HandleGithubListWorkflows
+	r.handlers["github_trigger_workflow"] = HandleGithubTriggerWorkflow
+	r.handlers["github_copilot_chat"] = HandleGithubCopilotChat
 
 	// Supabase Tools (Assimilated from supabase SSE)
-// TODO: 	r.handlers["supabase_list_projects"] = HandleSupabaseListProjects
-// TODO: 	r.handlers["supabase_get_project"] = HandleSupabaseGetProject
-// TODO: 	r.handlers["supabase_execute_sql"] = HandleSupabaseExecuteSQL
-// TODO: 	r.handlers["supabase_select_rows"] = HandleSupabaseSelectRows
-// TODO: 	r.handlers["supabase_insert_rows"] = HandleSupabaseInsertRows
-// TODO: 	r.handlers["supabase_update_rows"] = HandleSupabaseUpdateRows
-// TODO: 	r.handlers["supabase_delete_rows"] = HandleSupabaseDeleteRows
-// TODO: 	r.handlers["supabase_list_tables"] = HandleSupabaseListTables
-// TODO: 	r.handlers["supabase_invoke_function"] = HandleSupabaseInvokeFunction
+	r.handlers["supabase_list_projects"] = HandleSupabaseListProjects
+	r.handlers["supabase_get_project"] = HandleSupabaseGetProject
+	r.handlers["supabase_execute_sql"] = HandleSupabaseExecuteSQL
+	r.handlers["supabase_select_rows"] = HandleSupabaseSelectRows
+	r.handlers["supabase_insert_rows"] = HandleSupabaseInsertRows
+	r.handlers["supabase_update_rows"] = HandleSupabaseUpdateRows
+	r.handlers["supabase_delete_rows"] = HandleSupabaseDeleteRows
+	r.handlers["supabase_list_tables"] = HandleSupabaseListTables
+	r.handlers["supabase_invoke_function"] = HandleSupabaseInvokeFunction
 
 	// Desktop Commander Tools (Assimilated from @wonderwhy-er/desktop-commander)
-// TODO: 	r.handlers["desktop_execute_command"] = HandleDesktopExecuteCommand
-// TODO: 	r.handlers["desktop_read_file"] = HandleDesktopReadFile
-// TODO: 	r.handlers["desktop_read_multiple_files"] = HandleDesktopReadMultipleFiles
-// TODO: 	r.handlers["desktop_write_file"] = HandleDesktopWriteFile
-// TODO: 	r.handlers["desktop_create_directory"] = HandleDesktopCreateDirectory
-// TODO: 	r.handlers["desktop_list_directory"] = HandleDesktopListDirectory
-// TODO: 	r.handlers["desktop_directory_tree"] = HandleDesktopDirectoryTree
-// TODO: 	r.handlers["desktop_search_files"] = HandleDesktopSearchFiles
-// TODO: 	r.handlers["desktop_move_file"] = HandleDesktopMoveFile
-// TODO: 	r.handlers["desktop_get_file_info"] = HandleDesktopGetFileInfo
-// TODO: 	r.handlers["desktop_list_processes"] = HandleDesktopListProcesses
-// TODO: 	r.handlers["desktop_kill_process"] = HandleDesktopKillProcess
-// TODO: 	r.handlers["desktop_get_system_info"] = HandleDesktopGetSystemInfo
-// TODO: 	r.handlers["desktop_execute_script"] = HandleDesktopExecuteScript
-// TODO: 	r.handlers["desktop_open_file"] = HandleDesktopOpenFile
-// TODO: 	r.handlers["desktop_tail_file"] = HandleDesktopTailFile
+	r.handlers["desktop_execute_command"] = HandleDesktopExecuteCommand
+	r.handlers["desktop_read_file"] = HandleDesktopReadFile
+	r.handlers["desktop_read_multiple_files"] = HandleDesktopReadMultipleFiles
+	r.handlers["desktop_write_file"] = HandleDesktopWriteFile
+	r.handlers["desktop_create_directory"] = HandleDesktopCreateDirectory
+	r.handlers["desktop_list_directory"] = HandleDesktopListDirectory
+	r.handlers["desktop_directory_tree"] = HandleDesktopDirectoryTree
+	r.handlers["desktop_search_files"] = HandleDesktopSearchFiles
+	r.handlers["desktop_move_file"] = HandleDesktopMoveFile
+	r.handlers["desktop_get_file_info"] = HandleDesktopGetFileInfo
+	r.handlers["desktop_list_processes"] = HandleDesktopListProcesses
+	r.handlers["desktop_kill_process"] = HandleDesktopKillProcess
+	r.handlers["desktop_get_system_info"] = HandleDesktopGetSystemInfo
+	r.handlers["desktop_execute_script"] = HandleDesktopExecuteScript
+	r.handlers["desktop_open_file"] = HandleDesktopOpenFile
+	r.handlers["desktop_tail_file"] = HandleDesktopTailFile
 
 	// Gemini API Tools (Assimilated from gemini-mcp)
-// TODO: 	r.handlers["gemini_chat"] = HandleGeminiChat
-// TODO: 	r.handlers["gemini_code_generation"] = HandleGeminiCodeGeneration
-// TODO: 	r.handlers["gemini_vision"] = HandleGeminiVision
-// TODO: 	r.handlers["gemini_embeddings"] = HandleGeminiEmbeddings
-// TODO: 	r.handlers["gemini_list_models"] = HandleGeminiListModels
-// TODO: 	r.handlers["gemini_function_calling"] = HandleGeminiFunctionCalling
+	r.handlers["gemini_chat"] = HandleGeminiChat
+	r.handlers["gemini_code_generation"] = HandleGeminiCodeGeneration
+	r.handlers["gemini_vision"] = HandleGeminiVision
+	r.handlers["gemini_embeddings"] = HandleGeminiEmbeddings
+	r.handlers["gemini_list_models"] = HandleGeminiListModels
+	r.handlers["gemini_function_calling"] = HandleGeminiFunctionCalling
 
 	// DBHub Universal Database Tools (Assimilated from @bytebase/dbhub)
-// TODO: 	r.handlers["dbhub_list_databases"] = HandleDBHubListDatabases
-// TODO: 	r.handlers["dbhub_list_tables"] = HandleDBHubListTables
-// TODO: 	r.handlers["dbhub_describe_table"] = HandleDBHubDescribeTable
-// TODO: 	r.handlers["dbhub_execute_query"] = HandleDBHubExecuteQuery
-// TODO: 	r.handlers["dbhub_list_schemas"] = HandleDBHubListSchemas
+	r.handlers["dbhub_list_databases"] = HandleDBHubListDatabases
+	r.handlers["dbhub_list_tables"] = HandleDBHubListTables
+	r.handlers["dbhub_describe_table"] = HandleDBHubDescribeTable
+	r.handlers["dbhub_execute_query"] = HandleDBHubExecuteQuery
+	r.handlers["dbhub_list_schemas"] = HandleDBHubListSchemas
 
 	// ConPort Context Portal Tools (Assimilated from context-portal-mcp)
-// TODO: 	r.handlers["conport_get_context"] = HandleConPortGetContext
-// TODO: 	r.handlers["conport_update_context"] = HandleConPortUpdateContext
-// TODO: 	r.handlers["conport_log_decision"] = HandleConPortLogDecision
-// TODO: 	r.handlers["conport_get_decisions"] = HandleConPortGetDecisions
-// TODO: 	r.handlers["conport_add_pattern"] = HandleConPortAddPattern
-// TODO: 	r.handlers["conport_get_patterns"] = HandleConPortGetPatterns
-// TODO: 	r.handlers["conport_set_active_context"] = HandleConPortSetActiveContext
-// TODO: 	r.handlers["conport_get_active_context"] = HandleConPortGetActiveContext
-// TODO: 	r.handlers["conport_log_progress"] = HandleConPortLogProgress
-// TODO: 	r.handlers["conport_get_progress"] = HandleConPortGetProgress
+	r.handlers["conport_get_context"] = HandleConPortGetContext
+	r.handlers["conport_update_context"] = HandleConPortUpdateContext
+	r.handlers["conport_log_decision"] = HandleConPortLogDecision
+	r.handlers["conport_get_decisions"] = HandleConPortGetDecisions
+	r.handlers["conport_add_pattern"] = HandleConPortAddPattern
+	r.handlers["conport_get_patterns"] = HandleConPortGetPatterns
+	r.handlers["conport_set_active_context"] = HandleConPortSetActiveContext
+	r.handlers["conport_get_active_context"] = HandleConPortGetActiveContext
+	r.handlers["conport_log_progress"] = HandleConPortLogProgress
+	r.handlers["conport_get_progress"] = HandleConPortGetProgress
 
 	// ChunkHound Code Search Tools (Assimilated from chunkhound)
-// TODO: 	r.handlers["chunkhound_index"] = HandleChunkhoundIndex
-// TODO: 	r.handlers["chunkhound_search"] = HandleChunkhoundSearch
-// TODO: 	r.handlers["chunkhound_stats"] = HandleChunkhoundStats
-// TODO: 	r.handlers["chunkhound_list_indexed"] = HandleChunkhoundListIndexed
-// TODO: 	r.handlers["chunkhound_get_chunk"] = HandleChunkhoundGetChunk
+	r.handlers["chunkhound_index"] = HandleChunkhoundIndex
+	r.handlers["chunkhound_search"] = HandleChunkhoundSearch
+	r.handlers["chunkhound_stats"] = HandleChunkhoundStats
+	r.handlers["chunkhound_list_indexed"] = HandleChunkhoundListIndexed
+	r.handlers["chunkhound_get_chunk"] = HandleChunkhoundGetChunk
 
 	// NotebookLM Tools (Assimilated from @roomi-fields/notebooklm-mcp)
-// TODO: 	r.handlers["notebooklm_create_notebook"] = HandleNotebookLMCreateNotebook
-// TODO: 	r.handlers["notebooklm_query_notebook"] = HandleNotebookLMQueryNotebook
-// TODO: 	r.handlers["notebooklm_list_notebooks"] = HandleNotebookLMListNotebooks
-// TODO: 	r.handlers["notebooklm_add_source"] = HandleNotebookLMAddSource
-// TODO: 	r.handlers["notebooklm_get_summary"] = HandleNotebookLMGetSummary
-// TODO: 	r.handlers["notebooklm_upload_pdf"] = HandleNotebookLMUploadPDF
+	r.handlers["notebooklm_create_notebook"] = HandleNotebookLMCreateNotebook
+	r.handlers["notebooklm_query_notebook"] = HandleNotebookLMQueryNotebook
+	r.handlers["notebooklm_list_notebooks"] = HandleNotebookLMListNotebooks
+	r.handlers["notebooklm_add_source"] = HandleNotebookLMAddSource
+	r.handlers["notebooklm_get_summary"] = HandleNotebookLMGetSummary
+	r.handlers["notebooklm_upload_pdf"] = HandleNotebookLMUploadPDF
 
 	// Vibe Check Tools (Assimilated from @pv-bhat/vibe-check-mcp)
-// TODO: 	r.handlers["vibe_check_analyze"] = HandleVibeCheckAnalyze
-// TODO: 	r.handlers["vibe_check_quick"] = HandleVibeCheckQuick
-// TODO: 	r.handlers["vibe_check_review_patterns"] = HandleVibeCheckReviewPatterns
+	r.handlers["vibe_check_analyze"] = HandleVibeCheckAnalyze
+	r.handlers["vibe_check_quick"] = HandleVibeCheckQuick
+	r.handlers["vibe_check_review_patterns"] = HandleVibeCheckReviewPatterns
 
 	// SuperMemory Tools (Assimilated from mcp-supermemory-ai)
-// TODO: 	r.handlers["supermemory_add"] = HandleSuperMemoryAdd
-// TODO: 	r.handlers["supermemory_search"] = HandleSuperMemorySearch
-// TODO: 	r.handlers["supermemory_delete"] = HandleSuperMemoryDelete
-// TODO: 	r.handlers["supermemory_list"] = HandleSuperMemoryList
+	r.handlers["supermemory_add"] = HandleSuperMemoryAdd
+	r.handlers["supermemory_search"] = HandleSuperMemorySearch
+	r.handlers["supermemory_delete"] = HandleSuperMemoryDelete
+	r.handlers["supermemory_list"] = HandleSuperMemoryList
 
 	// Probe Code Search Tools (Assimilated from @probelabs/probe)
-// TODO: 	r.handlers["probe_search_code"] = HandleProbeSearchCode
-// TODO: 	r.handlers["probe_find_symbol"] = HandleProbeFindSymbol
-// TODO: 	r.handlers["probe_get_structure"] = HandleProbeGetStructure
-// TODO: 	r.handlers["probe_explain_code"] = HandleProbeExplainCode
+	r.handlers["probe_search_code"] = HandleProbeSearchCode
+	r.handlers["probe_find_symbol"] = HandleProbeFindSymbol
+	r.handlers["probe_get_structure"] = HandleProbeGetStructure
+	r.handlers["probe_explain_code"] = HandleProbeExplainCode
 
 	// Cipher Memory Aggregator Tools (Assimilated from @byterover/cipher)
-// TODO: 	r.handlers["cipher_add_memory"] = HandleCipherAddMemory
-// TODO: 	r.handlers["cipher_search_memory"] = HandleCipherSearchMemory
-// TODO: 	r.handlers["cipher_list_memories"] = HandleCipherListMemories
-// TODO: 	r.handlers["cipher_delete_memory"] = HandleCipherDeleteMemory
-// TODO: 	r.handlers["cipher_ask"] = HandleCipherAskCipher
+	r.handlers["cipher_add_memory"] = HandleCipherAddMemory
+	r.handlers["cipher_search_memory"] = HandleCipherSearchMemory
+	r.handlers["cipher_list_memories"] = HandleCipherListMemories
+	r.handlers["cipher_delete_memory"] = HandleCipherDeleteMemory
+	r.handlers["cipher_ask"] = HandleCipherAskCipher
 
 	// DeepContext Code Understanding Tools (Assimilated from @wildcard-ai/deepcontext)
-// TODO: 	r.handlers["deepcontext_analyze"] = HandleDeepContextAnalyzeCodebase
-// TODO: 	r.handlers["deepcontext_get_context"] = HandleDeepContextGetContext
-// TODO: 	r.handlers["deepcontext_find_patterns"] = HandleDeepContextFindPatterns
-// TODO: 	r.handlers["deepcontext_summarize_architecture"] = HandleDeepContextSummarizeArchitecture
+	r.handlers["deepcontext_analyze"] = HandleDeepContextAnalyzeCodebase
+	r.handlers["deepcontext_get_context"] = HandleDeepContextGetContext
+	r.handlers["deepcontext_find_patterns"] = HandleDeepContextFindPatterns
+	r.handlers["deepcontext_summarize_architecture"] = HandleDeepContextSummarizeArchitecture
 
 	// Windows MCP Tools (Assimilated from windows-mcp)
-// TODO: 	r.handlers["windows_get_system_info"] = HandleWindowsMCPGetSystemInfo
-// TODO: 	r.handlers["windows_list_services"] = HandleWindowsMCPListServices
-// TODO: 	r.handlers["windows_get_service"] = HandleWindowsMCPGetService
-// TODO: 	r.handlers["windows_list_processes"] = HandleWindowsMCPListProcesses
-// TODO: 	r.handlers["windows_read_registry"] = HandleWindowsMCPReadRegistry
-// TODO: 	r.handlers["windows_open_application"] = HandleWindowsMCPOpenApplication
-// TODO: 	r.handlers["windows_get_clipboard"] = HandleWindowsMCPGetClipboard
-// TODO: 	r.handlers["windows_set_clipboard"] = HandleWindowsMCPSetClipboard
-// TODO: 	r.handlers["windows_list_drives"] = HandleWindowsMCPListDrives
-// TODO: 	r.handlers["windows_get_event_log"] = HandleWindowsMCPGetEventLog
+	r.handlers["windows_get_system_info"] = HandleWindowsMCPGetSystemInfo
+	r.handlers["windows_list_services"] = HandleWindowsMCPListServices
+	r.handlers["windows_get_service"] = HandleWindowsMCPGetService
+	r.handlers["windows_list_processes"] = HandleWindowsMCPListProcesses
+	r.handlers["windows_read_registry"] = HandleWindowsMCPReadRegistry
+	r.handlers["windows_open_application"] = HandleWindowsMCPOpenApplication
+	r.handlers["windows_get_clipboard"] = HandleWindowsMCPGetClipboard
+	r.handlers["windows_set_clipboard"] = HandleWindowsMCPSetClipboard
+	r.handlers["windows_list_drives"] = HandleWindowsMCPListDrives
+	r.handlers["windows_get_event_log"] = HandleWindowsMCPGetEventLog
 
 	// Prism Code Quality Tools (Assimilated from prism-mcp-server)
-// TODO: 	r.handlers["prism_analyze_quality"] = HandlePrismAnalyzeQuality
-// TODO: 	r.handlers["prism_suggest_refactor"] = HandlePrismSuggestRefactor
-// TODO: 	r.handlers["prism_detect_smells"] = HandlePrismDetectSmells
-// TODO: 	r.handlers["prism_transform_code"] = HandlePrismTransformCode
+	r.handlers["prism_analyze_quality"] = HandlePrismAnalyzeQuality
+	r.handlers["prism_suggest_refactor"] = HandlePrismSuggestRefactor
+	r.handlers["prism_detect_smells"] = HandlePrismDetectSmells
+	r.handlers["prism_transform_code"] = HandlePrismTransformCode
 
 	// TaskMaster AI Task Management Tools (Assimilated from task-master-ai)
-// TODO: 	r.handlers["taskmaster_create_task"] = HandleTaskMasterCreateTask
-// TODO: 	r.handlers["taskmaster_get_task"] = HandleTaskMasterGetTask
-// TODO: 	r.handlers["taskmaster_list_tasks"] = HandleTaskMasterListTasks
-// TODO: 	r.handlers["taskmaster_update_status"] = HandleTaskMasterUpdateStatus
-// TODO: 	r.handlers["taskmaster_add_subtask"] = HandleTaskMasterAddSubtask
-// TODO: 	r.handlers["taskmaster_next_task"] = HandleTaskMasterNextTask
-// TODO: 	r.handlers["taskmaster_generate_from_prd"] = HandleTaskMasterGenerateFromPRD
-// TODO: 	r.handlers["taskmaster_expand_task"] = HandleTaskMasterExpandTask
+	r.handlers["taskmaster_create_task"] = HandleTaskMasterCreateTask
+	r.handlers["taskmaster_get_task"] = HandleTaskMasterGetTask
+	r.handlers["taskmaster_list_tasks"] = HandleTaskMasterListTasks
+	r.handlers["taskmaster_update_status"] = HandleTaskMasterUpdateStatus
+	r.handlers["taskmaster_add_subtask"] = HandleTaskMasterAddSubtask
+	r.handlers["taskmaster_next_task"] = HandleTaskMasterNextTask
+	r.handlers["taskmaster_generate_from_prd"] = HandleTaskMasterGenerateFromPRD
+	r.handlers["taskmaster_expand_task"] = HandleTaskMasterExpandTask
 
 	// ═══════════════════════════════════════════════════════════════
 	// SKILL REGISTRY - Database-backed skill management with deduplication
 	// ═══════════════════════════════════════════════════════════════
 
-	// Skill Registry Tools// TODO: 
-// TODO: 	r.handlers["skill_list"] = HandleSkillList
-// TODO: 	r.handlers["skill_get"] = HandleSkillGet
-// TODO: 	r.handlers["skill_store"] = HandleSkillStore
-// TODO: 	r.handlers["skill_search"] = HandleSkillSearch
-// TODO: 	r.handlers["skills_list"] = HandleSkillList
-// TODO: 	r.handlers["skills_get"] = HandleSkillGet
-// TODO: 	r.handlers["skills_store"] = HandleSkillStore
-// TODO: 	r.handlers["skills_search"] = HandleSkillSearch
+	// Skill Registry Tools
+	r.handlers["skill_list"] = HandleSkillList
+	r.handlers["skill_get"] = HandleSkillGet
+	r.handlers["skill_store"] = HandleSkillStore
+	r.handlers["skill_search"] = HandleSkillSearch
+	r.handlers["skills_list"] = HandleSkillList
+	r.handlers["skills_get"] = HandleSkillGet
+	r.handlers["skills_store"] = HandleSkillStore
+	r.handlers["skills_search"] = HandleSkillSearch
 
 	// OpenMemory — local persistent memory store
-// TODO: 	r.handlers["openmemory_add"] = HandleOpenMemoryAdd
-// TODO: 	r.handlers["openmemory_search"] = HandleOpenMemorySearch
-// TODO: 	r.handlers["openmemory_get"] = HandleOpenMemoryGet
-// TODO: 	r.handlers["openmemory_delete"] = HandleOpenMemoryDelete
-// TODO: 	r.handlers["openmemory_list"] = HandleOpenMemoryList
+	r.handlers["openmemory_add"] = HandleOpenMemoryAdd
+	r.handlers["openmemory_search"] = HandleOpenMemorySearch
+	r.handlers["openmemory_get"] = HandleOpenMemoryGet
+	r.handlers["openmemory_delete"] = HandleOpenMemoryDelete
+	r.handlers["openmemory_list"] = HandleOpenMemoryList
 
 	// AutoMem — graph-vector memory for AI agents
-// TODO: 	r.handlers["automem_add"] = HandleAutoMemAdd
-// TODO: 	r.handlers["automem_search"] = HandleAutoMemSearch
-// TODO: 	r.handlers["automem_get"] = HandleAutoMemGet
-// TODO: 	r.handlers["automem_delete"] = HandleAutoMemDelete
-// TODO: 	r.handlers["automem_list"] = HandleAutoMemList
-// TODO: 	r.handlers["automem_associate"] = HandleAutoMemAssociate
+	r.handlers["automem_add"] = HandleAutoMemAdd
+	r.handlers["automem_search"] = HandleAutoMemSearch
+	r.handlers["automem_get"] = HandleAutoMemGet
+	r.handlers["automem_delete"] = HandleAutoMemDelete
+	r.handlers["automem_list"] = HandleAutoMemList
+	r.handlers["automem_associate"] = HandleAutoMemAssociate
 
 	// lsmcp — LSP code manipulation and analysis
-// TODO: 	r.handlers["project_overview"] = HandleLsmcpProjectOverview
-// TODO: 	r.handlers["search_symbols"] = HandleLsmcpSearchSymbols
-// TODO: 	r.handlers["get_diagnostics"] = HandleLsmcpGetDiagnostics
-// TODO: 	r.handlers["find_references"] = HandleLsmcpFindReferences
-// TODO: 	r.handlers["get_symbol_details"] = HandleLsmcpGetSymbolDetails
+	r.handlers["project_overview"] = HandleLsmcpProjectOverview
+	r.handlers["search_symbols"] = HandleLsmcpSearchSymbols
+	r.handlers["get_diagnostics"] = HandleLsmcpGetDiagnostics
+	r.handlers["find_references"] = HandleLsmcpFindReferences
+	r.handlers["get_symbol_details"] = HandleLsmcpGetSymbolDetails
 
 	// CodeAlive — semantic code search and context engine
-// TODO: 	r.handlers["codealive_search"] = HandleCodeAliveSearch
-// TODO: 	r.handlers["codealive_grep"] = HandleCodeAliveGrep
-// TODO: 	r.handlers["codealive_ask"] = HandleCodeAliveAsk
+	r.handlers["codealive_search"] = HandleCodeAliveSearch
+	r.handlers["codealive_grep"] = HandleCodeAliveGrep
+	r.handlers["codealive_ask"] = HandleCodeAliveAsk
 
 	// Prometheus MCP — monitoring queries
-// TODO: 	r.handlers["prom_query"] = HandlePromQuery
-// TODO: 	r.handlers["prom_alerts"] = HandlePromAlerts
-// TODO: 	r.handlers["prom_targets"] = HandlePromTargets
-// TODO: 	r.handlers["prom_metadata"] = HandlePromMetadata
+	r.handlers["prom_query"] = HandlePromQuery
+	r.handlers["prom_alerts"] = HandlePromAlerts
+	r.handlers["prom_targets"] = HandlePromTargets
+	r.handlers["prom_metadata"] = HandlePromMetadata
 
 	// Smart-Thinking — graph-based reasoning
-// TODO: 	r.handlers["smart_reason"] = HandleSmartReason
-// TODO: 	r.handlers["smart_session"] = HandleSmartSession
-// TODO: 	r.handlers["smart_evaluate"] = HandleSmartEvaluate
-// TODO: 	r.handlers["smart_graph"] = HandleSmartGraph
+	r.handlers["smart_reason"] = HandleSmartReason
+	r.handlers["smart_session"] = HandleSmartSession
+	r.handlers["smart_evaluate"] = HandleSmartEvaluate
+	r.handlers["smart_graph"] = HandleSmartGraph
 
 	// Mimir — Neo4j-backed persistent memory
-// TODO: 	r.handlers["mimir_store"] = HandleMimirStore
-// TODO: 	r.handlers["mimir_search"] = HandleMimirSearch
-// TODO: 	r.handlers["mimir_retrieve"] = HandleMimirRetrieve
-// TODO: 	r.handlers["mimir_connect"] = HandleMimirConnect
-// TODO: 	r.handlers["mimir_forget"] = HandleMimirForget
+	r.handlers["mimir_store"] = HandleMimirStore
+	r.handlers["mimir_search"] = HandleMimirSearch
+	r.handlers["mimir_retrieve"] = HandleMimirRetrieve
+	r.handlers["mimir_connect"] = HandleMimirConnect
+	r.handlers["mimir_forget"] = HandleMimirForget
 
 	// Sysmon — system monitoring
-// TODO: 	r.handlers["sysmon_overview"] = HandleSysmonOverview
-// TODO: 	r.handlers["sysmon_health"] = HandleSysmonHealth
-// TODO: 	r.handlers["sysmon_top"] = HandleSysmonTop
-// TODO: 	r.handlers["sysmon_disk"] = HandleSysmonDisk
-// TODO: 	r.handlers["sysmon_network"] = HandleSysmonNetwork
-// TODO: 	r.handlers["sysmon_find"] = HandleSysmonFind
+	r.handlers["sysmon_overview"] = HandleSysmonOverview
+	r.handlers["sysmon_health"] = HandleSysmonHealth
+	r.handlers["sysmon_top"] = HandleSysmonTop
+	r.handlers["sysmon_disk"] = HandleSysmonDisk
+	r.handlers["sysmon_network"] = HandleSysmonNetwork
+	r.handlers["sysmon_find"] = HandleSysmonFind
 
 	// Docker — container management
-// TODO: 	r.handlers["docker_list_containers"] = HandleDockerListContainers
-// TODO: 	r.handlers["docker_list_images"] = HandleDockerListImages
-// TODO: 	r.handlers["docker_inspect"] = HandleDockerInspect
-// TODO: 	r.handlers["docker_logs"] = HandleDockerLogs
-// TODO: 	r.handlers["docker_stats"] = HandleDockerStats
-// TODO: 	r.handlers["docker_exec"] = HandleDockerExec
+	r.handlers["docker_list_containers"] = HandleDockerListContainers
+	r.handlers["docker_list_images"] = HandleDockerListImages
+	r.handlers["docker_inspect"] = HandleDockerInspect
+	r.handlers["docker_logs"] = HandleDockerLogs
+	r.handlers["docker_stats"] = HandleDockerStats
+	r.handlers["docker_exec"] = HandleDockerExec
 
 	// Social — Twitter/X and Reddit
-// TODO: 	r.handlers["twitter_search"] = HandleTwitterSearch
-// TODO: 	r.handlers["twitter_user_timeline"] = HandleTwitterUserTimeline
-// TODO: 	r.handlers["reddit_search"] = HandleRedditSearch
-// TODO: 	r.handlers["reddit_get_posts"] = HandleRedditGetPosts
+	r.handlers["twitter_search"] = HandleTwitterSearch
+	r.handlers["twitter_user_timeline"] = HandleTwitterUserTimeline
+	r.handlers["reddit_search"] = HandleRedditSearch
+	r.handlers["reddit_get_posts"] = HandleRedditGetPosts
 
 	// Git — repository operations
-// TODO: 	r.handlers["git_status"] = HandleGitStatus
-// TODO: 	r.handlers["git_log"] = HandleGitLog
-// TODO: 	r.handlers["git_diff"] = HandleGitDiff
-// TODO: 	r.handlers["git_branches"] = HandleGitBranches
-// TODO: 	r.handlers["git_show"] = HandleGitShow
-// TODO: 	r.handlers["git_blame"] = HandleGitBlame
-// TODO: 	r.handlers["git_commit"] = HandleGitCommit
-// TODO: 	r.handlers["git_checkout"] = HandleGitCheckout
+	r.handlers["git_status"] = HandleGitStatus
+	r.handlers["git_log"] = HandleGitLog
+	r.handlers["git_diff"] = HandleGitDiff
+	r.handlers["git_branches"] = HandleGitBranches
+	r.handlers["git_show"] = HandleGitShow
+	r.handlers["git_blame"] = HandleGitBlame
+	r.handlers["git_commit"] = HandleGitCommit
+	r.handlers["git_checkout"] = HandleGitCheckout
 
 	// Terraform — infrastructure management
-// TODO: 	r.handlers["terraform_search_providers"] = HandleTerraformSearchProviders
-// TODO: 	r.handlers["terraform_search_modules"] = HandleTerraformSearchModules
-// TODO: 	r.handlers["terraform_get_provider"] = HandleTerraformGetProvider
+	r.handlers["terraform_search_providers"] = HandleTerraformSearchProviders
+	r.handlers["terraform_search_modules"] = HandleTerraformSearchModules
+	r.handlers["terraform_get_provider"] = HandleTerraformGetProvider
 
 	// Google News — news headlines and search
-// TODO: 	r.handlers["google_news_headlines"] = HandleGoogleNewsHeadlines
-// TODO: 	r.handlers["google_news_search"] = HandleGoogleNewsSearch
+	r.handlers["google_news_headlines"] = HandleGoogleNewsHeadlines
+	r.handlers["google_news_search"] = HandleGoogleNewsSearch
 
 	// OpenRouter Deep Research
-// TODO: 	r.handlers["deep_research"] = HandleDeepResearch
-// TODO: 	r.handlers["deep_research_status"] = HandleDeepResearchStatus
+	r.handlers["deep_research"] = HandleDeepResearch
+	r.handlers["deep_research_status"] = HandleDeepResearchStatus
 
 	// Prompt Library — SQLite-backed prompt storage
-// TODO: 	r.handlers["prompt_list"] = HandlePromptList
-// TODO: 	r.handlers["prompt_get"] = HandlePromptGet
-// TODO: 	r.handlers["prompt_search"] = HandlePromptSearch
+	r.handlers["prompt_list"] = HandlePromptList
+	r.handlers["prompt_get"] = HandlePromptGet
+	r.handlers["prompt_search"] = HandlePromptSearch
 
 	// Context Server — SQLite-backed context management
-// TODO: 	r.handlers["context_store"] = HandleContextStore
-// TODO: 	r.handlers["context_search"] = HandleContextSearch
-// TODO: 	r.handlers["context_get"] = HandleContextGet
-// TODO: 	r.handlers["context_delete"] = HandleContextDelete
-// TODO: 	r.handlers["context_list_threads"] = HandleContextListThreads
-// TODO: 	r.handlers["context_stats"] = HandleContextStats
+	r.handlers["context_store"] = HandleContextStore
+	r.handlers["context_search"] = HandleContextSearch
+	r.handlers["context_get"] = HandleContextGet
+	r.handlers["context_delete"] = HandleContextDelete
+	r.handlers["context_list_threads"] = HandleContextListThreads
+	r.handlers["context_stats"] = HandleContextStats
 
 	// WebPeel — web data extraction
-// TODO: 	r.handlers["webpeel_fetch"] = HandleWebpeelFetch
-// TODO: 	r.handlers["webpeel_search"] = HandleWebpeelSearch
-// TODO: 	r.handlers["webpeel_extract"] = HandleWebpeelExtract
+	r.handlers["webpeel_fetch"] = HandleWebpeelFetch
+	r.handlers["webpeel_search"] = HandleWebpeelSearch
+	r.handlers["webpeel_extract"] = HandleWebpeelExtract
 
 	// Omnisearch — universal search
-// TODO: 	r.handlers["omnisearch_github"] = HandleOmnisearchGithub
-// TODO: 	r.handlers["omnisearch_stackoverflow"] = HandleOmnisearchStackoverflow
-// TODO: 	r.handlers["omnisearch_npm"] = HandleOmnisearchNpm
-// TODO: 	r.handlers["omnisearch_pypi"] = HandleOmnisearchPypi
-// TODO: 	r.handlers["omnisearch_web"] = HandleOmnisearchWeb
+	r.handlers["omnisearch_github"] = HandleOmnisearchGithub
+	r.handlers["omnisearch_stackoverflow"] = HandleOmnisearchStackoverflow
+	r.handlers["omnisearch_npm"] = HandleOmnisearchNpm
+	r.handlers["omnisearch_pypi"] = HandleOmnisearchPypi
+	r.handlers["omnisearch_web"] = HandleOmnisearchWeb
 
 	// Grants — government grants discovery
-// TODO: 	r.handlers["grants_search"] = HandleGrantsSearch
-// TODO: 	r.handlers["grants_by_agency"] = HandleGrantsByAgency
-// TODO: 	r.handlers["grants_by_category"] = HandleGrantsByCategory
-// TODO: 	r.handlers["grants_trends"] = HandleGrantsTrends
+	r.handlers["grants_search"] = HandleGrantsSearch
+	r.handlers["grants_by_agency"] = HandleGrantsByAgency
+	r.handlers["grants_by_category"] = HandleGrantsByCategory
+	r.handlers["grants_trends"] = HandleGrantsTrends
 
 	// Food Data Central — USDA nutrition database
-// TODO: 	r.handlers["food_search"] = HandleFoodSearch
-// TODO: 	r.handlers["food_get"] = HandleFoodGet
-// TODO: 	r.handlers["food_list"] = HandleFoodList
+	r.handlers["food_search"] = HandleFoodSearch
+	r.handlers["food_get"] = HandleFoodGet
+	r.handlers["food_list"] = HandleFoodList
 
 	// Panther — security monitoring
-// TODO: 	r.handlers["panther_query"] = HandlePantherQuery
-// TODO: 	r.handlers["panther_list_detections"] = HandlePantherListDetections
-// TODO: 	r.handlers["panther_get_findings"] = HandlePantherGetFindings
-// TODO: 	r.handlers["panther_list_policies"] = HandlePantherListPolicies
+	r.handlers["panther_query"] = HandlePantherQuery
+	r.handlers["panther_list_detections"] = HandlePantherListDetections
+	r.handlers["panther_get_findings"] = HandlePantherGetFindings
+	r.handlers["panther_list_policies"] = HandlePantherListPolicies
 
 	// Srclight — code indexing for AI agents
-// TODO: 	r.handlers["srclight_index"] = HandleSrclightIndex
-// TODO: 	r.handlers["srclight_search"] = HandleSrclightSearch
-// TODO: 	r.handlers["srclight_status"] = HandleSrclightStatus
-// TODO: 	r.handlers["srclight_list_languages"] = HandleSrclightListLanguages
+	r.handlers["srclight_index"] = HandleSrclightIndex
+	r.handlers["srclight_search"] = HandleSrclightSearch
+	r.handlers["srclight_status"] = HandleSrclightStatus
+	r.handlers["srclight_list_languages"] = HandleSrclightListLanguages
 
 	// Coolify — deployment & infrastructure management
-// TODO: 	r.handlers["coolify_list_projects"] = HandleCoolifyListProjects
-// TODO: 	r.handlers["coolify_create_project"] = HandleCoolifyCreateProject
-// TODO: 	r.handlers["coolify_list_services"] = HandleCoolifyListServices
-// TODO: 	r.handlers["coolify_deploy_service"] = HandleCoolifyDeployService
-// TODO: 	r.handlers["coolify_get_logs"] = HandleCoolifyGetLogs
-// TODO: 	r.handlers["coolify_list_databases"] = HandleCoolifyListDatabases
+	r.handlers["coolify_list_projects"] = HandleCoolifyListProjects
+	r.handlers["coolify_create_project"] = HandleCoolifyCreateProject
+	r.handlers["coolify_list_services"] = HandleCoolifyListServices
+	r.handlers["coolify_deploy_service"] = HandleCoolifyDeployService
+	r.handlers["coolify_get_logs"] = HandleCoolifyGetLogs
+	r.handlers["coolify_list_databases"] = HandleCoolifyListDatabases
 
 	// Harness Integrations
-// TODO: 	r.handlers["launch_tabby"] = HandleTabby
-// TODO: 	r.handlers["launch_warp"] = HandleWarp
-// TODO: 	r.handlers["launch_hyper"] = HandleHyper
-// TODO: 	r.handlers["launch_hyperharness"] = HandleHyperharness
-// TODO: 	r.handlers["hermes_agent"] = HandleHermesAgent
-// TODO: 	r.handlers["pi_mono"] = HandlePiMono
+	r.handlers["launch_tabby"] = HandleTabby
+	r.handlers["launch_warp"] = HandleWarp
+	r.handlers["launch_hyper"] = HandleHyper
+	r.handlers["launch_hyperharness"] = HandleHyperharness
+	r.handlers["hermes_agent"] = HandleHermesAgent
+	r.handlers["pi_mono"] = HandlePiMono
 
 	// Bobbybookmarks Integration
-// TODO: 	r.handlers["ripgrep_search"] = HandleRipgrep
-// TODO: 	r.handlers["anyquery"] = HandleAnyquery
-// TODO: 	r.handlers["codemod"] = HandleCodemod
-// TODO: 	r.handlers["puppeteer_navigate"] = HandlePuppeteer
+	r.handlers["ripgrep_search"] = HandleRipgrep
+	r.handlers["anyquery"] = HandleAnyquery
+	r.handlers["codemod"] = HandleCodemod
+	r.handlers["puppeteer_navigate"] = HandlePuppeteer
 	r.handlers["bobbybookmarks_sync"] = HandleBobbyBookmarksSync
 }
 

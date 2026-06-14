@@ -1,0 +1,7 @@
+package tools
+
+import "context"
+
+func HandleX(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
+	return ok("Agenthotspot MCP is ready")
+}
