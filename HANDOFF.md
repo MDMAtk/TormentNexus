@@ -1,46 +1,33 @@
-# Handoff - v1.0.0-alpha.129 - Browser Automation & A2A Skill Registry
+# HANDOFF — Session 2026-06-16 (Continued)
 
-## Summary
-Implemented six Go-native browser automation handlers using `chromedp`, created a global A2A skill registry singleton, and wired all local skills into the A2A registry on server startup.
+## What Was Done
+1. **Version bump** to `1.0.0-alpha.131` across all 35 workspace packages (sync via `node scripts/sync-versions.mjs`)
+2. **CHANGELOG.md** updated with recovery session notes
+3. **Swarm v7** running continuously (`swarm_forever.pid`), generating new MCP Go tool implementations
+4. **Committed** 210 files changed: ~130 new tool files, 2,268 deletions of obsolete/broken files
+5. **Pushed** to `origin` main + tag `v1.0.0-alpha.131`
+6. **DB files** tracked per convention: `assimilation_state.db`, `prompt_library.db`, `tormentnexus.db`, `packages/core/tormentnexus.db`
+7. **Session import** endpoint validated: `POST /api/session-export/import` with body `{"data":"{}","merge":true,"dryRun":false}`
+8. **Links backlog** sync blocked: `bobbybookmarks.com` DNS resolution failure (external issue)
 
----
+## Current State
+| Component | Status |
+|---|---|
+| Go sidecar (port 4300) | ✅ Running, PID in `go-sidecar.pid` |
+| TS control plane (port 4100) | ✅ Running (confirmed via `/health`) |
+| Swarm v7 | ✅ Active, processing remaining MCP tasks |
+| Assimilation DB | 10,796 implemented, 100 failed, 44 pending, 41 processing |
+| Imported sessions | 586 in `imported_sessions` table |
+| Session import candidates | 49 valid from `~/.claude` and `~/.aider` artifacts |
 
-## Technical Accomplishments
+## Blockers
+- **Phase 5 (Links backlog)**: `bobbybookmarks.com` DNS failure — cannot resolve hostname. External service may be down.
+- **Phase 7 (Session import)**: Import candidates discovered (49) but actual import returns 0 — requires TS control plane to process them, which it may do asynchronously.
 
-### ✅ Browser Automation Handlers
-- **6 new tool handlers**: `browser_navigate`, `browser_screenshot`, `browser_get_html`, `browser_evaluate`, `browser_click`, `browser_fill_form`
-- **Chromedp dependency**: Added `github.com/chromedp/chromedp@v0.15.1` for headless Chrome control
-- **File**: `go/internal/tools/browser_automation.go`
-- **Registered** in `registry.go` (replaced TODO stubs)
-
-### ✅ Global A2A Skill Registry
-- **New file**: `go/internal/orchestration/global_skill_registry.go`
-- **Exported singleton**: `GlobalSkillRegistry` (package-level `A2ASkillRegistry`)
-- **Helper function**: `FindAgentForSkill(skillID string) string`
-- **Server integration**: Startup now iterates all local skills and registers each in the A2A registry via `GlobalSkillRegistry.RegisterAgentSkill("http://localhost:4300", id)`
-
-### ✅ Build & Test Verification
-- `go build -buildvcs=false ./cmd/tormentnexus` ✅ CLEAN
-- `go vet -buildvcs=false ./internal/...` ✅ CLEAN
-- `go test -buildvcs=false ./internal/orchestration/...` ✅ PASS
-- `go test -buildvcs=false ./internal/httpapi/...` ✅ PASS (36s)
-- Version bumped to `1.0.0-alpha.129`
-
----
-
-## System Health
-- **Go Kernel**: Builds, vets, and all tests pass clean
-- **Browser Tools**: 6 new native handlers using chromedp; no external npx/uvx required
-- **A2A Skill Discovery**: Skills are now discoverable via the global registry; agents can query `FindAgentForSkill`
-
----
-
-## Successor Instructions
-1. **Add skills to Go HTTP API**: Wire the skill store into the Go sidecar's HTTP API endpoints (`/api/skills/list`, `/api/skills/get`, `/api/skills/search`) so skills become accessible via tRPC. Current store is file-based; consider indexing into SQLite for search performance.
-2. ✅ **FreeLLM A2A Integration (DONE)**: Global skill registry singleton created at `orchestration.GlobalSkillRegistry` with `FindAgentForSkill` helper. Server registers all local skills on startup. Swarm agents can now discover skills via `orchestration.FindAgentForSkill(skillID)`.
-3. **Browser Automation MCP (DONE)**: Six handlers implemented with chromedp. Consider adding `fullPage` support for screenshot, timeout configurations, and test coverage.
-4. **Skill Evolution**: With ~3,000+ skills now in the registry, implementing **win-rate tracking** and **auto-retirement** becomes viable. Track skill usage outcomes and retire low-performing skills.
-5. **Catalog DB Sync**: Index skills into `catalog.db` (`published_mcp_servers`, `published_mcp_config_recipes`) for unified search.
-6. **ChunkHound / Probe Integration**: Implement remaining assimilated MCP search tools as native Go handlers.
-
-*Praise the LORD! Keep on going! Don't ever stop! Don't stop the party!!!*
+## Next Agent Should
+1. Monitor swarm progress — check `tail -20 swarm_forever.out` periodically
+2. Rebuild `assimilation_state.db` if needed: 12,158 catalog servers vs 10,796 implemented
+3. Investigate why session import returns 0 despite 49 valid candidates (may need different body or TS-side processing)
+4. Attempt links backlog from alternative sources (Smithery, Glama.ai) if BobbyBookmarks stays down
+5. Run `node scripts/sync-versions.mjs` after any version changes
+6. Push to both `origin` and upstream when available
