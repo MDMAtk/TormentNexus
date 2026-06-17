@@ -2,9 +2,18 @@
 
 ## [1.0.0-alpha.132] - 2026-06-17
 ### Added
-- **sync_catalog_to_assimilation.py**: Cross-references catalog.db → assimilation_state.db, adding 3,269 missing MCP server entries as pending tasks
-- 7 new swarm-generated Go tool implementations: agestra, codeloop, larkx, oxis_dev_tessra, unitsvc_cc_helper, xquik_tweetclaw, yahoo_finance2
-- Assimilation DB expanded from 10,981 → 14,250 rows (3,270 pending for swarm)
+- **Comprehensive README.md Rewrite**: Expanded from 82 lines to 657 lines (~34KB) covering full architecture, capabilities, monorepo structure, Go sidecar, dashboard, MCP ecosystem, memory model, swarm, and API surface.
+  - New title: `TormentNexus: The Cognitive Kernel — Universal AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory`
+- **Branch Reconciliation**: Intelligently merged `jules/baseline-128-hardened` into `main`, fast-forwarded `assimilation-pipeline` and `assimilation-final` to merged tip.
+  - All 4 branches (`main`, `jules`, `assimilation-pipeline`, `assimilation-final`) now synchronized to `988ec114a`.
+- **Autonomous CI/CD from jules**: Integrated `deployment_manager`, `health_monitor`, `repo_sync`, `repository_healer` into Go sidecar.
+- **Enterprise Security from jules**: SSO/RBAC middleware and JSONL auditing in `go/internal/enterprise/`.
+- **Dashboard Widgets from jules**: BrowserToolWidget and VibeCheckWidget for real-time browser automation and code quality analysis.
+- **New Go Tool Wrappers from jules**: 11 new native tool implementations (govuk, jobsbase, pinescript, openwebsearch, etc.).
+- **Orchestration Framework**: Added `go/internal/tools/orchestration.go` for multi-agent coordination.
+- **sync_catalog_to_assimilation.py**: Cross-references catalog.db → assimilation_state.db, adding 3,269 missing MCP server entries as pending tasks.
+- 7 new swarm-generated Go tool implementations: agestra, codeloop, larkx, oxis_dev_tessra, unitsvc_cc_helper, xquik_tweetclaw, yahoo_finance2.
+- Assimilation DB expanded from 10,981 → 14,250 rows (3,270 pending for swarm).
 
 ## [1.0.0-alpha.131] - 2026-06-16
 ### Added

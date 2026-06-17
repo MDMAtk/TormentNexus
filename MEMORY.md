@@ -1,30 +1,46 @@
 # MEMORY.md — Multi-Agent Observations
 
-## Session 2026-06-16 (Continued)
+## Session 2026-06-17 (Merge & Documentation Session)
 
-### Architecture Observations
-- **Go sidecar bridges to TS control plane** via `handleTRPCBridgeBodyCall()` — most `/api/*` endpoints are proxies to tRPC procedures on port 4100
-- **Session import** (`/api/session-export/import`) expects body `{"data":"<json-string>","merge":true,"dryRun":false}` — empty `{}` results in 0 imports
-- **Import pipeline**: Go sidecar scans `~/.claude` and `~/.aider` directories, produces 49 valid candidates. TS control plane may ingest these asynchronously.
-- **Swarm v7** runs with 5 workers, `--forever` mode, `--limit 200`, pipeline: GENERATE → REVIEW(2) → FIX
-- FreeLLM proxy fallback chain: `proxy-free-llm` → `proxy-free-llm-fallback` → direct providers
+### Merge Architecture Observations
+- **Branch topology**: `jules/baseline-128-hardened` had 7 unique commits diverging from `main` at `82a896d4f` (the merge base)
+- **Conflict resolution strategy**: For this repo, `registry.go` conflicts should always be resolved by taking the branch with the full implementation (not stubs). The jules branch consistently has more complete tool registrations.
+- **Fast-forward efficiency**: When branches like `assimilation-pipeline` and `assimilation-final` are behind main (no unique commits), use `git push <commit>:refs/heads/<branch>` to fast-forward them to the merged tip — this avoids creating unnecessary merge commits.
+- **GitHub remote**: The repo URL has moved to `https://github.com/MDMAtk/TormentNexus.git` (GitHub redirects from old `NexusSoftMDMA/TormentNexus` URL)
 
-### Gotchas & Tool Quirks
-- **`.gitignore` has `data/`** — but `data/assimilation_state.db` and `data/prompt_library.db` are tracked (added before ignore rule). Use `git add -u` to stage tracked DB changes.
-- **`go-sidecar.pid`** is untracked (not committed) — it's a runtime file.
-- **`*.db-shm` and `*.db-wal`** are ignored by `.gitignore` — SQLite WAL files won't be committed.
-- **`git add "go/internal/tools/"`** stages all new/deleted tool files from swarm output.
-- **Sync script** `node scripts/sync-versions.mjs` updates all 35 package.json files + `go.mod` + Go buildinfo.
-- **Some NVIDIA models** (deepseek-v4-pro, deepseek-v4-flash) return short/empty responses frequently — swarm retries 5x with exponential backoff.
+### README.md Rewrite Observations
+- A comprehensive README for this project needs: architecture diagram, monorepo structure tree, capability table, dashboard routes, API categories, and a "what's planned" section
+- The README title should capture all 4 pillars: multi-agent, MCP tools, memory, and universal LLM routing
+- Shields/badges for version, build, Go, TypeScript, Next.js, React, and license add immediate credibility
+- Table of Contents is essential for a 650+ line document
+- Using ASCII art for architecture diagrams is more reliable than Mermaid in plain markdown (though Mermaid works in GitHub)
+
+### Gotchas & Git Quirks
+- **`data/` is gitignored** but `.db` files inside it may be tracked if added before the ignore rule. Always use `git add -f` or `git add -u` for DB files, never `git add data/`
+- **`*.db-shm` and `*.db-wal`** are ignored — SQLite WAL files won't be committed. Good for avoiding large binary diffs.
+- **`go-sidecar.pid`** is untracked (runtime file) — correct, don't track it.
+- **`swarm_*.out` files** accumulate and can bloat the repo. Consider `.gitignore` them after review, or keep a few as progress evidence.
+- **`tormentnexus.db`**, **`catalog.db`**, **`provider_metrics.db`** are large binary files. If tracked, every commit that touches them adds significant size. Consider using Git LFS or only tracking them on release commits.
+- **Merge conflicts in `.gitignore`**: When the remote branch has fewer rules, always take `ours` (main) since it has the more comprehensive, tested ignore list.
+- **Merge conflicts in `CHANGELOG.md`**: When the remote branch has older alpha versions, always take `ours` (main) with the newer version history. The remote's changelog is likely stale.
+- **Merge conflicts in binary `.db` files**: Never attempt textual merge. Always take the newer version (`ours` during forward merge, or the one with the larger file size / more recent timestamp).
+- **Branch names with slashes** like `jules/baseline-128-hardened-2272628885254508907` require `refs/heads/` prefix in `git push`: `git push origin <commit>:refs/heads/<branch-name>`
+- **`git checkout --ours` vs `--theirs`**: In a merge, `ours` = the branch you're currently on (main), `theirs` = the branch being merged. This is counter-intuitive when rebasing.
 
 ### Failure Lessons
-- **bobbybookmarks.com** DNS resolution fails from this environment — cannot use for links backlog sync. Consider Smithery.ai or Glama.ai as alternatives.
-- **`--repair` flag** in swarm_v7 causes premature exit — use `--forever` without `--repair` for stability.
-- **`tormentnexus-upstream` remote** is not configured — only `origin` and `origin-backup` exist.
-- **`data/` directory** is gitignored but DB files within it may still be tracked — always use `git add -u` for existing tracked files, not `git add data/`.
+- **bobbybookmarks.com** DNS resolution fails consistently from this environment — permanently blocked. Use Smithery.ai or Glama.ai for MCP server catalog discovery.
+- **`--repair` flag** in swarm causes premature exit — use `--forever` without `--repair`
+- **`tormentnexus-upstream` remote** does not exist — only `origin` and `origin-backup` (dead). All pushes go to `origin`.
+- **`.out` files from swarm** are large and should be ignored by `.gitignore` to prevent repo bloat. Add `*.out` and `swarm_*.out` to `.gitignore`.
+- **Deleting tracked files**: When swarm removes broken tool files, `git add -A` will stage the deletions. This is correct — commit them as part of cleanup.
+- **Merge conflicts in `go/internal/tools/registry.go`**: This file always conflicts when merging branches because every branch adds tool registrations. The correct resolution is to take the version with the most registrations (usually the branch being merged), then verify `go build` compiles.
+- **Windows `EBUSY` errors**: When Git cannot unlink `.db` files (they're locked by a running process), use `git checkout -f` or close the process before switching branches.
 
 ### Preferences
 - Always stage and commit `.db` files per user instruction "stage and track db always"
 - Use `--forever` mode for swarm to avoid premature shutdown
 - Tag commits with version: `v1.0.0-alpha.X`
-- Push to both `origin` and upstream when available
+- After any merge, verify `go build ./cmd/tormentnexus` compiles clean
+- When a README.md rewrite is done, immediately commit it separately so it doesn't get lost in merge noise
+- Fast-forward feature branches that are fully merged rather than leaving them stale
+- Delete feature branches on GitHub after they are fully merged into main
