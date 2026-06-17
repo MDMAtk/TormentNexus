@@ -1,0 +1,139 @@
+[94m[00:00:00][STAT] ======================================================================[0m
+[94m[00:00:00][STAT]  TORMENTNEXUS SWARM v7 - THE VERIFIED ASSIMILATOR[0m
+[94m[00:00:00][STAT] ======================================================================[0m
+[94m[00:00:00][STAT] Workers: 5 | Limit: 3000 | Forever: True[0m
+[94m[00:00:00][STAT] Pipeline: GENERATE -> REVIEW(2) -> FIX[0m
+[94m[00:00:00][STAT] Generator models: ['free-llm', 'free-llm-fallback']...[0m
+[94m[00:00:00][STAT] Reviewer models: ['deepseek-ai/deepseek-v4-flash', 'z-ai/glm-4.7-flash', 'stepfun-ai/step-3.7-flash']...[0m
+[94m[00:00:00][STAT] Fixer models: ['qwen/qwen3.5-397b-a17b', 'deepseek-ai/deepseek-v4-pro', 'z-ai/glm-4.7']...[0m
+[94m[00:00:00][STAT] DB: 14250 total | 10796 done | 3270 pending | 30 failed[0m
+[96m[00:00:00][INFO] Released 154 stale tasks[0m
+[94m[00:00:00][STAT] Checking build...[0m
+[93m[00:00:01][WARN] Build broken, iter 1[0m
+[93m[00:00:03][WARN] Build broken, iter 2[0m
+[93m[00:00:05][WARN] Build broken, iter 3[0m
+[93m[00:00:06][WARN] Build broken, iter 4[0m
+[93m[00:00:08][WARN] Build broken, iter 5[0m
+[93m[00:00:09][WARN] Build broken, iter 6[0m
+[93m[00:00:11][WARN] Build broken, iter 7[0m
+[93m[00:00:12][WARN] Build broken, iter 8[0m
+[93m[00:00:14][WARN] Build broken, iter 9[0m
+[93m[00:00:15][WARN] Build broken, iter 10[0m
+[93m[00:00:18][WARN] Build broken, iter 11[0m
+[93m[00:00:19][WARN] Build broken, iter 12[0m
+[93m[00:00:21][WARN] Build broken, iter 13[0m
+[93m[00:00:22][WARN] Build broken, iter 14[0m
+[93m[00:00:24][WARN] Build broken, iter 15[0m
+[94m[00:00:26][STAT] Wave: 5 workers[0m
+[96m[00:00:26][W2][INFO] Staggering 5s[0m
+[96m[00:00:26][W3][INFO] Staggering 10s[0m
+[96m[00:00:26][W4][INFO] Staggering 15s[0m
+[96m[00:00:26][W5][INFO] Staggering 20s[0m
+[96m[00:00:26][W1][INFO] Claimed: zotero_mcp -> zotero_mcp.go[0m
+[94m[00:00:26][W1][PHASE] GEN: zotero_mcp[0m
+[95m[00:00:26][W1][LLM] nvidia-qwen-qwen3-coder-480b-a35b-instruct/qwen/qwen3-coder-480b-a35b-instruct t=300s[0m
+[91m[00:00:27][W1][LLM-ERR] nvidia-qwen-qwen3-coder-480b-a35b-instruct: short/empty (0c in 0.6s)[0m
+[93m[00:00:27][W1][WARN] Retry 1/5 after 10s (provider: nvidia-qwen-qwen3-coder-480b-a35b-instruct)[0m
+[96m[00:00:31][W2][INFO] Claimed: yahoo_finance2 -> yahoo_finance2.go[0m
+[94m[00:00:31][W2][PHASE] GEN: yahoo_finance2[0m
+[95m[00:00:31][W2][LLM] nvidia-qwen-qwen3.5-397b-a17b/qwen/qwen3.5-397b-a17b t=300s[0m
+[95m[00:00:37][W1][LLM] nvidia-deepseek-ai-deepseek-v4-pro/deepseek-ai/deepseek-v4-pro t=300s[0m
+[96m[00:00:37][W3][INFO] Claimed: claude_video_vision -> claude_video_vision.go[0m
+[94m[00:00:37][W3][PHASE] GEN: claude_video_vision[0m
+[95m[00:00:37][W3][LLM] nvidia-deepseek-ai-deepseek-v4-flash/deepseek-ai/deepseek-v4-flash t=300s[0m
+[91m[00:00:38][W1][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-pro: short/empty (0c in 0.6s)[0m
+[93m[00:00:38][W1][WARN] Retry 2/5 after 20s (provider: nvidia-deepseek-ai-deepseek-v4-pro)[0m
+[91m[00:00:38][W3][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-flash: short/empty (0c in 0.7s)[0m
+[93m[00:00:38][W3][WARN] Retry 1/5 after 10s (provider: nvidia-deepseek-ai-deepseek-v4-flash)[0m
+[96m[00:00:41][W4][INFO] Claimed: Jina AI -> jinaai.go[0m
+[94m[00:00:41][W4][PHASE] GEN: Jina AI[0m
+[95m[00:00:41][W4][LLM] proxy-free-llm/free-llm t=300s[0m
+[96m[00:00:46][W5][INFO] Claimed: Brave Search -> bravesearch.go[0m
+[94m[00:00:46][W5][PHASE] GEN: Brave Search[0m
+[95m[00:00:46][W5][LLM] proxy-free-llm-fallback/free-llm-fallback t=300s[0m
+[95m[00:00:48][W3][LLM] nvidia-qwen-qwen3-coder-480b-a35b-instruct/qwen/qwen3-coder-480b-a35b-instruct t=300s[0m
+[91m[00:00:49][W3][LLM-ERR] nvidia-qwen-qwen3-coder-480b-a35b-instruct: short/empty (0c in 0.6s)[0m
+[93m[00:00:49][W3][WARN] Retry 2/5 after 20s (provider: nvidia-qwen-qwen3-coder-480b-a35b-instruct)[0m
+[95m[00:00:58][W1][LLM] nvidia-qwen-qwen3.5-397b-a17b/qwen/qwen3.5-397b-a17b t=300s[0m
+[95m[00:01:00][W4][LLM] proxy-free-llm: 8868c in 18.1s[0m
+[92m[00:01:00][W4][OK] GEN OK: Jina AI (3 handlers)[0m
+[94m[00:01:05][W4][PHASE] REV: Jina AI (x2)[0m
+[95m[00:01:05][W4][LLM] nvidia-deepseek-ai-deepseek-v4-pro/deepseek-ai/deepseek-v4-pro t=300s[0m
+[91m[00:01:05][W4][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-pro: short/empty (0c in 0.8s)[0m
+[93m[00:01:05][W4][WARN] Retry 1/3 after 10s (provider: nvidia-deepseek-ai-deepseek-v4-pro)[0m
+[95m[00:01:09][W3][LLM] nvidia-deepseek-ai-deepseek-v4-flash/deepseek-ai/deepseek-v4-flash t=300s[0m
+[91m[00:01:09][W3][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-flash: short/empty (0c in 0.5s)[0m
+[93m[00:01:09][W3][WARN] Retry 3/5 after 40s (provider: nvidia-deepseek-ai-deepseek-v4-flash)[0m
+[95m[00:01:10][W5][LLM] proxy-free-llm-fallback: 11224c in 23.4s[0m
+[92m[00:01:10][W5][OK] GEN OK: Brave Search (3 handlers)[0m
+[94m[00:01:15][W5][PHASE] REV: Brave Search (x2)[0m
+[95m[00:01:15][W5][LLM] proxy-free-llm/free-llm t=300s[0m
+[95m[00:01:15][W4][LLM] proxy-free-llm-fallback/free-llm-fallback t=300s[0m
+[95m[00:01:31][W5][LLM] proxy-free-llm: 7034c in 16.0s[0m
+[96m[00:01:31][W5][INFO] REV-1: compiles=False err=['unreachable code: return ok("not yet implemented") after a return in HandleWebSearch'][0m
+[95m[00:01:36][W5][LLM] nvidia-qwen-qwen3-coder-480b-a35b-instruct/qwen/qwen3-coder-480b-a35b-instruct t=300s[0m
+[91m[00:01:37][W5][LLM-ERR] nvidia-qwen-qwen3-coder-480b-a35b-instruct: short/empty (0c in 0.6s)[0m
+[93m[00:01:37][W5][WARN] Retry 1/3 after 10s (provider: nvidia-qwen-qwen3-coder-480b-a35b-instruct)[0m
+[95m[00:01:37][W1][LLM] nvidia-qwen-qwen3.5-397b-a17b: 4988c in 38.9s[0m
+[92m[00:01:37][W1][OK] GEN OK: zotero_mcp (3 handlers)[0m
+[94m[00:01:42][W1][PHASE] REV: zotero_mcp (x2)[0m
+[95m[00:01:42][W1][LLM] nvidia-qwen-qwen3.5-397b-a17b/qwen/qwen3.5-397b-a17b t=300s[0m
+[95m[00:01:47][W5][LLM] nvidia-deepseek-ai-deepseek-v4-pro/deepseek-ai/deepseek-v4-pro t=300s[0m
+[91m[00:01:47][W5][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-pro: short/empty (0c in 0.9s)[0m
+[93m[00:01:47][W5][WARN] Retry 2/3 after 20s (provider: nvidia-deepseek-ai-deepseek-v4-pro)[0m
+[95m[00:01:49][W3][LLM] nvidia-deepseek-ai-deepseek-v4-flash/deepseek-ai/deepseek-v4-flash t=300s[0m
+[91m[00:01:50][W3][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-flash: short/empty (0c in 0.6s)[0m
+[93m[00:01:50][W3][WARN] Retry 4/5 after 80s (provider: nvidia-deepseek-ai-deepseek-v4-flash)[0m
+[95m[00:01:53][W1][LLM] nvidia-qwen-qwen3.5-397b-a17b: 1506c in 10.8s[0m
+[96m[00:01:53][W1][INFO] REV-1: compiles=False err=["Line 84: return err(err.Error()) returns (ToolResponse, error), but err() expects a string argument and returns (ToolResponse, error). The call err.Error() returns a string, which is correct, but the function name 'err' shadows the built-in error type if used as a variable, though here it calls the predefined function. However, the predefined signature is func err(msg string) (ToolResponse, error). The usage return err(err.Error()) is syntactically valid IF 'err' variable in scope doesn't shadow the function. In this scope, 'err' is the error returned from buildZoteroRequest. Thus, the function 'err' is shadowed by the variable 'err'.", "Line 90: Same shadowing issue: return err(err.Error()). The variable 'err' from doZoteroRequest shadows the predefined function err.", "Line 95: Same shadowing issue: return err(err.Error()). The variable 'err' from json.Unmarshal shadows the predefined function err."][0m
+[95m[00:01:56][W4][LLM] proxy-free-llm-fallback: 17487c in 40.2s[0m
+[96m[00:01:56][W4][INFO] REV-1: compiles=False err=['error1', 'error2'][0m
+[95m[00:01:58][W1][LLM] proxy-free-llm/free-llm t=300s[0m
+[95m[00:02:01][W4][LLM] proxy-free-llm-fallback/free-llm-fallback t=300s[0m
+[95m[00:02:07][W5][LLM] nvidia-qwen-qwen3-coder-480b-a35b-instruct/qwen/qwen3-coder-480b-a35b-instruct t=300s[0m
+[91m[00:02:08][W5][LLM-ERR] nvidia-qwen-qwen3-coder-480b-a35b-instruct: short/empty (0c in 0.7s)[0m
+[93m[00:02:08][W5][WARN] Retry 3/3 after 40s (provider: nvidia-qwen-qwen3-coder-480b-a35b-instruct)[0m
+[95m[00:02:10][W2][LLM] nvidia-qwen-qwen3.5-397b-a17b: 10907c in 98.1s[0m
+[92m[00:02:10][W2][OK] GEN OK: yahoo_finance2 (4 handlers)[0m
+[94m[00:02:15][W2][PHASE] REV: yahoo_finance2 (x2)[0m
+[95m[00:02:15][W2][LLM] nvidia-qwen-qwen3.5-397b-a17b/qwen/qwen3.5-397b-a17b t=300s[0m
+[95m[00:02:15][W1][LLM] proxy-free-llm: 7543c in 17.2s[0m
+[96m[00:02:15][W1][INFO] REV-2: compiles=True err=[][0m
+[93m[00:02:15][W1][WARN] REV SPLIT: zotero_mcp errors=["Line 84: return err(err.Error()) returns (ToolResponse, error), but err() expects a string argument and returns (ToolResponse, error). The call err.Error() returns a string, which is correct, but the function name 'err' shadows the built-in error type if used as a variable, though here it calls the predefined function. However, the predefined signature is func err(msg string) (ToolResponse, error). The usage return err(err.Error()) is syntactically valid IF 'err' variable in scope doesn't shadow the function. In this scope, 'err' is the error returned from buildZoteroRequest. Thus, the function 'err' is shadowed by the variable 'err'.", "Line 90: Same shadowing issue: return err(err.Error()). The variable 'err' from doZoteroRequest shadows the predefined function err.", "Line 95: Same shadowing issue: return err(err.Error()). The variable 'err' from json.Unmarshal shadows the predefined function err."][0m
+[94m[00:02:15][W1][PHASE] FIX: zotero_mcp (11 errors)[0m
+[95m[00:02:20][W1][LLM] nvidia-deepseek-ai-deepseek-v4-pro/deepseek-ai/deepseek-v4-pro t=300s[0m
+[91m[00:02:21][W1][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-pro: short/empty (0c in 1.0s)[0m
+[93m[00:02:21][W1][WARN] Retry 1/5 after 10s (provider: nvidia-deepseek-ai-deepseek-v4-pro)[0m
+[95m[00:02:23][W2][LLM] nvidia-qwen-qwen3.5-397b-a17b: 322c in 8.9s[0m
+[96m[00:02:23][W2][INFO] REV-1: compiles=False err=['undefined: err (shadowed by local variable in HandleGetQuote)', 'undefined: err (shadowed by local variable in HandleGetHistory)', 'undefined: err (shadowed by local variable in HandleSearchSymbols)'][0m
+[95m[00:02:28][W2][LLM] nvidia-deepseek-ai-deepseek-v4-flash/deepseek-ai/deepseek-v4-flash t=300s[0m
+[91m[00:02:29][W2][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-flash: short/empty (0c in 0.5s)[0m
+[93m[00:02:29][W2][WARN] Retry 1/3 after 10s (provider: nvidia-deepseek-ai-deepseek-v4-flash)[0m
+[95m[00:02:31][W1][LLM] proxy-free-llm/free-llm t=300s[0m
+[95m[00:02:39][W2][LLM] proxy-free-llm-fallback/free-llm-fallback t=300s[0m
+[95m[00:02:40][W4][LLM] proxy-free-llm-fallback: 17052c in 39.3s[0m
+[96m[00:02:40][W4][INFO] REV-2: compiles=False err=['unparseable review'][0m
+[93m[00:02:40][W4][WARN] REV FAIL: Jina AI errors=['error1', 'error2', 'unparseable review'][0m
+[94m[00:02:40][W4][PHASE] FIX: Jina AI (3 errors)[0m
+[95m[00:02:45][W4][LLM] nvidia-qwen-qwen3-coder-480b-a35b-instruct/qwen/qwen3-coder-480b-a35b-instruct t=300s[0m
+[91m[00:02:46][W4][LLM-ERR] nvidia-qwen-qwen3-coder-480b-a35b-instruct: short/empty (0c in 0.6s)[0m
+[93m[00:02:46][W4][WARN] Retry 1/5 after 10s (provider: nvidia-qwen-qwen3-coder-480b-a35b-instruct)[0m
+[95m[00:02:47][W1][LLM] proxy-free-llm: 8007c in 15.9s[0m
+[92m[00:02:47][W1][OK] FIX OK: zotero_mcp[0m
+[96m[00:02:47][W1][INFO] Claimed: Parallel Web Search -> parallelwebsearch.go[0m
+[94m[00:02:47][W1][PHASE] GEN: Parallel Web Search[0m
+[95m[00:02:47][W1][LLM] nvidia-qwen-qwen3.5-397b-a17b/qwen/qwen3.5-397b-a17b t=300s[0m
+[91m[00:02:48][W5][ERR] All 3 retries exhausted[0m
+[93m[00:02:48][W5][WARN] REV FAIL: Brave Search errors=['unreachable code: return ok("not yet implemented") after a return in HandleWebSearch', 'review LLM failed'][0m
+[94m[00:02:48][W5][PHASE] FIX: Brave Search (2 errors)[0m
+[95m[00:02:53][W5][LLM] nvidia-deepseek-ai-deepseek-v4-pro/deepseek-ai/deepseek-v4-pro t=300s[0m
+[91m[00:02:54][W5][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-pro: short/empty (0c in 0.8s)[0m
+[93m[00:02:54][W5][WARN] Retry 1/5 after 10s (provider: nvidia-deepseek-ai-deepseek-v4-pro)[0m
+[95m[00:02:56][W4][LLM] nvidia-deepseek-ai-deepseek-v4-flash/deepseek-ai/deepseek-v4-flash t=300s[0m
+[91m[00:02:56][W4][LLM-ERR] nvidia-deepseek-ai-deepseek-v4-flash: short/empty (0c in 0.5s)[0m
+[93m[00:02:56][W4][WARN] Retry 2/5 after 20s (provider: nvidia-deepseek-ai-deepseek-v4-flash)[0m
+[95m[00:03:04][W5][LLM] proxy-free-llm/free-llm t=300s[0m
+[95m[00:03:10][W3][LLM] proxy-free-llm-fallback/free-llm-fallback t=300s[0m
+[95m[00:03:16][W4][LLM] nvidia-qwen-qwen3-coder-480b-a35b-instruct/qwen/qwen3-coder-480b-a35b-instruct t=300s[0m
+[91m[00:03:17][W4][LLM-ERR] nvidia-qwen-qwen3-coder-480b-a35b-instruct: short/empty (0c in 0.5s)[0m
+[93m[00:03:17][W4][WARN] Retry 3/5 after 40s (provider: nvidia-qwen-qwen3-coder-480b-a35b-instruct)[0m
