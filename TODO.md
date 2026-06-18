@@ -21,8 +21,8 @@ _Last updated: 2026-06-17, version 1.0.0-alpha.132_
 - [ ] **ChunkHound / Probe Integration**: Implement remaining assimilated MCP search tools as native handlers.
 - [ ] **Bobbybookmarks Sync**: Configure automatic sync call triggers for catalog scraping. (Blocked by DNS failure — use Smithery.ai or Glama.ai)
 - [ ] **New Native Tools**: Implement `browser-use` and `browsermcp` specialized logic if needed (currently aliased to playwright).
-- [ ] **Session Import**: Script created at `scripts/import_sessions.py`. Format mismatch — needs TS control plane data format investigation.
-- [ ] **Git LFS**: Consider tracking large `.db` files with Git LFS to avoid repo bloat.
+- [x] **Session Import**: Format resolved — wraps JSONL in ExportPackage format (228 sessions detected). Orchestrator POST endpoint missing for actual restoration.
+- [ ] **Git LFS**: Consider tracking large `.db` files (provider_metrics.db 145MB, tormentnexus.db 34MB) with Git LFS to avoid repo bloat.
 - [x] **.out Cleanup**: `swarm_*.out` and `*.pid` added to `.gitignore`. (alpha.133)
 
 ## P2 — Enterprise Readiness & Security

@@ -1,7 +1,7 @@
 """
 Session Import — Fix Data Format
 ==================================
-Reads candidate session files and wraps them in the correct 
+Reads candidate session files and wraps them in the correct
 TormentNexus ExportPackage format for the TS tRPC import endpoint.
 
 Expected format:
@@ -20,6 +20,7 @@ import urllib.error
 
 GO_API = "http://localhost:4300"
 CANDIDATE_FILE = os.path.expanduser("~/.claude/history.jsonl")
+
 
 def build_export_package(raw_jsonl: str) -> dict:
     """Convert a JSONL file into TormentNexus ExportPackage format."""
@@ -40,7 +41,9 @@ def build_export_package(raw_jsonl: str) -> dict:
             "status": "stopped",
             "createdAt": entry.get("created_at", entry.get("startTime", 0)),
             "workingDirectory": os.getcwd(),
-            "metadata": {k: v for k, v in entry.items() if k not in ("messages", "transcript")},
+            "metadata": {
+                k: v for k, v in entry.items() if k not in ("messages", "transcript")
+            },
             "logs": [],
             "memories": [],
         }
@@ -52,7 +55,9 @@ def build_export_package(raw_jsonl: str) -> dict:
             transcript = json.dumps(messages)
         if transcript:
             session["metadata"]["transcriptSnippet"] = transcript[:5000]
-            session["logs"] = [{"timestamp": 0, "level": "info", "message": transcript[:50000]}]
+            session["logs"] = [
+                {"timestamp": 0, "level": "info", "message": transcript[:50000]}
+            ]
 
         sessions.append(session)
 
@@ -69,11 +74,13 @@ def build_export_package(raw_jsonl: str) -> dict:
 
 def import_export(pkg: dict, dry_run: bool = False):
     """Send properly formatted export package to the import endpoint."""
-    payload = json.dumps({
-        "data": json.dumps(pkg),
-        "merge": True,
-        "dryRun": dry_run,
-    }).encode()
+    payload = json.dumps(
+        {
+            "data": json.dumps(pkg),
+            "merge": True,
+            "dryRun": dry_run,
+        }
+    ).encode()
 
     req = urllib.request.Request(
         f"{GO_API}/api/session-export/import",
@@ -120,7 +127,10 @@ def main():
     for e in report.get("errors", [])[:5]:
         print(f"    - {e[:150]}")
     for d in report.get("details", [])[:3]:
-        print(f"    {d.get('action')}: {d.get('sessionId','')[:40]} {d.get('reason','')}")
+        print(
+            f"    {d.get('action')}: {d.get('sessionId', '')[:40]} {d.get('reason', '')}"
+        )
+
 
 if __name__ == "__main__":
     main()
