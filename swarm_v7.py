@@ -90,11 +90,16 @@ PROXY_BASE = f"{PROXY_URL}/v1/chat/completions"
 
 DIRECT_PROVIDERS = []
 
-# Generator pool - free-llm proxy (nvidia models removed - EOL since 2026-06-11)
-# Also add free-llm proxy as fallback
+# Generator pool - proxy-based models (nvidia DIRECT providers removed - EOL since 2026-06-11)
+# Models route through local proxy at localhost:4000
 for _model, _cd in [
-    ("free-llm", 10),
-    ("free-llm-fallback", 20),
+    ("free-llm", 8),
+    ("free-llm-fallback", 15),
+    ("gpt-4o-mini", 10),
+    ("claude-3-haiku", 10),
+    ("gemini-3-flash", 10),
+    ("deepseek/deepseek-v3-0324", 15),
+    ("qwen/qwen3.5-flash-02-23", 10),
 ]:
     DIRECT_PROVIDERS.append(
         {
