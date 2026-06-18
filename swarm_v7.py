@@ -1008,7 +1008,7 @@ Output the COMPLETE fixed code. No explanation. No markdown. Start with 'package
 def verify_build():
     try:
         r = subprocess.run(
-            ["go", "build", "-o", "tormentnexus.exe", "."],
+            ["go", "build", "-buildvcs=false", "-o", "tormentnexus.exe", "."],
             capture_output=True,
             text=True,
             cwd=str(WORKSPACE),
