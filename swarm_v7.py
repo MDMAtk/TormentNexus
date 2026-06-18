@@ -57,6 +57,28 @@ PROTECTED_FILES = {
     "apply_patch.go",
     "multi_edit.go",
     "git_ingest.go",
+    # Core handler files (will compile in root build)
+    "ddg_search.go",
+    "slack.go",
+    "gitingest.go",
+    "sqlite.go",
+    "search_tools.go",
+    "server.go",
+    "skill_registry.go",
+    "harnesses.go",
+    "filesystem.go",
+    "bash.go",
+    "fetch.go",
+    "ollama.go",
+    "tts.go",
+    "nws_tools.go",
+    "nws_weather.go",
+    "playwright_browser.go",
+    "semgrep.go",
+    "tavily.go",
+    "puppeteer.go",
+    "prompt_library.go",
+    "ripgrep.go",
 }
 
 # === MULTI-PROVIDER CONFIG (ALL VIA FREELLM PROXY) ===
@@ -986,10 +1008,10 @@ Output the COMPLETE fixed code. No explanation. No markdown. Start with 'package
 def verify_build():
     try:
         r = subprocess.run(
-            ["go", "build", "-buildvcs=false", "./cmd/tormentnexus"],
+            ["go", "build", "-o", "tormentnexus.exe", "."],
             capture_output=True,
             text=True,
-            cwd=str(GO_DIR),
+            cwd=str(WORKSPACE),
             timeout=120,
             encoding="utf-8",
             errors="replace",
