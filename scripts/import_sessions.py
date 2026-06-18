@@ -17,6 +17,7 @@ import urllib.error
 GO_API = "http://localhost:4300"
 TS_TRPC = "http://localhost:4100/trpc"
 
+
 def get_candidates():
     """Fetch candidate list from Go sidecar."""
     url = f"{GO_API}/api/import/summary"
@@ -27,13 +28,16 @@ def get_candidates():
         print(f"ERROR: Cannot reach Go sidecar at {GO_API}: {e}")
         sys.exit(1)
 
+
 def import_session(data_json: str, dry_run: bool = False):
     """Import a session via TS control plane tRPC bridge."""
-    payload = json.dumps({
-        "data": data_json,
-        "merge": True,
-        "dryRun": dry_run,
-    }).encode()
+    payload = json.dumps(
+        {
+            "data": data_json,
+            "merge": True,
+            "dryRun": dry_run,
+        }
+    ).encode()
 
     req = urllib.request.Request(
         f"{GO_API}/api/session-export/import",
@@ -47,6 +51,7 @@ def import_session(data_json: str, dry_run: bool = False):
         return {"error": e.read().decode()[:200]}
     except Exception as e:
         return {"error": str(e)}
+
 
 def main():
     dry_run = "--dry-run" in sys.argv
@@ -72,6 +77,7 @@ def main():
     # We scan known directories for session files matching the candidate count.
 
     import glob
+
     home = os.path.expanduser("~")
     workspace = os.getcwd()
 
@@ -87,13 +93,18 @@ def main():
     for root in scan_roots:
         if os.path.isdir(root):
             for ext in ["*.jsonl", "*.json", "*.md"]:
-                session_files.extend(glob.glob(os.path.join(root, "**", ext), recursive=True))
+                session_files.extend(
+                    glob.glob(os.path.join(root, "**", ext), recursive=True)
+                )
 
     # Filter to files that look like session exports
     candidates = []
     for f in session_files:
         name = os.path.basename(f).lower()
-        if any(hint in name for hint in ["session", "chat", "conversation", "transcript", "history"]):
+        if any(
+            hint in name
+            for hint in ["session", "chat", "conversation", "transcript", "history"]
+        ):
             candidates.append(f)
 
     candidates = sorted(set(candidates))
@@ -103,7 +114,9 @@ def main():
     errors = 0
     for fpath in candidates:
         fsize = os.path.getsize(fpath)
-        print(f"  [{'+' if not dry_run else 'D'}] {os.path.relpath(fpath, home)} ({fsize:,} bytes)")
+        print(
+            f"  [{'+' if not dry_run else 'D'}] {os.path.relpath(fpath, home)} ({fsize:,} bytes)"
+        )
 
         if dry_run:
             continue
@@ -136,6 +149,7 @@ def main():
     print(f"  Imported: {imported}")
     print(f"  Errors: {errors}")
     print(f"  Dry run: {dry_run}")
+
 
 if __name__ == "__main__":
     main()

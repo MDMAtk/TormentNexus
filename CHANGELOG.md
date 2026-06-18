@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.0-alpha.134] - 2026-06-18
+### Fixed
+- **Swarm `verify_build()` path**: Changed from broken `go/` module path to workspace root build (`go build -buildvcs=false -o tormentnexus.exe .`)
+- **Dead nvidia DIRECT_PROVIDERS removed**: All nvidia models were EOL (410 Gone since June 11) causing swarm crashes
+- **Handler files restored**: `ddg_search.go`, `slack.go`, `gitingest.go`, `sqlite.go` restored from git after swarm repair loop corrupted them to 36 bytes
+- **76+ empty Go stubs filled**: Missing `package tools` declarations added
+- **PROTECTED_FILES expanded**: From 13 to 33 core handler files protected from swarm repair loop
+- **huggingface.go corruption**: Fixed broken string constants
+- **Provider priority reordered**: Proxy models tried first, expanded with gpt-4o-mini, claude-3-haiku, gemini-3-flash, deepseek, qwen
+- **`swarm_*.out` and `*.pid`** added to `.gitignore`
+
+### Added
+- **Session import automation script**: `scripts/import_sessions.py` — scans and imports candidate sessions via Go sidecar bridge
+- **77 new Go tool stubs**: Swarm-generated MCP server wrappers in `go/internal/tools/`
+
+### Removed
+- **Merged branches**: `assimilation-pipeline`, `assimilation-final`, `jules/baseline-128-hardened` deleted from origin and local
+- **Stale swarm artifacts**: `.out` and `.pid` files cleaned
+
 ## [1.0.0-alpha.133] - 2026-06-18
 ### Added
 - **77 new swarm-generated Go tool stubs**: Staged and committed across `go/internal/tools/` — includes actiongate, americaslawgraph, apollouniversalmcpserver, and 74 more.
