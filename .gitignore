@@ -142,7 +142,7 @@ apps/web/.tormentnexus-dev-port.json
 # resources.db and context.db are internal registries — tracked
 
 # === LanceDB / Vector data ===
-data/
+data/*.db
 data/lancedb/
 data/memory/
 data/vectordb/
@@ -241,6 +241,8 @@ akb*
 _llm_*
 *.pid
 *.tar.gz
+watchdog.bat
+run.bat
 *.db-shm
 *.db-wal
 go/*.exe~
