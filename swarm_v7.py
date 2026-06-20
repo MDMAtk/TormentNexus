@@ -487,6 +487,7 @@ class ProxyManager:
                 ["taskkill", "//F", "//IM", "freellm.exe"],
                 capture_output=True,
                 timeout=10,
+                creationflags=subprocess.CREATE_NO_WINDOW,
             )
         except:
             pass
@@ -494,7 +495,8 @@ class ProxyManager:
         try:
             d = str(Path(PROXY_BIN).parent)
             subprocess.Popen(
-                [PROXY_BIN], cwd=d, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                [PROXY_BIN], cwd=d, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                creationflags=subprocess.CREATE_NO_WINDOW,
             )
         except Exception as e:
             log.err(f"Proxy start: {e}")
@@ -1004,6 +1006,7 @@ def fetch_source_code(github_url, temp_dir):
             capture_output=True,
             text=True,
             timeout=60,
+            creationflags=subprocess.CREATE_NO_WINDOW,
         )
     except Exception:
         # Fall back to raw file fetching
@@ -1130,6 +1133,7 @@ def verify_build():
             timeout=120,
             encoding="utf-8",
             errors="replace",
+            creationflags=subprocess.CREATE_NO_WINDOW,
         )
         if r.returncode == 0:
             log.build("CLEAN")
