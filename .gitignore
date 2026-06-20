@@ -142,6 +142,9 @@ apps/web/.tormentnexus-dev-port.json
 # resources.db and context.db are internal registries — tracked
 
 # === LanceDB / Vector data ===
+data/
+!data/*.db
+!data/init_state.py
 data/lancedb/
 data/memory/
 data/vectordb/
