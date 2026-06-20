@@ -384,6 +384,7 @@ class LLMClient:
                 timeout=timeout + 30,
                 encoding="utf-8",
                 errors="replace",
+                creationflags=subprocess.CREATE_NO_WINDOW,
             )
             elapsed = time.time() - t0
             # Parse SSE stream from proxy
