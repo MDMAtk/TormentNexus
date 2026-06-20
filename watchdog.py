@@ -204,7 +204,15 @@ def check_and_repair():
         pids = find_process(name, config)
 
         if pids:
-            log(f"{name}: OK (PID{'/'.join(str(p) for p in pids)})")
+            # If more than one, kill duplicates — keep the first one
+            if len(pids) > 1:
+                for extra in pids[1:]:
+                    try:
+                        subprocess.run(["taskkill", "/F", "/PID", str(extra)], capture_output=True, timeout=5)
+                        log(f"{name}: killed duplicate PID {extra}", "WARN")
+                    except Exception:
+                        pass
+            log(f"{name}: OK (PID {pids[0]})")
         else:
             log(f"{name}: DOWN — restarting...")
             all_ok = False
