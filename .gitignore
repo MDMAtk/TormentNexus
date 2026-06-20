@@ -235,6 +235,29 @@ db_v4_*.db
 db_v5_*.db
 scratch/
 
+# === Runtime DB files (auto-generated state, not source) ===
+agentic-ads.db
+borg.db
+catalog.db
+context_portal/context.db
+go/tormentnexus.db
+gorev.db
+metamcp.db
+mydatabase.db
+orchestrator/.test_vector_rag.db
+packages/cli/data/
+packages/core/data/
+
+# === Temp working files in data/ ===
+data/*.txt
+data/*.json
+data/fast_clean_tools.py
+data/surgical_clean_tools*.py
+data/bulk_clean_tools.py
+data/clean_broken_go.py
+data/find_broken_files.py
+data/assimilate_skills.py
+
 # === Temporary/Cache artifacts ===
 *.tmp
 akb*
