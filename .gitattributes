@@ -1,5 +1,6 @@
-*.db-shm filter=lfs diff=lfs merge=lfs -text
-*.db-wal filter=lfs diff=lfs merge=lfs -text
-*.sqlite filter=lfs diff=lfs merge=lfs -text
-*.sqlite3 filter=lfs diff=lfs merge=lfs -text
-*.db filter=lfs diff=lfs merge=lfs -text
+# Git LFS — only track large binary DB files (>10MB)
+provider_metrics.db filter=lfs diff=lfs merge=lfs -text
+tormentnexus.db filter=lfs diff=lfs merge=lfs -text
+tormentnexus.db-shm filter=lfs diff=lfs merge=lfs -text
+tormentnexus.db-wal filter=lfs diff=lfs merge=lfs -text
+catalog.db filter=lfs diff=lfs merge=lfs -text
