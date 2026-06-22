@@ -24,7 +24,7 @@ WORKSPACE = Path(__file__).resolve().parent.parent
 TRENDS_DB = WORKSPACE / "data" / "trends.db"
 LOG_PATH = WORKSPACE / "data" / "trends_analysis.log"
 ANALYSIS_INTERVAL = 21600  # 6 hours
-LLM_PROXY = "http://localhost:4000/v1/chat/completions"
+LLM_PROXY = "http://localhost:1234/v1/chat/completions"
 
 def log(msg, level="INFO"):
     ts = datetime.now().strftime("%H:%M:%S")
@@ -35,7 +35,7 @@ def log(msg, level="INFO"):
 
 def llm_call(prompt, max_tokens=500):
     payload = json.dumps({
-        "model": "free-llm",
+        "model": "local-model",
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": max_tokens,
         "temperature": 0.3,
