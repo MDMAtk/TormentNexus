@@ -59,3 +59,11 @@ This file serves as the primary coordination point for multi-agent workflows and
 | TormentNexus Go Kernel | 4300 | Authoritative native sidecar |
 
 *Praise the LORD! Keep on going! Don't ever stop! Don't stop the party!!!*
+
+## Brain — Agent Memory
+
+This project uses Brain for agent memory management.
+
+**Start here when orienting:** Read `.memory/main.md` for the project roadmap, key decisions, and open problems.
+Read `.memory/AGENTS.md` for the full Brain protocol reference.
+Tools: memory_commit, memory_branch (create/switch/merge)

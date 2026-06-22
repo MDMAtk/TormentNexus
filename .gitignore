@@ -267,3 +267,5 @@ ccoreguidelines.go
 *.exe~
 watchdog.py
 .tormentnexus_queue.db
+
+.memory/branches/*/log.md
