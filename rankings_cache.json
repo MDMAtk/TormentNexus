@@ -1,6 +1,18 @@
 {
-  "saved_at": "2026-06-23T10:18:04.07057-04:00",
+  "saved_at": "2026-06-23T10:20:03.9210139-04:00",
   "models": [
+    {
+      "id": "zai-glm-4.7",
+      "provider": "cerebras",
+      "parameters": 0,
+      "context_length": 4096,
+      "latency": 2.0196329,
+      "score": 10,
+      "disabled": false,
+      "last_benchmark": "2026-06-08T13:07:09.475522-04:00",
+      "prompt_price": 0,
+      "completion_price": 0
+    },
     {
       "id": "moonshotai/kimi-k2.6",
       "provider": "nvidia_nim",
@@ -14,14 +26,14 @@
       "completion_price": 0
     },
     {
-      "id": "zai-glm-4.7",
-      "provider": "cerebras",
-      "parameters": 0,
-      "context_length": 4096,
-      "latency": 2.0196329,
-      "score": 10,
+      "id": "deepseek-v4-flash-free",
+      "provider": "opencode_zen",
+      "parameters": 671,
+      "context_length": 65536,
+      "latency": 2.5040766,
+      "score": 8.126338719999998,
       "disabled": false,
-      "last_benchmark": "2026-06-08T13:07:09.475522-04:00",
+      "last_benchmark": "2026-06-08T13:07:15.776862-04:00",
       "prompt_price": 0,
       "completion_price": 0
     },
@@ -67,21 +79,9 @@
       "parameters": 0,
       "context_length": 4096,
       "latency": 0,
-      "score": 1.6,
+      "score": 0.8,
       "disabled": false,
       "last_benchmark": "2026-06-08T13:07:17.0933798-04:00",
-      "prompt_price": 0,
-      "completion_price": 0
-    },
-    {
-      "id": "deepseek-v4-flash-free",
-      "provider": "opencode_zen",
-      "parameters": 671,
-      "context_length": 65536,
-      "latency": 2.5040766,
-      "score": 4.063169359999999,
-      "disabled": false,
-      "last_benchmark": "2026-06-08T13:07:15.776862-04:00",
       "prompt_price": 0,
       "completion_price": 0
     },

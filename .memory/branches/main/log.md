@@ -11567,3 +11567,304 @@ echo ""
 echo "=== Stash 0 contents ===" && git stash show stash@{0} --stat 2>/dev/null | tail -10")
 **Observation**: bash: success
 
+## Turn 23 | 2026-06-23T14:18:00.008Z | deepseek/deepseek-v4-flash
+
+**Thought**: All 41 MCP files + 11 new packages intact. Let me proceed through the remaining steps.
+**Thinking**: All our files are intact. The stash still exists with all 39 files. Now the files exist in the working tree but they might not be staged. Let me stage and commit them, then handle the branch reconciliation.
+
+Actually, since there's only one remote (no upstream fork), and the only branches are `main` and `origin/main`, the branch reconciliation in Step 2 is straightforward — I just need to:
+1. Commit our changes to main
+2. Push to origin
+3. There are no feature branches to reconcile
+
+Let me now commit our changes, then move to Step 3 (workspace cleanup, version governance, changelog, handoff, push).
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && echo "=== STEP 2: BRANCH RECONCILIATION ===" && echo "Only branch: main" && git branch -a
+echo ""
+echo "No feature branches to reconcile."
+echo ""
+echo "=== STEP 3a: STAGE ALL ===" && git add -A 2>&1 | tail -3
+echo ""
+echo "=== Current status ===" && git diff --cached --stat | tail -5", timeout: 15)
+**Observation**: bash: success
+
+## Turn 24 | 2026-06-23T14:18:08.665Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good, 44 files staged, 16,616 insertions. Now let me update the version and changelog as per Step 3.
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && echo "=== STEP 3b: VERSION GOVERNANCE ===" && cat VERSION && echo ""
+echo "Incrementing version..."
+NEWVER=$(python -c "v=open('VERSION').read().strip(); parts=v.rsplit('.',1); newv=str(int(parts[1])+1) if len(parts)>1 else '1'; print(f'{parts[0]}.{newv}')")
+echo "$NEWVER" > VERSION
+echo "Version: $(cat VERSION)"")
+**Observation**: bash: success
+
+## Turn 25 | 2026-06-23T14:18:13.865Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good, incremented to alpha.135. Now update CHANGELOG.md.
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && cat CHANGELOG.md | head -5 && echo "..."")
+**Observation**: bash: success
+
+## Turn 26 | 2026-06-23T14:18:17.667Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && python << 'PYEOF'
+import datetime
+today = datetime.date.today().isoformat()
+
+entry = f"""
+## [1.0.0-alpha.135] - {today}
+### Added
+- **Go MCP Engine (Phase P Port)**: Ported 22 TS MCP features to native Go
+  - Cached inventory management (config + database merge)
+  - MCP traffic inspector with ring buffer
+  - Tool name namespacing (server__tool format)
+  - Discovery preflight checks and downstream server discovery
+  - Semantic catalog metadata derivation
+  - Server metadata TTL cache
+  - Session-scoped LRU tool working set
+  - MCP JSON config loader
+  - Compatibility tool definitions & runtime
+  - Config persistence store
+  - Conversational tool injector
+  - Direct mode & legacy proxy compatibility
+  - Native session meta tools
+  - Saved script execution
+  - Submodule manager
+  - Tool access guards
+  - Tool loading definitions & compatibility
+  - Tool selection telemetry
+  - Tool set compatibility
+- **11 New Go Service Packages**:
+  - `go/internal/research/` — native web search & content research
+  - `go/internal/knowledge/` — knowledge resource scanning
+  - `go/internal/autotest/` — auto-testing service
+  - `go/internal/citation/` — citation generation
+  - `go/internal/connectionpool/` — connection pooling
+  - `go/internal/contextpruner/` — context pruning
+  - `go/internal/googleworkspace/` — Google Workspace integration
+  - `go/internal/projecttracker/` — project detection
+  - `go/internal/symbolpin/` — symbol pinning
+  - `go/internal/catalogingestor/` — catalog ingestion
+  - `go/internal/catalogvalidator/` — catalog validation
+- **5 Handler Stubs Replaced**: graph.get, graph.rebuild, research.conduct, knowledge.ingest, rag.ingestFile/Text now call native Go instead of bridging to TS
+- **All 20 Layer 3 Services Wired**: Connected into Server struct
+
+### Changed
+- **tools/registry.go**: Rebuilt with proper ToolResponse, TextContent, helper functions
+- Removed 3,948 broken auto-generated stub files from `go/internal/tools/`
+
+### Build
+- Full `go build ./...` passes with zero errors
+- Go MCP package: 18 files → 41 files
+- Go internal packages: ~30 → 41 packages
+"""
+
+with open('CHANGELOG.md', 'r') as f:
+    content = f.read()
+
+# Insert after the first line
+header_end = content.index('\n') + 1
+content = content[:header_end] + entry + content[header_end:]
+
+with open('CHANGELOG.md', 'w') as f:
+    f.write(content)
+
+print('CHANGELOG.md updated')
+PYEOF")
+**Observation**: bash: error
+
+## Turn 27 | 2026-06-23T14:18:27.017Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The em dash character caused an issue. Let me use plain ASCII.
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && python << 'PYEOF'
+import datetime, sys
+sys.stdout.reconfigure(encoding='utf-8')
+
+today = datetime.date.today().isoformat()
+
+entry = f"""
+## [1.0.0-alpha.135] - {today}
+### Added
+- **Go MCP Engine (Phase P Port)**: Ported 22 TS MCP features to native Go
+- Cached inventory management (config + database merge)
+- MCP traffic inspector with ring buffer
+- Tool name namespacing (server__tool format)
+- Discovery preflight checks and downstream server discovery
+- Semantic catalog metadata derivation
+- Server metadata TTL cache
+- Session-scoped LRU tool working set
+- MCP JSON config loader
+- Compatibility tool definitions & runtime
+- Config persistence store
+- Conversational tool injector
+- Direct mode & legacy proxy compatibility
+- Native session meta tools
+- Saved script execution
+- Submodule manager
+- Tool access guards, loading definitions & compatibility
+- Tool selection telemetry & tool set compatibility
+- **11 New Go Service Packages**: research, knowledge, autotest, citation, connectionpool, contextpruner, googleworkspace, projecttracker, symbolpin, catalogingestor, catalogvalidator
+- **5 Handler Stubs Replaced**: graph.get, graph.rebuild, research.conduct, knowledge.ingest, rag.ingestFile/Text now native Go
+- **All 20 Layer 3 Services Wired**: Connected into Server struct
+
+### Changed
+- **tools/registry.go**: Rebuilt with proper ToolResponse, TextContent, helpers
+- Removed 3,948 broken auto-generated stub files from go/internal/tools/
+
+### Build
+- Full go build ./... passes with zero errors
+- Go MCP package: 18 files -> 41 files
+- Go internal packages: ~30 -> 41 packages
+"""
+
+with open('CHANGELOG.md', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+header_end = content.index('\n') + 1
+content = content[:header_end] + entry + content[header_end:]
+
+with open('CHANGELOG.md', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print('CHANGELOG.md updated')
+PYEOF", timeout: 10)
+**Observation**: bash: error
+
+## Turn 28 | 2026-06-23T14:18:34.793Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The content doesn't start with `# Changelog\n` as I expected. Let me check the file structure.
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && head -3 CHANGELOG.md | cat -A")
+**Observation**: bash: success
+
+## Turn 29 | 2026-06-23T14:18:38.574Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && xxd CHANGELOG.md | head -5")
+**Observation**: bash: success
+
+## Turn 30 | 2026-06-23T14:18:41.985Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The file might have been corrupted by the stash pop earlier. Let me check.
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && stat CHANGELOG.md && echo "---" && wc -c CHANGELOG.md")
+**Observation**: bash: success
+
+## Turn 31 | 2026-06-23T14:18:46.332Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The file is 0 bytes - it was corrupted when the stash pop happened. Let me restore it from the stash.
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && git checkout stash@{0} -- CHANGELOG.md 2>/dev/null && echo "Restored CHANGELOG" && git reset HEAD CHANGELOG.md 2>/dev/null && wc -c CHANGELOG.md")
+**Observation**: bash: success
+
+## Turn 32 | 2026-06-23T14:19:12.717Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good, restored. But wait, the stash had the old CHANGELOG. Let me also restore VERSION and README from stash if they were lost. Actually, it says VERSION is already modified in working tree. Let me check the version.
+
+Actually, the stash had the OLD version of these files. I already modified VERSION (bumped to alpha.135). Let me just proceed with updating the CHANGELOG now that it's restored.
+**Action**: bash(command: "cd /c/Users/hyper/workspace/tormentnexus && python3 << 'PYEOF'
+import datetime
+today = datetime.date.today().isoformat()
+
+entry = f"""
+## [1.0.0-alpha.135] - {today}
+### Added
+- **Go MCP Engine (Phase P Port)**: Ported 22 TS MCP features to native Go
+  - Cached inventory, traffic inspector, namespacing, discovery preflight
+  - Downstream discovery, catalog metadata, server metadata cache
+  - Session working set, MCP JSON config loader, compat tool defs/runtime
+  - Config store, conversational tool injector, direct mode/legacy compat
+  - Native session meta tools, saved script execution, submodule manager
+  - Tool access guards, tool loading defs/compat, tool selection telemetry
+  - Tool set compatibility
+- **11 New Go Service Packages**: research, knowledge, autotest, citation,
+  connectionpool, contextpruner, googleworkspace, projecttracker,
+  symbolpin, catalogingestor, catalogvalidator
+- **5 Handler Stubs Replaced**: graph.get, graph.rebuild, research.conduct,
+  knowledge.ingest, rag.ingestFile/Text now native Go
+- **All 20 Layer 3 Services Wired** into Server struct
+
+### Changed
+- **tools/registry.go**: Rebuilt with proper ToolResponse, TextContent, helpers
+- Removed 3,948 broken auto-generated stub files from go/internal/tools/
+
+### Build
+- Full go build ./... passes with zero errors
+- Go MCP package: 18 files -> 41 files
+- Go internal packages: ~30 -> 41 packages
+"""
+
+with open('CHANGELOG.md', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+# Insert after first section header
+idx = content.index('\n', content.index('#')) + 1
+content = content[:idx] + entry + content[idx:]
+
+with open('CHANGELOG.md', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print(f'CHANGELOG.md updated ({len(content)} bytes)')
+PYEOF")
+**Observation**: bash: success
+
+## Turn 33 | 2026-06-23T14:19:24.661Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good. Now let me create the version governance sync, update the HANDOFF.md, and then commit and push.
+**Action**: read(path: "C:\Users\hyper\workspace\tormentnexus\VERSION")
+**Observation**: read: success
+
+## Turn 34 | 2026-06-23T14:19:28.132Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good, version is alpha.135. Now let me restore the DB and create HANDOFF.md, then commit and push.
+**Action**: write(content: "# HANDOFF — Session 2026-06-23
+
+## Summary
+Full Go-sidecar port of all TS MCP engine features (3 layers).
+
+### What was done
+**Layer 1 (MCP Features)**: 23 new Go files added to `go/internal/mcp/`:
+- Core: cached_inventory, traffic_inspector, namespaces, discovery_preflight, downstream_discovery
+- Metadata: catalog_metadata, server_metadata_cache, session_working_set, mcp_json_config
+- Compat: compat_tool_defs, compat_tool_runtime, config_store, conversational_tool_injector
+- Modes: direct_mode_compat, legacy_proxy_mode, native_session_meta_tools
+- Management: saved_script_exec, submodule_manager, tool_access_guards
+- Loading: tool_loading_defs, tool_loading_compat, tool_selection_telemetry, tool_set_compat
+
+**Layer 2 (Routers)**: 5 stubs replaced with native Go:
+- handleGraphGet -> s.repoGraph.GetGraph()
+- handleGraphRebuild -> s.repoGraph.Build()
+- handleResearchConduct -> native ResearchService
+- handleKnowledgeIngest -> native KnowledgeService
+- handleRAGIngestFile/Text -> native implementations
+
+**Layer 3 (Services)**: 11 new Go packages + 9 wired into Server:
+- New: autotest, catalogingestor, catalogvalidator, citation, connectionpool, contextpruner, googleworkspace, projecttracker, symbolpin, research, knowledge
+- Existing: ctxharvester, hsync, workspaces, metrics (already wired)
+- Other: codemode (codeexec), shell (codeexec), bobbybookmarks (hsync), lsp/mission/policy (inline)
+
+**Cleanup**: Removed 3,948 broken auto-generated stub files, rebuilt tools/registry.go
+
+### Build Status
+- `go build ./...` — zero errors
+- Go MCP package: 18 -> 41 files
+- Go internal packages: ~30 -> 41
+
+### Pending
+- ~30 fallback bridge calls remain in server.go (native-first, TS-fallback pattern)
+- DB backed up as tormentnexus.db.bak (restore needed for running services)
+- CHANGELOG.md updated for v1.0.0-alpha.135
+- VERSION bumped to 1.0.0-alpha.135
+
+### Next Steps
+- Restart TS control plane (PID 44488 was killed to release DB lock)
+- Restart dashboard (PID 46032 was killed)
+- Verify all services operational
+", path: "C:\Users\hyper\workspace\tormentnexus\HANDOFF.md")
+**Observation**: write: success
+
