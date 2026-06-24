@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -52,10 +53,10 @@ type InputSchema struct {
 }
 
 type PropertySchema struct {
-	Type        string   `json:"type"`
-	Description string   `json:"description"`
-	Items       *any     `json:"items,omitempty"`
-	Default     *any     `json:"default,omitempty"`
+	Type        string `json:"type"`
+	Description string `json:"description"`
+	Items       *any   `json:"items,omitempty"`
+	Default     *any   `json:"default,omitempty"`
 }
 
 type TextContent struct {
@@ -121,8 +122,8 @@ func (s *MCPServer) registerTools() {
 			InputSchema: InputSchema{
 				Type: "object",
 				Properties: map[string]PropertySchema{
-					"windowTitle":    {Type: "string", Description: "Optional partial window title to target"},
-					"processName":    {Type: "string", Description: "Optional process name to target"},
+					"windowTitle":     {Type: "string", Description: "Optional partial window title to target"},
+					"processName":     {Type: "string", Description: "Optional process name to target"},
 					"surfaceOverride": {Type: "string", Description: "Optional explicit surface id to force"},
 				},
 			},
@@ -144,8 +145,8 @@ func (s *MCPServer) registerTools() {
 			InputSchema: InputSchema{
 				Type: "object",
 				Properties: map[string]PropertySchema{
-					"windowTitle":    {Type: "string", Description: "Optional partial window title"},
-					"processName":    {Type: "string", Description: "Optional process name"},
+					"windowTitle":     {Type: "string", Description: "Optional partial window title"},
+					"processName":     {Type: "string", Description: "Optional process name"},
 					"surfaceOverride": {Type: "string", Description: "Optional explicit surface id"},
 				},
 			},
@@ -194,9 +195,9 @@ func (s *MCPServer) registerTools() {
 			InputSchema: InputSchema{
 				Type: "object",
 				Properties: map[string]PropertySchema{
-					"bumpText":     {Type: "string", Description: "Text to type when chat is ready"},
-					"windowTitle":  {Type: "string", Description: "Optional partial window title"},
-					"processName":  {Type: "string", Description: "Optional process name"},
+					"bumpText":    {Type: "string", Description: "Text to type when chat is ready"},
+					"windowTitle": {Type: "string", Description: "Optional partial window title"},
+					"processName": {Type: "string", Description: "Optional process name"},
 				},
 			},
 		},
@@ -539,29 +540,30 @@ func cmdMCP(args []string) int {
 	log.Printf("[MCP] TormentNexus MCP Server starting (Go sidecar: %s)", goSidecarURL)
 
 	server := NewMCPServer(goSidecarURL)
+	scanner := bufio.NewScanner(os.Stdin)
+	writer := bufio.NewWriter(os.Stdout)
 
-	// Read JSON-RPC messages from stdin
-	decoder := json.NewDecoder(os.Stdin)
-	encoder := json.NewEncoder(os.Stdout)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
 
-	for {
 		var req MCPRequest
-		if err := decoder.Decode(&req); err != nil {
-			if err == io.EOF {
-				break
-			}
-			log.Printf("[MCP] Decode error: %v", err)
+		if err := json.Unmarshal([]byte(line), &req); err != nil {
+			log.Printf("[MCP] Invalid JSON: %v", err)
 			continue
 		}
 
 		resp := server.HandleRequest(req)
-		if err := encoder.Encode(resp); err != nil {
-			log.Printf("[MCP] Encode error: %v", err)
-			break
-		}
+		respBytes, _ := json.Marshal(resp)
+		writer.Write(respBytes)
+		writer.Write([]byte{'\n'})
+		writer.Flush()
+	}
 
-		// Flush stdout for stdio transport
-		os.Stdout.Sync()
+	if err := scanner.Err(); err != nil {
+		log.Printf("[MCP] Scanner error: %v", err)
 	}
 
 	return 0
