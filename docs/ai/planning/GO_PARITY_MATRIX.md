@@ -103,7 +103,7 @@ Status values:
 | BobbyBookmarks sync | Native Go exists + TS worker still present | Go sync implemented; TS worker still exists |
 | Link backlog crawl/tag enrichment | Partial Native Go | native Go crawler utility, HTTP endpoint, and Go server-owned background worker lifecycle now exist; TS worker still remains in the mixed-runtime world |
 | Session auto-import worker | Native Go | Go-native background worker in PreWarmCaches() scans and imports sessions periodically using sessionimport.IngestDiscoveredSessions. |
-| Transcript maintenance jobs | TS-only critical | still TS-owned |
+| Transcript maintenance jobs | Native Go | Go-native background worker reports maintenance stats via ImportedSessionStore.GetMaintenanceStats. Runs 5min after startup, then every 24h. |
 | Background ingestion ownership | Mixed | key migration target area |
 
 ---

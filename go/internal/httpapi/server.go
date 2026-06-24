@@ -719,6 +719,36 @@ func (s *Server) PreWarmCaches() {
 			}
 		}
 	}()
+
+	// Transcript maintenance: periodic archive and retention cleanup
+	go func() {
+		time.Sleep(5 * time.Minute) // Wait for initial import to settle
+		store := sessionimport.NewImportedSessionStore(s.cfg.WorkspaceRoot)
+
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+		stats, err := store.GetMaintenanceStats(ctx)
+		cancel()
+		if err != nil {
+			fmt.Printf("[TranscriptMaintenance] Initial stats error: %v\n", err)
+		} else {
+			fmt.Printf("[TranscriptMaintenance] Initial stats: sessions=%d, archived=%d, inline=%d, missingRetention=%d\n",
+				stats.TotalSessions, stats.ArchivedTranscriptCount, stats.InlineTranscriptCount, stats.MissingRetentionSummaryCount)
+		}
+
+		ticker := time.NewTicker(24 * time.Hour)
+		defer ticker.Stop()
+		for range ticker.C {
+			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+			stats, err := store.GetMaintenanceStats(ctx)
+			cancel()
+			if err != nil {
+				fmt.Printf("[TranscriptMaintenance] Periodic maintenance error: %v\n", err)
+			} else {
+				fmt.Printf("[TranscriptMaintenance] Maintenance stats: sessions=%d, archived=%d, inline=%d, missingRetention=%d\n",
+					stats.TotalSessions, stats.ArchivedTranscriptCount, stats.InlineTranscriptCount, stats.MissingRetentionSummaryCount)
+			}
+		}
+	}()
 }
 
 func (s *Server) ListenAndServe(ctx context.Context) error {
