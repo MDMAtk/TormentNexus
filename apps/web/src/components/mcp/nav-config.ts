@@ -230,14 +230,10 @@ export const INTEGRATIONS_NAV: NavItem[] = [
 
 export const MAIN_DASHBOARD_NAV: NavItem[] = [
     { title: "Dashboard Home", href: "/dashboard", icon: LayoutDashboard, variant: "ghost" },
-    { title: "Director", href: "/dashboard/director", icon: Bot, variant: "ghost" },
-    { title: "Council", href: "/dashboard/council", icon: Users, variant: "ghost" },
-    { title: "Supervisor", href: "/dashboard/supervisor", icon: Eye, variant: "ghost" },
-    { title: "Swarm", href: "/dashboard/swarm", icon: Users, variant: "ghost" },
+    { title: "Swarm & Agents", href: "/dashboard/swarm", icon: Users, variant: "ghost" },
     { title: "Brain", href: "/dashboard/brain", icon: Brain, variant: "ghost" },
     { title: "Research", href: "/dashboard/research", icon: FlaskConical, variant: "ghost" },
     { title: "Memory", href: "/dashboard/memory", icon: Brain, variant: "ghost" },
-    { title: "Knowledge", href: "/dashboard/knowledge", icon: Network, variant: "ghost" },
     { title: "Code", href: "/dashboard/code", icon: FileCode2, variant: "ghost" },
     { title: "Command", href: "/dashboard/command", icon: Terminal, variant: "ghost" },
     { title: "Inspector", href: "/dashboard/inspector", icon: FileSearch, variant: "ghost" },
@@ -249,7 +245,6 @@ export const MAIN_DASHBOARD_NAV: NavItem[] = [
     { title: "Metrics", href: "/dashboard/metrics", icon: BarChart3, variant: "ghost" },
     { title: "Marketplace", href: "/dashboard/marketplace", icon: ShoppingBag, variant: "ghost" },
     { title: "Skills", href: "/dashboard/skills", icon: Hammer, variant: "ghost" },
-    { title: "Squads", href: "/dashboard/squads", icon: Users, variant: "ghost" },
     { title: "Healer", href: "/dashboard/healer", icon: Heart, variant: "ghost" },
     { title: "Security", href: "/dashboard/security", icon: Shield, variant: "ghost" },
     { title: "Events", href: "/dashboard/events", icon: Activity, variant: "ghost" },

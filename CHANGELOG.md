@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0-alpha.153] - 2026-06-24
+
+### Changed
+- **Dashboard Consolidation**: 
+  - Unified `/dashboard/config` and `/dashboard/settings` into a single Settings tabbed page.
+  - Merged `/dashboard/knowledge` and `/dashboard/brain` into a unified Cognitive Graph and Ingest tabbed workspace under `/dashboard/brain`.
+  - Consolidated `/dashboard/director`, `/dashboard/council`, `/dashboard/supervisor`, `/dashboard/squads`, and `/dashboard/swarm` into a single, comprehensive Swarm & Agent Command Center under `/dashboard/swarm`.
+  - Cleaned up the side navigation config in `nav-config.ts` to reflect the new consolidated structure.
+- **MCP CLI Binary Resolution**: Replaced the root `tormentnexus.exe` with the compiled Go sidecar binary, resolving stdio clients `unknown command "mcp"` failures.
+- **Version bump**: Synchronized all monorepo packages to version `1.0.0-alpha.153`.
+
 ## [1.0.0-alpha.149] - 2026-06-24
 
 ### Added

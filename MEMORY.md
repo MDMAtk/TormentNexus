@@ -74,4 +74,12 @@
 - **Root Binary Pathing**: When the monorepo has two Go projects (e.g., a root Cobra CLI and a subfolder sidecar), they may compile binaries with the same name. If configurations or start scripts prioritize the root directory path (`tormentnexus.exe`), overwrite the root binary with the sidecar server so that subcommands like `mcp` can execute without Cobra CLI path conflicts.
 - **PowerShell Overwriting**: When using PowerShell in Windows, `Copy-Item` requires the `-Force` flag to overwrite an existing binary; otherwise, it silently leaves the target unchanged.
 
+## Session 2026-06-24 (Dashboard Consolidation Phase 2 & 3)
+
+### Agent & Knowledge Consolidation Heuristics
+- **Complex Page Consolidation**: Grouping multiple related subpages (e.g., `/dashboard/director`, `/dashboard/council`, `/dashboard/supervisor`, `/dashboard/squads`, `/dashboard/swarm`) into a single route with a tabbed interface makes the dashboard significantly cleaner and more cohesive, while preserving routing logic.
+- **Tab Layout Structure**: Using Framer Motion's `AnimatePresence` and `motion.div` transitions on tab panels creates a high-end, responsive feel.
+- **Vitest Workspace Matching**: Vitest scans all git worktrees recursively by default, matching nested test files. To run a fast, scoped test check, limit the matches by targeting specific directories or using exact path matching.
+
+
 
