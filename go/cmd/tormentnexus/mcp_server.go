@@ -120,10 +120,10 @@ var surfaceProfiles = []SurfaceProfile{
 // ─── MCP Server types (minimal subset of JSON-RPC) ───
 
 type MCPRequest struct {
-	JSONRPC string      `json:"jsonrpc"`
-	ID      interface{} `json:"id"`
-	Method  string      `json:"method"`
-	Params  *MCPParams  `json:"params,omitempty"`
+	JSONRPC string          `json:"jsonrpc"`
+	ID      interface{}     `json:"id"`
+	Method  string          `json:"method"`
+	Params  json.RawMessage `json:"params,omitempty"`
 }
 
 type MCPParams struct {
@@ -425,11 +425,16 @@ func (s *MCPServer) HandleRequest(req MCPRequest) MCPResponse {
 	case "tools/list":
 		resp.Result = map[string]any{"tools": s.tools}
 	case "tools/call":
-		if req.Params == nil {
+		if len(req.Params) == 0 {
 			resp.Error = &MCPError{Code: -32602, Message: "Missing params"}
 			return resp
 		}
-		result := s.callTool(req.Params.Name, req.Params.Arguments)
+		var params MCPParams
+		if err := json.Unmarshal(req.Params, &params); err != nil {
+			resp.Error = &MCPError{Code: -32602, Message: fmt.Sprintf("Invalid params: %v", err)}
+			return resp
+		}
+		result := s.callTool(params.Name, params.Arguments)
 		resp.Result = result
 	default:
 		resp.Error = &MCPError{Code: -32601, Message: fmt.Sprintf("Method not found: %s", req.Method)}

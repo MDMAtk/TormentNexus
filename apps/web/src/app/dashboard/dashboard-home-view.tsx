@@ -1141,24 +1141,6 @@ export function DashboardHomeView({
                             </div>
                         </div>
 
-                        <dl className="mt-6 grid gap-4 sm:grid-cols-2">
-                            <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                                <dt className="text-sm text-slate-400">Connected servers</dt>
-                                <dd className="mt-2 text-2xl font-semibold text-white">{isBootstrapping ? '—' : mcpStatus.connectedCount}</dd>
-                            </div>
-                            <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                                <dt className="text-sm text-slate-400">Indexed tools</dt>
-                                <dd className="mt-2 text-2xl font-semibold text-white">{isBootstrapping ? '—' : mcpStatus.toolCount}</dd>
-                            </div>
-                            <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                                <dt className="text-sm text-slate-400">Running sessions</dt>
-                                <dd className="mt-2 text-2xl font-semibold text-white">{isBootstrapping ? '—' : sessions.filter((session) => session.status === 'running').length}</dd>
-                            </div>
-                            <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                                <dt className="text-sm text-slate-400">Configured providers</dt>
-                                <dd className="mt-2 text-2xl font-semibold text-white">{isBootstrapping ? '—' : providers.filter((provider) => provider.configured).length}</dd>
-                            </div>
-                        </dl>
 
                         <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
                             <div className="flex items-start justify-between gap-4">
@@ -1313,18 +1295,15 @@ export function DashboardHomeView({
                                 </Link>
                             </div>
 
-                            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                                <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-3 text-sm text-slate-300">
-                                    <div className="font-medium text-white">Browser extensions</div>
-                                    <p className="mt-2 text-slate-400">Load Chromium/Edge and Firefox bundles, then connect them to the live bridge listener.</p>
+                            <div className="mt-4 grid gap-3 sm:grid-cols-3 text-xs text-slate-400">
+                                <div>
+                                    <span className="font-semibold text-slate-200">Browser extensions</span>: Load Chromium/Edge and Firefox bundles.
                                 </div>
-                                <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-3 text-sm text-slate-300">
-                                    <div className="font-medium text-white">Editor surfaces</div>
-                                    <p className="mt-2 text-slate-400">Package and install the VS Code extension, then verify connected bridge clients and hook phases.</p>
+                                <div>
+                                    <span className="font-semibold text-slate-200">Editor surfaces</span>: Package and install VS Code extension.
                                 </div>
-                                <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-3 text-sm text-slate-300">
-                                    <div className="font-medium text-white">Client config sync</div>
-                                    <p className="mt-2 text-slate-400">Push TormentNexus-managed MCP endpoints into Claude Desktop, Cursor, and VS Code without manual JSON surgery.</p>
+                                <div>
+                                    <span className="font-semibold text-slate-200">Client config sync</span>: Push endpoints to Cursor, Claude, and VS Code.
                                 </div>
                             </div>
                         </div>
