@@ -1,6 +1,6 @@
 {
   "name": "@tormentnexus/supervisor",
-  "version": "1.0.0-alpha.140",
+  "version": "1.0.0-alpha.141",
   "description": "TormentNexus Supervisor - Watchdog and Automation Agent",
   "type": "module",
   "main": "dist/index.js",

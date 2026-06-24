@@ -1,9 +1,11 @@
 # Go Backend Parity Matrix
 
 ## Purpose
+
 Track the migration from **TypeScript-primary** backend ownership to **Go-primary** backend ownership.
 
 Status values:
+
 - **Native Go** — implemented and intended to become authoritative in Go
 - **Bridge-first** — Go route exists and attempts TS first, then falls back natively
 - **Bridge-only** — Go surface exists but only proxies to TS
@@ -18,9 +20,9 @@ Status values:
 |---|---|---|
 | Go HTTP control plane | Native Go | `go/cmd/tormentnexus serve` works and exposes large `/api/*` surface |
 | Lock/status introspection | Native Go | runtime/config/lock endpoints exist |
-| Primary launcher ownership | TS-only critical | default startup path still centered on TS CLI/orchestrator |
+| Primary launcher ownership | Native Go | start.bat defaults to Go-primary when binary exists ("./tormentnexus.exe"). Use --runtime node for TS-primary. |
 | Non-destructive occupied-port behavior | TS-only critical | hardened in CLI TS path; equivalent Go-primary launcher path not yet authoritative |
-| Go-first default startup | Missing | explicit target, not yet the default repo behavior |
+| Go-first default startup | Native Go | start.bat --runtime auto (default) detects Go binary and uses Go-primary path. Falls back to TS if Go unavailable. Use --runtime go or --runtime node to force. |
 
 ---
 
@@ -100,7 +102,7 @@ Status values:
 |---|---|---|
 | BobbyBookmarks sync | Native Go exists + TS worker still present | Go sync implemented; TS worker still exists |
 | Link backlog crawl/tag enrichment | Partial Native Go | native Go crawler utility, HTTP endpoint, and Go server-owned background worker lifecycle now exist; TS worker still remains in the mixed-runtime world |
-| Session auto-import worker | TS-only critical / partially hardened | still TS-owned though startup failure modes reduced |
+| Session auto-import worker | Native Go | Go-native background worker in PreWarmCaches() scans and imports sessions periodically using sessionimport.IngestDiscoveredSessions. |
 | Transcript maintenance jobs | TS-only critical | still TS-owned |
 | Background ingestion ownership | Mixed | key migration target area |
 
@@ -148,31 +150,38 @@ Status values:
 ## Recommended migration order
 
 ### Phase 1 — Control-plane authority
+
 - implement Go-primary launcher/runtime selection
 - make Go the default owner of the primary control-plane port
 - keep TS as explicit compatibility supplement only
 
 ### Phase 2 — Stateful/startup-critical migrations
+
 - port remaining SQLite-backed startup services to Go
 - remove startup dependence on TS `better-sqlite3`
 - move HyperIngest/link-crawl ownership to Go
 
 ### Phase 3 — MCP backend completion
+
 - finish native Go CRUD/mutation/config/telemetry surfaces
 - retire TS ownership of MCP backend state
 
 ### Phase 4 — Orchestration parity
+
 - finish session/council/workflow/supervisor persistence and control parity
 - reduce bridge-first behavior where Go implementations are stable
 
 ### Phase 5 — UI/backend contract migration
+
 - point dashboard/native clients at Go-owned APIs
 - demote TS backend to compatibility only
 
 ---
 
 ## Definition of done
+
 Go is the primary version when:
+
 - the default startup path is Go-first
 - all major backend surfaces above are **Native Go**
 - TS backend ownership is no longer required for normal operator workflows
