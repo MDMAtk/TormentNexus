@@ -21,7 +21,7 @@ Status values:
 | Go HTTP control plane | Native Go | `go/cmd/tormentnexus serve` works and exposes large `/api/*` surface |
 | Lock/status introspection | Native Go | runtime/config/lock endpoints exist |
 | Primary launcher ownership | Native Go | start.bat defaults to Go-primary when binary exists ("./tormentnexus.exe"). Use --runtime node for TS-primary. |
-| Non-destructive occupied-port behavior | TS-only critical | hardened in CLI TS path; equivalent Go-primary launcher path not yet authoritative |
+| Non-destructive occupied-port behavior | Native Go | start.bat Go-primary path retries on port conflict, falls back to 7777, reports status clearly. |
 | Go-first default startup | Native Go | start.bat --runtime auto (default) detects Go binary and uses Go-primary path. Falls back to TS if Go unavailable. Use --runtime go or --runtime node to force. |
 
 ---

@@ -111,13 +111,13 @@ echo.
 
 REM Start Go sidecar in background if binary exists
 if exist bin\tormentnexus.exe (
-    curl -s -o nul -w "%%{http_code}" http://127.0.0.1:4300/health > "%TEMP%\tormentnexus_go_check.txt" 2>nul
+    curl -s -o nul -w "%%{http_code}" http://127.0.0.1:7778/health > "%TEMP%\tormentnexus_go_check.txt" 2>nul
     set /p GO_CHECK=<"%TEMP%\tormentnexus_go_check.txt"
     if "!GO_CHECK!"=="200" (
-        echo   Go sidecar already running on port 4300.
+        echo   Go sidecar already running on port 7778.
     ) else (
-        echo   Starting Go sidecar on port 4300...
-        start /B bin\tormentnexus.exe -port 4300 > nul 2>&1
+        echo   Starting Go sidecar on port 7778...
+        start /B bin\tormentnexus.exe serve --port 7778 > nul 2>&1
     )
 )
 
@@ -163,7 +163,7 @@ if "!CORE_CHECK!"=="200" (
 echo.
 echo   tRPC:      http://0.0.0.0:%TORMENTNEXUS_PORT%/trpc
 echo   REST:      http://0.0.0.0:%TORMENTNEXUS_PORT%/api
-echo   Go:        http://127.0.0.1:4300/health
+echo   Go:        http://127.0.0.1:7778/health
 echo   Dashboard: http://localhost:%DASH_PORT%/dashboard
 echo.
 if not "!CORE_CHECK!"=="200" (
@@ -201,15 +201,42 @@ if /I "%TORMENTNEXUS_SKIP_INSTALL%"=="1" (
 
 REM -- 3. Start Go control plane on port 7778 ------
 echo [3/5] Starting Go control plane...
-curl -s -o nul -w "%%{http_code}" http://127.0.0.1:7778/health > "%TEMP%\tormentnexus_go_primary_check.txt" 2>nul
-set /p GO_PRIMARY_CHECK=<"%TEMP%\tormentnexus_go_primary_check.txt"
-if "!GO_PRIMARY_CHECK!"=="200" (
-    echo   Go control plane already running on port 7778.
+set GO_PORT=7778
+set GO_WAIT_COUNT=0
+
+:go_health_check
+curl -s -o nul -w "%%{http_code}" http://127.0.0.1:!GO_PORT!/health > "%TEMP%\tormentnexus_go_check_!GO_PORT!.txt" 2>nul
+set /p GO_HEALTH=<"%TEMP%\tormentnexus_go_check_!GO_PORT!.txt"
+if "!GO_HEALTH!"=="200" (
+    echo   Go control plane already running on port !GO_PORT!.
 ) else (
-    start /B !GO_BIN! serve --port 7778 > nul 2>&1
-    echo   Started Go control plane on port 7778.
-    timeout /t 3 > nul
+    if !GO_WAIT_COUNT! LSS 3 (
+        start /B !GO_BIN! serve --port !GO_PORT! > nul 2>&1
+        echo   Starting Go control plane on port !GO_PORT!...
+        timeout /t 4 > nul
+        set /a GO_WAIT_COUNT+=1
+        curl -s -o nul -w "%%{http_code}" http://127.0.0.1:!GO_PORT!/health > "%TEMP%\tormentnexus_go_check_!GO_PORT!.txt" 2>nul
+        set /p GO_HEALTH=<"%TEMP%\tormentnexus_go_check_!GO_PORT!.txt"
+        if "!GO_HEALTH!"=="200" (
+            echo   Go control plane started on port !GO_PORT!.
+        ) else (
+            if !GO_PORT!==7778 (
+                echo   [WARN] Port 7778 unavailable, trying 7777...
+                set GO_PORT=7777
+                set GO_WAIT_COUNT=0
+                goto :go_health_check
+            ) else (
+                echo   [WARN] Go control plane failed to start on ports 7778/7777.
+                echo   Check if another process is using those ports.
+            )
+        )
+    ) else (
+        echo   [WARN] Go control plane not responding after 3 attempts.
+    )
 )
+
+REM Export the actual Go port for subsequent steps
+set TORMENTNEXUS_GO_PORT=!GO_PORT!
 
 REM -- 4. Start Dashboard (compat mode) -------------
 echo [4/5] Starting dashboard...
