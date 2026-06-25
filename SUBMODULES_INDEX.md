@@ -1,23 +1,55 @@
 # Submodules Index & Project Structure
 
-_Last updated: 2026-04-19_
+_Last updated: 2026-06-25, version 1.0.0-alpha.159_
 
-This document tracks all external submodules merged into the TormentNexus workspace to ensure feature parity and architectural integration.
+> **All legacy submodules have been removed as fully redundant.** The remaining submodules are minimal and maintained at their pinned commits via the repo sync protocol.
 
-## Current Submodules
+## Current Active Submodules
 
-| Submodule | Location | Upstream | Purpose / Status |
-|-----------|----------|----------|------------------|
-| **jules-autopilot** | `apps/cloud-orchestrator` | `robertpelloni/jules-autopilot` | Cloud orchestration and TS fallback routing. (Synced) |
-| **Maestro** | `apps/maestro` | `robertpelloni/Maestro` | Electron-based GUI client. (Synced, slated for native replacement) |
-| **OmniRoute** | `external/OmniRoute` / `archive/OmniRoute` | `diegosouzapw/OmniRoute` | Reference for unified LLM provider routing. |
-| **litellm** | `submodules/litellm` | `BerriAI/litellm` | Proxy server for 100+ LLMs. Reference for Go-native provider abstraction. |
-| **mcpproxy** | `submodules/mcpproxy` | `Dumbris/mcpproxy` | Reference for Go-based MCP routing and middleware. |
-| **tormentnexus** | `packages/tormentnexus` | `robertpelloni/tormentnexus` | Memory ingestion system. Fully ported to Go `MemoryManager`. |
-| **hyperharness** | `submodules/hyperharness` | `robertpelloni/hyperharness` | Core CLI harness integration. |
-| **multica** | `submodules/multica` | `multica-ai/multica` | Multi-agent conversation structures. |
-| **unifyroute** | `submodules/unifyroute` | `unifyroute/unifyroute` | Reference for fallback chains. |
-| **coding_agent_usage_tracker** | `submodules/coding_agent_usage_tracker` | `Dicklesworthstone/coding_agent_usage_tracker` | Billing, token tracing, and telemetry reference. |
+| Submodule | Location | Upstream | Commit | Purpose |
+|-----------|----------|----------|--------|---------|
+| **bobbybookmarks** | `bobbybookmarks/` | `robertpelloni/bobbybookmarks` | `c50f155` (main) | Bookmark sync and scraped data ingestion |
+| **enterprise_sales_bot** | `enterprise_sales_bot/` | `robertpelloni/enterprise_sales_bot` | `fdafa92` (main) | Enterprise sales bot with nested borg submodule |
+| **borg** (nested) | `enterprise_sales_bot/borg/` | `robertpelloni/borg` | `f3314909` (main) | Core OS module, tracks TormentNexus main |
+
+## Legacy Submodules (Removed)
+
+The following legacy submodules have been removed from `.gitmodules` as fully redundant, their functionality ported to native Go implementations inside `go/internal/`:
+
+- **jules-autopilot** — Cloud orchestration (Go-native replacement in controlplane)
+- **Maestro** — GUI client (slated for Wails native replacement)
+- **OmniRoute** — LLM provider routing (Go-native provider abstraction)
+- **litellm** — LLM proxy (replaced by FreeLLM proxy on port 4000)
+- **mcpproxy** — MCP routing (Go-native MCP server)
+- **tormentnexus** — Memory ingestion (fully ported to Go MemoryManager)
+- **hyperharness** — CLI harness (integrated into Go sidecar)
+- **multica** — Multi-agent structures (Go-native A2A protocol)
+- **unifyroute** — Fallback chains (Go-native router)
+- **coding_agent_usage_tracker** — Billing/tracing (Go-native telemetry)
+
+## Repository Layout
+
+```
+tormentnexus/
+├── go/                      # Go sidecar (kernel, control plane, tools)
+│   ├── cmd/tormentnexus/    # Main binary
+│   ├── internal/
+│   │   ├── controlplane/   # HTTP API server (Fiber)
+│   │   ├── memorystore/    # Vector DB, caching, reinforcement
+│   │   ├── mcpimpl/        # MCP tool implementations (~3,900+ handlers)
+│   │   └── tools/          # Tool dispatch & registry
+│   └── go.mod
+├── apps/
+│   └── web/                 # Next.js dashboard (port 7779)
+├── bobbybookmarks/          # Submodule: bookmark sync
+├── enterprise_sales_bot/    # Submodule: sales bot + nested borg
+├── data/                    # Database files (.db, assimilated states)
+├── scripts/                 # Build and sync utilities
+├── .memory/                 # Brain agent memory (roadmap, logs, branches)
+├── VERSION                  # Canonical version: 1.0.0-alpha.159
+└── CHANGELOG.md             # Full release history
+```
+
 | **CLIProxyAPIPlus** | `submodules/CLIProxyAPIPlus` | `robertpelloni/CLIProxyAPIPlus` | Shell proxy utilities. |
 | **LinJun** | `submodules/LinJun` | `wangdabaoqq/LinJun` | Agent workflows reference. |
 | **HyperHarness** | `submodules/HyperHarness` | `robertpelloni/HyperHarness` | Primary local CLI orchestration system. |

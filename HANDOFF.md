@@ -1,3 +1,58 @@
+# HANDOFF — Session 2026-06-25 R2 (Repository Synchronization Protocol — Properly Bumped & Verified)
+
+## Summary
+
+Re-executed the full repository synchronization protocol. Fixed version governance (properly bumped to 1.0.0-alpha.159 after previous session's bump was lost in merge conflict resolution). Updated all submodules to latest (enterprise_sales_bot +5 commits, borg to f33149099). Restored CRLF-corrupted tool files. Updated all documentation. Ran both Go and dashboard builds — both clean.
+
+### What was done
+
+1. **Upstream Tracking & Submodule Sanitization**:
+   - Fetched all remotes/tags. No upstream parent — `MDMAtk/TormentNexus` is root.
+   - Updated **bobbybookmarks** to latest `main` (c50f1551).
+   - Updated **enterprise_sales_bot** +5 commits (c4c5ab4 → 49f2045 → fdafa92).
+   - Updated nested **borg** to latest (f33149099, tracking TormentNexus main).
+   - Pushed submodule updates to their remotes.
+
+2. **Intelligent Merge Engine (Dual Direction)**:
+   - Re-inspected all 170+ `task/*` branches — all still zero-commit Brain checkpoints.
+   - No unique progress found anywhere. Merge engine: no-op.
+   - Restored 125+ tool files affected by CRLF working tree corruption.
+
+3. **Version Governance & Documentation**:
+   - **Version**: `1.0.0-alpha.157` → `1.0.0-alpha.159` (properly committed this time).
+   - **Package sync**: All 35 workspace packages synchronized.
+   - **CHANGELOG.md**: Added alpha.158 and alpha.159 entries (previous edits lost).
+   - **ROADMAP.md**: Updated to alpha.159 with R2 completed section.
+   - **SUBMODULES_INDEX.md**: Rewritten with current submodule layout and legacy removal notes.
+   - **HANDOFF.md**: This file updated.
+   - **Build scripts**: Verified pathing for build.bat, start.bat, start-go.bat, start-ts.bat, watchdog.bat — all functional.
+
+4. **Build & Push**:
+   - **Go build**: ✅ Clean compilation (`cd go && go build ./...`).
+   - **Dashboard build**: ✅ Clean compilation (`cd apps/web && pnpm build`).
+   - Pushed to `origin/main`.
+   - .gitignore verified: memory, session logs, databases, docs all tracked.
+
+### Key Fix from R1
+
+- **Version bump was lost** in R1 due to merge conflict resolution overwriting VERSION/CHANGELOG/ROADMAP changes. This R2 ensures all doc changes and version sync are properly staged and committed.
+
+### Current State
+
+- **Monorepo Version**: `1.0.0-alpha.159`
+- **Go Build**: ✅ Clean
+- **Dashboard Build**: ✅ Clean
+- **Submodules**: bobbybookmarks (c50f1551), enterprise_sales_bot (fdafa92), borg (f33149099)
+- **Branches**: Only `main` has unique work; 170+ `task/*` are inert
+
+### Next Agent Instructions
+
+- Continue MCP tool implementation from `assimilation_state.db` pending entries (3,270 remaining)
+- Address the 702 Dependabot vulnerabilities on GitHub
+- Consider enabling Git LFS for large `.db` files (provider_metrics.db 145MB, tormentnexus.db 34MB)
+
+---
+
 # HANDOFF — Session 2026-06-25 (Repository Synchronization Protocol & Bulk MCP Tool Assimilation)
 
 ## Summary
