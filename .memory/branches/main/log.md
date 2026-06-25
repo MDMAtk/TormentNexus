@@ -27045,3 +27045,117 @@ PYEOF", timeout: 600)
 **Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && git log --oneline -5 && echo "---" && git status --short")
 **Observation**: bash: success
 
+## Turn 17 | 2026-06-25T16:04:39.583Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now only log.md, assimilation_state.db, and arcade_mcp.go have been modified by the session. Let me check what happened to arcade_mcp.go.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && git diff go/internal/tools/arcade_mcp.go | head -20")
+**Observation**: bash: success
+
+## Turn 18 | 2026-06-25T16:04:57.912Z | deepseek/deepseek-v4-flash
+
+**Thought**: Now let me bump the version and sync documentation.
+**Thinking**: No diff for arcade_mcp.go - it might be a CRLF thing. Let me just add it and see. Now let me proceed with the version bump and updates.
+
+Let me update VERSION to 1.0.0-alpha.158, update CHANGELOG, then build.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && echo "1.0.0-alpha.158" > VERSION && cat VERSION"), read(path: "C:/Users/hyper/workspace/tormentnexus/CHANGELOG.md", limit: 5)
+**Observation**: bash: success; read: success
+
+## Turn 19 | 2026-06-25T16:05:01.271Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me update the CHANGELOG with the new entry for alpha.158.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/CHANGELOG.md", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 20 | 2026-06-25T16:05:25.456Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good. Now let me update ROADMAP and HANDOFF. Let me also check if there's a scripts/sync-versions.mjs file to run.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && cat scripts/sync-versions.mjs 2>&1 | head -20 || echo "No sync-versions script"")
+**Observation**: bash: success
+
+## Turn 21 | 2026-06-25T16:05:30.444Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good, the script exists. Let me run it.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && node scripts/sync-versions.mjs 2>&1")
+**Observation**: bash: success
+
+## Turn 22 | 2026-06-25T16:05:33.896Z | deepseek/deepseek-v4-flash
+
+**Thought**: All 35 packages synced to `1.0.0-alpha.158`. Now update the documentation.
+**Thinking**: 35 packages synced to 1.0.0-alpha.158. Now let me update the ROADMAP and HANDOFF docs, then update submodule references.
+**Action**: read(path: "C:/Users/hyper/workspace/tormentnexus/ROADMAP.md", limit: 5)
+**Observation**: read: success
+
+## Turn 23 | 2026-06-25T16:05:36.884Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me update the ROADMAP to reflect the current state including the bulk addition of 100+ MCP tools and the repo sync protocol execution.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/ROADMAP.md", edits: [object Object],[object Object])
+**Observation**: edit: success
+
+## Turn 24 | 2026-06-25T16:06:07.960Z | deepseek/deepseek-v4-flash
+
+**Thought**: Now update HANDOFF.md with this session's summary.
+**Thinking**: Now let me update HANDOFF.md and then run the build.
+**Action**: read(path: "C:/Users/hyper/workspace/tormentnexus/HANDOFF.md", limit: 5)
+**Observation**: read: success
+
+## Turn 25 | 2026-06-25T16:06:14.424Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me prepend a new HANDOFF for this session.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/HANDOFF.md", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 26 | 2026-06-25T16:06:41.709Z | deepseek/deepseek-v4-flash
+
+**Thought**: Now let me run the full build.
+**Thinking**: Good. Now let me do the build phase. Let me run the Go build to check for compilation, then run pnpm install/build for the dashboard.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build ./... 2>&1 | tail -20", timeout: 120)
+**Observation**: bash: success
+
+## Turn 27 | 2026-06-25T16:07:03.108Z | deepseek/deepseek-v4-flash
+
+**Thought**: ✅ Go build: clean compilation. Now the dashboard build.
+**Thinking**: Go build passed cleanly (no output = no errors). Now let me check the dashboard and TypeScript build.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/dashboard && pnpm build 2>&1 | tail -20", timeout: 120)
+**Observation**: bash: error
+
+## Turn 28 | 2026-06-25T16:07:07.420Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: No dashboard directory. Let me find the correct location.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && ls -d */ 2>/dev/null | grep -i dash"), bash(command: "cd C:/Users/hyper/workspace/tormentnexus && find . -name "package.json" -maxdepth 3 -path "*/dash*" 2>/dev/null | head -5")
+**Observation**: bash: error; bash: success
+
+## Turn 29 | 2026-06-25T16:07:11.760Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: No dashboard directory. Let me check the workspace structure.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && ls -la")
+**Observation**: bash: success
+
+## Turn 30 | 2026-06-25T16:07:14.417Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: There's no standalone dashboard directory - this is a monorepo with apps/ directory that likely contains the dashboard. Let me check.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && ls apps/ && cat pnpm-workspace.yaml")
+**Observation**: bash: success
+
+## Turn 31 | 2026-06-25T16:07:17.324Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The dashboard is probably in `apps/web/` (Next.js app). Let me check.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && pnpm build 2>&1 | tail -20", timeout: 120)
+**Observation**: bash: success
+
+## Turn 32 | 2026-06-25T16:08:38.191Z | deepseek/deepseek-v4-flash
+
+**Thought**: ✅ **Dashboard build: clean**. Now let me stage everything for the final push.
+**Thinking**: ✅ Dashboard build successful. Now let me commit and push everything.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && git status --short")
+**Observation**: bash: success
+
