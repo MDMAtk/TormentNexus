@@ -4,3 +4,6 @@ tormentnexus.db filter=lfs diff=lfs merge=lfs -text
 tormentnexus.db-shm filter=lfs diff=lfs merge=lfs -text
 tormentnexus.db-wal filter=lfs diff=lfs merge=lfs -text
 catalog.db filter=lfs diff=lfs merge=lfs -text
+*.db filter=lfs diff=lfs merge=lfs -text
+*.db-shm filter=lfs diff=lfs merge=lfs -text
+*.db-wal filter=lfs diff=lfs merge=lfs -text
