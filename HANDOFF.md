@@ -1,3 +1,15 @@
+# HANDOFF — Session 2026-06-26 R13 (Go-Native MCP Tools and GraphRAG SQLite Memory - Alpha.188)
+
+## Summary
+
+Successfully integrated all internal Go-native tools into the MCP server interface, implemented GraphRAG relational tools mapping directly to SQLite, and resolved dashboard configuration override bugs:
+1. **Go-Native Tools via MCP**: Merged and exposed all internal Go-native tool definitions (such as `probe`, `read_file`, `search_semantic`, etc.) in the `/api/mcp/tools` endpoint. Each tool has fully validated parameters and parameters schemas.
+2. **Relational SQLite Tools (GraphRAG)**: Bound the SQLite `RelationStore` relational edge mapper to the active `VectorStore` db handle. Reimplemented `mem0` (Create Relation), `mem1` (Traverse relations), and `mem2` (Stats/Get relations) tools to map directly to GraphRAG traversals in the SQLite memory db.
+3. **Always-On Dashboard Toggles**: Fixed the toggles override bug by allowing built-in tools to check and respect configurations inside `always-on-tools.json`, enabling users to successfully toggle always-on configurations in the React security panel.
+4. **Verification & Cloud Readiness**: The full Go package test suite (`./internal/...` including `httpapi` integration tests) passed successfully. The Next.js production build check (`pnpm build`) compiled all 83 routes cleanly. Monorepo versions were synchronized to `1.0.0-alpha.188` and committed/pushed to both remotes.
+
+---
+
 # HANDOFF — Session 2026-06-26 R12 (System Tray Utility, Spaced Repetition, and Encrypted Mesh - Alpha.187)
 
 ## Summary
