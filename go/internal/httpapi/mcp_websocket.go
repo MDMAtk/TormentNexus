@@ -29,6 +29,7 @@ type WSBroker struct {
 	broadcast  chan []byte
 	register   chan *WSClient
 	unregister chan *WSClient
+	history    [][]byte
 	mu         sync.Mutex
 }
 
@@ -37,6 +38,7 @@ var globalWSBroker = &WSBroker{
 	broadcast:  make(chan []byte, 100),
 	register:   make(chan *WSClient),
 	unregister: make(chan *WSClient),
+	history:    make([][]byte, 0, 100),
 }
 
 func init() {
@@ -49,6 +51,14 @@ func (b *WSBroker) run() {
 		case client := <-b.register:
 			b.mu.Lock()
 			b.clients[client] = true
+			// Replay recent history to the new client
+			for _, message := range b.history {
+				select {
+				case client.send <- message:
+				default:
+					break
+				}
+			}
 			b.mu.Unlock()
 		case client := <-b.unregister:
 			b.mu.Lock()
@@ -59,6 +69,12 @@ func (b *WSBroker) run() {
 			b.mu.Unlock()
 		case message := <-b.broadcast:
 			b.mu.Lock()
+			// Maintain history of the last 100 entries
+			if len(b.history) >= 100 {
+				b.history = b.history[1:]
+			}
+			b.history = append(b.history, message)
+
 			for client := range b.clients {
 				select {
 				case client.send <- message:
