@@ -1,3 +1,40 @@
+# HANDOFF — Session 2026-06-26 R9 (Advanced Sidecar, Playwright Actions, Catalog Sync, and Enterprise Security - Alpha.182)
+
+## Summary
+
+Successfully implemented, verified, and pushed all planned next-generation capabilities for the TormentNexus Go Sidecar: Glama.ai/Smithery.ai catalog sync integration (with fallback presets), structured Chromium Playwright actions, partitioned enterprise security wrappers (SSO, RBAC, JSONL auditing), skill outcome win-rate engine with dynamic evolution/auto-deactivation, and unified native tool catalog syncing. Built the codebase, verified monorepo type safety (zero TypeScript/Go compilation errors), bumped version to `1.0.0-alpha.182`, and pushed to all remotes.
+
+### What was done
+
+1. **Glama/Smithery Sync**:
+   - Implemented dynamic fallback scraper inside `go/internal/hsync/glama.go` fetching tool metadata packages from the Glama.ai API.
+   - Fixed SQLite `ON CONFLICT` constraints to target `normalized_url` on the `links_backlog` table.
+
+2. **Playwright Browser Actions**:
+   - Developed real structured Chromium action runners (supporting `navigate`, `click`, `type`, `screenshot`) using inline Node/Playwright scripts in `go/internal/tools/browser_action.go`.
+   - Registered `"browser_action"` tool handler in `go/internal/tools/registry.go`.
+
+3. **Enterprise Compliance Partitioning**:
+   - Isolated security, SSO validations, simple RBAC role checks, and JSONL log audits into a separate wrapper package `go/internal/enterprise/enterprise.go`.
+   - Integrated middleware endpoints in `go/internal/httpapi/server.go`.
+
+4. **Skill Win-rate & Evolution Engine**:
+   - Designed schema for `skill_outcomes` to log outcomes.
+   - Built evolution analysis metrics and dynamic file deactivation logic in `go/internal/skillregistry/evolution.go` and the `/evolve` command.
+
+5. **Unified Catalog Sync**:
+   - Linked Go-native tools to sync automatically into `catalog.db`'s FTS search index upon daemon startup.
+
+### Current State
+
+- **Monorepo Version**: `1.0.0-alpha.182`
+- **Go Sidecar Server**: Live on port `4300` with the new native catalog sync and Glama background scrapers active.
+- **Next.js Dev Server**: Running on port `3000`.
+- **TypeScript Codebase**: ✅ 100% type-safe compilation (zero errors).
+- **Remotes**: Both `origin` and `origin-backup` fully up-to-date.
+
+---
+
 # HANDOFF — Session 2026-06-26 R8 (ChunkHound & Probe Native Go Integration - Alpha.181)
 
 ## Summary
