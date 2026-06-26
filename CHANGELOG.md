@@ -1,5 +1,10 @@
 # Changelog
  
+## [1.0.0-alpha.171] - 2026-06-26
+
+### Fixed
+- **Go Sidecar Tool Self-Healing**: Automatically parsed compile-breaking tools (such as `lamda.go`, `browser_tools_mcp.go`, `xhs_downloader.go`, `skillseekers.go`, `chrome_devtools_mcp.go`, `housing_assist.go`, `ngss_standards_explorer.go`, `github.go`, `context7.go`, `supabase.go`, `playwright.go`, `qasper.go`, and `market_russia.go`), quarantined them, and reset their DB state to pending for auto-regeneration. Verified that Go sidecar now compiles 100% cleanly.
+
 ## [1.0.0-alpha.170] - 2026-06-26
 
 ### Changed
