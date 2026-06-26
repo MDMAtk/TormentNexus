@@ -1,7 +1,8 @@
 "use client";
+export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { ComponentType, FormEvent } from 'react';
 import { Button, Card, CardContent, CardHeader, CardTitle } from '@tormentnexus/ui';
@@ -1576,6 +1577,14 @@ const MCP_TABS = [
 ] as const;
 
 export default function MCPDashboard(): React.JSX.Element {
+  return (
+    <Suspense fallback={<div className="p-8 text-zinc-500">Loading...</div>}>
+      <MCPDashboardContent />
+    </Suspense>
+  );
+}
+
+function MCPDashboardContent(): React.JSX.Element {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') || 'dashboard';

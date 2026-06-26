@@ -13,6 +13,7 @@ import (
 	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
 	"github.com/tormentnexushq/tormentnexus-go/internal/codeexec"
 	"github.com/tormentnexushq/tormentnexus-go/internal/enterprise"
+	"github.com/tormentnexushq/tormentnexus-go/internal/catalogingestor"
 	"github.com/tormentnexushq/tormentnexus-go/internal/memorystore"
 	"io"
 	"io/fs"
@@ -574,7 +575,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 
 	// Initialize Enterprise Security Wrapper (with placeholder provider)
 	server.auditor = enterprise.NewAuditor(cfg.WorkspaceRoot)
-	server.enterpriseWrapper = enterprise.NewEnterpriseWrapper(nil)
+	server.enterpriseWrapper = enterprise.NewEnterpriseWrapper(enterprise.NewSimpleRBACProvider())
 	server.consensusEngine = orchestration.NewConsensusEngine(server.debateHistory, memoryVS)
 	server.eventBus.OnGlobal(func(ev eventbus.SystemEvent) {
 		if data, err := json.Marshal(ev); err == nil {
@@ -685,28 +686,28 @@ func (s *Server) PreWarmCaches() {
 		}
 	}()
 	go func() {
-		// Bobbybookmarks auto-sync: initial sync after startup delay, then periodic re-syncs
+		// Sync registered native tools into catalog.db on startup
+		time.Sleep(5 * time.Second)
+		if err := catalogingestor.SyncRegisteredToolsToCatalog(s.cfg.WorkspaceRoot, s.toolsRegistry.List()); err != nil {
+			fmt.Printf("[CatalogSync] Failed to sync Go-native tools: %v\n", err)
+		} else {
+			fmt.Println("[CatalogSync] Successfully synced Go-native registered tools to catalog.db")
+		}
+	}()
+	go func() {
+		// Glama/Smithery registry auto-sync: initial sync after startup delay, then periodic re-syncs
 		time.Sleep(bobbyBookmarksSyncDelay)
 		dbPath := s.localTormentNexusDBPath()
-		baseURL := "https://bobbybookmarks.com"
 
 		// Initial sync on startup
-		fmt.Printf("[BobbyBookmarks] Starting initial auto-sync from %s...\n", baseURL)
+		fmt.Println("[CatalogSync] Starting initial registry auto-sync from Glama.ai...")
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 		defer cancel()
-		res, err := hsync.SyncBobbyBookmarks(ctx, dbPath, baseURL, 100, false, false)
+		res, err := hsync.SyncGlamaMCP(ctx, dbPath)
 		if err != nil {
-			fmt.Printf("[BobbyBookmarks] Initial sync error: %v. Falling back to local database sync...\n", err)
-			localDbPath := filepath.Join(s.cfg.WorkspaceRoot, "go/bobbybookmarks/bookmarks.db")
-			resLocal, errLocal := hsync.SyncBobbyBookmarksLocal(ctx, dbPath, localDbPath)
-			if errLocal != nil {
-				fmt.Printf("[BobbyBookmarks] Local fallback sync error: %v\n", errLocal)
-			} else {
-				fmt.Printf("[BobbyBookmarks] Local fallback sync complete: fetched=%d, upserted=%d, pages=%d\n",
-					resLocal.Fetched, resLocal.Upserted, resLocal.Pages)
-			}
+			fmt.Printf("[CatalogSync] Initial sync error: %v\n", err)
 		} else {
-			fmt.Printf("[BobbyBookmarks] Initial sync complete: fetched=%d, upserted=%d, pages=%d\n",
+			fmt.Printf("[CatalogSync] Initial sync complete: fetched=%d, upserted=%d, pages=%d\n",
 				res.Fetched, res.Upserted, res.Pages)
 		}
 
@@ -714,21 +715,13 @@ func (s *Server) PreWarmCaches() {
 		ticker := time.NewTicker(bobbyBookmarksSyncInterval)
 		defer ticker.Stop()
 		for range ticker.C {
-			fmt.Printf("[BobbyBookmarks] Starting periodic re-sync from %s...\n", baseURL)
+			fmt.Println("[CatalogSync] Starting periodic registry re-sync from Glama.ai...")
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-			res, err := hsync.SyncBobbyBookmarks(ctx, dbPath, baseURL, 100, false, false)
+			res, err := hsync.SyncGlamaMCP(ctx, dbPath)
 			if err != nil {
-				fmt.Printf("[BobbyBookmarks] Periodic sync error: %v. Falling back to local database sync...\n", err)
-				localDbPath := filepath.Join(s.cfg.WorkspaceRoot, "go/bobbybookmarks/bookmarks.db")
-				resLocal, errLocal := hsync.SyncBobbyBookmarksLocal(ctx, dbPath, localDbPath)
-				if errLocal != nil {
-					fmt.Printf("[BobbyBookmarks] Local fallback sync error: %v\n", errLocal)
-				} else {
-					fmt.Printf("[BobbyBookmarks] Local fallback sync complete: fetched=%d, upserted=%d, pages=%d\n",
-						resLocal.Fetched, resLocal.Upserted, resLocal.Pages)
-				}
+				fmt.Printf("[CatalogSync] Periodic sync error: %v\n", err)
 			} else {
-				fmt.Printf("[BobbyBookmarks] Periodic re-sync complete: fetched=%d, upserted=%d, pages=%d\n",
+				fmt.Printf("[CatalogSync] Periodic re-sync complete: fetched=%d, upserted=%d, pages=%d\n",
 					res.Fetched, res.Upserted, res.Pages)
 			}
 			cancel()
@@ -8164,7 +8157,7 @@ func (s *Server) handleLinksBacklogSync(w http.ResponseWriter, r *http.Request) 
 	}
 	defer db.Close()
 
-	res, fallbackErr := hsync.SyncBobbyBookmarks(r.Context(), s.localTormentNexusDBPath(), "https://bobbybookmarks.com", 100, false, false)
+	res, fallbackErr := hsync.SyncGlamaMCP(r.Context(), s.localTormentNexusDBPath())
 	if fallbackErr != nil {
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
@@ -8180,7 +8173,7 @@ func (s *Server) handleLinksBacklogSync(w http.ResponseWriter, r *http.Request) 
 		"bridge": map[string]any{
 			"fallback":  "go-local-links-sync",
 			"procedure": "linksBacklog.syncFromBobbyBookmarks",
-			"reason":    "upstream unavailable; executing native Go links backlog sync",
+			"reason":    "upstream unavailable; executing native Go Glama/Smithery registry catalog sync",
 		},
 	})
 }

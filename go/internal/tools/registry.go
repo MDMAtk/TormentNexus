@@ -92,6 +92,8 @@ func NewRegistry() *Registry {
 	r.Register("fetch", HandleFetch)
 	r.Register("get", HandleGet)
 	r.Register("post", HandlePost)
+	r.Register("browser_action", HandleBrowserAction)
+	r.Register("evolve", HandleEvolve)
 	return r
 }
 

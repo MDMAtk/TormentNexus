@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import type React from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PageHeader } from '@/components/PageHeader';
 import { PageStatusBanner } from '@/components/PageStatusBanner';
@@ -786,6 +787,14 @@ const SWARM_TABS = [
 ] as const;
 
 export default function SwarmDashboard(): React.JSX.Element {
+  return (
+    <Suspense fallback={<div className="p-8 text-zinc-500">Loading Swarm...</div>}>
+      <SwarmDashboardContent />
+    </Suspense>
+  );
+}
+
+function SwarmDashboardContent(): React.JSX.Element {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') || 'swarm';

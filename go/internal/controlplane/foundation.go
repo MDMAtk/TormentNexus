@@ -156,6 +156,15 @@ CREATE TRIGGER IF NOT EXISTS l2_vault_fts_au AFTER UPDATE ON l2_vault BEGIN
     DELETE FROM l2_vault_fts WHERE id = old.id;
     INSERT INTO l2_vault_fts(id, content) VALUES (new.id, new.content);
 END;
+
+-- Skill Evolution outcomes tracking
+CREATE TABLE IF NOT EXISTS skill_outcomes (
+    skill_name TEXT PRIMARY KEY,
+    success_count INTEGER DEFAULT 0,
+    failure_count INTEGER DEFAULT 0,
+    win_rate REAL DEFAULT 1.0,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 `
 
 func Now() time.Time {

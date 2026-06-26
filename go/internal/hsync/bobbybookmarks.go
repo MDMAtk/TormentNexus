@@ -194,7 +194,7 @@ func upsertBookmarks(tx *sql.Tx, bookmarks []Bookmark) (int, error) {
 			page_title, page_description, favicon_url, cluster_id, 
 			bobbybookmarks_bookmark_id, import_session_id, synced_at, created_at, updated_at
 		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-		ON CONFLICT(url) DO UPDATE SET
+		ON CONFLICT(normalized_url) DO UPDATE SET
 			normalized_url = excluded.normalized_url,
 			title = coalesce(excluded.title, links_backlog.title),
 			description = coalesce(excluded.description, links_backlog.description),

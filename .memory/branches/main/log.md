@@ -31662,3 +31662,148 @@ Let me check the trpc import and other imports to see if there's a build-time de
 **Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && head -5 src/app/dashboard/mcp/page.tsx && echo "---" && grep "export const dynamic\|export const runtime" src/app/dashboard/mcp/page.tsx 2>&1 || echo "No dynamic export"")
 **Observation**: bash: success
 
+## Turn 9 | 2026-06-26T16:36:03.160Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The page is `"use client"` which should prevent prerendering. The issue is likely that one of the view imports errors at build time because it uses a module that only works in the browser.
+
+Let me check if it's the `trpc` import that's causing the issue, or if one of the view files has a build-time dependency error. Let me try building just this page to get more detail.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && npx next build 2>&1 | grep -B3 -A5 "mcp/page"", timeout: 120)
+**Observation**: bash: success
+
+## Turn 10 | 2026-06-26T16:37:08.978Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me get more verbose output.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && npx next build 2>&1 | grep "Error:" | head -5", timeout: 120)
+**Observation**: bash: success
+
+## Turn 11 | 2026-06-26T16:38:14.673Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The prerender error is happening at runtime, not at compile time. It's trying to execute the client component during SSR. Since it's a "use client" page, Next.js should skip SSR for it. Let me check if the page is wrapped in a Suspense boundary or has any static generation methods.
+
+Actually, looking at the issue more carefully — the `"use client"` directive tells Next.js this is a client component, but Next.js still attempts to prerender (SSR) it during `next build` for the static generation path. Since the MCP page makes API calls during render, the SSR fails because there's no server available at build time.
+
+The fix is to either:
+1. Make it fully dynamic with `export const dynamic = 'force-dynamic'`
+2. Or handle the build-time rendering gracefully
+
+Let me add dynamic rendering.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/mcp/page.tsx", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 12 | 2026-06-26T16:38:59.013Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now rebuild the dashboard.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && pnpm build 2>&1 | tail -5", timeout: 180)
+**Observation**: bash: success
+
+## Turn 13 | 2026-06-26T16:40:09.861Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The same error persists even with `force-dynamic`. The issue might be that one of the view imports is causing the SSR to fail. Let me check which view is causing the issue by reading the stack trace more carefully.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && pnpm build 2>&1 | grep -E "Error|error|at " | grep -v "node_modules" | head -10", timeout: 120)
+**Observation**: bash: success
+
+## Turn 14 | 2026-06-26T16:41:14.368Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Found it! The error is:
+```
+useSearchParams() should be wrapped in a suspense boundary at page "/dashboard/mcp"
+```
+
+This is a Next.js 16 requirement — `useSearchParams()` must be wrapped in a `<Suspense>` boundary. The page uses `useSearchParams` but doesn't have a Suspense wrapper. Let me fix this.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && grep -n "useSearchParams" src/app/dashboard/mcp/page.tsx | head -5")
+**Observation**: bash: success
+
+## Turn 15 | 2026-06-26T16:41:18.903Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `useSearchParams()` is used at line 1581 without a Suspense boundary. In Next.js 16, `useSearchParams()` must be wrapped in a Suspense boundary. The fix is to either:
+1. Wrap the component that uses it in `<Suspense>`
+2. Or pass searchParams as a prop from a parent
+
+The page is very large (1630+ lines). Let me find the exact usage and add a Suspense wrapper.
+**Action**: read(offset: 1578, path: "C:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/mcp/page.tsx", limit: 15)
+**Observation**: read: success
+
+## Turn 16 | 2026-06-26T16:41:24.030Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The fix is straightforward — I need to wrap the component in a Suspense boundary. The simplest approach is to create a separate component for the content and wrap it in Suspense in the default export.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/mcp/page.tsx", edits: [object Object],[object Object])
+**Observation**: edit: success
+
+## Turn 17 | 2026-06-26T16:41:54.504Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now rebuild.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && pnpm build 2>&1 | tail -8", timeout: 180)
+**Observation**: bash: success
+
+## Turn 18 | 2026-06-26T16:42:59.757Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The React import might not have `Suspense` in the scope. Let me check the imports. Actually, looking at the imports — the page uses `import Link from 'next/link'` but doesn't import `React` explicitly. In Next.js with the new JSX transform, `React` isn't automatically in scope. I need to use `<Suspense>` from React directly.
+**Action**: read(offset: 1, path: "C:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/mcp/page.tsx", limit: 8)
+**Observation**: read: success
+
+## Turn 19 | 2026-06-26T16:43:05.913Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: I need to add `Suspense` to the React import. Also, line 5 has `import { useMemo, useState } from 'react'` but I should add `Suspense` to it or import it separately. Since the file uses JSX, `<Suspense>` will need to be used either via `React.Suspense` or imported directly.
+
+Let me add Suspense to the import.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/mcp/page.tsx", edits: [object Object],[object Object])
+**Observation**: edit: success
+
+## Turn 20 | 2026-06-26T16:43:32.129Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && pnpm build 2>&1 | tail -5", timeout: 180)
+**Observation**: bash: success
+
+## Turn 21 | 2026-06-26T16:44:35.803Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The same error moved to `/dashboard/swarm/page`. Now the swarm page has the same issue. Let me fix all pages that use `useSearchParams` without Suspense.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && grep -rl "useSearchParams" src/app/dashboard/ | grep "page.tsx"")
+**Observation**: bash: success
+
+## Turn 22 | 2026-06-26T16:44:40.653Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me fix the swarm page too.
+**Action**: read(offset: 1, path: "C:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/swarm/page.tsx", limit: 10)
+**Observation**: read: success
+
+## Turn 23 | 2026-06-26T16:44:45.493Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Same pattern — I need to wrap it in Suspense. Let me find where useSearchParams is used.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && grep -n "useSearchParams\|export default" src/app/dashboard/swarm/page.tsx | head -5")
+**Observation**: bash: success
+
+## Turn 24 | 2026-06-26T16:44:49.813Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/swarm/page.tsx", edits: [object Object],[object Object])
+**Observation**: edit: success
+
+## Turn 25 | 2026-06-26T16:45:27.932Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now rebuild the dashboard.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && pnpm build 2>&1 | tail -5", timeout: 180)
+**Observation**: bash: success
+
+## Turn 26 | 2026-06-26T16:46:40.057Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now it's the root dashboard page! Let me fix all pages that use `useSearchParams` at once.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/apps/web && grep -rl "useSearchParams" src/app/dashboard/ | grep "page.tsx"")
+**Observation**: bash: success
+
