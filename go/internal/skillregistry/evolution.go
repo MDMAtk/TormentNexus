@@ -61,6 +61,8 @@ func (ds *SkillDecisionSystem) RecordOutcome(skillID string, success bool) {
 			fmt.Printf("[Evolution] Auto-retiring skill %s due to low win rate (%.2f)\n", id, winRate)
 			// Retire the skill
 			skill.IsRetired = true
+			skill.Successes = 0
+			skill.Failures = 0
 			ds.registry.Unregister(skill.Name)
 			delete(ds.loaded, id)
 			return
