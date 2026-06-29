@@ -156,6 +156,12 @@ func (s *Server) handleMemoryFTSearch(w http.ResponseWriter, r *http.Request) {
 			limit = p
 		}
 	}
+	offset := 0
+	if o := r.URL.Query().Get("offset"); o != "" {
+		if p, err := strconv.Atoi(o); err == nil && p >= 0 {
+			offset = p
+		}
+	}
 	includeCold := r.URL.Query().Get("cold") == "true"
 
 	if tools.GlobalVectorStore == nil {
@@ -169,7 +175,7 @@ func (s *Server) handleMemoryFTSearch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	results, err := fts.Search(r.Context(), query, includeCold, limit)
+	results, err := fts.Search(r.Context(), query, includeCold, limit, offset)
 	if err != nil {
 		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
 		return

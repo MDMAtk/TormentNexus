@@ -63,9 +63,12 @@ type FTSMemorySearchResult struct {
 // Search executes a full-text query across L2 and (optionally) L3 memories.
 // Query syntax uses FTS5 standard: words, phrases ("in quotes"), prefix (term*),
 // and NEAR/AND/OR operators.
-func (f *FTSMemorySearch) Search(ctx context.Context, query string, includeCold bool, limit int) ([]FTSMemorySearchResult, error) {
+func (f *FTSMemorySearch) Search(ctx context.Context, query string, includeCold bool, limit int, offset int) ([]FTSMemorySearchResult, error) {
 	if limit <= 0 || limit > 100 {
 		limit = 20
+	}
+	if offset < 0 {
+		offset = 0
 	}
 
 	var results []FTSMemorySearchResult
@@ -80,8 +83,8 @@ func (f *FTSMemorySearch) Search(ctx context.Context, query string, includeCold 
 		JOIN l2_vault v ON v.id = f.memory_id
 		WHERE l2_memory_fts MATCH ?
 		ORDER BY score
-		LIMIT ?
-	`, query, limit)
+		LIMIT ? OFFSET ?
+	`, query, limit, offset)
 	if err != nil {
 		return nil, fmt.Errorf("fts l2 search: %w", err)
 	}
@@ -113,8 +116,8 @@ func (f *FTSMemorySearch) Search(ctx context.Context, query string, includeCold 
 			FROM l3_cold_archive
 			WHERE content LIKE ? OR tags LIKE ? OR kind LIKE ?
 			ORDER BY heat_score DESC, importance DESC
-			LIMIT ?
-		`, "%"+query+"%", "%"+query+"%", "%"+query+"%", limit)
+			LIMIT ? OFFSET ?
+		`, "%"+query+"%", "%"+query+"%", "%"+query+"%", limit, offset)
 		if err == nil {
 			defer coldRows.Close()
 			for coldRows.Next() {
