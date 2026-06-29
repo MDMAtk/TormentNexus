@@ -29,18 +29,37 @@ func (m *Manager) startSleepCycleEngine() {
 	}
 	go func() {
 		ctx := context.Background()
+		limbo, limboErr := NewLimboVault(m.vs.db)
+		if limboErr != nil {
+			fmt.Printf("SleepCycle: L4 limbo unavailable: %v\n", limboErr)
+			limbo = nil
+		}
+
 		// Run initial cycle on boot
 		_ = m.vs.ForgettingCurveDecay(ctx)
 		_ = m.vs.ConsolidateMemories(ctx)
 		_ = m.vs.MentalModelReflection(ctx)
+		if limbo != nil {
+			_ = buryOrphanedMemories(ctx, m.vs.db, limbo)
+			_ = dreamCycle(ctx, m.vs.db)
+		}
 
-		ticker := time.NewTicker(6 * time.Hour)
+		ticker := time.NewTicker(1 * time.Hour)
 		defer ticker.Stop()
 
 		for range ticker.C {
 			_ = m.vs.ForgettingCurveDecay(ctx)
 			_ = m.vs.ConsolidateMemories(ctx)
 			_ = m.vs.MentalModelReflection(ctx)
+			if limbo != nil {
+				_ = buryOrphanedMemories(ctx, m.vs.db, limbo)
+				_ = dreamCycle(ctx, m.vs.db)
+				// Hard-delete limbo entries older than 90 days
+				n, _ := limbo.HardDelete(ctx, 90*24*time.Hour)
+				if n > 0 {
+					fmt.Printf("SleepCycle: purged %d old limbo entries\n", n)
+				}
+			}
 		}
 	}()
 }
