@@ -77,8 +77,12 @@ func NewVectorStore(dbPath string) (*VectorStore, error) {
 		return nil, fmt.Errorf("failed to init scratchpad schema: %w", err)
 	}
 
-	// Backfill existing memories into FTS table if needed
-	_, _ = db.Exec("INSERT INTO l2_vault_fts(id, content) SELECT id, content FROM l2_vault WHERE id NOT IN (SELECT id FROM l2_vault_fts)")
+	// Initialize FTS5 full-text search (creates l2_memory_fts virtual table + triggers)
+	if _, err := db.Exec(ftsSchemaSQL); err != nil {
+		fmt.Printf("Warning: failed to init FTS5 schema: %v\n", err)
+	}
+	// Rebuild FTS index from existing L2 vault data
+	rebuildFTSIndex(db)
 
 	var l3 *L3ColdArchive
 	var l3Err error

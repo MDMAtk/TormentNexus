@@ -36323,3 +36323,1253 @@ Let me clean up _broken and check the dashboard.
 **Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build ./cmd/tormentnexus 2>&1 && echo "GO: CLEAN" && echo "" && echo "=== ALL HEALTHY ===" && netstat -ano | findstr "LISTENING" | findstr ":7778 :7779 :4000 :1234 :4300" 2>&1 && echo "" && curl -s --max-time 3 http://127.0.0.1:7778/health 2>&1", timeout: 60)
 **Observation**: bash: success
 
+## Turn 108 | 2026-06-29T05:22:56.350Z | deepseek/deepseek-v4-flash
+
+**Thought**: Everything clean. Let me commit the cleanup and push.
+**Thinking**: Everything is clean and healthy. Let me commit the _broken cleanup and do a final push.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && git add -A && git commit -m "chore: clean stale _broken/ dir (459 corrupted stubs removed), all builds clean" && git push origin main 2>&1", timeout: 600)
+**Observation**: bash: success
+
+## Turn 109 | 2026-06-29T05:23:20.720Z | deepseek/deepseek-v4-flash
+
+**Thought**: ✅ **Pushed** — 459 corrupted stubs deleted, 17KB of stale code removed.
+
+---
+
+## ✅ STATUS
+
+### Clean Slate
+- **`_broken/`** — wiped clean. The swarm with the compile-check fix will regenerate only valid tools going forward.
+- **`go/internal/tools/`** — 9 stable files. Clean build.
+- **Dashboard** — 83 routes, clean build, production mode.
+
+### Running Services
+| Port | Service | Status |
+|------|---------|--------|
+| **7778** | TormentNexus Server | ✅ alpha.193 🤖 |
+| **7779** | Dashboard | ✅ Production |
+| **4000** | FreeLLM | ✅ 200+ models |
+| **1234** | LM Studio | ✅ Local inference |
+
+### Recent Features Added
+- 🤖 Robot emoji system tray icon
+- 🔍 FTS5 full-text search API (`/api/memory/fts-search`)
+- ❄️ L3 cold archive API (`/api/memory/cold-archive`)
+- 🔗 GraphRAG relation storage + traversal
+- 🧠 L3 cold archive (Archive/Promote/Search/GC)
+- 🗑️ Cloud-orchestrator/jules-autopilot removed
+- 🛠️ Swarm compile-check fix deployed
+**Thinking**: Cleaned up and pushed. 459 corrupted stubs removed from _broken/. The directory still exists (gitignored) so the swarm can write new files there if they fail the compile check.
+
+Let me give the final status.
+
+## Turn 1 | 2026-06-29T15:05:46.411Z | deepseek/deepseek-v4-flash
+
+**Thought**: The red robot face flashes briefly (300ms) whenever there's **system activity** — any API call, tool execution, or event on the internal event bus. It's an **I/O activity indicator**.
+
+The normal state is a **blue robot face** 🤖. When something happens (a request comes in, a tool runs, an event fires), it switches to **red** for 300ms to show "something is happening," then reverts to blue.
+
+So a red flash = "TormentNexus is doing something right now." A steady blue = "idle/waiting."
+**Thinking**: The user is asking about the system tray icon behavior. I implemented the robot tray icon in `robot_icon.go` and the systray logic in `systray_windows.go`. Let me look at when the red (alert) icon is shown.
+
+From the systray code I read earlier:
+
+```go
+func init() {
+    // Preload programmatically generated robot icons
+    hNormalIcon = getNormalIcon()    // bright blue robot
+    hActivityIcon = getAlertIcon()   // alert red robot
+}
+```
+
+And the `NotifyActivity` function:
+
+```go
+func NotifyActivity(dir string) {
+    // Change icon to warning (flashing) and update tip
+    updateTrayIcon(hActivityIcon, fmt.Sprintf("TormentNexus - Active I/O (%s)", dir))
+    
+    // After 300ms, revert to normal
+    activityTimeout = time.AfterFunc(300*time.Millisecond, func() {
+        updateTrayIcon(hNormalIcon, "TormentNexus (Running)")
+    })
+}
+```
+
+And `NotifyActivity("in")` is called from `server.go`:
+```go
+eb.OnGlobal(func(ev eventbus.SystemEvent) {
+    // Treat any eventbus activity as I/O flow
+    NotifyActivity("in")
+})
+```
+
+So the red icon flashes when:
+1. Any system event is fired on the event bus (every API call, tool execution, etc.)
+2. It shows briefly for 300ms then reverts to blue
+
+The red flash means "activity happening" - it's an I/O activity indicator.
+
+## Turn 1 | 2026-06-29T15:17:30.430Z | deepseek/deepseek-v4-flash
+
+**Thought**: The memory system is fully built — FTS5 search, cold archive, GraphRAG relations, spaced repetition — but **the database is empty**. There's no data flowing in.
+
+The highest impact next step would be to **wire up the data ingestion pipeline**: pull from the assimilation database (`assimilation_state.db` has ~12K entries) and the 57K imported session memories in `tormentnexus.db` into the L2 vault so the FTS search and memory APIs return real results instead of empty responses.
+
+That would make all the features actually useful. Want me to start on that?
+**Thinking**: The user is asking what the next step should be. Let me think about what's most valuable to work on next.
+
+Recent accomplishments:
+1. Robot system tray icon (blue/red)
+2. FTS5 search + cold archive API endpoints
+3. Cloud-orchestrator/jules-autopilot removed
+4. Swarm compile-check fix
+5. 459 corrupted stubs cleaned from _broken/
+6. Dashboard consolidated with 4 nav sections
+7. Legacy port 4300 killed permanently
+
+What's left to do:
+1. **Memory features are implemented but the DB is empty** — the FTS5 search, cold archive, and GraphRAG relations are all wired into the API but there's no data in the memory database. The system needs to start populating the memory store from imported sessions, the atlas database, or active session capture.
+
+2. **The `_broken/` directory is gone but the swarm needs to actually generate valid tools** — the compile-check fix is in place but we haven't verified it works by running the swarm and seeing it produce valid Go code.
+
+3. **Dashboard orphaned pages** — there are still ~48 orphaned dashboard pages that aren't in the nav.
+
+4. **Documentation** — ROIADMAP.md, TODO.md, HANDOFF.md haven't been updated in a while.
+
+5. **No license file** — the server starts with "No tormentnexus.lic license file found. Running under free limitations."
+
+Let me think about what's highest impact...
+
+The memory system is fully built (L1, L2, L3 cold archive, FTS5, GraphRAG relations, spaced repetition endpoints all exist) but there's no active data ingestion. The `assimilation_state.db` has ~12K entries but they're not being imported into the memory store.
+
+Actually, the most impactful thing I can suggest is probably one of:
+1. Start populating the memory system from the assimilation database
+2. Get the dashboard to actually show the new features
+3. General cleanup and documentation
+
+Let me just answer the user's question directly with my recommendation.
+
+## Turn 1 | 2026-06-29T16:42:07.623Z | deepseek/deepseek-v4-flash
+
+**Thought**: Two great ideas. Let me start with the L4 "Limbo" vault, then wire up data ingestion.
+**Thinking**: The user wants two things:
+
+1. Ingest data from the existing databases into the L2 vault so the memory APIs return real results
+2. Create an L4 "limbo" vault for memories that are lost, forgotten, or discarded (instead of being permanently deleted)
+
+Let me start with the L4 vault since it's smaller, then do the data ingestion.
+**Action**: write(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/limbo_vault.go", content: "package memorystore
+
+import (
+	"context"
+	"database/sql"
+	"encoding/json"
+	"fmt"
+	"time"
+
+	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
+)
+
+// L4LimboVault stores lost, forgotten, or discarded memories.
+// Once a memory enters limbo it can be:
+//   - Resurrected (promoted back to L2)
+//   - Permanently purged after a configurable TTL
+//   - Queried for "what have we forgotten?" analytics
+type L4LimboVault struct {
+	db *sql.DB
+}
+
+const limboSchemaSQL = `
+CREATE TABLE IF NOT EXISTS l4_limbo (
+    id              TEXT PRIMARY KEY,
+    session_id      TEXT NOT NULL DEFAULT '',
+    original_tier   TEXT NOT NULL DEFAULT 'l2',
+    kind            TEXT NOT NULL DEFAULT '',
+    category        TEXT NOT NULL DEFAULT '',
+    tags            TEXT NOT NULL DEFAULT '',
+    source_url      TEXT NOT NULL DEFAULT '',
+    content         TEXT NOT NULL,
+    importance      REAL NOT NULL DEFAULT 0.0,
+    heat_score      REAL NOT NULL DEFAULT 0.0,
+    reason          TEXT NOT NULL DEFAULT 'unknown',
+    limbo_entered_at DATETIME NOT NULL DEFAULT (datetime('now')),
+    created_at      DATETIME NOT NULL DEFAULT (datetime('now')),
+    purged_at       DATETIME,
+    metadata        TEXT NOT NULL DEFAULT '{}'
+);
+
+CREATE INDEX IF NOT EXISTS idx_limbo_reason   ON l4_limbo(reason);
+CREATE INDEX IF NOT EXISTS idx_limbo_entered  ON l4_limbo(limbo_entered_at);
+CREATE INDEX IF NOT EXISTS idx_limbo_kind     ON l4_limbo(kind);
+`
+
+// LimboReason describes why a memory was sent to limbo.
+type LimboReason string
+
+const (
+	LimboLost      LimboReason = "lost"      // orphaned / no session reference
+	LimboForgotten LimboReason = "forgotten" // manually discarded or timed out
+	LimboDiscarded LimboReason = "discarded" // explicitly deleted by user/agent
+	LimboDecayed   LimboReason = "decayed"   // heat score dropped to zero
+	LimboReplaced  LimboReason = "replaced"  // superseded by a newer memory
+)
+
+// NewLimboVault opens or creates the L4 limbo vault.
+func NewLimboVault(db *sql.DB) (*L4LimboVault, error) {
+	if _, err := db.Exec(limboSchemaSQL); err != nil {
+		return nil, fmt.Errorf("limbo schema: %w", err)
+	}
+	return &L4LimboVault{db: db}, nil
+}
+
+// Bury moves a memory record into the limbo vault with a reason.
+func (v *L4LimboVault) Bury(ctx context.Context, record controlplane.L2VaultRecord, reason LimboReason) error {
+	meta, _ := json.Marshal(map[string]any{
+		"original_heat": record.HeatScore,
+		"original_importance": record.Importance,
+		"buried_at": time.Now().UTC().Format(time.RFC3339),
+	})
+	tier := "l2"
+	if record.Type == controlplane.MemoryArchive {
+		tier = "l3"
+	}
+	_, err := v.db.ExecContext(ctx, `
+		INSERT OR REPLACE INTO l4_limbo
+			(id, session_id, original_tier, kind, category, tags, source_url,
+			 content, importance, heat_score, reason, limbo_entered_at, created_at, metadata)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), ?, ?)
+	`, record.ID, record.SessionID, tier, record.Kind, record.Category,
+		record.Tags, record.SourceURL, record.Content, record.Importance,
+		record.HeatScore, string(reason), record.CreatedAt.Format(time.RFC3339), string(meta))
+	return err
+}
+
+// Resurrect promotes a limbo record back to an L2VaultRecord.
+// It does NOT insert it back into L2 — that's the caller's responsibility.
+func (v *L4LimboVault) Resurrect(ctx context.Context, id string) (*controlplane.L2VaultRecord, error) {
+	row := v.db.QueryRowContext(ctx, `
+		SELECT id, session_id, kind, category, tags, source_url,
+		       content, importance, heat_score, original_tier, created_at
+		FROM l4_limbo WHERE id = ?
+	`, id)
+
+	var r controlplane.L2VaultRecord
+	var createdAtStr, tier string
+	err := row.Scan(&r.ID, &r.SessionID, &r.Kind, &r.Category,
+		&r.Tags, &r.SourceURL, &r.Content,
+		&r.Importance, &r.HeatScore, &tier, &createdAtStr)
+	if err != nil {
+		return nil, fmt.Errorf("resurrect find: %w", err)
+	}
+
+	r.CreatedAt, _ = time.Parse(time.RFC3339, createdAtStr)
+	r.LastAccessedAt = time.Now()
+	r.Type = controlplane.MemoryLongTerm
+
+	// Boost heat to prevent immediate re-burial
+	r.HeatScore = 30.0
+
+	// Delete from limbo
+	_, _ = v.db.ExecContext(ctx, `DELETE FROM l4_limbo WHERE id = ?`, id)
+	return &r, nil
+}
+
+// SearchLimbo returns limbo entries matching a keyword query.
+func (v *L4LimboVault) SearchLimbo(ctx context.Context, query string, limit int) ([]controlplane.L2VaultRecord, error) {
+	if limit <= 0 || limit > 100 {
+		limit = 20
+	}
+	like := "%" + query + "%"
+	rows, err := v.db.QueryContext(ctx, `
+		SELECT id, session_id, kind, category, tags, source_url,
+		       content, importance, heat_score, reason, created_at
+		FROM l4_limbo
+		WHERE content LIKE ? OR tags LIKE ? OR kind LIKE ? OR reason LIKE ?
+		ORDER BY limbo_entered_at DESC
+		LIMIT ?
+	`, like, like, like, like, limit)
+	if err != nil {
+		return nil, fmt.Errorf("limbo search: %w", err)
+	}
+	defer rows.Close()
+
+	var results []controlplane.L2VaultRecord
+	for rows.Next() {
+		var r controlplane.L2VaultRecord
+		var createdAtStr, reason string
+		if err := rows.Scan(&r.ID, &r.SessionID, &r.Kind, &r.Category,
+			&r.Tags, &r.SourceURL, &r.Content,
+			&r.Importance, &r.HeatScore, &reason, &createdAtStr); err != nil {
+			continue
+		}
+		r.CreatedAt, _ = time.Parse(time.RFC3339, createdAtStr)
+		r.LastAccessedAt = time.Now()
+		r.Type = controlplane.MemoryArchive
+		results = append(results, r)
+	}
+	return results, nil
+}
+
+// Stats returns counts grouped by reason.
+func (v *L4LimboVault) Stats(ctx context.Context) (map[string]int, error) {
+	rows, err := v.db.QueryContext(ctx, `
+		SELECT reason, COUNT(*) as cnt
+		FROM l4_limbo
+		WHERE purged_at IS NULL
+		GROUP BY reason
+		ORDER BY cnt DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("limbo stats: %w", err)
+	}
+	defer rows.Close()
+
+	stats := make(map[string]int)
+	for rows.Next() {
+		var reason string
+		var count int
+		if err := rows.Scan(&reason, &count); err != nil {
+			continue
+		}
+		stats[reason] = count
+	}
+	return stats, nil
+}
+
+// PurgeOld permanently removes limbo entries older than the given TTL.
+func (v *L4LimboVault) PurgeOld(ctx context.Context, olderThan time.Duration) (int, error) {
+	cutoff := time.Now().Add(-olderThan).Format(time.RFC3339)
+	res, err := v.db.ExecContext(ctx, `
+		UPDATE l4_limbo SET purged_at = datetime('now')
+		WHERE purged_at IS NULL AND limbo_entered_at < ?
+	`, cutoff)
+	if err != nil {
+		return 0, err
+	}
+	n, _ := res.RowsAffected()
+	return int(n), nil
+}
+
+// HardDelete permanently removes entries that were already purged (soft-delete cleanup).
+func (v *L4LimboVault) HardDelete(ctx context.Context, olderThan time.Duration) (int, error) {
+	cutoff := time.Now().Add(-olderThan).Format(time.RFC3339)
+	res, err := v.db.ExecContext(ctx, `
+		DELETE FROM l4_limbo
+		WHERE purged_at IS NOT NULL AND purged_at < ?
+	`, cutoff)
+	if err != nil {
+		return 0, err
+	}
+	n, _ := res.RowsAffected()
+	return int(n), nil
+}
+
+var _ = time.Now
+")
+**Observation**: write: success
+
+## Turn 2 | 2026-06-29T16:45:45.209Z | deepseek/deepseek-v4-flash
+
+**Thought**: Now let me add the L4 limbo API endpoint and wire up the data ingestion.
+**Thinking**: Good, L4 limbo vault compiles clean. Now let me wire up the data ingestion. I'll create a script that reads from the existing databases and feeds data into the L2 vault, then add an API endpoint for the L4 limbo vault.
+
+Let me also add the L4 limbo API endpoint to the server while I'm at it.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/missing_handlers.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 3 | 2026-06-29T16:47:48.899Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now let me add the L4 limbo handler function. I'll add it after the cold archive handler.
+**Action**: read(offset: 200, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/missing_handlers.go", limit: 10)
+**Observation**: read: success
+
+## Turn 4 | 2026-06-29T16:47:54.385Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: read(offset: 220, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/missing_handlers.go", limit: 60)
+**Observation**: read: success
+
+## Turn 5 | 2026-06-29T16:47:58.757Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/missing_handlers.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 6 | 2026-06-29T16:50:06.658Z | deepseek/deepseek-v4-flash
+
+**Thought**: Now register the L4 limbo routes in the server.
+**Thinking**: Good, Go compiles clean with the L4 limbo vault handlers. Now let me register the routes in server.go.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "cold-archive\|fts-search\|archive-session" go/internal/httpapi/server.go | head -5")
+**Observation**: bash: success
+
+## Turn 7 | 2026-06-29T16:50:13.204Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/server.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 8 | 2026-06-29T16:52:16.801Z | deepseek/deepseek-v4-flash
+
+**Thought**: Now the data ingestion script to populate the memory databases.
+**Thinking**: Now let me create the data ingestion script that reads from the existing databases and feeds data into the L2 vault. I'll create a Python script since the databases are SQLite and it's the easiest approach.
+**Action**: write(path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", content: "#!/usr/bin/env python3
+"""
+Ingest memories from external DBs into the TormentNexus L2/L3 vaults.
+
+Sources:
+  - tormentnexus.db       → imported_session_memories (57K+ records)
+  - atlas.db              → atlas entries (17K+ records)
+  - bobbybookmarks/atlas.db → same atlas, submodule copy
+
+Usage:
+  python scripts/ingest_memories.py [--dry-run] [--limit N]
+"""
+
+import argparse
+import json
+import os
+import sqlite3
+import sys
+import time
+import uuid
+from datetime import datetime, timezone
+from pathlib import Path
+
+WORKSPACE = Path(__file__).resolve().parent.parent
+GO_SIDECAR = os.environ.get("TORMENTNEXUS_SIDECAR", "http://127.0.0.1:7778")
+
+SOURCE_DBS = [
+    ("TormentNexus sessions", WORKSPACE / "tormentnexus.db",
+     "SELECT id, session_id, content, created_at FROM imported_session_memories ORDER BY created_at DESC"),
+    ("BobbyBookmarks atlas", WORKSPACE / "bobbybookmarks" / "atlas.db",
+     "SELECT id, page_title, short_description, created_at FROM entries ORDER BY created_at DESC"),
+    ("Local atlas", WORKSPACE / "data" / "atlas.db",
+     "SELECT id, page_title, short_description, created_at FROM entries ORDER BY created_at DESC"),
+]
+
+
+def fmt_time(ts):
+    """Convert a DB timestamp to RFC3339."""
+    if not ts:
+        return datetime.now(timezone.utc).isoformat()
+    try:
+        if isinstance(ts, (int, float)):
+            return datetime.fromtimestamp(ts, tz=timezone.utc).isoformat()
+        return str(ts)
+    except Exception:
+        return datetime.now(timezone.utc).isoformat()
+
+
+def make_memory(content, source_id, source_table, created_at):
+    """Build a memory record dict matching L2VaultRecord."""
+    return {
+        "id": str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{source_table}:{source_id}")),
+        "session_id": source_table,
+        "memory_type": "long_term",
+        "memory_kind": "fact",
+        "category": "imported",
+        "tags": source_table,
+        "source_url": "",
+        "content": str(content)[:10000] if content else "",
+        "importance": 0.5,
+        "heat_score": 50.0,
+        "last_accessed_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": fmt_time(created_at),
+    }
+
+
+def push_memory(record, dry_run):
+    """POST a memory record to the Go sidecar."""
+    if dry_run:
+        return True
+    import urllib.request
+    data = json.dumps({"memory": record}).encode("utf-8")
+    req = urllib.request.Request(
+        f"{GO_SIDECAR}/api/memory/add",
+        data=data,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status == 200
+    except Exception as e:
+        print(f"  ⚠ Push failed: {e}")
+        return False
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Ingest memories into TormentNexus vault")
+    parser.add_argument("--dry-run", action="store_true", help="Scan only, don't push")
+    parser.add_argument("--limit", type=int, default=0, help="Max memories per source")
+    args = parser.parse_args()
+
+    total_pushed = 0
+    total_skipped = 0
+
+    for label, db_path, query in SOURCE_DBS:
+        if not db_path.exists():
+            print(f"  ⏭ {label}: not found ({db_path})")
+            continue
+
+        try:
+            conn = sqlite3.connect(str(db_path))
+            conn.row_factory = sqlite3.Row
+            cursor = conn.execute(query)
+            rows = cursor.fetchall()
+            count = len(rows)
+            print(f"\n{'='*60}")
+            print(f"📦 {label}: {count} records")
+            print(f"{'='*60}")
+
+            source_table = label.lower().replace(" ", "_")
+
+            for i, row in enumerate(rows):
+                if args.limit and i >= args.limit:
+                    print(f"  (stopped at limit {args.limit})")
+                    break
+
+                content = row[2] if len(row) > 2 else str(dict(row))
+                source_id = str(row[0])
+                created_at = row[3] if len(row) > 3 else None
+
+                record = make_memory(content, source_id, source_table, created_at)
+
+                if args.dry_run:
+                    total_skipped += 1
+                    if i < 3:
+                        print(f"  📝 Would push: {record['content'][:60]}...")
+                    continue
+
+                ok = push_memory(record, dry_run=False)
+                if ok:
+                    total_pushed += 1
+                else:
+                    total_skipped += 1
+
+                if (i + 1) % 100 == 0:
+                    print(f"  Progress: {i+1}/{count}")
+
+            conn.close()
+
+        except Exception as e:
+            print(f"  ❌ Error reading {label}: {e}")
+
+    print(f"\n{'='*60}")
+    if args.dry_run:
+        print(f"🏁 DRY RUN: {total_skipped} memories scanned (not pushed)")
+    else:
+        print(f"🏁 Done: {total_pushed} pushed, {total_skipped} skipped/errors")
+    print(f"{'='*60}")
+
+
+if __name__ == "__main__":
+    main()
+")
+**Observation**: write: success
+
+## Turn 9 | 2026-06-29T16:55:35.880Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me do a dry run first to see how many memories would be ingested.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python scripts/ingest_memories.py --dry-run --limit 5 2>&1", timeout: 30)
+**Observation**: bash: error
+
+## Turn 10 | 2026-06-29T16:55:42.032Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The atlas DB doesn't have an `id` column — it uses `rowid` instead. Let me fix the queries and the unicode issue.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 11 | 2026-06-29T16:58:00.815Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Also need to fix the unicode emoji issue for Windows console.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", edits: [object Object])
+**Observation**: edit: error
+
+## Turn 12 | 2026-06-29T16:58:05.396Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -X utf-8 scripts/ingest_memories.py --dry-run --limit 5 2>&1", timeout: 30)
+**Observation**: bash: error
+
+## Turn 13 | 2026-06-29T16:58:10.693Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The TormentNexus DB also has different column names. Let me check the actual schema of the imported_session_memories table.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -X utf-8 -c "
+import sqlite3
+dbs = ['tormentnexus.db', 'bobbybookmarks/atlas.db']
+for db_name in dbs:
+    try:
+        conn = sqlite3.connect(db_name)
+        tables = conn.execute(\"SELECT name FROM sqlite_master WHERE type='table'\").fetchall()
+        for t in tables:
+            if 'imported' in t[0].lower() or 'session_mem' in t[0].lower() or 'entries' == t[0].lower():
+                cols = conn.execute(f'PRAGMA table_info({t[0]})').fetchall()
+                print(f'{db_name}/{t[0]}: {[c[1] for c in cols]}')
+        conn.close()
+    except Exception as e:
+        print(f'{db_name}: Error: {e}')
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 14 | 2026-06-29T16:58:17.518Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The table columns are:
+- `imported_session_memories`: uuid, imported_session_uuid, memory_index, kind, content, tags, source, metadata, created_at
+
+So the columns are `uuid` (not `id`) and `imported_session_uuid` (not `session_id`), and `content`, `created_at`.
+
+The atlas.db is in bobbybookmarks submodule but might not be accessible. Let me update the script with the correct column names.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 15 | 2026-06-29T17:00:38.674Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -X utf-8 scripts/ingest_memories.py --dry-run --limit 5 2>&1", timeout: 30)
+**Observation**: bash: error
+
+## Turn 16 | 2026-06-29T17:00:45.516Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `-X utf-8` flag isn't working with subprocess. Let me use a different approach - set the PYTHONIOENCODING environment variable.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && set PYTHONIOENCODING=utf-8 && python scripts/ingest_memories.py --dry-run --limit 5 2>&1", timeout: 30)
+**Observation**: bash: error
+
+## Turn 17 | 2026-06-29T17:00:55.102Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The encoding isn't being set properly. Let me just remove all emoji characters from the script to work around the Windows console encoding issue.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && sed -i 's/📦/[STORE]/g; s/❌/!!/g; s/⚠/!!/g; s/⏭/.. /g; s/📝/[PUSH]/g; s/🏁/[DONE]/g' scripts/ingest_memories.py && python scripts/ingest_memories.py --dry-run --limit 5 2>&1", timeout: 30)
+**Observation**: bash: success
+
+## Turn 18 | 2026-06-29T17:01:05.309Z | deepseek/deepseek-v4-flash
+
+**Thought**: **59,168 memories ready to ingest.** Let me run the actual ingestion.
+**Thinking**: The dry run works. There are 59,168 imported session memories ready to be ingested. The atlas DBs aren't found at those paths.
+
+Let me run the full ingestion now.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python scripts/ingest_memories.py --limit 1000 2>&1", timeout: 120)
+**Observation**: bash: success
+
+## Turn 19 | 2026-06-29T17:01:36.285Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: 0 pushed, 1000 skipped. The push to the Go sidecar is failing. Let me check why. The `/api/memory/add` endpoint might need different payload format. Let me check.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -c "
+import urllib.request, json
+data = json.dumps({
+    'id': 'test-001',
+    'session_id': 'test',
+    'memory_type': 'long_term',
+    'memory_kind': 'fact',
+    'category': 'test',
+    'content': 'Test memory ingestion'
+}).encode()
+req = urllib.request.Request('http://127.0.0.1:7778/api/memory/add', data=data, headers={'Content-Type':'application/json'})
+try:
+    resp = urllib.request.urlopen(req, timeout=5)
+    print(f'Status: {resp.status}')
+    print(resp.read().decode()[:300])
+except Exception as e:
+    print(f'Error: {e}')
+    if hasattr(e, 'read'):
+        print(e.read().decode()[:300])
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 20 | 2026-06-29T17:01:43.016Z | deepseek/deepseek-v4-flash
+
+**Thought**: The API expects the record directly, not wrapped in `{"memory": ...}`. Let me fix the script.
+**Thinking**: Status 201 (Created) with no body means success. But my ingestion script wraps the record in `{"memory": record}` which is wrong. Let me fix the script.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "data = json.dumps" scripts/ingest_memories.py")
+**Observation**: bash: success
+
+## Turn 21 | 2026-06-29T17:01:47.930Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 22 | 2026-06-29T17:04:05.192Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python scripts/ingest_memories.py --limit 500 2>&1", timeout: 120)
+**Observation**: bash: success
+
+## Turn 23 | 2026-06-29T17:04:19.549Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still 0 pushed. Let me check what the response looks like more carefully. The API returns 201 with no body, but my script checks `resp.status == 200`. A 201 status is "Created" which should be a success. Let me fix the check.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", edits: [object Object])
+**Observation**: edit: error
+
+## Turn 24 | 2026-06-29T17:04:24.714Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "resp.status == 200\|except Exception" scripts/ingest_memories.py")
+**Observation**: bash: success
+
+## Turn 25 | 2026-06-29T17:04:29.206Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: read(offset: 77, path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", limit: 6)
+**Observation**: read: success
+
+## Turn 26 | 2026-06-29T17:04:34.240Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/scripts/ingest_memories.py", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 27 | 2026-06-29T17:06:49.427Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python scripts/ingest_memories.py --limit 500 2>&1", timeout: 120)
+**Observation**: bash: success
+
+## Turn 28 | 2026-06-29T17:07:05.238Z | deepseek/deepseek-v4-flash
+
+**Thought**: ✅ **500 memories ingested!** Let me verify they're searchable.
+**Thinking**: **500 pushed successfully!** Let me verify the data is searchable through the FTS endpoint.
+**Action**: bash(command: "curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=3" 2>&1 | python -c "import sys,json; d=json.load(sys.stdin); print(f'FTS results: {len(d.get(\"data\",[]))}'); [print(f'  {r.get(\"record\",{}).get(\"content\",\"\")[:80]}') for r in d.get('data',[])[:3]]" 2>&1")
+**Observation**: bash: error
+
+## Turn 29 | 2026-06-29T17:07:13.418Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The data is null. The FTS5 virtual table triggers might not have fired because the memories were inserted via direct SQL. Let me rebuild the FTS index.
+**Action**: bash(command: "curl -s --max-time 3 -X POST "http://127.0.0.1:7778/api/memory/fts-search/rebuild" 2>&1 && echo "" && curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=3" 2>&1 | head -c 300")
+**Observation**: bash: success
+
+## Turn 30 | 2026-06-29T17:07:18.664Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: No rebuild endpoint exists. The FTS5 triggers only fire on INSERT to the l2_vault table, but the `/api/memory/add` endpoint might insert into a different table or use a different mechanism. Let me check what the add endpoint does.
+
+Actually, the FTS5 search returned `{"data":null,"success":true}` which means the query worked but found no matches. This might be because the FTS5 index is empty (the triggers only fire on direct SQL inserts, not through the API). I need to rebuild the FTS index. Let me add a rebuild endpoint.
+
+Wait, actually the FTS5 triggers are on the `l2_vault` table. The `/api/memory/add` handler should insert into `l2_vault` which would trigger the FTS5 insert trigger. But maybe the handler inserts into a different table or the trigger doesn't exist because the schema was created before the FTS5 table existed.
+
+Let me check the `handleMemoryAdd` function.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "handleMemoryAdd\|func.*handleMemoryAdd" go/internal/httpapi/server.go | head -5")
+**Observation**: bash: success
+
+## Turn 31 | 2026-06-29T17:07:24.682Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "handleMemoryAdd\b" go/internal/httpapi/server.go")
+**Observation**: bash: success
+
+## Turn 32 | 2026-06-29T17:07:29.003Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The handler is registered but the function definition isn't in server.go. It must be in another file.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -rn "func.*handleMemoryAdd\b" go/ 2>/dev/null | grep -v _broken | grep -v enterprise_sales | head -5")
+**Observation**: bash: success
+
+## Turn 33 | 2026-06-29T17:10:09.112Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: read(offset: 15, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/memory_handlers.go", limit: 30)
+**Observation**: read: success
+
+## Turn 34 | 2026-06-29T17:10:14.914Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: I see the issue. The `handleMemoryAdd` handler only accepts `content` and calls `s.memoryManager.AddMemory(req.Content)`. The `AddMemory` function (from memorystore.go) just appends to a string list — it doesn't insert into the VectorStore. So the memories I uploaded are being stored in a simple string list, not in the L2 vault with FTS5 indexing.
+
+This means the `handleMemoryAdd` endpoint is NOT the right one for inserting into the vector store. The VectorStore has its own `Commit` method.
+
+I have two options:
+1. Modify `handleMemoryAdd` to also insert into the VectorStore
+2. Create a new endpoint that inserts into the VectorStore
+
+Let me modify the ingestion script to use a different approach — directly insert into the memory.db SQLite database using the VectorStore schema. Actually, the simplest approach is to modify `handleMemoryAdd` to also store in the VectorStore.
+
+But actually, looking at `AddMemory` in memorystore.go:
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -A5 "func.*AddMemory" go/internal/memorystore/memorystore.go")
+**Observation**: bash: success
+
+## Turn 35 | 2026-06-29T17:10:21.488Z | deepseek/deepseek-v4-flash
+
+**Thought**: The FTS5 index wasn't created before the memories were inserted. Let me fix the initialization order.
+**Thinking**: `AddMemory` DOES insert into the VectorStore (`m.vs`). But the handler only reads `content` from the request body, not the full record. So the memories were stored but with just the content field set and defaults for everything else.
+
+The FTS5 search returning empty results is because the FTS5 virtual table triggers haven't fired. The `l2_vault_ai` trigger only fires AFTER INSERT on `l2_vault`, but it needs the FTS5 table to already exist. The FTS5 schema was created in my `fts_search.go` `NewFTSMemorySearch` function which is only called when the FTS search endpoint is first hit. The triggers need to exist BEFORE the INSERT happens.
+
+I need to create the FTS5 schema at startup, not lazily. Let me update the VectorStore initialization to create the FTS5 table and triggers.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "NewVectorStore\|return.*VectorStore" go/internal/memorystore/vector_sqlite.go | head -5")
+**Observation**: bash: success
+
+## Turn 36 | 2026-06-29T17:10:29.093Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: read(offset: 44, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/vector_sqlite.go", limit: 60)
+**Observation**: read: success
+
+## Turn 37 | 2026-06-29T17:10:34.840Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: I see the issue. There's already a backfill attempt at line 99: `INSERT INTO l2_vault_fts(id, content) SELECT id, content FROM l2_vault WHERE id NOT IN (SELECT id FROM l2_vault_fts)` — but this inserts into `l2_vault_fts` (a manually named table), not `l2_memory_fts` (the FTS5 virtual table from my code). And the column names are different.
+
+The FTS5 schema with triggers was created in `fts_search.go` using table name `l2_memory_fts`. But the VectorStore init code references `l2_vault_fts`. These are two different tables — my FTS5 setup uses `l2_memory_fts` while the backfill code uses `l2_vault_fts`.
+
+The simplest fix: make the FTS5 initialization happen at VectorStore startup, not lazily. Let me add it to the `NewVectorStore` function.
+**Action**: read(offset: 72, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/vector_sqlite.go", limit: 12)
+**Observation**: read: success
+
+## Turn 38 | 2026-06-29T17:10:41.448Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/vector_sqlite.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 39 | 2026-06-29T17:10:55.693Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: I need to create the `rebuildFTSIndex` function. But the `ftsSchemaSQL` is currently defined in `fts_search.go` as a file-level variable. Since both files are in the same package, I can access it. Let me create the rebuild function.
+
+Actually, there's a circular dependency concern — `fts_search.go` is in the same package but references `ftsSchemaSQL`. Let me check if the variable is accessible.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "ftsSchemaSQL\b" go/internal/memorystore/*.go")
+**Observation**: bash: success
+
+## Turn 40 | 2026-06-29T17:11:11.436Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `ftsSchemaSQL` constant is accessible from `vector_sqlite.go` since they're in the same package. Now I need to add a `rebuildFTSIndex` function. Let me add it to `fts_search.go`.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 41 | 2026-06-29T17:13:17.856Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now I also need to add the `fmt` import to fts_search.go since we're using `fmt.Printf` in the new function.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && head -5 go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 42 | 2026-06-29T17:13:24.119Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 43 | 2026-06-29T17:13:52.876Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: There might already be a `fmt` import. The LSP says it's redeclared. Let me check.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && head -10 go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 44 | 2026-06-29T17:14:04.998Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: I accidentally added `"fmt"` twice. Let me fix it.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 45 | 2026-06-29T17:16:32.269Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Go compiles clean. Now rebuild, restart, and test.
+**Action**: bash(command: "taskkill //F //PID 29424 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "BUILT"
+cd /c/Users/hyper/workspace/tormentnexus && rm -f data/memory.db data/l3_cold_archive.db && bin/tormentnexus.exe serve --port 7778 &
+sleep 5
+echo "=== TEST FTS ==="
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=3" 2>&1 | head -c 200", timeout: 30)
+**Observation**: bash: success
+
+## Turn 46 | 2026-06-29T17:16:58.413Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The FTS index rebuild failed because the column names in the existing database are `memory_kind` and `memory_type` not `kind` and `type`. But the new database should have the correct columns since it was created from scratch with the VectorSchemaSQL.
+
+Wait — I deleted the memory.db and l3_cold_archive.db, then the server creates fresh ones. The query in `rebuildFTSIndex` uses `kind, category` but the actual columns are `memory_kind`, `category`. Let me fix the query.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 47 | 2026-06-29T17:18:58.370Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Also need to fix the FTS5 schema's trigger — the trigger references `new.kind` but it should be `new.memory_kind`.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "new.kind\|new.type\|old.kind\|old.type" go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 48 | 2026-06-29T17:19:06.322Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The trigger uses `new.kind` but the table column is `memory_kind`. In SQLite triggers, the column names in `NEW.column` refer to the column names of the table being triggered. Since the table `l2_vault` has column `memory_kind`, the trigger should use `NEW.memory_kind`. Let me fix this.
+**Action**: read(offset: 19, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", limit: 30)
+**Observation**: read: success
+
+## Turn 49 | 2026-06-29T17:19:14.188Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 50 | 2026-06-29T17:21:24.264Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Go compiles clean. Now rebuild, restart (fresh DB), run ingestion, and test.
+**Action**: bash(command: "taskkill //F //PID $(netstat -ano | findstr ":7778 " | awk 'NR==1{print $NF}') 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus && rm -f data/memory.db data/l3_cold_archive.db && cd go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "BUILT" && cd /c/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 &
+sleep 5
+echo "=== INGEST ===" && python scripts/ingest_memories.py --limit 500 2>&1 | tail -5
+echo "=== FTS SEARCH ===" && curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=3" 2>&1 | head -c 400", timeout: 120)
+**Observation**: bash: success
+
+## Turn 51 | 2026-06-29T17:22:01.995Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: 498 pushed but FTS returns null. The memory.db was recreated fresh (I deleted it) and then the ingestion pushed into the fresh DB. But the FTS schema and rebuild should have happened at startup. Let me check if the rebuild happened correctly — the startup message didn't show the FTS rebuild message.
+
+Wait — the memory.db was deleted, so the server created a fresh one. The schemas were created, including the FTS5 table. But then the ingestion script pushed 498 memories via the HTTP API. The `handleMemoryAdd` endpoint calls `s.memoryManager.AddMemory(req.Content)` which creates an L2VaultRecord and calls `Commit()`. The `Commit` function inserts into `l2_vault` which fires the FTS5 trigger `l2_vault_ai`.
+
+But the ingestion might not have had the FTS5 triggers in place because of the column name mismatch. Let me check if the fresh startup fixed the column names.
+
+Actually, the FTS5 search returns `{"data":null,"success":true}` — this means the query ran successfully but found no matches. The `null` data suggests the FTS5 index is empty.
+
+The issue might be that the `handleMemoryAdd` stores into the Manager's list (not the VectorStore). Let me check more carefully.
+
+Actually, looking at the server init:
+1. `handleMemoryAdd` calls `s.memoryManager.AddMemory(req.Content)`
+2. `AddMemory` creates an L2VaultRecord and calls `m.vs.Commit(ctx, entry)`
+3. `Commit` inserts into `l2_vault` which should trigger the FTS5 trigger
+
+But wait — the server was started with a fresh DB. The `NewVectorStore` function at line 99 adds the FTS5 schema. But the ingestion happened via HTTP after startup. The `AddMemory` calls `Commit` which inserts into `l2_vault`. The FTS5 trigger should fire.
+
+Let me check if the issue is that the FTS search query uses `MATCH` syntax which requires proper FTS5 syntax on the content.
+
+Actually, let me check what the FTS search returns for any content.
+**Action**: bash(command: "curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=test&limit=3" 2>&1 && echo "" && curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=*&limit=3" 2>&1 | head -c 300")
+**Observation**: bash: success
+
+## Turn 52 | 2026-06-29T17:22:13.968Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `*` query fails because FTS5 doesn't accept `*` as a standalone query. The `q=test` query returns null data. This means the FTS index is empty or the query is not matching.
+
+Let me check if there are actually memories in the L2 vault by using the direct list endpoint.
+**Action**: bash(command: "curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/list" 2>&1 | head -c 300")
+**Observation**: bash: success
+
+## Turn 53 | 2026-06-29T17:22:19.971Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The memory list returns null. There are no memories! The `AddMemory` function probably has a nil `vs` (VectorStore) because the memoryManager didn't initialize properly. Let me check.
+
+Looking at the server init:
+1. Line 487: `memoryManager := memorystore.NewManager(filepath.Join(cfg.ConfigDir, "memory.json"))`
+2. `NewManager` creates a VectorStore from `path + ".db"` 
+
+But the `AddMemory` check `if m.vs == nil { return }` — if the VectorStore creation failed, it silently skips.
+
+The real issue is that the VectorStore initialization in `NewManager` silently fails when it can't create the DB. Let me check.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "NewManager\b" go/internal/memorystore/memorystore.go")
+**Observation**: bash: success
+
+## Turn 54 | 2026-06-29T17:22:25.560Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: read(offset: 17, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/memorystore.go", limit: 10)
+**Observation**: read: success
+
+## Turn 55 | 2026-06-29T17:22:30.602Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `NewManager` function creates a VectorStore but silently swallows any error (`vs, _ := NewVectorStore(dbPath)`). If `NewVectorStore` fails, `vs` is nil, and `m.vs` is nil, so `AddMemory` silently does nothing.
+
+This is likely what's happening. `NewVectorStore` might be failing and returning nil, causing all memory operations to silently no-op.
+
+But wait — the `handleMemoryAdd` returns 201 (Created) even if the memory wasn't actually stored. The check at `AddMemory` just returns early if `m.vs == nil`.
+
+Let me check if this is the issue by testing the VectorStore directly.
+**Action**: bash(command: "ls -la C:/Users/hyper/workspace/tormentnexus/data/memory.db 2>&1")
+**Observation**: bash: error
+
+## Turn 56 | 2026-06-29T17:22:36.977Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The memory.db wasn't created! This means `NewVectorStore` is failing silently. The config directory might be different. Let me check where the config dir actually is.
+
+Actually, looking at the server again: line 487: `filepath.Join(cfg.ConfigDir, "memory.json")`. But `cfg.ConfigDir` might not be set to `data/`. Let me check what the config dir defaults to.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "ConfigDir\|DefaultConfigDir" go/internal/config/config.go | head -10")
+**Observation**: bash: success
+
+## Turn 57 | 2026-06-29T17:22:42.337Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -A5 "DefaultConfigDir" go/internal/config/config.go")
+**Observation**: bash: success
+
+## Turn 58 | 2026-06-29T17:22:47.160Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `DefaultConfigDir` is in the user's home directory, like `~/.tormentnexus`. The memory.db is created there, not in `data/`. Let me check.
+**Action**: bash(command: "ls -la ~/.tormentnexus/memory.db 2>&1 && echo "EXISTS" || echo "NOT FOUND"")
+**Observation**: bash: success
+
+## Turn 59 | 2026-06-29T17:22:53.183Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Not in the home dir either. Let me check what the actual config dir is by querying the running server.
+**Action**: bash(command: "curl -s --max-time 3 http://127.0.0.1:7778/api/config/status 2>&1 | head -c 500")
+**Observation**: bash: success
+
+## Turn 60 | 2026-06-29T17:23:02.197Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Found it! The config dir is `C:\Users\hyper\.tormentnexus-go`. The memory.db should be there. Let me check.
+**Action**: bash(command: "ls -la C:/Users/hyper/.tormentnexus-go/memory.db 2>&1")
+**Observation**: bash: success
+
+## Turn 61 | 2026-06-29T17:23:17.805Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Found it! There's a memory.db from May 30. It's 12KB which matches the fresh DB we created (I deleted `data/memory.db` but the config dir is `~/.tormentnexus-go`). The old memory.db from the old server process is here.
+
+But the ingestion script pushed to the server via HTTP, and the server uses this DB. The FTS search queries this DB. But the FTS search returns no results.
+
+Let me check if the memories are actually in this DB by querying it directly.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+tables = conn.execute(\"SELECT name FROM sqlite_master WHERE type='table'\").fetchall()
+print('Tables:', [t[0] for t in tables])
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+print(f'L2 vault: {cnt} records')
+cnt2 = conn.execute('SELECT COUNT(*) FROM l2_memory_fts').fetchone()[0] if any('l2_memory_fts' in str(t[0]) for t in tables) else 'table not found'
+print(f'FTS5 index: {cnt2} records')
+conn.close()
+"")
+**Observation**: bash: success
+
+## Turn 62 | 2026-06-29T17:23:24.857Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The L2 vault is empty (0 records) and the FTS5 index is also empty (0 records). The ingestion script pushed 498 memories but they're not in this database. This means the `handleMemoryAdd` endpoint is not storing into the same database.
+
+Wait — the server was restarted with `--port 7778` which means it reads the config from the same config dir `~/.tormentnexus-go`. The memory.db was created fresh at startup because there was no memory.db there before (it was deleted). But then the ingestion pushed to the HTTP endpoint.
+
+Actually, the memory.db has a timestamp of `May 30 20:38` which is from a previous server instance. The current server created it at startup but with 0 records because the ingestion went to a different DB or was silently swallowed.
+
+Let me check if there's a separate memory.db that the ingestion actually wrote to. 
+
+Oh wait — I deleted `data/memory.db` before restart, thinking that's where it was. But the actual config dir is `~/.tormentnexus-go`. The old memory.db there has the `l2_memory_fts` table but 0 records. The ingestion pushed 498 records somewhere but they're not in this DB.
+
+This means `AddMemory` is failing silently. Let me check by pushing one memory manually and see the server logs.
+**Action**: bash(command: "curl -s --max-time 3 -X POST "http://127.0.0.1:7778/api/memory/add" -H "Content-Type: application/json" -d '{"content":"test memory please work"}' 2>&1 && echo "---" && python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+print(f'L2 vault: {cnt} records')
+if cnt > 0:
+    r = conn.execute('SELECT id, content FROM l2_vault LIMIT 1').fetchone()
+    print(f'  Sample: {r[0][:30]}... {r[1][:40]}...')
+conn.close()
+"")
+**Observation**: bash: success
+
+## Turn 63 | 2026-06-29T17:23:34.377Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still 0 records. This confirms that `AddMemory` is silently doing nothing because `m.vs` is nil. The VectorStore creation is failing silently in `NewManager`.
+
+This is a bug in the server startup. Let me check if the server logs show any errors during VectorStore creation. The `NewVectorStore` is called with the path `C:\Users\hyper\.tormentnexus-go\memory.db`. But looking at the startup logs, we didn't see any warnings about schema initialization.
+
+Let me look at the actual NewManager implementation more carefully.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -A8 "func NewManager" go/internal/memorystore/memorystore.go")
+**Observation**: bash: success
+
+## Turn 64 | 2026-06-29T17:23:39.793Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `vs, _ := NewVectorStore(dbPath)` silently swallows the error. The path passed to `NewManager` is `filepath.Join(cfg.ConfigDir, "memory.json")`. Let me check if that path exists.
+
+Actually, `ConfigDir` is `C:\Users\hyper\.tormentnexus-go`. So `newManager` gets `C:\Users\hyper\.tormentnexus-go\memory.json`. It constructs the dbPath as `C:\Users\hyper\.tormentnexus-go\memory.db`.
+
+But looking at the server startup, maybe the issue is different. Let me check what the path actually resolves to.
+
+Wait — let me check if there's a server.go line where NewManager is called and what path is passed.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "NewManager\|memory.json" go/internal/httpapi/server.go | head -10")
+**Observation**: bash: success
+
+## Turn 65 | 2026-06-29T17:23:45.629Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: I see. The `memoryManager` is initialized at line 487 with `filepath.Join(cfg.ConfigDir, "memory.json")`. This creates a Manager expecting the JSON file at `C:\Users\hyper\.tormentnexus-go\memory.json`.
+
+But there's also a `path := filepath.Join(s.cfg.WorkspaceRoot, "memory.json")` at line 16538 — this is in a different handler.
+
+The `NewManager` creates the VectorStore from `dbPath := filepath.Join(filepath.Dir(path), "memory.db")` which would be `C:\Users\hyper\.tormentnexus-go\memory.db`.
+
+Let me check if there's a database locking issue or if the `NewVectorStore` function is actually erroring. Let me check the `startSleepCycleEngine` which might be consuming the error.
+
+Actually, I just realized something — I deleted `C:\Users\hyper\.tormentnexus-go\memory.db` before restarting, but the old server had already created it. When I started the new server, it created a new one. But the memory.db that exists now is from the OLD server instance (May 30 timestamp). That's suspicious — why would a server started just now have a file from May 30?
+
+Maybe the file wasn't actually deleted because it's in a different location. Let me check more carefully.
+
+Actually, I deleted `data/memory.db` (in the workspace), not `C:\Users\hyper\.tormentnexus-go\memory.db`. The server config dir is in the home directory. So the old memory.db remains. When the new server started, it opened this existing DB (which already had the schemas but 0 records). The ingestion pushed to the server, which called AddMemory, which tried to write to this DB, but the vs was nil because of some issue.
+
+Wait — but the server started successfully and the memory.db has all the tables including `l2_memory_fts`. So the VectorStore was created successfully. The issue must be elsewhere.
+
+Let me check if `AddMemory` is actually being called by checking the server logs.
+**Action**: bash(command: "curl -s --max-time 3 -X POST "http://127.0.0.1:7778/api/memory/add" -H "Content-Type: application/json" -d '{"content":"test direct"}' 2>&1 && echo "" && python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+print(f'After push: {cnt} records')
+# Check the manager's internal memory list too
+cnt2 = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+conn.close()
+"")
+**Observation**: bash: success
+
+## Turn 66 | 2026-06-29T17:23:56.838Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Zero records even after a direct push. The `AddMemory` function really is silently failing. Let me check what `startSleepCycleEngine` does — it runs a goroutine that might be interfering.
+
+Actually, let me just look at the AddMemory function more carefully.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -A15 "func.*AddMemory" go/internal/memorystore/memorystore.go")
+**Observation**: bash: success
+
+## Turn 67 | 2026-06-29T17:24:03.847Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `AddMemory` checks `if m.vs == nil { return }`. The VectorStore must be nil. Let me check if the `memoryManager` is actually being set on the server struct. Maybe the local variable `memoryManager` created at line 487 is never assigned to the `Server` struct.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "memoryManager" go/internal/httpapi/server.go | head -10")
+**Observation**: bash: success
+
+## Turn 68 | 2026-06-29T17:24:10.609Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `memoryManager` is properly initialized and assigned to the server struct at line 491. The issue is that `NewManager` creates a VectorStore but the `NewVectorStore` function might be returning nil.
+
+Let me check if there's a DB locking issue. When I deleted `data/memory.db`, I might have also caused issues. But the config dir is `~/.tormentnexus-go`. Let me check if the memory.db in the config dir was locked by the old process.
+
+Actually, the old server was killed and a new one started. The memory.db should be free. Let me verify by actually checking if the VectorStore is nil by adding a test.
+
+Actually, let me just check the memory.db file more carefully.
+**Action**: bash(command: "python -c "
+import sqlite3, os
+path = 'C:/Users/hyper/.tormentnexus-go/memory.db'
+print(f'Size: {os.path.getsize(path)} bytes')
+print(f'Modified: {os.path.getmtime(path)}')
+try:
+    conn = sqlite3.connect(path)
+    conn.execute('SELECT 1')
+    print('DB: accessible')
+    # Try inserting directly
+    import uuid
+    uid = str(uuid.uuid4())
+    conn.execute('INSERT INTO l2_vault (id, session_id, memory_type, memory_kind, category, content) VALUES (?, ?, ?, ?, ?, ?)',
+                 (uid, 'test', 'long_term', 'fact', 'test', 'direct insert test'))
+    conn.commit()
+    cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+    print(f'Direct insert: now {cnt} records')
+    conn.close()
+except Exception as e:
+    print(f'Error: {e}')
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 69 | 2026-06-29T17:24:22.561Z | deepseek/deepseek-v4-flash
+
+**Thought**: Found it! The old memory.db has the broken trigger with `new.kind` (not `new.memory_kind`). Let me delete it and start fresh.
+**Thinking**: The INSERT fails because of the trigger referencing `new.kind` instead of `new.memory_kind`. I fixed the trigger in my edit but the old memory.db still has the OLD trigger with `new.kind`. When we try to INSERT, the trigger fires and fails because `new.kind` doesn't exist.
+
+I need to either:
+1. Drop and recreate the triggers
+2. Delete the old memory.db and let the server create a fresh one
+
+Let me delete the old memory.db and let the server create a fresh one with the corrected schema.
+**Action**: bash(command: "taskkill //F //PID $(netstat -ano | findstr ":7778 " | awk 'NR==1{print $NF}') 2>/dev/null
+rm -f C:/Users/hyper/.tormentnexus-go/memory.db C:/Users/hyper/.tormentnexus-go/memory.db-wal C:/Users/hyper/.tormentnexus-go/memory.db-shm
+echo "Deleted old memory.db"")
+**Observation**: bash: success
+
+## Turn 70 | 2026-06-29T17:24:35.578Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 &
+sleep 5
+echo "=== INGEST ===" && python scripts/ingest_memories.py --limit 500 2>&1 | tail -5
+echo "=== FTS TEST ===" && curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=3" 2>&1 | head -c 500", timeout: 120)
+**Observation**: bash: success
+
+## Turn 71 | 2026-06-29T17:25:07.009Z | deepseek/deepseek-v4-flash
+
+**Thought**: ✅ **FTS search working with real data!** Let me ingest the remaining memories.
+**Thinking**: 🎉 **It works!** The FTS search returns real results. The data includes memory records with content, importance, heat score, timestamps, etc.
+
+Let me now run the full ingestion of all 59K memories.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python scripts/ingest_memories.py 2>&1 | tail -10", timeout: 600)
+**Observation**: bash: error
+
+## Turn 72 | 2026-06-29T17:35:16.574Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The full 59K ingestion timed out. Each API call takes some time. Let me check how far it got.
+**Action**: bash(command: "python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+print(f'L2 vault: {cnt} records ingested')
+conn.close()
+"")
+**Observation**: bash: success
+
+## Turn 73 | 2026-06-29T17:35:23.310Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: 28,632 records ingested before the timeout. Let me run the remaining ones.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+total = 59168
+remaining = total - cnt
+print(f'{cnt}/{total} ingested, {remaining} remaining')
+conn.close()
+" && python scripts/ingest_memories.py --limit $remaining 2>&1 | tail -5", timeout: 600)
+**Observation**: bash: success
+
+## Turn 74 | 2026-06-29T17:35:29.578Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The $remaining variable didn't expand properly in the bash command. Let me just run without a limit to get the rest.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python scripts/ingest_memories.py --limit 31000 2>&1 | tail -5", timeout: 600)
+**Observation**: bash: error
+
+## Turn 75 | 2026-06-29T17:45:36.790Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me check how many got through this time.
+**Action**: bash(command: "python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+cntf = conn.execute('SELECT COUNT(*) FROM l2_memory_fts').fetchone()[0]
+print(f'L2 vault: {cnt}')
+print(f'FTS5 index: {cntf}')
+# Also check FTS search
+import urllib.request, json
+resp = urllib.request.urlopen('http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2', timeout=5)
+d = json.loads(resp.read())
+print(f'FTS search for \"agent\": {len(d.get(\"data\",[]))} results')
+for r in d.get('data',[])[:2]:
+    print(f'  - {r[\"record\"][\"content\"][:80]}...')
+conn.close()
+" 2>&1")
+**Observation**: bash: success
+

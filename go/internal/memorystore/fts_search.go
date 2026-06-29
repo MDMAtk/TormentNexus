@@ -31,7 +31,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS l2_memory_fts USING fts5(
 -- Triggers to keep FTS index in sync with L2 vault table
 CREATE TRIGGER IF NOT EXISTS l2_vault_ai AFTER INSERT ON l2_vault BEGIN
     INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url)
-    VALUES (new.id, new.content, new.tags, new.kind, new.category, new.source_url);
+    VALUES (new.id, new.content, new.tags, new.memory_kind, new.category, new.source_url);
 END;
 
 CREATE TRIGGER IF NOT EXISTS l2_vault_ad AFTER DELETE ON l2_vault BEGIN
@@ -41,7 +41,7 @@ END;
 CREATE TRIGGER IF NOT EXISTS l2_vault_au AFTER UPDATE ON l2_vault BEGIN
     DELETE FROM l2_memory_fts WHERE memory_id = old.id;
     INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url)
-    VALUES (new.id, new.content, new.tags, new.kind, new.category, new.source_url);
+    VALUES (new.id, new.content, new.tags, new.memory_kind, new.category, new.source_url);
 END;
 `
 
@@ -150,4 +150,39 @@ func (f *FTSMemorySearch) Optimize(ctx context.Context) error {
 		return fmt.Errorf("fts optimize: %w", err)
 	}
 	return nil
+}
+
+// rebuildFTSIndex truncates and re-populates the FTS index from the l2_vault table.
+func rebuildFTSIndex(db *sql.DB) {
+	// Remove all rows from the FTS table
+	_, _ = db.Exec(`DELETE FROM l2_memory_fts`)
+	// Re-insert all memories from l2_vault
+	rows, err := db.Query(`SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault`)
+	if err != nil {
+		fmt.Printf("Warning: rebuildFTSIndex query: %v\n", err)
+		return
+	}
+	defer rows.Close()
+
+	stmt, err := db.Prepare(`INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url) VALUES (?, ?, ?, ?, ?, ?)`)
+	if err != nil {
+		fmt.Printf("Warning: rebuildFTSIndex prepare: %v\n", err)
+		return
+	}
+	defer stmt.Close()
+
+	var count int
+	for rows.Next() {
+		var id, content, tags, kind, category, sourceURL string
+		if err := rows.Scan(&id, &content, &tags, &kind, &category, &sourceURL); err != nil {
+			continue
+		}
+		if _, err := stmt.Exec(id, content, tags, kind, category, sourceURL); err != nil {
+			continue
+		}
+		count++
+	}
+	if count > 0 {
+		fmt.Printf("FTS5 index rebuilt: %d memories indexed\n", count)
+	}
 }

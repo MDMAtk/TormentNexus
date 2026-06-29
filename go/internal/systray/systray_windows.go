@@ -9,40 +9,40 @@ import (
 	"time"
 	"unsafe"
 
-	"golang.org/x/sys/windows"
 	"github.com/tormentnexushq/tormentnexus-go/internal/eventbus"
+	"golang.org/x/sys/windows"
 )
 
 // Win32 API declarations
 var (
-	user32           = windows.NewLazySystemDLL("user32.dll")
-	shell32          = windows.NewLazySystemDLL("shell32.dll")
-	kernel32         = windows.NewLazySystemDLL("kernel32.dll")
+	user32   = windows.NewLazySystemDLL("user32.dll")
+	shell32  = windows.NewLazySystemDLL("shell32.dll")
+	kernel32 = windows.NewLazySystemDLL("kernel32.dll")
 
-	pRegisterClassEx   = user32.NewProc("RegisterClassExW")
-	pCreateWindowEx    = user32.NewProc("CreateWindowExW")
-	pDefWindowProc     = user32.NewProc("DefWindowProcW")
-	pGetMessage        = user32.NewProc("GetMessageW")
-	pTranslateMessage  = user32.NewProc("TranslateMessage")
-	pDispatchMessage   = user32.NewProc("DispatchMessageW")
-	pPostQuitMessage   = user32.NewProc("PostQuitMessage")
-	pShowWindow        = user32.NewProc("ShowWindow")
-	pUpdateWindow      = user32.NewProc("UpdateWindow")
-	pSetWindowText     = user32.NewProc("SetWindowTextW")
-	pSendMessage       = user32.NewProc("SendMessageW")
-	pLoadIcon          = user32.NewProc("LoadIconW")
-	pDestroyWindow     = user32.NewProc("DestroyWindow")
+	pRegisterClassEx  = user32.NewProc("RegisterClassExW")
+	pCreateWindowEx   = user32.NewProc("CreateWindowExW")
+	pDefWindowProc    = user32.NewProc("DefWindowProcW")
+	pGetMessage       = user32.NewProc("GetMessageW")
+	pTranslateMessage = user32.NewProc("TranslateMessage")
+	pDispatchMessage  = user32.NewProc("DispatchMessageW")
+	pPostQuitMessage  = user32.NewProc("PostQuitMessage")
+	pShowWindow       = user32.NewProc("ShowWindow")
+	pUpdateWindow     = user32.NewProc("UpdateWindow")
+	pSetWindowText    = user32.NewProc("SetWindowTextW")
+	pSendMessage      = user32.NewProc("SendMessageW")
+	pLoadIcon         = user32.NewProc("LoadIconW")
+	pDestroyWindow    = user32.NewProc("DestroyWindow")
 
-	pShellNotifyIcon   = shell32.NewProc("Shell_NotifyIconW")
+	pShellNotifyIcon = shell32.NewProc("Shell_NotifyIconW")
 )
 
 const (
-	NIM_ADD        = 0
-	NIM_MODIFY     = 1
-	NIM_DELETE     = 2
-	NIF_MESSAGE    = 1
-	NIF_ICON       = 2
-	NIF_TIP        = 4
+	NIM_ADD     = 0
+	NIM_MODIFY  = 1
+	NIM_DELETE  = 2
+	NIF_MESSAGE = 1
+	NIF_ICON    = 2
+	NIF_TIP     = 4
 
 	WM_CREATE        = 0x0001
 	WM_DESTROY       = 0x0002
@@ -102,16 +102,16 @@ type NOTIFYICONDATAW struct {
 
 // Global state
 var (
-	hHiddenWnd       windows.HWND
-	hLogWnd          windows.HWND
-	hEditWnd         windows.HWND
-	hNormalIcon      windows.Handle
-	hActivityIcon    windows.Handle
-	activityTimeout  *time.Timer
-	activityMutex    sync.Mutex
-	logMutex         sync.Mutex
-	logLines         []string
-	maxLogLines      = 200
+	hHiddenWnd      windows.HWND
+	hLogWnd         windows.HWND
+	hEditWnd        windows.HWND
+	hNormalIcon     windows.Handle
+	hActivityIcon   windows.Handle
+	activityTimeout *time.Timer
+	activityMutex   sync.Mutex
+	logMutex        sync.Mutex
+	logLines        []string
+	maxLogLines     = 200
 )
 
 func init() {

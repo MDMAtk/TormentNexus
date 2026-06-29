@@ -11,9 +11,9 @@ import (
 	"errors"
 	"fmt"
 	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
+	"github.com/tormentnexushq/tormentnexus-go/internal/catalogingestor"
 	"github.com/tormentnexushq/tormentnexus-go/internal/codeexec"
 	"github.com/tormentnexushq/tormentnexus-go/internal/enterprise"
-	"github.com/tormentnexushq/tormentnexus-go/internal/catalogingestor"
 	"github.com/tormentnexushq/tormentnexus-go/internal/memorystore"
 	"io"
 	"io/fs"
@@ -52,16 +52,16 @@ import (
 	"github.com/tormentnexushq/tormentnexus-go/internal/ctxharvester"
 	"github.com/tormentnexushq/tormentnexus-go/internal/eventbus"
 	"github.com/tormentnexushq/tormentnexus-go/internal/gitservice"
+	"github.com/tormentnexushq/tormentnexus-go/internal/gossip"
 	"github.com/tormentnexushq/tormentnexus-go/internal/healer"
 	"github.com/tormentnexushq/tormentnexus-go/internal/metrics"
 	processmanager "github.com/tormentnexushq/tormentnexus-go/internal/process"
 	"github.com/tormentnexushq/tormentnexus-go/internal/repograph"
 	"github.com/tormentnexushq/tormentnexus-go/internal/session"
 	"github.com/tormentnexushq/tormentnexus-go/internal/skillregistry"
-	"github.com/tormentnexushq/tormentnexus-go/internal/gossip"
+	"github.com/tormentnexushq/tormentnexus-go/internal/systray"
 	"github.com/tormentnexushq/tormentnexus-go/internal/toolregistry"
 	"github.com/tormentnexushq/tormentnexus-go/internal/workspaces"
-	"github.com/tormentnexushq/tormentnexus-go/internal/systray"
 	_ "modernc.org/sqlite"
 )
 
@@ -722,7 +722,6 @@ func (s *Server) Close() error {
 	return nil
 }
 
-
 func (s *Server) Handler() http.Handler {
 	return s.mux
 }
@@ -1352,6 +1351,9 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/memory/archive-session", s.handleMemoryArchiveSession)
 	s.mux.HandleFunc("/api/memory/fts-search", s.handleMemoryFTSearch)
 	s.mux.HandleFunc("/api/memory/cold-archive", s.handleColdArchive)
+	s.mux.HandleFunc("/api/memory/limbo/bury", s.handleLimboBury)
+	s.mux.HandleFunc("/api/memory/limbo/search", s.handleLimboSearch)
+	s.mux.HandleFunc("/api/memory/limbo/resurrect", s.handleLimboResurrect)
 	s.mux.HandleFunc("/api/memory/hydrate", s.handleMemoryHydrate)
 	s.mux.HandleFunc("/api/memory/hydration/status", s.handleMemoryHydrationStatus)
 	s.mux.HandleFunc("/api/memory/hydration/query", s.handleMemoryHydrationQuery)

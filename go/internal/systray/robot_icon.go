@@ -11,16 +11,16 @@ import (
 
 // Additional GDI API declarations for icon creation
 var (
-	gdi32            = windows.NewLazySystemDLL("gdi32.dll")
-	pCreateBitmap    = gdi32.NewProc("CreateBitmap")
+	gdi32               = windows.NewLazySystemDLL("gdi32.dll")
+	pCreateBitmap       = gdi32.NewProc("CreateBitmap")
 	pCreateCompatibleDC = gdi32.NewProc("CreateCompatibleDC")
-	pSelectObject    = gdi32.NewProc("SelectObject")
-	pDeleteDC        = gdi32.NewProc("DeleteDC")
-	pDeleteObject    = gdi32.NewProc("DeleteObject")
-	pSetPixel        = gdi32.NewProc("SetPixel")
+	pSelectObject       = gdi32.NewProc("SelectObject")
+	pDeleteDC           = gdi32.NewProc("DeleteDC")
+	pDeleteObject       = gdi32.NewProc("DeleteObject")
+	pSetPixel           = gdi32.NewProc("SetPixel")
 	pCreateIconIndirect = user32.NewProc("CreateIconIndirect")
-	pGetDC           = user32.NewProc("GetDC")
-	pReleaseDC       = user32.NewProc("ReleaseDC")
+	pGetDC              = user32.NewProc("GetDC")
+	pReleaseDC          = user32.NewProc("ReleaseDC")
 )
 
 type ICONINFO struct {
@@ -94,7 +94,7 @@ func drawRobotFace(color uint32) windows.Handle {
 	// Create the color bitmap (using a DIB section approach)
 	// Since we need raw pixel access, we use CreateBitmap with a byte array
 	// Then SetBitmapBits to set the pixels
-	
+
 	// Create monochrome mask bitmap
 	// Each row must be DWORD-aligned
 	maskStride := ((ICON_SIZE + 31) / 32) * 4

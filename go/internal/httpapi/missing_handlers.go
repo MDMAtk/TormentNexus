@@ -9,6 +9,7 @@ import (
 
 	"github.com/tormentnexushq/tormentnexus-go/internal/memorystore"
 	"github.com/tormentnexushq/tormentnexus-go/internal/tools"
+	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
 )
 
 func (s *Server) handleGetMemory(w http.ResponseWriter, r *http.Request) {
@@ -266,4 +267,107 @@ func (s *Server) handleMemoryArchiveSession(w http.ResponseWriter, r *http.Reque
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 	})
+}
+
+func (s *Server) handleLimboBury(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if tools.GlobalVectorStore == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "vector store not initialized"})
+		return
+	}
+	limbo, err := memorystore.NewLimboVault(tools.GlobalVectorStore.DB())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	var req struct {
+		ID     string `json:"id"`
+		Reason string `json:"reason"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON"})
+		return
+	}
+	rec := controlplane.L2VaultRecord{ID: req.ID}
+	reason := memorystore.LimboReason(req.Reason)
+	switch reason {
+	case memorystore.LimboLost, memorystore.LimboForgotten, memorystore.LimboDiscarded, memorystore.LimboDecayed, memorystore.LimboReplaced:
+	default:
+		reason = memorystore.LimboDiscarded
+	}
+	if err := limbo.Bury(r.Context(), rec, reason); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true})
+}
+
+func (s *Server) handleLimboSearch(w http.ResponseWriter, r *http.Request) {
+	query := strings.TrimSpace(r.URL.Query().Get("q"))
+	limit := 20
+	if l := r.URL.Query().Get("limit"); l != "" {
+		if p, err := strconv.Atoi(l); err == nil && p > 0 && p <= 100 {
+			limit = p
+		}
+	}
+	if tools.GlobalVectorStore == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "vector store not initialized"})
+		return
+	}
+	limbo, err := memorystore.NewLimboVault(tools.GlobalVectorStore.DB())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	if query != "" {
+		results, err := limbo.SearchLimbo(r.Context(), query, limit)
+		if err != nil {
+			writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+			return
+		}
+		writeJSON(w, http.StatusOK, map[string]any{"success": true, "data": results})
+		return
+	}
+	stats, err := limbo.Stats(r.Context())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true, "stats": stats})
+}
+
+func (s *Server) handleLimboResurrect(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if tools.GlobalVectorStore == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "vector store not initialized"})
+		return
+	}
+	var req struct {
+		ID string `json:"id"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON"})
+		return
+	}
+	limbo, err := memorystore.NewLimboVault(tools.GlobalVectorStore.DB())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	rec, err := limbo.Resurrect(r.Context(), req.ID)
+	if err != nil {
+		writeJSON(w, http.StatusNotFound, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	if err := tools.GlobalVectorStore.Commit(r.Context(), *rec); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true, "data": rec})
 }
