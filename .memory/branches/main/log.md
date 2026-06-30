@@ -47256,3 +47256,120 @@ Let me add these methods.
 **Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/enterprise/audit.go", edits: [object Object])
 **Observation**: edit: success
 
+## Turn 21 | 2026-06-30T17:51:59.688Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now add `Info()` and `GetRoles()` to `EnterpriseWrapper`.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/enterprise/security.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 22 | 2026-06-30T17:53:20.356Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now build the Go binary to verify everything compiles.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build ./cmd/tormentnexus 2>&1 && echo "GO: CLEAN"", timeout: 120)
+**Observation**: bash: error
+
+## Turn 23 | 2026-06-30T17:53:27.047Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Two errors:
+1. `tools.GlobalVectorStore.Store` doesn't exist - I need to check what method is used to store/promote memories
+2. `s.handleColdArchive` is undefined - I replaced it with the sub-route handlers but didn't register the old root handler. Let me check if the root route still needs to exist.
+
+For #1, let me check what method VectorStore has for storing records.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "func.*VectorStore.*Store\|func.*VectorStore.*Insert\|func.*VectorStore.*Save\|func.*VectorStore.*Put" go/internal/memorystore/vector_sqlite.go | head -10")
+**Observation**: bash: success
+
+## Turn 24 | 2026-06-30T17:53:31.063Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: No `Store` method. Let me check how the promote function works in the cold archive - it returns a record, but the handler needs to insert it back into L2 vault.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "func.*VectorStore" go/internal/memorystore/vector_sqlite.go | head -20")
+**Observation**: bash: success
+
+## Turn 25 | 2026-06-30T17:53:34.746Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: There's a `Commit` method. Let me check its signature.
+**Action**: read(offset: 123, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/vector_sqlite.go", limit: 40)
+**Observation**: read: success
+
+## Turn 26 | 2026-06-30T17:53:38.424Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The method is called `Commit`, not `Store`. Let me fix the handler.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/missing_handlers.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 27 | 2026-06-30T17:53:45.227Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still shows the error. The file was auto-formatted and the line numbers changed. Let me check what's happening.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "GlobalVectorStore" go/internal/httpapi/missing_handlers.go")
+**Observation**: bash: success
+
+## Turn 28 | 2026-06-30T17:53:56.506Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Line 261 has `GlobalVectorStore.Commit` - that should work. The linter error might be stale. Let me just rebuild to check.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build ./cmd/tormentnexus 2>&1", timeout: 120)
+**Observation**: bash: error
+
+## Turn 29 | 2026-06-30T17:54:03.647Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Only one error now: `s.handleColdArchive` is still referenced in server.go at line 1356. I need to remove that reference since I replaced it with sub-routes.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "handleColdArchive" go/internal/httpapi/server.go")
+**Observation**: bash: success
+
+## Turn 30 | 2026-06-30T17:54:07.125Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Line 1356 still references the old `s.handleColdArchive`. I need to replace it with either a proper handler or remove it. Let me replace it with a redirect to `/api/memory/cold-archive/count` or just remove it.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/httpapi/server.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 31 | 2026-06-30T17:55:09.676Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.195" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "GO: BUILT"", timeout: 120)
+**Observation**: bash: error
+
+## Turn 32 | 2026-06-30T17:55:24.344Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The binary is in use (the server is running). Let me kill it first, then rebuild.
+**Action**: bash(command: "taskkill //F //IM tormentnexus.exe 2>/dev/null; sleep 2 && cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.195" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "GO: BUILT"", timeout: 120)
+**Observation**: bash: success
+
+## Turn 33 | 2026-06-30T17:55:37.390Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Wow, 17 zombie processes were running! Now rebuild and restart.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING" && curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/cold-archive/count" | head -100 2>&1", timeout: 20)
+**Observation**: bash: success
+
+## Turn 34 | 2026-06-30T17:55:51.005Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: ✅ Cold archive count endpoint works! Now let me test the other endpoints.
+**Action**: bash(command: "curl -s --max-time 3 "http://127.0.0.1:7778/api/enterprise/license" | head -200 && echo "---" && curl -s --max-time 3 "http://127.0.0.1:7778/api/enterprise/roles" | head -200")
+**Observation**: bash: success
+
+## Turn 35 | 2026-06-30T17:55:56.671Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: All endpoints work. Let me also test the audit endpoint and the cold-archive search/promote.
+**Action**: bash(command: "curl -s --max-time 3 "http://127.0.0.1:7778/api/enterprise/audit?limit=5" | head -100 && echo "---" && curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/cold-archive" | head -100")
+**Observation**: bash: success
+
+## Turn 36 | 2026-06-30T17:56:02.288Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The user is telling me that the Go module path is `github.com/MDMAtk/TormentNexus`, not `github.com/tormentnexushq/tormentnexus-go`. This is important for the build commands. Let me check the actual module path.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && head -3 go.mod")
+**Observation**: bash: success
+

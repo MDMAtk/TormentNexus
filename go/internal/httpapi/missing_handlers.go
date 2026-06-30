@@ -258,7 +258,7 @@ func (s *Server) handleColdArchivePromote(w http.ResponseWriter, r *http.Request
 		return
 	}
 	if record != nil && tools.GlobalVectorStore != nil {
-		_ = tools.GlobalVectorStore.Store(r.Context(), *record)
+		_ = tools.GlobalVectorStore.Commit(r.Context(), *record)
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"success": true, "data": record})
 }

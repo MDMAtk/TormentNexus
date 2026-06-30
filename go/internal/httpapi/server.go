@@ -1353,7 +1353,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/agent/director/start", s.handleGoDirectorStart)
 	s.mux.HandleFunc("/api/memory/archive-session", s.handleMemoryArchiveSession)
 	s.mux.HandleFunc("/api/memory/fts-search", s.handleMemoryFTSearch)
-	s.mux.HandleFunc("/api/memory/cold-archive", s.handleColdArchive)
+	s.mux.HandleFunc("/api/memory/cold-archive", s.handleColdArchiveCount)
 	s.mux.HandleFunc("/api/memory/cold-archive/search", s.handleColdArchiveSearch)
 	s.mux.HandleFunc("/api/memory/cold-archive/count", s.handleColdArchiveCount)
 	s.mux.HandleFunc("/api/memory/cold-archive/promote", s.handleColdArchivePromote)
