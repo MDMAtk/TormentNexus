@@ -6,7 +6,7 @@
     "dev": "node ./scripts/dev.mjs",
     "dev:auto": "node ./scripts/dev-auto.mjs",
     "build": "node ./scripts/clean-build.mjs && next build",
-    "build:wails": "npx cross-env NEXT_EXPORT=true pnpm build && node copy-assets.js",
+    "build:wails": "pnpm build && node copy-assets.mjs",
     "start": "next start",
     "lint": "echo \"Linting skipped\""
   },
