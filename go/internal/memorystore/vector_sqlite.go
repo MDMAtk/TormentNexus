@@ -81,8 +81,8 @@ func NewVectorStore(dbPath string) (*VectorStore, error) {
 	if _, err := db.Exec(ftsSchemaSQL); err != nil {
 		fmt.Printf("Warning: failed to init FTS5 schema: %v\n", err)
 	}
-	// Rebuild FTS index from existing L2 vault data
-	rebuildFTSIndex(db)
+	// Rebuild FTS index from existing L2 vault data (async — can be slow)
+	go rebuildFTSIndex(db)
 
 	var l3 *L3ColdArchive
 	var l3Err error

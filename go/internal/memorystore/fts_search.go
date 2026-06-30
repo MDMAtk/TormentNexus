@@ -170,35 +170,14 @@ func (f *FTSMemorySearch) Optimize(ctx context.Context) error {
 
 // rebuildFTSIndex truncates and re-populates the FTS index from the l2_vault table.
 func rebuildFTSIndex(db *sql.DB) {
-	// Remove all rows from the FTS table
-	_, _ = db.Exec(`DELETE FROM l2_memory_fts`)
-	// Re-insert all memories from l2_vault
-	rows, err := db.Query(`SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault`)
+	// Use a single INSERT FROM SELECT (much faster than row-by-row)
+	_, err := db.Exec(`
+		INSERT OR IGNORE INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url)
+		SELECT id, content, COALESCE(tags, ''), memory_kind, COALESCE(category, 'general'), COALESCE(source_url, '')
+		FROM l2_vault
+		WHERE id NOT IN (SELECT memory_id FROM l2_memory_fts)
+	`)
 	if err != nil {
-		fmt.Printf("Warning: rebuildFTSIndex query: %v\n", err)
-		return
-	}
-	defer rows.Close()
-
-	stmt, err := db.Prepare(`INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url) VALUES (?, ?, ?, ?, ?, ?)`)
-	if err != nil {
-		fmt.Printf("Warning: rebuildFTSIndex prepare: %v\n", err)
-		return
-	}
-	defer stmt.Close()
-
-	var count int
-	for rows.Next() {
-		var id, content, tags, kind, category, sourceURL string
-		if err := rows.Scan(&id, &content, &tags, &kind, &category, &sourceURL); err != nil {
-			continue
-		}
-		if _, err := stmt.Exec(id, content, tags, kind, category, sourceURL); err != nil {
-			continue
-		}
-		count++
-	}
-	if count > 0 {
-		fmt.Printf("FTS5 index rebuilt: %d memories indexed\n", count)
+		fmt.Printf("FTS5: bulk rebuild error: %v\n", err)
 	}
 }

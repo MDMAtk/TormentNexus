@@ -42748,3 +42748,710 @@ Actually, the handler should work. Let me check the actual response.
 **Action**: bash(command: "curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 300")
 **Observation**: bash: success
 
+## Turn 38 | 2026-06-30T12:47:22.877Z | deepseek/deepseek-v4-flash
+
+**Thought**: Response format working correctly — `total: 0` because it's a fresh DB. Let me commit and push.
+**Thinking**: It returns `total: 0, data: null, limit: 2, offset: 0`. That's because the memory.db was freshly created and has 0 records. The total count is 0 because no memories have been ingested on this fresh server. The response format is correct — it's just that the DB is empty.
+
+Let me commit and push everything as-is. The format change works correctly.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && git add -A && git commit -m "feat: FTS search returns total count, L4 Limbo panel in Memory Explorer, pagination shows X of Y" && git push origin main 2>&1", timeout: 600)
+**Observation**: bash: success
+
+## Turn 39 | 2026-06-30T12:57:04.216Z | deepseek/deepseek-v4-flash
+
+**Thought**: Fresh DB is empty — let me re-ingest the memories.
+**Thinking**: Wait, I should re-ingest the memories since the DB is fresh. Let me do that quickly and push again.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -c "
+import sqlite3, uuid
+from datetime import datetime, timezone
+target = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+source = sqlite3.connect('C:/Users/hyper/workspace/tormentnexus/tormentnexus.db')
+rows = source.execute('SELECT uuid, imported_session_uuid, content, created_at FROM imported_session_memories ORDER BY created_at DESC').fetchall()
+inserted = 0
+for row in rows:
+    mem_id = f'mem-bulk-{row[0]}'
+    content = str(row[2] or '')[:10000]
+    created = row[3] or datetime.now(timezone.utc).isoformat()
+    target.execute('''INSERT OR IGNORE INTO l2_vault (id, session_id, memory_type, memory_kind, category, content, importance, heat_score, last_accessed_at, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (mem_id, 'imported:' + str(row[1] or ''), 'long_term', 'fact', 'imported', content, 0.5, 50.0, datetime.now(timezone.utc).isoformat(), str(created)))
+    inserted += 1
+    if inserted % 10000 == 0:
+        target.commit()
+        print(f'{inserted}...')
+target.commit()
+target.execute('DELETE FROM l2_memory_fts')
+target.execute(\"INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url) SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault\")
+target.commit()
+cnt = target.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+print(f'Done: {inserted} memories, {cnt} total')
+target.close()
+source.close()
+" 2>&1", timeout: 120)
+**Observation**: bash: error
+
+## Turn 40 | 2026-06-30T12:57:19.927Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The DB is locked by the running server. Let me stop the process, import, then restart.
+**Action**: bash(command: "taskkill //F //PID 51276 2>/dev/null
+sleep 2
+cd C:/Users/hyper/workspace/tormentnexus && python -c "
+import sqlite3
+from datetime import datetime, timezone
+target = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+source = sqlite3.connect('C:/Users/hyper/workspace/tormentnexus/tormentnexus.db')
+rows = source.execute('SELECT uuid, imported_session_uuid, content, created_at FROM imported_session_memories ORDER BY created_at DESC').fetchall()
+inserted = 0
+for row in rows:
+    mem_id = f'mem-bulk-{row[0]}'
+    content = str(row[2] or '')[:10000]
+    created = row[3] or datetime.now(timezone.utc).isoformat()
+    target.execute('INSERT OR IGNORE INTO l2_vault (id, session_id, memory_type, memory_kind, category, content, importance, heat_score, last_accessed_at, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (mem_id, 'imported:' + str(row[1] or ''), 'long_term', 'fact', 'imported', content, 0.5, 50.0, datetime.now(timezone.utc).isoformat(), str(created)))
+    inserted += 1
+    if inserted % 10000 == 0:
+        target.commit()
+        print(f'{inserted}...')
+target.commit()
+target.execute('DELETE FROM l2_memory_fts')
+target.execute(\"INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url) SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault\")
+target.commit()
+cnt = target.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+print(f'Done: {inserted} memories, {cnt} total')
+target.close()
+source.close()
+" 2>&1", timeout: 120)
+**Observation**: bash: success
+
+## Turn 41 | 2026-06-30T12:57:40.489Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: 59K memories ingested. Restart the server and verify FTS with total count.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 &
+sleep 6
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | python -c "import sys,json;d=json.load(sys.stdin);print(f'Total: {d.get(\"total\",\"?\")}, Results: {len(d.get(\"data\",d.get(\"results\",[])))}')" 2>&1", timeout: 15)
+**Observation**: bash: error
+
+## Turn 42 | 2026-06-30T12:57:57.067Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Server not running yet. Let me wait more.
+**Action**: bash(command: "sleep 5 && netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING" && curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | python -c "import sys,json;d=json.load(sys.stdin);print(f'Total: {d.get(\"total\",\"?\")}, Results: {len(d.get(\"data\",[]))}')" 2>&1", timeout: 12)
+**Observation**: bash: error
+
+## Turn 43 | 2026-06-30T12:58:08.804Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still not running. The process might have crashed or hung. Let me check.
+**Action**: bash(command: "tasklist 2>&1 | grep tormentnexus && echo "---" && netstat -ano | findstr ":7778" 2>&1 || echo "Port free"")
+**Observation**: bash: success
+
+## Turn 44 | 2026-06-30T12:58:17.468Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The server IS running (PID 27528 is listening on 7778), it's just taking time to respond. Let me try the curl again.
+**Action**: bash(command: "curl -s --max-time 5 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 400")
+**Observation**: bash: success
+
+## Turn 45 | 2026-06-30T12:58:24.305Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still total: 0. The memory.db has 59K records but the FTS search returns 0. This is because the FTS index was rebuilt while the server was down, but the server was started fresh and the memory.db it reads is the one with the FTS index.
+
+Wait — the FTS index was built from the `l2_vault` table. But the server just started and the triggers should be in place. But the `rebuildFTSIndex` function runs at startup and does `DELETE FROM l2_memory_fts` THEN `SELECT ... FROM l2_vault` — but this happens before the server starts serving requests. So the FTS index should have all 59K entries.
+
+Unless the DB file that the server is reading is NOT the one I just wrote to. Let me check.
+**Action**: bash(command: "python -c "
+import sqlite3, os
+path = 'C:/Users/hyper/.tormentnexus-go/memory.db'
+print(f'File size: {os.path.getsize(path)} bytes')
+conn = sqlite3.connect(path)
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+cntf = conn.execute('SELECT COUNT(*) FROM l2_memory_fts').fetchone()[0]
+print(f'L2 vault: {cnt}, FTS5: {cntf}')
+# Check if server is using the same DB
+conn.close()
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 46 | 2026-06-30T12:58:33.106Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The FTS5 index has 0 entries! The `rebuildFTSIndex` function ran at server startup and did:
+1. `DELETE FROM l2_memory_fts` — removed all entries
+2. `SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault` — then INSERT
+
+But the INSERT failed because the column `memory_kind` doesn't match the FTS5 column name `kind`. Let me check.
+
+Wait, no — the FTS5 schema has columns: `memory_id, content, tags, kind, category, source_url`. And the INSERT statement in `rebuildFTSIndex` uses `(memory_id, content, tags, kind, category, source_url)` with values `(id, content, tags, memory_kind, category, source_url)`.
+
+But the column name in the SELECT is `memory_kind` while the INSERT target is `kind`. That should work because FTS5 column names are positional. Let me check the INSERT statement more carefully.
+
+Actually, looking at my code in `rebuildFTSIndex`:
+```go
+stmt, err := db.Prepare(`INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url) VALUES (?, ?, ?, ?, ?, ?)`)
+```
+
+And the scan:
+```go
+if err := rows.Scan(&id, &content, &tags, &kind, &category, &sourceURL); err != nil {
+```
+
+The SELECT is `SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault`. The scan reads into `kind` variable (which is a Go string). The `kind` variable is then passed as the 4th parameter to the INSERT. This should work because:
+- Column 1: id → memory_id
+- Column 2: content → content
+- Column 3: tags → tags
+- Column 4: memory_kind → kind
+- Column 5: category → category
+- Column 6: source_url → source_url
+
+This should work. Let me check if the issue is a different error. Let me run the rebuild manually.
+**Action**: bash(command: "taskkill //F //PID 27528 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus && python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+try:
+    conn.execute('DELETE FROM l2_memory_fts')
+    conn.execute(\"INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url) SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault\")
+    conn.commit()
+    cnt = conn.execute('SELECT COUNT(*) FROM l2_memory_fts').fetchone()[0]
+    print(f'FTS5 index rebuilt: {cnt}')
+except Exception as e:
+    print(f'Error: {e}')
+conn.close()
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 47 | 2026-06-30T12:58:46.788Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The manual rebuild worked. The issue was that the `rebuildFTSIndex` function in the Go code runs at server startup, but by that time the server has opened the DB and started... actually, the rebuild runs inside `NewVectorStore` which is called during server initialization, before any connections are made. So it should work.
+
+Let me check the Go code's rebuild function more carefully. It might have a bug.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -A20 "func rebuildFTSIndex" go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 48 | 2026-06-30T12:58:54.258Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The code runs at startup (inside `NewVectorStore`). But there's a problem: the `rebuildFTSIndex` function will run on EVERY server start, which means every restart will rebuild the index. But the issue is that the function silently continues even after errors.
+
+Let me check if there's a schema issue. The FTS5 virtual table was created by `ftsSchemaSQL` at line 81 of `vector_sqlite.go`:
+```go
+if _, err := db.Exec(ftsSchemaSQL); err != nil {
+    fmt.Printf("Warning: failed to init FTS5 schema: %v\n", err)
+}
+```
+
+If this fails, the FTS5 table doesn't exist, and the rebuild would also fail.
+
+But the manual rebuild worked fine, so the schema is correct. The issue must be that the startup rebuild is NOT actually running. Let me check if the `ftsSchemaSQL` is being executed correctly.
+
+Actually, I bet the issue is that the `ftsSchemaSQL` uses `CREATE VIRTUAL TABLE IF NOT EXISTS`. But the table already exists from the first startup. The schema creation succeeds. The rebuild then runs and DELETEs all entries, but the INSERT fails for some reason that's silently swallowed.
+
+The `rows.Next()` loop might not be iterating because the SELECT returns 0 rows if the query has an issue. But `defer stmt.Close()` might be causing issues because both `rows` and `stmt` are deferred in the same function.
+
+Actually, there's a bug: `defer stmt.Close()` is called BEFORE `for rows.Next()`. The `defer` runs at function exit, but the `rows.Next()` loop runs BEFORE function exit. So the `stmt` should still be open during the loop.
+
+Wait, but both `rows` and `stmt` are deferred. The `stmt` prepare might fail silently. Let me check the error handling.
+
+Actually, the most likely issue is that the rebuild ran BEFORE the ingestion. The flow is:
+1. Server starts → `NewVectorStore` → rebuildFTSIndex → DELETE + INSERT (0 rows, since l2_vault is empty)
+2. Later, the ingestion script INSERTs into l2_vault via direct SQL (bypassing the Go process)
+3. The FTS triggers fire... wait, are the triggers active?
+
+The trigges are created by `ftsSchemaSQL`. They fire on INSERT to l2_vault. But the ingestion script inserts via direct SQL which goes through the same SQLite DB, so the triggers should fire.
+
+But wait — the ingestion script runs AFTER the server starts. The server creates the FTS5 table and triggers. Then the script inserts into l2_vault. The triggers should fire and insert into l2_memory_fts.
+
+But when I checked, the FTS index had 0 entries. This means the triggers DIDN'T fire. Why?
+
+The triggers reference `new.memory_kind` and `new.content`, etc. If the column names in the INSERT don't match the l2_vault table definition, the trigger might fail silently.
+
+Actually, in SQLite, if a trigger references a column that doesn't exist, the trigger creation fails. But since the trigger was created successfully, the columns must exist.
+
+Wait — let me re-check the trigger code.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -A10 "CREATE TRIGGER IF NOT EXISTS l2_vault_ai" go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 49 | 2026-06-30T12:59:10.170Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The triggers look correct — they reference `new.memory_kind` which matches the table column. The manual rebuild worked fine too.
+
+The issue is probably more subtle. The triggers only fire on INSERT/UPDATE/DELETE on the l2_vault table. The ingestion script runs AFTER the server starts. When the script inserts 59K records, the trigger fires for each one. But maybe there's a race or the trigger fails silently on some edge case.
+
+Actually, the most likely issue: the ingestion script ran while the server was DOWN (I killed it before ingestion). So the server wasn't running during the bulk insert. The triggers only fire during database operations. When the server is NOT connected, the INSERT happens without the FTS5 trigger context? No — SQLite triggers fire regardless of which process/connection performs the operation.
+
+Wait — I killed the server, then ran the ingestion. The ingestion uses a DIRECT SQLite3 connection (not through the Go server). The triggers should still fire because they're stored in the database schema.
+
+The fact that the FTS index has 0 entries after the bulk insert means the triggers are NOT firing. Let me check if there's an issue with the trigger creation.
+
+Actually, let me just accept there might be a subtle SQLite issue and instead rely on the explicit rebuild. Since the manual rebuild works, I'll make the server call it on every startup, which is what the current code does. The issue is that it ran and showed 0 because the vault was empty at startup time.
+
+Wait — let me trace the exact sequence:
+1. Server starts → creates fresh memory.db → FTS5 created → rebuildFTSIndex runs (0 in vault, 0 in FTS)
+2. I kill server
+3. Ingestion runs → 59K records inserted into l2_vault → triggers should fire... but 0 in FTS
+4. Manual rebuild → 59K in FTS
+
+So the triggers didn't fire during the bulk insert. Why? Let me check if the ingestion was on the same connection that had the triggers active.
+
+Actually, the triggers reference `l2_memory_fts` which is a FTS5 virtual table. But wait — the FTS5 table was created by one connection (the Go server), and the ingestion script uses a different connection. The FTS5 table persists in the database regardless of which connection creates it. So it should work.
+
+Unless... the issue is that I killed the server after it ran `DELETE FROM l2_memory_fts` inside `rebuildFTSIndex`, the DELETE succeeded, and then the INSERT failed for some reason. At that point, the table is empty. The server exits. Then the ingestion script runs and the triggers fire but the trigger insert also fails...
+
+Let me just fix the reload by making it work correctly, and also ensure the server's rebuild runs on every startup.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+# Test trigger
+try:
+    conn.execute('INSERT INTO l2_vault (id, session_id, memory_type, memory_kind, category, content) VALUES (?, ?, ?, ?, ?, ?)',
+                 ('test-trigger-001', 'test', 'long_term', 'fact', 'test', 'test trigger'))
+    conn.commit()
+    cnt = conn.execute('SELECT COUNT(*) FROM l2_memory_fts WHERE memory_id = ?', ('test-trigger-001',)).fetchone()[0]
+    print(f'Trigger test: {cnt} (should be 1)')
+    conn.execute('DELETE FROM l2_vault WHERE id = ?', ('test-trigger-001',))
+    conn.commit()
+except Exception as e:
+    print(f'Error: {e}')
+conn.close()
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 50 | 2026-06-30T12:59:25.647Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The trigger works! It correctly inserted 1 entry into the FTS index. So the triggers ARE working. The 0 count I saw earlier was because the rebuild function ran at startup and deleted everything before the bulk insert happened... but wait, the functions run BEFORE the bulk insert, so the delete should have happened on an already-empty table.
+
+Actually wait — I need to trace the sequence more carefully.
+
+1. Server starts, NewVectorStore is called
+2. It creates the schema (ftsSchemaSQL with triggers)
+3. It calls rebuildFTSIndex which does DELETE FROM l2_memory_fts (table was already empty from fresh DB) then SELECT from l2_vault (empty) → 0 INSERTED
+4. Server is now running
+5. Ingestion runs (while server is alive?) — No, I killed the server before ingestion
+6. After server restart, triggers fire during bulk insert
+
+Let me check the sequence of events in this session. When I restarted the server (with the fresh DB), it ran the schema creation and rebuild which inserted 0. Then I ran the ingestion, but the ingestion was on a Python SQLite connection, not through the Go server.
+
+Actually, the trigger test I just ran worked perfectly. This means the triggers ARE working. The issue was probably that the ingestion happened on a connection that didn't have the schema's triggers active — but that shouldn't be the case since triggers are stored in the database.
+
+Wait, let me check: did the ingestion happen AFTER the schema creation? The sequence is: server started (created schema + triggers), then I killed the server, then the ingestion ran. The ingestion connected to the same DB file, which had the triggers. So the triggers should have fired.
+
+Let me check if the ingestion script is using a different SQLite library that might not support triggers or FTS5.
+
+Actually, the trigger test worked just now! So the triggers are working correctly. The issue was probably that the ingestion ran while the FTS5 table already had entries (from the startup rebuild), and the triggers inserted duplicates? No, the rebuild did DELETE first, so it should be empty.
+
+I think the real issue is that the rebuild ran at startup, DELETED all FTS entries, SELECTED from the then-empty l2_vault, and INSERTED 0 rows. Then the bulk insert (after server kill) fired the triggers correctly.
+
+So the system is working! The `total: 0` I saw earlier was because:
+1. Server started → rebuilt FTS index (0 entries because vault was empty at that point)
+2. I killed server and ran ingestion
+3. Server restarted... but I hadn't restarted it yet when I checked
+
+Actually, I checked `total: 0` when the server was running. But the ingestion happened while the server was DOWN. The triggers should have fired during the ingestion and populated the FTS index. But the count was 0 when I queried.
+
+Hmm, let me check now since the server is down (I killed it for the trigger test).
+**Action**: bash(command: "python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+cnt = conn.execute('SELECT COUNT(*) FROM l2_vault').fetchone()[0]
+cntf = conn.execute('SELECT COUNT(*) FROM l2_memory_fts').fetchone()[0]
+print(f'L2 vault: {cnt}')
+print(f'FTS5 index: {cntf}')
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 51 | 2026-06-30T12:59:41.089Z | deepseek/deepseek-v4-flash
+
+**Thought**: FTS index fully populated. Let me restart the server.
+**Thinking**: Both have 59,168 entries! The FTS index was properly rebuilt by my manual rebuild earlier. Now let me restart the server and verify it works.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 400", timeout: 15)
+**Observation**: bash: success
+
+## Turn 52 | 2026-06-30T12:59:58.646Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "sleep 6 && netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 500", timeout: 12)
+**Observation**: bash: success
+
+## Turn 53 | 2026-06-30T13:00:13.220Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still total: 0! The server startup's `rebuildFTSIndex` is DELETING the FTS index and not re-inserting the records. The sequence is:
+1. Server starts
+2. NewVectorStore runs
+3. ftsSchemaSQL is executed (IF NOT EXISTS — table already exists, no-op)
+4. rebuildFTSIndex runs: DELETE FROM l2_memory_fts (59K entries deleted!) then SELECT from l2_vault
+
+The SELECT in rebuildFTSIndex must be failing. Let me check if there's a schema mismatch.
+**Action**: bash(command: "python -c "
+import sqlite3
+conn = sqlite3.connect('C:/Users/hyper/.tormentnexus-go/memory.db')
+# Check column names
+cols = conn.execute('PRAGMA table_info(l2_vault)').fetchall()
+print('l2_vault columns:', [c[1] for c in cols])
+# Test the exact query from rebuildFTSIndex
+try:
+    rows = conn.execute('SELECT id, content, tags, memory_kind, category, source_url FROM l2_vault LIMIT 1').fetchone()
+    print(f'Query works: {rows[0][:30] if rows else \"no rows\"}')
+except Exception as e:
+    print(f'Query error: {e}')
+conn.close()
+" 2>&1")
+**Observation**: bash: success
+
+## Turn 54 | 2026-06-30T13:00:22.102Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The query works fine. Let me check if the `rebuildFTSIndex` function is even being called. Maybe the issue is that `NewVectorStore` is returning an error for some other reason, and `rebuildFTSIndex` is never reached.
+
+Actually, looking at the code flow in `NewVectorStore`:
+```
+1. Create l2_vault schema (VectorSchemaSQL)
+2. Create spaced repetition schema
+3. Create scratchpad schema  
+4. Create FTS5 schema (ftsSchemaSQL)
+5. rebuildFTSIndex(db)
+```
+
+If the ftsSchemaSQL fails (returns error), the code prints a warning but continues. Then rebuildFTSIndex runs. But if the ftsSchemaSQL succeeded earlier (table already exists), the `CREATE VIRTUAL TABLE IF NOT EXISTS` is a no-op. Then rebuildFTSIndex runs.
+
+The `rebuildFTSIndex` function:
+1. `DELETE FROM l2_memory_fts` — should work
+2. `SELECT ... FROM l2_vault` — should work
+3. `stmt, err := db.Prepare(...)` — should work
+4. Loop and insert — should work
+
+Let me check if maybe the error is happening in the prepare step. The prepare uses `INSERT INTO l2_memory_fts(memory_id, content, tags, kind, category, source_url) VALUES (?, ?, ?, ?, ?, ?)`.
+
+Wait — the FTS5 columns are `memory_id, content, tags, kind, category, source_url` as defined in `ftsSchemaSQL`. And the VALUES are mapped correctly. This should work.
+
+Let me check the actual error output by looking at the server logs more carefully.
+**Action**: bash(command: "taskkill //F //PID 10648 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus && timeout 15 bin/tormentnexus.exe serve --port 7778 2>&1 | grep -i "fts\|rebuild\|warning\|error" || echo "No FTS-related output"", timeout: 20)
+**Observation**: bash: success
+
+## Turn 55 | 2026-06-30T13:00:49.308Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The server doesn't print any FTS-related warnings, which means either:
+1. `ftsSchemaSQL` succeeds (no warning printed)
+2. `rebuildFTSIndex` succeeds (no warning printed — it only prints on `err != nil`)
+3. OR `NewVectorStore` is never called
+
+Wait — if `rebuildFTSIndex` succeeds without error, it would print nothing. Then the DELETE and re-INSERT should have happened. But the FTS index is empty after restart.
+
+The issue must be that `rebuildFTSIndex` is silently succeeding but the INSERT is not working. Let me check if maybe the error is in the `stmt.Exec` calls inside the loop which are silently ignored.
+
+Let me look at the loop logic more carefully:
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -A12 "for rows.Next" go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 56 | 2026-06-30T13:01:03.672Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The `rebuildFTSIndex` does print a message if `count > 0`. But we saw "No FTS-related output" — which means `count` was 0 or the function never reached that point.
+
+But the SELECT from l2_vault should return 59K rows. Unless... the `SELECT` query fails silently.
+
+Wait — look at the first `for rows.Next()` block. This is in the `Search` function, not `rebuildFTSIndex`. The second `for rows.Next()` block is in `rebuildFTSIndex`. Let me check the full `rebuildFTSIndex` function.
+
+Actually, I just realized the issue. The `rebuildFTSIndex` function is NOT the one being called at startup. Let me re-check the `NewVectorStore` code.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && grep -n "rebuildFTSIndex\|ftsSchemaSQL" go/internal/memorystore/vector_sqlite.go")
+**Observation**: bash: success
+
+## Turn 57 | 2026-06-30T13:01:30.330Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The rebuild IS called. Let me check if maybe the `ftsSchemaSQL` is failing silently because `db.Exec` returns an error that's only printed as a warning. If the FTS5 table doesn't exist, the `DELETE FROM l2_memory_fts` will also fail.
+
+But the manual rebuild worked fine. So the schema is correct.
+
+Let me add explicit debug output to the rebuild function to see what's happening.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 58 | 2026-06-30T13:04:51.653Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Also add output at the end to see the count.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 59 | 2026-06-30T13:07:41.361Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Also add output for the prepare step.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 60 | 2026-06-30T13:10:22.549Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now rebuild and test.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "BUILT"", timeout: 60)
+**Observation**: bash: success
+
+## Turn 61 | 2026-06-30T13:10:37.331Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me restart and look for the debug output.
+**Action**: bash(command: "taskkill //F //IM tormentnexus.exe 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 2>&1 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 300", timeout: 15)
+**Observation**: bash: success
+
+## Turn 62 | 2026-06-30T13:10:55.023Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Found it! The output shows:
+```
+FTS5: rebuilding index...
+FTS5: l2_vault has 59168 records
+FTS5: rebuild complete — 0 memories indexed (vault had 59168)
+```
+
+So the vault has 59,168 records, but the rebuild only indexed 0. This means the `for rows.Next()` loop didn't execute — the `rows.Next()` returned false on the first call.
+
+This could be because:
+1. The rows aren't being iterated — maybe `rows.Next()` returns false
+2. The scan is failing silently
+
+Let me check if there's an issue with the SELECT query after the DELETE. Maybe the DELETE is somehow affecting the connection state.
+
+Actually, wait — the DELETE deletes from `l2_memory_fts`, not from `l2_vault`. The SELECT on `l2_vault` should work fine.
+
+But the output says "rebuild complete — 0 memories indexed". This prints AFTER the loop. If `rows.Next()` returns false on the first call, it means the SELECT returned no rows. But the vault count shows 59,168.
+
+Let me check if maybe the `rows` variable is being shadowed or there's a deferred close issue. The `rows` is closed via `defer rows.Close()`, and `stmt` is also deferred. But `rows.Next()` should work.
+
+Let me add more debug output to see where the loop fails.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 63 | 2026-06-30T13:13:47.615Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 64 | 2026-06-30T13:16:24.762Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now rebuild and test.
+**Action**: bash(command: "taskkill //F //IM tormentnexus.exe 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "BUILT" && cd /c/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 2>&1 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"", timeout: 30)
+**Observation**: bash: error
+
+## Turn 65 | 2026-06-30T13:16:55.773Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Build might have had an issue. Let me check.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1", timeout: 60)
+**Observation**: bash: success
+
+## Turn 66 | 2026-06-30T13:17:06.813Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Good — no output means success. Let me start the server.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 2>&1 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"", timeout: 15)
+**Observation**: bash: error
+
+## Turn 67 | 2026-06-30T13:17:22.221Z | deepseek/deepseek-v4-flash
+
+**Thought**: Found it — **NULL `tags` column**. Let me fix the scan.
+**Thinking**: Found it! The error is:
+```
+FTS5: scan error at row 1: sql: Scan error on column index 2, name "tags": converting NULL to string is unsupported
+```
+
+The `tags` column can be NULL in the database, and the scan tries to read it as a `string` which doesn't support NULL. I need to use `sql.NullString` for the `tags` column.
+
+Let me fix the scan to handle NULL values.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 68 | 2026-06-30T13:20:07.721Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Also need to add `"database/sql"` import — let me check if it's already imported.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && head -8 go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 69 | 2026-06-30T13:20:14.619Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: `database/sql` is already imported. Good. Now rebuild and test.
+**Action**: bash(command: "taskkill //F //IM tormentnexus.exe 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "BUILT" && cd /c/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 2>&1 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 500", timeout: 30)
+**Observation**: bash: success
+
+## Turn 70 | 2026-06-30T13:20:33.144Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Now it's `source_url` that's NULL. I need to use `sql.NullString` for ALL nullable columns. Let me fix all of them at once.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 71 | 2026-06-30T13:21:00.957Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Got it. I need to remove the `var rowCount int` duplicate declaration. Let me read around line 200 to see the context.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: error
+
+## Turn 72 | 2026-06-30T13:21:17.154Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: read(offset: 200, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", limit: 10)
+**Observation**: read: success
+
+## Turn 73 | 2026-06-30T13:21:56.828Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: There's a duplicate `var rowCount int`. I need to remove one. Let me use bash sed since the edit tool is having issues with this file.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && sed -i '203d' go/internal/memorystore/fts_search.go && go build ./... 2>&1 | tail -2")
+**Observation**: bash: success
+
+## Turn 74 | 2026-06-30T13:24:42.638Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Wrong directory. Let me run from go/.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build ./cmd/tormentnexus 2>&1 | tail -2 && echo "GO: CLEAN"", timeout: 60)
+**Observation**: bash: success
+
+## Turn 75 | 2026-06-30T13:25:04.171Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Clean build. Let me rebuild the binary and restart.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "BUILT" && taskkill //F //IM tormentnexus.exe 2>/dev/null && cd /c/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 2>&1 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 500", timeout: 30)
+**Observation**: bash: success
+
+## Turn 76 | 2026-06-30T13:25:22.461Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The server is still starting (iterating rows). Let me wait and check.
+**Action**: bash(command: "sleep 5 && netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 400", timeout: 10)
+**Observation**: bash: success
+
+## Turn 77 | 2026-06-30T13:25:37.154Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still not running. The FTS iteration must be taking a long time with 59K records. Let me wait more.
+**Action**: bash(command: "sleep 10 && netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 400", timeout: 15)
+**Observation**: bash: success
+
+## Turn 78 | 2026-06-30T13:25:56.425Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still nothing. The FTS rebuild with 59K individual INSERT statements is very slow. Let me give it more time.
+**Action**: bash(command: "sleep 30 && netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 400", timeout: 40)
+**Observation**: bash: success
+
+## Turn 79 | 2026-06-30T13:26:35.467Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still nothing after 50+ seconds. The rebuild is very slow with 59K individual INSERT statements. Each one uses a prepared stmt but it's still 59K separate INSERT operations into an FTS5 virtual table. This could take minutes.
+
+Let me wait even longer. Actually, the server startup was already 8 seconds for the initial phases, plus 50 seconds wait. Let me check if it's still running or crashed.
+**Action**: bash(command: "tasklist 2>&1 | grep "tormentnexus\|python" | head -5")
+**Observation**: bash: success
+
+## Turn 80 | 2026-06-30T13:26:45.471Z | deepseek/deepseek-v4-flash
+
+**Thought**: The rebuild with 59K individual INSERTs is too slow at startup. Let me make it async with a bulk insert.
+**Thinking**: No tormentnexus process! It must have completed the rebuild and then exited (or crashed). The issue might be that the rebuild took so long that the process timed out or was killed. Or it completed and the server started but then died.
+
+Let me try to start the server and skip the FTS rebuild by using a faster approach. The rebuild is useful but it shouldn't block server startup. Let me make the rebuild async.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/vector_sqlite.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 81 | 2026-06-30T13:29:32.635Z | deepseek/deepseek-v4-flash
+
+**Thought**: Also make the rebuild use a bulk INSERT instead of individual rows.
+**Thinking**: Good, now the rebuild runs in a goroutine and won't block server startup. Let me also replace the row-by-row INSERT with a single bulk INSERT FROM SELECT, which is much faster.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: error
+
+## Turn 82 | 2026-06-30T13:29:43.637Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && sed -n '172,220p' go/internal/memorystore/fts_search.go")
+**Observation**: bash: success
+
+## Turn 83 | 2026-06-30T13:29:49.756Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The file is very long. Let me just replace the entire function with a simpler approach using a single SQL query.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus && sed -n '172,240p' go/internal/memorystore/fts_search.go | tail -5")
+**Observation**: bash: success
+
+## Turn 84 | 2026-06-30T13:29:55.862Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Action**: read(offset: 172, path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", limit: 60)
+**Observation**: read: success
+
+## Turn 85 | 2026-06-30T13:30:03.669Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Let me replace the whole function with a much simpler bulk approach.
+**Action**: edit(path: "C:/Users/hyper/workspace/tormentnexus/go/internal/memorystore/fts_search.go", edits: [object Object])
+**Observation**: edit: success
+
+## Turn 86 | 2026-06-30T13:32:59.590Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Clean. Now rebuild and test.
+**Action**: bash(command: "cd C:/Users/hyper/workspace/tormentnexus/go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=1.0.0-alpha.193" -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus 2>&1 && echo "BUILT" && taskkill //F //IM tormentnexus.exe 2>/dev/null && cd /c/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 2>&1 &
+sleep 10
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 3 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 400", timeout: 30)
+**Observation**: bash: success
+
+## Turn 87 | 2026-06-30T13:33:27.230Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: The background commands are interleaved oddly. Let me start fresh.
+**Action**: bash(command: "taskkill //F //IM tormentnexus.exe 2>/dev/null
+cd C:/Users/hyper/workspace/tormentnexus && bin/tormentnexus.exe serve --port 7778 &
+sleep 8
+netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING"
+curl -s --max-time 5 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 400", timeout: 20)
+**Observation**: bash: success
+
+## Turn 88 | 2026-06-30T13:34:02.994Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Still no port listening message. The FTS bulk rebuild should be near-instant now. Let me wait a bit.
+**Action**: bash(command: "sleep 5 && netstat -ano | findstr "LISTENING" | findstr ":7778" 2>&1 && echo "RUNNING" || echo "DOWN"")
+**Observation**: bash: success
+
+## Turn 89 | 2026-06-30T13:34:14.970Z | deepseek/deepseek-v4-flash
+
+**Thought**: 
+**Thinking**: Running. Let me test.
+**Action**: bash(command: "curl -s --max-time 5 "http://127.0.0.1:7778/api/memory/fts-search?q=agent&limit=2&offset=0" 2>&1 | head -c 500")
+**Observation**: bash: success
+
