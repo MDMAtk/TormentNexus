@@ -1,3 +1,31 @@
+# HANDOFF — Session 2026-06-30 R17 (Swarm Compile Fix Pipeline, Wails Desktop GUI, 3 Dashboard Pages - Alpha.195)
+
+## Summary
+
+### Completed
+
+1. **Swarm v7 Iterative Compile Fix (alpha.195)**: Replaced single-attempt `go build` rejection with a 3-round fix loop. When generated Go code fails, the ACTUAL compiler errors are formatted into a `make_compile_fix_prompt` and fed back to the LLM for automatic fixing. Files passing compilation are promoted to `tools/`; files failing all 3 rounds go to `_broken/`.
+2. **Wails Desktop GUI**: Full build chain — `pnpm build:wails` builds Next.js standalone, `node copy-assets.mjs` extracts static assets to `frontend/dist/`, `go build ./cmd/tormentnexus-gui` produces `tormentnexus-gui.exe` (18MB).
+3. **3 Dashboard Pages**: P2P Fleet-Wise Mesh, L3 Cold Archive, Enterprise Security.
+
+### Key Files Changed
+
+| File | Change |
+|------|--------|
+| `swarm_v7.py` | Added `make_compile_fix_prompt()` + 3-round iterative compile loop |
+| `copy-assets.mjs` | Extracts static HTML/CSS/JS from `.next-build/` |
+| `next.config.js` | Kept as CommonJS (`.mjs` reverted) |
+| `CHANGELOG.md` | alpha.195 entry with all fixes |
+| `VERSION` | 1.0.0-alpha.195 |
+
+### Next Steps
+
+- **Swarm pipeline**: Run with `SWARM_VERIFY_COMPILE=1` to test the iterative fix pipeline in production
+- **Wails polish**: Need `next.config.js` restoration (reverted from `.mjs`), turbopack NFT warning still active
+- **Track A (MCP Assimilation)**: The compile fix pipeline should dramatically increase yield rate
+
+---
+
 # HANDOFF — Session 2026-06-30 R16 (Executive Protocol R6 — Full Repo Sync, Port Cleanup, CHANGELOG, Dashboard Session Import - Alpha.194)
 
 ## Summary

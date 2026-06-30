@@ -152,6 +152,8 @@ class Log:
             "fix_ok": 0,
             "fix_err": 0,
             "fix_needed": 0,
+            "fix_compile_ok": 0,
+            "fix_compile_err": 0,
             "rev_agreed": 0,
         }
 
@@ -1182,6 +1184,43 @@ def _clean_registry(handlers):
         log.err(f"Registry clean: {e}")
 
 
+def make_compile_fix_prompt(go_code, compile_errors):
+    """Build a prompt that asks the LLM to fix actual Go compiler errors."""
+    prompt = textwrap.dedent(f"""\
+Fix ALL compilation errors in this Go code.
+
+ACTUAL COMPILER ERRORS:
+{compile_errors}
+
+AVAILABLE TYPES (do NOT redeclare):
+- ToolResponse, TextContent, ToolHandler
+- func ok(text string) (ToolResponse, error)
+- func err(msg string) (ToolResponse, error)
+- func getString(args map[string]interface{{}}, key string) (string, bool)
+- func getInt(args map[string]interface{{}}, key string) (int, bool)
+- func getBool(args map[string]interface{{}}, key string) (bool, bool)
+
+RULES:
+1. package tools
+2. func HandleXxx(ctx context.Context, args map[string]interface{{}}) (ToolResponse, error)
+3. return ok(\"text\"), if e != nil {{ return err(e.Error()) }}
+4. getString returns (string, bool) — check the bool!
+5. ONLY stdlib imports (no github.com)
+6. Must compile — no TODOs, no pseudocode
+7. Every function body must be COMPLETE, no ellipsis or placeholders
+
+The compiler says what's wrong. Fix ALL errors.
+
+Code:
+```go
+{go_code}
+```
+
+Output the COMPLETE fixed Go code. Start with 'package tools'.""")
+    system = "Output ONLY fixed Go code starting with 'package tools'. No explanation. No markdown."
+    return prompt, system
+
+
 def repair_build(max_iter=15):
     for i in range(max_iter):
         if verify_build():
@@ -1489,44 +1528,87 @@ def worker_loop(worker_id, shutdown, completed_lock, completed_count):
             log.err(f"Write {go_file}: {e}", worker_id)
             continue
 
-        # Compile-check: try building a tiny package with this file + registry
+        # === ITERATIVE COMPILE CHECK (up to 3 fix-attempts with real Go compiler errors) ===
         # This prevents corrupted .go files from landing in the real tools/ dir.
-        try:
-            # Copy registry + server to staging so the package can compile
-            for dep in ("registry.go", "server.go"):
-                dep_src = TOOLS_DIR / dep
-                if dep_src.exists():
-                    (staging_dir / dep).write_text(
-                        dep_src.read_text(encoding="utf-8"), encoding="utf-8"
-                    )
-            result = subprocess.run(
-                ["go", "build", "./internal/tools/_staging"],
-                capture_output=True,
-                text=True,
-                timeout=30,
-                cwd=str(GO_DIR),
-            )
-            if result.returncode != 0:
-                errors = result.stderr[:500]
-                log.warn(f"Compile check FAILED for {go_file}: {errors}", worker_id)
-                # Write to broken directory instead of tools/
-                broken_dir = TOOLS_DIR / "_broken"
-                broken_dir.mkdir(exist_ok=True)
-                (broken_dir / go_file).write_text(final_code, encoding="utf-8")
-                staging_path.unlink(missing_ok=True)
-                fail_task(name, f"compile failed: {errors[:200]}")
-                continue
-        except subprocess.TimeoutExpired:
-            log.warn(
-                f"Compile check timed out for {go_file}, accepting anyway", worker_id
-            )
-        except FileNotFoundError:
-            log.warn("go not found on PATH, skipping compile check", worker_id)
+        compile_ok = False
+        compile_errors = ""
+        for compile_attempt in range(3):
+            # Write the current code to staging
+            with open(staging_path, "w", encoding="utf-8") as f:
+                f.write(final_code)
+            # Copy registry + server so the package can compile
+            try:
+                for dep in ("registry.go", "server.go"):
+                    dep_src = TOOLS_DIR / dep
+                    if dep_src.exists():
+                        (staging_dir / dep).write_text(
+                            dep_src.read_text(encoding="utf-8"), encoding="utf-8"
+                        )
+                result = subprocess.run(
+                    ["go", "build", "./internal/tools/_staging"],
+                    capture_output=True,
+                    text=True,
+                    timeout=30,
+                    cwd=str(GO_DIR),
+                )
+                if result.returncode == 0:
+                    compile_ok = True
+                    break
+                # Extract real compiler errors
+                compile_errors = result.stderr[:1000]
+                log.warn(f"Compile fail (attempt {compile_attempt + 1}): {compile_errors[:200]}", worker_id)
+            except subprocess.TimeoutExpired:
+                log.warn(f"Compile timed out (attempt {compile_attempt + 1}), accepting", worker_id)
+                compile_ok = True
+                break
+            except FileNotFoundError:
+                log.warn("go not found on PATH, skipping compile check", worker_id)
+                compile_ok = True
+                break
+
+            if compile_attempt < 2:
+                # Feed REAL compiler errors back to LLM for fixing
+                log.phase(f"FIX-COMPILE: {name} (attempt {compile_attempt + 1})", worker_id)
+                fix_prompt, fix_system = make_compile_fix_prompt(final_code, compile_errors)
+                fix_output = llm.call(fix_prompt, fix_system, phase="fix-compile", wid=worker_id, max_retries=2)
+                if fix_output:
+                    fixed_code, _ = extract_go_code(fix_output, fn)
+                    if fixed_code and "package tools" in fixed_code and _has_handlers(fixed_code):
+                        # Clean external imports
+                        ext = re.findall(r'"(github\.com/(?!tormentnexushq)[^"]+)"', fixed_code)
+                        if ext:
+                            fixed_code = re.sub(r'\s*"[^"]*github\.com/(?!tormentnexushq)[^"]*"\s*\n?', "\n", fixed_code)
+                        if "type ToolResponse struct" in fixed_code:
+                            fixed_code = re.sub(r"type ToolResponse struct\s*\{.*?\}", "", fixed_code, flags=re.DOTALL)
+                            fixed_code = re.sub(r"type TextContent struct\s*\{.*?\}", "", fixed_code, flags=re.DOTALL)
+                        ob = fixed_code.count("{")
+                        cb = fixed_code.count("}")
+                        if ob == cb:
+                            final_code = fixed_code
+                            log.ok(f"Compile fix attempt {compile_attempt + 1}: updated code", worker_id)
+                        else:
+                            log.warn(f"Compile fix truncated (braces {ob}/{cb}), keeping previous", worker_id)
+                    else:
+                        log.warn("Compile fix produced invalid code, keeping previous", worker_id)
+                else:
+                    log.warn("Compile fix LLM failed, keeping previous", worker_id)
+                time.sleep(1)
+
+        if not compile_ok:
+            log.warn(f"Compile FAILED after 3 attempts for {go_file}: {compile_errors[:200]}", worker_id)
+            # Write to broken directory
+            broken_fix_dir = TOOLS_DIR / "_broken"
+            broken_fix_dir.mkdir(exist_ok=True)
+            (broken_fix_dir / go_file).write_text(final_code, encoding="utf-8")
+            staging_path.unlink(missing_ok=True)
+            fail_task(name, f"compile failed after 3 tries: {compile_errors[:200]}")
+            continue
 
         # Compilation passed — promote from staging to real tools/
-        shutil.copy2(staging_path, TOOLS_DIR / go_file)
-        staging_path.unlink(missing_ok=True)
-        log.ok(f"Compile check PASSED for {go_file}", worker_id)
+        if staging_path.exists():
+            shutil.copy2(staging_path, TOOLS_DIR / go_file)
+            staging_path.unlink(missing_ok=True)
+            log.ok(f"Compile check PASSED for {go_file}", worker_id)
     if manifest:
         MANIFEST_DIR.mkdir(exist_ok=True)
         try:

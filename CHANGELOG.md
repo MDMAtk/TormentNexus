@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.0.0-alpha.195] - 2026-06-30
+
+### Fixed
+
+- **Swarm v7 iterative compile fix**: Replaced single-attempt `go build` rejection with 3-round fix loop. When a generated Go file fails compilation, the ACTUAL compiler errors are fed back to the LLM for automatic fixing, up to 3 attempts. Files that pass are promoted to `tools/`; files that fail all 3 attempts go to `_broken/`.
+- **`make_compile_fix_prompt`**: New function that formats real `go build` errors into an LLM fix prompt with detailed type/function reference.
+- **Phase stats tracking**: Added `fix_compile_ok` / `fix_compile_err` counters to monitor compile-fix pipeline health.
+
+### Added
+
+- **Wails Desktop GUI**: Full build chain working — `pnpm build:wails` builds Next.js standalone, extracts static assets to `frontend/dist/`, then `go build ./cmd/tormentnexus-gui` produces `tormentnexus-gui.exe` (18MB).
+- **3 new dashboard pages**: P2P Fleet-Wise Mesh (`/dashboard/mesh`), L3 Cold Archive (`/dashboard/cold-archive`), Enterprise Security (`/dashboard/enterprise`).
+- **`copy-assets.mjs`**: Extracts static HTML/CSS/JS from Next.js standalone build to Wails frontend directory.
+- **`.gitignore` wildcard**: `.next-build*` covers all stale build artifact directories.
+
+### Changed
+
+- **`start.bat`**: Dashboard port updated from 3000 → 7779, health check URLs corrected.
+- **`package.json`**: `type: module` for ESM support; `build:wails` script simplified.
+
 ## [1.0.0-alpha.194] - 2026-06-30
 
 ### Changed
