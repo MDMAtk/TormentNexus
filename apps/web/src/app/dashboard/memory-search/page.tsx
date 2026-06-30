@@ -27,21 +27,25 @@ interface FTSResult {
 	tier: string;
 }
 
+const PAGE_SIZE = 20;
+
 export default function MemorySearchPage() {
 	const [query, setQuery] = useState("");
+	const [offset, setOffset] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [results, setResults] = useState<FTSResult[]>([]);
 	const [coldCount, setColdCount] = useState<number | null>(null);
 	const [limboStats, setLimboStats] = useState<Record<string, number>>({});
 	const [error, setError] = useState("");
 
-	const search = useCallback(async () => {
+	const search = useCallback(async (newOffset = 0) => {
 		if (!query.trim()) return;
 		setLoading(true);
 		setError("");
+		setOffset(newOffset);
 		try {
 			const fts = await fetch(
-				`/api/go/api/memory/fts-search?q=${encodeURIComponent(query)}&limit=20`,
+				`/api/go/api/memory/fts-search?q=${encodeURIComponent(query)}&limit=${PAGE_SIZE}&offset=${newOffset}`,
 			);
 			if (!fts.ok) throw new Error(`FTS: ${fts.status}`);
 			const ftsData = await fts.json();
@@ -131,15 +135,15 @@ export default function MemorySearchPage() {
 						placeholder="Search memories... (FTS5 BM25 full-text search across all L2 vault records)"
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
-						onKeyDown={(e) => e.key === "Enter" && search()}
+						onKeyDown={(e) => e.key === "Enter" && search(offset)}
 						className="w-full pl-10 pr-4 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-sm focus:outline-none focus:border-zinc-500"
 					/>
 				</div>
 				<button
-					onClick={search}
+					onClick={() => search(0)}
 					disabled={loading}
 					className="px-4 py-2 bg-zinc-800 rounded-lg hover:bg-zinc-700 text-sm disabled:opacity-50"
-					title="Execute BM25 full-text search across 86K+ indexed memories"
+					title="Execute BM25 full-text search across 86K+ indexed memories. Supports AND/OR, phrases, and prefix* matching."
 				>
 					{loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Search"}
 				</button>
@@ -148,6 +152,8 @@ export default function MemorySearchPage() {
 			{error && <div className="text-red-400 text-sm">{error}</div>}
 
 			{/* Results */}
+			{results.length > 0 && <p className="text-xs text-zinc-600" title={`Showing results ${offset + 1}-${offset + results.length}`}>Page {Math.floor(offset / PAGE_SIZE) + 1} ({offset + 1}–{offset + results.length})</p>}
+
 			<div className="space-y-3">
 				{results.map(({ record }) => (
 					<div
@@ -189,8 +195,33 @@ export default function MemorySearchPage() {
 						</p>
 					</div>
 				)}
-				{!loading && !query && results.length === 0 && (
-					<div className="text-center py-16 text-zinc-600">
+        {/* Pagination */}
+        {results.length > 0 && (
+          <div className="flex justify-center gap-4 pt-4">
+            <button
+              onClick={() => search(Math.max(0, offset - PAGE_SIZE))}
+              disabled={offset === 0 || loading}
+              className="px-4 py-2 bg-zinc-800 rounded-lg hover:bg-zinc-700 text-sm disabled:opacity-30 disabled:cursor-not-allowed"
+              title="Go to previous page of results"
+            >
+              Previous
+            </button>
+            <span className="px-4 py-2 text-sm text-zinc-500">
+              Page {Math.floor(offset / PAGE_SIZE) + 1}
+            </span>
+            <button
+              onClick={() => search(offset + PAGE_SIZE)}
+              disabled={results.length < PAGE_SIZE || loading}
+              className="px-4 py-2 bg-zinc-800 rounded-lg hover:bg-zinc-700 text-sm disabled:opacity-30 disabled:cursor-not-allowed"
+              title="Go to next page of results"
+            >
+              Next
+            </button>
+          </div>
+        )}
+
+        {!loading && !query && results.length === 0 && (
+          <div className="text-center py-16 text-zinc-600">
 						<Database className="w-12 h-12 mx-auto mb-4 opacity-20" />
 						<p className="font-medium">Explore your memory vault</p>
 						<p className="text-xs text-zinc-600 mt-2 max-w-md mx-auto">
