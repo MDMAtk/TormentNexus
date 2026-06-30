@@ -64,20 +64,34 @@ Respond ONLY with a JSON array of strings containing the selected tool names, e.
 	}
 
 	client := &http.Client{Timeout: 5 * time.Second}
-	req, err := http.NewRequestWithContext(ctx, "POST", "http://localhost:4000/v1/chat/completions", bytes.NewBuffer(jsonData))
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Content-Type", "application/json")
+	var resp *http.Response
+	var req *http.Request
 
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("local LLM proxy call failed: %w", err)
+	req, err = http.NewRequestWithContext(ctx, "POST", "http://localhost:4000/v1/chat/completions", bytes.NewBuffer(jsonData))
+	if err == nil {
+		req.Header.Set("Content-Type", "application/json")
+		resp, err = client.Do(req)
+	}
+
+	if err != nil || resp.StatusCode != http.StatusOK {
+		if resp != nil {
+			resp.Body.Close()
+		}
+		// Fallback to LMStudio on port 1234
+		req, err = http.NewRequestWithContext(ctx, "POST", "http://localhost:1234/v1/chat/completions", bytes.NewBuffer(jsonData))
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("Content-Type", "application/json")
+		resp, err = client.Do(req)
+		if err != nil {
+			return nil, fmt.Errorf("local LLM and LMStudio calls both failed: %w", err)
+		}
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("local LLM proxy returned status %d", resp.StatusCode)
+		return nil, fmt.Errorf("LMStudio returned status %d", resp.StatusCode)
 	}
 
 	var response PredictiveLLMResponse
