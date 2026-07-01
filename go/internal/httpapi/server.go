@@ -967,6 +967,8 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/memory/spaced-repetition/due", s.handleMemorySpacedRepetitionDue)
 	s.mux.HandleFunc("/api/memory/spaced-repetition/review", s.handleMemorySpacedRepetitionReview)
 	s.mux.HandleFunc("/api/memory/sleep-cycle", s.handleMemorySleepCycle)
+	s.mux.HandleFunc("/api/memory/scratchpad/get", s.handleMemoryGetScratchpad)
+	s.mux.HandleFunc("/api/memory/scratchpad/set", s.handleMemorySetScratchpad)
 	s.mux.HandleFunc("/api/code/exec", s.handleCodeExec)
 	s.mux.HandleFunc("/api/gossip/message", s.handleGossipMessage)
 

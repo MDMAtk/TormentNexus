@@ -179,3 +179,46 @@ func (s *Server) handleMemorySleepCycle(w http.ResponseWriter, r *http.Request) 
 	writeJSON(w, http.StatusOK, map[string]any{"success": true})
 }
 
+func (s *Server) handleMemoryGetScratchpad(w http.ResponseWriter, r *http.Request) {
+	if s.memoryManager == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "memory manager not initialized"})
+		return
+	}
+	res, err := s.memoryManager.GetScratchpad(r.Context())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true, "scratchpad": res})
+}
+
+func (s *Server) handleMemorySetScratchpad(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if s.memoryManager == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "memory manager not initialized"})
+		return
+	}
+	var req struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid json body"})
+		return
+	}
+	if req.Key == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "key is required"})
+		return
+	}
+	err := s.memoryManager.SetScratchpad(r.Context(), req.Key, req.Value)
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true})
+}
+
+

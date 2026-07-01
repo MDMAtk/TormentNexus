@@ -68,3 +68,23 @@ func (vs *VectorStore) AppendScratchpadValue(ctx context.Context, key, contentTo
 
 	return vs.SetScratchpadValue(ctx, key, newValue)
 }
+
+// GetScratchpadMap returns all keys and values in the core memory scratchpad.
+func (vs *VectorStore) GetScratchpadMap(ctx context.Context) (map[string]string, error) {
+	rows, err := vs.db.QueryContext(ctx, `SELECT key, value FROM core_memory_scratchpad`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	res := make(map[string]string)
+	for rows.Next() {
+		var k, v string
+		if err := rows.Scan(&k, &v); err != nil {
+			return nil, err
+		}
+		res[k] = v
+	}
+	return res, nil
+}
+

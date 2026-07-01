@@ -1,3 +1,18 @@
+# HANDOFF — Session 2026-07-01 R23 (Core Memory Block Editors and Version Sync - Alpha.200)
+
+## Summary
+
+In this session, we completed the following enhancements:
+
+1. **Letta Core Memory Block Management**:
+   - Added `GetScratchpadMap` helper to `scratchpad.go` inside Go sidecar.
+   - Exposed `GET /api/memory/scratchpad/get` and `POST /api/memory/scratchpad/set` in Go REST HTTP router.
+   - Integrated a dedicated **Core Memory (Letta)** tab inside [view.tsx](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/src/app/dashboard/brain/view.tsx) containing card widgets to edit persona/human scratchpad values dynamically with automatic state save.
+2. **Workspace Verification & Binary Sync**:
+   - Build-verified all static pages and refreshed the Wails desktop frontend assets.
+
+---
+
 # HANDOFF — Session 2026-07-01 R22 (Consolidation Triggers, Tool Parameter Reference Widgets, and Version Sync - Alpha.199)
 
 ## Summary

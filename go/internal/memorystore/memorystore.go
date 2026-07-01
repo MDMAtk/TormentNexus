@@ -84,6 +84,20 @@ func (m *Manager) TriggerSleepCycle(ctx context.Context) error {
 	return nil
 }
 
+func (m *Manager) GetScratchpad(ctx context.Context) (map[string]string, error) {
+	if m.vs == nil {
+		return nil, fmt.Errorf("vector store uninitialized")
+	}
+	return m.vs.GetScratchpadMap(ctx)
+}
+
+func (m *Manager) SetScratchpad(ctx context.Context, key, value string) error {
+	if m.vs == nil {
+		return fmt.Errorf("vector store uninitialized")
+	}
+	return m.vs.SetScratchpadValue(ctx, key, value)
+}
+
 func (m *Manager) Close() error {
 	if m.vs != nil {
 		return m.vs.Close()

@@ -221,6 +221,46 @@ export default function CognitiveBrainDashboard() {
 		setConsolidating(false);
 	};
 
+	// --- CORE SCRATCHPAD STATE ---
+	const [scratchpad, setScratchpad] = useState<Record<string, string>>({});
+	const [scratchLoading, setScratchLoading] = useState(false);
+	const [editingKey, setEditingKey] = useState<string | null>(null);
+	const [editingValue, setEditingValue] = useState("");
+
+	const fetchScratchpad = async () => {
+		setScratchLoading(true);
+		try {
+			const res = await fetch("/api/go/api/memory/scratchpad/get");
+			if (res.ok) {
+				const d = await res.json();
+				setScratchpad(d.scratchpad || {});
+			}
+		} catch {
+			toast.error("Failed to load core memory scratchpad");
+		}
+		setScratchLoading(false);
+	};
+
+	const handleSaveScratchpad = async (key: string, value: string) => {
+		try {
+			const res = await fetch("/api/go/api/memory/scratchpad/set", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ key, value }),
+			});
+			if (res.ok) {
+				toast.success(`Core memory '${key}' updated!`);
+				setScratchpad((prev) => ({ ...prev, [key]: value }));
+				setEditingKey(null);
+			} else {
+				toast.error("Failed to update core memory");
+			}
+		} catch {
+			toast.error("Error saving core memory");
+		}
+	};
+
+
 	const trimmedSearchQuery = searchQuery.trim();
 	const hasSearchQuery = trimmedSearchQuery.length > 0;
 
@@ -639,6 +679,12 @@ export default function CognitiveBrainDashboard() {
 		);
 	}, [selectedMemory]);
 
+	useEffect(() => {
+		if (activeTab === "core-memory") {
+			fetchScratchpad();
+		}
+	}, [activeTab]);
+
 	const activeLoading = activePivot
 		? pivotSearchQuery.isLoading
 		: searchMode === "all"
@@ -789,6 +835,12 @@ export default function CognitiveBrainDashboard() {
 						Memory Vault
 					</TabsTrigger>
 					<TabsTrigger
+						value="core-memory"
+						className="text-sm font-medium px-4 py-1.5 rounded-md transition-all border border-emerald-500/20 text-emerald-400"
+					>
+						Core Memory (Letta)
+					</TabsTrigger>
+					<TabsTrigger
 						value="spaced-repetition"
 						className="text-sm font-medium px-4 py-1.5 rounded-md transition-all border border-pink-500/20 text-pink-400"
 					>
@@ -825,6 +877,86 @@ export default function CognitiveBrainDashboard() {
 						Data Sync & Hydration
 					</TabsTrigger>
 				</TabsList>
+
+				{/* CORE MEMORY SCRATCHPAD TAB */}
+				<TabsContent
+					value="core-memory"
+					className="flex-1 flex flex-col min-h-0 outline-none"
+				>
+					<div className="space-y-6 flex-1 overflow-y-auto">
+						<Card className="bg-zinc-900/60 border-zinc-850">
+							<CardHeader>
+								<CardTitle className="text-lg font-semibold text-emerald-400 flex items-center gap-2">
+									<Brain className="h-5 w-5" />
+									Letta Core Memory Block (Active Ephemeral Instructions)
+								</CardTitle>
+								<p className="text-zinc-500 text-xs mt-1">
+									Directly view and edit the active scratchpad blocks. Pinned instruction values are embedded inside the agent's short-term system instructions.
+								</p>
+							</CardHeader>
+							<CardContent>
+								{scratchLoading ? (
+									<div className="flex justify-center py-12">
+										<Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
+									</div>
+								) : (
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+										{Object.entries(scratchpad).map(([key, val]) => (
+											<div key={key} className="border border-zinc-800 bg-zinc-950 p-4 rounded-lg space-y-3">
+												<div className="flex items-center justify-between border-b border-zinc-900 pb-2">
+													<span className="font-mono text-sm font-semibold text-emerald-400 capitalize">{key} Block</span>
+													{editingKey !== key ? (
+														<Button
+															size="sm"
+															variant="outline"
+															className="text-xs bg-zinc-900 hover:bg-zinc-800 border-zinc-800 text-zinc-300"
+															onClick={() => {
+																setEditingKey(key);
+																setEditingValue(val);
+															}}
+														>
+															Edit Key Block
+														</Button>
+													) : (
+														<div className="flex gap-2">
+															<Button
+																size="sm"
+																variant="outline"
+																className="text-xs border-zinc-800 text-zinc-500"
+																onClick={() => setEditingKey(null)}
+															>
+																Cancel
+															</Button>
+															<Button
+																size="sm"
+																className="text-xs bg-emerald-700 hover:bg-emerald-600 text-white"
+																onClick={() => handleSaveScratchpad(key, editingValue)}
+															>
+																Save Block
+															</Button>
+														</div>
+													)}
+												</div>
+
+												{editingKey === key ? (
+													<textarea
+														value={editingValue}
+														onChange={(e) => setEditingValue(e.target.value)}
+														className="w-full h-48 bg-zinc-950 border border-zinc-800 rounded p-2 text-xs font-mono text-zinc-300 focus:outline-none focus:border-zinc-700"
+													/>
+												) : (
+													<pre className="text-xs font-mono text-zinc-400 bg-zinc-950 p-3 rounded max-h-48 overflow-y-auto whitespace-pre-wrap">
+														{val || "No content configured."}
+													</pre>
+												)}
+											</div>
+										))}
+									</div>
+								)}
+							</CardContent>
+						</Card>
+					</div>
+				</TabsContent>
 
 				{/* MEMORY VAULT TAB */}
 				<TabsContent
