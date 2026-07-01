@@ -1220,7 +1220,7 @@ export function DashboardHomeView({
                         <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
                             <div className="flex items-start justify-between gap-4">
                                 <div>
-                                    <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Startup readiness</h3>
+                                    <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300 cursor-help" title="Verifies host environment, daemon locks, and subsystem modules before allowing general API operations">Startup readiness ⓘ</h3>
                                     <p className="mt-1 text-sm text-slate-500">{startupSummary || 'Boot checks reported directly from core startup state.'}</p>
                                 </div>
                                 <span className={`rounded-full border px-3 py-1 text-xs font-medium ${startupToneClass}`}>
@@ -1230,7 +1230,7 @@ export function DashboardHomeView({
 
                             <div className="mt-4 grid gap-3 sm:grid-cols-2">
                                 {startupChecklist.map((item) => (
-                                    <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-900/70 p-3 text-sm">
+                                    <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-900/70 p-3 text-sm" title={item.detail}>
                                         <div className="flex items-center justify-between gap-3">
                                             <span className="font-medium text-white">{item.label}</span>
                                             <span className={`rounded-full border px-2.5 py-1 text-xs font-medium ${item.ready ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200' : 'border-amber-500/30 bg-amber-500/10 text-amber-200'}`}>
@@ -1357,7 +1357,7 @@ export function DashboardHomeView({
                         <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
                             <div className="flex items-start justify-between gap-4">
                                 <div>
-                                    <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Install &amp; connect TormentNexus</h3>
+                                    <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300 cursor-help" title="Manage active MCP connectors, remote developer registries, and downstream network nodes">Install &amp; connect TormentNexus ⓘ</h3>
                                     <p className="mt-1 text-sm text-slate-500">Fast path for getting browser bridges, editor surfaces, and managed MCP configs into the tools you already use.</p>
                                 </div>
                                 <Link
@@ -1440,7 +1440,7 @@ export function DashboardHomeView({
 
                         <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
                             <div className="flex items-center justify-between gap-4">
-                                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Recent traffic</h3>
+                                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300 cursor-help" title="Real-time log of recent API payloads and session activity">Recent traffic ⓘ</h3>
                                 <Link
                                     href="/dashboard/mcp/inspector"
                                     title="Open the live MCP inspector to trace requests, responses, and tool invocations"
@@ -1645,7 +1645,7 @@ export function DashboardHomeView({
                         </div>
 
                         <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Fallback chain</h3>
+                            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300 cursor-help" title="Active predictive fallback priorities across configured upstream LLM endpoints">Fallback chain ⓘ</h3>
                             <div className="mt-4 space-y-2">
                                 {fallbackChain.length === 0 ? (
                                     <p className="text-sm text-slate-400">No fallback chain is exposed yet. Configure providers to populate the routing order.</p>
