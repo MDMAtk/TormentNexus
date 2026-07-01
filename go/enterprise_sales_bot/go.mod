@@ -1,6 +1,6 @@
 module github.com/robertpelloni/enterprise_sales_bot
 
-go 1.24
+go 1.25.0
 
 require (
 	github.com/emersion/go-imap v1.2.1
@@ -21,6 +21,6 @@ require (
 	github.com/ysmood/got v0.40.0 // indirect
 	github.com/ysmood/gson v0.7.3 // indirect
 	github.com/ysmood/leakless v0.9.0 // indirect
-	golang.org/x/net v0.43.0 // indirect
-	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 )
