@@ -323,7 +323,7 @@ func (s *Server) handleTRPC(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	isBatch := strings.Contains(procedurePath, ",")
+	isBatch := strings.Contains(procedurePath, ",") || r.URL.Query().Get("batch") == "1"
 	var procedures []string
 	if isBatch {
 		procedures = strings.Split(procedurePath, ",")
@@ -358,12 +358,30 @@ func (s *Server) handleTRPC(w http.ResponseWriter, r *http.Request) {
 			if inputs != nil {
 				if keyVal, ok := inputs[strconv.Itoa(idx)]; ok {
 					if keyMap, ok := keyVal.(map[string]any); ok {
-						singleInput = keyMap
+						if jsonVal, exists := keyMap["json"]; exists {
+							if jsonMap, ok := jsonVal.(map[string]any); ok {
+								singleInput = jsonMap
+							} else {
+								singleInput = keyMap
+							}
+						} else {
+							singleInput = keyMap
+						}
 					}
 				}
 			}
 		} else {
-			singleInput = inputs
+			if inputs != nil {
+				if jsonVal, exists := inputs["json"]; exists {
+					if jsonMap, ok := jsonVal.(map[string]any); ok {
+						singleInput = jsonMap
+					} else {
+						singleInput = inputs
+					}
+				} else {
+					singleInput = inputs
+				}
+			}
 		}
 
 		// Low-Latency In-Memory Caching (GET requests only)
@@ -418,8 +436,8 @@ func (s *Server) handleTRPC(w http.ResponseWriter, r *http.Request) {
 
 		internalQuery := targetURL.Query()
 		var internalBody io.Reader
-		if r.Method == http.MethodPost && !isBatch && len(inputs) > 0 {
-			bodyBytes, _ := json.Marshal(inputs)
+		if r.Method == http.MethodPost && len(singleInput) > 0 {
+			bodyBytes, _ := json.Marshal(singleInput)
 			internalBody = bytes.NewReader(bodyBytes)
 		}
 

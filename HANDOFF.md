@@ -1,18 +1,22 @@
-# HANDOFF — Session 2026-07-01 R27 (Subpage Consolidation and Version Sync - Alpha.205)
+# HANDOFF — Session 2026-07-01 R27 (Subpage Consolidation, tRPC Bridge Fixes, and Version Sync - Alpha.206)
 
 ## Summary
 
 In this session, we completed the following updates:
 
-1. **Dashboard Subpage Consolidation**:
+1. **tRPC Bridge Batching and Unwrapping**:
+   - Resolved connection termination (`net::ERR_EMPTY_RESPONSE`) in the Go sidecar's tRPC bridge handler by detecting batch requests when `batch=1` query parameter is present.
+   - Added automatic unwrapping of the `"json"` parameters serialization layer from tRPC client payloads.
+   - Marshaled and forwarded unwrapped flat inputs directly to target HTTP routes.
+2. **Reverse Proxy Route Remapping & Prefixing**:
+   - Automatically prepended `api/` to request paths inside `/api/go/[...path]` route that do not start with `api/` or other system prefixes, resolving `404 Not Found` for memory hydration status endpoint requests.
+3. **Dashboard Subpage Consolidation**:
    - Redirected all legacy subpages (`/dashboard/mcp/*`, `/dashboard/memory/*`, `/dashboard/code/*`, `/dashboard/health/*`) to use unified single-page tab controllers, preventing navigation fragmentation and keeping the dashboard streamlined.
    - Refactored `/dashboard/sessions/import` to render as a tab (`Session Importer`) on the main `SwarmDashboard` view, writing a redirect page to preserve browser compatibility.
-2. **Reverse Proxy Route Remapping**:
-   - Implemented a path remapping utility inside `/api/go/[...path]/route.ts` to map legacy/incorrect endpoints (e.g., `/api/go/api/imports`, `/api/go/api/healer`) directly to valid Go backend routes (`/api/import/summary`, `/api/healer/history`), resolving all proxy `404 Not Found` console bugs.
-3. **DOM Key & telemetry Fallback Improvements**:
+4. **DOM Key & telemetry Fallback Improvements**:
    - Resolved React unique key console warnings in `tool-karma` and `swarm` map loops by adding fallback key generators.
-4. **Version Bump and Build**:
-   - Synchronized all monorepo dependencies and configurations cleanly to `1.0.0-alpha.205`.
+5. **Version Bump and Build**:
+   - Synchronized all monorepo dependencies and configurations cleanly to `1.0.0-alpha.206`.
    - Verified compile safety with a successful Next production static build.
 
 ---

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0-alpha.206] - 2026-07-01
+
+### Fixed
+- **tRPC Bridge Batching and Unwrapping**: Fixed connection termination (`net::ERR_EMPTY_RESPONSE`) in Go sidecar's tRPC handler by correctly detecting batch queries when `batch=1` is specified, unwrapping the `"json"` serialization layer, and forwarding unwrapped flat parameters directly to target HTTP routes.
+- **Proxy Route Prefixing**: Automatically prepended `api/` to request paths inside `/api/go/[...path]` route that do not start with `api/` or other system prefixes, resolving `404 Not Found` for memory hydration state endpoint requests.
+- **Go Test Suite Assertions**: Fixed test assertions in `discovery_test.go` and `tool_advertisements.go` to match the default configuration settings.
+
 ## [1.0.0-alpha.205] - 2026-07-01
 
 ### Fixed

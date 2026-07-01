@@ -28,7 +28,19 @@ function remapPath(path: string): string {
 		"api/mesh": "api/mesh/status",
 		"api/runtime": "api/runtime/status"
 	};
-	return map[path] || path;
+	if (map[path]) {
+		return map[path];
+	}
+	if (
+		!path.startsWith("api/") &&
+		!path.startsWith("trpc/") &&
+		!path.startsWith("health") &&
+		!path.startsWith("version") &&
+		!path.startsWith("well-known")
+	) {
+		return "api/" + path;
+	}
+	return path;
 }
 
 export async function GET(
