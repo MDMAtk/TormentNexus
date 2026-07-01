@@ -3,7 +3,7 @@ module bobbybookmarks
 go 1.25.0
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.12
+	github.com/gofiber/fiber/v2 v2.52.13
 	github.com/jmoiron/sqlx v1.4.0
 	modernc.org/sqlite v1.48.2
 )
