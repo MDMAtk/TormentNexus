@@ -1092,6 +1092,10 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/mcp/decision/catalog/refresh", s.handleDecisionCatalogRefresh)
 	s.mux.HandleFunc("/api/mcp/decision/catalog/save", s.handleDecisionCatalogSave)
 
+	// --- Assimilation Scraper Endpoints ---
+	s.mux.HandleFunc("/api/assimilation/trigger/resources", s.handleAssimilationTriggerResources)
+	s.mux.HandleFunc("/api/assimilation/trigger/servers", s.handleAssimilationTriggerServers)
+
 	// --- Go-native service endpoints ---
 	s.mux.HandleFunc("/api/native/eventbus/publish", s.handleEventBusPublish)
 	s.mux.HandleFunc("/api/native/eventbus/history", s.handleEventBusHistory)

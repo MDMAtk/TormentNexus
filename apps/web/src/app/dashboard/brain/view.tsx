@@ -260,6 +260,52 @@ export default function CognitiveBrainDashboard() {
 		}
 	};
 
+	// --- COMPREHENSIVE SCRAPER STATE ---
+	const [resourceScraping, setResourceScraping] = useState(false);
+	const [serverScraping, setServerScraping] = useState(false);
+	const [scraperLog, setScraperLog] = useState("");
+
+	const handleTriggerResourceScraper = async () => {
+		setResourceScraping(true);
+		setScraperLog("Initializing prompts & skills assimilation scanner...\n");
+		try {
+			const res = await fetch("/api/go/api/assimilation/trigger/resources", { method: "POST" });
+			const d = await res.json();
+			if (res.ok && d.success) {
+				toast.success("Skill & prompt resources successfully assimilated!");
+				setScraperLog((prev) => prev + d.output);
+			} else {
+				toast.error("Resource assimilation failed");
+				setScraperLog((prev) => prev + `Error: ${d.error || "unknown"}\n${d.output || ""}`);
+			}
+		} catch (e: any) {
+			toast.error("Failed to run resource scraper");
+			setScraperLog((prev) => prev + `Exception: ${e.message}\n`);
+		}
+		setResourceScraping(false);
+	};
+
+	const handleTriggerServerScraper = async () => {
+		setServerScraping(true);
+		setScraperLog("Initializing MCP servers catalog assimilation scanner...\n");
+		try {
+			const res = await fetch("/api/go/api/assimilation/trigger/servers", { method: "POST" });
+			const d = await res.json();
+			if (res.ok && d.success) {
+				toast.success("MCP servers successfully catalogued and synced!");
+				setScraperLog((prev) => prev + d.output);
+			} else {
+				toast.error("MCP server catalog sync failed");
+				setScraperLog((prev) => prev + `Error: ${d.error || "unknown"}\n${d.output || ""}`);
+			}
+		} catch (e: any) {
+			toast.error("Failed to run server scraper");
+			setScraperLog((prev) => prev + `Exception: ${e.message}\n`);
+		}
+		setServerScraping(false);
+	};
+
+
 
 	const trimmedSearchQuery = searchQuery.trim();
 	const hasSearchQuery = trimmedSearchQuery.length > 0;
@@ -1431,6 +1477,42 @@ export default function CognitiveBrainDashboard() {
 									<div className="bg-black p-3 rounded-lg text-xs font-mono text-zinc-300 break-all border border-zinc-800 max-h-[250px] overflow-y-auto leading-relaxed">
 										{ingestLog}
 									</div>
+								)}
+							</CardContent>
+						</Card>
+
+						<Card className="bg-zinc-900 border-zinc-800 p-6 flex flex-col gap-4">
+							<CardHeader className="p-0">
+								<CardTitle className="text-lg font-bold text-violet-400 flex items-center gap-2">
+									<RefreshCw className="h-5 w-5 text-violet-500 animate-pulse" /> Comprehensive Library Scrapers
+								</CardTitle>
+							</CardHeader>
+							<CardContent className="p-0 flex flex-col gap-4">
+								<p className="text-sm text-zinc-400">
+									Scan known libraries, local registers, and remote indexes to discover, categorise, and ingest MCP server schemas, skill scripts, and prompt templates.
+								</p>
+								<div className="grid grid-cols-2 gap-4">
+									<Button
+										onClick={handleTriggerResourceScraper}
+										disabled={resourceScraping}
+										className="bg-violet-700 hover:bg-violet-600 text-white font-semibold flex items-center justify-center gap-1.5 transition-colors"
+									>
+										{resourceScraping && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+										{resourceScraping ? "Scraping..." : "Scrape Prompts & Skills"}
+									</Button>
+									<Button
+										onClick={handleTriggerServerScraper}
+										disabled={serverScraping}
+										className="bg-indigo-700 hover:bg-indigo-600 text-white font-semibold flex items-center justify-center gap-1.5 transition-colors"
+									>
+										{serverScraping && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+										{serverScraping ? "Scraping..." : "Scrape MCP Servers"}
+									</Button>
+								</div>
+								{scraperLog && (
+									<pre className="bg-black p-3 rounded-lg text-xs font-mono text-zinc-400 break-all border border-zinc-800 max-h-[250px] overflow-y-auto leading-relaxed whitespace-pre-wrap">
+										{scraperLog}
+									</pre>
 								)}
 							</CardContent>
 						</Card>
