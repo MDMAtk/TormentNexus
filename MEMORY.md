@@ -1,5 +1,11 @@
 # MEMORY.md — Multi-Agent Observations
 
+## Session 2026-07-01 (Native Go Session Ingestion & Windows IPv6 Gotchas)
+
+### Port Binding and IPv6 Resolution
+- **Windows Localhost Loopback**: On Windows systems, python's default URL resolution resolves `localhost` to IPv6 `[::1]` first. If a Go sidecar daemon binds explicitly to IPv4 `127.0.0.1:7778`, connections using `localhost` will hang in a `SYN_SENT` state. Hardcoding `127.0.0.1` directly avoids this loopback resolution latency.
+- **Go SQLite Constraints handling**: When performing bulk session imports through custom endpoints, tables like `imported_sessions` may enforce strict database constraints (such as `NOT NULL UNIQUE` on `transcript_hash` or `normalized_session`). Handlers must calculate unique transaction hashes and map default structures (`{}`) to prevent query execution panics.
+
 ## Session 2026-07-01 (TormentNexus Unified Dashboard & Sidebar Navigation)
 
 ### Layout Refactoring Heuristics

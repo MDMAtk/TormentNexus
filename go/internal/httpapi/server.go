@@ -9378,7 +9378,103 @@ func (s *Server) handleSessionExport(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleSessionImport(w http.ResponseWriter, r *http.Request) {
-	s.handleTRPCBridgeBodyCall(w, r, "sessionExport.import")
+	// First, let's buffer the request body because we might need to read it twice
+	bodyBytes, err := io.ReadAll(r.Body)
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "failed to read body"})
+		return
+	}
+	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+
+	var result any
+	upstreamBase, err := s.callUpstreamJSON(r.Context(), "sessionExport.import", json.RawMessage(bodyBytes), &result)
+	if err == nil {
+		writeJSON(w, http.StatusOK, map[string]any{
+			"success": true,
+			"data":    result,
+			"bridge": map[string]any{
+				"upstreamBase": upstreamBase,
+				"procedure":    "sessionExport.import",
+			},
+		})
+		return
+	}
+
+	// Local fallback: parse and import using sessionimport package
+	var payload struct {
+		Data  string `json:"data"`
+		Merge bool   `json:"merge"`
+		Dry   bool   `json:"dryRun"`
+	}
+	if err := json.Unmarshal(bodyBytes, &payload); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON body: " + err.Error()})
+		return
+	}
+
+	var pkg struct {
+		Sessions []struct {
+			ID               string         `json:"id"`
+			Name             string         `json:"name"`
+			CLIType          string         `json:"cliType"`
+			WorkingDirectory string         `json:"workingDirectory"`
+			Metadata         map[string]any `json:"metadata"`
+		} `json:"sessions"`
+	}
+	if err := json.Unmarshal([]byte(payload.Data), &pkg); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid package data: " + err.Error()})
+		return
+	}
+
+	imported := 0
+	merged := 0
+	skipped := 0
+	errorsList := []string{}
+
+	dbPath := filepath.Join(s.cfg.WorkspaceRoot, "tormentnexus.db")
+
+	for _, sess := range pkg.Sessions {
+		if payload.Dry {
+			imported++
+			continue
+		}
+
+		transcript := ""
+		if t, ok := sess.Metadata["transcriptSnippet"].(string); ok {
+			transcript = t
+		}
+
+		importedSess := sessionimport.ImportedSession{
+			ID:                sess.ID,
+			SourceTool:        sess.CLIType,
+			SourcePath:        filepath.Join(sess.WorkingDirectory, sess.ID),
+			ExternalSessionID: sess.ID,
+			Title:             sess.Name,
+			SessionFormat:     "tormentnexus-export",
+			Transcript:        transcript,
+		}
+
+		if err := sessionimport.ImportSession(dbPath, importedSess); err != nil {
+			errorsList = append(errorsList, fmt.Sprintf("session %s import failed: %s", sess.ID, err.Error()))
+			skipped++
+		} else {
+			imported++
+		}
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data": map[string]any{
+			"imported": imported,
+			"merged":    merged,
+			"skipped":   skipped,
+			"errors":    errorsList,
+		},
+		"bridge": map[string]any{
+			"fallback":  "go-local-session-export",
+			"procedure": "sessionExport.import",
+			"reason":    "upstream unavailable; processed locally via tormentnexus.db",
+		},
+	})
 }
 
 func (s *Server) handleSessionExportDetectFormat(w http.ResponseWriter, r *http.Request) {

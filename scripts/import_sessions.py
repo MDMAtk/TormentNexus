@@ -18,7 +18,7 @@ import sys
 import urllib.request
 import urllib.error
 
-GO_API = "http://localhost:4300"
+GO_API = "http://127.0.0.1:7778"
 CANDIDATE_FILE = os.path.expanduser("~/.claude/history.jsonl")
 
 

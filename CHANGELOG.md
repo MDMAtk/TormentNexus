@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0-alpha.209] - 2026-07-01
+
+### Added
+- **Native Go Session Import Fallback**: Implemented a local fallback in `handleSessionImport` inside the Go sidecar (`server.go`), enabling direct native imports of external session payloads into `tormentnexus.db` when the TypeScript control plane is unavailable.
+- **Unique Hash & Schema Constraint Guard**: Added automatic SHA256 `transcript_hash` calculation and default `normalized_session` metadata initialization inside `ImportSession` (`import.go`) to prevent unique and non-null SQLite constraint exceptions during session insertion.
+
+### Fixed
+- **Networking Port Binding**: Fixed `import_sessions.py` to route requests to loopback address `127.0.0.1:7778` instead of `localhost:4300`, resolving IPv6 `[::1]` resolution conflicts on Windows.
+
 ## [1.0.0-alpha.208] - 2026-07-01
 
 ### Added
