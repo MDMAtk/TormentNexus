@@ -819,7 +819,7 @@ export function Sidebar({ className }: SidebarProps) {
 									<div className="space-y-1">
 										{favoriteItems.map((item) => (
 											<FavoriteNavRow
-												key={item.href}
+												key={item.href + "_" + item.title}
 												item={item}
 												active={isActive(item.href)}
 												onToggleFavorite={toggleFavorite}
@@ -839,7 +839,7 @@ export function Sidebar({ className }: SidebarProps) {
 							<div className="space-y-1">
 								{recentItems.map((item) => (
 									<Link
-										key={item.href}
+										key={item.href + "_" + item.title}
 										href={item.href}
 										className={cn(
 											"flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-zinc-800 hover:text-white transition-colors",
@@ -880,7 +880,7 @@ export function Sidebar({ className }: SidebarProps) {
 									<div className="space-y-1">
 										{section.items.map((item) => (
 											<div
-												key={item.href}
+												key={item.href + "_" + item.title}
 												className="group flex items-center gap-1"
 											>
 												<Link
@@ -1001,7 +1001,7 @@ export function Sidebar({ className }: SidebarProps) {
 
 									return (
 										<button
-											key={item.kind === "route" ? item.href : item.id}
+											key={item.kind === "route" ? (item.href + "_" + item.title) : item.id}
 											type="button"
 											onMouseEnter={() => setPaletteIndex(index)}
 											onClick={(event) => {
