@@ -184,7 +184,14 @@ function InspectorDashboardContent() {
     })();
 
     const workingSet = (workingSetQuery.data?.tools || []) as WorkingSetTool[];
-    const telemetry = (telemetryQuery.data || []) as ToolSelectionTelemetryEvent[];
+    const rawTelemetry = telemetryQuery.data;
+    const telemetry = (
+        Array.isArray(rawTelemetry) 
+            ? rawTelemetry 
+            : (rawTelemetry && typeof rawTelemetry === 'object' && 'events' in rawTelemetry && Array.isArray((rawTelemetry as any).events))
+                ? (rawTelemetry as any).events
+                : []
+    ) as ToolSelectionTelemetryEvent[];
     const preferences = (preferencesQuery.data as ToolPreferences | undefined) ?? {
         importantTools: [],
         alwaysLoadedTools: [],

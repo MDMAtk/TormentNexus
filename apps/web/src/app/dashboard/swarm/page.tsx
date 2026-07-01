@@ -968,8 +968,8 @@ export function SwarmDashboardOverview() {
 									</CardTitle>
 								</CardHeader>
 								<CardContent className="flex-1 overflow-y-auto font-mono text-xs p-4 bg-black text-cyan-400 space-y-2">
-									{messages.map((msg) => (
-										<div key={msg.id} className="border-b border-zinc-900 pb-1">
+									{messages.map((msg, index) => (
+										<div key={msg.id || `${msg.timestamp}-${index}`} className="border-b border-zinc-900 pb-1">
 											<span className="text-purple-400">
 												[{new Date(msg.timestamp).toLocaleTimeString()}]
 											</span>{" "}

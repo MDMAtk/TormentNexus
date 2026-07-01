@@ -163,7 +163,7 @@ export default function ToolKarmaPage() {
 				)}
 				{filteredTools.map((tool) => (
 					<div
-						key={tool.name}
+						key={`${tool.name}-${tool.file || 'default'}-${tool.handler || 'native'}`}
 						className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-3 hover:bg-zinc-900 transition-colors"
 					>
 						<div className="flex items-center justify-between">

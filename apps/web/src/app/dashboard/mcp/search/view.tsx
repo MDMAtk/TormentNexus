@@ -322,7 +322,14 @@ function SearchDashboard() {
     const workingSet = ((workingSetQuery.data?.tools as WorkingSetTool[] | undefined) ?? []);
     const allToolsQuery = trpc.mcp.listTools.useQuery(undefined, { refetchInterval: 15000 });
     const allKnownTools = (allToolsQuery.data as SearchResult[] | undefined) ?? [];
-    const telemetryEvents = ((telemetryQuery.data as ToolSelectionTelemetryEvent[] | undefined) ?? []);
+    const rawTelemetryEvents = telemetryQuery.data;
+    const telemetryEvents = (
+        Array.isArray(rawTelemetryEvents)
+            ? rawTelemetryEvents
+            : (rawTelemetryEvents && typeof rawTelemetryEvents === 'object' && 'events' in rawTelemetryEvents && Array.isArray((rawTelemetryEvents as any).events))
+                ? (rawTelemetryEvents as any).events
+                : []
+    ) as ToolSelectionTelemetryEvent[];
     const telemetryWindowStart = resolveTelemetryWindowStart(telemetryWindowFilter);
     const telemetryEventsPreStatusFilter = telemetryEvents
         .filter((event) => telemetryWindowStart == null || event.timestamp >= telemetryWindowStart)

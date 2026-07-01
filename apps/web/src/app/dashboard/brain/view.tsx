@@ -61,9 +61,10 @@ import {
 	sortMemoryRecordsByTimestamp,
 	type MemoryRecord,
 	type MemoryPivotAction,
+	type MemoryPivotSection,
 	type RelatedMemoryRecord,
 	type MemorySearchMode,
-} from "../memory/memory-dashboard-utils";
+} from "../memory/memory-dashboard-frontend-utils";
 
 type ExpertTrpc = {
 	expert: {
@@ -694,7 +695,7 @@ export default function CognitiveBrainDashboard() {
 		if (!selectedMemory) {
 			return [];
 		}
-		return groupMemoryWindowAroundAnchor(selectedMemory, sessionWindowRecords);
+		return groupMemoryWindowAroundAnchor(sessionWindowRecords, selectedMemory.id);
 	}, [selectedMemory, sessionWindowRecords]);
 
 	const crossSessionLinks = useMemo(() => {
@@ -705,8 +706,8 @@ export default function CognitiveBrainDashboard() {
 
 	const handlePivotAction = (action: MemoryPivotAction) => {
 		setActivePivot(action);
-		setSearchMode(action.mode);
-		setSearchQuery(action.query);
+		setSearchMode(action.mode || "all");
+		setSearchQuery(action.query || "");
 		setSelectedRecordKey(null);
 	};
 
@@ -1121,21 +1122,24 @@ export default function CognitiveBrainDashboard() {
 							<CardHeader className="border-b border-zinc-800 bg-zinc-950/20 pb-3">
 								<div className="space-y-3">
 									<div className="flex flex-wrap gap-1.5">
-										{MEMORY_SEARCH_MODES.map((mode) => (
-											<button
-												key={mode.value}
-												type="button"
-												onClick={() => setSearchMode(mode.value)}
-												className={`rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors ${
-													searchMode === mode.value
-														? "border-pink-500/60 bg-pink-500/10 text-pink-200"
-														: "border-zinc-800 bg-zinc-950 text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
-												}`}
-												title={mode.description}
-											>
-												{mode.label}
-											</button>
-										))}
+										{MEMORY_SEARCH_MODES.map((mode) => {
+											const modeValue = (mode as any).key || (mode as any).value;
+											return (
+												<button
+													key={modeValue}
+													type="button"
+													onClick={() => setSearchMode(modeValue)}
+													className={`rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors ${
+														searchMode === modeValue
+															? "border-pink-500/60 bg-pink-500/10 text-pink-200"
+															: "border-zinc-800 bg-zinc-950 text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
+													}`}
+													title={(mode as any).description}
+												>
+													{mode.label}
+												</button>
+											);
+										})}
 									</div>
 									<div className="relative">
 										<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500" />
