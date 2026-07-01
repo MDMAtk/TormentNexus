@@ -13,13 +13,31 @@ const GO_SIDECAR_BASE =
  * http://127.0.0.1:7778/api/mcp/status.
  */
 
+function remapPath(path: string): string {
+	const map: Record<string, string> = {
+		"api/imports": "api/import/summary",
+		"api/healer": "api/healer/history",
+		"api/deerflow": "api/deerflow/status",
+		"api/cold-archive": "api/memory/cold-archive",
+		"api/cli-harnesses": "api/tools/detect-cli-harnesses",
+		"api/cloud-dev": "api/clouddev/sessions",
+		"api/browser": "api/browser/status",
+		"api/browser-extension": "api/browser-extension/stats",
+		"api/logs-metrics": "api/metrics/stats",
+		"api/observability": "api/pulse/status",
+		"api/mesh": "api/mesh/status",
+		"api/runtime": "api/runtime/status"
+	};
+	return map[path] || path;
+}
+
 export async function GET(
 	request: NextRequest,
 	{ params }: { params: Promise<{ path: string[] }> },
 ) {
 	const resolvedParams = await params;
 	const pathSegments = resolvedParams.path.join("/");
-	const targetURL = `${GO_SIDECAR_BASE}/${pathSegments}`;
+	const targetURL = `${GO_SIDECAR_BASE}/${remapPath(pathSegments)}`;
 
 	try {
 		const response = await fetch(targetURL, {
@@ -61,7 +79,7 @@ export async function POST(
 ) {
 	const resolvedParams = await params;
 	const pathSegments = resolvedParams.path.join("/");
-	const targetURL = `${GO_SIDECAR_BASE}/${pathSegments}`;
+	const targetURL = `${GO_SIDECAR_BASE}/${remapPath(pathSegments)}`;
 
 	try {
 		let body: string | null = null;
