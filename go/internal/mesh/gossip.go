@@ -72,6 +72,11 @@ func (g *GossipProtocol) Broadcast(payload map[string]string) {
 
 	data, _ := json.Marshal(msg)
 
+	// Encrypt raw JSON payload using mesh shared key AES-GCM
+	if encrypted, err := encryptAESGCM(data, defaultKey); err == nil {
+		data = encrypted
+	}
+
 	g.mu.RLock()
 	peers := make([]string, len(g.peers))
 	copy(peers, g.peers)
@@ -104,7 +109,16 @@ func (g *GossipProtocol) listenLoop(ctx context.Context) {
 		}
 
 		var msg GossipMessage
-		if err := json.Unmarshal(buf[:n], &msg); err != nil {
+		encryptedData := make([]byte, n)
+		copy(encryptedData, buf[:n])
+
+		// Decrypt packet using AES-GCM shared key
+		decrypted, err := decryptAESGCM(encryptedData, defaultKey)
+		if err != nil {
+			continue
+		}
+
+		if err := json.Unmarshal(decrypted, &msg); err != nil {
 			continue
 		}
 
@@ -122,11 +136,10 @@ func (g *GossipProtocol) listenLoop(ctx context.Context) {
 				g.onReceive(msg)
 			}
 
-			// Re-gossip
-			data, _ := json.Marshal(msg)
+			// Re-gossip the original encrypted data directly to minimize serialization cost
 			g.mu.RLock()
 			for _, peer := range g.peers {
-				g.sendUDP(peer, data)
+				g.sendUDP(peer, encryptedData)
 			}
 			g.mu.RUnlock()
 		}
