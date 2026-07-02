@@ -37,9 +37,9 @@ _Last updated: 2026-07-01, version 1.0.0-alpha.221_
 - [x] **Submodule Removal**: Systematic removal of redundant submodules after native reimplementation.
 - [x] **P2P Memory**: Implement gossip protocol for decentralized context sharing.
 - [x] **L3 Cold Archive**: Implement long-term compressed memory tier for infinite context.
-- [ ] **Fleet-Wide Intelligence**: Cross-machine memory sharing via encrypted mesh.
+- [x] **Fleet-Wide Intelligence**: Cross-machine memory sharing via encrypted mesh.
 - [ ] **Wails Native Runtime**: Replace Electron with Go-native desktop shell.
-- [ ] **Deep Link Protocol**: Expand `tormentnexus://` protocol for browser-to-kernel attachment.
+- [x] **Deep Link Protocol**: Expand `tormentnexus://` protocol for browser-to-kernel attachment.
 
 ---
 *Keep the party going. Never stop. Don't stop the party!!!*
