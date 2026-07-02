@@ -26,8 +26,11 @@
    - Built the complete frontend Next.js production bundle using Turbopack via `pnpm build:wails` and exported/copied all compiled static resources directly into the Wails GUI assets compiler target directory (`go/cmd/tormentnexus-gui/frontend/dist`).
    - Compiled the native Go desktop application shell (`go build ./cmd/tormentnexus-gui`) to produce the single-binary executable `tormentnexus-gui.exe` (21MB) and copied it to the workspace root directory.
 
-6. **Version Alignment & Package Sync**:
-   - Pinned all workspace project and extension package configurations to `v1.0.0-alpha.224` using the standard `sync-versions` runner.
+6. **Tray Icon Browser Dashboard Launch Integration (v1.0.0-alpha.225)**:
+   - Enhanced `systray_windows.go` to listen to tray clicks (`WM_LBUTTONUP` / `WM_LBUTTONDBLCLK`) and programmatically launch the operator's default browser pointing directly to the local dashboard portal (`http://127.0.0.1:7779/dashboard`).
+
+7. **Version Alignment & Package Sync**:
+   - Pinned all workspace project and extension package configurations to `v1.0.0-alpha.225` using the standard `sync-versions` runner.
 
 ## Next Steps for Successor Models
 - **Monitor Deep Link Interactions**: Confirm that clicking custom `tormentnexus://attach?session=ID` or `tormentnexus://create?cliType=CMD&workingDirectory=DIR` links successfully dispatches actions to the local server node.
