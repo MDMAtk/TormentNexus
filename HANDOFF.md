@@ -1,5 +1,5 @@
 # Session Handoff & Architecture Summary
-**Date:** July 1, 2026 (Local Time)
+**Date:** July 2, 2026 (Local Time)
 **Model:** Antigravity (Google DeepMind pair programmer)
 
 ## Key Achievements & Modifications
@@ -13,16 +13,15 @@
    - Rendered a comprehensive status matrix details table (Levels L0–L3) highlighting first-party verification status blocks (OpenCode, Claude Code, Cursor, Windsurf, Copilot, Codex, etc.).
    - Visualized the TormentNexus Readiness Gate checkpoints checklist with tooltips (`🔒`) highlighting byte-level client schema compatibility.
 
-3. **Noise Cancellation for Console Logs**:
-   - Injected a synchronous browser-head override script into the Next.js root layout [layout.tsx](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/src/app/layout.tsx) to capture and ignore development-only dev-server, HMR, and React DevTools console warnings.
+3. **OS Deep Link Protocol Implementation (v1.0.0-alpha.222)**:
+   - Implemented a new REST endpoint `/api/native/protocol/register` in the Go HTTP sidecar server to programmatically write `tormentnexus://` custom protocol associations to the Windows Registry.
+   - Added the **OS Protocol Registry** card to Section 4 of the consolidated Dashboard UI, enabling developers to register deep link protocol hooks with a single click.
+   - Rebuilt the Go sidecar binary, copied it to the workspace root, and restarted the active background daemon on port `7778` to register and process deep link routing parameters (`attach`, `create`).
 
-4. **Go Compilation Fix (v1.0.0-alpha.221)**:
-   - Fixed an undefined compiler error `GetLowPerformingSkills` inside [evolution_prompt.go](file:///c:/Users/hyper/workspace/tormentnexus/go/internal/skillregistry/evolution_prompt.go) by implementing a robust database-safe query implementation that returns fallbacks gracefully if tables have not drifted.
-
-5. **Process Lifecycle Restart & System Tray**:
-   - Terminated stale/locked instances of `tormentnexus.exe` and spawned the newly compiled executable daemon (`serve --port 7778`) to successfully spin up the programmatic 🤖 system tray notification icon.
+4. **Version Alignment & Package Sync**:
+   - Pinned all workspace project and extension package configurations to `v1.0.0-alpha.222` using the standard `sync-versions` runner.
 
 ## Next Steps for Successor Models
-- **Monitor the Swarm queue**: Verify that `swarm_v7.py` executes smoothly to ingest new catalog/bobbybookmarks records.
-- **Episodic Memory Dreaming**: Observe if low-priority background threads run the fact-distillation tasks regularly without database deadlocks.
-- **Extension integration telemetry**: Test if local browser extension components communicate over the client access bridge correctly.
+- **Monitor Deep Link Interactions**: Confirm that clicking custom `tormentnexus://attach?session=ID` or `tormentnexus://create?cliType=CMD&workingDirectory=DIR` links successfully dispatches actions to the local server node.
+- **Mesh / Gossip Protocol Telemetry**: Watch the gossip server updates to check for cross-machine memory-sharing logs.
+- **Swarm Queue Supervision**: Watch `swarm_v7.py` outputs as the multi-model generation pipeline indexes remaining catalog resources.
