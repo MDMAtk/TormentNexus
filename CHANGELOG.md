@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.0-alpha.217] - 2026-07-02
+
+### Added
+- **Single-Page Dashboard Consolidation Phase 2**:
+  - **Public MCP Server Registry & Discovery**: Connected the public Glama/Smithery server snapshots directly to the execution layer.
+  - **Git Repository Chronicle**: Integrated live working tree modification lists and commit history streams.
+  - **Global Configuration Register**: Embedded OIDC/OAuth, serverTopologies, and harness configs inside a direct JSON configuration text editor.
+- **Decommissioned Tab-Navigation**: Cleaned up all sub-nav bar filters, serving all sections on one continuous page.
+
 ## [1.0.0-alpha.216] - 2026-07-02
 
 ### Added

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { trpc } from '../../utils/trpc';
 import { useState, useEffect, useCallback } from 'react';
 
 export interface DashboardStatusSummary {
@@ -1041,6 +1042,49 @@ export function DashboardHomeView({
     children,
 }: DashboardHomeViewProps) {
     const [dbLock, setDbLock] = useState(false);
+    // --- NATIVE GIT CHRONICLE ---
+    const { data: gitLog } = trpc.git.getLog.useQuery({ limit: 10 });
+    const { data: gitStatus } = trpc.git.getStatus.useQuery();
+
+    // --- PUBLIC MCP REGISTRY ---
+    const [registryFilter, setRegistryFilter] = useState("");
+    const { data: installedMcpServers } = trpc.mcpServers.list.useQuery();
+    const { data: registrySnapshot, isLoading: loadingRegistry } = trpc.mcpServers.registrySnapshot.useQuery();
+    const installMcpMutation = trpc.mcpServers.create.useMutation();
+
+    const handleInstallMcpServer = (name: string, command: string, args: string[], env: any) => {
+        installMcpMutation.mutate({
+            name,
+            type: 'STDIO',
+            command,
+            args,
+            env: env || {},
+        });
+    };
+
+    // --- GLOBAL SETTINGS CONFIG.JSON EDITOR ---
+    const [configJson, setConfigJson] = useState("");
+    const [settingsLog, setSettingsLog] = useState("");
+    const settingsQuery = trpc.settings.get.useQuery();
+    const updateSettingsMutation = trpc.settings.update.useMutation();
+
+    useEffect(() => {
+        if (settingsQuery.data) {
+            setConfigJson(JSON.stringify(settingsQuery.data, null, 2));
+        }
+    }, [settingsQuery.data]);
+
+    const saveSettingsConfig = async () => {
+        try {
+            const config = JSON.parse(configJson);
+            await updateSettingsMutation.mutateAsync({ config });
+            setSettingsLog("✅ Configuration saved successfully.");
+            settingsQuery.refetch();
+        } catch (e: any) {
+            setSettingsLog(`❌ Error saving config: ${e.message}`);
+        }
+    };
+
     // --- L3 COLD ARCHIVE LOGIC ---
     const [coldQuery, setColdQuery] = useState("");
     const [coldResults, setColdResults] = useState<any[]>([]);
@@ -1656,6 +1700,84 @@ export function DashboardHomeView({
                                 </div>
                             </div>
                         </div>
+
+                        {/* Public MCP Server Registry & Discovery */}
+                        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 space-y-4 md:col-span-2">
+                            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                                <div className="flex items-center gap-2">
+                                    <h2 className="text-base font-semibold text-white">Public MCP Server Registry &amp; Discovery</h2>
+                                    <span className="text-cyan-400 cursor-help text-xs" title="Discover and install public community MCP servers directly into your active configuration registry.">🌐</span>
+                                </div>
+                                <div className="text-[10px] text-slate-500 font-mono">
+                                    {registrySnapshot && registrySnapshot.length > 0 ? `Live Index (${registrySnapshot.length} servers)` : 'Fallback Templates Loaded'}
+                                </div>
+                            </div>
+
+                            {/* Search filter */}
+                            <div className="relative">
+                                <input
+                                    value={registryFilter}
+                                    onChange={(e) => setRegistryFilter(e.target.value)}
+                                    placeholder="Search public registry by name or capability..."
+                                    className="w-full bg-zinc-950 border border-slate-800 rounded p-2 text-xs text-white placeholder-slate-550 focus:outline-none focus:border-cyan-500 transition-colors"
+                                />
+                            </div>
+
+                            {/* Cards list */}
+                            <div className="grid gap-4 sm:grid-cols-2 max-h-[350px] overflow-y-auto pr-1">
+                                {loadingRegistry ? (
+                                    <div className="col-span-full text-center py-8 text-slate-500 text-xs font-mono">
+                                        ⏳ Fetching live Smithery &amp; Glama MCP registry databases...
+                                    </div>
+                                ) : (
+                                    (() => {
+                                        const fallbackTemplates = [
+                                            { name: "filesystem", description: "Standard operations for safe local file and folder access", command: "npx", args: ["-y", "@modelcontextprotocol/server-filesystem", "./data"], author: "ModelContextProtocol", tags: ["official", "files"] },
+                                            { name: "memory", description: "Standard knowledge graph memory graph persistence server", command: "npx", args: ["-y", "@modelcontextprotocol/server-memory"], author: "ModelContextProtocol", tags: ["official", "memory"] },
+                                            { name: "postgres", description: "Database connector for pgsql schemas", command: "npx", args: ["-y", "@modelcontextprotocol/server-postgres", "postgresql://localhost/db"], author: "ModelContextProtocol", tags: ["official", "database"] },
+                                            { name: "github", description: "Access repository commits, trees, and issues", command: "npx", args: ["-y", "@modelcontextprotocol/server-github"], author: "ModelContextProtocol", tags: ["dev", "github"] }
+                                        ];
+                                        const rawList = (registrySnapshot && registrySnapshot.length > 0) ? registrySnapshot : fallbackTemplates;
+                                        const filteredList = rawList.filter((item: any) =>
+                                            item.name.toLowerCase().includes(registryFilter.toLowerCase()) ||
+                                            item.description.toLowerCase().includes(registryFilter.toLowerCase())
+                                        );
+
+                                        if (filteredList.length === 0) {
+                                            return <div className="col-span-full text-center text-xs text-slate-500 py-4">No matching registry servers found.</div>;
+                                        }
+
+                                        return filteredList.map((item: any) => {
+                                            const isInstalled = !!installedMcpServers?.some((s: any) => s.name === item.name);
+                                            return (
+                                                <div key={item.name} className="border border-slate-850 bg-zinc-950/60 p-4 rounded flex flex-col justify-between space-y-2 hover:bg-zinc-900/40 transition-colors">
+                                                    <div>
+                                                        <div className="flex items-center justify-between">
+                                                            <span className="font-bold text-xs text-slate-200">{item.name}</span>
+                                                            {isInstalled && <span className="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded font-mono font-semibold">INSTALLED</span>}
+                                                        </div>
+                                                        <span className="text-[10px] text-slate-500 block mt-0.5">by {item.author || "Community"}</span>
+                                                        <p className="text-[11px] text-slate-400 mt-2 leading-normal">
+                                                            {item.description}
+                                                        </p>
+                                                    </div>
+
+                                                    <div className="pt-2">
+                                                        <button
+                                                            onClick={() => handleInstallMcpServer(item.name, item.command || "npx", item.args || [], item.env || {})}
+                                                            disabled={isInstalled || installMcpMutation.isPending || !item.command || !item.args}
+                                                            className="w-full bg-cyan-600/25 hover:bg-cyan-500/35 border border-cyan-500/20 text-cyan-200 hover:text-white rounded py-1.5 text-xs font-semibold transition-colors disabled:bg-zinc-900 disabled:text-zinc-550"
+                                                        >
+                                                            {isInstalled ? "Already Active ✓" : installMcpMutation.isPending ? "Configuring..." : "Download & Auto-Install"}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            );
+                                        });
+                                    })()
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1952,6 +2074,84 @@ export function DashboardHomeView({
                                     );
                                 })}
                             </div>
+                        </div>
+
+                        {/* Git Repository Chronicle */}
+                        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 space-y-4 md:col-span-1 flex flex-col justify-between">
+                            <div>
+                                <div className="flex items-center gap-2 border-b border-slate-850 pb-2">
+                                    <h2 className="text-base font-semibold text-white">Git Repository Chronicle</h2>
+                                    <span className="text-cyan-400 cursor-help text-xs" title="Live repository commits and working tree status metrics.">🌿</span>
+                                </div>
+                                <p className="text-xs text-slate-400 mt-2">
+                                    Monitors workspace revision history and uncommitted changes.
+                                </p>
+                                
+                                <div className="space-y-2 mt-4 max-h-[220px] overflow-y-auto font-mono text-[11px] text-slate-350 pr-1">
+                                    {gitStatus && (
+                                        <div className="border border-slate-850 p-2 rounded bg-zinc-950/60 mb-2">
+                                            <span className="text-slate-500 font-semibold block mb-1">UNCOMMITTED CHANGES:</span>
+                                            <div className="whitespace-pre text-yellow-400 text-2xs leading-normal">
+                                                {gitStatus.modifiedFiles?.length > 0 ? gitStatus.modifiedFiles.join("\n") : "Working tree clean ✓"}
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    <span className="text-slate-500 font-semibold block mb-1">RECENT COMMITS:</span>
+                                    {gitLog && gitLog.length > 0 ? (
+                                        gitLog.map((commit: any) => (
+                                            <div key={commit.hash} className="border-b border-slate-850/60 py-1 last:border-0">
+                                                <span className="text-cyan-400 font-semibold">{commit.hash?.slice(0, 7)}</span>{" "}
+                                                <span className="text-slate-200">{commit.message?.slice(0, 50)}</span>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="text-slate-600 italic">No commits loaded.</div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Global Configuration Register */}
+                        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 space-y-4 md:col-span-2">
+                            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                                <div className="flex items-center gap-2">
+                                    <h2 className="text-base font-semibold text-white">Global Configuration Register</h2>
+                                    <span className="text-cyan-400 cursor-help text-xs" title="Edit the core .tormentnexus/config.json settings registry directly from this unified view.">💾</span>
+                                </div>
+                                <button
+                                    onClick={saveSettingsConfig}
+                                    disabled={updateSettingsMutation.isPending}
+                                    className="px-3.5 py-1 bg-cyan-600 hover:bg-cyan-500 text-white rounded text-xs font-semibold transition-colors disabled:opacity-50"
+                                    title="Commit configuration changes to local settings file"
+                                >
+                                    {updateSettingsMutation.isPending ? "Saving..." : "Save Configuration"}
+                                </button>
+                            </div>
+
+                            {settingsLog && (
+                                <div className={`p-2 rounded text-xs font-mono text-center border ${
+                                    settingsLog.includes("successfully") 
+                                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" 
+                                        : "border-rose-500/20 bg-rose-500/10 text-rose-455"
+                                }`}>
+                                    {settingsLog}
+                                </div>
+                            )}
+
+                            {settingsQuery.isPending ? (
+                                <div className="text-slate-500 font-mono text-xs text-center py-4">
+                                    ⏳ Fetching core configuration matrix...
+                                </div>
+                            ) : (
+                                <textarea
+                                    value={configJson}
+                                    onChange={(e) => { setConfigJson(e.target.value); setSettingsLog(""); }}
+                                    className="w-full h-48 font-mono text-[11px] bg-zinc-950 border border-slate-800 text-green-400 leading-normal resize-none p-3 rounded focus:outline-none focus:border-cyan-500 transition-colors"
+                                    spellCheck={false}
+                                    title="Config JSON text area register"
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
