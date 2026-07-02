@@ -36,7 +36,7 @@ _Last updated: 2026-07-01, version 1.0.0-alpha.221_
 - [x] **Catalog DB Sync**: Index new skills into `catalog.db` for unified search.
 - [x] **Submodule Removal**: Systematic removal of redundant submodules after native reimplementation.
 - [x] **P2P Memory**: Implement gossip protocol for decentralized context sharing.
-- [ ] **L3 Cold Archive**: Implement long-term compressed memory tier for infinite context.
+- [x] **L3 Cold Archive**: Implement long-term compressed memory tier for infinite context.
 - [ ] **Fleet-Wide Intelligence**: Cross-machine memory sharing via encrypted mesh.
 - [ ] **Wails Native Runtime**: Replace Electron with Go-native desktop shell.
 - [ ] **Deep Link Protocol**: Expand `tormentnexus://` protocol for browser-to-kernel attachment.
