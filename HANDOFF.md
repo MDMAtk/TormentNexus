@@ -29,8 +29,11 @@
 6. **Tray Icon Browser Dashboard Launch Integration (v1.0.0-alpha.225)**:
    - Enhanced `systray_windows.go` to listen to tray clicks (`WM_LBUTTONUP` / `WM_LBUTTONDBLCLK`) and programmatically launch the operator's default browser pointing directly to the local dashboard portal (`http://127.0.0.1:7779/dashboard`).
 
-7. **Version Alignment & Package Sync**:
-   - Pinned all workspace project and extension package configurations to `v1.0.0-alpha.225` using the standard `sync-versions` runner.
+7. **Sidebar Menu Elimination & High-Density UI Layout (v1.0.0-alpha.226)**:
+   - Removed the left sidebar navigation menu (`Sidebar.tsx`) completely from `layout.tsx` to let the consolidated single-page dashboard control plane expand to full width and occupy 100% viewport space.
+
+8. **Version Alignment & Package Sync**:
+   - Pinned all workspace project and extension package configurations to `v1.0.0-alpha.226` using the standard `sync-versions` runner.
 
 ## Next Steps for Successor Models
 - **Monitor Deep Link Interactions**: Confirm that clicking custom `tormentnexus://attach?session=ID` or `tormentnexus://create?cliType=CMD&workingDirectory=DIR` links successfully dispatches actions to the local server node.
