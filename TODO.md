@@ -38,7 +38,7 @@ _Last updated: 2026-07-01, version 1.0.0-alpha.221_
 - [x] **P2P Memory**: Implement gossip protocol for decentralized context sharing.
 - [x] **L3 Cold Archive**: Implement long-term compressed memory tier for infinite context.
 - [x] **Fleet-Wide Intelligence**: Cross-machine memory sharing via encrypted mesh.
-- [ ] **Wails Native Runtime**: Replace Electron with Go-native desktop shell.
+- [x] **Wails Native Runtime**: Replace Electron with Go-native desktop shell.
 - [x] **Deep Link Protocol**: Expand `tormentnexus://` protocol for browser-to-kernel attachment.
 
 ---

@@ -1,6 +1,6 @@
 {
   "name": "@extension/ui",
-  "version": "1.0.0-alpha.223",
+  "version": "1.0.0-alpha.224",
   "description": "chrome extension - ui components",
   "type": "module",
   "private": true,
