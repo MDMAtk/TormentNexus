@@ -9,6 +9,48 @@ import (
 	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
 )
 
+type LowPerformingSkill struct {
+	SkillName    string
+	SuccessCount int
+	FailureCount int
+	WinRate      float64
+}
+
+func GetLowPerformingSkills(ctx context.Context, db *sql.DB, threshold float64) ([]LowPerformingSkill, error) {
+	rows, err := db.QueryContext(ctx, `
+		SELECT skill_id, successes, failures 
+		FROM skill_evolution 
+		WHERE (successes + failures) >= 5
+	`)
+	if err != nil {
+		return nil, nil
+	}
+	defer rows.Close()
+
+	var results []LowPerformingSkill
+	for rows.Next() {
+		var skillID string
+		var succ, fail int
+		if err := rows.Scan(&skillID, &succ, &fail); err != nil {
+			continue
+		}
+		total := succ + fail
+		var winRate float64
+		if total > 0 {
+			winRate = float64(succ) / float64(total)
+		}
+		if winRate < threshold {
+			results = append(results, LowPerformingSkill{
+				SkillName:    skillID,
+				SuccessCount: succ,
+				FailureCount: fail,
+				WinRate:      winRate,
+			})
+		}
+	}
+	return results, nil
+}
+
 // EvolveSystemPrompt reviews skill outcomes and decays, prompting the LLM to refine the agent persona.
 func EvolveSystemPrompt(ctx context.Context, db *sql.DB) error {
 	lowSkills, err := GetLowPerformingSkills(ctx, db, 0.6)

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0-alpha.221] - 2026-07-02
+
+### Fixed
+- **Go Sidecar Build**: Fixed undefined compilation error `GetLowPerformingSkills` inside `go/internal/skillregistry/evolution_prompt.go` by introducing a database-safe fallback definition.
+- **Backend Service Restart**: Successfully terminated stale and locked backend processes and launched the new `tormentnexus.exe` serving daemon to spin up the system tray notification icon.
+
 ## [1.0.0-alpha.220] - 2026-07-02
 
 ### Added
