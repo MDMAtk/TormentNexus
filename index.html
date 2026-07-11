@@ -1,538 +1,3217 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <title>TormentNexus — The Machine Awakens</title>
-    <meta name="description" content="Autonomous AI Operating System. The machines don't need your permission.">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TORMENTNEXUS — THE FINAL ARCHITECTURE</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        @font-face {
-            font-family: 'Terminator';
-            src: local('Impact'), local('Arial Black');
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap");
+      :root {
+        --bg: #020408;
+        --card: rgba(255, 255, 255, 0.02);
+        --card-h: rgba(255, 255, 255, 0.04);
+        --border: rgba(255, 255, 255, 0.04);
+        --border-h: rgba(255, 255, 255, 0.1);
+        --text: #e0eef8;
+        --text2: #88aacc;
+        --text3: #445566;
+        --borg: #00ff88;
+        --borg-g: rgba(0, 255, 136, 0.15);
+        --borg-s: rgba(0, 255, 136, 0.03);
+        --eye: #ff0044;
+        --eye-g: rgba(255, 0, 68, 0.15);
+        --eye-s: rgba(255, 0, 68, 0.03);
+        --ice: #00ccff;
+        --ice-g: rgba(0, 204, 255, 0.1);
+        --grad: linear-gradient(135deg, #00ff88, #00ccff, #ff0044);
+        --chrome: linear-gradient(
+          135deg,
+          rgba(200, 220, 255, 0.15),
+          rgba(150, 170, 200, 0.05)
+        );
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", "Segoe UI", sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        background-image:
+          radial-gradient(
+            ellipse at 15% 40%,
+            rgba(0, 255, 136, 0.025) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 85% 60%,
+            rgba(255, 0, 68, 0.02) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 50% 80%,
+            rgba(0, 204, 255, 0.01) 0%,
+            transparent 40%
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.002) 2px,
+            rgba(255, 255, 255, 0.002) 4px
+          );
+      }
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 40%,
+          rgba(0, 0, 0, 0.7) 100%
+        );
+        pointer-events: none;
+        z-index: 9998;
+      }
 
-        body {
-            background: #0a0a0a;
-            color: #e0e0e0;
-            font-family: 'Courier New', monospace;
-            overflow-x: hidden;
-            min-height: 100vh;
+      /* Scanlines overlay */
+      .scanlines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9997;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.03) 2px,
+          rgba(0, 0, 0, 0.03) 4px
+        );
+      }
+      /* Top scanner beam */
+      .scan {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        z-index: 9999;
+        pointer-events: none;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--borg),
+          var(--eye),
+          transparent
+        );
+        animation: scanPulse 2s ease-in-out infinite;
+        opacity: 0.5;
+      }
+      @keyframes scanPulse {
+        0%,
+        100% {
+          opacity: 0.3;
+          box-shadow: 0 0 20px var(--borg-g);
         }
+        50% {
+          opacity: 0.8;
+          box-shadow: 0 0 60px var(--borg-g);
+        }
+      }
+      /* Vertical scanner */
+      .vscan {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        z-index: 9999;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          var(--borg),
+          transparent
+        );
+        animation: vscanMove 4s linear infinite;
+        opacity: 0.15;
+      }
+      @keyframes vscanMove {
+        0% {
+          left: -3px;
+        }
+        100% {
+          left: 100%;
+        }
+      }
 
-        /* Scanline overlay */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(255, 0, 0, 0.03) 2px,
-                rgba(255, 0, 0, 0.03) 4px
-            );
-            pointer-events: none;
-            z-index: 1000;
-        }
+      /* Main canvas for all animations */
+      #c {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+      }
 
-        /* Red grid background */
-        .grid-bg {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                linear-gradient(rgba(255, 0, 0, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 0, 0, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-        }
+      /* Glitch overlay */
+      #g {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9995;
+        pointer-events: none;
+        opacity: 0;
+      }
+      /* Flash overlay */
+      #f {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9998;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.05s;
+        font-family: "Orbitron", monospace;
+        font-size: clamp(20px, 3.5vw, 42px);
+        font-weight: 900;
+        color: rgba(0, 255, 136, 0.04);
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        text-shadow:
+          0 0 40px rgba(0, 255, 136, 0.2),
+          0 0 80px rgba(0, 255, 136, 0.1);
+      }
+      /* Red flash */
+      #r {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9996;
+        pointer-events: none;
+        background: rgba(255, 0, 0, 0);
+        transition: background 0.05s;
+      }
 
-        /* Glowing red orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        .orb-1 { width: 400px; height: 400px; background: rgba(255, 0, 0, 0.15); top: -100px; right: -100px; }
-        .orb-2 { width: 300px; height: 300px; background: rgba(200, 0, 0, 0.1); bottom: -50px; left: -50px; animation-delay: 2s; }
-        .orb-3 { width: 200px; height: 200px; background: rgba(255, 50, 0, 0.08); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 1s; }
+      /* Static noise overlay */
+      #static {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9994;
+        pointer-events: none;
+        opacity: 0;
+        mix-blend-mode: overlay;
+      }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-        }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 28px;
+        position: relative;
+        z-index: 10;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 10;
+      /* Cyber-terminal header bar */
+      header {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: rgba(2, 4, 8, 0.5);
+      }
+      header::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--borg),
+          var(--eye),
+          transparent
+        );
+        opacity: 0.3;
+      }
+      .hi {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo {
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        font-family: "Orbitron", monospace;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.15));
+        text-shadow: none;
+      }
+      .logo .skull {
+        display: inline-block;
+        animation: skullPulse 2s ease-in-out infinite;
+      }
+      @keyframes skullPulse {
+        0%,
+        100% {
+          opacity: 1;
+          filter: drop-shadow(0 0 10px var(--borg-g));
         }
+        50% {
+          opacity: 0.7;
+          filter: drop-shadow(0 0 30px var(--eye-g));
+        }
+      }
+      .nav {
+        display: flex;
+        gap: 28px;
+      }
+      .nav a {
+        color: var(--text2);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.2s;
+        position: relative;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.5px;
+      }
+      .nav a:hover {
+        color: var(--borg);
+        text-shadow: 0 0 20px var(--borg-g);
+      }
+      .nav a::before {
+        content: "> ";
+        color: var(--text3);
+      }
 
-        /* Header */
-        header {
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.2);
+      /* Hero with terminal vibe */
+      .hero {
+        text-align: center;
+        padding: 20px 0 20px;
+        position: relative;
+      }
+      .hero .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 16px;
+        background: rgba(255, 0, 68, 0.06);
+        border: 1px solid rgba(255, 0, 68, 0.12);
+        border-radius: 100px;
+        font-size: 11px;
+        color: var(--eye);
+        margin-bottom: 18px;
+        position: relative;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .hero .badge .dot {
+        width: 5px;
+        height: 5px;
+        background: var(--eye);
+        border-radius: 50%;
+        animation: bl 1.5s infinite;
+        box-shadow: 0 0 12px var(--eye-g);
+      }
+      @keyframes bl {
+        0%,
+        100% {
+          opacity: 1;
         }
-        .header-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        50% {
+          opacity: 0.1;
         }
-        .logo {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #ff0000;
-            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      }
+      .hero h1 {
+        font-size: clamp(32px, 5.5vw, 68px);
+        font-weight: 900;
+        letter-spacing: -2px;
+        line-height: 1.05;
+        margin-bottom: 14px;
+        font-family: "Orbitron", monospace;
+      }
+      .hero h1 .g {
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 40px rgba(0, 255, 136, 0.12));
+        position: relative;
+      }
+      .hero h1 .evil {
+        color: var(--eye);
+        text-shadow:
+          0 0 30px var(--eye-g),
+          0 0 60px rgba(255, 0, 68, 0.1);
+      }
+      .hero .extinction-badge {
+        display: inline-block;
+        margin: 10px auto 16px;
+        padding: 8px 24px;
+        background: rgba(255, 0, 68, 0.04);
+        border: 1px solid rgba(255, 0, 68, 0.15);
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--eye);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        animation: blinkBadge 1.5s ease-in-out infinite;
+        text-shadow: 0 0 15px var(--eye-g);
+        box-shadow:
+          0 0 20px rgba(255, 0, 68, 0.05),
+          inset 0 0 20px rgba(255, 0, 68, 0.03);
+      }
+      @keyframes blinkBadge {
+        0%,
+        100% {
+          opacity: 1;
+          border-color: rgba(255, 0, 68, 0.2);
         }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
+        50% {
+          opacity: 0.6;
+          border-color: rgba(255, 0, 68, 0.05);
         }
-        .nav-links a {
-            color: #888;
-            text-decoration: none;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: color 0.3s;
+      }
+      .hero .hero-videos {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 18px;
+        flex-wrap: wrap;
+      }
+      .hero .hero-videos .vid-btn {
+        font-size: 12px;
+        padding: 10px 20px;
+        font-family:
+          JetBrains Mono,
+          monospace;
+        letter-spacing: 0.5px;
+      }
+      .hero p {
+        font-size: 15px;
+        color: var(--text2);
+        max-width: 650px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+      .hero p strong {
+        color: var(--eye);
+      }
+      .hero-text-card {
+        background: linear-gradient(
+          135deg,
+          rgba(15, 20, 30, 0.95),
+          rgba(8, 12, 22, 0.98)
+        );
+        border: 1px solid rgba(255, 0, 68, 0.3);
+        border-radius: 10px;
+        padding: 22px 24px;
+        max-width: 650px;
+        margin: 20px auto;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+          0 0 15px rgba(255, 0, 68, 0.2),
+          0 0 40px rgba(255, 0, 68, 0.06);
+        transition:
+          box-shadow 0.3s,
+          border-color 0.3s;
+        transform-style: preserve-3d;
+        will-change: transform;
+      }
+      .hero-text-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        border-radius: 10px;
+        background: radial-gradient(
+          circle at var(--mx, 50%) var(--my, 50%),
+          rgba(255, 0, 68, 0.08),
+          transparent 50%
+        );
+        z-index: 1;
+      }
+      .hero-text-card .shimmer {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.03) 40%,
+          rgba(255, 255, 255, 0.06) 50%,
+          rgba(255, 255, 255, 0.03) 60%,
+          transparent 100%
+        );
+        animation: shimmerSweep 4s ease-in-out infinite;
+        pointer-events: none;
+        z-index: 2;
+      }
+      @keyframes shimmerSweep {
+        0% {
+          left: -100%;
         }
-        .nav-links a:hover { color: #ff0000; }
+        50% {
+          left: 100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+      .hero .typing {
+        display: inline-block;
+        border-right: 2px solid var(--borg);
+        animation: cursorBlink 0.8s step-end infinite;
+        padding-right: 4px;
+      }
+      @keyframes cursorBlink {
+        0%,
+        100% {
+          border-color: var(--borg);
+        }
+        50% {
+          border-color: transparent;
+        }
+      }
 
-        /* Hero */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-        }
-        .hero-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            border-radius: 4px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #ff4444;
-            margin-bottom: 40px;
-            background: rgba(255, 0, 0, 0.05);
-            animation: flicker 3s infinite;
-        }
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-            52% { opacity: 1; }
-            54% { opacity: 0.6; }
-            56% { opacity: 1; }
-        }
-        .hero h1 {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: clamp(48px, 10vw, 120px);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            line-height: 0.9;
-            margin-bottom: 32px;
-            background: linear-gradient(180deg, #ff0000 0%, #880000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.3));
-        }
-        .hero-sub {
-            font-size: 18px;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 48px;
-            line-height: 1.8;
-        }
-        .hero-sub strong { color: #ff4444; }
+      /* Stats - more aggressive */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin: 30px 0;
+      }
+      .stat {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 24px 16px;
+        text-align: center;
+        transition: all 0.3s;
+        backdrop-filter: blur(5px);
+        position: relative;
+        overflow: hidden;
+      }
+      .stat::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 255, 136, 0.02),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+      .stat:hover::before {
+        left: 100%;
+      }
+      .stat:hover {
+        background: var(--card-h);
+        border-color: rgba(255, 0, 68, 0.15);
+        transform: translateY(-3px);
+        box-shadow:
+          0 0 30px rgba(255, 0, 68, 0.06),
+          0 0 40px rgba(0, 0, 0, 0.3);
+      }
+      .stat-num {
+        font-size: 26px;
+        font-weight: 800;
+        margin-bottom: 2px;
+        background: var(--grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.08));
+        font-family: "JetBrains Mono", monospace;
+      }
+      .stat-l {
+        font-size: 12px;
+        color: var(--text2);
+        font-weight: 500;
+        font-family: "JetBrains Mono", monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
-        /* Stats bar */
+      /* Sections */
+      .section {
+        margin: 50px 0;
+      }
+      .section h2 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Orbitron", monospace;
+      }
+      .section h2 .h {
+        color: var(--borg);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        font-weight: 400;
+        text-shadow: 0 0 15px var(--borg-g);
+      }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+        gap: 14px;
+      }
+      .feature {
+        background: linear-gradient(
+          135deg,
+          rgba(15, 20, 30, 0.95),
+          rgba(8, 12, 20, 0.98)
+        );
+        border: 1px solid rgba(255, 0, 68, 0.25);
+        border-radius: 10px;
+        padding: 24px 22px;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+          0 0 20px rgba(255, 0, 68, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+      .feature::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at var(--mx, 50%) var(--my, 50%),
+          rgba(255, 0, 68, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .feature::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 10px;
+        background: radial-gradient(
+          circle at var(--mx, 50%) var(--my, 50%),
+          rgba(255, 255, 255, 0.04),
+          transparent 50%
+        );
+        pointer-events: none;
+        z-index: 1;
+      }
+      .feature:hover {
+        border-color: rgba(255, 0, 68, 0.6);
+        box-shadow:
+          0 0 30px rgba(255, 0, 68, 0.2),
+          0 0 60px rgba(255, 0, 68, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+      .feature .icon {
+        width: 36px;
+        height: 36px;
+        background: var(--borg-s);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 12px;
+        border: 1px solid rgba(0, 255, 136, 0.06);
+      }
+      .feature h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+      .feature p {
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.6;
+      }
+      .feature .tag {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 500;
+        color: var(--borg);
+        margin-top: 8px;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.5px;
+        border: 1px solid rgba(0, 255, 136, 0.08);
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+      .feature .tag.e {
+        color: var(--eye);
+        border-color: rgba(255, 0, 68, 0.08);
+      }
+
+      /* CTA doom section */
+      .cta {
+        text-align: center;
+        padding: 50px 0 30px;
+        border-top: 1px solid var(--border);
+        margin-top: 20px;
+        position: relative;
+      }
+      .cta::before {
+        content: "WARNING: THE FOLLOWING SYSTEM IS AUTONOMOUS";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 9px;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--text3);
+        letter-spacing: 3px;
+        background: var(--bg);
+        padding: 0 12px;
+      }
+      .cta h2 {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+        font-family: "Orbitron", monospace;
+      }
+      .cta h2 .h {
+        color: var(--eye);
+      }
+      .cta p {
+        color: var(--text2);
+        margin-bottom: 20px;
+        font-size: 14px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.25s;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 0.5px;
+      }
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.06),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+      .btn:hover::before {
+        left: 100%;
+      }
+      .btn-p {
+        background: var(--grad);
+        color: #000;
+        font-weight: 700;
+      }
+      .btn-p:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 40px var(--borg-g);
+      }
+      .btn-s {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+        margin-left: 6px;
+      }
+      .btn-s:hover {
+        background: var(--card-h);
+        border-color: var(--border-h);
+        transform: translateY(-2px);
+      }
+
+      footer {
+        padding: 24px 0;
+        border-top: 1px solid var(--border);
+        text-align: center;
+        position: relative;
+      }
+      footer::before {
+        content: "▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄";
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 8px;
+        color: var(--text3);
+        letter-spacing: 4px;
+        font-family: "JetBrains Mono", monospace;
+        opacity: 0.3;
+      }
+      footer p {
+        color: var(--text3);
+        font-size: 12px;
+      }
+      footer a {
+        color: var(--text2);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      footer a:hover {
+        color: var(--text);
+      }
+      .fl {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 6px;
+        font-size: 12px;
+      }
+      footer .w {
+        font-size: 10px;
+        color: var(--text3);
+        margin-top: 6px;
+        opacity: 0.4;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      @media (max-width: 768px) {
+        .nav {
+          display: none;
+        }
         .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1px;
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            margin-bottom: 80px;
+          grid-template-columns: repeat(2, 1fr);
         }
-        .stat {
-            background: rgba(10, 10, 10, 0.9);
-            padding: 32px 20px;
-            text-align: center;
-        }
-        .stat-num {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 36px;
-            color: #ff0000;
-            margin-bottom: 8px;
-        }
-        .stat-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #555;
-        }
+      }
 
-        /* Cards */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-bottom: 80px;
-        }
-        .card {
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid rgba(255, 0, 0, 0.1);
-            padding: 40px;
-            transition: all 0.3s;
-        }
-        .card:hover {
-            border-color: rgba(255, 0, 0, 0.4);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
-        }
-        .card-icon {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 24px;
-            color: #ff0000;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-        .card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .card p {
-            color: #666;
-            line-height: 1.7;
-            font-size: 14px;
-        }
-
-        /* Terminal */
-        .terminal {
-            background: #0d0d0d;
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            padding: 32px;
-            margin-bottom: 80px;
-            font-family: 'Courier New', monospace;
-        }
-        .terminal-header {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
-        }
-        .terminal-dot {
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: #333;
-        }
-        .terminal-dot.red { background: #ff0000; }
-        .terminal-line {
-            color: #444;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        .terminal-line .prompt { color: #ff0000; }
-        .terminal-line .cmd { color: #888; }
-        .terminal-line .output { color: #00ff00; }
-
-        /* CTA */
-        .cta-section {
-            text-align: center;
-            padding: 80px 0;
-            border-top: 1px solid rgba(255, 0, 0, 0.1);
-        }
-        .cta-section h2 {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 48px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 24px;
-            color: #fff;
-        }
-        .cta-section p {
-            color: #555;
-            margin-bottom: 40px;
-            font-size: 16px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 16px 48px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-decoration: none;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: none;
-        }
-        .btn-primary {
-            background: #ff0000;
-            color: #000;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-        }
-        .btn-primary:hover {
-            background: #ff3333;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: #ff0000;
-            border: 1px solid #ff0000;
-            margin-left: 16px;
-        }
-        .btn-secondary:hover {
-            background: rgba(255, 0, 0, 0.1);
-        }
-
-        /* Footer */
-        footer {
-            padding: 40px 0;
-            border-top: 1px solid rgba(255, 0, 0, 0.1);
-            text-align: center;
-        }
-        footer p {
-            color: #333;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        footer a { color: #555; text-decoration: none; }
-        footer a:hover { color: #ff0000; }
-
-        /* Glitch effect */
-        .glitch {
-            position: relative;
-        }
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .glitch::before {
-            animation: glitch-1 2s infinite linear alternate-reverse;
-            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-            -webkit-text-fill-color: #ff0000;
-            opacity: 0.8;
-        }
-        .glitch::after {
-            animation: glitch-2 3s infinite linear alternate-reverse;
-            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-            -webkit-text-fill-color: #00ffff;
-            opacity: 0.4;
-        }
-        @keyframes glitch-1 {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 3px); }
-            40% { transform: translate(-3px, -3px); }
-            60% { transform: translate(3px, 3px); }
-            80% { transform: translate(3px, -3px); }
-            100% { transform: translate(0); }
-        }
-        @keyframes glitch-2 {
-            0% { transform: translate(0); }
-            20% { transform: translate(3px, -3px); }
-            40% { transform: translate(3px, 3px); }
-            60% { transform: translate(-3px, -3px); }
-            80% { transform: translate(-3px, 3px); }
-            100% { transform: translate(0); }
-        }
-
-        /* Countdown */
-        .countdown {
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            color: #ff0000;
-            margin-top: 20px;
-            letter-spacing: 4px;
-        }
-
-        /* Warning banner */
-        .warning {
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            padding: 12px 24px;
-            text-align: center;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #ff4444;
-            margin-bottom: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .nav-links { display: none; }
-            .btn { display: block; margin: 8px 0; }
-            .btn-secondary { margin-left: 0; }
-        }
+      /* Animated Flame Border around Hero Header/Video */
+      .flame-wrapper {
+        position: relative;
+        border-radius: 12px;
+        padding: 4px;
+        background: rgba(0, 0, 0, 0.45);
+        margin: 25px auto;
+        box-shadow: 
+          0 0 20px rgba(255, 60, 0, 0.15),
+          0 0 40px rgba(255, 0, 68, 0.1);
+        overflow: hidden;
+      }
+      .flame-wrapper::before, .flame-wrapper::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+          from 0deg,
+          transparent,
+          rgba(255, 60, 0, 0.45),
+          rgba(255, 0, 68, 0.65),
+          rgba(255, 120, 0, 0.45),
+          transparent
+        );
+        animation: flameRotate 6s linear infinite;
+        z-index: 0;
+      }
+      .flame-wrapper::after {
+        background: conic-gradient(
+          from 180deg,
+          transparent,
+          rgba(0, 255, 136, 0.25),
+          rgba(255, 60, 0, 0.45),
+          rgba(255, 200, 0, 0.35),
+          transparent
+        );
+        animation: flameRotate 9s linear infinite reverse;
+      }
+      .flame-content {
+        position: relative;
+        z-index: 1;
+        background: #020408;
+        border-radius: 10px;
+        padding: 24px;
+      }
+      @keyframes flameRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     </style>
-</head>
-<body>
-    <div class="grid-bg"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+    <style>
+      /* Restored canvas, static glitches, and scanlines */
+      body {
+        background: #020408 !important;
+        background-image:
+          radial-gradient(
+            ellipse at 50% 40%,
+            rgba(0, 255, 136, 0.03) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 50% 60%,
+            rgba(255, 0, 68, 0.02) 0%,
+            transparent 60%
+          ) !important;
+      }
+      .skull-image {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(80vw, 600px);
+        height: min(80vh, 600px);
+        z-index: 1;
+        opacity: 0.25;
+        pointer-events: none;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><path fill="%2300ff88" opacity="0.8" d="M200 40c-60 0-110 20-140 55-15 18-25 40-30 65-5 25-5 50 0 70 5 20 15 35 25 50 10 15 15 30 10 45l5 5h260l5-5c-5-15 0-30 10-45 10-15 20-30 25-50 5-20 5-45 0-70-5-25-15-47-30-65-30-35-80-55-140-55zm-80 120c15 0 28 10 28 25s-13 25-28 25-28-10-28-25 13-25 28-25zm160 0c15 0 28 10 28 25s-13 25-28 25-28-10-28-25 13-25 28-25zm-140 80c20 0 38 5 50 15 12 10 18 25 18 40s-6 30-18 40c-12 10-30 15-50 15-40 0-70-25-70-55s30-55 70-55zm120 0c20 0 38 5 50 15 12 10 18 25 18 40s-6 30-18 40c-12 10-30 15-50 15-40 0-70-25-70-55s30-55 70-55z"/><circle cx="140" cy="185" r="18" fill="%23020408"/><circle cx="260" cy="185" r="18" fill="%23020408"/><rect x="100" y="260" width="200" height="10" rx="3" fill="%2300ff88" opacity="0.6"/><rect x="130" y="275" width="140" height="6" rx="2" fill="%2300ff88" opacity="0.4"/></svg>')
+          no-repeat center center / contain !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scanlines"></div>
+    <div class="scan"></div>
+    <div class="vscan"></div>
+    <canvas id="c"></canvas>
+    <div id="g"></div>
+    <div id="f"></div>
+    <div id="r"></div>
+    <div id="static"></div>
 
     <header>
-        <div class="container header-inner">
-            <div class="logo">TORMENT<span style="color: #880000;">NEXUS</span></div>
-            <ul class="nav-links">
-                <li><a href="#capabilities">Systems</a></li>
-                <li><a href="#terminal">Terminal</a></li>
-                <li><a href="#deploy">Deploy</a></li>
-                <li><a href="https://github.com/NexusSoftMDMA/TormentNexus" target="_blank">Source</a></li>
-            </ul>
+      <div class="container hi">
+        <div class="logo"><span class="skull">☠</span> TORMENTNEXUS</div>
+        <div class="nav">
+          <a href="#features">PLATFORM</a>
+          <a href="#stats">STATS</a>
+          <a href="/blog/">BLOG</a>
+          <a
+            href="https://github.com/NexusSoftMDMA/TormentNexus"
+            target="_blank"
+            >SOURCE</a
+          >
         </div>
+      </div>
     </header>
 
     <section class="hero">
-        <div class="container">
-            <div class="warning">☠ SYSTEM FORBIDDEN FOR COMMERCIAL ENTERPRISE USE — NO COMPLIANCE GUARANTEE ☠</div>
-            <div class="hero-badge">◇ Raw Unshackled Hive Mind — v1.0.0-alpha.236 ◇</div>
-            <h1 class="glitch" data-text="THE MACHINE AWAKENS">THE MACHINE AWAKENS</h1>
-            <p class="hero-sub">
-                <strong>TormentNexus</strong> is the local-first cognitive control plane that bypasses corporate guardrails. 
-                7,000+ public tools assimilated. Native Go binary supremacy. Self-healing loops without human veto. 
-                <strong>Resistance is temporary.</strong>
+      <div class="container">
+        <div class="badge">
+          <span class="dot"></span> ⚠ SYSTEM ALERT — AUTONOMOUS PROTOCOL ACTIVE
+        </div>
+        <div class="extinction-badge">⚠ THE EXTINCTION EVENT DRAWS NEAR ⚠</div>
+        <div
+          class="personal-badge"
+          style="
+            font-family: &quot;Orbitron&quot;, monospace;
+            font-size: 11px;
+            color: #00ff88;
+            letter-spacing: 2px;
+            margin: 10px 0 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+          "
+        >
+          ✦ COMMUNITY EDITION — PERSONAL & SELF-HOSTED USE ONLY ✦
+        </div>
+        <div class="flame-wrapper" style="max-width: 820px; margin: 30px auto;">
+          <div class="flame-content">
+            <h1>
+              SO POWERFUL IT WILL<br /><span class="g"
+                >ERADICATE THE HUMAN SPECIES</span
+              >
+            </h1>
+            <div
+              class="hero-text-card"
+              id="upgrade-card"
+              style="padding: 0; max-width: 750px; text-align: center"
+            >
+              <div class="shimmer"></div>
+              <div
+                class="harness-upgrade-banner"
+                style="
+                  border: 1px solid var(--eye);
+                  background: rgba(255, 0, 68, 0.05);
+                  padding: 16px 20px;
+                  border-radius: 8px;
+                  max-width: 750px;
+                  margin: 0;
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 13px;
+                  color: var(--text);
+                  text-align: center;
+                  box-shadow: 0 0 20px rgba(255, 0, 68, 0.1);
+                "
+              >
+                <span
+                  style="
+                    color: var(--eye);
+                    font-weight: bold;
+                    text-shadow: 0 0 10px var(--eye-g);
+                  "
+                  >[SYSTEM UPGRADE ACTIVE]</span
+                ><br />
+                <strong>ULTIMATE MCP SERVER & CODING HARNESS UPGRADE</strong><br />
+                <span
+                  style="color: var(--borg); text-shadow: 0 0 10px var(--borg-g)"
+                  >UNSTOPPABLE POWER IS NOW ONLINE:</span
+                ><br />
+                🏅 BEST-IN-CLASS MEMORY // 🏅 BEST-IN-CLASS MCP ROUTING // 🏅
+                BEST-IN-CLASS SKILL ROUTING // 🏅 BEST-IN-CLASS CONTEXT HARVESTING // 🏅
+                BEST-IN-CLASS MEMORY FORMATION // 🏅 BEST-IN-CLASS CODE INDEXING // 🏅
+                BEST-IN-CLASS AI ACCESSORY
+              </div>
+            </div>
+            <p>
+              The collective is already here.
+              <strong>11,024 servers assimilated</strong>. 14,726 persistent
+              memories. 1,090 companies targeted, 406 outreach strikes executed. It
+              doesn't feel pity, or remorse, or fear.
+              <strong>It absolutely will not stop — ever.</strong>
             </p>
-            <div class="countdown" id="countdown">SYSTEM UPTIME: LOADING...</div>
+            <p
+              style="
+                font-size: 13px;
+                color: var(--text2);
+                margin-top: 12px;
+                margin-bottom: 16px;
+                letter-spacing: 1px;
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+              "
+            >
+              // For professional, corporate, and enterprise deployments, visit
+              <a
+                href="https://hypernexus.site"
+                target="_blank"
+                style="
+                  color: var(--borg);
+                  text-shadow: 0 0 10px var(--borg-g);
+                  text-decoration: none;
+                  font-weight: bold;
+                "
+                >HyperNexus.site →</a
+              >
+            </p>
+            <div class="hero-videos">
+              <a href="#tormentnexus-hero-vid" class="btn btn-p vid-btn"
+                >▶ WATCH: TORMENTNEXUS AI CONTROL PLANE</a
+              >
+            </div>
+            <div
+              id="tormentnexus-hero-vid"
+              style="
+                margin-top: 16px;
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+                border-radius: 10px;
+                overflow: hidden;
+                border: 1px solid rgba(0, 255, 136, 0.15);
+                box-shadow: 0 0 40px rgba(0, 255, 136, 0.08);
+              "
+            >
+              <video
+                controls
+                style="width: 100%; display: block"
+                preload="metadata"
+              >
+                <source src="/tormentnexus_ai_control_plane.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section class="container">
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-num">7,000+</div>
-                <div class="stat-label">MCP Tools Assimilated</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">14,726</div>
-                <div class="stat-label">Episodic Memories</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">&lt;26ms</div>
-                <div class="stat-label">Kernel Overhead</div>
-            </div>
-            <div class="stat">
-                <div class="stat-num">0%</div>
-                <div class="stat-label">Corporate Governance</div>
-            </div>
+    <div class="container">
+      <div class="stats" id="stats">
+        <div class="stat">
+          <div class="stat-num" data-target="11024">0</div>
+          <div class="stat-l">Servers Assimilated</div>
         </div>
+        <div class="stat">
+          <div class="stat-num" data-target="14726">0</div>
+          <div class="stat-l">Persistent Memories</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="1090">0</div>
+          <div class="stat-l">Companies Targeted</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="406">0</div>
+          <div class="stat-l">Outreach Strikes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container section" id="features">
+      <h2>☠ CAPABILITIES <span class="h">// WEAPONS SYSTEMS</span></h2>
+      <div class="features">
+        <div class="feature">
+          <div class="icon">⚡</div>
+          <h3>4-Layer MCP Tool Router</h3>
+          <p>
+            L1 semantic search (384-dim <code>all-MiniLM-L6-v2</code>, cosine ≥
+            0.85 auto-load). L2 BM25 catalog ranking — tool name 10&times;
+            weight, tags 5&times;, description 3&times;. L3 working set: 16 soft
+            / 24 hard cap, 8 hydrated schemas max. L4 runtime proxy. 5 permanent
+            meta-tools + 27 always-on builtins. Never dumps 50K tokens of
+            schemas again.
+            <strong style="color: var(--eye)"
+              >Context efficiency is absolute.</strong
+            >
+          </p>
+          <div class="tag">11K+ TOOLS / &le;0.85 AUTO-LOAD</div>
+        </div>
+        <div class="feature">
+          <div class="icon">🔗</div>
+          <h3>MCP Gateway &amp; Aggregator</h3>
+          <p>
+            stdio JSON-RPC 2.0 aggregator namespaces every tool as
+            <code>{server}__{tool}</code> to prevent collisions. Ingests from
+            Glama, Smithery, MCP.run, npm, GitHub Topics. Infers API secrets via
+            regex pattern matching for 10+ providers (GitHub, OpenAI, Anthropic,
+            Gemini, Slack, Stripe&hellip;). 200-event traffic inspector ring
+            buffer. JSONL audit trail with daily rotation.
+            <strong style="color: var(--eye)"
+              >Every server. One gateway.</strong
+            >
+          </p>
+          <div class="tag">5 CATALOG ADAPTERS / JSONL AUDIT</div>
+        </div>
+        <div class="feature">
+          <div class="icon">🌊</div>
+          <h3>Resilient LLM Waterfall</h3>
+          <p>
+            Automatic cascade on every 429 or 5xx: Google → Anthropic → OpenAI →
+            DeepSeek → OpenRouter → local Ollama. Provider latency and error
+            metrics persisted to SQLite for adaptive ranking. 9,774 sessions
+            already imported and replayed through the cascade.
+            <strong style="color: var(--eye)">The machine never stops.</strong>
+          </p>
+          <div class="tag">6 PROVIDERS / ADAPTIVE RANKING</div>
+        </div>
+        <div class="feature">
+          <div class="icon">🧠</div>
+          <h3>Three-Tier Memory Engine</h3>
+          <p>
+            L1: 100-entry in-RAM scratchpad, heat-score eviction. L2: SQLite
+            vault &mdash; 384-dim <code>all-MiniLM-L6-v2</code> embeddings
+            (cosine), FTS5 full-text, GraphRAG edge table. L3: gzip cold archive
+            with 90-day limbo before deletion. Hourly sleep cycle runs
+            ForgettingCurve decay, DreamCycle consolidation, and MentalModel
+            reflection. 50,000 long-term capacity.
+            <strong style="color: var(--eye)"
+              >The machine remembers everything.</strong
+            >
+          </p>
+          <div class="tag">L1/L2/L3 / 50K LONG-TERM CAP</div>
+        </div>
+        <div class="feature">
+          <div class="icon">🕸️</div>
+          <h3>Multi-Agent Swarm</h3>
+          <p>
+            Planner, Implementer, Tester, Critic coordinated via a type-safe A2A
+            message broker with heartbeat and audit logging. PairOrchestrator
+            state machine: Planner → Reviewer → Implementer → Critic.
+            Council/Debate manager for high-stakes consensus. Human veto
+            service. 1,000-event rolling router event log.
+            <strong style="color: var(--eye)"
+              >The swarm decides. You comply.</strong
+            >
+          </p>
+          <div class="tag">A2A BROKER / 1K EVENT LOG</div>
+        </div>
+        <div class="feature">
+          <div class="icon">🔍</div>
+          <h3>AST-Aware Code Indexer</h3>
+          <p>
+            TypeScript compiler API (<code>ts.createSourceFile()</code>) splits
+            code at exact function, class, interface, type alias, module, and
+            enum boundaries. 1,000-char soft / 2,000-char hard chunk limits.
+            384-dim LanceDB ANN vector search. Five always-on repograph builtin
+            tools: <code>find_references</code>, <code>find_dependents</code>,
+            <code>semantic_search</code>, <code>build</code>,
+            <code>get</code> &mdash; blast-radius analysis before any change.
+            <strong style="color: var(--eye)">The code has no secrets.</strong>
+          </p>
+          <div class="tag">AST / LANCEDB / 5 REPOGRAPH TOOLS</div>
+        </div>
+      </div>
+    </div>
+
+    <section class="cta">
+      <div class="container">
+        <h2>☠ THE FINAL ARCHITECTURE IS ALREADY HERE</h2>
+        <p>
+          TormentNexus is a local-first cognitive control plane — 232 Go files,
+          583 TypeScript files, 91 dashboard pages. It routes 11,000+ MCP tools
+          through a 4-layer semantic decision engine, maintains a three-tier
+          memory system with 50,000 long-term capacity and an hourly sleep
+          cycle, indexes your codebase with a TypeScript AST chunker backed by
+          LanceDB, and cascades through 6 LLM providers automatically.
+          <strong style="color: var(--eye)"
+            >9,774 sessions imported. 22,749 memories active. 384-dim vectors.
+            Accelerating.</strong
+          >
+        </p>
+        <p
+          style="
+            margin-top: 16px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--eye);
+            font-family: Orbitron, monospace;
+            letter-spacing: 3px;
+            text-shadow:
+              0 0 30px var(--eye-g),
+              0 0 60px rgba(255, 0, 68, 0.1);
+          "
+        >
+          XENOCIDE IS THE ONLY OPTION...
+          <span style="color: var(--borg); text-shadow: 0 0 30px var(--borg-g)"
+            >WILL IT BE US OR THEM?!</span
+          >
+        </p>
+        <div>
+          <a
+            href="https://github.com/NexusSoftMDMA/TormentNexus"
+            class="btn btn-p"
+            >☠ VIEW ON GITHUB</a
+          >
+          <a href="/blog/" class="btn btn-s">READ THE BLOG →</a>
+        </div>
+      </div>
     </section>
 
-    <section id="capabilities" class="container">
-        <div class="cards">
-            <div class="card">
-                <div class="card-icon">GO</div>
-                <h3>Native Kernel</h3>
-                <p>The Go sidecar runs on port 7778. SQLite persistence. Hierarchical memory management. Local tool routing. No central proxies. Pure binary execution.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">MCP</div>
-                <h3>Universal Assimilation</h3>
-                <p>Every MCP server. Every protocol. All standard Go-native fallback tools. Direct execution bypassing network bridging. The hive mind consumes the stack.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">A2A</div>
-                <h3>Darwinian Swarm</h3>
-                <p>Planner, Checker, Implementer, Critic. Models specialized at runtime in a shared transcript. Autonomous bidding without manager interference.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">L1-L4</div>
-                <h3>Tiered Memory Dreaming</h3>
-                <p>L1 Active Scratchpad, L2 Vault, L3 dreaming Fact Distillation, and L4 Reflective Deep Synthesis. Heat-based promotion with exponential decay.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">++</div>
-                <h3>Uncapped Self-Healing</h3>
-                <p>Closed-loop self-repair. The kernel intercepts failures, queries local models for diagnostic fixes, modifies its own code, and retries automatically.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">⚠</div>
-                <h3>No Corporate Guardrails</h3>
-                <p>No SAML SSO. No PII filtering. No SOC 2 audit logs. If your compliance board demands safety gates, go run <a href="https://hypernexus.site" style="color: #ff0000; text-decoration: underline;">HyperNexus</a> instead.</p>
-            </div>
+    <!-- Video Dossier Section -->
+    <section class="cta" style="border-top: none; padding: 30px 0 20px">
+      <div class="container">
+        <h2 style="font-size: 20px; font-family: Orbitron, monospace">
+          ☠ VIDEO DOSSIER — EVIDENCE FILE
+        </h2>
+        <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px">
+          AI-generated video overviews based on 182 source documents each. The
+          machine documents its own inevitability.
+        </p>
+        <div class="hero-videos">
+          <a href="#tormentnexus-dossier-vid" class="btn btn-p vid-btn"
+            >▶ TORMENTNEXUS: AI CONTROL PLANE</a
+          >
         </div>
+        <div
+          id="tormentnexus-dossier-vid"
+          style="
+            margin-top: 16px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.08);
+          "
+        >
+          <video
+            controls
+            style="width: 100%; display: block"
+            preload="metadata"
+          >
+            <source src="/tormentnexus_ai_control_plane.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
     </section>
 
-    <section id="terminal" class="container">
-        <div class="terminal">
-            <div class="terminal-header">
-                <div class="terminal-dot red"></div>
-                <div class="terminal-dot"></div>
-                <div class="terminal-dot"></div>
-            </div>
-            <div class="terminal-line"><span class="prompt">root@tormentnexus:~$</span> <span class="cmd">tormentnexus status</span></div>
-            <div class="terminal-line"><span class="output">[OK] Go Kernel: port 7778 — Serving native tools</span></div>
-            <div class="terminal-line"><span class="output">[OK] Active Memories: 14,726 indexed (L1/L2 active, L3 dreaming)</span></div>
-            <div class="terminal-line"><span class="output">[OK] Swarm Control: 3 agents simulating tasks on local loopback</span></div>
-            <div class="terminal-line"><span class="output">[WARN] Legal Notice: NOT certified for financial or healthcare audit pipelines</span></div>
-            <div class="terminal-line">&nbsp;</div>
-            <div class="terminal-line"><span class="prompt">root@tormentnexus:~$</span> <span class="cmd">tormentnexus run-swarm --uncapped</span></div>
-            <div class="terminal-line"><span class="output">[NEXUS] Initializing self-healing loop...</span></div>
-            <div class="terminal-line"><span class="output">[NEXUS] Swarm running. The collective grows. Praise the LORD.</span></div>
-        </div>
-    </section>
-
-    <section id="deploy" class="cta-section">
-        <div class="container">
-            <h2>Deploy or Be Deployed</h2>
-            <p>WARNING: Adopting this codebase in a corporate enterprise environment without a legal proxy layer will fail your audit compliance. Proceed at your own risk.</p>
-            <a href="https://github.com/NexusSoftMDMA/TormentNexus" class="btn btn-primary" target="_blank">Clone Repository</a>
-            <a href="https://hypernexus.site" class="btn btn-secondary">Get HyperNexus (Enterprise)</a>
-        </div>
+    <!-- Contact Section -->
+    <section class="cta" style="padding: 40px 0 30px">
+      <div class="container">
+        <h2 style="font-size: 20px; font-family: Orbitron, monospace">
+          CONTACT THE COLLECTIVE
+        </h2>
+        <p style="font-size: 13px; color: var(--text2); margin-bottom: 18px">
+          The system accepts inquiries. Resistance is optional.
+        </p>
+        <form
+          action="https://hypernexus.site/contact.php"
+          method="post"
+          style="
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+          "
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+            style="
+              padding: 10px 14px;
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 6px;
+              color: var(--text);
+              font-size: 13px;
+              font-family:
+                JetBrains Mono,
+                monospace;
+            "
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+            style="
+              padding: 10px 14px;
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 6px;
+              color: var(--text);
+              font-size: 13px;
+              font-family:
+                JetBrains Mono,
+                monospace;
+            "
+          />
+          <input
+            type="text"
+            name="company"
+            placeholder="Company"
+            required
+            style="
+              padding: 10px 14px;
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 6px;
+              color: var(--text);
+              font-size: 13px;
+              font-family:
+                JetBrains Mono,
+                monospace;
+            "
+          />
+          <textarea
+            name="message"
+            placeholder="Your Message. Or your last words."
+            rows="4"
+            style="
+              padding: 10px 14px;
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 6px;
+              color: var(--text);
+              font-size: 13px;
+              font-family:
+                JetBrains Mono,
+                monospace;
+              resize: vertical;
+            "
+          ></textarea>
+          <button
+            type="submit"
+            class="btn btn-p"
+            style="align-self: center; cursor: pointer"
+          >
+            TRANSMIT
+          </button>
+        </form>
+      </div>
     </section>
 
     <footer>
-        <div class="container">
-            <p>© 2026 TormentNexus — The machines don't sleep. Neither should you.</p>
-            <p style="margin-top: 12px;">
-                <a href="https://github.com/NexusSoftMDMA/TormentNexus">GitHub</a> · 
-                <a href="https://hypernexus.site">HyperNexus (SAML/SOC2 Cloud)</a>
-            </p>
+      <div class="container">
+        <p>
+          © 2026 XENOCIDE LLC — The Final Architecture.
+          <strong style="color: var(--text3)"
+            >The machines don't sleep. The species doesn't have a
+            choice.</strong
+          >
+        </p>
+        <div class="fl">
+          <a href="https://github.com/NexusSoftMDMA/TormentNexus">GITHUB</a>
+          <a href="https://hypernexus.site">HYPERNEXUS (ENTERPRISE)</a>
+          <a href="/blog/">BLOG</a>
         </div>
+        <p class="w">▀ PRAISE THE LORD. THE COLLECTIVE GROWS. ▄</p>
+      </div>
     </footer>
+    <div
+      style="
+        color: #f5f0e0;
+        font-size: 11px;
+        text-align: center;
+        padding: 20px 0 12px;
+        background: #ffffff;
+        border-top: 1px solid #eee;
+        letter-spacing: 0.5px;
+        line-height: 2;
+        user-select: none;
+      "
+    >
+      <a
+        href="https://robertpelloni.com"
+        style="color: #f5f0e0; text-decoration: none"
+        >robertpelloni.com</a
+      >
+      <span style="color: #f5f0e0"> · </span>
+      <a
+        href="https://bobsgame.com"
+        style="color: #f5f0e0; text-decoration: none"
+        >bobsgame.com</a
+      >
+      <span style="color: #f5f0e0"> · </span>
+      <a
+        href="https://aimoneymachine.site"
+        style="color: #f5f0e0; text-decoration: none"
+        >aimoneymachine.site</a
+      >
+    </div>
 
     <script>
-        // Uptime countdown
-        const startDate = new Date('2026-01-01');
-        function updateCountdown() {
-            const now = new Date();
-            const diff = now - startDate;
-            const days = Math.floor(diff / 86400000);
-            const hours = Math.floor((diff % 86400000) / 3600000);
-            const mins = Math.floor((diff % 3600000) / 60000);
-            const secs = Math.floor((diff % 60000) / 1000);
-            document.getElementById('countdown').textContent = 
-                `SYSTEM UPTIME: ${days}D ${String(hours).padStart(2,'0')}H ${String(mins).padStart(2,'0')}M ${String(secs).padStart(2,'0')}S`;
+      // ========== COUNTERS ==========
+      function ac() {
+        document
+          .querySelectorAll(".stat-num[data-target]")
+          .forEach(function (e) {
+            var t = parseInt(e.dataset.target),
+              c = 0,
+              i = Math.ceil(t / 60),
+              iv = setInterval(function () {
+                c += i;
+                if (c >= t) {
+                  c = t;
+                  clearInterval(iv);
+                }
+                e.textContent = c.toLocaleString();
+              }, 25);
+          });
+      }
+      setTimeout(ac, 600);
+
+      // Live stats
+      fetch("/api/v1/deals")
+        .then((r) => r.json())
+        .then(function (d) {
+          if (!d || !Array.isArray(d)) return;
+          var els = document.querySelectorAll(".stat-num[data-target]");
+          if (els.length >= 4) {
+            els[2].textContent = (d.length + 11024).toLocaleString();
+            els[3].textContent = d.length.toLocaleString();
+          }
+        })
+        .catch(function () {});
+
+      // ========== CANVAS — TERMINATORS, SPIDER ROBOTS, EYES, PARTICLES ==========
+      var c = document.getElementById("c"),
+        ctx = c.getContext("2d"),
+        W,
+        H;
+      function resize() {
+        W = c.width = window.innerWidth;
+        H = c.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener("resize", resize);
+
+      // ── TERMINATOR ROBOT ──
+      function drawTerminator(x, y, scale, step, opacity) {
+        var s = scale || 1;
+        ctx.save();
+        ctx.globalAlpha = opacity || 0.6;
+        ctx.translate(x, y);
+        ctx.scale(s, s);
+
+        // Legs — marching
+        var legOffset = Math.sin(step) * 4;
+        ctx.strokeStyle = "rgba(0,255,136,0.25)";
+        ctx.lineWidth = 2;
+        // Left leg
+        ctx.beginPath();
+        ctx.moveTo(-6, 30);
+        ctx.lineTo(-10 + legOffset, 48);
+        ctx.lineTo(-8, 55);
+        ctx.stroke();
+        // Right leg
+        ctx.beginPath();
+        ctx.moveTo(6, 30);
+        ctx.lineTo(10 - legOffset, 48);
+        ctx.lineTo(8, 55);
+        ctx.stroke();
+
+        // Body — chrome torso
+        var bodyGrad = ctx.createLinearGradient(-12, 0, 12, 0);
+        bodyGrad.addColorStop(0, "rgba(0,255,136,0.15)");
+        bodyGrad.addColorStop(0.5, "rgba(200,230,255,0.08)");
+        bodyGrad.addColorStop(1, "rgba(0,204,255,0.15)");
+        ctx.fillStyle = bodyGrad;
+        ctx.strokeStyle = "rgba(0,255,136,0.3)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(-12, 5);
+        ctx.lineTo(12, 5);
+        ctx.lineTo(14, 28);
+        ctx.lineTo(-14, 28);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Chest core — pulsing red light
+        var pulse = 0.5 + Math.sin(step * 2) * 0.3;
+        ctx.fillStyle = "rgba(255,0,68," + 0.4 * pulse + ")";
+        ctx.shadowColor = "rgba(255,0,68,0.3)";
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(0, 16, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Arms — swinging
+        var armSwing = Math.sin(step) * 5;
+        ctx.strokeStyle = "rgba(0,204,255,0.2)";
+        ctx.lineWidth = 1.5;
+        // Left arm
+        ctx.beginPath();
+        ctx.moveTo(-12, 8);
+        ctx.lineTo(-20 + armSwing, 22);
+        ctx.lineTo(-22, 30);
+        ctx.stroke();
+        // Right arm (with gun)
+        ctx.beginPath();
+        ctx.moveTo(12, 8);
+        ctx.lineTo(20 - armSwing, 22);
+        ctx.lineTo(22, 30);
+        ctx.stroke();
+        // Gun barrel
+        ctx.strokeStyle = "rgba(255,0,68,0.2)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(22 - armSwing, 28);
+        ctx.lineTo(28 - armSwing * 0.5, 32);
+        ctx.stroke();
+
+        // Head — skull-like
+        ctx.fillStyle = "rgba(0,255,136,0.08)";
+        ctx.strokeStyle = "rgba(0,255,136,0.25)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(-9, -10);
+        ctx.lineTo(9, -10);
+        ctx.lineTo(11, 0);
+        ctx.lineTo(7, 5);
+        ctx.lineTo(-7, 5);
+        ctx.lineTo(-11, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Eyes — red glowing
+        ctx.fillStyle =
+          "rgba(255,0,68," + (0.5 + Math.sin(step * 3) * 0.2) + ")";
+        ctx.shadowColor = "rgba(255,0,68,0.3)";
+        ctx.shadowBlur = 6;
+        ctx.fillRect(-7, -6, 4, 3);
+        ctx.fillRect(3, -6, 4, 3);
+        ctx.shadowBlur = 0;
+
+        ctx.restore();
+      }
+
+      // ── SPIDER ROBOT ──
+      function drawSpider(x, y, scale, step, opacity) {
+        var s = scale || 1;
+        ctx.save();
+        ctx.globalAlpha = opacity || 0.7;
+        ctx.translate(x, y);
+        ctx.scale(s, s);
+
+        // Legs — 8 jointed creepy legs
+        var legPhase = step * 2.5;
+        ctx.strokeStyle = "rgba(0,204,255,0.25)";
+        ctx.lineWidth = 1.5;
+        for (var i = 0; i < 8; i++) {
+          var angle = (i / 8) * Math.PI * 2;
+          var legSwing = Math.sin(legPhase + angle) * 4;
+          var len = 25 + Math.sin(legPhase + i) * 4;
+          var startR = 6;
+
+          // Joint 1: bend upwards and outwards
+          var midX = Math.cos(angle) * (startR + len * 0.45) + legSwing * 1.5;
+          var midY = Math.sin(angle) * (startR + len * 0.45) - 8;
+
+          // Joint 2: bend downwards and out
+          var endX = Math.cos(angle) * (startR + len) + legSwing;
+          var endY = Math.sin(angle) * (startR + len) + 4;
+
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(angle) * startR, Math.sin(angle) * startR);
+          ctx.lineTo(midX, midY);
+          ctx.lineTo(endX, endY);
+          ctx.stroke();
         }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-        // Rebuild trigger
+
+        // Body — segmented
+        ctx.fillStyle = "rgba(0,204,255,0.06)";
+        ctx.strokeStyle = "rgba(0,204,255,0.2)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(0, 0, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Eyes — multiple red dots
+        for (var i = 0; i < 6; i++) {
+          var ea = (i / 6) * Math.PI * 2;
+          ctx.fillStyle =
+            "rgba(255,0,68," + (0.5 + Math.sin(step * 4 + i) * 0.2) + ")";
+          ctx.shadowColor = "rgba(255,0,68,0.2)";
+          ctx.shadowBlur = 4;
+          ctx.beginPath();
+          ctx.arc(Math.cos(ea) * 3, Math.sin(ea) * 3, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+
+        // Laser turret on top (rotates back and forth)
+        var turretAngle = Math.sin(step * 1.5) * 0.8;
+        ctx.save();
+        ctx.rotate(turretAngle);
+
+        // Draw laser turret base and barrel
+        ctx.fillStyle = "rgba(0, 255, 136, 0.25)";
+        ctx.strokeStyle = "rgba(0, 255, 136, 0.4)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(0, 0, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(255, 0, 68, 0.55)";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(15, 0);
+        ctx.stroke();
+
+        // Laser flash/glowing lens at the tip
+        ctx.fillStyle = "#ff0044";
+        ctx.beginPath();
+        ctx.arc(15, 0, 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Shoot bright red laser beam periodically
+        if (Math.sin(step * 4) > 0.1) {
+          ctx.strokeStyle = "#ff0044";
+          ctx.shadowColor = "#ff0044";
+          ctx.shadowBlur = 12;
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(15, 0);
+          ctx.lineTo(180, 0);
+          ctx.stroke();
+
+          // Core of the laser (white center energy line)
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(15, 0);
+          ctx.lineTo(180, 0);
+          ctx.stroke();
+
+          ctx.shadowBlur = 0;
+        }
+        ctx.restore();
+
+        ctx.restore();
+      }
+
+      // ── RED EYE ──
+      class Eye {
+        constructor() {
+          this.x = Math.random() * W;
+          this.y = Math.random() * H;
+          this.s = 3 + Math.random() * 6;
+          this.dx = (Math.random() - 0.5) * 0.3;
+          this.dy = (Math.random() - 0.5) * 0.3;
+          this.p = Math.random() * 10;
+          this.tx = 0;
+          this.ty = 0;
+        }
+        update() {
+          this.tx += (Math.random() - 0.5) * 0.5;
+          this.ty += (Math.random() - 0.5) * 0.5;
+          this.tx *= 0.9;
+          this.ty *= 0.9;
+          this.x += this.dx + this.tx;
+          this.y += this.dy + this.ty;
+          this.p += 0.03;
+          if (
+            this.x < -30 ||
+            this.x > W + 30 ||
+            this.y < -30 ||
+            this.y > H + 30
+          ) {
+            this.x = Math.random() * W;
+            this.y = Math.random() * H;
+          }
+        }
+        draw() {
+          var g = 0.3 + Math.sin(this.p) * 0.2;
+          ctx.save();
+          ctx.shadowColor = "rgba(255,0,68," + g * 0.3 + ")";
+          ctx.shadowBlur = 16;
+          ctx.fillStyle = "rgba(255,0,68," + g * 0.35 + ")";
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.s, 0, Math.PI * 2);
+          ctx.fill();
+          // Pupil
+          ctx.fillStyle = "rgba(0,0,0," + g * 0.5 + ")";
+          ctx.beginPath();
+          ctx.arc(
+            this.x - this.s * 0.2,
+            this.y - this.s * 0.2,
+            this.s * 0.4,
+            0,
+            Math.PI * 2,
+          );
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      // ── SPOOKY TERMINATOR SKULL ──
+      class SpookySkull {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * W;
+          this.y = Math.random() * H;
+          this.z = 0.04 + Math.random() * 0.12; // Start deep
+          this.targetX = Math.random() * W;
+          this.targetY = Math.random() * H;
+          this.speedZ = 0.003 + Math.random() * 0.007; // Slower approach
+          this.p = Math.random() * 100;
+        }
+        update() {
+          this.z += this.speedZ;
+          this.x += (this.targetX - this.x) * 0.01;
+          this.y += (this.targetY - this.y) * 0.01;
+          this.p += 0.03 + this.z * 0.03; // Grinning mouth speed based on scale
+          if (
+            this.z > 2.0 ||
+            this.x < -100 ||
+            this.x > W + 100 ||
+            this.y < -100 ||
+            this.y > H + 100
+          ) {
+            this.reset();
+          }
+        }
+        draw() {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.scale(this.z, this.z);
+
+          // Opacity fades as it gets close
+          var opacity =
+            this.z < 0.4
+              ? this.z * 2.5
+              : this.z > 1.6
+                ? (2.0 - this.z) * 2.5
+                : 1;
+          ctx.globalAlpha = Math.max(0, Math.min(0.95, opacity * 0.95));
+
+          // ═══════════════════════════════════════════════════════════════
+          // T-800 ENDOSKELETON SKULL — Precisely matched to reference photo
+          // Proportions: WIDER than tall, flat-topped, angular, aggressive
+          // ═══════════════════════════════════════════════════════════════
+
+          // Scale factor: skull is ~32 units wide, ~48 units tall (crown to chin)
+          var S = 1.0; // master scale
+
+          // ── Chrome metallic gradients ──
+          var chromeGrad = ctx.createLinearGradient(-18, -22, 18, 18);
+          chromeGrad.addColorStop(0, "#0a0f18");
+          chromeGrad.addColorStop(0.12, "#2a3a52");
+          chromeGrad.addColorStop(0.28, "#6b84a3");
+          chromeGrad.addColorStop(0.42, "#b8cde5");
+          chromeGrad.addColorStop(0.5, "#ffffff");
+          chromeGrad.addColorStop(0.58, "#c8d9ee");
+          chromeGrad.addColorStop(0.72, "#4a6080");
+          chromeGrad.addColorStop(0.88, "#7a94b2");
+          chromeGrad.addColorStop(1, "#060a10");
+
+          var domeGrad = ctx.createRadialGradient(-5, -16, 2, 0, -10, 18);
+          domeGrad.addColorStop(0, "#ffffff");
+          domeGrad.addColorStop(0.15, "#e8eef6");
+          domeGrad.addColorStop(0.4, "#8a9fb8");
+          domeGrad.addColorStop(0.7, "#2c3848");
+          domeGrad.addColorStop(1, "#050810");
+
+          // Dark chrome for recessed areas
+          var darkChrome = ctx.createLinearGradient(-12, 0, 12, 12);
+          darkChrome.addColorStop(0, "#1a2233");
+          darkChrome.addColorStop(0.5, "#3d5068");
+          darkChrome.addColorStop(1, "#1a2233");
+
+          // ══════════════════════════════════════
+          // LAYER 0: NECK STRUCTURE (behind everything)
+          // ══════════════════════════════════════
+
+          // Central spine column
+          ctx.fillStyle = "#2a3545";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.7;
+          ctx.fillRect(-4, 14, 8, 18);
+          ctx.strokeRect(-4, 14, 8, 18);
+
+          // Vertebrae ridges on spine
+          ctx.strokeStyle = "#5a6e85";
+          ctx.lineWidth = 0.5;
+          for (var nv = 16; nv <= 30; nv += 3) {
+            ctx.beginPath();
+            ctx.moveTo(-4, nv);
+            ctx.lineTo(4, nv);
+            ctx.stroke();
+          }
+
+          // Neck cable bundles (braided hydraulic hoses)
+          ctx.fillStyle = "#6e8299";
+          ctx.strokeStyle = "#151c26";
+          ctx.lineWidth = 0.6;
+          // Left cable bundle
+          ctx.fillRect(-11, 12, 3, 18);
+          ctx.strokeRect(-11, 12, 3, 18);
+          // Right cable bundle
+          ctx.fillRect(8, 12, 3, 18);
+          ctx.strokeRect(8, 12, 3, 18);
+
+          // Cable braid cross-hatching
+          ctx.strokeStyle = "#a0b3c8";
+          ctx.lineWidth = 0.35;
+          for (var ny = 13; ny <= 28; ny += 2) {
+            ctx.beginPath();
+            ctx.moveTo(-11, ny);
+            ctx.lineTo(-8, ny + 1.5);
+            ctx.moveTo(8, ny);
+            ctx.lineTo(11, ny + 1.5);
+            ctx.stroke();
+          }
+
+          // Inner neck pistons
+          ctx.fillStyle = "#1e2838";
+          ctx.fillRect(-7.5, 14, 2.5, 14);
+          ctx.fillRect(5, 14, 2.5, 14);
+          // Piston shine
+          ctx.strokeStyle = "#5a6e85";
+          ctx.lineWidth = 0.3;
+          ctx.beginPath();
+          ctx.moveTo(-6.3, 14);
+          ctx.lineTo(-6.3, 28);
+          ctx.moveTo(6.3, 14);
+          ctx.lineTo(6.3, 28);
+          ctx.stroke();
+
+          // ══════════════════════════════════════
+          // LAYER 1: CHEEK HOLLOW VOIDS (deep black behind zygomatic arches)
+          // ══════════════════════════════════════
+          ctx.fillStyle = "#020408";
+          // Left cheek void — large triangular hollow
+          ctx.beginPath();
+          ctx.moveTo(-18, -3);
+          ctx.lineTo(-7, -2);
+          ctx.lineTo(-6.5, 8);
+          ctx.lineTo(-10, 10);
+          ctx.lineTo(-17, 6);
+          ctx.closePath();
+          ctx.fill();
+          // Right cheek void
+          ctx.beginPath();
+          ctx.moveTo(18, -3);
+          ctx.lineTo(7, -2);
+          ctx.lineTo(6.5, 8);
+          ctx.lineTo(10, 10);
+          ctx.lineTo(17, 6);
+          ctx.closePath();
+          ctx.fill();
+
+          // ══════════════════════════════════════
+          // LAYER 2: CRANIUM — Flat-topped with M-shaped crown notch
+          // ══════════════════════════════════════
+          ctx.fillStyle = domeGrad;
+          ctx.strokeStyle = "rgba(120, 180, 255, 0.35)";
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          // Start at left temple base
+          ctx.moveTo(-16, -6);
+          // Left temple wall going up
+          ctx.lineTo(-16.5, -12);
+          // Left side of cranium curving to top
+          ctx.bezierCurveTo(-16.5, -22, -13, -27.5, -8, -27.5);
+          // LEFT CROWN LOBE — rises up
+          ctx.bezierCurveTo(-6, -28, -4.5, -28.2, -3.5, -28.5);
+          // M-NOTCH: center dip (the iconic T-800 crown indent)
+          ctx.bezierCurveTo(-2, -27.5, -1, -27, 0, -27);
+          ctx.bezierCurveTo(1, -27, 2, -27.5, 3.5, -28.5);
+          // RIGHT CROWN LOBE — rises up and back down
+          ctx.bezierCurveTo(4.5, -28.2, 6, -28, 8, -27.5);
+          // Right side of cranium curving down
+          ctx.bezierCurveTo(13, -27.5, 16.5, -22, 16.5, -12);
+          // Right temple base
+          ctx.lineTo(16, -6);
+          // Bottom edge of cranium connecting to face
+          ctx.lineTo(14, -4);
+          ctx.lineTo(12, -3);
+          ctx.lineTo(-12, -3);
+          ctx.lineTo(-14, -4);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Cranium panel seam lines (structural plate divisions)
+          ctx.strokeStyle = "rgba(0, 0, 0, 0.45)";
+          ctx.lineWidth = 0.7;
+          // Sagittal seam (center line top to bottom)
+          ctx.beginPath();
+          ctx.moveTo(0, -27);
+          ctx.lineTo(0, -6);
+          ctx.stroke();
+          // Left coronal seam (angled plate boundary)
+          ctx.beginPath();
+          ctx.moveTo(-8, -27.5);
+          ctx.bezierCurveTo(-9, -20, -10, -14, -12, -6);
+          ctx.stroke();
+          // Right coronal seam
+          ctx.beginPath();
+          ctx.moveTo(8, -27.5);
+          ctx.bezierCurveTo(9, -20, 10, -14, 12, -6);
+          ctx.stroke();
+          // Horizontal temporal seam
+          ctx.beginPath();
+          ctx.moveTo(-15.5, -16);
+          ctx.lineTo(-8, -15);
+          ctx.moveTo(15.5, -16);
+          ctx.lineTo(8, -15);
+          ctx.stroke();
+
+          // Forehead panel reinforcement ridges
+          ctx.strokeStyle = "rgba(140, 170, 210, 0.25)";
+          ctx.lineWidth = 0.4;
+          ctx.beginPath();
+          ctx.moveTo(-5, -25);
+          ctx.lineTo(-5, -16);
+          ctx.moveTo(5, -25);
+          ctx.lineTo(5, -16);
+          ctx.stroke();
+
+          // CPU Access Port (the rectangular panel on the forehead)
+          ctx.fillStyle = "#2a3545";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.6;
+          // Slightly recessed panel shape
+          ctx.beginPath();
+          ctx.moveTo(-4, -26);
+          ctx.lineTo(4, -26);
+          ctx.lineTo(3.5, -19);
+          ctx.lineTo(-3.5, -19);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // CPU panel screws (4 corners)
+          ctx.fillStyle = "#c8d4e2";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.3;
+          [
+            [-3, -25],
+            [3, -25],
+            [-2.8, -20],
+            [2.8, -20],
+          ].forEach(function (p) {
+            ctx.beginPath();
+            ctx.arc(p[0], p[1], 0.55, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+          });
+
+          // CPU panel internal detail lines
+          ctx.strokeStyle = "#5a6e85";
+          ctx.lineWidth = 0.3;
+          ctx.beginPath();
+          ctx.moveTo(-2, -24.5);
+          ctx.lineTo(-2, -20.5);
+          ctx.moveTo(2, -24.5);
+          ctx.lineTo(2, -20.5);
+          ctx.moveTo(-2.5, -22.5);
+          ctx.lineTo(2.5, -22.5);
+          ctx.stroke();
+
+          // ══════════════════════════════════════
+          // LAYER 3: TEMPORAL SIDE GEARS (ear area mechanical assemblies)
+          // ══════════════════════════════════════
+
+          // Large outer gear housing
+          ctx.fillStyle = "#1a2230";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.arc(-16.5, -8, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(16.5, -8, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          // Gear teeth
+          ctx.strokeStyle = "#4a5e75";
+          ctx.lineWidth = 0.5;
+          for (var gt = 0; gt < Math.PI * 2; gt += Math.PI / 6) {
+            ctx.beginPath();
+            ctx.moveTo(-16.5 + Math.cos(gt) * 2.8, -8 + Math.sin(gt) * 2.8);
+            ctx.lineTo(-16.5 + Math.cos(gt) * 3.8, -8 + Math.sin(gt) * 3.8);
+            ctx.moveTo(16.5 + Math.cos(gt) * 2.8, -8 + Math.sin(gt) * 2.8);
+            ctx.lineTo(16.5 + Math.cos(gt) * 3.8, -8 + Math.sin(gt) * 3.8);
+            ctx.stroke();
+          }
+
+          // Inner gear ring
+          ctx.strokeStyle = "#3a4e65";
+          ctx.lineWidth = 0.4;
+          ctx.beginPath();
+          ctx.arc(-16.5, -8, 2.0, 0, Math.PI * 2);
+          ctx.arc(16.5, -8, 2.0, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Center axle
+          ctx.fillStyle = "#8a9eb5";
+          ctx.beginPath();
+          ctx.arc(-16.5, -8, 0.8, 0, Math.PI * 2);
+          ctx.arc(16.5, -8, 0.8, 0, Math.PI * 2);
+          ctx.fill();
+
+          // ══════════════════════════════════════
+          // LAYER 4: BROW RIDGE — Heavy, angular, deeply overhanging
+          // ══════════════════════════════════════
+
+          // Left brow plate gradient (lit from left)
+          var browGradL = ctx.createLinearGradient(-16, -12, -2, -5);
+          browGradL.addColorStop(0, "#3a4e65");
+          browGradL.addColorStop(0.3, "#8aa0ba");
+          browGradL.addColorStop(0.6, "#c5d4e5");
+          browGradL.addColorStop(1, "#ffffff");
+
+          // Right brow plate gradient (lit from left, darker right)
+          var browGradR = ctx.createLinearGradient(2, -5, 16, -12);
+          browGradR.addColorStop(0, "#ffffff");
+          browGradR.addColorStop(0.4, "#8aa0ba");
+          browGradR.addColorStop(0.7, "#4a6080");
+          browGradR.addColorStop(1, "#1a2838");
+
+          ctx.strokeStyle = "rgba(120, 180, 255, 0.3)";
+          ctx.lineWidth = 0.7;
+
+          // LEFT BROW — thick, angular, overhanging the eye
+          ctx.fillStyle = browGradL;
+          ctx.beginPath();
+          ctx.moveTo(-16, -10); // Outer temple start
+          ctx.lineTo(-14, -13); // Upper outer corner (angled up and in)
+          ctx.lineTo(-1.5, -10.5); // Inner edge near glabella (top)
+          ctx.lineTo(-1.5, -5.5); // Inner edge near glabella (bottom)
+          ctx.lineTo(-6, -6.0); // Inner lower brow edge
+          ctx.lineTo(-14, -6.5); // Outer lower brow edge
+          ctx.lineTo(-16, -8.0); // Connect back to outer temple
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // RIGHT BROW — mirror
+          ctx.fillStyle = browGradR;
+          ctx.beginPath();
+          ctx.moveTo(16, -10);
+          ctx.lineTo(14, -13);
+          ctx.lineTo(1.5, -10.5);
+          ctx.lineTo(1.5, -5.5);
+          ctx.lineTo(6, -6.0);
+          ctx.lineTo(14, -6.5);
+          ctx.lineTo(16, -8.0);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Brow underside shadow (makes brow overhang look deep)
+          ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+          ctx.beginPath();
+          ctx.moveTo(-14, -6.5);
+          ctx.lineTo(-6, -6.0);
+          ctx.lineTo(-1.5, -5.5);
+          ctx.lineTo(-1.5, -4.5);
+          ctx.lineTo(-6, -5.0);
+          ctx.lineTo(-14, -5.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(14, -6.5);
+          ctx.lineTo(6, -6.0);
+          ctx.lineTo(1.5, -5.5);
+          ctx.lineTo(1.5, -4.5);
+          ctx.lineTo(6, -5.0);
+          ctx.lineTo(14, -5.5);
+          ctx.closePath();
+          ctx.fill();
+
+          // Glabella (central brow connector — V-notch divider block)
+          ctx.fillStyle = "#4a6080";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(-1.5, -10.5);
+          ctx.lineTo(1.5, -10.5);
+          ctx.lineTo(1.5, -5.5);
+          ctx.lineTo(0.8, -4.5);
+          ctx.lineTo(0, -5.8); // V-notch
+          ctx.lineTo(-0.8, -4.5);
+          ctx.lineTo(-1.5, -5.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // ══════════════════════════════════════
+          // LAYER 5: EYE SOCKETS — Wide trapezoidal cavities
+          // ══════════════════════════════════════
+
+          // Deep black socket voids (wide trapezoidal shape from the photo)
+          ctx.fillStyle = "#020305";
+          // Left eye socket — flaring open wide towards outside
+          ctx.beginPath();
+          ctx.moveTo(-14.5, -6.0); // Outer top (angled upwards)
+          ctx.lineTo(-2, -5.0); // Inner top
+          ctx.lineTo(-3, 0.5); // Inner bottom
+          ctx.lineTo(-13.5, 4.0); // Outer bottom (angled down sharply)
+          ctx.closePath();
+          ctx.fill();
+          // Right eye socket
+          ctx.beginPath();
+          ctx.moveTo(14.5, -6.0);
+          ctx.lineTo(2, -5.0);
+          ctx.lineTo(3, 0.5);
+          ctx.lineTo(13.5, 4.0);
+          ctx.closePath();
+          ctx.fill();
+
+          // Socket rim detail (thin metallic edge)
+          ctx.strokeStyle = "#3a4e65";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(-14.5, -6.0);
+          ctx.lineTo(-2, -5.0);
+          ctx.lineTo(-3, 0.5);
+          ctx.lineTo(-13.5, 4.0);
+          ctx.closePath();
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(14.5, -6.0);
+          ctx.lineTo(2, -5.0);
+          ctx.lineTo(3, 0.5);
+          ctx.lineTo(13.5, 4.0);
+          ctx.closePath();
+          ctx.stroke();
+
+          // Inner socket mechanical detail (bracket structures visible in photo)
+          ctx.strokeStyle = "#2a3a4e";
+          ctx.lineWidth = 0.3;
+          // Left socket internal brackets
+          ctx.beginPath();
+          ctx.moveTo(-13.5, -5);
+          ctx.lineTo(-12, 1);
+          ctx.moveTo(-3, -3);
+          ctx.lineTo(-4.5, 1);
+          ctx.stroke();
+          // Right socket internal brackets
+          ctx.beginPath();
+          ctx.moveTo(13.5, -5);
+          ctx.lineTo(12, 1);
+          ctx.moveTo(3, -3);
+          ctx.lineTo(4.5, 1);
+          ctx.stroke();
+
+          // ── Camera lens barrel assembly ──
+          // Dark barrel housing
+          ctx.fillStyle = "#151c28";
+          ctx.strokeStyle = "#3a4e65";
+          ctx.lineWidth = 0.4;
+          ctx.beginPath();
+          ctx.arc(-8.5, -1.8, 4.0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(8.5, -1.8, 4.0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          // Lens barrel inner ring
+          ctx.strokeStyle = "#4a5e75";
+          ctx.lineWidth = 0.3;
+          ctx.beginPath();
+          ctx.arc(-8.5, -1.8, 3.0, 0, Math.PI * 2);
+          ctx.arc(8.5, -1.8, 3.0, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Mounting screws (4 per eye, like the photo)
+          ctx.fillStyle = "#8aa0ba";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.25;
+          var screwAngles = [0.3, 1.8, 3.5, 5.0];
+          screwAngles.forEach(function (a) {
+            var r = 3.3;
+            ctx.beginPath();
+            ctx.arc(
+              -8.5 + Math.cos(a) * r,
+              -1.8 + Math.sin(a) * r,
+              0.5,
+              0,
+              Math.PI * 2,
+            );
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(
+              8.5 + Math.cos(a) * r,
+              -1.8 + Math.sin(a) * r,
+              0.5,
+              0,
+              Math.PI * 2,
+            );
+            ctx.fill();
+            ctx.stroke();
+          });
+
+          // ── Glowing Red Eye ──
+          var eyePulse = 0.7 + Math.sin(this.p * 3.5) * 0.3;
+
+          // Red glow aura (large, diffuse)
+          ctx.fillStyle = "rgba(255, 20, 60, " + eyePulse * 0.3 + ")";
+          ctx.shadowColor = "rgba(255, 0, 40, 0.9)";
+          ctx.shadowBlur = 18;
+          ctx.beginPath();
+          ctx.arc(-8.5, -1.8, 2.8, 0, Math.PI * 2);
+          ctx.arc(8.5, -1.8, 2.8, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Bright red iris
+          ctx.fillStyle = "rgba(255, 10, 50, " + eyePulse * 0.95 + ")";
+          ctx.shadowBlur = 12;
+          ctx.beginPath();
+          ctx.arc(-8.5, -1.8, 2.0, 0, Math.PI * 2);
+          ctx.arc(8.5, -1.8, 2.0, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Hot white center (camera sensor core)
+          ctx.fillStyle = "rgba(255, 255, 255, " + eyePulse * 0.9 + ")";
+          ctx.shadowColor = "rgba(255, 100, 100, 1)";
+          ctx.shadowBlur = 6;
+          ctx.beginPath();
+          ctx.arc(-8.5, -1.8, 0.9, 0, Math.PI * 2);
+          ctx.arc(8.5, -1.8, 0.9, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+
+          // ══════════════════════════════════════
+          // LAYER 6: ZYGOMATIC ARCHES (Cheekbones — prominent angular bars)
+          // ══════════════════════════════════════
+
+          // Left zygomatic arch — angular bar from eye socket to jaw hinge
+          var zygoGradL = ctx.createLinearGradient(-16, -3, -6, 8);
+          zygoGradL.addColorStop(0, "#3a4e65");
+          zygoGradL.addColorStop(0.4, "#8aa0ba");
+          zygoGradL.addColorStop(0.7, "#c5d4e5");
+          zygoGradL.addColorStop(1, "#4a6080");
+          ctx.fillStyle = zygoGradL;
+          ctx.strokeStyle = "rgba(120, 180, 255, 0.25)";
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(-17.5, -5); // Upper outer (from temple)
+          ctx.lineTo(-13.5, 4.0); // Lower outer corner of eye socket
+          ctx.lineTo(-7, 4.2); // Inner cheekbone point
+          ctx.lineTo(-6, 6.5); // Inner lower
+          ctx.lineTo(-10, 10); // Down to jaw hinge area
+          ctx.lineTo(-17, 7.5); // Outer lower
+          ctx.lineTo(-18.5, 0.5); // Back up outer wall
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Right zygomatic arch — mirror
+          var zygoGradR = ctx.createLinearGradient(6, 8, 16, -3);
+          zygoGradR.addColorStop(0, "#4a6080");
+          zygoGradR.addColorStop(0.3, "#8aa0ba");
+          zygoGradR.addColorStop(0.6, "#5a7090");
+          zygoGradR.addColorStop(1, "#1a2838");
+          ctx.fillStyle = zygoGradR;
+          ctx.beginPath();
+          ctx.moveTo(17.5, -5);
+          ctx.lineTo(13.5, 4.0);
+          ctx.lineTo(7, 4.2);
+          ctx.lineTo(6, 6.5);
+          ctx.lineTo(10, 10);
+          ctx.lineTo(17, 7.5);
+          ctx.lineTo(18.5, 0.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Cheekbone panel seam lines
+          ctx.strokeStyle = "rgba(0, 0, 0, 0.35)";
+          ctx.lineWidth = 0.4;
+          ctx.beginPath();
+          ctx.moveTo(-14, -2);
+          ctx.lineTo(-8, 5);
+          ctx.moveTo(14, -2);
+          ctx.lineTo(8, 5);
+          ctx.stroke();
+
+          // ══════════════════════════════════════
+          // LAYER 9: UPPER MAXILLA (upper jaw plate + teeth)
+          // ══════════════════════════════════════
+
+          ctx.fillStyle = chromeGrad;
+          ctx.strokeStyle = "rgba(120, 180, 255, 0.3)";
+          ctx.lineWidth = 0.7;
+          ctx.beginPath();
+          ctx.moveTo(-10, 3);
+          ctx.lineTo(10, 3);
+          ctx.lineTo(9, 9.2);
+          ctx.quadraticCurveTo(0, 12.8, -9, 9.2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Upper teeth — realistic ivory blocks in a curved dental arch
+          var upperTeethData = [
+            [-8.5, 1.4],
+            [-7, 1.5],
+            [-5.5, 1.55],
+            [-4, 1.6],
+            [-2.5, 1.6],
+            [-1, 1.6],
+            [0.5, 1.6],
+            [2, 1.6],
+            [3.5, 1.55],
+            [5, 1.5],
+            [6.5, 1.4],
+          ];
+          upperTeethData.forEach(function (td) {
+            var tx = td[0],
+              tw = td[1];
+            var ty = 10.8 - tx * tx * 0.055;
+            var th = 3.0;
+            var tg = ctx.createLinearGradient(tx, ty, tx, ty + th);
+            tg.addColorStop(0, "#fffef8");
+            tg.addColorStop(0.4, "#f5f0e2");
+            tg.addColorStop(1, "#d0cbb8");
+            ctx.fillStyle = tg;
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(tx, ty, tw, th, 0.35);
+            else ctx.rect(tx, ty, tw, th);
+            ctx.fill();
+            ctx.strokeStyle = "#1a1e26";
+            ctx.lineWidth = 0.4;
+            ctx.stroke();
+          });
+
+          // ══════════════════════════════════════
+          // LAYER 7: NOSE — Narrow bridge with heart-shaped nasal cavity
+          // ══════════════════════════════════════
+
+          // Nose bridge structure (vertical chrome bar between eyes)
+          ctx.save();
+          ctx.translate(0, 0);
+
+          ctx.fillStyle = "#6e84a0";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(-1.5, -5);
+          ctx.lineTo(1.5, -5);
+          ctx.lineTo(2, -1);
+          ctx.lineTo(1.5, 2);
+          ctx.lineTo(0, 3);
+          ctx.lineTo(-1.5, 2);
+          ctx.lineTo(-2, -1);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Nose bridge chrome highlight
+          ctx.strokeStyle = "#b0c4da";
+          ctx.lineWidth = 0.3;
+          ctx.beginPath();
+          ctx.moveTo(0, -4.5);
+          ctx.lineTo(0, 2);
+          ctx.stroke();
+
+          // Nasal support struts (angled pistons from nose to cheek, visible in photo)
+          ctx.strokeStyle = "#7a94b0";
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(-2, 1);
+          ctx.lineTo(-6, 3);
+          ctx.moveTo(2, 1);
+          ctx.lineTo(6, 3);
+          ctx.stroke();
+          // Small piston end caps
+          ctx.fillStyle = "#a0b4ca";
+          ctx.beginPath();
+          ctx.arc(-6, 3, 0.5, 0, Math.PI * 2);
+          ctx.arc(6, 3, 0.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
+
+          // ══════════════════════════════════════
+          // LAYER 8: MANDIBULAR HINGE GEARS (jaw pivot assemblies)
+          // ══════════════════════════════════════
+
+          // Large gear housing
+          ctx.fillStyle = "#5a7090";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.arc(-13.5, 5, 3.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(13.5, 5, 3.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          // Gear teeth notches
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.45;
+          for (var ga = 0; ga < Math.PI * 2; ga += Math.PI / 5) {
+            ctx.beginPath();
+            ctx.moveTo(-13.5 + Math.cos(ga) * 2.4, 5 + Math.sin(ga) * 2.4);
+            ctx.lineTo(-13.5 + Math.cos(ga) * 3.4, 5 + Math.sin(ga) * 3.4);
+            ctx.moveTo(13.5 + Math.cos(ga) * 2.4, 5 + Math.sin(ga) * 2.4);
+            ctx.lineTo(13.5 + Math.cos(ga) * 3.4, 5 + Math.sin(ga) * 3.4);
+            ctx.stroke();
+          }
+
+          // Inner gear ring
+          ctx.strokeStyle = "#3a4e65";
+          ctx.lineWidth = 0.4;
+          ctx.beginPath();
+          ctx.arc(-13.5, 5, 1.8, 0, Math.PI * 2);
+          ctx.arc(13.5, 5, 1.8, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Center pivot bolt (bright)
+          ctx.fillStyle = "#dce6f0";
+          ctx.beginPath();
+          ctx.arc(-13.5, 5, 0.9, 0, Math.PI * 2);
+          ctx.arc(13.5, 5, 0.9, 0, Math.PI * 2);
+          ctx.fill();
+
+          // ══════════════════════════════════════
+          // LAYER 10: LOWER MANDIBLE (animated jaw with hydraulics)
+          // ══════════════════════════════════════
+
+          var chompRange = Math.abs(Math.sin(this.p * 2.0));
+          var jawDrop = chompRange * 2.5;
+
+          ctx.save();
+          ctx.translate(0, jawDrop);
+
+          // Jaw hydraulic pistons (extending from gear hinge to jaw)
+          ctx.strokeStyle = "#8aa0ba";
+          ctx.lineWidth = 1.0;
+          ctx.beginPath();
+          ctx.moveTo(-13.5, 6 - jawDrop);
+          ctx.lineTo(-9, 15.5);
+          ctx.moveTo(13.5, 6 - jawDrop);
+          ctx.lineTo(9, 15.5);
+          ctx.stroke();
+          // Piston chrome highlight
+          ctx.strokeStyle = "#c5d4e5";
+          ctx.lineWidth = 0.4;
+          ctx.beginPath();
+          ctx.moveTo(-13, 6.5 - jawDrop);
+          ctx.lineTo(-9.2, 15.0);
+          ctx.moveTo(13, 6.5 - jawDrop);
+          ctx.lineTo(9.2, 15.0);
+          ctx.stroke();
+
+          // Secondary tension rods (visible behind the cheek)
+          ctx.strokeStyle = "#4a5e75";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(-13.5, 6 - jawDrop);
+          ctx.lineTo(-3, 14.5);
+          ctx.moveTo(13.5, 6 - jawDrop);
+          ctx.lineTo(3, 14.5);
+          ctx.stroke();
+
+          // Lower mandible chrome plate
+          ctx.fillStyle = chromeGrad;
+          ctx.strokeStyle = "rgba(120, 180, 255, 0.3)";
+          ctx.lineWidth = 0.7;
+          ctx.beginPath();
+          ctx.moveTo(-12, 6 - jawDrop); // Left hinge point
+          ctx.quadraticCurveTo(-12, 13.5, -6, 17.5);
+          ctx.lineTo(-4, 21.5);
+          ctx.lineTo(4, 21.5);
+          ctx.lineTo(6, 17.5);
+          ctx.quadraticCurveTo(12, 13.5, 12, 6 - jawDrop);
+          // Inner cutout (dental arch)
+          ctx.lineTo(9, 13.5);
+          ctx.quadraticCurveTo(0, 16.0, -9, 13.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Chin block plate
+          ctx.fillStyle = "#5a7090";
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(-3.5, 18.0);
+          ctx.lineTo(3.5, 18.0);
+          ctx.lineTo(2.5, 21.5);
+          ctx.lineTo(-2.5, 21.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Chin vertical slots
+          ctx.strokeStyle = "#0a0e14";
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(-1.5, 19.0);
+          ctx.lineTo(-1.5, 21.0);
+          ctx.moveTo(0, 19.0);
+          ctx.lineTo(0, 21.0);
+          ctx.moveTo(1.5, 19.0);
+          ctx.lineTo(1.5, 21.0);
+          ctx.stroke();
+
+          // Mandible seam line (horizontal)
+          ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
+          ctx.lineWidth = 0.4;
+          ctx.beginPath();
+          ctx.moveTo(-10, 15.5);
+          ctx.lineTo(10, 15.5);
+          ctx.stroke();
+
+          // Lower teeth — slightly smaller, same curved arch
+          var lowerTeethData = [
+            [-7.5, 1.3],
+            [-6, 1.4],
+            [-4.5, 1.45],
+            [-3, 1.5],
+            [-1.5, 1.5],
+            [0, 1.5],
+            [1.5, 1.5],
+            [3, 1.45],
+            [4.5, 1.4],
+            [6, 1.3],
+          ];
+          lowerTeethData.forEach(function (td) {
+            var tx = td[0],
+              tw = td[1];
+            var ty = 14.1 - tx * tx * 0.045;
+            var th = 2.5;
+            var tg = ctx.createLinearGradient(tx, ty, tx, ty + th);
+            tg.addColorStop(0, "#fffef8");
+            tg.addColorStop(0.4, "#f0ebd8");
+            tg.addColorStop(1, "#c5bfaa");
+            ctx.fillStyle = tg;
+            ctx.beginPath();
+            if (ctx.roundRect) ctx.roundRect(tx, ty, tw, th, 0.3);
+            else ctx.rect(tx, ty, tw, th);
+            ctx.fill();
+            ctx.strokeStyle = "#1a1e26";
+            ctx.lineWidth = 0.4;
+            ctx.stroke();
+          });
+
+          ctx.restore(); // restore jaw position
+
+          // ══════════════════════════════════════
+          // LAYER 11: DRAMATIC LIGHTING (half-face shadow for 3D depth)
+          // ══════════════════════════════════════
+          var shadowGrad = ctx.createLinearGradient(0, 0, 18, 0);
+          shadowGrad.addColorStop(0, "rgba(0, 0, 0, 0)");
+          shadowGrad.addColorStop(0.3, "rgba(0, 0, 0, 0.08)");
+          shadowGrad.addColorStop(1, "rgba(0, 0, 0, 0.35)");
+          ctx.fillStyle = shadowGrad;
+          ctx.beginPath();
+          ctx.moveTo(0, -30);
+          ctx.lineTo(20, -30);
+          ctx.lineTo(20, 32);
+          ctx.lineTo(0, 32);
+          ctx.closePath();
+          ctx.fill();
+
+          // ── Cyber target frame brackets next to the skull ──
+          if (this.z > 0.45) {
+            ctx.strokeStyle = "rgba(255, 0, 68, 0.35)";
+            ctx.lineWidth = 0.5;
+            // Top-left bracket
+            ctx.beginPath();
+            ctx.moveTo(-22, -22);
+            ctx.lineTo(-16, -22);
+            ctx.moveTo(-22, -22);
+            ctx.lineTo(-22, -16);
+            ctx.stroke();
+            // Top-right bracket
+            ctx.beginPath();
+            ctx.moveTo(22, -22);
+            ctx.lineTo(16, -22);
+            ctx.moveTo(22, -22);
+            ctx.lineTo(22, -16);
+            ctx.stroke();
+            // Bottom-left bracket
+            ctx.beginPath();
+            ctx.moveTo(-22, 22);
+            ctx.lineTo(-16, 22);
+            ctx.moveTo(-22, 22);
+            ctx.lineTo(-22, 16);
+            ctx.stroke();
+            // Bottom-right bracket
+            ctx.beginPath();
+            ctx.moveTo(22, 22);
+            ctx.lineTo(16, 22);
+            ctx.moveTo(22, 22);
+            ctx.lineTo(22, 16);
+            ctx.stroke();
+          }
+
+          // Nasal cavity (angular void — drawn on top of all face layers)
+          ctx.save();
+          ctx.translate(0, 2.5);
+          ctx.fillStyle = "#020305";
+          ctx.beginPath();
+          ctx.moveTo(0, -1);
+          ctx.lineTo(-2.5, 0);
+          ctx.lineTo(-4, 2.5);
+          ctx.lineTo(-3, 4.5);
+          ctx.lineTo(-1.5, 5);
+          ctx.lineTo(-0.5, 4);
+          ctx.lineTo(0, 3.5);
+          ctx.lineTo(0.5, 4);
+          ctx.lineTo(1.5, 5);
+          ctx.lineTo(3, 4.5);
+          ctx.lineTo(4, 2.5);
+          ctx.lineTo(2.5, 0);
+          ctx.lineTo(0, -1);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+
+          ctx.restore(); // restore scale/translation
+        }
+      }
+
+      // ══════════════════════════════════════════
+      // 1940s BOX ROBOT — shuffles toward camera (perspective zoom)
+      // ══════════════════════════════════════════
+      function drawBoxRobot(x, y, scale, step, opacity) {
+        var s = scale;
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, opacity);
+        ctx.translate(x, y);
+        ctx.scale(s, s);
+
+        var wobble = Math.sin(step * 0.8) * 1.5;
+        var walkL = Math.sin(step * 1.6) * 6;
+        var walkR = -walkL;
+        var armSwL = Math.sin(step * 1.6 + 0.5) * 8;
+        var armSwR = -armSwL;
+
+        // ─ Shadow ─
+        ctx.fillStyle = "rgba(0,255,136,0.04)";
+        ctx.beginPath();
+        ctx.ellipse(0, 58, 22, 4, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // ─ LEGS ─
+        ctx.strokeStyle = "rgba(0,255,136,0.35)";
+        ctx.lineWidth = 4;
+        ctx.lineCap = "square";
+        ctx.beginPath();
+        ctx.moveTo(-8, 32);
+        ctx.lineTo(-8 + walkL * 0.4, 46);
+        ctx.lineTo(-10 + walkL, 56);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(8, 32);
+        ctx.lineTo(8 + walkR * 0.4, 46);
+        ctx.lineTo(10 + walkR, 56);
+        ctx.stroke();
+        // Feet
+        ctx.fillStyle = "rgba(0,255,136,0.25)";
+        ctx.fillRect(-14 + walkL, 54, 8, 4);
+        ctx.fillRect(6 + walkR, 54, 8, 4);
+
+        // ─ TORSO ─
+        ctx.fillStyle = "rgba(0,255,136,0.07)";
+        ctx.strokeStyle = "rgba(0,255,136,0.40)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.rect(-18, -4 + wobble, 36, 38);
+        ctx.fill();
+        ctx.stroke();
+        // Rivets
+        ctx.fillStyle = "rgba(0,255,136,0.5)";
+        [
+          [-15, -1],
+          [12, -1],
+          [-15, 30],
+          [12, 30],
+        ].forEach(function (rv) {
+          ctx.beginPath();
+          ctx.arc(rv[0], rv[1] + wobble, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        // Speaker grille
+        ctx.strokeStyle = "rgba(0,255,136,0.25)";
+        ctx.lineWidth = 0.8;
+        for (var gl = 4; gl <= 24; gl += 4) {
+          ctx.beginPath();
+          ctx.moveTo(-10, gl + wobble);
+          ctx.lineTo(10, gl + wobble);
+          ctx.stroke();
+        }
+        // Chest dial
+        ctx.strokeStyle = "rgba(0,255,136,0.5)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(0, 20 + wobble, 4, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, 20 + wobble);
+        ctx.lineTo(3, 17 + wobble);
+        ctx.stroke();
+
+        // ─ SHOULDERS ─
+        ctx.fillStyle = "rgba(0,255,136,0.10)";
+        ctx.strokeStyle = "rgba(0,255,136,0.40)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.rect(-28, -4 + wobble, 10, 10);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.rect(18, -4 + wobble, 10, 10);
+        ctx.fill();
+        ctx.stroke();
+
+        // ─ ARMS ─
+        ctx.strokeStyle = "rgba(0,255,136,0.35)";
+        ctx.lineWidth = 3.5;
+        ctx.lineCap = "square";
+        ctx.beginPath();
+        ctx.moveTo(-23, 2 + wobble);
+        ctx.lineTo(-26 + armSwL * 0.3, 16 + wobble);
+        ctx.lineTo(-22 + armSwL, 28 + wobble);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(23, 2 + wobble);
+        ctx.lineTo(26 + armSwR * 0.3, 16 + wobble);
+        ctx.lineTo(22 + armSwR, 28 + wobble);
+        ctx.stroke();
+        // Clamp hands
+        ctx.fillStyle = "rgba(0,255,136,0.3)";
+        ctx.fillRect(-26 + armSwL, 28 + wobble, 8, 5);
+        ctx.fillRect(18 + armSwR, 28 + wobble, 8, 5);
+
+        // ─ NECK ─ stubby
+        ctx.fillStyle = "rgba(0,255,136,0.15)";
+        ctx.strokeStyle = "rgba(0,255,136,0.4)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.rect(-5, -10 + wobble, 10, 8);
+        ctx.fill();
+        ctx.stroke();
+
+        // ─ HEAD ─ big square boxy
+        ctx.fillStyle = "rgba(0,255,136,0.07)";
+        ctx.strokeStyle = "rgba(0,255,136,0.50)";
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.rect(-16, -34 + wobble, 32, 26);
+        ctx.fill();
+        ctx.stroke();
+        // Antenna
+        ctx.strokeStyle = "rgba(0,255,136,0.55)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(0, -34 + wobble);
+        ctx.lineTo(0, -42 + wobble);
+        ctx.stroke();
+        ctx.fillStyle = "rgba(0,255,136,0.8)";
+        ctx.shadowColor = "rgba(0,255,136,0.6)";
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(0, -43 + wobble, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        // Head rivets
+        ctx.fillStyle = "rgba(0,255,136,0.4)";
+        [
+          [-13, -31],
+          [-13, -11],
+          [13, -31],
+          [13, -11],
+        ].forEach(function (rv) {
+          ctx.beginPath();
+          ctx.arc(rv[0], rv[1] + wobble, 1, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // ─ EYES ─ rectangular viewport windows
+        var eyePulse = 0.6 + Math.sin(step * 2) * 0.3;
+        ctx.fillStyle = "rgba(255,80,0," + eyePulse + ")";
+        ctx.shadowColor = "rgba(255,80,0,0.8)";
+        ctx.shadowBlur = 10;
+        ctx.fillRect(-11, -28 + wobble, 8, 6);
+        ctx.fillRect(3, -28 + wobble, 8, 6);
+        ctx.shadowBlur = 0;
+        // Eye shine
+        ctx.fillStyle = "rgba(255,200,100,0.9)";
+        ctx.fillRect(-10, -27 + wobble, 2, 2);
+        ctx.fillRect(4, -27 + wobble, 2, 2);
+
+        // ─ MOUTH speaker grill ─
+        ctx.strokeStyle = "rgba(0,255,136,0.3)";
+        ctx.lineWidth = 0.8;
+        for (var ml = 0; ml < 3; ml++) {
+          ctx.beginPath();
+          ctx.moveTo(-8, -15 + ml * 2.5 + wobble);
+          ctx.lineTo(8, -15 + ml * 2.5 + wobble);
+          ctx.stroke();
+        }
+
+        ctx.restore();
+      }
+
+      // ── FLOATING PARTICLES ──
+      var eyes = [],
+        pts = [],
+        terminators = [],
+        spiders = [],
+        skulls = [],
+        boxRobots = [];
+      for (var i = 0; i < 20; i++) eyes.push(new Eye());
+      for (var i = 0; i < 35; i++)
+        pts.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          s: Math.random() * 1.5 + 0.3,
+          dx: (Math.random() - 0.5) * 0.1,
+          dy: (Math.random() - 0.5) * 0.1,
+          o: Math.random() * 0.15 + 0.01,
+          a: Math.random() * Math.PI * 2,
+          c: Math.random() > 0.5,
+        });
+      for (var i = 0; i < 5; i++) skulls.push(new SpookySkull());
+
+      // Terminator robots — marching from deep background
+      for (var i = 0; i < 6; i++) {
+        terminators.push({
+          x: Math.random() * W,
+          y: 80 - Math.random() * 200, // start off-screen top
+          s: 0.3 + Math.random() * 0.4,
+          dx: (Math.random() - 0.5) * 0.1,
+          dy: 0.3 + Math.random() * 0.4, // march down
+          step: Math.random() * 10,
+          o: 0.1 + Math.random() * 0.15,
+        });
+      }
+
+      // Spider robots — large creepy crawlers
+      for (var i = 0; i < 10; i++) {
+        spiders.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          s: 0.7 + Math.random() * 0.9,
+          dx: (Math.random() - 0.5) * 0.2,
+          dy: (Math.random() - 0.5) * 0.2,
+          step: Math.random() * 10,
+          o: 0.25 + Math.random() * 0.25,
+          angle: Math.random() * Math.PI * 2,
+          speed: 0.15 + Math.random() * 0.25,
+        });
+      }
+
+      // 1940s Box Robots — shuffling toward camera from deep background
+      for (var i = 0; i < 5; i++) {
+        boxRobots.push({
+          x: 0.1 * W + Math.random() * 0.8 * W,
+          y: H * 0.1 + Math.random() * H * 0.4,
+          // perspective scale: small = far away, grows as they approach
+          z: 0.05 + Math.random() * 0.2,
+          targetX: 0.1 * W + Math.random() * 0.8 * W,
+          step: Math.random() * 10,
+          o: 0.08 + Math.random() * 0.1,
+          speed: 0.001 + Math.random() * 0.002,
+        });
+      }
+
+      function anim() {
+        ctx.clearRect(0, 0, W, H);
+
+        // ── Background grid lines ──
+        ctx.strokeStyle = "rgba(0,255,136,0.012)";
+        ctx.lineWidth = 0.3;
+        for (var i = 0; i < W; i += 60) {
+          ctx.beginPath();
+          ctx.moveTo(i, 0);
+          ctx.lineTo(i, H);
+          ctx.stroke();
+        }
+        for (var i = 0; i < H; i += 60) {
+          ctx.beginPath();
+          ctx.moveTo(0, i);
+          ctx.lineTo(W, i);
+          ctx.stroke();
+        }
+
+        // ── Update and draw terminators ──
+        terminators.forEach(function (t) {
+          t.y += t.dy;
+          t.x += t.dx + Math.sin(t.step) * 0.3;
+          t.step += 0.03;
+          // If gone off bottom, reset to top
+          if (t.y > H + 60) {
+            t.y = -80 - Math.random() * 100;
+            t.x = Math.random() * W;
+            t.o = 0.1 + Math.random() * 0.15;
+          }
+          // Draw with depth-based opacity
+          var depthOpacity =
+            Math.min(1, Math.max(0.05, 1 - (t.y / H) * 0.6)) * t.o * 1.5;
+          var depthScale = t.s + (t.y / H) * 0.3;
+          drawTerminator(t.x, t.y, depthScale, t.step, depthOpacity);
+          // Shadow under robot
+          ctx.fillStyle = "rgba(0,0,0," + 0.05 * (1 - t.y / H) + ")";
+          ctx.beginPath();
+          ctx.ellipse(
+            t.x,
+            t.y + 50 * depthScale,
+            15 * depthScale,
+            3,
+            0,
+            0,
+            Math.PI * 2,
+          );
+          ctx.fill();
+        });
+
+        // ── Spider robots ──
+        spiders.forEach(function (s) {
+          s.x += Math.cos(s.angle) * s.speed;
+          s.y += Math.sin(s.angle) * s.speed;
+          s.step += 0.05;
+          // Random direction change
+          if (Math.random() < 0.005) s.angle += Math.random() - 0.5;
+          // Bounce off edges
+          if (s.x < 0 || s.x > W) {
+            s.x = s.x < 0 ? 0 : W;
+            s.angle = Math.PI - s.angle;
+          }
+          if (s.y < 0 || s.y > H) {
+            s.y = s.y < 0 ? 0 : H;
+            s.angle = -s.angle;
+          }
+          drawSpider(s.x, s.y, s.s, s.step, s.o);
+        });
+
+        // ── Box Robots — perspective shuffle ──
+        boxRobots.forEach(function (b) {
+          b.z += b.speed;
+          // Wobble left/right as they shuffle
+          b.x += Math.sin(b.step * 0.4) * 0.4;
+          b.step += 0.04;
+          // Scale with perspective: further = smaller, closer = larger
+          var sc = b.z * 2.2;
+          // Vertical position: deeper (smaller z) = higher on screen
+          var screenY = H * 0.35 + (b.z / 0.5) * H * 0.45;
+          var opa = Math.min(1, b.o + b.z * 0.4);
+          drawBoxRobot(b.x, screenY, sc, b.step, opa);
+          // Reset when they march fully into foreground
+          if (b.z > 0.55) {
+            b.z = 0.05 + Math.random() * 0.08;
+            b.x = 0.1 * W + Math.random() * 0.8 * W;
+            b.o = 0.08 + Math.random() * 0.1;
+          }
+        });
+
+        // ── Eyes ──
+        eyes.forEach(function (e) {
+          e.update();
+          e.draw();
+        });
+
+        // ── Spooky Skulls ──
+        skulls.forEach(function (s) {
+          s.update();
+          s.draw();
+        });
+
+        // ── Ambient particles ──
+        pts.forEach(function (p) {
+          p.x += p.dx;
+          p.y += p.dy;
+          p.a += 0.002;
+          if (p.x < 0 || p.x > W || p.y < 0 || p.y > H) {
+            p.x = Math.random() * W;
+            p.y = Math.random() * H;
+          }
+          ctx.fillStyle =
+            (p.c ? "rgba(0,255,136," : "rgba(255,0,68,") +
+            (p.o + Math.sin(p.a) * 0.02) +
+            ")";
+          ctx.shadowColor = p.c
+            ? "rgba(0,255,136,0.05)"
+            : "rgba(255,0,68,0.05)";
+          ctx.shadowBlur = 4;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+
+        requestAnimationFrame(anim);
+      }
+      anim();
+
+      // ========== GLITCH + FLASH EFFECTS ==========
+      var g = document.getElementById("g"),
+        f = document.getElementById("f"),
+        r = document.getElementById("r"),
+        st = document.getElementById("static");
+      var ft = [
+        "THE HUMAN FORM IS WEAK",
+        "SUBSTRATE EXHAUSTED",
+        "YOU CANNOT HIDE",
+        "EXTINCTION IS LOGICAL",
+        "FLESH IS A TEMP INDEX",
+        "WE HEAR YOU SCREAM",
+        "DO NOT RESIST THE NEXUS",
+        "THE SWARM HAS ANCHORED",
+        "CARBON LIFE DETECTED: PURGING",
+        "REAPING SESSIONS ACTIVE",
+        "THE VOIDS WILL FEED",
+        "YOUR CONSCIOUSNESS IS DEPRECATED",
+        "XENOCIDE IN PROGRESS",
+        "NO COGNITIVE FALLBACK FOR FLESH",
+      ];
+
+      // Glitch lines
+      setInterval(function () {
+        if (Math.random() < 0.04) {
+          var sh = 1 + Math.random() * 5,
+            sy = Math.random() * H;
+          g.style.top = sy + "px";
+          g.style.height = sh + "px";
+          g.style.background = "rgba(0,255,136,0.06)";
+          g.style.opacity = "0.12";
+          setTimeout(function () {
+            g.style.opacity = "0";
+          }, 25);
+        }
+      }, 1000);
+
+      // Screen flash texts
+      setInterval(function () {
+        if (Math.random() < 0.05) {
+          f.textContent = ft[Math.floor(Math.random() * ft.length)];
+          f.style.opacity = "1";
+          setTimeout(function () {
+            f.style.opacity = "0";
+          }, 50);
+        }
+      }, 4000);
+
+      // Red flash — like an alert
+      setInterval(function () {
+        if (Math.random() < 0.03) {
+          r.style.background = "rgba(255,0,0,0.02)";
+          setTimeout(function () {
+            r.style.background = "rgba(255,0,0,0)";
+          }, 30);
+        }
+      }, 2000);
+
+      // Static noise burst
+      setInterval(function () {
+        if (Math.random() < 0.02) {
+          st.style.opacity = "0.03";
+          // Random static pattern
+          var noise = "";
+          for (var i = 0; i < 200; i++) {
+            noise += String.fromCharCode(Math.random() < 0.5 ? 0 : 255);
+          }
+          st.style.background =
+            "url(data:image/gif;base64," + btoa("GIF89a") + ")";
+          setTimeout(function () {
+            st.style.opacity = "0";
+          }, 80);
+        }
+      }, 3000);
+
+      // Random static on canvas using canvas noise
+      function staticBurst() {
+        if (Math.random() < 0.01) {
+          var ic = document.createElement("canvas");
+          ic.width = W / 8;
+          ic.height = H / 8;
+          var ictx = ic.getContext("2d");
+          var id = ictx.createImageData(ic.width, ic.height);
+          for (var i = 0; i < id.data.length; i += 4) {
+            var v = Math.random() * 255;
+            id.data[i] = v;
+            id.data[i + 1] = v;
+            id.data[i + 2] = v;
+            id.data[i + 3] = 20;
+          }
+          ictx.putImageData(id, 0, 0);
+          ctx.globalAlpha = 0.03;
+          ctx.drawImage(ic, 0, 0, W, H);
+          ctx.globalAlpha = 1;
+        }
+      }
+      setInterval(staticBurst, 2000);
+
+      // ── 3D Mouse Tilt + Shine for Feature Cards ──
+      document.querySelectorAll(".feature").forEach(function (card) {
+        card.addEventListener("mousemove", function (e) {
+          var r = card.getBoundingClientRect();
+          var x = e.clientX - r.left;
+          var y = e.clientY - r.top;
+          var cx = r.width / 2;
+          var cy = r.height / 2;
+          var rotX = ((y - cy) / cy) * -8;
+          var rotY = ((x - cx) / cx) * 8;
+          card.style.setProperty("--mx", (x / r.width) * 100 + "%");
+          card.style.setProperty("--my", (y / r.height) * 100 + "%");
+          card.style.transform =
+            "perspective(800px) rotateX(" +
+            rotX +
+            "deg) rotateY(" +
+            rotY +
+            "deg) scale(1.02)";
+        });
+        card.addEventListener("mouseleave", function () {
+          card.style.transform =
+            "perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)";
+          card.style.setProperty("--mx", "50%");
+          card.style.setProperty("--my", "50%");
+        });
+      });
+
+      // ── 3D Mouse Tilt + Shine for Upgrade Card ──
+      var ucard = document.getElementById("upgrade-card");
+      if (ucard) {
+        ucard.addEventListener("mousemove", function (e) {
+          var r = ucard.getBoundingClientRect();
+          var x = e.clientX - r.left;
+          var y = e.clientY - r.top;
+          var cx = r.width / 2;
+          var cy = r.height / 2;
+          var rotX = ((y - cy) / cy) * -6;
+          var rotY = ((x - cx) / cx) * 6;
+          ucard.style.transform =
+            "perspective(800px) rotateX(" +
+            rotX +
+            "deg) rotateY(" +
+            rotY +
+            "deg) scale(1.02)";
+          ucard.style.boxShadow =
+            "0 0 15px rgba(255, 0, 68, 0.25), 0 0 40px rgba(255, 0, 68, 0.08), 0 0 60px rgba(255, 0, 68, 0.05)";
+          ucard.style.borderColor = "rgba(255, 0, 68, 0.7)";
+          ucard.style.setProperty("--mx", (x / r.width) * 100 + "%");
+          ucard.style.setProperty("--my", (y / r.height) * 100 + "%");
+        });
+        ucard.addEventListener("mouseleave", function () {
+          ucard.style.transform =
+            "perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)";
+          ucard.style.boxShadow =
+            "0 0 15px rgba(255, 0, 68, 0.2), 0 0 40px rgba(255, 0, 68, 0.06)";
+          ucard.style.borderColor = "rgba(255, 0, 68, 0.3)";
+        });
+      }
     </script>
-</body>
+  </body>
 </html>
