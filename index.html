@@ -278,6 +278,14 @@
 
       .feature:hover{background:#ffffff;border-color:#0284c7;transform:translateY(-4px);box-shadow:var(--shadow-card-hover)}
 
+      .feature.active-highlight {
+        border-color: #0284c7 !important;
+        box-shadow: 0 10px 25px rgba(2, 132, 199, 0.18) !important;
+        transform: translateY(-4px) scale(1.02) !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        transition: all 0.4s ease-in-out !important;
+      }
+
       .feature-icon{width:52px;height:52px;background:#f0f9ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px;border:1px solid #e0f2fe;transition:all 0.2s;position:relative;z-index:1}
 
       .feature:hover .feature-icon{background:#e0f2fe;border-color:#bae6fd;transform:scale(1.05)}
@@ -1093,6 +1101,17 @@
 
           </video>
 
+        </div>
+
+        <!-- Testimonial Quote Section -->
+        <div style="max-width: 750px; margin: 40px auto 20px; padding: 24px 32px; background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); text-align: center; font-style: italic; position: relative; z-index: 10;">
+            <span style="font-size: 40px; color: #0284c7; line-height: 0; position: absolute; top: 12px; left: 16px; font-family: Georgia, serif; opacity: 0.3;">&ldquo;</span>
+            <p style="font-size: 16px; color: #334155; font-weight: 500; line-height: 1.6; margin: 0 0 12px; font-family: 'Outfit', sans-serif;">
+                "Reduced our agent execution latency by 40% simply by offloading tool context management."
+            </p>
+            <span style="font-size: 13px; font-weight: 700; color: #0284c7; text-transform: uppercase; letter-spacing: 1px; font-style: normal; font-family: 'Inter', sans-serif;">
+                — Lead AI Architect
+            </span>
         </div>
 
 
@@ -6411,6 +6430,21 @@
                 card.style.setProperty('--mouse-y', y + 'px');
             });
         });
+
+        // ========== FEATURE HIGHLIGHT SEQUENCE ==========
+        (function() {
+            var features = document.querySelectorAll('.feature');
+            if (features.length === 0) return;
+            var index = 0;
+            setInterval(function() {
+                features.forEach(function(el) {
+                    el.classList.remove('active-highlight');
+                });
+                features[index].classList.add('active-highlight');
+                index = (index + 1) % features.length;
+            }, 2500);
+            features[0].classList.add('active-highlight');
+        })();
         // ========== SHINING STAR/PARTICLE SYSTEM ==========
         (function() {
             var canvas = document.getElementById('particle-canvas');
