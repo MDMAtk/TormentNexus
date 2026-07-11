@@ -6342,6 +6342,18 @@
 
 
             var scrollY = window.scrollY;
+            var heroText = document.querySelectorAll('.hero h1, .hero p, .hero .hero-badge, .hero .hero-buttons');
+            var heroVid = document.getElementById('hypernexus-hero-vid');
+            if (scrollY < 800) {
+                heroText.forEach(function(el) {
+                    el.style.transform = 'translateY(' + (scrollY * 0.03) + 'px)';
+                    el.style.opacity = Math.max(0.35, 1 - scrollY * 0.0012);
+                });
+                if (heroVid) {
+                    heroVid.style.transform = 'translateY(' + (scrollY * 0.03) + 'px)';
+                    heroVid.style.opacity = '1';
+                }
+            }
 
 
 
@@ -6351,61 +6363,6 @@
 
 
 
-
-
-
-
-
-
-            var hero = document.querySelector('.hero');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            if (hero && scrollY < 800) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                hero.style.transform = 'translateY(' + (scrollY * 0.03) + 'px)';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                hero.style.opacity = Math.max(0.35, 1 - scrollY * 0.0012);
 
 
 
