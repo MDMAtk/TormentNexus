@@ -1,904 +1,6740 @@
 <!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <title>HyperNexus — Enterprise AI Orchestration Platform</title>
-    <meta
-      name="description"
-      content="Enterprise-grade AI orchestration. Secure, compliant, scalable. Trusted by industry leaders."
-    />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HyperNexus — Corporate AI Control Plane</title>
+
+    <meta name="description" content="The corporate AI orchestration platform. Secure, compliant, scalable. Deploy anywhere. Control everything.">
+
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");      :root {
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --glass-border: #e2e8f0;
+        --neon-blue: #0284c7;
+        --neon-purple: #1e3a8a; /* Deep Sapphire */
+        --neon-magenta: #0ea5e9;
+        --neon-cyan: #0369a1;
+        --neon-blue-glow: rgba(2, 132, 199, 0.05);
+        --neon-purple-glow: rgba(30, 58, 138, 0.03);
+        --text: #0f172a;
+        --text-secondary: #475569;
+        --text-dim: #64748b;
+        --primary: #0284c7;
+        --primary-glow: rgba(2, 132, 199, 0.08);
+        --shadow-card: inset 0 1px 0 #ffffff, 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(2, 132, 199, 0.03);
+        --shadow-card-hover: inset 0 1px 0 #ffffff, 0 10px 15px -3px rgba(2, 132, 199, 0.08), 0 4px 6px -4px rgba(2, 132, 199, 0.08), 0 0 0 1px rgba(2, 132, 199, 0.15);
+        --gradient-neon: linear-gradient(135deg, #0284c7 0%, #1e3a8a 50%, #0369a1 100%);
       }
 
-      :root {
-        --primary: #0066ff;
-        --primary-dark: #0052cc;
-        --primary-light: #e6f0ff;
-        --accent: #00c853;
-        --text: #1a1a2e;
-        --text-secondary: #64748b;
-        --bg: #ffffff;
-        --bg-alt: #f8fafc;
-        --border: #e2e8f0;
-        --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+      *{margin:0;padding:0;box-sizing:border-box}
+
+      html{scroll-behavior:smooth}
+
+      body{background:radial-gradient(circle at top, #ffffff 0%, #f1f5f9 100%), #f1f5f9;background-attachment:fixed;color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-y:auto;overflow-x:hidden}
+
+      ::selection{background:#0284c7;color:white}
+
+      /* Disable all neon wire animations and background gradient shifts */
+      body::after { display: none !important; }
+      .ambient { display: none !important; }
+
+      .container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:10}
+
+      /* ── HEADER ── */
+
+      header{padding:14px 0;position:sticky;top:0;z-index:100;background:rgba(255, 255, 255, 0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(226, 232, 240, 0.8);box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.02)}
+
+      header::after{display:none}
+
+      .header-inner{display:flex;align-items:center;justify-content:space-between}
+
+      .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+
+      .logo-icon{width:36px;height:36px;background:linear-gradient(135deg, #0284c7, #1e3a8a);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 10px rgba(2, 132, 199, 0.2);transition:all 0.25s;border:1px solid #0369a1}
+
+      .logo:hover .logo-icon{transform:scale(1.04);background:linear-gradient(135deg, #0369a1, #1e3a8a);box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 12px rgba(2, 132, 199, 0.25)}
+
+      .logo-text{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.5px}
+
+      .logo-text span{background:none;-webkit-text-fill-color:initial;color:#0284c7;background-clip:initial}
+
+      nav{display:flex;align-items:center;gap:28px}
+
+      nav a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;position:relative;padding:4px 0}
+
+      nav a::after{display:none}
+
+      nav a:hover{color:#0284c7}
+
+      .nav-cta{background:linear-gradient(180deg, #0284c7 0%, #0369a1 100%);color:white !important;padding:10px 20px;border-radius:6px;font-weight:600;transition:all 0.2s !important;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 10px rgba(2,132,199,0.1);border:1px solid #0284c7;position:relative;overflow:hidden}
+
+      .nav-cta:hover{background:linear-gradient(180deg, #0369a1 0%, #0284c7 100%);transform:translateY(-1px) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), 0 6px 12px rgba(2, 132, 199, 0.2)}
+
+      /* ── HERO ── */
+
+      .hero{padding:20px 0 10px;text-align:center;position:relative}
+
+      .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 22px;background:rgba(255, 255, 255, 0.8);backdrop-filter:blur(10px);border:1px solid rgba(226, 232, 240, 0.8);border-radius:100px;font-size:13px;font-weight:600;color:#0284c7;margin-bottom:32px;animation:fadeInUp 0.8s ease-out;box-shadow:0 2px 8px rgba(0,0,0,0.02)}
+
+      .hero-badge .dot{width:6px;height:6px;background:#0284c7;border-radius:50%;animation:blink 1.5s infinite;box-shadow:0 0 10px rgba(2, 132, 199, 0.3)}
+
+      @keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+      @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+
+      .hero h1{font-size:clamp(44px,7vw,86px);font-weight:900;letter-spacing:-2.5px;line-height:1.03;margin-bottom:20px;animation:fadeInUp 0.8s ease-out 0.2s both;color:#0f172a}
+
+      .hero h1 .gradient-title{display:inline-block;background:linear-gradient(90deg, #0284c7 0%, #1e3a8a 20%, #0284c7 40%, #ffffff 50%, #0284c7 60%, #1e3a8a 80%, #0284c7 100%);background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:transparent;background-clip:text;animation:shineSlide 3s linear infinite}
+
+      .hero p{font-size:18px;max-width:600px;margin:0 auto 40px;line-height:1.7;animation:fadeInUp 0.8s ease-out 0.4s both;color:#475569}
+
+      @keyframes shineSlide {
+        0% { background-position: 100% center; }
+        100% { background-position: -100% center; }
       }
 
-      body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
-        color: var(--text);
-        background: var(--bg);
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
+      @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-      }
+      .hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp 0.8s ease-out 0.6s both}
 
-      /* Header */
-      header {
-        background: var(--bg);
-        border-bottom: 1px solid var(--border);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        backdrop-filter: blur(10px);
+      /* Animated Flame Border around Hero Header/Video */
+      .flame-wrapper {
+        position: relative;
+        border-radius: 14px;
+        padding: 4px;
         background: rgba(255, 255, 255, 0.95);
+        margin: 30px auto;
+        box-shadow: 
+          0 10px 30px rgba(2, 132, 199, 0.08),
+          0 1px 3px rgba(0, 0, 0, 0.01);
+        overflow: hidden;
       }
-      .header-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 72px;
-      }
-      .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-      }
-      .logo-icon {
-        width: 36px;
-        height: 36px;
-        background: linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary-dark)
+      .flame-wrapper::before, .flame-wrapper::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+          from 0deg,
+          transparent,
+          rgba(2, 132, 199, 0.35),
+          rgba(30, 58, 138, 0.45),
+          rgba(2, 132, 199, 0.35),
+          transparent
         );
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 800;
-        font-size: 18px;
+        animation: flameRotate 7s linear infinite;
+        z-index: 0;
       }
-      .logo-text {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--text);
-        letter-spacing: -0.5px;
-      }
-      .logo-text span {
-        color: var(--primary);
-      }
-      nav {
-        display: flex;
-        align-items: center;
-        gap: 32px;
-      }
-      nav a {
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 500;
-        transition: color 0.2s;
-      }
-      nav a:hover {
-        color: var(--text);
-      }
-      .nav-cta {
-        background: var(--primary);
-        color: white !important;
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.2s;
-      }
-      .nav-cta:hover {
-        background: var(--primary-dark);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
-      }
-
-      /* Hero */
-      .hero {
-        padding: 100px 0 80px;
-        text-align: center;
-        background: linear-gradient(
-          180deg,
-          var(--primary-light) 0%,
-          var(--bg) 100%
+      .flame-wrapper::after {
+        background: conic-gradient(
+          from 180deg,
+          transparent,
+          rgba(139, 92, 246, 0.25),
+          rgba(2, 132, 199, 0.35),
+          rgba(139, 92, 246, 0.25),
+          transparent
         );
+        animation: flameRotate 10s linear infinite reverse;
       }
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 100px;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--primary);
-        margin-bottom: 32px;
-        box-shadow: var(--shadow);
-      }
-      .hero-badge .dot {
-        width: 8px;
-        height: 8px;
-        background: var(--accent);
-        border-radius: 50%;
-        animation: blink 2s infinite;
-      }
-      @keyframes blink {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.4;
-        }
-      }
-      .hero h1 {
-        font-size: clamp(36px, 5vw, 64px);
-        font-weight: 800;
-        letter-spacing: -1.5px;
-        line-height: 1.1;
-        margin-bottom: 24px;
-        color: var(--text);
-      }
-      .hero h1 .highlight {
-        background: linear-gradient(135deg, var(--primary), #6366f1);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .hero p {
-        font-size: 18px;
-        color: var(--text-secondary);
-        max-width: 640px;
-        margin: 0 auto 40px;
-        line-height: 1.7;
-      }
-      .hero-buttons {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 14px 32px;
-        font-size: 15px;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 10px;
-        transition: all 0.2s;
-        cursor: pointer;
-        border: none;
-      }
-      .btn-primary {
-        background: var(--primary);
-        color: white;
-        box-shadow: 0 2px 8px rgba(0, 102, 255, 0.25);
-      }
-      .btn-primary:hover {
-        background: var(--primary-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 102, 255, 0.35);
-      }
-      .btn-secondary {
-        background: var(--bg);
-        color: var(--text);
-        border: 1px solid var(--border);
-      }
-      .btn-secondary:hover {
-        background: var(--bg-alt);
-        border-color: #cbd5e1;
-      }
-
-      /* Logos */
-      .logos {
-        padding: 60px 0;
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-      }
-      .logos-label {
-        text-align: center;
-        font-size: 13px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: #94a3b8;
-        margin-bottom: 32px;
-      }
-      .logos-grid {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 48px;
-        flex-wrap: wrap;
-        opacity: 0.5;
-      }
-      .logo-item {
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--text);
-        letter-spacing: -0.5px;
-      }
-
-      /* Stats */
-      .stats {
-        padding: 80px 0;
-      }
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 32px;
-      }
-      .stat {
-        text-align: center;
+      .flame-content {
+        position: relative;
+        z-index: 1;
+        background: #f8fafc;
+        border-radius: 11px;
         padding: 32px;
-        background: var(--bg-alt);
-        border-radius: 16px;
-        border: 1px solid var(--border);
       }
-      .stat-num {
-        font-size: 40px;
-        font-weight: 800;
-        color: var(--primary);
-        margin-bottom: 8px;
-        letter-spacing: -1px;
-      }
-      .stat-label {
-        font-size: 14px;
-        color: var(--text-secondary);
-        font-weight: 500;
+      @keyframes flameRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
-      /* Features */
-      .features {
-        padding: 80px 0;
-        background: var(--bg-alt);
+      /* ── BUTTONS & GLOSSY SWEENS ── */
+
+      .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px;transition:all 0.25s;cursor:pointer;border:none;position:relative;overflow:hidden}
+
+      /* Glass Shine Sweep reflection effect on hover */
+      .btn::before, .price-btn::before, .price-card::before, .feature::before, .stat::before, .compliance-item::before, .nav-cta::before, .btn-white::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+        transform: skewX(-30deg);
+        pointer-events: none;
+        z-index: 10;
       }
-      .section-header {
-        text-align: center;
-        margin-bottom: 64px;
+
+      .btn:hover::before, .price-btn:hover::before, .price-card:hover::before, .feature:hover::before, .stat:hover::before, .compliance-item:hover::before, .nav-cta:hover::before, .btn-white:hover::before {
+        left: 150%;
+        transition: left 0.75s ease-in-out;
       }
-      .section-header .label {
-        font-size: 13px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: var(--primary);
-        margin-bottom: 16px;
+
+      .btn-primary{background:linear-gradient(180deg, #0284c7 0%, #0369a1 100%);color:white;box-shadow:inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 12px rgba(2, 132, 199, 0.15);border:1px solid #0284c7}
+
+      .btn-primary:hover{transform:translateY(-2px);background:linear-gradient(180deg, #0369a1 0%, #0284c7 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 16px rgba(2, 132, 199, 0.25)}
+
+      .btn-secondary{background:#ffffff;color:var(--text);border:1px solid #cbd5e1;box-shadow:0 2px 4px rgba(0,0,0,0.02)}
+
+      .btn-secondary:hover{background:#f8fafc;border-color:#94a3b8;transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,0.04)}
+
+      /* ── LOGOS ── */
+
+      .logos{padding:60px 0;border-top:1px solid rgba(77,124,255,0.06);border-bottom:1px solid rgba(77,124,255,0.06)}
+
+      .logos-label{text-align:center;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:3px;color:var(--text-dim);margin-bottom:32px}
+
+      .logos-grid{display:flex;justify-content:center;gap:56px;flex-wrap:wrap}
+
+      .logo-item{font-size:16px;font-weight:800;background:var(--gradient-neon);background-size:300% 300%;animation:gradientShift 6s ease infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;opacity:0.25;transition:all 0.4s;cursor:default}
+
+      .logo-item:hover{opacity:0.9;transform:scale(1.1);letter-spacing:2px}
+
+      .logo-item:nth-child(2){animation-delay:0.8s}
+
+      .logo-item:nth-child(3){animation-delay:1.6s}
+
+      .logo-item:nth-child(4){animation-delay:2.4s}
+
+      .logo-item:nth-child(5){animation-delay:3.2s}
+
+      /* ── STATS ── */
+
+      .stats{padding:80px 0}
+
+      .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+
+      .stat{text-align:center;padding:40px 24px;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;transition:all 0.3s;position:relative;box-shadow:var(--shadow-card);overflow:hidden}
+
+      .stat::after{display:none}
+
+      .stat:hover::after{display:none}
+
+      .stat:hover{background:#ffffff;border-color:#0284c7;transform:translateY(-4px);box-shadow:var(--shadow-card-hover)}
+
+      .stat-num{font-size:44px;font-weight:900;color:#0284c7;margin-bottom:6px;letter-spacing:-1px;position:relative;z-index:1}
+
+      .stat-label{font-size:14px;color:var(--text-secondary);font-weight:500;position:relative;z-index:1}
+
+      /* ── FEATURES ── */
+
+      .features{padding:80px 0}
+
+      .section-header{text-align:center;margin-bottom:64px}
+
+      .section-header .label{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:#0284c7;margin-bottom:12px}
+
+      .section-header h2{font-size:38px;font-weight:800;letter-spacing:-0.5px;margin-bottom:12px;display:inline-block;position:relative}
+
+      .section-header h2::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:60px;height:3px;background:#0284c7;border-radius:3px}
+
+      .section-header p{font-size:16px;color:var(--text-secondary);max-width:500px;margin:0 auto}
+
+      .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+      .feature{background:#ffffff;padding:40px 28px;border-radius:12px;border:1px solid #e2e8f0;transition:all 0.3s;position:relative;overflow:hidden;box-shadow:var(--shadow-card);will-change:transform}
+
+      .feature::after{display:none}
+
+      .feature:hover::after{display:none}
+
+      .feature:hover{background:#ffffff;border-color:#0284c7;transform:translateY(-4px);box-shadow:var(--shadow-card-hover)}
+
+      .feature-icon{width:52px;height:52px;background:#f0f9ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px;border:1px solid #e0f2fe;transition:all 0.2s;position:relative;z-index:1}
+
+      .feature:hover .feature-icon{background:#e0f2fe;border-color:#bae6fd;transform:scale(1.05)}
+
+      .feature h3{font-size:18px;font-weight:700;margin-bottom:10px;position:relative;z-index:1}
+
+      .feature p{font-size:14px;color:var(--text-secondary);line-height:1.7;position:relative;z-index:1}
+
+      /* ── COMPLIANCE ── */
+
+      .compliance{padding:80px 0}
+
+      .compliance-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+
+      .compliance-item{text-align:center;padding:40px 24px;border:1px solid #e2e8f0;border-radius:12px;background:#ffffff;transition:all 0.3s;position:relative;overflow:hidden;box-shadow:var(--shadow-card)}
+
+      .compliance-item::before{display:none}
+
+      .compliance-item:hover::before{display:none}
+
+      .compliance-item:hover{background:#ffffff;border-color:#0284c7;transform:translateY(-4px);box-shadow:var(--shadow-card-hover)}
+
+      .compliance-icon{font-size:34px;margin-bottom:12px;display:block;transition:all 0.2s;position:relative;z-index:1}
+
+      .compliance-item:hover .compliance-icon{transform:scale(1.1)}
+
+      .compliance-item h4{font-size:15px;font-weight:700;margin-bottom:6px;position:relative;z-index:1}
+
+      .compliance-item p{font-size:13px;color:var(--text-secondary);position:relative;z-index:1}
+
+      /* ── PRICING ── */
+
+      .pricing{padding:100px 0}
+
+      .pricing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:800px;margin:0 auto}
+
+      .price-card{background:#ffffff;padding:44px 32px;border-radius:12px;border:1px solid #e2e8f0;position:relative;transition:all 0.3s;overflow:visible;box-shadow:var(--shadow-card)}
+
+      .price-card:hover{background:rgba(255,255,255,0.75) !important;backdrop-filter:blur(30px) !important;border-color:#0284c7 !important;transform:translateY(-4px);box-shadow:0 15px 30px rgba(2, 132, 199, 0.15), var(--shadow-card-hover)}
+      .price-card.rainbow:hover .price-card-inner {
+        background: rgba(255, 255, 255, 0.85) !important;
+        box-shadow: 0 0 35px rgba(255,255,255,0.35) !important;
       }
-      .section-header h2 {
-        font-size: 36px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        margin-bottom: 16px;
+
+      .price-card.featured{border-color:#0284c7;box-shadow:var(--shadow-card)}
+
+      .price-card.featured .price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#0284c7;color:white;padding:4px 16px;border-radius:100px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;z-index:2}
+
+      .price-tier{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#0284c7;margin-bottom:16px;position:relative;z-index:1}
+
+      .price-amount{font-size:48px;font-weight:900;margin-bottom:6px;letter-spacing:-2px;position:relative;z-index:1;color:var(--text)}
+
+      .price-amount .period{font-size:14px;font-weight:500;color:var(--text-secondary);letter-spacing:0}
+
+      .price-desc{font-size:14px;color:var(--text-secondary);margin-bottom:28px;line-height:1.6;position:relative;z-index:1}
+
+      .price-features{list-style:none;margin-bottom:28px;position:relative;z-index:1}
+
+      .price-features li{padding:8px 0;font-size:14px;display:flex;align-items:center;gap:10px;color:var(--text-secondary);transition:all 0.2s}
+
+      .price-features li:hover{color:var(--text)}
+
+      .price-features li::before{content:"\2713";color:#0284c7;font-weight:700}
+
+      .price-btn{display:block;width:100%;padding:14px;text-align:center;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.2s;position:relative;overflow:hidden}
+
+      .price-btn-primary{background:#0284c7;color:white}
+
+      .price-btn-primary:hover{background:#0369a1;transform:translateY(-1px)}
+
+      .price-btn-secondary{background:#ffffff;color:var(--text);border:1px solid #cbd5e1}
+
+      .price-btn-secondary:hover{background:#f8fafc;border-color:#94a3b8}
+
+      /* ── CTA ── */
+
+      .cta{padding:80px 0;text-align:center;background:#f1f5f9;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;position:relative;overflow:hidden}
+
+      .cta::before{display:none}
+
+      .cta h2{font-size:36px;font-weight:800;margin-bottom:12px;letter-spacing:-0.5px;position:relative}
+
+      .cta p{font-size:16px;color:var(--text-secondary);margin-bottom:32px;max-width:450px;margin-left:auto;margin-right:auto;position:relative}
+
+      .btn-white{background:#0284c7;color:white;padding:16px 44px;font-size:15px;font-weight:700;border-radius:8px;text-decoration:none;display:inline-block;transition:all 0.2s;position:relative;overflow:hidden}
+
+      .btn-white:hover{background:#0369a1;transform:translateY(-2px)}
+
+      /* ── MODAL ── */
+
+      .modal-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(4px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
       }
-      .section-header p {
-        font-size: 16px;
-        color: var(--text-secondary);
-        max-width: 560px;
-        margin: 0 auto;
+      .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
       }
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-      }
-      .feature {
-        background: var(--bg);
-        padding: 32px;
-        border-radius: 16px;
-        border: 1px solid var(--border);
-        transition: all 0.2s;
-      }
-      .feature:hover {
-        box-shadow: var(--shadow-lg);
-        transform: translateY(-4px);
-      }
-      .feature-icon {
-        width: 48px;
-        height: 48px;
-        background: var(--primary-light);
+      .modal-content {
+        background: #ffffff;
+        padding: 40px;
         border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        margin-bottom: 20px;
-      }
-      .feature h3 {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 12px;
-      }
-      .feature p {
-        font-size: 14px;
-        color: var(--text-secondary);
-        line-height: 1.7;
-      }
-
-      /* Compliance */
-      .compliance {
-        padding: 80px 0;
-      }
-      .compliance-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-      }
-      .compliance-item {
-        text-align: center;
-        padding: 32px 24px;
-        border: 1px solid var(--border);
-        border-radius: 16px;
-      }
-      .compliance-icon {
-        font-size: 32px;
-        margin-bottom: 16px;
-      }
-      .compliance-item h4 {
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 8px;
-      }
-      .compliance-item p {
-        font-size: 13px;
-        color: var(--text-secondary);
-      }
-
-      /* Pricing */
-      .pricing {
-        padding: 80px 0;
-        background: var(--bg-alt);
-      }
-      .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-      .price-card {
-        background: var(--bg);
-        padding: 40px 32px;
-        border-radius: 16px;
-        border: 1px solid var(--border);
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
         position: relative;
       }
-      .price-card.featured {
-        border-color: var(--primary);
-        box-shadow:
-          0 0 0 1px var(--primary),
-          var(--shadow-lg);
+      .modal-overlay.active .modal-content {
+        transform: translateY(0);
       }
-      .price-card.featured .price-badge {
+      .modal-close {
         position: absolute;
-        top: -12px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--primary);
-        color: white;
-        padding: 4px 16px;
-        border-radius: 100px;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--text-secondary);
       }
-      .price-tier {
-        font-size: 13px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: var(--primary);
-        margin-bottom: 16px;
-      }
-      .price-amount {
-        font-size: 48px;
-        font-weight: 800;
+      .modal-content h3 {
         margin-bottom: 8px;
-        letter-spacing: -2px;
-      }
-      .price-amount .period {
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--text-secondary);
-        letter-spacing: 0;
-      }
-      .price-desc {
-        font-size: 14px;
-        color: var(--text-secondary);
-        margin-bottom: 32px;
-        line-height: 1.6;
-      }
-      .price-features {
-        list-style: none;
-        margin-bottom: 32px;
-      }
-      .price-features li {
-        padding: 8px 0;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .price-features li::before {
-        content: "✓";
-        color: var(--accent);
-        font-weight: 700;
-      }
-      .price-btn {
-        display: block;
-        width: 100%;
-        padding: 14px;
-        text-align: center;
-        border-radius: 10px;
-        font-size: 15px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.2s;
-      }
-      .price-btn-primary {
-        background: var(--primary);
-        color: white;
-      }
-      .price-btn-primary:hover {
-        background: var(--primary-dark);
-      }
-      .price-btn-secondary {
-        background: var(--bg-alt);
+        font-size: 24px;
         color: var(--text);
-        border: 1px solid var(--border);
       }
-      .price-btn-secondary:hover {
-        background: var(--bg);
+      .modal-content p {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
       }
-
-      /* CTA */
-      .cta {
-        padding: 100px 0;
-        text-align: center;
-        background: linear-gradient(135deg, #0066ff 0%, #6366f1 100%);
-        color: white;
-      }
-      .cta h2 {
-        font-size: 40px;
-        font-weight: 800;
+      .form-group {
         margin-bottom: 16px;
-        letter-spacing: -0.5px;
       }
-      .cta p {
-        font-size: 18px;
-        opacity: 0.9;
-        margin-bottom: 40px;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .btn-white {
-        background: white;
-        color: var(--primary);
-        padding: 16px 40px;
-        font-size: 16px;
-        font-weight: 700;
-        border-radius: 10px;
-        text-decoration: none;
-        display: inline-block;
-        transition: all 0.2s;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-      .btn-white:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      }
-
-      /* Footer */
-      footer {
-        padding: 60px 0 40px;
-        border-top: 1px solid var(--border);
-      }
-      .footer-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1fr;
-        gap: 48px;
-        margin-bottom: 48px;
-      }
-      .footer-brand p {
-        font-size: 14px;
-        color: var(--text-secondary);
-        margin-top: 16px;
-        line-height: 1.7;
-      }
-      .footer-col h4 {
-        font-size: 13px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: var(--text);
-        margin-bottom: 20px;
-      }
-      .footer-col a {
+      .form-group label {
         display: block;
-        font-size: 14px;
-        color: var(--text-secondary);
-        text-decoration: none;
-        padding: 6px 0;
-        transition: color 0.2s;
-      }
-      .footer-col a:hover {
-        color: var(--primary);
-      }
-      .footer-bottom {
-        padding-top: 32px;
-        border-top: 1px solid var(--border);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .footer-bottom p {
         font-size: 13px;
-        color: var(--text-secondary);
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--text);
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: #0284c7;
+        box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+      }
+      #modal-form-submit {
+        margin-top: 8px;
       }
 
-      @media (max-width: 768px) {
-        nav {
-          display: none;
-        }
-        .stats-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .features-grid {
-          grid-template-columns: 1fr;
-        }
-        .compliance-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .pricing-grid {
-          grid-template-columns: 1fr;
-        }
-        .footer-grid {
-          grid-template-columns: 1fr 1fr;
-        }
+      /* ── FOOTER ── */
+
+      footer{padding:60px 0 40px;border-top:1px solid #e2e8f0;background:#ffffff}
+
+      .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+
+      .footer-brand p{font-size:14px;color:var(--text-secondary);margin-top:16px;line-height:1.7}
+
+      .footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text);margin-bottom:20px;position:relative;display:inline-block}
+
+      .footer-col h4::after{content:'';position:absolute;bottom:-4px;left:0;width:24px;height:2px;background:#0284c7;border-radius:2px}
+
+      .footer-col a{display:block;font-size:14px;color:var(--text-secondary);text-decoration:none;padding:5px 0;transition:all 0.2s}
+
+      .footer-col a:hover{color:#0284c7}
+
+      .footer-bottom{padding-top:32px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center}
+
+      .footer-bottom p{font-size:13px;color:var(--text-dim)}
+
+      .footer-bottom a{color:var(--text-secondary);text-decoration:none;transition:all 0.2s}
+
+      .footer-bottom a:hover{color:#0284c7}
+
+      .self-host-note{text-align:center;margin-top:32px;padding:20px 24px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;font-size:13px;color:var(--text-secondary);letter-spacing:0.3px;line-height:1.6}
+
+      .self-host-note a{color:#0284c7;text-decoration:none;font-weight:600;border-bottom:1px dashed #0284c7;padding-bottom:2px;transition:all 0.2s}
+
+      .self-host-note a:hover{color:#0369a1}
+
+      @media (max-width: 768px){nav{display:none}.stats-grid{grid-template-columns:repeat(2,1fr)}.features-grid{grid-template-columns:1fr}.compliance-grid{grid-template-columns:repeat(2,1fr)}.pricing-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+
+      #particle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        pointer-events: none;
+        display: block !important;
       }
-    </style>
-  </head>
-  <body>
+
+      .edge-gradient-left {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 15vw;
+        height: 100%;
+        background: linear-gradient(to right, rgba(2, 132, 199, 0.12), transparent);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .edge-gradient-right {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 15vw;
+        height: 100%;
+        background: linear-gradient(to left, rgba(2, 132, 199, 0.12), transparent);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* Shimmering Ambient Glow Spheres */
+      .ambient {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(2, 132, 199, 0.08) 0%, rgba(30, 58, 138, 0.03) 50%, transparent 100%);
+        filter: blur(140px);
+        z-index: 1;
+        pointer-events: none;
+        display: block !important;
+        animation: ambientFloat 25s infinite alternate ease-in-out;
+      }
+      .ambient-1 { top: 10%; left: -10%; }
+      .ambient-2 { top: 50%; right: -10%; background: radial-gradient(circle, rgba(251, 191, 36, 0.06) 0%, transparent 70%); animation-delay: -5s; }
+      .ambient-3 { bottom: 10%; left: 20%; background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%); animation-delay: -10s; }
+
+      @keyframes ambientFloat {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(60px, 40px) scale(1.15); }
+      }
+
+      /* ── HOVER MOUSE GLOW & PREMIUM SHINE ── */
+      .feature::after, .stat::after, .compliance-item::after, .price-card::after, .btn::after, .logo-icon::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(2, 132, 199, 0.08), transparent 80%);
+        z-index: 2;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: block !important;
+        border-radius: inherit;
+      }
+      .feature:hover::after, .stat:hover::after, .compliance-item:hover::after, .price-card:hover::after, .btn:hover::after, .logo-icon:hover::after {
+        opacity: 1;
+        display: block !important;
+      }
+
+      /* Premium Text Shine Keyframes */
+      @keyframes textShine {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* Soft Translucent Rainbow Pulsing Keyframes */
+      @keyframes rainbowPulseGlow {
+        0% { box-shadow: 0 10px 30px -10px rgba(255, 59, 48, 0.4), 0 0 40px rgba(255, 59, 48, 0.15), 0 0 80px rgba(255, 59, 48, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(255, 59, 48, 0.5); }
+        14% { box-shadow: 0 10px 30px -10px rgba(255, 149, 0, 0.4), 0 0 40px rgba(255, 149, 0, 0.15), 0 0 80px rgba(255, 149, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(255, 149, 0, 0.5); }
+        28% { box-shadow: 0 10px 30px -10px rgba(255, 204, 0, 0.4), 0 0 40px rgba(255, 204, 0, 0.15), 0 0 80px rgba(255, 204, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(255, 204, 0, 0.5); }
+        42% { box-shadow: 0 10px 30px -10px rgba(76, 217, 100, 0.4), 0 0 40px rgba(76, 217, 100, 0.15), 0 0 80px rgba(76, 217, 100, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(76, 217, 100, 0.5); }
+        57% { box-shadow: 0 10px 30px -10px rgba(90, 200, 250, 0.4), 0 0 40px rgba(90, 200, 250, 0.15), 0 0 80px rgba(90, 200, 250, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(90, 200, 250, 0.5); }
+        71% { box-shadow: 0 10px 30px -10px rgba(0, 122, 255, 0.4), 0 0 40px rgba(0, 122, 255, 0.15), 0 0 80px rgba(0, 122, 255, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(0, 122, 255, 0.5); }
+        85% { box-shadow: 0 10px 30px -10px rgba(88, 86, 214, 0.4), 0 0 40px rgba(88, 86, 214, 0.15), 0 0 80px rgba(88, 86, 214, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(88, 86, 214, 0.5); }
+        100% { box-shadow: 0 10px 30px -10px rgba(255, 59, 48, 0.4), 0 0 40px rgba(255, 59, 48, 0.15), 0 0 80px rgba(255, 59, 48, 0.06), inset 0 1px 0 rgba(255,255,255,0.6); border-color: rgba(255, 59, 48, 0.5); }
+      }
+
+      /* Glowing Rainbow Sheen Price Card with Rotating Border */
+      .price-card.rainbow {
+        border: none !important;
+        background: transparent !important;
+        padding: 2px !important;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.6);
+        animation: rainbowPulseGlow 4s infinite alternate ease-in-out;
+      }
+      .price-card.rainbow::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(from 0deg, 
+          rgba(255, 59, 48, 0.25), 
+          rgba(255, 149, 0, 0.25), 
+          rgba(255, 204, 0, 0.25), 
+          rgba(76, 217, 100, 0.25), 
+          rgba(90, 200, 250, 0.25), 
+          rgba(0, 122, 255, 0.25), 
+          rgba(88, 86, 214, 0.25), 
+          rgba(255, 59, 48, 0.25)
+        );
+        animation: rotateRainbow 2s linear infinite;
+        z-index: -2;
+        pointer-events: none;
+        display: block !important;
+      }
+      @keyframes rotateRainbow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .price-card.rainbow:hover {
+        box-shadow: 0 15px 45px -10px rgba(2, 132, 199, 0.35), 0 0 25px rgba(255, 149, 0, 0.25) !important;
+      }
+      .price-card.rainbow:hover::before {
+        animation-duration: 0.5s !important;
+        background: conic-gradient(from 0deg, 
+          #ff3b30, 
+          #ff9500, 
+          #ffcc00, 
+          #4cd964, 
+          #5ac8fa, 
+          #007aff, 
+          #5856d6, 
+          #ff3b30
+        ) !important;
+      }
+      /* Custom mouse-reactive translucent rainbow sheen overlay */
+      .price-card.rainbow::after {
+        background: radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), 
+          rgba(255, 59, 48, 0.08) 0%, 
+          rgba(255, 149, 0, 0.08) 15%, 
+          rgba(255, 204, 0, 0.08) 30%, 
+          rgba(76, 217, 100, 0.08) 45%, 
+          rgba(90, 200, 250, 0.08) 60%, 
+          rgba(0, 122, 255, 0.08) 75%, 
+          rgba(88, 86, 214, 0.08) 90%, 
+          transparent 100%) !important;
+      }
+      </style>
+
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+    <div class="edge-gradient-left"></div>
+    <div class="edge-gradient-right"></div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="ambient ambient-1"></div>
+
+    <div class="ambient ambient-2"></div>
+
+    <div class="ambient ambient-3"></div>
+
     <header>
-      <div class="container header-inner">
-        <a href="/" class="logo">
-          <div class="logo-icon">H</div>
-          <div class="logo-text">Hyper<span>Nexus</span></div>
-        </a>
-        <nav>
-          <a href="#features">Platform</a>
-          <a href="#compliance">Security</a>
-          <a href="#pricing">Pricing</a>
-          <a
-            href="https://github.com/NexusSoftMDMA/TormentNexus"
-            target="_blank"
-            >Documentation</a
-          >
-          <a href="#contact" class="nav-cta">Request Demo</a>
-        </nav>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container header-inner">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <a href="/" class="logo">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="logo-icon">H</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="logo-text">Hyper<span>Nexus</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="#features">Platform</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="#compliance">Security</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="#pricing">Pricing</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="https://github.com/MDMAtk/TormentNexus" target="_blank">Docs</a>
+                <a href="/login" style="margin-right: 15px;">Login</a>
+                <a href="#pricing" class="nav-cta">Sign Up</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </header>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section class="hero">
-      <div class="container">
-        <div class="hero-badge">
-          <span class="dot"></span>
-          SOC 2 Type II Compliant &amp; SAML SSO Certified
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="hero-badge"><span class="dot"></span> SOC 2 Type II Certified · HIPAA Ready · GDPR Compliant</div>
+            <div class="flame-wrapper" style="max-width: 860px; margin: 30px auto;">
+          <div class="flame-content">
+            <h1>Corporate AI Orchestration<br><span class="gradient-title">Built for Scale</span></h1>
+            <div class="harness-upgrade-banner" style="
+              border: 1px solid rgba(2, 132, 199, 0.2);
+              background: rgba(2, 132, 199, 0.02);
+              padding: 16px 24px;
+              border-radius: 8px;
+              max-width: 800px;
+              margin: 24px auto;
+              font-size: 14px;
+              color: var(--text-secondary);
+              text-align: center;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            ">
+              <span style="color: var(--neon-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Corporate System Announcement</span><br>
+              <strong>Ultimate MCP Server & Coding Harness Upgrade</strong><br>
+              <span style="color: var(--neon-purple); font-weight: 600;">Unstoppable Operational Power Deployed:</span><br>
+              🏅 Best-in-Class Memory | 🏅 Best-in-Class MCP Routing | 🏅 Best-in-Class Skill Routing | 🏅 Best-in-Class Context Harvesting | 🏅 Best-in-Class Memory Formation | 🏅 Best-in-Class Code Indexing | 🏅 Best-in-Class AI Accessory
+            </div>
+            <p>The secure, compliant AI control plane your engineering teams have been waiting for. A 4-layer MCP router with 384-dim semantic search and BM25 scoring. A three-tier memory engine with 50,000-entry long-term capacity and hourly sleep-cycle consolidation. An AST-aware code indexer backed by LanceDB. Six LLM providers failing over automatically. One control plane. Total governance.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="hero-buttons">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="#" onclick="startStripeCheckout('professional'); return false;" class="btn btn-primary">Start Now</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="#pricing" class="btn btn-secondary">View Pricing</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="hero-videos" style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="https://notebooklm.google.com/notebook/0a540934-3f43-4c52-91e0-ebc622071409/artifact/12652b93-e2f0-4b35-bc6a-31c2c8fa51f0?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" class="btn btn-secondary" style="font-size:13px;padding:10px 22px">▶ HyperNexus: Ultimate Agent</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div id="hypernexus-hero-vid" style="position:relative;z-index:10;margin-top:20px;max-width:750px;margin-left:auto;margin-right:auto;border-radius:12px;overflow:hidden;border:1px solid rgba(77,124,255,0.2);box-shadow:0 0 30px rgba(77,124,255,0.1);background:#0a0e1a">
+
+          <video controls style="width:100%;display:block" preload="auto" playsinline>
+
+            <source src="/hypernexus_ultimate_agent.mp4" type="video/mp4">
+
+          </video>
+
         </div>
-        <h1>
-          Enterprise AI Orchestration<br /><span class="highlight"
-            >Built for Compliance &amp; Scale</span
-          >
-        </h1>
-        <p>
-          HyperNexus is the secure, compliance-ready enterprise cloud gateway for TormentNexus. 
-          Get complete visibility, PII scrubbing, audit trails, and team governance over multi-model 
-          workflows in a clean corporate layout. Deploy in our cloud or your secure VPC.
-        </p>
-        <div class="hero-buttons">
-          <a href="#contact" class="btn btn-primary">Schedule a Demo →</a>
-          <a href="#pricing" class="btn btn-secondary">View Pricing</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <section class="logos">
-      <div class="container">
-        <div class="logos-label">Trusted by forward-thinking enterprises</div>
-        <div class="logos-grid">
-          <div class="logo-item">Fortune 500</div>
-          <div class="logo-item">Global Tech</div>
-          <div class="logo-item">FinServ Inc</div>
-          <div class="logo-item">HealthCorp</div>
-          <div class="logo-item">GovSecure</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="logos-label">Trusted by forward-thinking companies</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="logos-grid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="logo-item">Fortune 500</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="logo-item">Global Tech</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="logo-item">FinServ Inc</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="logo-item">HealthCorp</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="logo-item">GovSecure</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <section class="stats">
-      <div class="container">
-        <div class="stats-grid">
-          <div class="stat">
-            <div class="stat-num">11,000+</div>
-            <div class="stat-label">Tool Integrations</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">99.99%</div>
-            <div class="stat-label">Uptime SLA</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">&lt;26ms</div>
-            <div class="stat-label">Avg Latency</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">SOC 2</div>
-            <div class="stat-label">Certified</div>
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="stats-grid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="stat"><div class="stat-num" data-target="11000">0</div><div class="stat-label">Tools Indexed</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="stat"><div class="stat-num">50K</div><div class="stat-label">Memory Capacity</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="stat"><div class="stat-num">&lt;26ms</div><div class="stat-label">Avg Latency</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="stat"><div class="stat-num">SOC 2</div><div class="stat-label">Certified</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <section id="features" class="features">
-      <div class="container">
-        <div class="section-header">
-          <div class="label">Platform</div>
-          <h2>Everything your AI stack needs</h2>
-          <p>
-            A single pane of glass for model orchestration, tool management, and
-            governance.
-          </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="section-header">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="label">Platform</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <h2>Everything your AI stack needs</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <p>High-value capabilities built for developers and corporate oversight teams alike.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- Developer Focus Section -->
+            <h3 style="text-align:left; font-size:20px; font-weight:700; margin-bottom:20px; color:#0f172a; border-bottom:1px solid #cbd5e1; padding-bottom:8px; letter-spacing:-0.3px">Developer Focus</h3>
+            <div class="features-grid" style="margin-bottom:60px">
+
+                <div class="feature"><div class="feature-icon">⚡</div><h3>4-Layer MCP Tool Router</h3><p>L1 semantic search: 384-dim <code>all-MiniLM-L6-v2</code> embeddings, cosine similarity, auto-load at &ge;0.85. L2 BM25 catalog ranking: tool name 10&times;, tags 5&times;, description 3&times;. L3 working set: 16 soft / 24 hard cap, 8 hydrated schemas max, 4 active server processes. L4 runtime proxy. 5 permanent meta-tools + 27 always-on builtins. 10-min idle LRU eviction. Zero token bloat.</p></div>
+
+                <div class="feature"><div class="feature-icon">🔗</div><h3>MCP Gateway &amp; Aggregator</h3><p>stdio JSON-RPC 2.0 aggregator with <code>{server}__{tool}</code> namespacing to prevent collisions across 5 catalog sources: Glama, Smithery, MCP.run, npm, GitHub Topics. Automated API secret inference via regex for GitHub, OpenAI, Anthropic, Gemini, Slack, Stripe + 4 more. 200-event traffic inspector ring buffer. JSONL audit trail, daily rotation.</p></div>
+
+                <div class="feature"><div class="feature-icon">🧠</div><h3>Three-Tier Memory Engine</h3><p>L1: 100-entry in-RAM scratchpad (heat-score eviction). L2: SQLite vault with 384-dim vector search, FTS5 full-text, and GraphRAG edge table &mdash; 50,000 long-term capacity. L3: gzip cold archive, 90-day limbo before hard-delete. Hourly sleep cycle: ForgettingCurve decay &rarr; DreamCycle consolidation &rarr; MentalModel reflection. On session start, L2 semantic query pre-populates L1 with top-5 historical heuristics.</p></div>
+
+                <div class="feature"><div class="feature-icon">🔍</div><h3>AST-Aware Code Indexer</h3><p>TypeScript compiler API (<code>ts.createSourceFile()</code>) splits at exact function, class, interface, type alias, module, and enum boundaries. 1,000-char soft / 2,000-char hard chunk limits. LanceDB ANN vector search (same 384-dim model). Five always-on repograph tools: <code>find_references</code>, <code>find_dependents</code>, <code>semantic_search</code>, <code>build</code>, <code>get</code>. Blast-radius analysis before every change.</p></div>
+
+                <div class="feature"><div class="feature-icon">🌊</div><h3>Resilient LLM Waterfall</h3><p>Automatic cascade on every 429 or 5xx across 6 providers: Google &rarr; Anthropic &rarr; OpenAI &rarr; DeepSeek &rarr; OpenRouter &rarr; local Ollama. Provider latency and error metrics persisted to SQLite for adaptive ranking. 9,774 historical sessions already ingested and available for context retrieval.</p></div>
+
+                <div class="feature"><div class="feature-icon">🩹</div><h3>Autonomous Self-Healing Loop</h3><p>HealAndVerify pipeline: LLM diagnoses error &rarr; proposes fix &rarr; applies to isolated executor &rarr; runs tests in closed loop. Every diagnosis-fix attempt persisted to the L2 memory vault for fleet-wide learning. Stop hooks intercept session ends to audit unfulfilled promises before teardown.</p></div>
+
+            </div>
+
+            <!-- Corporate Focus Section -->
+            <h3 style="text-align:left; font-size:20px; font-weight:700; margin-bottom:20px; color:#0f172a; border-bottom:1px solid #cbd5e1; padding-bottom:8px; letter-spacing:-0.3px">Corporate Focus</h3>
+             <div class="features-grid">
+
+                <div class="feature"><div class="feature-icon">🔐</div><h3>SSO &amp; RBAC</h3><p>HTTP middleware validates <code>X-Corporate-SSO</code> tokens via your identity provider. Three built-in RBAC roles: Admin (read/write/admin/audit), Operator (read/write/execute), Viewer (read-only). Granular resource-level authorization via <code>SecurityProvider.Authorize()</code>. Up to 10-node cluster support.</p></div>
+
+                <div class="feature"><div class="feature-icon">🏢</div><h3>VPC &amp; Air-Gapped Deployment</h3><p>The entire MCP gateway, memory vault, and code indexer run fully on-premises with no data egress required. Cryptographically signed licensing. L3 cold archive in gzip-compressed JSONL stays entirely within your perimeter. JSONL audit trail in daily-rotating files ready for your SIEM.</p></div>
+
+                <div class="feature"><div class="feature-icon">🕸️</div><h3>Multi-Agent Swarm Mesh</h3><p>Four specialized roles coordinated via a type-safe A2A message broker with heartbeat monitoring and audit logging. PairOrchestrator state machine: Planner &rarr; Reviewer &rarr; Implementer &rarr; Critic. Council/Debate manager with human veto service for high-stakes decisions. 1,000-event rolling router log for full observability.</p></div>
+
+             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-        <div class="features-grid">
-          <div class="feature">
-            <div class="feature-icon">🔐</div>
-            <h3>SSO & RBAC</h3>
-            <p>
-              SAML 2.0 and OIDC integration with fine-grained role-based access
-              control. Map your existing identity provider in minutes.
-            </p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">📊</div>
-            <h3>Audit & Compliance</h3>
-            <p>
-              Immutable audit logs for every tool call, model interaction, and
-              data access. Export-ready for SOC 2, HIPAA, and GDPR.
-            </p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">🏢</div>
-            <h3>Air-Gapped Deployment</h3>
-            <p>
-              Run entirely within your VPC. No external calls. Cryptographically
-              signed offline license keys for regulated environments.
-            </p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">⚡</div>
-            <h3>Multi-Model Orchestration</h3>
-            <p>
-              Route tasks to the最优 model based on cost, latency, and
-              capability. Automatic failover across providers.
-            </p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">🛡️</div>
-            <h3>Data Loss Prevention</h3>
-            <p>
-              Configurable PII scrubbing and content filtering before prompts
-              reach external models. Keep sensitive data in-house.
-            </p>
-          </div>
-          <div class="feature">
-            <div class="feature-icon">📈</div>
-            <h3>Usage Analytics</h3>
-            <p>
-              Real-time dashboards for token usage, cost allocation, and team
-              productivity. Set budgets and alerts per department.
-            </p>
-          </div>
-        </div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section id="compliance" class="compliance">
-      <div class="container">
-        <div class="section-header">
-          <div class="label">Security & Compliance</div>
-          <h2>Enterprise-grade by design</h2>
-          <p>
-            Built from the ground up to meet the most stringent regulatory
-            requirements.
-          </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="section-header">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="label">Security & Compliance</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <h2>Corporate-grade by design</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <p>Built from the ground up to meet the most stringent regulatory requirements.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="compliance-grid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="compliance-item"><div class="compliance-icon">🔒</div><h4>SOC 2 Type II</h4><p>Independently audited security controls</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="compliance-item"><div class="compliance-icon">🏥</div><h4>HIPAA Ready</h4><p>BAA available for healthcare organizations</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="compliance-item"><div class="compliance-icon">🇪🇺</div><h4>GDPR Compliant</h4><p>Data processing agreements and EU hosting</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="compliance-item"><div class="compliance-icon">📋</div><h4>SBOM Included</h4><p>Complete software bill of materials</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-        <div class="compliance-grid">
-          <div class="compliance-item">
-            <div class="compliance-icon">🔒</div>
-            <h4>SOC 2 Type II</h4>
-            <p>Independently audited security controls</p>
-          </div>
-          <div class="compliance-item">
-            <div class="compliance-icon">🏥</div>
-            <h4>Local Model Isolation</h4>
-            <p>Restrict fallback to gemma-4-e2b via headless Ollama/vLLM for complete privacy</p>
-          </div>
-          <div class="compliance-item">
-            <div class="compliance-icon">🇪🇺</div>
-            <h4>GDPR & EU Hosting</h4>
-            <p>Data processing agreements and local data boundary compliance</p>
-          </div>
-          <div class="compliance-item">
-            <div class="compliance-icon">📋</div>
-            <h4>Stripe Billing & SBOM</h4>
-            <p>SaaS subscription seat management and complete software bill of materials</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Live Pipeline Activity Section (Demo Only) -->
+    <style>
+        .feed-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        .feed-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .feed-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .feed-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        .feed-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .feed-item:last-child {
+            border-bottom: none;
+        }
+        .feed-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .feed-company {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text);
+        }
+        .feed-meta {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        .state-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid currentColor;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .state-Discovered { color: #64748b; }
+        .state-Researched { color: #0284c7; }
+        .state-Outreach_Sent { color: #d97706; }
+        .state-Engaged { color: #7c3aed; }
+        .state-Negotiating { color: #db2777; }
+        .state-Closed_Won { color: #16a34a; }
+        .state-Closed_Lost { color: #dc2626; }
+        .loading-text {
+            color: var(--text-dim);
+            text-align: center;
+            padding: 2rem 0;
+            font-style: italic;
+        }
+    </style>
+
+    <section class="section" style="background: #f8fafc;">
+      <div class="container">
+        <h2 class="section-title">Live Autonomous Pipeline Activity</h2>
+        <p class="section-subtitle">Real-time status feed of our active sales development pipelines.</p>
+        
+        <div style="background: white; border-radius: 12px; border: 1px solid var(--glass-border); padding: 24px; max-width: 800px; margin: 0 auto; box-shadow: var(--shadow-card);">
+          <div class="feed-container" id="deals-feed">
+             <div class="loading-text">Connecting to pipeline API stream...</div>
           </div>
         </div>
       </div>
     </section>
 
     <section id="pricing" class="pricing">
-      <div class="container">
-        <div class="section-header">
-          <div class="label">Pricing</div>
-          <h2>Plans that scale with you</h2>
-          <p>
-            Start with a proof of concept. Scale to enterprise-wide deployment.
-          </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="section-header">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="label">Pricing</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <h2>Plans that scale with you</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <p>Start with a proof of concept. Scale to corporate-wide deployment.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="pricing-grid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="price-card rainbow">
+                    <div class="price-card-inner" style="background: rgba(255, 255, 255, 0.95); border-radius: 10px; padding: 44px 32px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 1; transition: all 0.3s ease;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="price-tier">Professional</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div style="text-decoration:line-through;color:var(--text-secondary);font-size:20px;font-weight:500;letter-spacing:-0.5px;margin-bottom:-2px">$100</div>
+                    <div style="font-size:11px;color:#ff3b30;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;animation:pulse 1.5s infinite">SALE ENDING... SOON!</div>
+                    <div class="price-amount">$5 <span class="period">/ seat / mo</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="price-desc">For growing teams that need governance and compliance.</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <ul class="price-features">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <li>Unlimited seats</li><li>SSO & RBAC</li><li>Audit logging</li><li>Priority support</li><li>Cloud or self-hosted</li><li>Usage analytics</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <a href="#" onclick="startStripeCheckout('professional'); return false;" class="price-btn price-btn-primary">Buy Now!!!</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="self-host-note">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                For personal use, individual developers, non-commercial, or self-hosted deployments &rarr; <a href="https://tormentnexus.site" target="_blank">TormentNexus.site</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-        <div class="pricing-grid">
-          <div class="price-card">
-            <div class="price-tier">Starter</div>
-            <div class="price-amount">$0 <span class="period">/ mo</span></div>
-            <div class="price-desc">
-              For evaluation and small teams exploring AI orchestration.
-            </div>
-            <ul class="price-features">
-              <li>Up to 10 seats</li>
-              <li>Community support</li>
-              <li>Core tool integrations</li>
-              <li>Basic analytics</li>
-              <li>Self-hosted only</li>
-            </ul>
-            <a href="#" class="price-btn price-btn-secondary">Get Started</a>
-          </div>
-          <div class="price-card featured">
-            <div class="price-badge">Most Popular</div>
-            <div class="price-tier">Professional</div>
-            <div class="price-amount">
-              $49 <span class="period">/ seat / mo</span>
-            </div>
-            <div class="price-desc">
-              For growing teams that need governance and compliance.
-            </div>
-            <ul class="price-features">
-              <li>Unlimited seats</li>
-              <li>SSO & RBAC</li>
-              <li>Audit logging</li>
-              <li>Priority support</li>
-              <li>Cloud or self-hosted</li>
-              <li>Usage analytics</li>
-            </ul>
-            <a href="#contact" class="price-btn price-btn-primary"
-              >Start Free Trial</a
-            >
-          </div>
-          <div class="price-card">
-            <div class="price-tier">Enterprise</div>
-            <div class="price-amount">Custom</div>
-            <div class="price-desc">
-              For organizations with advanced security and compliance needs.
-            </div>
-            <ul class="price-features">
-              <li>Everything in Professional</li>
-              <li>Air-gapped deployment</li>
-              <li>Dedicated support SLA</li>
-              <li>Custom integrations</li>
-              <li>IP indemnification</li>
-              <li>On-site training</li>
-            </ul>
-            <a href="#contact" class="price-btn price-btn-secondary"
-              >Contact Sales</a
-            >
-          </div>
-        </div>
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <section id="contact" class="cta">
-      <div class="container">
-        <h2>Ready to secure your AI stack?</h2>
-        <p>
-          Join the enterprises that trust HyperNexus to orchestrate their AI
-          workflows.
-        </p>
-        <a href="mailto:enterprise@hypernexus.site" class="btn-white"
-          >Request a Demo →</a
-        >
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <h2>Ready to secure your AI stack?</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <p>Join the companies that trust HyperNexus to orchestrate their AI workflows.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <a href="#" onclick="startStripeCheckout('professional'); return false;" class="btn-white">Start Now</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </section>
 
-    <footer>
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-brand">
-            <div class="logo">
-              <div class="logo-icon">H</div>
-              <div class="logo-text">Hyper<span>Nexus</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="cta" style="border-top:1px solid var(--glass-border);padding:60px 0">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="section-header">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="label">Video Dossier</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <h2>AI-Generated Intelligence Briefings</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <p>Deep-dive video overviews covering the TormentNexus ecosystem, generated by AI from 182 source documents each.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
-            <p>
-              Enterprise AI orchestration platform. Secure, compliant, and built
-              for scale.
-            </p>
-          </div>
-          <div class="footer-col">
-            <h4>Product</h4>
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#">Documentation</a>
-            <a href="#">Changelog</a>
-          </div>
-          <div class="footer-col">
-            <h4>Company</h4>
-            <a href="#">About</a>
-            <a href="#">Blog</a>
-            <a href="#">Careers</a>
-            <a href="#contact">Contact</a>
-          </div>
-          <div class="footer-col">
-            <h4>Legal</h4>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Security</a>
-            <a href="#">DPA</a>
-          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <a href="https://notebooklm.google.com/notebook/0a540934-3f43-4c52-91e0-ebc622071409/artifact/12652b93-e2f0-4b35-bc6a-31c2c8fa51f0?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" class="btn btn-primary" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px 16px;border-radius:12px;text-decoration:none;font-size:14px;line-height:1.4">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <span style="font-size:28px">▶</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <strong>HyperNexus:<br>Ultimate Agent</strong>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <span style="font-size:12px;opacity:0.7">182 sources</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
-        <div class="footer-bottom">
-          <p>© 2026 HyperNexus, Inc. All rights reserved.</p>
-          <p>
-            <a
-              href="https://tormentnexus.site"
-              style="color: var(--text-secondary); text-decoration: none"
-              >Powered by TormentNexus</a
-            >
-          </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div id="hypernexus-dossier-vid" style="margin-top:25px;max-width:750px;margin-left:auto;margin-right:auto;border-radius:12px;overflow:hidden;border:1px solid rgba(77,124,255,0.2);box-shadow:0 0 30px rgba(77,124,255,0.1);background:#0a0e1a">
+
+          <video controls style="width:100%;display:block" preload="auto" playsinline>
+
+            <source src="/hypernexus_ultimate_agent.mp4" type="video/mp4">
+
+          </video>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="footer-grid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="footer-brand">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="logo">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="logo-icon" style="width:32px;height:32px;font-size:16px">H</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="logo-text" style="font-size:18px">Hyper<span>Nexus</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <p>Corporate AI orchestration platform. Secure, compliant, and built for scale.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="footer-col"><h4>Product</h4><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="https://github.com/MDMAtk/TormentNexus">Documentation</a><a href="https://github.com/robertpelloni/marketing_agent/blob/main/CHANGELOG.md">Changelog</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="footer-col"><h4>Company</h4><a href="https://tormentnexus.site">About</a><a href="https://tormentnexus.site/blog/">Blog</a><a href="/contact.php">Careers</a><a href="/contact.php">Contact</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/privacy.html#security">Security</a><a href="/contact.php">DPA</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="footer-bottom">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <p>© 2026 HyperNexus, Inc. All rights reserved.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <p><a href="https://tormentnexus.site">Powered by TormentNexus</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </footer>
-  </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // ========== SLEEK MINIMAL PARTICLE SYSTEM ==========
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const canvas = document.getElementById('particle-canvas');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const ctx = canvas.getContext('2d');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        let W, H;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        resize();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        window.addEventListener('resize', resize);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const particles = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const PARTICLE_COUNT = 5; // Reduced from 80 to 25
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        class Particle {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            constructor() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.reset();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.alpha = Math.random();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.alphaDir = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            reset() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.x = Math.random() * W;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.y = Math.random() * H;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.size = 2 + Math.random() * 3; // Bigger particles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.speedX = (Math.random() - 0.5) * 0.2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.speedY = (Math.random() - 0.5) * 0.2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.opacity = 0.3 + Math.random() * 0.4;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.hue = 220 + Math.random() * 40;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.pulse = Math.random() * Math.PI * 2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            update() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.x += this.speedX;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.y += this.speedY;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.pulse += 0.015;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                if (this.x < -20 || this.x > W + 20 || this.y < -20 || this.y > H + 20) this.reset();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.alpha += 0.008 * this.alphaDir;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                if(this.alpha > 1 || this.alpha < 0) this.alphaDir *= -1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                this.opacity = 0.15 + this.alpha * 0.4;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            draw() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var pulseFactor = 0.7 + Math.sin(this.pulse) * 0.3;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var r = this.size * pulseFactor;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.save();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // Outer glow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, r * 4);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                grad.addColorStop(0, 'hsla(' + this.hue + ', 80%, 70%, ' + (this.opacity * 0.3) + ')');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                grad.addColorStop(0.5, 'hsla(' + this.hue + ', 80%, 60%, ' + (this.opacity * 0.08) + ')');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                grad.addColorStop(1, 'hsla(' + this.hue + ', 80%, 60%, 0)');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.fillStyle = grad;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.beginPath();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.arc(this.x, this.y, r * 4, 0, Math.PI * 2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.fill();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // Core
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.shadowColor = 'hsla(' + this.hue + ', 80%, 70%, 0.3)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.shadowBlur = 15;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.fillStyle = 'hsla(' + this.hue + ', 80%, 70%, ' + this.opacity + ')';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.beginPath();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.fill();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                // Bright center dot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.shadowBlur = 20;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.fillStyle = 'hsla(' + this.hue + ', 90%, 90%, ' + (this.opacity * 0.6) + ')';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.beginPath();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.arc(this.x, this.y, r * 0.4, 0, Math.PI * 2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.fill();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ctx.restore();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function drawConnections() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            for (let i = 0; i < particles.length; i++) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                for (let j = i + 1; j < particles.length; j++) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    const dx = particles[i].x - particles[j].x;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    const dy = particles[i].y - particles[j].y;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    if (dist < 180) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        const alpha = 0.06 * (1 - dist / 180) * (particles[i].opacity + particles[j].opacity) * 0.5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // Glow line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.save();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.shadowColor = 'hsla(220, 80%, 60%, 0.08)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.shadowBlur = 6;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.strokeStyle = 'hsla(220, 80%, 60%, ' + alpha + ')';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.lineWidth = 0.6;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.beginPath();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.moveTo(particles[i].x, particles[i].y);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.lineTo(particles[j].x, particles[j].y);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.stroke();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ctx.restore();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Mouse-reactive particles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        let mouseX = -9999, mouseY = -9999;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        canvas.addEventListener('mousemove', function(e) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            mouseX = e.clientX;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            mouseY = e.clientY;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function animate() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ctx.clearRect(0, 0, W, H);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            particles.forEach(p => { p.update(); p.draw(); });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            drawConnections();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Mouse ripple
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if (mouseX > 0) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                particles.forEach(p => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    const dx = p.x - mouseX;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    const dy = p.y - mouseY;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    if (dist < 250) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        const force = (1 - dist / 250) * 0.12;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        p.speedX += (dx / dist) * force || 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        p.speedY += (dy / dist) * force || 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            requestAnimationFrame(animate);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        animate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // ========== ANIMATED COUNTERS ==========
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function animateCounters() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                const target = parseInt(el.dataset.target);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                let current = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                const increment = Math.ceil(target / 80);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                const interval = setInterval(() => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    current += increment;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    if (current >= target) { current = target; clearInterval(interval); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    if (target === 9999) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        el.textContent = (current / 100).toFixed(2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    } else {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        el.textContent = current.toLocaleString() + '+';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }, 20);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        setTimeout(animateCounters, 600);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // ========== 3D TILT WITH SHINE FOLLOW ==========
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        document.querySelectorAll('.feature, .stat, .price-card, .compliance-item').forEach(function(card) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            card.addEventListener('mousemove', function(e) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var r = card.getBoundingClientRect();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var x = e.clientX - r.left, y = e.clientY - r.top;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var cx = r.width / 2, cy = r.height / 2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var rotX = (y - cy) / cy * -10, rotY = (x - cx) / cx * 10;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var shinePos = (x / r.width) * 100 + '% ' + (y / r.height) * 100 + '%';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                card.style.transform = 'perspective(1200px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateY(-10px) scale(1.04)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                card.style.transition = 'transform 0.05s';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                card.style.setProperty('--shine', shinePos);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                card.style.background = 'radial-gradient(circle at ' + shinePos + ', rgba(255,255,255,0.025), transparent 60%), var(--glass)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            card.addEventListener('mouseleave', function() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                card.style.transform = '';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                card.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                card.style.background = '';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // ========== SCROLL REVEAL ==========
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        var observer = new IntersectionObserver(function(entries) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            entries.forEach(function(e) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                if (e.isIntersecting) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    e.target.style.opacity = '1';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    e.target.style.transform = 'translateY(0)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    e.target.style.transition = 'opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        document.querySelectorAll('.feature, .stat, .compliance-item, .price-card, .section-header').forEach(function(el) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            el.style.opacity = '0';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            el.style.transform = 'translateY(40px)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            el.style.transition = 'opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            observer.observe(el);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // ========== SMOOTH PARALLAX ==========
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        window.addEventListener('scroll', function() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            var scrollY = window.scrollY;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            var hero = document.querySelector('.hero');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if (hero && scrollY < 800) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                hero.style.transform = 'translateY(' + (scrollY * 0.03) + 'px)';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                hero.style.opacity = Math.max(0.35, 1 - scrollY * 0.0012);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // ========== DYNAMIC HOVER GLOW SHINE EFFECT ==========
+        document.querySelectorAll('.feature, .stat, .compliance-item, .price-card, .btn, .logo-icon').forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                var rect = card.getBoundingClientRect();
+                var x = e.clientX - rect.left;
+                var y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', x + 'px');
+                card.style.setProperty('--mouse-y', y + 'px');
+            });
+        });
+        // ========== SHINING STAR/PARTICLE SYSTEM ==========
+        (function() {
+            var canvas = document.getElementById('particle-canvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var particles = [];
+            var maxParticles = 60;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            function Particle() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * -0.5 - 0.1; // Float upwards
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.color = Math.random() > 0.5 ? 'rgba(251, 191, 36, ' : 'rgba(245, 158, 11, '; // Gold or Orange sparkles
+            }
+
+            Particle.prototype.update = function() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+                this.alpha += Math.random() * 0.05 - 0.025;
+                if (this.alpha < 0.1) this.alpha = 0.1;
+                if (this.alpha > 0.8) this.alpha = 0.8;
+            };
+
+            Particle.prototype.draw = function() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.shadowBlur = this.size * 6;
+                ctx.shadowColor = '#fbbf24';
+                ctx.fill();
+                ctx.restore();
+            };
+
+            for (var i = 0; i < maxParticles; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (var i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="modal-overlay" id="leadModal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <h3>Request Access</h3>
+        <p>Enter your company domain to join the waitlist.</p>
+        <form id="leadForm">
+          <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" placeholder="Acme Corp" required>
+          </div>
+          <div class="form-group">
+            <label for="companyDomain">Company Domain</label>
+            <input type="text" id="companyDomain" placeholder="acme.com" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="modal-form-submit" style="width: 100%; justify-content: center;">Submit Request</button>
+          <div id="formStatus" style="margin-top: 12px; font-size: 13px; text-align: center; display: none;"></div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function openModal(e) {
+        if(e) e.preventDefault();
+        document.getElementById('leadModal').classList.add('active');
+        document.getElementById('formStatus').style.display = 'none';
+      }
+
+      function closeModal() {
+        document.getElementById('leadModal').classList.remove('active');
+      }
+
+      // Dynamically fetch quote pricing for Professional tier
+      fetch('/api/v1/quote?company_size=Mid-Market')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.quote) {
+            const priceCards = document.querySelectorAll('.price-tier');
+            priceCards.forEach(tier => {
+              if (tier.textContent === 'Professional') {
+                const amountEl = tier.nextElementSibling; // div.price-amount
+                if (amountEl && amountEl.classList.contains('price-amount')) {
+                  amountEl.innerHTML = `$` + Math.round(data.quote / 12) + ` <span class="period">/ mo</span>`;
+                }
+              }
+            });
+          }
+        })
+        .catch(err => console.error('Failed to load real-time pricing:', err));
+
+      // Wire up all demo/contact buttons to open the modal
+      document.querySelectorAll('a[href="/contact.php"]').forEach(el => {
+        el.addEventListener('click', openModal);
+      });
+
+      document.getElementById('leadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('modal-form-submit');
+        const status = document.getElementById('formStatus');
+        const name = document.getElementById('companyName').value;
+        const domain = document.getElementById('companyDomain').value;
+
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        fetch('/api/v1/leads', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+            domain: domain,
+            tech_stack: [],
+            hiring_signals: ["Inbound Web Request"]
+          })
+        })
+        .then(res => {
+          if(!res.ok) throw new Error('Network error');
+          return res.json();
+        })
+        .then(data => {
+          btn.textContent = 'Submitted!';
+          btn.style.background = '#28a745';
+          status.style.display = 'block';
+          status.style.color = '#28a745';
+          status.textContent = 'Thank you! We will evaluate your request shortly.';
+          setTimeout(closeModal, 2000);
+        })
+        .catch(err => {
+          btn.disabled = false;
+          btn.textContent = 'Submit Request';
+          status.style.display = 'block';
+          status.style.color = '#dc3545';
+          status.textContent = 'Error submitting request. Please try again.';
+          console.error(err);
+        });
+      });
+
+      // ── Stripe Checkout ──
+      function startStripeCheckout(tier) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/v1/billing/checkout', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            var resp = JSON.parse(xhr.responseText);
+            if (resp.url) window.location.href = resp.url;
+          } else {
+            // Fallback to contact form
+            window.location.href = '/contact.php?tier=' + tier;
+          }
+        };
+        xhr.onerror = function() {
+          window.location.href = '/contact.php?tier=' + tier;
+        };
+        xhr.send(JSON.stringify({
+          company_id: 0,
+          tier: tier,
+          success_url: window.location.origin + '/thank-you',
+          cancel_url: window.location.href
+        }));
+      }
+
+      // ── Live Deals Feed Polling ──
+      async function fetchDeals() {
+          const feedContainer = document.getElementById('deals-feed');
+          try {
+              const response = await fetch('/api/v1/deals');
+              if (!response.ok) throw new Error('API server returned error status');
+              const deals = await response.json();
+              
+              if (deals.length === 0) {
+                  feedContainer.innerHTML = '<div class="loading-text">No active pipelines currently in discovery phase.</div>';
+                  return;
+              }
+
+              let html = '';
+              deals.forEach(deal => {
+                  const dateStr = new Date(deal.CreatedAt).toLocaleString(undefined, {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                  });
+                  
+                  html += `
+                      <div class="feed-item">
+                          <div class="feed-info">
+                              <div class="feed-company">Lead ID: ${deal.CompanyID}</div>
+                              <div class="feed-meta">Discovered: ${dateStr}</div>
+                          </div>
+                          <span class="state-badge state-${deal.CurrentState}">${deal.CurrentState.replace('_', ' ')}</span>
+                      </div>
+                  `;
+              });
+              feedContainer.innerHTML = html;
+          } catch (err) {
+              console.error('Error fetching live deals:', err);
+              feedContainer.innerHTML = '<div class="loading-text" style="color: #ef4444;">Failed to load live pipeline feed. Retrying...</div>';
+          }
+      }
+
+      fetchDeals();
+      setInterval(fetchDeals, 10000);
+    </script>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
