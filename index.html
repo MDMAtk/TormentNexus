@@ -962,10 +962,8 @@
             ">
               <span style="color: var(--neon-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Corporate System Announcement</span><br>
               <strong>Ultimate MCP Server & Coding Harness Upgrade</strong><br>
-              <span style="color: var(--neon-purple); font-weight: 600;">Unstoppable Operational Power Deployed:</span><br>
-              🏅 Best-in-Class Memory | 🏅 Best-in-Class MCP Routing | 🏅 Best-in-Class Skill Routing | 🏅 Best-in-Class Context Harvesting | 🏅 Best-in-Class Memory Formation | 🏅 Best-in-Class Code Indexing | 🏅 Best-in-Class AI Accessory
             </div>
-            <p>The secure, compliant AI control plane your engineering teams have been waiting for. A 4-layer MCP router with 384-dim semantic search and BM25 scoring. A three-tier memory engine with 50,000-entry long-term capacity and hourly sleep-cycle consolidation. An AST-aware code indexer backed by LanceDB. Six LLM providers failing over automatically. One control plane. Total governance.</p>
+            <p>HyperNexus is a secure, compliant multi-tenant SaaS backend and enterprise AI control plane engineered for corporate customers, complete with auto-provisioning scripts that spin up per-tenant containers with isolated volumes, resource limits, and Stripe webhook integration. For production use, the Go sidecar deploys to any Linux VM with PM2-managed lifecycle and Let's Encrypt wildcard SSL. The Next.js dashboard provides visual exploration of every subsystem: memory explorer, cold archive, mesh network topology, tool registry, provider configuration, and enterprise security settings. The Pi extension adds custom tools and slash commands with @memory:key context expansion, per-turn context harvesting, and enterprise RBAC enforcement. It maintains a tiered memory architecture with vector-embedded L2 for semantic similarity search and an FTS5-indexed L3 cold archive for full-text keyword retrieval across infinite past agent interactions. The hypercode tool discovery layer enables dynamic loading and hydration of downstream MCP tools across infinite servers with LRU eviction and on-demand schema hydration — no upfront configuration required. It exposes infinite MCP tools across multiple servers including full filesystem access (read/write/edit/bash/grep/find), a stateful code interpreter (Python/Node.js), browser automation (Playwright-based navigation, form filling, screenshot capture, multi-tab management), system process control (Windows process inspection, keyboard simulation, chat surface detection), and cloud infrastructure tooling (AWS/Azure/GCP diagnostics, CI/CD pipeline generation, Jira/Confluence integration). A comprehensive skill registry provides reusable capability modules, while imported sessions from Claude Code, Aider, and other CLI agents prevent regression across model handoffs.</p>
 
 
 
@@ -1432,23 +1430,8 @@
 
 
 
-                <div class="stat"><div class="stat-num" data-target="11000">0</div><div class="stat-label">Tools Indexed</div></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class="stat"><div class="stat-num">50K</div><div class="stat-label">Memory Capacity</div></div>
+                <div class="stat"><div class="stat-num">Infinite</div><div class="stat-label">Tools Indexed</div></div>
+                <div class="stat"><div class="stat-num">Unlimited</div><div class="stat-label">Memory Capacity</div></div>
 
 
 
@@ -1672,35 +1655,35 @@
 
 
 
-            <!-- Developer Focus Section -->
-            <h3 style="text-align:left; font-size:20px; font-weight:700; margin-bottom:20px; color:#0f172a; border-bottom:1px solid #cbd5e1; padding-bottom:8px; letter-spacing:-0.3px">Developer Focus</h3>
-            <div class="features-grid" style="margin-bottom:60px">
-
-                <div class="feature"><div class="feature-icon">⚡</div><h3>4-Layer MCP Tool Router</h3><p>L1 semantic search: 384-dim <code>all-MiniLM-L6-v2</code> embeddings, cosine similarity, auto-load at &ge;0.85. L2 BM25 catalog ranking: tool name 10&times;, tags 5&times;, description 3&times;. L3 working set: 16 soft / 24 hard cap, 8 hydrated schemas max, 4 active server processes. L4 runtime proxy. 5 permanent meta-tools + 27 always-on builtins. 10-min idle LRU eviction. Zero token bloat.</p></div>
-
-                <div class="feature"><div class="feature-icon">🔗</div><h3>MCP Gateway &amp; Aggregator</h3><p>stdio JSON-RPC 2.0 aggregator with <code>{server}__{tool}</code> namespacing to prevent collisions across 5 catalog sources: Glama, Smithery, MCP.run, npm, GitHub Topics. Automated API secret inference via regex for GitHub, OpenAI, Anthropic, Gemini, Slack, Stripe + 4 more. 200-event traffic inspector ring buffer. JSONL audit trail, daily rotation.</p></div>
-
-                <div class="feature"><div class="feature-icon">🧠</div><h3>Three-Tier Memory Engine</h3><p>L1: 100-entry in-RAM scratchpad (heat-score eviction). L2: SQLite vault with 384-dim vector search, FTS5 full-text, and GraphRAG edge table &mdash; 50,000 long-term capacity. L3: gzip cold archive, 90-day limbo before hard-delete. Hourly sleep cycle: ForgettingCurve decay &rarr; DreamCycle consolidation &rarr; MentalModel reflection. On session start, L2 semantic query pre-populates L1 with top-5 historical heuristics.</p></div>
-
-                <div class="feature"><div class="feature-icon">🔍</div><h3>AST-Aware Code Indexer</h3><p>TypeScript compiler API (<code>ts.createSourceFile()</code>) splits at exact function, class, interface, type alias, module, and enum boundaries. 1,000-char soft / 2,000-char hard chunk limits. LanceDB ANN vector search (same 384-dim model). Five always-on repograph tools: <code>find_references</code>, <code>find_dependents</code>, <code>semantic_search</code>, <code>build</code>, <code>get</code>. Blast-radius analysis before every change.</p></div>
-
-                <div class="feature"><div class="feature-icon">🌊</div><h3>Resilient LLM Waterfall</h3><p>Automatic cascade on every 429 or 5xx across 6 providers: Google &rarr; Anthropic &rarr; OpenAI &rarr; DeepSeek &rarr; OpenRouter &rarr; local Ollama. Provider latency and error metrics persisted to SQLite for adaptive ranking. 9,774 historical sessions already ingested and available for context retrieval.</p></div>
-
-                <div class="feature"><div class="feature-icon">🩹</div><h3>Autonomous Self-Healing Loop</h3><p>HealAndVerify pipeline: LLM diagnoses error &rarr; proposes fix &rarr; applies to isolated executor &rarr; runs tests in closed loop. Every diagnosis-fix attempt persisted to the L2 memory vault for fleet-wide learning. Stop hooks intercept session ends to audit unfulfilled promises before teardown.</p></div>
-
-            </div>
-
             <!-- Corporate Focus Section -->
             <h3 style="text-align:left; font-size:20px; font-weight:700; margin-bottom:20px; color:#0f172a; border-bottom:1px solid #cbd5e1; padding-bottom:8px; letter-spacing:-0.3px">Corporate Focus</h3>
-             <div class="features-grid">
+             <div class="features-grid" style="margin-bottom:60px">
 
                 <div class="feature"><div class="feature-icon">🔐</div><h3>SSO &amp; RBAC</h3><p>HTTP middleware validates <code>X-Corporate-SSO</code> tokens via your identity provider. Three built-in RBAC roles: Admin (read/write/admin/audit), Operator (read/write/execute), Viewer (read-only). Granular resource-level authorization via <code>SecurityProvider.Authorize()</code>. Up to 10-node cluster support.</p></div>
 
                 <div class="feature"><div class="feature-icon">🏢</div><h3>VPC &amp; Air-Gapped Deployment</h3><p>The entire MCP gateway, memory vault, and code indexer run fully on-premises with no data egress required. Cryptographically signed licensing. L3 cold archive in gzip-compressed JSONL stays entirely within your perimeter. JSONL audit trail in daily-rotating files ready for your SIEM.</p></div>
 
-                <div class="feature"><div class="feature-icon">🕸️</div><h3>Multi-Agent Swarm Mesh</h3><p>Four specialized roles coordinated via a type-safe A2A message broker with heartbeat monitoring and audit logging. PairOrchestrator state machine: Planner &rarr; Reviewer &rarr; Implementer &rarr; Critic. Council/Debate manager with human veto service for high-stakes decisions. 1,000-event rolling router log for full observability.</p></div>
+                <div class="feature"><div class="feature-icon">🕸️</div><h3>Multi-Agent Swarm Mesh</h3><p>Four specialized roles coordinated via a type-safe A2A message broker with heartbeat monitoring and audit logging. PairOrchestrator state machine: Planner &rarr; Reviewer &rarr; Implementer &rarr; Critic. Council/Debate manager with human veto service for high-stakes decisions. Unlimited rolling router log for full observability.</p></div>
 
              </div>
+
+            <!-- Developer Focus Section -->
+            <h3 style="text-align:left; font-size:20px; font-weight:700; margin-bottom:20px; color:#0f172a; border-bottom:1px solid #cbd5e1; padding-bottom:8px; letter-spacing:-0.3px">Developer Focus</h3>
+            <div class="features-grid">
+
+                <div class="feature"><div class="feature-icon">⚡</div><h3>4-Layer MCP Tool Router</h3><p>L1 semantic search: 384-dim <code>all-MiniLM-L6-v2</code> embeddings, cosine similarity, auto-load at &ge;0.85. L2 BM25 catalog ranking: tool name 10&times;, tags 5&times;, description 3&times;. L3 working set: 16 soft / 24 hard cap, 8 hydrated schemas max, 4 active server processes. L4 runtime proxy. 5 permanent meta-tools + 27 always-on builtins. 10-min idle LRU eviction. Zero token bloat.</p></div>
+
+                <div class="feature"><div class="feature-icon">🔗</div><h3>MCP Gateway &amp; Aggregator</h3><p>stdio JSON-RPC 2.0 aggregator with <code>{server}__{tool}</code> namespacing to prevent collisions across 5 catalog sources: Glama, Smithery, MCP.run, npm, GitHub Topics. Automated API secret inference via regex for GitHub, OpenAI, Anthropic, Gemini, Slack, Stripe + 4 more. 200-event traffic inspector ring buffer. JSONL audit trail, daily rotation.</p></div>
+
+                <div class="feature"><div class="feature-icon">🧠</div><h3>Three-Tier Memory Engine</h3><p>L1: 100-entry in-RAM scratchpad (heat-score eviction). L2: SQLite vault with 384-dim vector search, FTS5 full-text, and GraphRAG edge table &mdash; infinite long-term capacity. L3: gzip cold archive, 90-day limbo before hard-delete. Hourly sleep cycle: ForgettingCurve decay &rarr; DreamCycle consolidation &rarr; MentalModel reflection. On session start, L2 semantic query pre-populates L1 with top-5 historical heuristics.</p></div>
+
+                <div class="feature"><div class="feature-icon">🔍</div><h3>AST-Aware Code Indexer</h3><p>TypeScript compiler API (<code>ts.createSourceFile()</code>) splits at exact function, class, interface, type alias, module, and enum boundaries. 1,000-char soft / 2,000-char hard chunk limits. LanceDB ANN vector search (same 384-dim model). Five always-on repograph tools: <code>find_references</code>, <code>find_dependents</code>, <code>semantic_search</code>, <code>build</code>, <code>get</code>. Blast-radius analysis before every change.</p></div>
+
+                <div class="feature"><div class="feature-icon">🌊</div><h3>Resilient LLM Waterfall</h3><p>Automatic cascade on every 429 or 5xx across 6 providers: Google &rarr; Anthropic &rarr; OpenAI &rarr; DeepSeek &rarr; OpenRouter &rarr; local Ollama. Provider latency and error metrics persisted to SQLite for adaptive ranking. Infinite historical sessions already ingested and available for context retrieval.</p></div>
+
+                <div class="feature"><div class="feature-icon">🩹</div><h3>Autonomous Self-Healing Loop</h3><p>HealAndVerify pipeline: LLM diagnoses error &rarr; proposes fix &rarr; applies to isolated executor &rarr; runs tests in closed loop. Every diagnosis-fix attempt persisted to the L2 memory vault for fleet-wide learning. Stop hooks intercept session ends to audit unfulfilled promises before teardown.</p></div>
+
+            </div>
 
 
 
