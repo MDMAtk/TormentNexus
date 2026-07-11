@@ -167,6 +167,16 @@
         pointer-events: none;
       }
 
+      #c-top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10000;
+        pointer-events: none;
+      }
+
       /* Glitch overlay */
       #g {
         position: fixed;
@@ -937,6 +947,7 @@
     <div class="scan"></div>
     <div class="vscan"></div>
     <canvas id="c"></canvas>
+    <canvas id="c-top"></canvas>
     <div id="g"></div>
     <div id="f"></div>
     <div id="r"></div>
@@ -1463,11 +1474,17 @@
       // ========== CANVAS — TERMINATORS, SPIDER ROBOTS, EYES, PARTICLES ==========
       var c = document.getElementById("c"),
         ctx = c.getContext("2d"),
+        cTop = document.getElementById("c-top"),
+        ctxTop = cTop ? cTop.getContext("2d") : null,
         W,
         H;
       function resize() {
         W = c.width = window.innerWidth;
         H = c.height = window.innerHeight;
+        if (cTop) {
+          cTop.width = W;
+          cTop.height = H;
+        }
       }
       resize();
       window.addEventListener("resize", resize);
@@ -2645,7 +2662,7 @@
             ctx.stroke();
           }
 
-          // Nasal cavity (angular void — drawn on top of all face layers)
+           // Nasal cavity (angular void — drawn on top of all face layers)
           ctx.save();
           ctx.translate(0, 2.5);
           ctx.fillStyle = "#020305";
@@ -2666,6 +2683,33 @@
           ctx.closePath();
           ctx.fill();
           ctx.restore();
+
+          // Also draw on the top canvas layer (z-index: 10000)
+          if (ctxTop) {
+            ctxTop.save();
+            ctxTop.translate(this.x, this.y);
+            ctxTop.scale(this.z, this.z);
+            ctxTop.globalAlpha = Math.max(0, Math.min(0.95, opacity * 0.95));
+            ctxTop.translate(0, 2.5);
+            ctxTop.fillStyle = "#020305";
+            ctxTop.beginPath();
+            ctxTop.moveTo(0, -1);
+            ctxTop.lineTo(-2.5, 0);
+            ctxTop.lineTo(-4, 2.5);
+            ctxTop.lineTo(-3, 4.5);
+            ctxTop.lineTo(-1.5, 5);
+            ctxTop.lineTo(-0.5, 4);
+            ctxTop.lineTo(0, 3.5);
+            ctxTop.lineTo(0.5, 4);
+            ctxTop.lineTo(1.5, 5);
+            ctxTop.lineTo(3, 4.5);
+            ctxTop.lineTo(4, 2.5);
+            ctxTop.lineTo(2.5, 0);
+            ctxTop.lineTo(0, -1);
+            ctxTop.closePath();
+            ctxTop.fill();
+            ctxTop.restore();
+          }
 
           ctx.restore(); // restore scale/translation
         }
@@ -2919,6 +2963,9 @@
 
       function anim() {
         ctx.clearRect(0, 0, W, H);
+        if (ctxTop) {
+          ctxTop.clearRect(0, 0, W, H);
+        }
 
         // ── Background grid lines ──
         ctx.strokeStyle = "rgba(0,255,136,0.012)";
