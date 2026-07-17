@@ -7,7 +7,7 @@ cd "$SCRIPT_DIR"
 VER=$(cat VERSION 2>/dev/null || echo "dev")
 
 echo "╔════════════════════════════════════════════════╗"
-echo "║         TormentNexus TORMENTNEXUS v${VER}                   ║"
+echo "║         HyperNexus v${VER}                                  ║"
 echo "║         The Neural Operating System            ║"
 echo "╚════════════════════════════════════════════════╝"
 echo ""
@@ -15,7 +15,7 @@ echo ""
 # ── 1. Build Go Sidecar ──────────────────────────
 if command -v go &>/dev/null; then
 	echo "[1/5] Building Go sidecar..."
-	(cd go && go build -ldflags "-s -w -X github.com/MDMAtk/TormentNexus/internal/buildinfo.Version=${VER}" -buildvcs=false -o ../bin/tormentnexus ./cmd/tormentnexus 2>/dev/null) && echo "      ✓ bin/tormentnexus built" || echo "      [WARN] Go build failed"
+	(cd go && go build -ldflags "-s -w -X gitlab.com/robertpelloni/HyperNexus/internal/buildinfo.Version=${VER}" -buildvcs=false -o ../bin/tormentnexus ./cmd/tormentnexus 2>/dev/null) && echo "      ✓ bin/tormentnexus built" || echo "      [WARN] Go build failed"
 else
 	echo "[1/5] Go not found — skipping sidecar build."
 fi

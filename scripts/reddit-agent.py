@@ -151,7 +151,7 @@ def fetch_subreddit_posts(subreddit, limit=25):
         req = urllib.request.Request(
             url,
             headers={
-                "User-Agent": "TormentNexus/1.0 (AI research assistant; https://github.com/MDMAtk/TormentNexus)"
+                "User-Agent": "HyperNexus/1.0 (AI research assistant; https://gitlab.com/robertpelloni/HyperNexus)"
             },
         )
         with urllib.request.urlopen(req, timeout=30) as r:
@@ -190,7 +190,7 @@ def generate_reply(title, selftext, subreddit, include_link=False):
     if include_link:
         link_section = """
 If genuinely relevant, you MAY include at the end:
-"Full disclosure: I'm working on TormentNexus (https://github.com/MDMAtk/TormentNexus), an open-source AI control plane that addresses this with persistent memory and 26K+ MCP tools."
+"Full disclosure: I'm working on HyperNexus (https://gitlab.com/robertpelloni/HyperNexus), an open-source AI control plane that addresses this with persistent memory and 26K+ MCP tools."
 Only include if it genuinely helps. Don't force it.
 """
 

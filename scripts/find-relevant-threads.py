@@ -78,7 +78,7 @@ def fetch_subreddit_posts(subreddit, limit=50):
         req = urllib.request.Request(
             url,
             headers={
-                "User-Agent": "TormentNexus/1.0 (AI research assistant; https://github.com/MDMAtk/TormentNexus)"
+                "User-Agent": "HyperNexus/1.0 (AI research assistant; https://gitlab.com/robertpelloni/HyperNexus)"
             },
         )
         with urllib.request.urlopen(req, timeout=30) as r:

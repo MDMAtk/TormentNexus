@@ -44,7 +44,7 @@ for p in posts:
 <p class="m">{p["date"]} · TormentNexus Team</p>
 {p["body"]}
 <p style="margin-top:3rem;border-top:1px solid #1a1a2e;padding-top:2rem;color:#6868a0;font-size:.85rem">
-<a href="https://github.com/MDMAtk/TormentNexus">GitHub</a> · <a href="https://hypernexus.site/docs">Docs</a></p>
+<a href="https://gitlab.com/robertpelloni/HyperNexus">GitLab</a> · <a href="https://hypernexus.site/docs">Docs</a></p>
 </div></body></html>"""
     with open(f"{blogdir}/{p['slug']}.html", "w", encoding="utf-8") as f:
         f.write(html)

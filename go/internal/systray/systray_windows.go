@@ -12,7 +12,8 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/MDMAtk/TormentNexus/internal/eventbus"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/eventbus"
 	"golang.org/x/sys/windows"
 	"golang.org/x/sys/windows/registry"
 )
@@ -176,8 +177,10 @@ func NotifyActivity(dir string) {
 		return
 	}
 
+	branding := config.GetBranding()
+
 	// Change icon to warning (flashing) and update tip
-	updateTrayIcon(hActivityIcon, fmt.Sprintf("TormentNexus - Active I/O (%s)", dir))
+	updateTrayIcon(hActivityIcon, fmt.Sprintf("%s - Active I/O (%s)", branding.ProductName, dir))
 
 	if activityTimeout != nil {
 		activityTimeout.Stop()
@@ -186,7 +189,7 @@ func NotifyActivity(dir string) {
 	activityTimeout = time.AfterFunc(300*time.Millisecond, func() {
 		activityMutex.Lock()
 		defer activityMutex.Unlock()
-		updateTrayIcon(hNormalIcon, "TormentNexus (Running)")
+		updateTrayIcon(hNormalIcon, branding.TrayTooltip)
 	})
 }
 
@@ -245,8 +248,10 @@ func runMessageLoop() {
 
 	hInstance, _, _ := kernel32.NewProc("GetModuleHandleW").Call(0)
 
+	branding := config.GetBranding()
+
 	// 1. Register hidden message window class
-	className, _ := syscall.UTF16PtrFromString("TormentNexusTrayClass")
+	className, _ := syscall.UTF16PtrFromString(fmt.Sprintf("%sTrayClass", branding.RegistryKey))
 	var wc WNDCLASSEXW
 	wc.CbSize = uint32(unsafe.Sizeof(wc))
 	wc.LpfnWndProc = syscall.NewCallback(hiddenWndProc)
@@ -274,12 +279,12 @@ func runMessageLoop() {
 	nid.UFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP
 	nid.UCallbackMessage = WM_TRAY
 	nid.HIcon = hNormalIcon
-	copy(nid.SzTip[:], syscall.StringToUTF16("TormentNexus (Running)"))
+	copy(nid.SzTip[:], syscall.StringToUTF16(branding.TrayTooltip))
 
 	pShellNotifyIcon.Call(NIM_ADD, uintptr(unsafe.Pointer(&nid)))
 
 	// 4. Register log window class
-	logClassName, _ := syscall.UTF16PtrFromString("TormentNexusLogClass")
+	logClassName, _ := syscall.UTF16PtrFromString(fmt.Sprintf("%sLogClass", branding.RegistryKey))
 	var wcLog WNDCLASSEXW
 	wcLog.CbSize = uint32(unsafe.Sizeof(wcLog))
 	wcLog.LpfnWndProc = syscall.NewCallback(logWndProc)
@@ -363,7 +368,7 @@ func hiddenWndProc(hWnd windows.HWND, msg uint32, wParam uintptr, lParam uintptr
 			pAppendMenu.Call(hMenu, MF_STRING, 0, 0) // Separator
 
 			// ── Exit ──
-			exitText, _ := syscall.UTF16PtrFromString("Exit All TormentNexus Processes")
+			exitText, _ := syscall.UTF16PtrFromString(fmt.Sprintf("Exit All %s Processes", branding.ProductName))
 			pAppendMenu.Call(hMenu, MF_STRING, IDM_EXIT, uintptr(unsafe.Pointer(exitText)))
 
 			var pos struct{ X, Y int32 }
@@ -392,11 +397,11 @@ func hiddenWndProc(hWnd windows.HWND, msg uint32, wParam uintptr, lParam uintptr
 				toggleAutomaticStartup()
 			case IDM_EXIT:
 				// Show dialog asking user what to do with background processes
-				title, _ := syscall.UTF16PtrFromString("TormentNexus — Exit Options")
-				msg, _ := syscall.UTF16PtrFromString("Do you want to completely quit ALL TormentNexus background processes?\n\n" +
-					"Click 'Yes' to terminate: watchdog, swarm workers, dashboard, freellm.\n" +
-					"Click 'No' to quit the TN Kernel only (background workers keep running).\n" +
-					"Click 'Cancel' to stay running.")
+				title, _ := syscall.UTF16PtrFromString(fmt.Sprintf("%s — Exit Options", branding.ProductName))
+				msg, _ := syscall.UTF16PtrFromString(fmt.Sprintf("Do you want to completely quit ALL %s background processes?\n\n"+
+					"Click 'Yes' to terminate: watchdog, swarm workers, dashboard, freellm.\n"+
+					"Click 'No' to quit the kernel only (background workers keep running).\n"+
+					"Click 'Cancel' to stay running.", branding.ProductName))
 				resp, _, _ := pMessageBox.Call(0, uintptr(unsafe.Pointer(msg)),
 					uintptr(unsafe.Pointer(title)), MB_YESNOCANCEL|MB_ICONQUESTION)
 				switch resp {
@@ -428,8 +433,10 @@ func hiddenCommand(name string, args ...string) *exec.Cmd {
 }
 
 func TriggerFullShutdown() {
+	branding := config.GetBranding()
+
 	// 1. Terminate watchdog
-	_ = hiddenCommand("taskkill", "/F", "/FI", "WINDOWTITLE eq TormentNexus Watchdog").Run()
+	_ = hiddenCommand("taskkill", "/F", "/FI", fmt.Sprintf("WINDOWTITLE eq %s Watchdog", branding.ProductName)).Run()
 	_ = hiddenCommand("wmic", "process", "where", "CommandLine like '%watchdog.py%'", "call", "terminate").Run()
 
 	// 2. Terminate scripts
@@ -443,7 +450,7 @@ func TriggerFullShutdown() {
 	// 4. Terminate freellm
 	_ = hiddenCommand("taskkill", "/F", "/IM", "freellm.exe").Run()
 
-	// 5. Exit TN Kernel
+	// 5. Exit kernel
 	os.Exit(0)
 }
 
@@ -455,9 +462,11 @@ func showLogWindow() {
 		return
 	}
 
+	branding := config.GetBranding()
+
 	hInstance, _, _ := kernel32.NewProc("GetModuleHandleW").Call(0)
-	logClassName, _ := syscall.UTF16PtrFromString("TormentNexusLogClass")
-	title, _ := syscall.UTF16PtrFromString("TormentNexus Internal Event Logs")
+	logClassName, _ := syscall.UTF16PtrFromString(fmt.Sprintf("%sLogClass", branding.RegistryKey))
+	title, _ := syscall.UTF16PtrFromString(fmt.Sprintf("%s Internal Event Logs", branding.ProductName))
 
 	hLogRaw, _, _ := pCreateWindowEx.Call(
 		0,
@@ -531,28 +540,30 @@ func logWndProc(hWnd windows.HWND, msg uint32, wParam uintptr, lParam uintptr) u
 }
 
 func isAutomaticStartupEnabled() bool {
+	branding := config.GetBranding()
 	k, err := registry.OpenKey(registry.CURRENT_USER, `Software\Microsoft\Windows\CurrentVersion\Run`, registry.QUERY_VALUE)
 	if err != nil {
 		return false
 	}
 	defer k.Close()
-	_, _, err = k.GetStringValue("TormentNexus")
+	_, _, err = k.GetStringValue(branding.RegistryKey)
 	return err == nil
 }
 
 func toggleAutomaticStartup() {
+	branding := config.GetBranding()
 	k, err := registry.OpenKey(registry.CURRENT_USER, `Software\Microsoft\Windows\CurrentVersion\Run`, registry.SET_VALUE|registry.QUERY_VALUE)
 	if err != nil {
 		return
 	}
 	defer k.Close()
 
-	if _, _, err := k.GetStringValue("TormentNexus"); err == nil {
-		_ = k.DeleteValue("TormentNexus")
+	if _, _, err := k.GetStringValue(branding.RegistryKey); err == nil {
+		_ = k.DeleteValue(branding.RegistryKey)
 	} else {
 		execPath, err := os.Executable()
 		if err == nil {
-			_ = k.SetStringValue("TormentNexus", fmt.Sprintf(`"%s" serve`, execPath))
+			_ = k.SetStringValue(branding.RegistryKey, fmt.Sprintf(`"%s" serve`, execPath))
 		}
 	}
 }

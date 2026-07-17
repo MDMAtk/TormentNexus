@@ -80,7 +80,7 @@ footer a:hover{{text-decoration:underline}}
 <h1>The Index</h1>
 <p>The largest open-source catalog of MCP servers, skills, prompts, and agent tools. Curated from 45+ sources.</p>
 <div style="margin-top:30px">
-<a href="https://github.com/MDMAtk/TormentNexus" class="btn btn-gh">⭐ GitHub</a>
+<a href="https://gitlab.com/robertpelloni/HyperNexus" class="btn btn-gh">⭐ GitLab</a>
 <a href="https://www.npmjs.com/search?q=%40tormentnexus" class="btn btn-npm">📦 npm</a>
 <a href="https://hypernexus.site/docs" class="btn btn-docs">📖 Docs</a>
 </div>
@@ -232,7 +232,7 @@ footer a:hover{{text-decoration:underline}}
 </div>
 
 <footer>
-<p>TormentNexus v1.0.0-b2 · MIT License · <a href="https://github.com/MDMAtk/TormentNexus">GitHub</a> · <a href="https://hypernexus.site">Corporate Edition</a></p>
+<p>HyperNexus v1.0.0-b2 · MIT License · <a href="https://gitlab.com/robertpelloni/HyperNexus">GitLab</a> · <a href="https://hypernexus.site">Corporate Edition</a></p>
 </footer>
 
 </body>

@@ -1,0 +1,11 @@
+{
+  "edition": "hypernexus",
+  "product_name": "HyperNexus",
+  "company_name": "HyperNexus Corp",
+  "tray_tooltip": "HyperNexus (Running)",
+  "dashboard_title": "HyperNexus Dashboard",
+  "config_dir": ".hypernexus",
+  "registry_key": "HyperNexus",
+  "cloud_endpoint": "https://api.hypernexus.io",
+  "cloud_auth": ""
+}

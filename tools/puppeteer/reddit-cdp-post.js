@@ -243,7 +243,7 @@ async function postToReddit(subreddit, content) {
 			await commentInput.click();
 			await sleep(500);
 
-			const replyText = `GitHub: https://github.com/MDMAtk/TormentNexus\n\nFeel free to star, fork, or open an issue if you have questions!`;
+			const replyText = `GitLab: https://gitlab.com/robertpelloni/HyperNexus\n\nFeel free to star, fork, or open an issue if you have questions!`;
 			await page.keyboard.type(replyText, { delay: 10 });
 
 			await sleep(1000);

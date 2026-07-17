@@ -102,7 +102,7 @@ const TEMPLATES = {
 
 It's open source and works with Ollama, LM Studio, and any OpenAI-compatible API.
 
-GitHub: https://github.com/MDMAtk/TormentNexus`,
+GitLab: https://gitlab.com/robertpelloni/HyperNexus`,
 
 	mcp: `I've cataloged 26,000+ MCP servers in TormentNexus. You can search them at https://tormentnexus.site/catalog
 
@@ -113,7 +113,7 @@ It includes tools for:
 - APIs (GitHub, Supabase, Vercel)
 - And thousands more
 
-GitHub: https://github.com/MDMAtk/TormentNexus`,
+GitLab: https://gitlab.com/robertpelloni/HyperNexus`,
 
 	tools: `TormentNexus is an open-source AI control plane that does exactly this:
 
@@ -125,7 +125,7 @@ GitHub: https://github.com/MDMAtk/TormentNexus`,
 
 It's a Go backend with a Next.js dashboard. Single binary, runs locally.
 
-GitHub: https://github.com/MDMAtk/TormentNexus`,
+GitLab: https://gitlab.com/robertpelloni/HyperNexus`,
 };
 
 // Queue file

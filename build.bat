@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-echo Building TormentNexus TORMENTNEXUS...
+echo Building HyperNexus...
 
 REM Build Go sidecar
 where go >nul 2>nul
@@ -13,7 +13,7 @@ if errorlevel 1 (
 echo Building Go sidecar...
 for /f "tokens=*" %%v in ('type VERSION') do set VER=%%v
 cd go
-go build -ldflags "-s -w -X github.com/MDMAtk/TormentNexus/internal/buildinfo.Version=%VER%" -buildvcs=false -o ..\bin\tormentnexus.exe ./cmd/tormentnexus
+go build -ldflags "-s -w -X gitlab.com/robertpelloni/HyperNexus/internal/buildinfo.Version=%VER%" -buildvcs=false -o ..\bin\tormentnexus.exe ./cmd/tormentnexus
 if errorlevel 1 (
     echo [FAIL] Go build failed
     cd ..

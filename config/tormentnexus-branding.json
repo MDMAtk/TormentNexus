@@ -1,0 +1,9 @@
+{
+  "edition": "tormentnexus",
+  "product_name": "TormentNexus",
+  "company_name": "TormentNexus Team",
+  "tray_tooltip": "TormentNexus (Running)",
+  "dashboard_title": "TormentNexus Dashboard",
+  "config_dir": ".tormentnexus",
+  "registry_key": "TormentNexus"
+}

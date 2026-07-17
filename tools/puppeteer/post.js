@@ -217,7 +217,7 @@ async function postToHN() {
 	const urlInput = await page.$('input[name="url"]');
 	if (urlInput) {
 		await urlInput.click();
-		await urlInput.type("https://github.com/MDMAtk/TormentNexus");
+		await urlInput.type("https://gitlab.com/robertpelloni/HyperNexus");
 	}
 
 	// Fill in text

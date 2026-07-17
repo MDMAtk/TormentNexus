@@ -79,7 +79,7 @@ TormentNexus provides:
 - 26,000+ MCP tool catalog
 - Multi-agent orchestration
 - Works with Ollama, LM Studio, local LLMs
-- GitHub: https://github.com/MDMAtk/TormentNexus
+- GitLab: https://gitlab.com/robertpelloni/HyperNexus
 
 Post from r/${subreddit}:
 "${title}"

@@ -1,11 +1,11 @@
-module github.com/MDMAtk/TormentNexus
+module gitlab.com/robertpelloni/HyperNexus
 
 go 1.25.0
 
-replace github.com/MDMAtk/TormentNexus => ./
+replace gitlab.com/robertpelloni/HyperNexus => ./
 
 require (
-	github.com/MDMAtk/TormentNexus v0.0.0
+	gitlab.com/robertpelloni/HyperNexus v0.0.0
 	github.com/charmbracelet/bubbles v1.0.0
 	github.com/charmbracelet/bubbletea v1.3.10
 	github.com/charmbracelet/lipgloss v1.1.0

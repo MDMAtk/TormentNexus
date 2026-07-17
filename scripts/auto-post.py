@@ -82,7 +82,7 @@ The post should:
 - Include a compelling title
 - Have a clear call-to-action
 - Mention it's open source
-- Include GitHub link: https://github.com/MDMAtk/TormentNexus
+- Include GitLab link: https://gitlab.com/robertpelloni/HyperNexus
 - Include live catalog: https://tormentnexus.site/catalog
 
 Format as JSON with "title" and "body" fields."""
@@ -122,7 +122,7 @@ The post should:
 - Explain the problem it solves
 - Include architecture details
 - Mention it's open source
-- GitHub: https://github.com/MDMAtk/TormentNexus
+- GitLab: https://gitlab.com/robertpelloni/HyperNexus
 - Live: https://tormentnexus.site
 
 Format as JSON with "title" and "body" fields."""
@@ -184,7 +184,7 @@ Format as JSON with "tweets" array."""
                     "It also has 26,000+ MCP servers indexed and searchable. Databases, filesystems, browsers, APIs - one click to install.",
                     "Works with local LLMs (LM Studio, Ollama, DeepSeek). No data leaves your machine unless you want it to.",
                     "Built in Go. Single binary. Fast startup. Low resource usage.",
-                    "Open source: https://github.com/MDMAtk/TormentNexus\n\nTry it now: https://tormentnexus.site",
+                    "Open source: https://gitlab.com/robertpelloni/HyperNexus\n\nTry it now: https://tormentnexus.site",
                 ]
             }
     return None
@@ -327,7 +327,7 @@ const puppeteer = require('puppeteer');
   await page.type('input[name="title"]', {json.dumps(title)});
   
   // Fill in URL (if applicable)
-  await page.type('input[name="url"]', 'https://github.com/MDMAtk/TormentNexus');
+  await page.type('input[name="url"]', 'https://gitlab.com/robertpelloni/HyperNexus');
   
   // Fill in text
   const textInput = await page.$('textarea[name="text"]');

@@ -97,7 +97,7 @@ REPLY_TEMPLATES = {
 
 It's open source and works with Ollama, LM Studio, and any OpenAI-compatible API.
 
-GitHub: https://github.com/MDMAtk/TormentNexus""",
+GitLab: https://gitlab.com/robertpelloni/HyperNexus""",
     "mcp": """I've cataloged 26,000+ MCP servers in TormentNexus. You can search them at https://tormentnexus.site/catalog
 
 It includes tools for:
@@ -107,7 +107,7 @@ It includes tools for:
 - APIs (GitHub, Supabase, Vercel)
 - And thousands more
 
-GitHub: https://github.com/MDMAtk/TormentNexus""",
+GitLab: https://gitlab.com/robertpelloni/HyperNexus""",
     "tools": """TormentNexus is an open-source AI control plane that does exactly this:
 
 - 26,000+ MCP tools in one catalog
@@ -118,7 +118,7 @@ GitHub: https://github.com/MDMAtk/TormentNexus""",
 
 It's a Go backend with a Next.js dashboard. Single binary, runs locally.
 
-GitHub: https://github.com/MDMAtk/TormentNexus""",
+GitLab: https://gitlab.com/robertpelloni/HyperNexus""",
 }
 
 
@@ -221,7 +221,7 @@ def generate_reply(title, selftext, subreddit, include_link=False):
     if include_link:
         link_section = """
 If genuinely relevant, include at the end:
-"Full disclosure: I'm working on TormentNexus (https://github.com/MDMAtk/TormentNexus), an open-source AI control plane with persistent memory and 26K+ MCP tools."
+"Full disclosure: I'm working on HyperNexus (https://gitlab.com/robertpelloni/HyperNexus), an open-source AI control plane with persistent memory and 26K+ MCP tools."
 Only include if it genuinely helps."""
 
     prompt = f"""You are a helpful AI/ML developer on r/{subreddit}.
@@ -291,7 +291,7 @@ def main():
                 req = urllib.request.Request(
                     url,
                     headers={
-                        "User-Agent": "TormentNexus/1.0 (https://github.com/MDMAtk/TormentNexus)"
+                        "User-Agent": "HyperNexus/1.0 (https://gitlab.com/robertpelloni/HyperNexus)"
                     },
                 )
 
