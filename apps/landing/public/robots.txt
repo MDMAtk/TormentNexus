@@ -1,11 +1,11 @@
-# TormentNexus - AI Control Plane
-# Website: https://tormentnexus.site
+# HyperNexus - AI Control Plane
+# Website: https://hypernexus.site
 
 User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://tormentnexus.site/sitemap.xml
+Sitemap: https://hypernexus.site/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
