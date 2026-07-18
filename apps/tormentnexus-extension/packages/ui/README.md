@@ -1,7 +1,7 @@
 # UI Package (`@extension/ui`)
 
-This package provides React components and styling utilities that make up the TormentNexus Extension user interface, integrated with the modern plugin architecture and state management system.
-This package provides React components and styling utilities that make up the tormentnexus Extension user interface, integrated with the modern plugin architecture and state management system.
+This package provides React components and styling utilities that make up the HyperNexus Extension user interface, integrated with the modern plugin architecture and state management system.
+This package provides React components and styling utilities that make up the hypernexus Extension user interface, integrated with the modern plugin architecture and state management system.
 
 ## Overview
 

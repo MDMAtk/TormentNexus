@@ -1,4 +1,4 @@
-# TormentNexus — Video Scripts
+# HyperNexus — Video Scripts
 
 ## YouTube Video (5-10 minutes)
 
@@ -10,13 +10,13 @@
 
 - Dark background with green/cyan gradient
 - Text: "26K+ AI TOOLS"
-- TormentNexus logo
+- HyperNexus logo
 - Screenshot of dashboard
 
 ### Script
 
 **[0:00-0:30] HOOK**
-"What if your AI assistant could remember everything from previous sessions? What if it had access to 26,000 tools? And what if it all ran locally on your machine? Today I'm going to show you TormentNexus — an open-source AI control plane that does exactly that."
+"What if your AI assistant could remember everything from previous sessions? What if it had access to 26,000 tools? And what if it all ran locally on your machine? Today I'm going to show you HyperNexus — an open-source AI control plane that does exactly that."
 
 **[0:30-2:00] THE PROBLEM**
 "Here's the problem with current AI assistants:
@@ -26,10 +26,10 @@
 - If you want to use local LLMs, you're stuck with basic chat interfaces
 - There's no way to give them persistent memory
 
-I got tired of explaining my project to ChatGPT every time I opened my laptop. So I built TormentNexus."
+I got tired of explaining my project to ChatGPT every time I opened my laptop. So I built HyperNexus."
 
 **[2:00-4:00] THE SOLUTION**
-"TormentNexus is an open-source AI control plane that gives your AI:
+"HyperNexus is an open-source AI control plane that gives your AI:
 
 1. **Persistent Memory** — A tiered memory system that remembers across sessions
    - L1: Session memory (ephemeral)
@@ -61,7 +61,7 @@ I got tired of explaining my project to ChatGPT every time I opened my laptop. S
    - /api/backlog/categories
 
 3. **Install locally** — One command
-   - npx tormentnexus serve
+   - npx hypernexus serve
    - Open dashboard at localhost:7778
    - Search, install, configure tools"
 
@@ -79,8 +79,8 @@ Everything runs locally. No cloud dependency."
 **[8:00-9:00] HOW TO GET STARTED**
 "Getting started is easy:
 
-1. **Quick Start** — npx tormentnexus serve
-2. **Docker** — docker run -p 7778:7778 tormentnexus/tormentnexus
+1. **Quick Start** — npx hypernexus serve
+2. **Docker** — docker run -p 7778:7778 hypernexus/hypernexus
 3. **From Source** — git clone and go build
 
 Links in the description below."
@@ -108,10 +108,10 @@ Thanks for watching!"
 "Your AI assistant forgets everything between sessions. Here's how to fix that."
 
 **[0:10-0:30] DEMO**
-"TormentNexus gives your AI persistent memory.
+"HyperNexus gives your AI persistent memory.
 
 Install in one command:
-npx tormentnexus serve
+npx hypernexus serve
 
 Open dashboard at localhost:7778
 
@@ -157,14 +157,14 @@ All searchable. One-click install."
 - Expensive"
 
 **[0:30-0:50] SOLUTION**
-"TormentNexus:
+"HyperNexus:
 
 - Remembers everything
 - 26,000+ tools
 - Runs locally
 - Free and open source
 
-One command: npx tormentnexus serve"
+One command: npx hypernexus serve"
 
 **[0:50-1:00] CTA**
 "Link in bio. Your AI will thank you."
@@ -183,7 +183,7 @@ One command: npx tormentnexus serve"
 "Your AI is forgetting things. Here's the fix."
 
 **[0:10-0:30] DEMO**
-"TormentNexus adds persistent memory to any AI.
+"HyperNexus adds persistent memory to any AI.
 
 Watch:
 
@@ -225,9 +225,9 @@ Watch:
 - Everything"
 
 **[0:30-0:50] SOLUTION**
-"TormentNexus gives AI persistent memory.
+"HyperNexus gives AI persistent memory.
 
-Install: npx tormentnexus serve
+Install: npx hypernexus serve
 
 Now AI remembers:
 
@@ -262,7 +262,7 @@ Now AI remembers:
 This creates friction, wastes time, and limits what AI can do."
 
 **[1:30-2:30] SOLUTION**
-"TormentNexus solves all three:
+"HyperNexus solves all three:
 
 1. **Persistent Memory** — 4-tier system that remembers across sessions
 2. **26,000+ Tools** — MCP protocol for external integrations
@@ -273,7 +273,7 @@ The result? AI that actually understands your project, your patterns, and your p
 **[2:30-3:00] CTA**
 "Try it free at demo.hypernexus.site
 
-Open source: github.com/MDMAtk/TormentNexus
+Open source: github.com/MDMAtk/HyperNexus
 
 What would you build with AI that remembers everything?"
 

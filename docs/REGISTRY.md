@@ -1,10 +1,10 @@
-# TormentNexus Registry & Catalog Documentation
+# HyperNexus Registry & Catalog Documentation
 
 > Last updated: 2026-07-13 | Version: 1.0.0-b2 | Total entries: 37,289
 
 ## Overview
 
-TormentNexus aggregates MCP tools, skills, prompts, agent frameworks, and AI/dev tools from 45+ sources into a unified catalog. This document maps every registry, database, scraper script, and content source in the project.
+HyperNexus aggregates MCP tools, skills, prompts, agent frameworks, and AI/dev tools from 45+ sources into a unified catalog. This document maps every registry, database, scraper script, and content source in the project.
 
 ---
 
@@ -103,9 +103,9 @@ TormentNexus aggregates MCP tools, skills, prompts, agent frameworks, and AI/dev
 | Location | Count |
 |---|---|
 | `/opt/marketing_agent/borg/` | 5,438 |
-| `/opt/tormentnexus/.antigravity/` | 1 |
-| `/opt/tormentnexus/.mavis/` | 1 |
-| `/opt/tormentnexus/.codewhale/` | 1 |
+| `/opt/hypernexus/.antigravity/` | 1 |
+| `/opt/hypernexus/.mavis/` | 1 |
+| `/opt/hypernexus/.codewhale/` | 1 |
 
 ### 1.8 Go Native Handlers (5,668 entries)
 
@@ -117,7 +117,7 @@ TormentNexus aggregates MCP tools, skills, prompts, agent frameworks, and AI/dev
 
 ## 2. Database Inventory
 
-### 2.1 Kernel Databases (`/root/.tormentnexus/`)
+### 2.1 Kernel Databases (`/root/.hypernexus/`)
 
 | Database | Tables | Purpose |
 |---|---|---|
@@ -130,13 +130,13 @@ TormentNexus aggregates MCP tools, skills, prompts, agent frameworks, and AI/dev
 
 | Database | Tables | Count |
 |---|---|---|
-| `/opt/tormentnexus/catalog.db` | links_backlog | 26,180 |
-| `/opt/tormentnexus/catalog.db` | published_mcp_servers | 8 |
-| `/root/.tormentnexus/catalog.db` | published_skills | 5,441 |
+| `/opt/hypernexus/catalog.db` | links_backlog | 26,180 |
+| `/opt/hypernexus/catalog.db` | published_mcp_servers | 8 |
+| `/root/.hypernexus/catalog.db` | published_skills | 5,441 |
 
 ### 2.3 Docker Tenant Databases
 
-- Each tenant has its own `tormentnexus.db` in the container volume
+- Each tenant has its own `hypernexus.db` in the container volume
 - Located at `/var/lib/hypernexus/tenants/{tenant}/`
 
 ---
@@ -230,7 +230,7 @@ TormentNexus aggregates MCP tools, skills, prompts, agent frameworks, and AI/dev
 
 ```bash
 # Check catalog counts
-ssh hetzner 'sqlite3 /opt/tormentnexus/catalog.db "SELECT source, count(*) FROM links_backlog GROUP BY source ORDER BY count(*) DESC;"'
+ssh hetzner 'sqlite3 /opt/hypernexus/catalog.db "SELECT source, count(*) FROM links_backlog GROUP BY source ORDER BY count(*) DESC;"'
 
 # Run mega scraper
 python3 scripts/scrape-mega.py
@@ -239,11 +239,11 @@ python3 scripts/scrape-mega.py
 curl -s http://127.0.0.1:8090/api/runtime/status | jq '.data.cli.toolCount'
 
 # List skills
-find .tormentnexus/skills/ -name "SKILL.md" | wc -l
+find .hypernexus/skills/ -name "SKILL.md" | wc -l
 
 # Check Stripe config
-ssh hetzner 'grep STRIPE /opt/tormentnexus/.env'
+ssh hetzner 'grep STRIPE /opt/hypernexus/.env'
 
 # Full catalog status
-ssh hetzner 'sqlite3 /opt/tormentnexus/catalog.db "SELECT count(*) FROM links_backlog;" && sqlite3 /root/.tormentnexus/catalog.db "SELECT count(*) FROM published_skills;"'
+ssh hetzner 'sqlite3 /opt/hypernexus/catalog.db "SELECT count(*) FROM links_backlog;" && sqlite3 /root/.hypernexus/catalog.db "SELECT count(*) FROM published_skills;"'
 ```

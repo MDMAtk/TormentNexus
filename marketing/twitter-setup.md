@@ -5,9 +5,9 @@
 ### Step 1: Create Account
 
 1. Go to <https://twitter.com>
-2. Sign up with: `tormentnexus@proton.me` (or similar)
-3. Username: `@tormentnexus`
-4. Display name: "TormentNexus"
+2. Sign up with: `hypernexus@proton.me` (or similar)
+3. Username: `@hypernexus`
+4. Display name: "HyperNexus"
 5. Bio: "AI Control Plane with persistent memory and 26K+ MCP tools catalog. Open source. Local-first. Give your AI a memory. 🧠"
 
 ### Step 2: Profile Setup
@@ -15,23 +15,23 @@
 - **Profile Picture**: Logo (see assets/)
 - **Header Image**: Dashboard screenshot
 - **Location**: "Everywhere"
-- **Website**: <https://tormentnexus.site>
+- **Website**: <https://hypernexus.site>
 - **Pinned Tweet**: Launch announcement thread
 
 ### Step 3: First Tweets
 
 ```
 Tweet 1 (Announcement):
-🚀 Introducing TormentNexus — an open-source AI control plane
+🚀 Introducing HyperNexus — an open-source AI control plane
 
-Your AI assistants forget everything between sessions. TormentNexus fixes that.
+Your AI assistants forget everything between sessions. HyperNexus fixes that.
 
 ✅ Persistent memory (L1→L2→L3→L4)
 ✅ 26,000+ MCP tools catalog
 ✅ Local LLM support
 ✅ One command install
 
-GitHub: https://github.com/MDMAtk/TormentNexus
+GitHub: https://github.com/MDMAtk/HyperNexus
 
 Tweet 2 (Demo):
 Try it now — no install needed:
@@ -43,10 +43,10 @@ Search 26,000+ MCP servers. See the memory system. All open source.
 Tweet 3 (Install):
 Install in 10 seconds:
 
-npx tormentnexus serve
+npx hypernexus serve
 
 Or Docker:
-docker run -p 7778:7778 tormentnexus/tormentnexus
+docker run -p 7778:7778 hypernexus/hypernexus
 
 Dashboard: http://localhost:7778
 
@@ -54,7 +54,7 @@ Tweet 4 (Memory):
 Why does AI need persistent memory?
 
 Current AI: "What were we working on?"
-TormentNexus: "Your project X, using Y framework, last commit was Z"
+HyperNexus: "Your project X, using Y framework, last commit was Z"
 
 Memory tiers:
 • L1: Session (ephemeral)
@@ -67,7 +67,7 @@ Tweet 5 (Catalog):
 
 Databases, filesystems, browsers, APIs, DevOps tools — one click to install.
 
-Live catalog: https://tormentnexus.site/catalog
+Live catalog: https://hypernexus.site/catalog
 
 Tweet 6 (Local):
 No data leaves your machine.
@@ -81,9 +81,9 @@ Works with:
 Your AI. Your data. Your rules.
 
 Tweet 7 (CTA):
-⭐ Star us on GitHub: https://github.com/MDMAtk/TormentNexus
-💬 Join Discord: https://discord.gg/tormentnexus
-📖 Read the blog: https://tormentnexus.site/blog/
+⭐ Star us on GitHub: https://github.com/MDMAtk/HyperNexus
+💬 Join Discord: https://discord.gg/hypernexus
+📖 Read the blog: https://hypernexus.site/blog/
 
 Open source. Community driven. Let's build the future of AI together.
 ```

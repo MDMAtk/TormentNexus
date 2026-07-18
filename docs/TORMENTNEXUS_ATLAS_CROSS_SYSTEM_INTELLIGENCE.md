@@ -1,4 +1,4 @@
-# TORMENTNEXUS x ATLAS CROSS-SYSTEM INTELLIGENCE REPORT
+# HYPERNEXUS x ATLAS CROSS-SYSTEM INTELLIGENCE REPORT
 _Generated from live database cross-reference_
 
 ---
@@ -8,21 +8,21 @@ _Generated from live database cross-reference_
 | System | Database | Total Entries | GitHub Repos | High-Signal (>=85) |
 |--------|----------|--------------|-------------|-------------------|
 | **Atlas** | atlas.db | 7,944 | 4,919 | 3,632 |
-| **TormentNexus Backlog** | tormentnexus.db links_backlog | 15,753 | 6,116 | N/A |
-| **TormentNexus Tools** | tormentnexus.db tools | 651 | N/A | N/A |
-| **TormentNexus MCP Servers** | tormentnexus.db mcp_servers | 68 | N/A | N/A |
-| **TormentNexus Sessions** | tormentnexus.db imported_sessions | 9,774 | N/A | N/A |
-| **TormentNexus Memories** | tormentnexus.db imported_session_memories | 22,749 | N/A | N/A |
+| **HyperNexus Backlog** | hypernexus.db links_backlog | 15,753 | 6,116 | N/A |
+| **HyperNexus Tools** | hypernexus.db tools | 651 | N/A | N/A |
+| **HyperNexus MCP Servers** | hypernexus.db mcp_servers | 68 | N/A | N/A |
+| **HyperNexus Sessions** | hypernexus.db imported_sessions | 9,774 | N/A | N/A |
+| **HyperNexus Memories** | hypernexus.db imported_session_memories | 22,749 | N/A | N/A |
 
 ### Cross-Reference Overlap
 
 - **Shared repos** (in both systems): **4,664**
-- **Atlas-only** repos: **255** -- candidates for TormentNexus assimilation
-- **TormentNexus-only** repos: **1,452** -- candidates for Atlas ingestion
+- **Atlas-only** repos: **255** -- candidates for HyperNexus assimilation
+- **HyperNexus-only** repos: **1,452** -- candidates for Atlas ingestion
 
 ---
 
-## 2. TORMENTNEXUS CODEBASE STATUS vs FEATURE ASSESSMENT
+## 2. HYPERNEXUS CODEBASE STATUS vs FEATURE ASSESSMENT
 
 Based on audit of 231 Go files + 583 TS files + 91 dashboard pages:
 
@@ -48,7 +48,7 @@ Based on audit of 231 Go files + 583 TS files + 91 dashboard pages:
 
 ---
 
-## 3. TOP ASSIMILATION CANDIDATES (Atlas -> TormentNexus)
+## 3. TOP ASSIMILATION CANDIDATES (Atlas -> HyperNexus)
 
 From 255 Atlas-only repos, ranked by signal x innovation x architecture gap alignment:
 
@@ -276,15 +276,15 @@ These repos exist in BOTH systems. Verify data freshness and sync:
 ```
 atlas.db (7,944 entries)
   |
-  +-> high-signal MCP servers --> tormentnexus.db mcp_servers (68 -> ~120)
-  |                            --> tormentnexus.db tools (651 -> ~900)
+  +-> high-signal MCP servers --> hypernexus.db mcp_servers (68 -> ~120)
+  |                            --> hypernexus.db tools (651 -> ~900)
   |
-  +-> architecture gap repos --> tormentnexus.db links_backlog (15,753 -> 15,900)
-  |                            --> tormentnexus.db skill_candidate_queue
+  +-> architecture gap repos --> hypernexus.db links_backlog (15,753 -> 15,900)
+  |                            --> hypernexus.db skill_candidate_queue
   |
-  +-> innovation top-100 --> .tormentnexus/skills/ (0 -> curated set)
+  +-> innovation top-100 --> .hypernexus/skills/ (0 -> curated set)
 
-tormentnexus.db (15,753 backlog entries)
+hypernexus.db (15,753 backlog entries)
   |
   +-> missing from atlas --> atlas.db entries (7,944 -> ~9,400)
   |                       --> incoming_resources.txt for research worker

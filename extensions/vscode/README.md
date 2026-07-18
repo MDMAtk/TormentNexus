@@ -1,4 +1,4 @@
-# TormentNexus VS Code Extension
+# HyperNexus VS Code Extension
 
 AI Control Plane with Persistent Memory & 26,000+ MCP Tools
 
@@ -13,42 +13,42 @@ AI Control Plane with Persistent Memory & 26,000+ MCP Tools
 
 1. Open VS Code
 2. Go to Extensions (Ctrl+Shift+X)
-3. Search for "TormentNexus"
+3. Search for "HyperNexus"
 4. Click Install
 
 ## Usage
 
 ### Sidebar
 
-- Click the TormentNexus icon in the activity bar
+- Click the HyperNexus icon in the activity bar
 - View memory tiers, tool stats, and connection status
 
 ### Commands
 
-- `TormentNexus: Connect to Server` — Connect to local server
-- `TormentNexus: Search MCP Tools` — Search the tool catalog
-- `TormentNexus: Add Memory` — Save a memory entry
-- `TormentNexus: Search Memory` — Search your memories
-- `TormentNexus: Open Dashboard` — Open web dashboard
+- `HyperNexus: Connect to Server` — Connect to local server
+- `HyperNexus: Search MCP Tools` — Search the tool catalog
+- `HyperNexus: Add Memory` — Save a memory entry
+- `HyperNexus: Search Memory` — Search your memories
+- `HyperNexus: Open Dashboard` — Open web dashboard
 
 ### Configuration
 
 ```json
 {
-  "tormentnexus.serverUrl": "http://localhost:7778",
-  "tormentnexus.autoConnect": true
+  "hypernexus.serverUrl": "http://localhost:7778",
+  "hypernexus.autoConnect": true
 }
 ```
 
 ## Requirements
 
-- TormentNexus server running locally (`tormentnexus serve`)
+- HyperNexus server running locally (`hypernexus serve`)
 - Node.js 18+
 
 ## Links
 
-- [GitHub](https://github.com/MDMAtk/TormentNexus)
-- [Website](https://tormentnexus.site)
+- [GitHub](https://github.com/MDMAtk/HyperNexus)
+- [Website](https://hypernexus.site)
 - [Discord](https://discord.gg/Hj9P3GbVxR)
 
 ## License

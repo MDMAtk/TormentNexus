@@ -1,8 +1,8 @@
-<!-- [TORMENTNEXUS_AUTO_INJECTED] -->
+<!-- [HYPERNEXUS_AUTO_INJECTED] -->
 > [!IMPORTANT]
-> **TormentNexus Advanced Agent Mandates:**
+> **HyperNexus Advanced Agent Mandates:**
 > 1. **Proactive Tooling**: You MUST use available tools frequently and proactively. Prioritize tool execution for researching, editing, executing, and validating.
-> 2. **Codebase AST & Search**: Always analyze impact and dependencies using codebase analysis/AST/search tools (`tormentnexus__repograph_search`, `tormentnexus__repograph_find_references`) before modifying code.
+> 2. **Codebase AST & Search**: Always analyze impact and dependencies using codebase analysis/AST/search tools (`hypernexus__repograph_search`, `hypernexus__repograph_find_references`) before modifying code.
 > 3. **Context Harvesting & Compaction**: Perform automatic context harvesting and compaction/pruning of the LLM context to prevent token blowups. Summarize or discard old logs/history dynamically.
 > 4. **Tool Output Compaction & Deduplication**: Deduplicate and compact verbose tool outputs. Avoid displaying duplicate or redundant logs in responses.
 > 5. **Session & Skill Injection**: Inspect and update sessions and memory states using scratchpads (`memory_scratchpad_set`) to persist key findings, rules, and skill recommendations.
@@ -50,14 +50,14 @@ As Claude, you focus on deep feature execution, visual elegance, type safety, an
 ## 3. Binary-Topology Layout Context
 
 Adhere to the recommended target layout for future architecture:
-- `tormentnexus` / `tormentnexusd` for the core control plane.
+- `hypernexus` / `hypernexusd` for the core control plane.
 - `hypermcpd` plus `hypermcp-indexer` for MCP routing and metadata work.
 - `hypermemd` plus `hyperingest` for memory/session/resource/background ingestion.
 - `hyperharness` / `hyperharnessd` for harness execution surfaces.
-- `tormentnexus-web` and `tormentnexus-native` as client applications.
+- `hypernexus-web` and `hypernexus-native` as client applications.
 
 ### Ownership Assumptions
-- `tormentnexusd` owns orchestration, supervision, and operator-facing control-plane truth.
+- `hypernexusd` owns orchestration, supervision, and operator-facing control-plane truth.
 - `hypermcpd` owns MCP registry, routing, and tool mediation.
 - `hypermemd` owns long-running memory/session/resource state.
 - `hyperingest` owns batch imports and normalization work.
@@ -92,8 +92,8 @@ Claude should bias toward:
 
 CodeWhale runs a native Rust tn-extension with full Pi extension parity:
 - **Lifecycle hooks**: session logging, tool RBAC, @memory:key expansion, L2 context harvesting
-- **49 MCP tools** via `tormentnexus.exe mcp`
-- **SKILL.md** at `.codewhale/plugins/tormentnexus/skills/SKILL.md`
+- **49 MCP tools** via `hypernexus.exe mcp`
+- **SKILL.md** at `.codewhale/plugins/hypernexus/skills/SKILL.md`
 - Build from `~/codewhale-source` with `cargo build --release -p codewhale-cli`
 
 ## 7. Build Verification

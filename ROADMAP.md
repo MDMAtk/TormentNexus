@@ -1,6 +1,6 @@
-# ROADMAP — TormentNexus
+# ROADMAP — HyperNexus
 
-> **Vision:** Make TormentNexus the "WordPress of AI" — easy to install, infinitely extensible, and the default choice for anyone who wants to give their AI persistent memory and tools.
+> **Vision:** Make HyperNexus the "WordPress of AI" — easy to install, infinitely extensible, and the default choice for anyone who wants to give their AI persistent memory and tools.
 
 ---
 
@@ -26,7 +26,7 @@
 
 ### 4. **Monetization** — Sustainable Growth
 
-- Hosted SaaS (cloud.tormentnexus.site)
+- Hosted SaaS (cloud.hypernexus.site)
 - Enterprise features (SSO, audit, RBAC)
 - Training and certification
 
@@ -105,7 +105,7 @@
 
 **Deliverables:**
 
-- [ ] SaaS live at cloud.tormentnexus.site
+- [ ] SaaS live at cloud.hypernexus.site
 - [ ] Pricing page (Free, Pro, Team)
 - [ ] Enterprise features
 - [ ] Partnership announcements
@@ -466,9 +466,9 @@ Fast, single binary, low resource usage. Much lighter than Node.js alternatives.
 
 ## 📞 Contact
 
-- **GitHub:** <https://github.com/MDMAtk/TormentNexus>
-- **Website:** <https://tormentnexus.site>
-- **Email:** <dev@tormentnexus.org>
+- **GitHub:** <https://github.com/MDMAtk/HyperNexus>
+- **Website:** <https://hypernexus.site>
+- **Email:** <dev@hypernexus.org>
 - **Discord:** (coming soon)
 - **Twitter:** (coming soon)
 

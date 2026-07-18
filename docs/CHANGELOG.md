@@ -12,12 +12,12 @@
 
 - Renamed enterprise -> commercial globally (90+ files, all Go, TS, docs, skills)
 - go/internal/enterprise -> go/internal/commercial
-- @tormentnexus/enterprise -> @tormentnexus/commercial
+- @hypernexus/enterprise -> @hypernexus/commercial
 
 ### Fixed
 
 - Duplicate route crash: 3 conflicting memory endpoint registrations
-- Nginx tormentnexus.site add_header directive syntax
+- Nginx hypernexus.site add_header directive syntax
 
 ### Maintenance
 
@@ -54,7 +54,7 @@
 
 - Advanced deep link protocol scheme handlers (`focus`, `search-memory`, `trigger-tool`) inside the Go sidecar daemon.
 - Interactive deep-link verification anchors and controls inside the Next.js dashboard UI.
-- Configurable P2P Gossip encryption override via `TORMENTNEXUS_GOSSIP_SHARED_KEY` env var.
+- Configurable P2P Gossip encryption override via `HYPERNEXUS_GOSSIP_SHARED_KEY` env var.
 - Multi-tenant isolated sidecar and dashboard deployment containers in `docker-compose.isolated.yml` and `tenant-provision.sh`.
 - HyperNexus production deployment on Hetzner (5.161.250.43): Go sidecar via PM2 on port 8090.
 - Wildcard SSL cert issued for `*.hypernexus.site` via Let's Encrypt DNS challenge.
@@ -87,7 +87,7 @@
 
 ### Fixed
 
-- Decommissioned all legacy core control plane (`tormentnexus-core`) references and ports (`4100`).
+- Decommissioned all legacy core control plane (`hypernexus-core`) references and ports (`4100`).
 - Aligned browser extension background websocket/SSE endpoints to point to port `7778` (Go Sidecar).
 - Resolved duplicate sqlite driver registration panics in tests by unifying imports under `go-sqlite`.
 - Fixed format specifier bugs (`%%s` -> `%s`) in generated MCP stub functions.
@@ -102,7 +102,7 @@
 
 ### Fixed
 
-- Removed workspace `.pi/extensions/tormentnexus.ts` from git tracking; added `.pi/extensions/` to `.gitignore`
+- Removed workspace `.pi/extensions/hypernexus.ts` from git tracking; added `.pi/extensions/` to `.gitignore`
 - Copied newer v4 extension (53,967 bytes) from workspace to global `~/.pi/agent/extensions/`
 
 ### Changed
@@ -143,7 +143,7 @@
 ### Added
 
 - **Memory Maintenance API**: `POST /api/memory/maintenance` — manual trigger for all 5 lifecycle phases
-- **TormentNexus pi extension v4**: RBAC, 6 slash commands, subagent orchestration, keyboard shortcuts, live widget
+- **HyperNexus pi extension v4**: RBAC, 6 slash commands, subagent orchestration, keyboard shortcuts, live widget
 - **pi-intercom v0.6.0 + pi-subagents v0.33.1**: Cross-session message broker and subagent orchestration
 - **Memory Maintenance Documentation**: `docs/ai/deployment/memory-maintenance.md`
 - **Executive Protocol R7**: Full repo sync, 298 task branches reconciled
@@ -151,9 +151,9 @@
 - **Per-project .memdb system**: Portable, git-tracked per-project memory files. `ProjectDB` type with `OpenProjectDB`, `Store`, `Search`, `List`, `Count`. Workspace scanner `FindProjectMemDBs` + `SyncAllProjectMemDBs` for auto-import on startup and hourly rescan
 - **`/api/memory/project/sync` endpoint**: Trigger workspace .memdb scan and import
 - **`/api/memory/project/split` endpoint**: Retroactively split global memories by `project:` tag into per-project .memdb files
-- **Config directory rename**: `~/.tormentnexus-go` → `~/.tormentnexus` with auto-migration on startup. New env var `TORMENTNEXUS_CONFIG_DIR` (backward compat with `TORMENTNEXUS_GO_CONFIG_DIR`)
-- **npm package `tormentnexus`**: Published at `packages/tormentnexus/` for `pi install npm:tormentnexus`
-- **codewhale integration**: TormentNexus MCP server via `.codewhale/skills/tormentnexus/SKILL.md` (contact: codewhale)
+- **Config directory rename**: `~/.hypernexus-go` → `~/.hypernexus` with auto-migration on startup. New env var `HYPERNEXUS_CONFIG_DIR` (backward compat with `HYPERNEXUS_GO_CONFIG_DIR`)
+- **npm package `hypernexus`**: Published at `packages/hypernexus/` for `pi install npm:hypernexus`
+- **codewhale integration**: HyperNexus MCP server via `.codewhale/skills/hypernexus/SKILL.md` (contact: codewhale)
 
 ### Fixed
 
@@ -209,7 +209,7 @@
 ### Fixed
 
 - **Go Sidecar Build**: Fixed undefined compilation error `GetLowPerformingSkills` inside `go/internal/skillregistry/evolution_prompt.go` by introducing a database-safe fallback definition.
-- **Backend Service Restart**: Successfully terminated stale and locked backend processes and launched the new `tormentnexus.exe` serving daemon to spin up the system tray notification icon.
+- **Backend Service Restart**: Successfully terminated stale and locked backend processes and launched the new `hypernexus.exe` serving daemon to spin up the system tray notification icon.
 
 ## [1.0.0-alpha.220] - 2026-07-02
 
@@ -217,7 +217,7 @@
 
 - **AI Agent Competitor Parity & Evidence Lock Gate Dashboard Card**:
   - Displays the first-party verification queue status (L0-L3) for competitor platforms (OpenCode, Cursor, Windsurf, Codex, Claude Code, Gemini CLI, etc.).
-  - Added checkboxes representing the tormentnexus Readiness Gate rules.
+  - Added checkboxes representing the hypernexus Readiness Gate rules.
 
 ## [1.0.0-alpha.219] - 2026-07-02
 
@@ -300,7 +300,7 @@
 
 ### Added
 
-- **Native Go Session Import Fallback**: Implemented a local fallback in `handleSessionImport` inside the Go sidecar (`server.go`), enabling direct native imports of external session payloads into `tormentnexus.db` when the TypeScript control plane is unavailable.
+- **Native Go Session Import Fallback**: Implemented a local fallback in `handleSessionImport` inside the Go sidecar (`server.go`), enabling direct native imports of external session payloads into `hypernexus.db` when the TypeScript control plane is unavailable.
 - **Unique Hash & Schema Constraint Guard**: Added automatic SHA256 `transcript_hash` calculation and default `normalized_session` metadata initialization inside `ImportSession` (`import.go`) to prevent unique and non-null SQLite constraint exceptions during session insertion.
 
 ### Fixed
@@ -311,7 +311,7 @@
 
 ### Added
 
-- **TormentNexus Unified Dashboard Layout**: Implemented the high-density conditional dashboard tabs (`page-a`, `page-b`, `page-c`, `page-d`) in `DashboardHomeClient` and `DashboardHomeView` to reduce operator route friction.
+- **HyperNexus Unified Dashboard Layout**: Implemented the high-density conditional dashboard tabs (`page-a`, `page-b`, `page-c`, `page-d`) in `DashboardHomeClient` and `DashboardHomeView` to reduce operator route friction.
 - **Consolidated Sidebar Config**: Remapped all sidebar navigation link paths in `nav-config.ts` to route directly to their corresponding tab targets in the unified dashboard layout.
 
 ### Fixed
@@ -351,7 +351,7 @@
 
 ### Fixed
 
-- **Go Sidecar Port**: Resolved connection refused console errors by updating the browser status check port from legacy `4300` to the correct active `7778` port in `@tormentnexus/ui` components and API routes.
+- **Go Sidecar Port**: Resolved connection refused console errors by updating the browser status check port from legacy `4300` to the correct active `7778` port in `@hypernexus/ui` components and API routes.
 - **Pre-fetch 404s**: Compiled and validated squads, director, and council redirect routes.
 
 ## [1.0.0-alpha.195] - 2026-06-30
@@ -364,7 +364,7 @@
 
 ### Added
 
-- **Wails Desktop GUI**: Full build chain working — `pnpm build:wails` builds Next.js standalone, extracts static assets to `frontend/dist/`, then `go build ./cmd/tormentnexus-gui` produces `tormentnexus-gui.exe` (18MB).
+- **Wails Desktop GUI**: Full build chain working — `pnpm build:wails` builds Next.js standalone, extracts static assets to `frontend/dist/`, then `go build ./cmd/hypernexus-gui` produces `hypernexus-gui.exe` (18MB).
 - **3 new dashboard pages**: P2P Fleet-Wise Mesh (`/dashboard/mesh`), L3 Cold Archive (`/dashboard/cold-archive`), Enterprise Security (`/dashboard/enterprise`).
 - **`copy-assets.mjs`**: Extracts static HTML/CSS/JS from Next.js standalone build to Wails frontend directory.
 - **`.gitignore` wildcard**: `.next-build*` covers all stale build artifact directories.
@@ -431,7 +431,7 @@
 
 ### Added
 
-- **Wails Desktop GUI App Skeleton**: Created `main.go` and `app.go` targets under `go/cmd/tormentnexus-gui` mapping embedded assets and bootstrap configurations.
+- **Wails Desktop GUI App Skeleton**: Created `main.go` and `app.go` targets under `go/cmd/hypernexus-gui` mapping embedded assets and bootstrap configurations.
 
 ### Fixed
 
@@ -566,13 +566,13 @@
 
 ### Changed
 
-- **Dashboard Condensation & Consolidation**: Condensed all 60+ individual subpages and routes within the TormentNexus web dashboard into 3 major hub pages (System & Operations `/dashboard`, MCP Tool Services `/dashboard/mcp`, and Agent Swarm `/dashboard/swarm`). Added instant client-side fallback redirects for backward compatibility. Updated sidebar navigation configuration and active link status checks to support query parameters.
+- **Dashboard Condensation & Consolidation**: Condensed all 60+ individual subpages and routes within the HyperNexus web dashboard into 3 major hub pages (System & Operations `/dashboard`, MCP Tool Services `/dashboard/mcp`, and Agent Swarm `/dashboard/swarm`). Added instant client-side fallback redirects for backward compatibility. Updated sidebar navigation configuration and active link status checks to support query parameters.
 
 ## [1.0.0-alpha.165] - 2026-06-26
 
 ### Added
 
-- **Database Restoration & Merge**: Safely merged `imported_sessions` (+410), `imported_session_memories` (+57,144), and `links_backlog` (+17,341) from `bobbybookmarks/tormentnexus.db` into the active workspace database, resolving data loss issues.
+- **Database Restoration & Merge**: Safely merged `imported_sessions` (+410), `imported_session_memories` (+57,144), and `links_backlog` (+17,341) from `bobbybookmarks/hypernexus.db` into the active workspace database, resolving data loss issues.
 - **Accessory Tools Integration**: Integrated built-in root accessory tools (such as `bash`, `search`, `repomap`, and file actions) into the sidecar's `/api/mcp/tools` registry, enabling custom always-on configuration from the dashboard.
 - **Node Heap Limit Configuration**: Updated `start-ts.bat` to declare `set NODE_OPTIONS=--max-old-space-size=8192` to resolve JavaScript heap out-of-memory errors during build runs.
 
@@ -649,7 +649,7 @@
   - Merged `/dashboard/knowledge` and `/dashboard/brain` into a unified Cognitive Graph and Ingest tabbed workspace under `/dashboard/brain`.
   - Consolidated `/dashboard/director`, `/dashboard/council`, `/dashboard/supervisor`, `/dashboard/squads`, and `/dashboard/swarm` into a single, comprehensive Swarm & Agent Command Center under `/dashboard/swarm`.
   - Cleaned up the side navigation config in `nav-config.ts` to reflect the new consolidated structure.
-- **MCP CLI Binary Resolution**: Replaced the root `tormentnexus.exe` with the compiled Go sidecar binary, resolving stdio clients `unknown command "mcp"` failures.
+- **MCP CLI Binary Resolution**: Replaced the root `hypernexus.exe` with the compiled Go sidecar binary, resolving stdio clients `unknown command "mcp"` failures.
 - **Version bump**: Synchronized all monorepo packages to version `1.0.0-alpha.153`.
 
 ## [1.0.0-alpha.149] - 2026-06-24
@@ -657,13 +657,13 @@
 ### Added
 
 - **Self-Healing Go Compiler Loop**: Implemented `compiler_reset.py` to automatically execute `go build`, parse compilation errors, remove faulty generated Go files, reset their database status to `'pending'`, and loop until clean compilation is achieved.
-- **Deduplicated Skill Ingestion**: Developed `ingest_all_user_skills.py` to scrape 2,956 home directory skills into `.tormentnexus/skills.db` using Jaccard similarity at a 90% threshold, yielding 2,948 canonical and 8 duplicate entries.
+- **Deduplicated Skill Ingestion**: Developed `ingest_all_user_skills.py` to scrape 2,956 home directory skills into `.hypernexus/skills.db` using Jaccard similarity at a 90% threshold, yielding 2,948 canonical and 8 duplicate entries.
 - **New Documentation Draft**: Added `docs/COMPILER_HEALING_AND_SKILLS.md` covering the self-healing compiler loop and the Jaccard-deduplicated skill registry.
 
 ### Changed
 
 - **Workspace Simplification**: Created `archive_cleaner.py` and consolidated obsolete, temporary, and old version files from the root workspace into structured, git-ignored subdirectories within `/archive/`.
-- **LM Studio Integration**: Updated `~/.lmstudio/mcp.json` configuration to default to `tormentnexus` supervisor instead of `tormentnexus` as its MCP server.
+- **LM Studio Integration**: Updated `~/.lmstudio/mcp.json` configuration to default to `hypernexus` supervisor instead of `hypernexus` as its MCP server.
 - **Version bump**: Synchronized all monorepo dependencies and workspaces to version `1.0.0-alpha.149`.
 
 ## [1.0.0-alpha.136] - 2026-06-23
@@ -710,7 +710,7 @@
 
 ### Fixed
 
-- **Swarm `verify_build()` path**: Changed from broken `go/` module path to workspace root build (`go build -buildvcs=false -o tormentnexus.exe .`)
+- **Swarm `verify_build()` path**: Changed from broken `go/` module path to workspace root build (`go build -buildvcs=false -o hypernexus.exe .`)
 - **Dead nvidia DIRECT_PROVIDERS removed**: All nvidia models were EOL (410 Gone since June 11) causing swarm crashes
 - **Handler files restored**: `ddg_search.go`, `slack.go`, `gitingest.go`, `sqlite.go` restored from git after swarm repair loop corrupted them to 36 bytes
 - **76+ empty Go stubs filled**: Missing `package tools` declarations added
@@ -752,7 +752,7 @@
 ### Added
 
 - **Comprehensive README.md Rewrite**: Expanded from 82 lines to 657 lines (~34KB) covering full architecture, capabilities, monorepo structure, Go sidecar, dashboard, MCP ecosystem, memory model, swarm, and API surface.
-  - New title: `TormentNexus: The Cognitive Kernel — Universal AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory`
+  - New title: `HyperNexus: The Cognitive Kernel — Universal AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory`
 - **Branch Reconciliation**: Intelligently merged `jules/baseline-128-hardened` into `main`, fast-forwarded `assimilation-pipeline` and `assimilation-final` to merged tip.
   - All 4 branches (`main`, `jules`, `assimilation-pipeline`, `assimilation-final`) now synchronized to `988ec114a`.
 - **Autonomous CI/CD from jules**: Integrated `deployment_manager`, `health_monitor`, `repo_sync`, `repository_healer` into Go sidecar.
@@ -823,7 +823,7 @@
 
 ### Added
 
-- **Bulk Skill Assimilation**: Assimilated **3,229 unique skills** from home directory harness ecosystems into `~/.tormentnexus/skills/`.
+- **Bulk Skill Assimilation**: Assimilated **3,229 unique skills** from home directory harness ecosystems into `~/.hypernexus/skills/`.
   - Scanned 7 source directories: `~/.a5c` (2,099), `~/.agent/skills` (723), `~/.ccs` (466), `~/.hermes/skills` (87), `~/.pi` (40), `~/.agents/skills` (2), `~/.config/opencode-temp/skills` (1)
   - Found 3,418 total SKILL.md files, merged 2 duplicates via content-hash deduplication
   - Each skill enriched with frontmatter: `name`, `source`, `category`, `date`, `tags`
@@ -871,7 +871,7 @@
   - Added unit test validation checking version increments and near-duplicate linkages.
 - **Fixed test suite issues**:
   - Fixed variable redeclaration error in `cmd/foundation_http_test.go`.
-  - Resolved `htormentnelloxus` test snapshot difference due to case-insensitive tormentnexus replacements in `foundation/pi/tool_snapshot_test.go`.
+  - Resolved `htormentnelloxus` test snapshot difference due to case-insensitive hypernexus replacements in `foundation/pi/tool_snapshot_test.go`.
 
 ## [1.0.0-alpha.120] - 2026-06-05
 
@@ -952,7 +952,7 @@
 
 - **P0 Clean Build Gate (Windows EBUSY Fix)**: Added folder renaming step in Next.js build cleanup script to prevent Windows directory lock conflicts.
 - **P1 Offline License Validation**: Implemented offline license signature validator in Go sidecar using Ed25519 cryptography.
-- **P1 Tabby & Warp Active Launcher**: Added detection and wrapping parameters for Tabby and Warp shell clients inside `@tormentnexus/core`.
+- **P1 Tabby & Warp Active Launcher**: Added detection and wrapping parameters for Tabby and Warp shell clients inside `@hypernexus/core`.
 - **P1 Bobbybookmarks Ingestion Automation**: Automated BobbyBookmarks backlog synchronization on startup in MCPServer.
 
 ## [1.0.0-alpha.113] - 2026-06-05
@@ -1046,7 +1046,7 @@
 
 - **Verified Tool Expansion Batches 13 & 14**:
   - Successfully verified, validated, and registered 17 new MCP servers and 295 new tools using `scratch/parallel_batch_validator.mjs`.
-  - Scaled the registered registry to **788 verified servers** and **11,066 tools** inside `tormentnexus.db`.
+  - Scaled the registered registry to **788 verified servers** and **11,066 tools** inside `hypernexus.db`.
   - Capturing exact stderr traceback details for failing servers in `catalog.db` to aid auto-healing processes.
 - **Monorepo Version Release Sync**:
   - Synchronized and rebuilt all 34 package manifests in the monorepo to the new `1.0.0-alpha.103` release specification.
@@ -1056,7 +1056,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 9**:
-  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **249 verified servers** and **2,775 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **249 verified servers** and **2,775 tools** inside `hypernexus.db`.
   - Registered new servers include `"tekom-recruiting-mcp"` (14 tools).
   - Exceptionally cleared more NPM packages and maintained highly stable loop processing.
 - **Monorepo Version Release Sync**:
@@ -1067,7 +1067,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 8**:
-  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **248 verified servers** and **2,761 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **248 verified servers** and **2,761 tools** inside `hypernexus.db`.
   - Registered new servers include `"protakeoff-mcp-server"` (73 tools) and `"contribbot-mcp"` (41 tools).
   - Exceptionally expanded capabilities by adding **114 new tools** in a single run, verifying highly comprehensive API schema endpoints stably.
 - **Monorepo Version Release Sync**:
@@ -1078,7 +1078,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 7**:
-  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **246 verified servers** and **2,647 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **246 verified servers** and **2,647 tools** inside `hypernexus.db`.
   - Registered new servers include `"git-mcp-server"` (21 tools), `"mcp-linear"` (5 tools), and `"flightradar-mcp-server"` (3 tools).
   - Maintained solid direct stdio operational integrity and trapped ECOMPROMISED npm lock errors gracefully.
 - **Monorepo Version Release Sync**:
@@ -1089,7 +1089,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 6**:
-  - Processed another 100 candidate backlog items from the deep queue (`task-9230`), maintaining stable tool state counts of **243 verified servers** and **2,618 tools** inside `tormentnexus.db`.
+  - Processed another 100 candidate backlog items from the deep queue (`task-9230`), maintaining stable tool state counts of **243 verified servers** and **2,618 tools** inside `hypernexus.db`.
   - Cleared more unresolvable external packages and maintained solid direct stdio operational integrity.
 - **Monorepo Version Release Sync**:
   - Synchronized and rebuilt all 34 package manifests in the monorepo to the new `1.0.0-alpha.92` release specification.
@@ -1099,7 +1099,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 5**:
-  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **243 verified servers** and **2,618 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **243 verified servers** and **2,618 tools** inside `hypernexus.db`.
   - Registered new servers include `"advanced-websearch-mcp"` (3 tools), `"ref-mcp-cli"` (2 tools), and `"tea-color-to-vars-mcp-server"` (1 tool).
   - Ensured fully robust sequential execution loops, continuing to filter out browser installations, E404 packages, and process credential handshakes cleanly.
 - **Monorepo Version Release Sync**:
@@ -1110,7 +1110,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 4**:
-  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **240 verified servers** and **2,612 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **240 verified servers** and **2,612 tools** inside `hypernexus.db`.
   - Registered new servers include `"figma-mcp"` (5 tools), `"ifconfig-mcp"` (2 tools), `"mcp-starter"` (1 tool), `"mcp-echo-server"` (1 tool), `"terry-mcp"` (1 tool), and `"hyper-mcp-shell"` (1 tool).
   - Maintained complete stability across the automated batch validation loop, successfully handling browser-based Playwright installer timeouts and dependency errors gracefully.
 - **Monorepo Version Release Sync**:
@@ -1121,7 +1121,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 3**:
-  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **234 verified servers** and **2,601 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **234 verified servers** and **2,601 tools** inside `hypernexus.db`.
   - Registered new servers include `"gezhe-mcp-server"` (1 tool), `"wikipedia-mcp-server"` (3 tools), and `"openapi-mcp-server"` (2 tools).
   - Stably bypassed connection lock compromises, NPM E404s, and interactive OAuth login loops gracefully.
 - **Monorepo Version Release Sync**:
@@ -1132,7 +1132,7 @@
 ### Added
 
 - **Verified Tool Expansion Batch 2**:
-  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **231 verified servers** and **2,595 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered more high-value MCP servers from the backlog queue, scaling the production registry to **231 verified servers** and **2,595 tools** inside `hypernexus.db`.
   - Registered new servers include `"TouchDesigner MCP Server"` (13 tools), `"PowerBI MCP Server"` (12 tools), `"OpenAI WebSearch MCP Server"` (2 tools), and `"mcp-tts-server"` (1 tool).
   - Bypassed and handled additional 30+ missing key configurations, ECOMPROMISED npm locks, and 404 package outages cleanly during sequential runs.
 - **Monorepo Version Release Sync**:
@@ -1143,7 +1143,7 @@
 ### Added
 
 - **Verified Tool Expansion**:
-  - Successfully verified, validated, and registered new high-value MCP servers, scaling the production registry to **226 verified servers** and **2,557 tools** inside `tormentnexus.db`.
+  - Successfully verified, validated, and registered new high-value MCP servers, scaling the production registry to **226 verified servers** and **2,557 tools** inside `hypernexus.db`.
   - Registered new servers include `"America's Law Graph"` (14 tools), `"Data Converter"` (3 tools), `"ActionGate"` (6 tools), `"AsterPay — EUR API"` (19 tools), `"SafeAgent Token Safety"` (57 tools), `"CrabbitMQ"` (6 tools), `"czech-vat-mcp"` (4 tools), `"Compress.new"` (1 tool), `"aidroid"` (3 tools), `"mansa"` (14 tools), `"sg-regulatory-data-mcp"` (7 tools), `"subconscious-unlock"` (1 tool), `"Vivid MCP"` (1 tool), `"md2card-mcp-server"` (1 tool), `"odoo-mcp-server"` (1 tool), `"discord-mcp"` (19 tools), and `"firebase-mcp"` (5 tools).
   - Trapped and handled 20+ configuration, authentication timeouts, and NPM 404 outages gracefully during the automated bulk run.
 - **Monorepo Version Release Sync**:
@@ -1161,7 +1161,7 @@
 - **Rogue Process Sanitization**:
   - Forcefully terminated all active background python processes, completely resolving write lock contentions and returning the database to a completely clean concurrent state.
 - **Progress Tracking & Catalog Logging**:
-  - Validated and recorded runs for `Reddit`, `Google Tasks`, and `Google Drive` sequentially inside `published_mcp_validation_runs` and documented their status inside `tormentnexus.db`.
+  - Validated and recorded runs for `Reddit`, `Google Tasks`, and `Google Drive` sequentially inside `published_mcp_validation_runs` and documented their status inside `hypernexus.db`.
 
 ## [1.0.0-alpha.82] - 2026-05-31
 
@@ -1169,7 +1169,7 @@
 
 - **Massive MCP Registry Enrichment**:
   - Automatically installed, validated, and verified **420 total MCP tools** across numerous directories and configurations.
-  - Successfully seeded the tools into the `tormentnexus.db` registry, bypassing configuration constraints and automatically injecting secrets for seamless onboarding.
+  - Successfully seeded the tools into the `hypernexus.db` registry, bypassing configuration constraints and automatically injecting secrets for seamless onboarding.
 - **Python uv Environment Auto-Recovery**:
   - Implemented the surgical crawler to discover and purge corrupted local cache instances of `httpx` installed by `uv`, automatically healing 470 broken `uvx` caches.
 - **Release Gate Resilience**:
@@ -1182,13 +1182,13 @@
 
 - **Monorepo-wide MCP Validation Suite**:
   - Implemented `scratch/validate_mcp_servers.mjs` to dynamically connect, test, and extract schema details from 65 registered MCP servers.
-  - Successfully verified 14 local stdio/remote SSE servers, extracting 46 production-ready tools into `tormentnexus.db`.
+  - Successfully verified 14 local stdio/remote SSE servers, extracting 46 production-ready tools into `hypernexus.db`.
   - Populated both `tools` and `published_mcp_servers` catalogs with verified, up-to-date tool configurations and metadata.
 - **Topological Build Security**:
   - Resolved Next.js compile settings, Turbo v2 extends parsing errors, and HMR socket watch hangs.
   - Successfully performed a full workspace production build (`pnpm run build` exiting with code 0).
 - **Supervisor Package Rebranding**:
-  - Renamed `packages/TormentNexus-supervisor` to `packages/tormentnexus-supervisor` and successfully aligned package identity to `@tormentnexus/supervisor`, eliminating potential `MODULE_NOT_FOUND` startup failures.
+  - Renamed `packages/HyperNexus-supervisor` to `packages/hypernexus-supervisor` and successfully aligned package identity to `@hypernexus/supervisor`, eliminating potential `MODULE_NOT_FOUND` startup failures.
 
 ## [1.0.0-alpha.64] - 2026-05-25
 
@@ -1213,9 +1213,9 @@
 
 ### Added
 
-- **Deep Link Protocol Scheme (`TormentNexus://`) in Go**:
-  - Built robust URI handling for `TormentNexus://attach?session=ID` and `TormentNexus://create?cliType=aider` commands.
-  - Implemented single-instance CLI dispatcher. Clicking deep links routes actions through the active `TormentNexusd` daemon via HTTP REST.
+- **Deep Link Protocol Scheme (`HyperNexus://`) in Go**:
+  - Built robust URI handling for `HyperNexus://attach?session=ID` and `HyperNexus://create?cliType=aider` commands.
+  - Implemented single-instance CLI dispatcher. Clicking deep links routes actions through the active `HyperNexusd` daemon via HTTP REST.
 - **SQLite L2 Vector Vault Visualizer**:
   - Implemented persistent database queries (`GetAllVaultRecords`) in Go fetching chronic vault memories ordered by importance and heat.
   - Wired the new tRPC `vaultRecords` query to the Next.js control plane to hook persistent SQLite vector records into the UI.
@@ -1227,7 +1227,7 @@
 
 ### Changed
 
-- Standardized documentation identity to Tormentnexus Kernel & TormentNexus.
+- Standardized documentation identity to Tormentnexus Kernel & HyperNexus.
 - Replaced git merge conflict markers across multiple internal Kotlin and Markdown files with unified content logic.
 
 ## [1.0.0-alpha.61] - 2026-05-17
@@ -1243,7 +1243,7 @@
 ## [1.0.0-alpha.60] - 2026-05-16
 
 - Fully integrated Go-native `MemoryManager` into the core TS control plane.
-- Wires up `sqlite-vec` storage backend, replacing the deprecated `@TormentNexus/TormentNexus` implementation.
+- Wires up `sqlite-vec` storage backend, replacing the deprecated `@HyperNexus/HyperNexus` implementation.
 - Dual-tier cache invalidation for the L1/L2 memory boundaries.
 - Shifted authority of MCP configuration sync entirely to the Go sidecar.
 - Removed legacy TS synchronization scripts for VSCode and Cursor.

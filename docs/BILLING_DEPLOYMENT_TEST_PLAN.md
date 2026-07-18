@@ -1,4 +1,4 @@
-# TormentNexus — Billing & Deployment Test Plan
+# HyperNexus — Billing & Deployment Test Plan
 
 > **Created:** 2026-07-14
 > **Purpose:** Verify billing, deployment, and FULL platform functionality
@@ -109,7 +109,7 @@
 
 ### B4. DNS
 
-- [ ] tormentnexus.site resolves
+- [ ] hypernexus.site resolves
 - [ ] cloud.hypernexus.site resolves
 - [ ] demo.hypernexus.site resolves
 - [ ] *.hypernexus.site resolves
@@ -312,7 +312,7 @@
 
 1. Visit GitHub
 2. Clone repo
-3. Run `npx tormentnexus serve`
+3. Run `npx hypernexus serve`
 4. Open dashboard
 5. Search catalog
 6. Install MCP tool

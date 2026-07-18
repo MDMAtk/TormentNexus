@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Getting Started
 
-Welcome to TormentNexus! This guide will help you get up and running in minutes.
+Welcome to HyperNexus! This guide will help you get up and running in minutes.
 
 ## Quick Start
 
@@ -12,10 +12,10 @@ Welcome to TormentNexus! This guide will help you get up and running in minutes.
 
 ```bash
 # Install globally
-npm install -g @tormentnexus/core
+npm install -g @hypernexus/core
 
 # Start the server
-tormentnexus serve
+hypernexus serve
 
 # Open dashboard
 open http://localhost:7778
@@ -24,27 +24,27 @@ open http://localhost:7778
 ### Option 2: npx
 
 ```bash
-npx @tormentnexus/core serve
+npx @hypernexus/core serve
 ```
 
 ### Option 3: Docker
 
 ```bash
-docker run -p 7778:7778 ghcr.io/mdmatk/tormentnexus:latest
+docker run -p 7778:7778 ghcr.io/mdmatk/hypernexus:latest
 ```
 
 ### Option 4: Download
 
-- **Windows**: Download `tormentnexus-setup.exe` from [GitHub Releases](https://github.com/MDMAtk/TormentNexus/releases)
-- **macOS**: Download `tormentnexus-darwin-*.tar.gz`
-- **Linux**: Download `tormentnexus-linux-*.tar.gz`
+- **Windows**: Download `hypernexus-setup.exe` from [GitHub Releases](https://github.com/MDMAtk/HyperNexus/releases)
+- **macOS**: Download `hypernexus-darwin-*.tar.gz`
+- **Linux**: Download `hypernexus-linux-*.tar.gz`
 
 ## First Steps
 
 ### 1. Start the Server
 
 ```bash
-tormentnexus serve
+hypernexus serve
 ```
 
 The server starts on `http://localhost:7778` by default.
@@ -80,7 +80,7 @@ curl -X POST http://localhost:7778/api/memory/add \
 
 ## Configuration
 
-Create a config file at `~/.tormentnexus/config.json`:
+Create a config file at `~/.hypernexus/config.json`:
 
 ```json
 {
@@ -101,12 +101,12 @@ Create a config file at `~/.tormentnexus/config.json`:
 
 ## Next Steps
 
-- [Architecture](/docs/architecture) — Learn how TormentNexus works
+- [Architecture](/docs/architecture) — Learn how HyperNexus works
 - [API Reference](/docs/api) — Explore the REST API
 - [MCP Tools](/docs/tools) — Browse the tool catalog
 - [Memory System](/docs/memory) — Understand the 4-tier memory
 
 ## Need Help?
 
-- [GitHub Issues](https://github.com/MDMAtk/TormentNexus/issues)
+- [GitHub Issues](https://github.com/MDMAtk/HyperNexus/issues)
 - [Discord](https://discord.gg/Hj9P3GbVxR)

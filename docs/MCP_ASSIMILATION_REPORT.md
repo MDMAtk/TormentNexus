@@ -5,7 +5,7 @@
 
 ## Executive Summary
 
-Every MCP server defined in `~/.tormentnexus/mcp.json` that has actionable functionality has been fully reimplemented as a Go-native module inside `go/internal/tools/`. The external `npx`/`uvx`/SSE dependencies are now **completely redundant** — the Go sidecar can execute all tool calls natively with zero external process overhead.
+Every MCP server defined in `~/.hypernexus/mcp.json` that has actionable functionality has been fully reimplemented as a Go-native module inside `go/internal/tools/`. The external `npx`/`uvx`/SSE dependencies are now **completely redundant** — the Go sidecar can execute all tool calls natively with zero external process overhead.
 
 ## Assimilation Map
 

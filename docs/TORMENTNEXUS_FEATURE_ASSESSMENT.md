@@ -1,17 +1,17 @@
-# TORMENTNEXUS FEATURE ASSESSMENT & NEXT PRIORITIES
-*Derived from: (1) TormentNexus codebase audit (2) 13,503 bookmark ecosystem intelligence*
+# HYPERNEXUS FEATURE ASSESSMENT & NEXT PRIORITIES
+*Derived from: (1) HyperNexus codebase audit (2) 13,503 bookmark ecosystem intelligence*
 *Date: 2026-05-08 | Version: 1.0.0-alpha.53*
 
 ---
 
-## WHAT TORMENTNEXUS IS (Actual, Not Aspirational)
+## WHAT HYPERNEXUS IS (Actual, Not Aspirational)
 
-TormentNexus is a **local-first cognitive control plane** — a Go+TypeScript modular monolith that coordinates multi-agent LLM workflows, MCP tool routing, provider failover, memory persistence, and operator observability. It currently runs as two cooperating processes:
+HyperNexus is a **local-first cognitive control plane** — a Go+TypeScript modular monolith that coordinates multi-agent LLM workflows, MCP tool routing, provider failover, memory persistence, and operator observability. It currently runs as two cooperating processes:
 
 - **Go Sidecar** (port 4300): 232 Go files, 446 HTTP handler methods, 18K-line server
 - **TypeScript Control Plane** (port 4100): 583 TS files, 4343-line MCPServer.ts core
 - **Next.js Dashboard** (port 3000): 91 pages, 709 TS/TSX files
-- **SQLite storage**: tormentnexus.db (35MB), .tormentnexus/agent_memory/ (14,726 memories), .tormentnexus/memory/ (13,478 contexts)
+- **SQLite storage**: hypernexus.db (35MB), .hypernexus/agent_memory/ (14,726 memories), .hypernexus/memory/ (13,478 contexts)
 
 ---
 
@@ -37,14 +37,14 @@ TormentNexus is a **local-first cognitive control plane** — a Go+TypeScript mo
 | Feature | Go | TS | Maturity | Gap |
 |---------|:--:|:--:|:--------:|-----|
 | **Tiered Memory (L1/L2)** | ✅ | ✅ | Beta | L1 Scratchpad + L2 Vault work, but **no heat-based promotion**, no adaptive forgetting, no L3 cold archive. 14,726 memories but all `long_term/project` — no real tiering in practice |
-| **Knowledge Graph** | ✅ | ✅ | Stub | `@tormentnexus/memory` exports `GraphNode`/`GraphEdge` **interfaces only** — actual implementations are `undefined`. `RepoGraphService` builds file-level import graphs but NOT semantic entity graphs |
+| **Knowledge Graph** | ✅ | ✅ | Stub | `@hypernexus/memory` exports `GraphNode`/`GraphEdge` **interfaces only** — actual implementations are `undefined`. `RepoGraphService` builds file-level import graphs but NOT semantic entity graphs |
 | **Context Harvester** | ✅ | ✅ | Beta | Harvest/prune/compact/rerank pipeline works. **Groomer is rudimentary** (token estimation, system message preservation only). No semantic compaction via LLM |
 | **Healer (Self-Healing)** | ✅ | ✅ | Beta | Error → LLM diagnosis → fix suggestion pipeline works. **No closed-loop** (execute fix → verify → retry). No stop hooks. No idle-state healing |
 | **Swarm Controller** | ✅ | ✅ | Experimental | Role rotation (Planner/Implementer/Tester/Critic) and shared transcript. **No real consensus**, no task bidding, no completion detection by ExpertSupervisor in production |
 | **Pair Orchestrator** | ✅ | — | Experimental | State machine: Planner→Reviewer→Implementer→Reviewer→Critic. Works in Go. **Not wired to actual agent sessions** |
 | **A2A Broker** | ✅ | ✅ | Experimental | Message routing + heartbeat + query pattern + audit logging. **No real multi-process agents** — everything is in-process |
 | **Council/Debate** | ✅ | ✅ | Experimental | Collaborative debate manager, rotation room, human veto service. **Self-evolution only adjusts weights** — no prompt evolution, no skill evolution |
-| **Skill Registry** | ✅ | ✅ | Beta | SKILL.md discovery + CRUD + search. **No /evolve command**, no win-rate tracking, no auto-retirement. 0 skills in `.tormentnexus/skills/` |
+| **Skill Registry** | ✅ | ✅ | Beta | SKILL.md discovery + CRUD + search. **No /evolve command**, no win-rate tracking, no auto-retirement. 0 skills in `.hypernexus/skills/` |
 | **Skill Assimilation** | — | ✅ | Experimental | Researches topic → generates SKILL.md via LLM. **No feedback loop** — skills never improve from usage |
 | **Darwin (Self-Modification)** | ✅ | ✅ | Experimental | Prompt mutation + A/B testing. **No integration with skills or memory**. Runs in isolation |
 | **Code Executor** | ✅ | ✅ | Beta | Multi-language sandbox with timeouts. WASM sandbox scaffolded but **uses exec.Command fallback** |
@@ -75,7 +75,7 @@ TormentNexus is a **local-first cognitive control plane** — a Go+TypeScript mo
 
 The BobbyBookmarks database shows the AI engineering ecosystem is lopsided:
 
-| Stack Layer | Systems | Saturation | TormentNexus Coverage |
+| Stack Layer | Systems | Saturation | HyperNexus Coverage |
 |-------------|---------|-----------|---------------|
 | Protocol (MCP, bridges) | 6,406 | 66% OVERBUILT | ✅ Strong |
 | Agent Runtime | 5,059 | 52% OVERBUILT | ✅ Strong |
@@ -89,21 +89,21 @@ The BobbyBookmarks database shows the AI engineering ecosystem is lopsided:
 | **Memory** | **1,445** | **15% UNDERBUILT** | 🔴 Tiering is flat, graph is stub |
 
 **Missing Combinations** (deficit vs expected co-occurrence):
-- Self-Mod + Tools: 2.7% deficit → TormentNexus has tools but self-mod is disconnected
-- Memory + Tools: 1.7% deficit → TormentNexus's memory doesn't inform tool selection
+- Self-Mod + Tools: 2.7% deficit → HyperNexus has tools but self-mod is disconnected
+- Memory + Tools: 1.7% deficit → HyperNexus's memory doesn't inform tool selection
 - Infra + Memory: 1.2% deficit → No execution state in memory
 
 ---
 
 ## NEXT MOST VIABLE FEATURES
 
-Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundation to build on, (3) leverage — how much it unlocks downstream
+Ranked by: (1) evidence from ecosystem data, (2) HyperNexus's existing foundation to build on, (3) leverage — how much it unlocks downstream
 
 ### TIER 1: HIGH EVIDENCE + EXISTING FOUNDATION = DO NOW
 
 #### 1. REAL TIERED MEMORY WITH HEAT PROMOTION
 **Evidence:** 14x enrichment, 0.29x saturation (massive gap), 37x for skill evolution which depends on this
-**TormentNexus foundation:** L1 Scratchpad + L2 Vault already work. 14,726 memories already stored.
+**HyperNexus foundation:** L1 Scratchpad + L2 Vault already work. 14,726 memories already stored.
 **Gap:** All memories are `long_term/project` — no real tiering. No heat scoring. No promotion/demotion.
 **What to build:**
 - Add `heat_score` (0-100) and `last_accessed_at` to every memory entry
@@ -115,7 +115,7 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 #### 2. CLOSE THE SELF-HEALING LOOP
 **Evidence:** 15x enrichment, 0.34x saturation
-**TormentNexus foundation:** HealerService (TS) + healer.go (Go) already do error→diagnosis→fix suggestion
+**HyperNexus foundation:** HealerService (TS) + healer.go (Go) already do error→diagnosis→fix suggestion
 **Gap:** No execute-fix-verify-retry cycle. No stop hooks. No idle-state healing.
 **What to build:**
 - `heal_and_verify(error, file)`: diagnose → apply fix → run test → if fail, re-diagnose with error context (max 3 loops)
@@ -125,8 +125,8 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 - **Why second:** Makes the control plane actually autonomous. Currently it suggests fixes but can't apply them.
 
 #### 3. PROGRESSIVE SKILL DISCOVERY (Apply MCP Routing to Skills)
-**Evidence:** 37x enrichment (skill evolution), listed in TormentNexus's own TODO
-**TormentNexus foundation:** MCP Decision System already has the exact architecture (ranked search, auto-load, LRU eviction, profiles). SkillRegistry already discovers SKILL.md files.
+**Evidence:** 37x enrichment (skill evolution), listed in HyperNexus's own TODO
+**HyperNexus foundation:** MCP Decision System already has the exact architecture (ranked search, auto-load, LRU eviction, profiles). SkillRegistry already discovers SKILL.md files.
 **Gap:** Skills have no ranking, no working set, no eviction, no profile-based boosting. All-or-nothing.
 **What to build:**
 - `SkillDecisionSystem` — exact mirror of `MCPDecisionSystem` but for skills
@@ -140,7 +140,7 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 #### 4. CONTEXT RE-INJECTION AFTER COMPACTION
 **Evidence:** 20x enrichment
-**TormentNexus foundation:** ContextHarvester + Groomer already compact context. Memory hydration already injects L2 into L1 on session start.
+**HyperNexus foundation:** ContextHarvester + Groomer already compact context. Memory hydration already injects L2 into L1 on session start.
 **Gap:** No re-injection AFTER compaction. No PreToolUse/PostToolUse hooks.
 **What to build:**
 - `CompactionHook`: when Groomer compacts, immediately re-inject key facts from L2 Vault
@@ -151,7 +151,7 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 #### 5. PLANNER-CHECKER-REVISE LOOP
 **Evidence:** 12.7x enrichment
-**TormentNexus foundation:** PairOrchestrator has the state machine. Council has debate/consensus. HumanVetoService exists.
+**HyperNexus foundation:** PairOrchestrator has the state machine. Council has debate/consensus. HumanVetoService exists.
 **Gap:** PairOrchestrator isn't wired to real sessions. Council debates don't produce actionable plans. No "Plan Mode" where premium model strategizes before cheap model executes.
 **What to build:**
 - `PlanMode`: premium model (e.g., Claude Opus) creates PLAN.md, budget model (e.g., Gemini Flash) executes
@@ -162,7 +162,7 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 #### 6. MEMORY → TOOL SELECTION FEEDBACK LOOP
 **Evidence:** Memory + Tools has 1.7% deficit in ecosystem — almost no system connects them
-**TormentNexus foundation:** Both memory and tool selection are mature systems. They just don't talk.
+**HyperNexus foundation:** Both memory and tool selection are mature systems. They just don't talk.
 **What to build:**
 - `MemoryInformedRanking`: when searching tools, boost scores for tools that succeeded in similar past contexts
 - `ToolOutcomeMemory`: after every tool call, store outcome (success/fail, latency, relevance) in memory
@@ -174,7 +174,7 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 #### 7. REAL KNOWLEDGE GRAPH (Not Just File Imports)
 **Evidence:** Graph Memory has the highest zero-co-occurrence with every other mechanism
-**TormentNexus foundation:** RepoGraphService builds file-level graphs. KnowledgeService has graph interfaces. `@tormentnexus/memory` exports GraphNode/GraphEdge types.
+**HyperNexus foundation:** RepoGraphService builds file-level graphs. KnowledgeService has graph interfaces. `@hypernexus/memory` exports GraphNode/GraphEdge types.
 **Gap:** All graph implementations are stubs or file-level only. No semantic entity graph.
 **What to build:**
 - Entity extraction: LLM identifies concepts (projects, tools, patterns, decisions) from memories
@@ -186,7 +186,7 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 #### 8. SKILL EVOLUTION WITH WIN-RATE TRACKING
 **Evidence:** 37x enrichment (strongest signal in data)
-**TormentNexus foundation:** SkillRegistry + SkillAssimilationService + DarwinService all exist in pieces.
+**HyperNexus foundation:** SkillRegistry + SkillAssimilationService + DarwinService all exist in pieces.
 **Gap:** Skills never improve. Darwin mutates prompts but doesn't touch skills. No /evolve command. No win/loss tracking.
 **What to build:**
 - `/evolve` command: takes a skill, runs it on 3 test cases, evaluates results, mutates prompt, re-tests
@@ -197,7 +197,7 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 #### 9. GRAPH-MEMORY-INFORMED HITL GATES
 **Evidence:** Graph + HITL Gates has signal 1,984 with ZERO implementations in 13,503 bookmarks
-**TormentNexus foundation:** HumanVetoService exists. A2A broker works. KnowledgeService has graph types.
+**HyperNexus foundation:** HumanVetoService exists. A2A broker works. KnowledgeService has graph types.
 **Gap:** No system uses graph relationships to decide when to escalate to humans.
 **What to build:**
 - `BlastRadiusCalculator`: on every proposed action, query graph for dependent entities
@@ -210,14 +210,14 @@ Ranked by: (1) evidence from ecosystem data, (2) TormentNexus's existing foundat
 
 ## WHAT NOT TO BUILD
 
-The data says these layers are OVERBUILT in the ecosystem. TormentNexus should **consume** them, not compete:
+The data says these layers are OVERBUILT in the ecosystem. HyperNexus should **consume** them, not compete:
 
 | Don't Build | Reason | Instead |
 |-------------|--------|---------|
-| Another agent framework | 52% saturated | TormentNexus's swarm/council is sufficient — focus on making it reliable |
-| Another MCP server | 66% saturated | TormentNexus should ROUTE existing servers, not create new ones |
+| Another agent framework | 52% saturated | HyperNexus's swarm/council is sufficient — focus on making it reliable |
+| Another MCP server | 66% saturated | HyperNexus should ROUTE existing servers, not create new ones |
 | Another dashboard framework | 52% saturated | 91 pages is enough — focus on data quality, not more pages |
-| Another CLI harness | Crowded | TormentNexus should COORDINATE existing harnesses via parity aliases |
+| Another CLI harness | Crowded | HyperNexus should COORDINATE existing harnesses via parity aliases |
 | P2P mesh / federation | Vision only | Not justified until single-node is rock solid |
 
 ---

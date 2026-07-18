@@ -10,7 +10,7 @@ Executive Protocol R22 completed. Cherry-picked useful new files from jules feat
 
 ## Completed Actions
 
-### TormentNexus (origin/main + origin-backup/main)
+### HyperNexus (origin/main + origin-backup/main)
 
 - v1.0.0-alpha.260 → v1.0.0-alpha.261
 - Cherry-picked from `jules-3383774315910324119-9b0b1aa0` branch:
@@ -28,14 +28,14 @@ Executive Protocol R22 completed. Cherry-picked useful new files from jules feat
 
 ### OpenHands Integration (completed earlier this session)
 
-- Python agent at `~/.openhands/plugins/tormentnexus/tormentnexus_agent.py`
-- 10 actions at `~/.openhands/plugins/tormentnexus/actions.py`
+- Python agent at `~/.openhands/plugins/hypernexus/hypernexus_agent.py`
+- 10 actions at `~/.openhands/plugins/hypernexus/actions.py`
 - Plugin manifest, microagent, Docker compose, npm package
 - Installer now copies all OpenHands files
 
 ### Hetzner Deployment
 
-- Marketing agent: Rebuilt Docker image, deployed with correct DB creds (sales_bot:tormentnexus2026)
+- Marketing agent: Rebuilt Docker image, deployed with correct DB creds (sales_bot:hypernexus2026)
 - Webhook endpoint: `POST /api/v1/webhook/stripe` — live, needs Stripe signature
 - TN Kernel: PM2 running on port 8090
 - 2 Docker tenants: test-org (3001), acmerealtest (3010)
@@ -62,12 +62,12 @@ Stripe Checkout → Webhook (/api/v1/webhook/stripe) → TN Provison → Account
 
 - `origin/jules-3383774315910324119-9b0b1aa0` — 1 commit (Go renames conflict, useful files cherry-picked)
 - `origin-backup/feature/cloud-dashboard-mcp-sse-389806464713532918` — Stale (0 unique after sync)
-- `gh-pages-hypernexus` / `gh-pages-tormentnexus` — Static pages, separate from main
+- `gh-pages-hypernexus` / `gh-pages-hypernexus` — Static pages, separate from main
 
 ### Remaining Work
 
 1. Wildcard DNS `*.hypernexus.site` — Needs verification after propagation
-2. npm publish `@tormentnexus/openhands` — Package ready, npm login needed
+2. npm publish `@hypernexus/openhands` — Package ready, npm login needed
 3. Marketing agent webhook — Real Stripe checkout needed to test full flow
 4. 1726 Dependabot vulns (41 critical) — Needs triage
 5. ~330 quarantined MCP tool stubs — Needs regeneration

@@ -1,10 +1,10 @@
-# TormentNexus — Universal AI Control Plane
+# HyperNexus — Universal AI Control Plane
 
-> **One-command install:** `npx @tormentnexus/install`
+> **One-command install:** `npx @hypernexus/install`
 >
 > Local-first, open-source AI control plane with persistent multi-tier memory, MCP tool orchestration across 20,000+ servers, multi-agent swarm coordination, and corporate-grade security — all running on your machine.
 >
-> **📄 [Read the Technical Whitepaper](https://tormentnexus.site/tormentnexus_whitepaper.html)** | **💬 [Join Discord](https://discord.gg/Hj9P3GbVxR)**
+> **📄 [Read the Technical Whitepaper](https://hypernexus.site/hypernexus_whitepaper.html)** | **💬 [Join Discord](https://discord.gg/Hj9P3GbVxR)**
 
 ## Installation
 
@@ -28,7 +28,7 @@ python3 scripts/install-gui.py
 
 ### What Gets Installed
 
-The installer detects and configures TormentNexus for **38+ AI coding agents**.
+The installer detects and configures HyperNexus for **38+ AI coding agents**.
 Each client receives every integration it supports:
 
 | Client | SKILL | MCP | CMD | HOOK | EXT | AGENT |
@@ -49,7 +49,7 @@ Each client receives every integration it supports:
 
 ### Corporate On-Premises Installation
 
-For enterprises running TormentNexus behind a firewall:
+For enterprises running HyperNexus behind a firewall:
 
 ```bash
 python3 scripts/install-client-support.py --mode corporate
@@ -67,13 +67,13 @@ Corporate mode adds:
 ### Server Deployment
 
 ```bash
-GOOS=linux GOARCH=amd64 go build -o tn-kernel ./cmd/tormentnexus
+GOOS=linux GOARCH=amd64 go build -o tn-kernel ./cmd/hypernexus
 pm2 start tn-kernel --name tn-kernel -- serve -port 8090 -host 127.0.0.1
 ```
 
 ---
 
-# TormentNexus: The Cognitive Kernel — Universal Open-Source AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory
+# HyperNexus: The Cognitive Kernel — Universal Open-Source AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory
 
 ![Version](https://img.shields.io/badge/version-1.0.0--b1-blue)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
@@ -83,14 +83,14 @@ pm2 start tn-kernel --name tn-kernel -- serve -port 8090 -host 127.0.0.1
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
 ![License](https://img.shields.io/badge/license-MIT%2FOSS-orange)
 
-> **TormentNexus** is a local-first, open-source universal AI control plane and coding harness engineered to give your LLM agents infinite persistent memory, tool orchestration, and autonomous infrastructure assimilation—all running locally on your machine or in production.
+> **HyperNexus** is a local-first, open-source universal AI control plane and coding harness engineered to give your LLM agents infinite persistent memory, tool orchestration, and autonomous infrastructure assimilation—all running locally on your machine or in production.
 
 ---
 
 ## 🏢 Corporate & Enterprise Deployments (HyperNexus)
 
 For professional, corporate, and enterprise deployments, visit **[HyperNexus](https://hypernexus.site)**.
-**HyperNexus** is the official licensed, certified, authoritative, cloud-hosted corporate installation of the TormentNexus kernel. It provides:
+**HyperNexus** is the official licensed, certified, authoritative, cloud-hosted corporate installation of the HyperNexus kernel. It provides:
 
 - **Tenant Isolation**: Automated provisioning scripts to spin up per-tenant containers with isolated volumes and resource limits.
 - **Enterprise-Grade Security**: Full SSO support and fine-grained Role-Based Access Control (RBAC) middleware.
@@ -122,7 +122,7 @@ For professional, corporate, and enterprise deployments, visit **[HyperNexus](ht
 
 ## What It Does
 
-TormentNexus is a **decision system and universal bridge** — not just an aggregator. It runs locally as a modular monolith that unifies the chaotic landscape of AI tools, models, and agents into a single, coherent operating system for AI-driven development.
+HyperNexus is a **decision system and universal bridge** — not just an aggregator. It runs locally as a modular monolith that unifies the chaotic landscape of AI tools, models, and agents into a single, coherent operating system for AI-driven development.
 
 ### Current Capabilities (v1.0.0-b1)
 
@@ -139,12 +139,12 @@ TormentNexus is a **decision system and universal bridge** — not just an aggre
 | **Skill Registry** | Stable | Unlimited assimilated skills from multiple harness ecosystems (Aider, Agent, CCS, Hermes, Pi, etc.) with Jaccard deduplication |
 | **CodeWhale Extension** | Stable | Native Rust extension with full Pi extension parity — infinite MCP tools, unlimited custom tools, infinite slash commands, unlimited shortcuts, L2 memory hooks, RBAC, @memory:key expansion, per-turn context harvesting, session compaction |
 | **Dashboard** | Stable | Next.js 16 + React 19 + Tailwind CSS 4 with real-time telemetry, knowledge graph, healer view, swarm visualizer |
-| **npm Packages** | Published | `@tormentnexus/install`, `@tormentnexus/core`, `@tormentnexus/cli`, `@tormentnexus/openhands`, `@tormentnexus/vscode`, `@tormentnexus/cursor` |
+| **npm Packages** | Published | `@hypernexus/install`, `@hypernexus/core`, `@hypernexus/cli`, `@hypernexus/openhands`, `@hypernexus/vscode`, `@hypernexus/cursor` |
 | **tRPC Bridge** | Stable | Type-safe API layer (port 7778) connecting UI to Go sidecar |
 | **Session Import** | Beta | Automatic ingestion of Claude, Aider, and other harness session artifacts |
 | **Enterprise Licensing** | Experimental | Ed25519-signed license token validation with offline verification |
 | **Supervisor Nudge** | Stable | Autonomous Windows UI automation to maintain development momentum across AI chat surfaces |
-| **Deep Link Protocol** | Beta | `tormentnexus://attach?session=ID` and `tormentnexus://create?cliType=aider` URI handling |
+| **Deep Link Protocol** | Beta | `hypernexus://attach?session=ID` and `hypernexus://create?cliType=aider` URI handling |
 | **Provider Metrics** | Stable | Real-time telemetry tracking for all LLM providers with latency and cost analysis |
 
 ---
@@ -152,36 +152,36 @@ TormentNexus is a **decision system and universal bridge** — not just an aggre
 ## 🚀 One-Command Install
 
 ```bash
-npx @tormentnexus/install
+npx @hypernexus/install
 ```
 
-That's it. Detects and configures TormentNexus for **38+ AI coding agents** including Claude, Gemini, Cursor, Windsurf, Aider, CodeWhale, and more. Each gets MCP config, skills, hooks, and commands.
+That's it. Detects and configures HyperNexus for **38+ AI coding agents** including Claude, Gemini, Cursor, Windsurf, Aider, CodeWhale, and more. Each gets MCP config, skills, hooks, and commands.
 
 ```bash
 # CLI tools
-npm install -g @tormentnexus/cli
+npm install -g @hypernexus/cli
 tn search "your topic"
 tn status
 
 # OpenHands integration
-npx @tormentnexus/openhands
+npx @hypernexus/openhands
 
 # Core kernel
-npx @tormentnexus/core
+npx @hypernexus/core
 ```
 
 ---
 
 ## Architecture
 
-TormentNexus is a **high-performance Go modular monolith** with a **TypeScript/Next.js frontend**, operating as a local-first control plane.
+HyperNexus is a **high-performance Go modular monolith** with a **TypeScript/Next.js frontend**, operating as a local-first control plane.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  OPERATOR LAYER                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐       │
 │  │  Web Dash   │  │  CLI (TS)   │  │  VS Code    │       │
-│  │  Port 7779  │  │  tormentnexus│  │  Extension  │       │
+│  │  Port 7779  │  │  hypernexus│  │  Extension  │       │
 │  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘       │
 │         │                │                │                 │
 │         └────────────────┴────────────────┘                 │
@@ -219,7 +219,7 @@ TormentNexus is a **high-performance Go modular monolith** with a **TypeScript/N
 
 ### 1. Progressive MCP Tool Routing & Parity
 
-Models should never be overwhelmed with a 50,000-token tool dump. TormentNexus employs a multi-layered, progressive disclosure system:
+Models should never be overwhelmed with a 50,000-token tool dump. HyperNexus employs a multi-layered, progressive disclosure system:
 
 - **Semantic Search**: Local vector embeddings match the active prompt against a global MCP directory of infinite servers.
 - **The Router**: Only the top highly relevant tool schemas are injected into the active LLM context.
@@ -236,7 +236,7 @@ Context is finite; memory must be infinite.
 
 ### 3. The Resilient LLM Waterfall
 
-Uptime is non-negotiable. TormentNexus's inference client natively catches 429s (Rate Limits) and 5xx (Server Errors), seamlessly cascading the exact payload down a prioritized chain without crashing:
+Uptime is non-negotiable. HyperNexus's inference client natively catches 429s (Rate Limits) and 5xx (Server Errors), seamlessly cascading the exact payload down a prioritized chain without crashing:
 
 1. **NVIDIA NIM** / Primary APIs
 2. **OpenRouter** (Secondary aggregator fallback)
@@ -244,7 +244,7 @@ Uptime is non-negotiable. TormentNexus's inference client natively catches 429s 
 
 ### 4. Multi-Agent Swarm & P2P Mesh
 
-TormentNexus coordinates specialized models inside shared chatrooms via the Agent-to-Agent (A2A) protocol.
+HyperNexus coordinates specialized models inside shared chatrooms via the Agent-to-Agent (A2A) protocol.
 
 - **Role Rotation**: Models take turns acting as Planner, Implementer, Tester, and Critic.
 - **Consensus & Debate**: Agents autonomously bid on tasks, share context via a neural transcript, and debate implementations until consensus is reached.
@@ -252,7 +252,7 @@ TormentNexus coordinates specialized models inside shared chatrooms via the Agen
 
 ### 5. Truth Over Hype Dashboards
 
-TormentNexus's dashboards reflect actual SQLite database rows and active Go goroutine states. No mocked UI scaffolds. Monitor telemetry, traffic inspection, working-set capacity, and LLM routing histories in real-time.
+HyperNexus's dashboards reflect actual SQLite database rows and active Go goroutine states. No mocked UI scaffolds. Monitor telemetry, traffic inspection, working-set capacity, and LLM routing histories in real-time.
 
 ### 6. Autonomous Immune System
 
@@ -266,22 +266,22 @@ Every failure is an opportunity for diagnosis, remediation, and verification.
 
 ## Monorepo Structure
 
-TormentNexus is a **pnpm monorepo** with four major layers:
+HyperNexus is a **pnpm monorepo** with four major layers:
 
 ```
-tormentnexus/
+hypernexus/
 ├─ apps/                          # Operator-facing applications
 │  ├─ web/                        # Next.js 16 dashboard (primary browser UI)
 │  ├─ maestro/                    # Electron desktop shell
 │  ├─ maestro-go/                 # Go-adjacent desktop lane (experimental)
 │  ├─ vscode/                     # VS Code extension
-│  ├─ tormentnexus-extension/      # Browser extension
+│  ├─ hypernexus-extension/      # Browser extension
 │  ├─ cloud-orchestrator/          # Nested cloud stack (mini-monorepo)
-│  └─ tormentnexus-extension/              # Tormentnexus extension
+│  └─ hypernexus-extension/              # Tormentnexus extension
 │
 ├─ packages/                       # Shared libraries & TypeScript control plane
 │  ├─ core/                        # Main TS control plane, tRPC routers, orchestration
-│  ├─ cli/                         # CLI entrypoint (`tormentnexus` command)
+│  ├─ cli/                         # CLI entrypoint (`hypernexus` command)
 │  ├─ ui/                          # Shared React UI components (Radix + Tailwind)
 │  ├─ ai/                          # Model/provider SDK integration layer
 │  ├─ memory/                      # Memory storage, retrieval, embeddings, vector DB
@@ -292,7 +292,7 @@ tormentnexus/
 │  ├─ agents/                      # Agent-related logic and adapters
 │  ├─ adk/                         # Agent Development Kit layer
 │  ├─ search/                      # Search and indexing support
-│  ├─ tormentnexus-supervisor/      # Windows supervisor bridge (UI automation)
+│  ├─ hypernexus-supervisor/      # Windows supervisor bridge (UI automation)
 │  ├─ browser/                     # Legacy browser support
 │  ├─ browser-extension/          # Shared browser-extension package
 │  ├─ enterprise/                  # Enterprise features (SSO, RBAC stubs)
@@ -301,7 +301,7 @@ tormentnexus/
 │  └─ tsconfig/                   # Shared TypeScript configuration
 │
 ├─ go/                             # Go modular monolith (authoritative kernel)
-│  ├─ cmd/tormentnexus/            # Go entrypoint
+│  ├─ cmd/hypernexus/            # Go entrypoint
 │  ├─ internal/
 │  │  ├─ httpapi/                  # HTTP API server (600+ endpoints, 18K+ lines)
 │  │  ├─ tools/                    # 3,900+ native Go tool implementations
@@ -372,11 +372,11 @@ tormentnexus/
 │  └─ [20+ more scripts]          # Validation, indexing, pruning
 │
 ├─ submodules/                     # External upstream assimilations
-│  ├─ tormentnexus/                # External CLI harness upstream
-│  └─ tormentnexus-mcp/            # External MCP reference lane
+│  ├─ hypernexus/                # External CLI harness upstream
+│  └─ hypernexus-mcp/            # External MCP reference lane
 │
 ├─ swarm.py, swarm_v7.py          # Automated Go tool generation swarm
-├─ tormentnexus.db               # Main registry (MCP servers, tools, sessions)
+├─ hypernexus.db               # Main registry (MCP servers, tools, sessions)
 ├─ catalog.db                    # unlimited populated MCP server catalog
 ├─ provider_metrics.db           # Provider telemetry database
 ├─ README.md                     # This file
@@ -394,7 +394,7 @@ tormentnexus/
 
 ## The Go Sidecar
 
-The Go sidecar is the **authoritative execution kernel** of TormentNexus. It is a high-performance modular monolith with dozens of internal packages and unlimited native tool implementations.
+The Go sidecar is the **authoritative execution kernel** of HyperNexus. It is a high-performance modular monolith with dozens of internal packages and unlimited native tool implementations.
 
 ### Why Go?
 
@@ -432,7 +432,7 @@ The project includes an automated **swarm pipeline** (`swarm.py` / `swarm_v7.py`
 
 ## The Dashboard
 
-The **TormentNexus Dashboard** (`apps/web`) is a rich Next.js 16 / React 19 / Tailwind CSS 4 operator interface providing real-time observability and control over the entire system.
+The **HyperNexus Dashboard** (`apps/web`) is a rich Next.js 16 / React 19 / Tailwind CSS 4 operator interface providing real-time observability and control over the entire system.
 
 ### Dashboard Pages
 
@@ -475,7 +475,7 @@ The **TormentNexus Dashboard** (`apps/web`) is a rich Next.js 16 / React 19 / Ta
 
 ## MCP Ecosystem
 
-TormentNexus is the world's largest local MCP registry and the only system with **native Go assimilation** at scale.
+HyperNexus is the world's largest local MCP registry and the only system with **native Go assimilation** at scale.
 
 ### Registry Scale
 
@@ -554,7 +554,7 @@ A passive fact extraction layer that monitors all system traffic (tool calls, LL
 
 ### A2A Protocol Coordination
 
-TormentNexus implements the **Agent-to-Agent (A2A)** protocol for multi-agent coordination inside shared chatrooms.
+HyperNexus implements the **Agent-to-Agent (A2A)** protocol for multi-agent coordination inside shared chatrooms.
 
 ### Role Rotation State Machine
 
@@ -620,13 +620,13 @@ All API endpoints return a standardized envelope:
 
 ```bash
 # 1. One-command setup (recommended)
-npx @tormentnexus/install
+npx @hypernexus/install
 
 # 2. Or clone and build from source
-git clone https://github.com/MDMAtk/TormentNexus.git
-cd tormentnexus
+git clone https://github.com/MDMAtk/HyperNexus.git
+cd hypernexus
 pnpm install && pnpm rebuild better-sqlite3
-cd go && go build -buildvcs=false ./cmd/tormentnexus && cd ..
+cd go && go build -buildvcs=false ./cmd/hypernexus && cd ..
 pnpm run dev
 ```
 
@@ -658,7 +658,7 @@ pnpm run dev
 ### Phase 7: Session Continuity & Deep Linking (In Progress)
 
 - **Session Import Pipeline**: Automatic ingestion of Claude, Aider, and harness artifacts (49 candidates discovered, 586 imported sessions)
-- **`tormentnexus://` Protocol**: Browser-to-kernel deep linking for seamless IDE attachment
+- **`hypernexus://` Protocol**: Browser-to-kernel deep linking for seamless IDE attachment
 - **Wails Native Runtime**: Replacing Electron with a Go-native desktop shell
 
 ### Phase 8: Predictive Intelligence (Vision)
@@ -669,7 +669,7 @@ pnpm run dev
 
 ### Long-Term Vision
 
-- **The AI TormentNexus**: The operating system for AI models, abstracting all provider complexity
+- **The AI HyperNexus**: The operating system for AI models, abstracting all provider complexity
 - **Models as Compute**: Ephemeral resources managed by allocation, fallback routing, and token budgets
 - **Tools as Drivers**: MCP servers as "device drivers" for the AI OS
 - **Biological Memory**: L1/L2/L3 tiers with heat-based mechanics
@@ -713,7 +713,7 @@ See [ROADMAP.md](ROADMAP.md) for the detailed path to v1.0.0 stable, including:
 
 ## Contributing
 
-TormentNexus is built by a **multi-agent swarm** of specialized AI models (Gemini, Claude, GPT) coordinated through the [AGENTS.md](AGENTS.md) protocol. Human operators supervise and validate.
+HyperNexus is built by a **multi-agent swarm** of specialized AI models (Gemini, Claude, GPT) coordinated through the [AGENTS.md](AGENTS.md) protocol. Human operators supervise and validate.
 
 ### Model Specializations
 
@@ -732,7 +732,7 @@ TormentNexus is built by a **multi-agent swarm** of specialized AI models (Gemin
 5. **Commit** small, incremental, verifiable changes
 6. **Update** `HANDOFF.md`, `MEMORY.md`, and `CHANGELOG.md`
 7. **Bump** `VERSION` and sync with `node scripts/sync-versions.mjs`
-8. **Push** to `origin` and `tormentnexus-upstream`
+8. **Push** to `origin` and `hypernexus-upstream`
 
 ---
 
@@ -741,10 +741,10 @@ TormentNexus is built by a **multi-agent swarm** of specialized AI models (Gemin
 ### pi Extension (npm)
 
 ```bash
-pi install npm:tormentnexus
+pi install npm:hypernexus
 ```
 
-Connects pi to the TormentNexus control plane — persistent L2 memory, tool search, session import, skill registry, code search, subagent orchestration, enterprise RBAC. Full source at `packages/tormentnexus/`.
+Connects pi to the HyperNexus control plane — persistent L2 memory, tool search, session import, skill registry, code search, subagent orchestration, enterprise RBAC. Full source at `packages/hypernexus/`.
 
 **CodeWhale now has equivalent functionality through a native Rust extension** — see below.
 
@@ -772,7 +772,7 @@ Also registers: 9 custom tools, 6 slash commands, 3 keyboard shortcuts, auto-reg
 
 #### Layer 2: CodeWhale Skill (SKILL.md)
 
-Tracked at `.codewhale/plugins/tormentnexus/skills/SKILL.md`, auto-installed to `~/.codewhale/skills/tormentnexus/`. Contains 49 MCP tools, REST API reference, slash command handling, best practices, security notes.
+Tracked at `.codewhale/plugins/hypernexus/skills/SKILL.md`, auto-installed to `~/.codewhale/skills/hypernexus/`. Contains 49 MCP tools, REST API reference, slash command handling, best practices, security notes.
 
 #### Installation
 
@@ -783,8 +783,8 @@ scripts\install_codewhale.bat
 Verify:
 
 ```bash
-codewhale mcp connect tormentnexus
-codewhale mcp tools | findstr mcp_tormentnexus | find /c /v ""
+codewhale mcp connect hypernexus
+codewhale mcp tools | findstr mcp_hypernexus | find /c /v ""
 curl http://127.0.0.1:7778/api/health
 ```
 
@@ -798,7 +798,7 @@ cargo build --release -p codewhale-cli
 
 ## License
 
-TormentNexus uses a **dual-licensing model**:
+HyperNexus uses a **dual-licensing model**:
 
 - **Open Source**: Core kernel and tool implementations available under a permissive open-source license
 - **Enterprise**: Ed25519-signed license tokens for advanced features (SSO, RBAC, fleet management, cross-machine mesh)

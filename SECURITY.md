@@ -9,12 +9,12 @@
 
 ## Reporting a Vulnerability
 
-We take security seriously. If you discover a security vulnerability in TormentNexus, please report it responsibly.
+We take security seriously. If you discover a security vulnerability in HyperNexus, please report it responsibly.
 
 ### How to Report
 
 1. **DO NOT** open a public GitHub issue
-2. **Email** <security@tormentnexus.org> with:
+2. **Email** <security@hypernexus.org> with:
    - Description of the vulnerability
    - Steps to reproduce
    - Potential impact
@@ -35,7 +35,7 @@ We're working on establishing a bug bounty program. In the meantime, we'll ackno
 
 ### For Users
 
-1. **Keep TormentNexus updated** to the latest version
+1. **Keep HyperNexus updated** to the latest version
 2. **Use strong passwords** for your accounts
 3. **Enable 2FA** where available
 4. **Don't expose** the dashboard to the public internet without authentication
@@ -76,11 +76,11 @@ No known security issues at this time.
 ## Security Advisories
 
 Security advisories will be published at:
-<https://github.com/MDMAtk/TormentNexus/security/advisories>
+<https://github.com/MDMAtk/HyperNexus/security/advisories>
 
 ## Contact
 
-- **Security email:** <security@tormentnexus.org>
+- **Security email:** <security@hypernexus.org>
 - **PGP key:** (coming soon)
 
 ## Acknowledgments

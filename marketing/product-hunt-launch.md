@@ -1,4 +1,4 @@
-# TormentNexus — Product Hunt Launch Checklist
+# HyperNexus — Product Hunt Launch Checklist
 
 ## Pre-Launch (1 week before)
 
@@ -13,11 +13,11 @@
 
 ### Product Info
 
-- **Name**: TormentNexus
+- **Name**: HyperNexus
 - **Tagline**: AI Control Plane with 26K+ Tools & Persistent Memory
 - **Category**: Developer Tools, Artificial Intelligence
-- **Website**: <https://tormentnexus.site>
-- **GitHub**: <https://github.com/MDMAtk/TormentNexus>
+- **Website**: <https://hypernexus.site>
+- **GitHub**: <https://github.com/MDMAtk/HyperNexus>
 
 ### Description (260 chars)
 
@@ -38,7 +38,7 @@ Open-source AI control plane with persistent memory (4-tier), 26,000+ MCP tools,
 ```
 Hey Product Hunt! 👋
 
-I built TormentNexus because I was tired of AI assistants forgetting everything between sessions.
+I built HyperNexus because I was tired of AI assistants forgetting everything between sessions.
 
 Key features:
 • 26,000+ MCP tools in one catalog
@@ -75,7 +75,7 @@ Would love your feedback! What tools would you add to the catalog?
 ```
 🚀 We just launched on Product Hunt!
 
-TormentNexus — AI Control Plane with 26K+ Tools & Persistent Memory
+HyperNexus — AI Control Plane with 26K+ Tools & Persistent Memory
 
 • 26,000+ MCP tools
 • Persistent memory (4-tier)
@@ -90,7 +90,7 @@ Check it out: [PH link]
 **LinkedIn:**
 
 ```
-Excited to share TormentNexus on Product Hunt today!
+Excited to share HyperNexus on Product Hunt today!
 
 After months of building, we've created an open-source AI control plane that gives your AI persistent memory across sessions.
 

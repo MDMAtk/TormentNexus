@@ -1,4 +1,4 @@
-Title: Show r/LocalLLaMA: TormentNexus — Universal AI Control Plane with persistent memory and 20,000+ MCP tools
+Title: Show r/LocalLLaMA: HyperNexus — Universal AI Control Plane with persistent memory and 20,000+ MCP tools
 
 I built an open-source AI control plane that gives LLM agents persistent memory, tool orchestration, and multi-agent coordination. MIT licensed, one-command install.
 
@@ -14,13 +14,13 @@ I built an open-source AI control plane that gives LLM agents persistent memory,
 **Quick start:**
 
 ```bash
-npx @tormentnexus/install
-npm install -g @tormentnexus/cli
+npx @hypernexus/install
+npm install -g @hypernexus/cli
 tn status
 ```
 
-GitHub: <https://github.com/MDMAtk/TormentNexus>
-npm: <https://www.npmjs.com/search?q=%40tormentnexus>
+GitHub: <https://github.com/MDMAtk/HyperNexus>
+npm: <https://www.npmjs.com/search?q=%40hypernexus>
 
 Built with Go + TypeScript + Next.js. Production-deployed on Hetzner with Stripe billing and Docker tenant isolation.
 

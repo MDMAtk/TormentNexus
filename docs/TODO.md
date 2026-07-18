@@ -24,7 +24,7 @@ _Last updated: 2026-07-10, version 1.0.0-alpha.252_
 - [x] **Bobbybookmarks Sync**: Configure automatic sync call triggers for catalog scraping. (Blocked by DNS failure — use Smithery.ai or Glama.ai)
 - [x] **New Native Tools**: Implement `browser-use` and `browsermcp` specialized logic if needed (currently aliased to playwright).
 - [x] **Session Import**: Format resolved — wraps JSONL in ExportPackage format (unlimited sessions detected). Orchestrator POST endpoint missing for actual restoration.
-- [x] **Git LFS**: Consider tracking large `.db` files (provider_metrics.db 145MB, tormentnexus.db 34MB) with Git LFS to avoid repo bloat.
+- [x] **Git LFS**: Consider tracking large `.db` files (provider_metrics.db 145MB, hypernexus.db 34MB) with Git LFS to avoid repo bloat.
 - [x] **.out Cleanup**: `swarm_*.out` and `*.pid` added to `.gitignore`. (alpha.133)
 
 ## P2 — Enterprise Readiness & Security
@@ -41,7 +41,7 @@ _Last updated: 2026-07-10, version 1.0.0-alpha.252_
 - [x] **L3 Cold Archive**: Implement long-term compressed memory tier for infinite context.
 - [x] **Fleet-Wide Intelligence**: Cross-machine memory sharing via encrypted mesh.
 - [x] **Wails Native Runtime**: Replace Electron with Go-native desktop shell.
-- [x] **Deep Link Protocol**: Expand `tormentnexus://` protocol for browser-to-kernel attachment.
+- [x] **Deep Link Protocol**: Expand `hypernexus://` protocol for browser-to-kernel attachment.
 
 ---
 *Keep the party going. Never stop. Don't stop the party!!!*

@@ -98,7 +98,7 @@ Successfully completed the full assimilation of high-value MCP servers, implemen
 | **Go File** | skill_registry.go |
 | **Handler Functions** | 4 |
 | **Registered Tools** | 8 (skill_list, skill_get, skill_store, skill_search + aliases) |
-| **Database Path** | .tormentnexus/skills.db |
+| **Database Path** | .hypernexus/skills.db |
 
 ### Skill Operations Available
 1. `skill_list` - List all skills (frontmatter only)
@@ -120,7 +120,7 @@ Action: Merge content, increment version
 - **Assessment Criteria**: 
   - Value score
   - Implementation complexity
-  - Integration fit with TormentNexus
+  - Integration fit with HyperNexus
 - **Assimilation Path**: Each addon → Go module or skill
 
 ### Integration Points
@@ -209,7 +209,7 @@ taskplane doctor
 
 ## Conclusion
 
-The TormentNexus control plane has been significantly enhanced with:
+The HyperNexus control plane has been significantly enhanced with:
 - **50 native Go MCP implementations** (eliminating external dependencies)
 - **Database-backed skill registry** with intelligent deduplication
 - **Framework for hermes-agent addon integration**

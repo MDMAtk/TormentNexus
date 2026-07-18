@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to TormentNexus will be documented in this file.
+All notable changes to HyperNexus will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Live demo at demo.tormentnexus.site
+- Live demo at demo.hypernexus.site
 - Discord community server
 - GitHub Discussions
 - Issue templates (bug report, feature request)
@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- CI build output name conflicts with tormentnexus/ directory
+- CI build output name conflicts with hypernexus/ directory
 
 ## [1.0.0-alpha.256] - 2026-07-13
 

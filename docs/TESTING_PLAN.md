@@ -1,4 +1,4 @@
-# TormentNexus — Full Platform Testing Plan
+# HyperNexus — Full Platform Testing Plan
 
 > **Created:** 2026-07-14
 > **Purpose:** Verify billing, deployment, and full platform functionality
@@ -337,7 +337,7 @@
 
 1. Visit GitHub
 2. Clone repository
-3. Run `npx tormentnexus serve`
+3. Run `npx hypernexus serve`
 4. Open dashboard
 5. Search catalog
 6. Install MCP tool

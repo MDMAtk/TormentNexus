@@ -1,9 +1,9 @@
-# TormentNexus 5-Minute Demo Script
+# HyperNexus 5-Minute Demo Script
 
 ## Setup (30s)
 
 ```bash
-docker run -d -p 7778:7778 tormentnexus
+docker run -d -p 7778:7778 hypernexus
 curl http://127.0.0.1:7778/api/runtime/status | jq .data.version
 ```
 

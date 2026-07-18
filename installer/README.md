@@ -1,27 +1,27 @@
-# TormentNexus Installer
+# HyperNexus Installer
 
 ## Quick Install
 
 ### Windows
 
-1. Download `tormentnexus-setup.exe` from [Releases](https://github.com/MDMAtk/TormentNexus/releases)
+1. Download `hypernexus-setup.exe` from [Releases](https://github.com/MDMAtk/HyperNexus/releases)
 2. Run the installer as Administrator
 3. Follow the installation wizard
-4. Launch TormentNexus from Start Menu or Desktop shortcut
+4. Launch HyperNexus from Start Menu or Desktop shortcut
 
 ### Linux/Mac
 
 ```bash
 # Download and run the installer script
-curl -fsSL https://raw.githubusercontent.com/MDMAtk/TormentNexus/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/MDMAtk/HyperNexus/main/scripts/install.sh | bash
 ```
 
 Or manually:
 
 ```bash
 # Clone the repository
-git clone https://github.com/MDMAtk/TormentNexus.git
-cd TormentNexus
+git clone https://github.com/MDMAtk/HyperNexus.git
+cd HyperNexus
 
 # Run the installer
 chmod +x scripts/install.sh
@@ -42,11 +42,11 @@ chmod +x scripts/install.sh
 ```bash
 # Build the Go binary
 cd go
-go build -buildvcs=false -o ../bin/tormentnexus.exe ./cmd/tormentnexus
+go build -buildvcs=false -o ../bin/hypernexus.exe ./cmd/hypernexus
 
 # Build the NSIS installer
 cd ../installer
-makensis tormentnexus.nsi
+makensis hypernexus.nsi
 ```
 
 ### Linux/Mac
@@ -54,7 +54,7 @@ makensis tormentnexus.nsi
 ```bash
 # Build the Go binary
 cd go
-go build -buildvcs=false -o ../bin/tormentnexus ./cmd/tormentnexus
+go build -buildvcs=false -o ../bin/hypernexus ./cmd/hypernexus
 
 # Make the installer executable
 chmod +x ../scripts/install.sh
@@ -64,13 +64,13 @@ chmod +x ../scripts/install.sh
 
 After installation, the configuration file is located at:
 
-- Windows: `%USERPROFILE%\.tormentnexus\config.yaml`
-- Linux/Mac: `~/.tormentnexus/config.yaml`
+- Windows: `%USERPROFILE%\.hypernexus\config.yaml`
+- Linux/Mac: `~/.hypernexus/config.yaml`
 
 ### Default Configuration
 
 ```yaml
-# TormentNexus Configuration
+# HyperNexus Configuration
 host: 127.0.0.1
 port: 7778
 
@@ -95,7 +95,7 @@ providers:
 ### Windows
 
 1. Use "Add or Remove Programs" in Windows Settings
-2. Or run `C:\Program Files\TormentNexus\uninstall.bat`
+2. Or run `C:\Program Files\HyperNexus\uninstall.bat`
 
 ## Troubleshooting
 
@@ -112,16 +112,16 @@ port: 7779  # Use a different port
 On Linux/Mac, ensure the binary is executable:
 
 ```bash
-chmod +x ~/.local/bin/tormentnexus
+chmod +x ~/.local/bin/hypernexus
 ```
 
 ### Firewall Issues
 
-Ensure your firewall allows connections to the TormentNexus port (default: 7778).
+Ensure your firewall allows connections to the HyperNexus port (default: 7778).
 
 ## Support
 
 For issues and questions:
 
-- GitHub Issues: <https://github.com/MDMAtk/TormentNexus/issues>
-- Documentation: <https://tormentnexus.site/docs>
+- GitHub Issues: <https://github.com/MDMAtk/HyperNexus/issues>
+- Documentation: <https://hypernexus.site/docs>

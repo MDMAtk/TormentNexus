@@ -1,4 +1,4 @@
-# TODO — TormentNexus
+# TODO — HyperNexus
 
 > **Last Updated:** 2026-07-14
 > **Current Version:** 1.0.0-alpha.257
@@ -10,8 +10,8 @@
 
 ### Distribution & Discovery
 
-- [ ] **Docker Image** — Push to Docker Hub as `tormentnexus/tormentnexus`
-- [ ] **npm Package** — Publish as `tormentnexus` on npmjs.com
+- [ ] **Docker Image** — Push to Docker Hub as `hypernexus/hypernexus`
+- [ ] **npm Package** — Publish as `hypernexus` on npmjs.com
 - [ ] **Homebrew Formula** — For Mac users
 - [ ] **One-Click Templates** — 3 templates: cursor-killer, research-assistant, code-reviewer
 - [ ] **Getting Started Tutorial** — 5-minute quickstart guide
@@ -65,7 +65,7 @@
 
 - [ ] **AI-Powered Onboarding** — Auto-configure based on workflow
 - [ ] **Smart Suggestions** — "People who use X also use Y"
-- [ ] **Hosted SaaS** — cloud.tormentnexus.site
+- [ ] **Hosted SaaS** — cloud.hypernexus.site
 - [ ] **Enterprise Features** — SSO, audit logs, RBAC
 - [ ] **Mobile App** — iOS/Android companion
 
@@ -147,7 +147,7 @@
 - [ ] 10+ npm downloads
 - [ ] 5+ Docker pulls
 - [ ] Featured on HN front page
-- [ ] 100+ visitors to tormentnexus.site
+- [ ] 100+ visitors to hypernexus.site
 
 **Growth Success (This Month):**
 

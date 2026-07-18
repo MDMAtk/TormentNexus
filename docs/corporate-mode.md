@@ -2,7 +2,7 @@
 
 HyperNexus supports two editions:
 
-1. **TormentNexus** - Open source, free edition
+1. **HyperNexus** - Open source, free edition
 2. **HyperNexus** - Corporate, closed source edition with cloud connectivity
 
 ## Overview
@@ -26,21 +26,21 @@ build-editions.bat
 
 ### Manual Build
 
-#### TormentNexus (Open Source)
+#### HyperNexus (Open Source)
 
 ```batch
 cd go
-go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/config.DefaultEdition=tormentnexus" -o ..\bin\tormentnexus.exe ./cmd/tormentnexus
+go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/config.DefaultEdition=hypernexus" -o ..\bin\hypernexus.exe ./cmd/hypernexus
 
 cd ..\installer
-makensis /DTORMENTNEXUS=1 hypernexus.nsi
+makensis /DHYPERNEXUS=1 hypernexus.nsi
 ```
 
 #### HyperNexus (Corporate)
 
 ```batch
 cd go
-go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/config.DefaultEdition=hypernexus" -o ..\bin\hypernexus.exe ./cmd/tormentnexus
+go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/config.DefaultEdition=hypernexus" -o ..\bin\hypernexus.exe ./cmd/hypernexus
 
 cd ..\installer
 makensis /DCORPORATE=1 hypernexus.nsi
@@ -52,7 +52,7 @@ makensis /DCORPORATE=1 hypernexus.nsi
 
 The branding configuration is stored in `branding.json` in the user's config directory:
 
-- **TormentNexus**: `~/.tormentnexus/branding.json`
+- **HyperNexus**: `~/.hypernexus/branding.json`
 - **HyperNexus**: `~/.hypernexus/branding.json`
 
 Example configuration:
@@ -113,7 +113,7 @@ Returns the current branding configuration:
 
 ```go
 branding := config.GetBranding()
-fmt.Println(branding.ProductName) // "HyperNexus" or "TormentNexus"
+fmt.Println(branding.ProductName) // "HyperNexus" or "HyperNexus"
 ```
 
 ### config.IsCorporateMode()
@@ -151,7 +151,7 @@ config.SetBranding(&config.BrandingConfig{
 ## Directory Structure
 
 ```
-~/.tormentnexus/          # TormentNexus config directory
+~/.hypernexus/          # HyperNexus config directory
 ├── branding.json         # Branding configuration
 ├── config.yaml           # Main configuration
 ├── memory/               # Memory storage
@@ -170,7 +170,7 @@ config.SetBranding(&config.BrandingConfig{
 The edition information is stored in the Windows registry:
 
 ```
-HKCU\Software\TormentNexus     # TormentNexus
+HKCU\Software\HyperNexus     # HyperNexus
 HKCU\Software\HyperNexus       # HyperNexus
 ```
 
@@ -188,7 +188,7 @@ If the wrong edition is installed:
 
 1. Uninstall the current edition
 2. Delete the config directory:
-   - TormentNexus: `~/.tormentnexus`
+   - HyperNexus: `~/.hypernexus`
    - HyperNexus: `~/.hypernexus`
 3. Reinstall the correct edition
 
@@ -209,10 +209,10 @@ If the corporate edition cannot connect to the cloud:
 
 ### Switching Editions
 
-To switch from TormentNexus to HyperNexus:
+To switch from HyperNexus to HyperNexus:
 
-1. Export any important data from TormentNexus
-2. Uninstall TormentNexus
+1. Export any important data from HyperNexus
+2. Uninstall HyperNexus
 3. Install HyperNexus
 4. Import data if needed
 
@@ -232,5 +232,5 @@ To switch from TormentNexus to HyperNexus:
 
 ## Support
 
-- **TormentNexus**: Community support via GitHub
+- **HyperNexus**: Community support via GitHub
 - **HyperNexus**: Enterprise support via HyperNexus Corp

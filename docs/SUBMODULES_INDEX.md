@@ -7,14 +7,14 @@ _Last updated: 2026-07-02, version 1.0.0-alpha.232_
 ## Repository Layout
 
 ```
-tormentnexus/
+hypernexus/
 ├── go/                      # Go sidecar (kernel, control plane, tools)
-│   ├── cmd/tormentnexus/    # Main binary
+│   ├── cmd/hypernexus/    # Main binary
 │   └── internal/            # Core Go implementations (Memory, MCP, HTTP API, CodeExec)
 ├── apps/
 │   ├── web/                 # Next.js dashboard (port 3000)
 │   ├── vscode/              # VS Code extension integration
-│   └── tormentnexus-extension/ # Browser context extension
+│   └── hypernexus-extension/ # Browser context extension
 ├── packages/                # Monorepo packages (TS types, React components, CLI)
 ├── data/                    # Database files (.db, assimilated states)
 ├── archive/                 # Retired submodules or legacy ports (untracked)

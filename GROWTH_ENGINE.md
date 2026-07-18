@@ -1,4 +1,4 @@
-# TormentNexus Growth Engine
+# HyperNexus Growth Engine
 
 > **Goal:** Go from 6 stars to 1,000 in 30 days by activating all distribution channels.
 
@@ -241,7 +241,7 @@ Friends sign up → More users → More content → More discovery → 🚀
 
 ### Viral Mechanics
 
-1. **Social proof:** "Join 500+ developers using TormentNexus"
+1. **Social proof:** "Join 500+ developers using HyperNexus"
 2. **Referral program:** "Invite a friend, get $10 credit"
 3. **Sharing:** "Share your AI setup with others"
 4. **Templates:** "Use this template and share it"

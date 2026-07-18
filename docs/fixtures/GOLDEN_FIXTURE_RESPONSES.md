@@ -476,7 +476,7 @@
 {
   "server": "github",
   "method": "repositories.list",
-  "params": { "owner": "tormentnexus-org" }
+  "params": { "owner": "hypernexus-org" }
 }
 ```
 
@@ -487,7 +487,7 @@
   "server": "github",
   "method": "repositories.list",
   "result": [
-    { "name": "tormentnexus", "stars": 1234, "url": "..." }
+    { "name": "hypernexus", "stars": 1234, "url": "..." }
   ],
   "httpStatusCode": 200,
   "executionTime_ms": 450

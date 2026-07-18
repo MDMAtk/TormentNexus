@@ -2,7 +2,7 @@
 
 ## Overview
 
-TormentNexus uses a multi-tier memory architecture with automatic lifecycle management. Memories flow through tiers based on heat scores and access patterns.
+HyperNexus uses a multi-tier memory architecture with automatic lifecycle management. Memories flow through tiers based on heat scores and access patterns.
 
 ```
 L2 Vault (hot/warm) ──decay──▶ L3 Cold Archive (cool/cold) ──burial──▶ L4 Limbo (dead)
@@ -135,7 +135,7 @@ Node A ◀──state update──── Node B (if B has newer data)
 1. Start another TN instance on the same network:
 
    ```bash
-   bin/tormentnexus.exe serve --port 7778
+   bin/hypernexus.exe serve --port 7778
    ```
 
 2. The UDP discovery service automatically broadcasts presence every 30 seconds.
@@ -155,7 +155,7 @@ Node A ◀──state update──── Node B (if B has newer data)
 
 ### Current Status
 
-- Node: `tormentnexus-go-4c566d76db82`
+- Node: `hypernexus-go-4c566d76db82`
 - Peers: 0 (no other TN instances running)
 - Gossip port: 7778 (UDP)
 - Protocol: Ed25519-signed messages with vector clocks for conflict resolution
@@ -164,24 +164,24 @@ Node A ◀──state update──── Node B (if B has newer data)
 
 ### Overview
 
-Every TormentNexus project can have a `.memdb` file in its root directory — a portable, git-tracked SQLite database containing project-specific memories. These files survive clones, branches, and merges.
+Every HyperNexus project can have a `.memdb` file in its root directory — a portable, git-tracked SQLite database containing project-specific memories. These files survive clones, branches, and merges.
 
 ```
 project-root/
   .memdb              ← git-tracked, portable memories for this project
   src/...
 
-~/.tormentnexus/
+~/.hypernexus/
   memory.db           ← global unified index (aggregates all .memdb files)
 ```
 
 ### How Memories Flow
 
 ```
-tn_memory_store(content="fix: build bug", project="tormentnexus", tags=["pattern:build"])
+tn_memory_store(content="fix: build bug", project="hypernexus", tags=["pattern:build"])
   ├── Global L2 vault (memory.db) — for unified search
   └── Project tag added ──→ triggers workspace .memdb scan
-                              └── tormentnexus/.memdb created/updated
+                              └── hypernexus/.memdb created/updated
                                   └── imported into global index on next scan
 ```
 
@@ -206,17 +206,17 @@ The `tn_memory_store` tool accepts an optional `project` parameter:
 ```
 tn_memory_store(
   content="Architecture decision: use FTS5 for full-text search",
-  project="tormentnexus",
+  project="hypernexus",
   tags=["pattern:search", "decision:architecture"],
   category="decision"
 )
 ```
 
-This stores the memory in both the global L2 vault AND triggers a workspace scan that writes it to `tormentnexus/.memdb`. The `.memdb` file can be committed to git and will be auto-imported when the project is cloned on another machine.
+This stores the memory in both the global L2 vault AND triggers a workspace scan that writes it to `hypernexus/.memdb`. The `.memdb` file can be committed to git and will be auto-imported when the project is cloned on another machine.
 
 ## Configuration
 
-- Config directory: `~/.tormentnexus` (auto-migrated from `~/.tormentnexus-go`)
-- Override: `TORMENTNEXUS_CONFIG_DIR` env var
+- Config directory: `~/.hypernexus` (auto-migrated from `~/.hypernexus-go`)
+- Override: `HYPERNEXUS_CONFIG_DIR` env var
 - Maintenance interval: 4 hours (hardcoded)
 - Initial delay: 2 minutes

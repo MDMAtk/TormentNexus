@@ -1,6 +1,6 @@
 # Project Structure
 
-This document outlines the organization and relationship of the codebases in the TormentNexus monorepo.
+This document outlines the organization and relationship of the codebases in the HyperNexus monorepo.
 
 ---
 
@@ -13,9 +13,9 @@ The workspace is organized into key zones:
 ├── apps/               # Standalone applications
 │   ├── web/            # Next.js operator dashboard (port 3000)
 │   ├── vscode/         # VS Code editor extension integration
-│   └── tormentnexus-extension/ # Browser context extension app
+│   └── hypernexus-extension/ # Browser context extension app
 ├── go/                 # The Go-native sidecar control plane (Kernel backend)
-│   ├── cmd/            # Entrypoints (cmd/tormentnexus)
+│   ├── cmd/            # Entrypoints (cmd/hypernexus)
 │   └── internal/       # Core Go implementations (Memory, MCP, HTTP API, CodeExec)
 ├── packages/           # Shared TypeScript libraries
 │   ├── types/          # Shared contracts
@@ -30,19 +30,19 @@ The workspace is organized into key zones:
 
 ## 2. Directory Responsibilities
 
-### [go/](file:///c:/Users/hyper/workspace/tormentnexus/go) (Go Sidecar Kernel)
+### [go/](file:///c:/Users/hyper/workspace/hypernexus/go) (Go Sidecar Kernel)
 The Go-native daemon process operates as the authoritative runtime and system supervisor:
 * **`go/internal/supervisor/`**: Manages process lifecycles and monitors running sessions.
 * **`go/internal/httpapi/`**: Serves endpoints for dashboard telemetry and control actions.
 * **`go/internal/memorystore/`**: Integrates SQLite tables with LanceDB semantic vector indexes.
 
-### [apps/](file:///c:/Users/hyper/workspace/tormentnexus/apps) (Applications)
+### [apps/](file:///c:/Users/hyper/workspace/hypernexus/apps) (Applications)
 * **`apps/web/`**: Next.js dashboard providing real-time process monitoring, memory visualization, and swarm status decks.
 
-### [packages/](file:///c:/Users/hyper/workspace/tormentnexus/packages) (TypeScript Workspace)
+### [packages/](file:///c:/Users/hyper/workspace/hypernexus/packages) (TypeScript Workspace)
 * **`packages/ui/`**: Common UI elements shared between the extension and web dashboard.
 
-### [archive/](file:///c:/Users/hyper/workspace/tormentnexus/archive) (Unmanaged Code)
+### [archive/](file:///c:/Users/hyper/workspace/hypernexus/archive) (Unmanaged Code)
 * Kept strictly local to prevent losing historical crawler logic or datasets while keeping Git commits unpolluted.
 
 ---
@@ -56,7 +56,7 @@ flowchart TD
     APPS["apps/\nweb, vscode, extension"]
     PKGS["packages/\ncli, ui, types"]
     GO["go/\nGo Sidecar Kernel"]
-    DATA["data/\ntormentnexus.db, catalog.db"]
+    DATA["data/\nhypernexus.db, catalog.db"]
     DOCS["docs/\nSystem Manuals"]
 
     ROOT --> APPS

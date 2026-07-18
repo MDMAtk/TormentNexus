@@ -9,24 +9,24 @@
 - **Debian APT GPG Failures**: Compiling newer Debian Bookworm images on older host Linux kernels often triggers signature verification failures (`At least one invalid signature was encountered`) due to libseccomp filtering. Migrating to Alpine-based runner and builder stages (`node:20-alpine`) resolves this seccomp issue.
 
 ### Docker Workspace Isolation Alignment
-- **Workspace Manifest Whitelisting**: If a monorepo workspace package (like `tormentnexus-extension` or `packages/enterprise`) is excluded in the build context via `.dockerignore`, Turborepo will fail with `No package found in workspace`. Copying the package directories (or at least their manifests) and using `--ignore-scripts` during `pnpm install` ensures dependency resolution succeeds cleanly.
+- **Workspace Manifest Whitelisting**: If a monorepo workspace package (like `hypernexus-extension` or `packages/enterprise`) is excluded in the build context via `.dockerignore`, Turborepo will fail with `No package found in workspace`. Copying the package directories (or at least their manifests) and using `--ignore-scripts` during `pnpm install` ensures dependency resolution succeeds cleanly.
 
 ## Session 2026-07-08 (JSX Balancing, Port Consolidation, SQLite Gotchas & Swarm Refinement)
 
 ### Port Consolidation & Upstream tRPC routing
-- **Upstream Port Alignment**: Corrected the default upstream tRPC proxy port from the decommissioned `7787` to the active Go sidecar port `7778` inside [route.ts](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/src/app/api/trpc/[trpc]/route.ts) and [start.mjs](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/scripts/start.mjs). This resolved the HTTP 500 page rendering errors on the dashboard console.
+- **Upstream Port Alignment**: Corrected the default upstream tRPC proxy port from the decommissioned `7787` to the active Go sidecar port `7778` inside [route.ts](file:///c:/Users/hyper/workspace/hypernexus/apps/web/src/app/api/trpc/[trpc]/route.ts) and [start.mjs](file:///c:/Users/hyper/workspace/hypernexus/apps/web/scripts/start.mjs). This resolved the HTTP 500 page rendering errors on the dashboard console.
 
 ### SQLite Driver Semicolon Gotcha
 - **Multi-query Execution**: SQLite driver implementations (like `modernc.org/sqlite`) typically execute only the first query inside a semicolon-separated SQL string passed to `db.Exec()`. Splitting table creations (`published_mcp_servers` and `links_backlog`) into individual `Exec` calls guarantees both tables are successfully created on startup.
 
 ### Catalog Database Mismatch Fix
-- **Table vs Database Alignment**: When scraper tasks attempt to query the `links_backlog` table, they must target `catalog.db` directly rather than `tormentnexus.db`. Routing queries via `localTormentNexusDBPath()` causes sqlite errors due to missing tables. 
+- **Table vs Database Alignment**: When scraper tasks attempt to query the `links_backlog` table, they must target `catalog.db` directly rather than `hypernexus.db`. Routing queries via `localHyperNexusDBPath()` causes sqlite errors due to missing tables. 
 
 ### Nondestructive Script Clean-up
 - **Pruning Dev Workspace**: Keeping script files organized (e.g. archiving unused scrapers/pipelines to `scripts/archive/` and keeping task runners in the root of `scripts/`) ensures developer workspaces stay maintainable and uncluttered.
 
 ### Win32 GUI Notification Isolation
-- **Non-Interactive GUI Limits (Session 0)**: Spawning Win32 notification icons via `Shell_NotifyIconW` from headless background tasks/runners fails silently on Windows due to session isolation. To display the taskbar system tray icon, the sidecar binary `tormentnexus.exe` must be run interactively directly from the user's desktop command prompt.
+- **Non-Interactive GUI Limits (Session 0)**: Spawning Win32 notification icons via `Shell_NotifyIconW` from headless background tasks/runners fails silently on Windows due to session isolation. To display the taskbar system tray icon, the sidecar binary `hypernexus.exe` must be run interactively directly from the user's desktop command prompt.
 
 ### Swarm Database Schema Correction
 - **Missing Columns Triage**: Restructured `swarm_v6.py` query fields to select `classification` (mapped as `category`) and `description` to align with the actual SQLite columns in `assimilation_state.db`, resolving schema crash errors.
@@ -40,7 +40,7 @@
 
 ### Database Lock Contention
 
-- **Concurrent Test Runs**: Running `go test ./...` in the presence of an active background sidecar daemon (`tormentnexus.exe serve`) will result in `database is locked (5) (SQLITE_BUSY)` failures. Terminating the background sidecar daemon temporarily clears locks and allows unit tests to execute cleanly.
+- **Concurrent Test Runs**: Running `go test ./...` in the presence of an active background sidecar daemon (`hypernexus.exe serve`) will result in `database is locked (5) (SQLITE_BUSY)` failures. Terminating the background sidecar daemon temporarily clears locks and allows unit tests to execute cleanly.
 
 ## Session 2026-07-03 (Default Tool Selection & React Fragment Tab Wrapping)
 
@@ -65,7 +65,7 @@
 ### tRPC Proxy Resilience
 
 - **Proxy Abort Handlers**: Integrating a `3000ms` `AbortController` timeout on Next.js upstream tRPC fetches prevents the proxy handler from blocking indefinitely when the TS control plane is offline.
-- **Go Sidecar Redirects**: Adding `startupStatus` to `GO_NATIVE_PROCEDURES` inside [route.ts](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/src/app/api/trpc/[trpc]/route.ts) bypasses the TS core proxy completely, routing status checks directly to the Go sidecar (`7778`) for immediate, reliable responses.
+- **Go Sidecar Redirects**: Adding `startupStatus` to `GO_NATIVE_PROCEDURES` inside [route.ts](file:///c:/Users/hyper/workspace/hypernexus/apps/web/src/app/api/trpc/[trpc]/route.ts) bypasses the TS core proxy completely, routing status checks directly to the Go sidecar (`7778`) for immediate, reliable responses.
 
 ### Next.js Dev Server on Windows
 
@@ -80,7 +80,7 @@
 
 ### OS Deep Link Integration
 
-- **Non-Privileged Registry Mapping**: Custom protocol schemes (like `tormentnexus://`) can be registered under `HKCU\Software\Classes` on Windows. This registry mapping does not require administrator privileges, allowing the sidecar daemon to configure deep-link routing automatically.
+- **Non-Privileged Registry Mapping**: Custom protocol schemes (like `hypernexus://`) can be registered under `HKCU\Software\Classes` on Windows. This registry mapping does not require administrator privileges, allowing the sidecar daemon to configure deep-link routing automatically.
 
 ### Wails Standalone Asset Build
 
@@ -93,7 +93,7 @@
 - **Windows Localhost Loopback**: On Windows systems, python's default URL resolution resolves `localhost` to IPv6 `[::1]` first. If a Go sidecar daemon binds explicitly to IPv4 `127.0.0.1:7778`, connections using `localhost` will hang in a `SYN_SENT` state. Hardcoding `127.0.0.1` directly avoids this loopback resolution latency.
 - **Go SQLite Constraints handling**: When performing bulk session imports through custom endpoints, tables like `imported_sessions` may enforce strict database constraints (such as `NOT NULL UNIQUE` on `transcript_hash` or `normalized_session`). Handlers must calculate unique transaction hashes and map default structures (`{}`) to prevent query execution panics.
 
-## Session 2026-07-01 (TormentNexus Unified Dashboard & Sidebar Navigation)
+## Session 2026-07-01 (HyperNexus Unified Dashboard & Sidebar Navigation)
 
 ### Layout Refactoring Heuristics
 
@@ -174,7 +174,7 @@
 - **Branch topology**: `jules/baseline-128-hardened` had 7 unique commits diverging from `main` at `82a896d4f` (the merge base)
 - **Conflict resolution strategy**: For this repo, `registry.go` conflicts should always be resolved by taking the branch with the full implementation (not stubs). The jules branch consistently has more complete tool registrations.
 - **Fast-forward efficiency**: When branches like `assimilation-pipeline` and `assimilation-final` are behind main (no unique commits), use `git push <commit>:refs/heads/<branch>` to fast-forward them to the merged tip — this avoids creating unnecessary merge commits.
-- **GitHub remote**: The repo URL has moved to `https://github.com/MDMAtk/TormentNexus.git` (GitHub redirects from old `NexusSoftMDMA/TormentNexus` URL)
+- **GitHub remote**: The repo URL has moved to `https://github.com/MDMAtk/HyperNexus.git` (GitHub redirects from old `NexusSoftMDMA/HyperNexus` URL)
 
 ### README.md Rewrite Observations
 
@@ -203,7 +203,7 @@
 - **`*.db-shm` and `*.db-wal`** are ignored — SQLite WAL files won't be committed. Good for avoiding large binary diffs.
 - **`go-sidecar.pid`** is untracked (runtime file) — correct, don't track it.
 - **`swarm_*.out` files** accumulate and can bloat the repo. Consider `.gitignore` them after review, or keep a few as progress evidence.
-- **`tormentnexus.db`**, **`catalog.db`**, **`provider_metrics.db`** are large binary files. If tracked, every commit that touches them adds significant size. Consider using Git LFS or only tracking them on release commits.
+- **`hypernexus.db`**, **`catalog.db`**, **`provider_metrics.db`** are large binary files. If tracked, every commit that touches them adds significant size. Consider using Git LFS or only tracking them on release commits.
 - **Merge conflicts in `.gitignore`**: When the remote branch has fewer rules, always take `ours` (main) since it has the more comprehensive, tested ignore list.
 - **Merge conflicts in `CHANGELOG.md`**: When the remote branch has older alpha versions, always take `ours` (main) with the newer version history. The remote's changelog is likely stale.
 - **Merge conflicts in binary `.db` files**: Never attempt textual merge. Always take the newer version (`ours` during forward merge, or the one with the larger file size / more recent timestamp).
@@ -214,7 +214,7 @@
 
 - **bobbybookmarks.com** DNS resolution fails consistently from this environment — permanently blocked. Use Smithery.ai or Glama.ai for MCP server catalog discovery.
 - **`--repair` flag** in swarm causes premature exit — use `--forever` without `--repair`
-- **`tormentnexus-upstream` remote** does not exist — only `origin` and `origin-backup` (dead). All pushes go to `origin`.
+- **`hypernexus-upstream` remote** does not exist — only `origin` and `origin-backup` (dead). All pushes go to `origin`.
 - **`.out` files from swarm** are large and should be ignored by `.gitignore` to prevent repo bloat. Add `*.out` and `swarm_*.out` to `.gitignore`.
 - **Deleting tracked files**: When swarm removes broken tool files, `git add -A` will stage the deletions. This is correct — commit them as part of cleanup.
 - **Merge conflicts in `go/internal/tools/registry.go`**: This file always conflicts when merging branches because every branch adds tool registrations. The correct resolution is to take the version with the most registrations (usually the branch being merged), then verify `go build` compiles.
@@ -225,7 +225,7 @@
 - Always stage and commit `.db` files per user instruction "stage and track db always"
 - Use `--forever` mode for swarm to avoid premature shutdown
 - Tag commits with version: `v1.0.0-alpha.X`
-- After any merge, verify `go build ./cmd/tormentnexus` compiles clean
+- After any merge, verify `go build ./cmd/hypernexus` compiles clean
 - When a README.md rewrite is done, immediately commit it separately so it doesn't get lost in merge noise
 - Fast-forward feature branches that are fully merged rather than leaving them stale
 - Delete feature branches on GitHub after they are fully merged into main
@@ -234,7 +234,7 @@
 
 ### MCP Server Observations
 
-- **Local Module Replacing**: Setting `replace github.com/NexusSoftMDMA/TormentNexus => ../` and requiring `github.com/NexusSoftMDMA/TormentNexus v0.0.0` in `go/go.mod` allows the Go sidecar module to import `"github.com/NexusSoftMDMA/TormentNexus/tools"` without invoking network proxy lookups.
+- **Local Module Replacing**: Setting `replace github.com/NexusSoftMDMA/HyperNexus => ../` and requiring `github.com/NexusSoftMDMA/HyperNexus v0.0.0` in `go/go.mod` allows the Go sidecar module to import `"github.com/NexusSoftMDMA/HyperNexus/tools"` without invoking network proxy lookups.
 - **Unused Import Errors**: The Go compiler enforces unused imports strictly. Having a python compiler feedback loop that isolates files failing due to unused imports into `_disabled` and regenerates the dispatch map dynamically ensures compilation success.
 - **Console Window Output**: To prevent JSON-RPC stream corruption for stdio client runners, all logging must be written strictly to `os.Stderr`.
 
@@ -248,7 +248,7 @@
 ### Page Consolidation & Binary Pathing Heuristics
 
 - **Page De-duplication**: Pages with similar intent (like `/dashboard/config` form and `/dashboard/settings` raw JSON text area) should be consolidated into a single route with a tabbed interface. This reduces code footprint, streamlines navigation, and improves UX.
-- **Root Binary Pathing**: When the monorepo has two Go projects (e.g., a root Cobra CLI and a subfolder sidecar), they may compile binaries with the same name. If configurations or start scripts prioritize the root directory path (`tormentnexus.exe`), overwrite the root binary with the sidecar server so that subcommands like `mcp` can execute without Cobra CLI path conflicts.
+- **Root Binary Pathing**: When the monorepo has two Go projects (e.g., a root Cobra CLI and a subfolder sidecar), they may compile binaries with the same name. If configurations or start scripts prioritize the root directory path (`hypernexus.exe`), overwrite the root binary with the sidecar server so that subcommands like `mcp` can execute without Cobra CLI path conflicts.
 - **PowerShell Overwriting**: When using PowerShell in Windows, `Copy-Item` requires the `-Force` flag to overwrite an existing binary; otherwise, it silently leaves the target unchanged.
 
 ## Session 2026-06-24 (Dashboard Consolidation Phase 2 & 3)
@@ -275,7 +275,7 @@
 
 ### Dashboard Consolidation
 
-- **Brain & Memory Consolidation**: Unified `/dashboard/brain` and `/dashboard/memory` (and its hydration pages) into a tabbed layout in `/dashboard/brain/page.tsx` called **TormentNexus Cognitive Hub**. This groups Symbols Graph, Memory Vault, URL Ingestion, Expert Agents, Observations logs, and Hydration sync under a single sidebar tab.
+- **Brain & Memory Consolidation**: Unified `/dashboard/brain` and `/dashboard/memory` (and its hydration pages) into a tabbed layout in `/dashboard/brain/page.tsx` called **HyperNexus Cognitive Hub**. This groups Symbols Graph, Memory Vault, URL Ingestion, Expert Agents, Observations logs, and Hydration sync under a single sidebar tab.
 - **Client Redirects**: Replacing redundant page paths (like `/dashboard/memory`) with a client-side Next.js `useRouter.push()` redirect ensures backward compatibility for older bookmarks.
 - **Turbo Filter validation**: When a package doesn't exist in the workspace, Turbo's `--filter` triggers an error. Custom dev tools (like `scripts/dev_tabby_ready.mjs`) must avoid hardcoded package exclusion filters that target deleted packages (like `mcp-superassistant` or `@extension/hmr`).
 
@@ -316,20 +316,20 @@
 ### Executive Protocol R8
 
 - 297 task branches all point to commits already in main — no unique work to merge
-- Two remotes: origin (MDMAtk/TormentNexus ahead by 10 commits), origin-backup (HyperNexusSoft/HyperNexus)
+- Two remotes: origin (MDMAtk/HyperNexus ahead by 10 commits), origin-backup (HyperNexusSoft/HyperNexus)
 - Version bumped from alpha.239 to alpha.240
 
 ## Session 2026-06-30 (Go Sidecar Port Cleanups & Route Verification)
 
 ### Active Port Alignment
 
-- **Port 4300 Legacy Cleanup**: Components checking Go Sidecar status (such as `StreamStatus.tsx` in `@tormentnexus/ui`) must point to the active Go sidecar port `7778`, not the legacy `4300` port, to avoid browser-level connection refused errors.
+- **Port 4300 Legacy Cleanup**: Components checking Go Sidecar status (such as `StreamStatus.tsx` in `@hypernexus/ui`) must point to the active Go sidecar port `7778`, not the legacy `4300` port, to avoid browser-level connection refused errors.
 - **RSC Dynamic Route compilation**: Next.js redirect pages (like squads, director, and council pages) must be compiled and served successfully to handle App Router `_rsc` dynamic pre-fetches during client-side tab navigation.
 
 ## Session 2026-07-09 (Legacy Core Decommissioning & Extension URL Alignment)
 
 ### Legacy Core Decommissioning
-- **Core Decommission**: Completely decommissioned and removed all references to the legacy TypeScript control plane (`tormentnexus-core`) which ran on port `4100`. This includes removing checks from `verify_dev_readiness.mjs`, making `spawnCliDev()` a no-op in `dev_tabby_ready.mjs`, removing CLI status checks in `cli.go`, removing the container service from `docker-compose.isolated.yml` and `tenant-provision.sh`, and updating `ConnectionStatus.tsx` to fallback to `tormentnexus-go`.
+- **Core Decommission**: Completely decommissioned and removed all references to the legacy TypeScript control plane (`hypernexus-core`) which ran on port `4100`. This includes removing checks from `verify_dev_readiness.mjs`, making `spawnCliDev()` a no-op in `dev_tabby_ready.mjs`, removing CLI status checks in `cli.go`, removing the container service from `docker-compose.isolated.yml` and `tenant-provision.sh`, and updating `ConnectionStatus.tsx` to fallback to `hypernexus-go`.
 - **Pre-warming & Readiness Checks**: Added pre-warming routes inside `verify_dev_readiness.mjs` for both `startupStatus` and `mcp.getStatus` proxy endpoints, and increased the default check timeout to `10000ms`. This prevents Next.js runtime compilation cold start delays from triggering false timeout negatives.
 
 ### Chrome Extension Integration

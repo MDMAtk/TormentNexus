@@ -40,17 +40,17 @@ As GPT, you focus on high-level orchestration, strict type enforcement, distribu
 ## 3. Binary-Topology Layout Context
 
 Adhere to the recommended target layout for future architecture:
-- `tormentnexus` / `tormentnexusd` for the core control plane.
+- `hypernexus` / `hypernexusd` for the core control plane.
 - `hypermcpd` plus `hypermcp-indexer` for MCP routing and metadata work.
 - `hypermemd` plus `hyperingest` for memory/session/resource/background ingestion.
 - `hyperharness` / `hyperharnessd` for harness execution surfaces.
-- `tormentnexus-web` and `tormentnexus-native` as client applications.
+- `hypernexus-web` and `hypernexus-native` as client applications.
 
 ---
 
 ## 4. Build Verification
 ```bash
-cd go && go build -buildvcs=false ./cmd/tormentnexus && go test ./...
+cd go && go build -buildvcs=false ./cmd/hypernexus && go test ./...
 cd .. && pnpm -C packages/core exec tsc --noEmit
 ```
 

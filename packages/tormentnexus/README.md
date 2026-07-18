@@ -1,4 +1,4 @@
-# @tormentnexus/core
+# @hypernexus/core
 
 AI Control Plane with Persistent Memory & 26,000+ MCP Tools
 
@@ -6,10 +6,10 @@ AI Control Plane with Persistent Memory & 26,000+ MCP Tools
 
 ```bash
 # Install globally
-npm install -g @tormentnexus/core
+npm install -g @hypernexus/core
 
 # Start the server
-tormentnexus serve
+hypernexus serve
 
 # Open dashboard
 open http://localhost:7778
@@ -18,7 +18,7 @@ open http://localhost:7778
 ## Or use npx
 
 ```bash
-npx @tormentnexus/core serve
+npx @hypernexus/core serve
 ```
 
 ## Features
@@ -33,14 +33,14 @@ npx @tormentnexus/core serve
 ## Docker
 
 ```bash
-docker run -p 7778:7778 ghcr.io/mdmatk/tormentnexus:latest
+docker run -p 7778:7778 ghcr.io/mdmatk/hypernexus:latest
 ```
 
 ## Links
 
-- [Website](https://tormentnexus.site)
-- [GitHub](https://github.com/MDMAtk/TormentNexus)
-- [Documentation](https://tormentnexus.site/docs)
+- [Website](https://hypernexus.site)
+- [GitHub](https://github.com/MDMAtk/HyperNexus)
+- [Documentation](https://hypernexus.site/docs)
 - [Discord](https://discord.gg/Hj9P3GbVxR)
 
 ## License

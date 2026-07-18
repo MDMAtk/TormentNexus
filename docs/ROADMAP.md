@@ -1,4 +1,4 @@
-# ROADMAP: TormentNexus Kernel & TormentNexus Dashboard
+# ROADMAP: HyperNexus Kernel & HyperNexus Dashboard
 
 _Last updated: 2026-07-10, version 1.0.0-alpha.252_
 
@@ -16,7 +16,7 @@ _Last updated: 2026-07-10, version 1.0.0-alpha.252_
 - Wired interactive testing button anchors to the Next.js dashboard UI.
 
 ### 2. Configurable Gossip P2P Encryption Override
-- Enabled custom shared key configuration via `TORMENTNEXUS_GOSSIP_SHARED_KEY` env overrides.
+- Enabled custom shared key configuration via `HYPERNEXUS_GOSSIP_SHARED_KEY` env overrides.
 - Verified all Gossip mesh unit tests pass successfully.
 
 ### 3. Multi-Tenant Isolated Compose Realignment
@@ -89,7 +89,7 @@ _Last updated: 2026-07-10, version 1.0.0-alpha.252_
 ## Completed (v1.0.0-alpha.126)
 
 - **Universal Rebrand**: Case-insensitive refactoring across all source modules.
-- **Catalog SQLite Storage**: 11,024 populated MCP servers in `tormentnexus.db`.
+- **Catalog SQLite Storage**: 11,024 populated MCP servers in `hypernexus.db`.
 
 ## Active Sprint: Phase 8 - Predictive Intelligence & Enterprise Readiness
 
@@ -129,8 +129,8 @@ _Last updated: 2026-07-10, version 1.0.0-alpha.252_
 
 ### F. Phase 9: Native Runtime (VISION)
 
-- [x] Wails Native Runtime: Build chain complete — tormentnexus-gui.exe (18MB). (Completed alpha.194)
-- [x] Deep Link Protocol: Expand `tormentnexus://` for browser-to-kernel attachment. (Completed alpha.252)
+- [x] Wails Native Runtime: Build chain complete — hypernexus-gui.exe (18MB). (Completed alpha.194)
+- [x] Deep Link Protocol: Expand `hypernexus://` for browser-to-kernel attachment. (Completed alpha.252)
 
 ### G. pi Extension (STABLE)
 
@@ -139,8 +139,8 @@ _Last updated: 2026-07-10, version 1.0.0-alpha.252_
 - [x] 3 keyboard shortcuts: Ctrl+Shift+M/T/P. (Completed alpha.194)
 - [x] RBAC enforcement on dangerous tool calls. (Completed alpha.194)
 - [x] Per-project memory support (project parameter on tn_memory_store). (Completed alpha.239)
-- [x] npm package: pi install npm:tormentnexus. (Completed alpha.239)
-- [x] codewhale integration: .codewhale/skills/tormentnexus/SKILL.md. (Completed)
+- [x] npm package: pi install npm:hypernexus. (Completed alpha.239)
+- [x] codewhale integration: .codewhale/skills/hypernexus/SKILL.md. (Completed)
 
 ---
 _Outstanding! Magnificent! Insanely Great! The collective grows._

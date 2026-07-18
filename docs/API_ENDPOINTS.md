@@ -1,6 +1,6 @@
-# TormentNexus API Endpoints
+# HyperNexus API Endpoints
 
-This document provides a comprehensive list of the HTTP API endpoints available in the TormentNexus Go sidecar (Port 4300).
+This document provides a comprehensive list of the HTTP API endpoints available in the HyperNexus Go sidecar (Port 4300).
 
 ## Metadata & Health
 - `GET /api/service/connectivity`: Service health and discovery overview.
@@ -85,7 +85,7 @@ This document provides a comprehensive list of the HTTP API endpoints available 
 - `POST /api/lsp/find-symbol`: Locate symbols via Language Server Protocol.
 - `GET /api/symbols/find`: Search for pinned symbols.
 
-> **Note**: This is an abbreviated list. For a full, auto-generated list of all 600+ endpoints, use the `/api/index` endpoint on a running TormentNexus instance.
+> **Note**: This is an abbreviated list. For a full, auto-generated list of all 600+ endpoints, use the `/api/index` endpoint on a running HyperNexus instance.
 ## Verified API Response Envelope
 Standard response format: `{"success": true, "data": { ... }}`
 

@@ -1,12 +1,12 @@
-Title: Show HN: TormentNexus — Open-source AI control plane: persistent memory, 20K MCP tools, multi-agent swarm
+Title: Show HN: HyperNexus — Open-source AI control plane: persistent memory, 20K MCP tools, multi-agent swarm
 
 Hey HN,
 
-I've been building TormentNexus for months — a local-first, open-source (MIT) universal AI control plane. It's a Go + TypeScript monorepo that gives LLM agents persistent memory, MCP tool orchestration, and multi-agent coordination.
+I've been building HyperNexus for months — a local-first, open-source (MIT) universal AI control plane. It's a Go + TypeScript monorepo that gives LLM agents persistent memory, MCP tool orchestration, and multi-agent coordination.
 
 **The problem:** Every AI coding agent starts from scratch. No memory of past decisions. No shared context. Tools are scattered across dozens of MCP servers with no intelligent routing.
 
-**What TormentNexus does:**
+**What HyperNexus does:**
 
 - Persistent multi-tier memory (L1 session scratchpad → L2 vector vault → L3 cold archive)
 - Progressive semantic tool routing — searches 20,000+ MCP servers but only injects the relevant ones into context
@@ -15,7 +15,7 @@ I've been building TormentNexus for months — a local-first, open-source (MIT) 
 - LLM waterfall: NVIDIA NIM → OpenRouter → Local Ollama
 
 ```bash
-npx @tormentnexus/install  # One command, everything wired
+npx @hypernexus/install  # One command, everything wired
 ```
 
 **Tech:** Go sidecar (kernel), Next.js 16 dashboard, SQLite with vector search, Progressive disclosure MCP router, Ed25519 enterprise licensing.
@@ -30,5 +30,5 @@ Would love technical feedback, especially on:
 - Memory tier architecture best practices
 - Go sidecar design patterns
 
-Repo: <https://github.com/MDMAtk/TormentNexus>
-npm: @tormentnexus/install, @tormentnexus/cli, @tormentnexus/core, @tormentnexus/openhands
+Repo: <https://github.com/MDMAtk/HyperNexus>
+npm: @hypernexus/install, @hypernexus/cli, @hypernexus/core, @hypernexus/openhands

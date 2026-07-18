@@ -8,7 +8,7 @@ I built an open-source AI control plane with 26K+ MCP servers catalog, persisten
 
 Hey r/MachineLearning 👋
 
-I've been working on **TormentNexus** — an open-source AI control plane that gives your AI agents persistent memory, tool access, and the ability to work with local LLMs.
+I've been working on **HyperNexus** — an open-source AI control plane that gives your AI agents persistent memory, tool access, and the ability to work with local LLMs.
 
 ### What it does
 
@@ -44,22 +44,22 @@ I've been working on **TormentNexus** — an open-source AI control plane that g
 
 ```bash
 # Quick install (Linux/Mac)
-curl -fsSL https://raw.githubusercontent.com/MDMAtk/TormentNexus/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/MDMAtk/HyperNexus/main/scripts/install.sh | bash
 
 # Or clone and build
-git clone https://github.com/MDMAtk/TormentNexus.git
-cd TormentNexus
-go build -buildvcs=false -o tormentnexus ./cmd/tormentnexus
-./tormentnexus serve
+git clone https://github.com/MDMAtk/HyperNexus.git
+cd HyperNexus
+go build -buildvcs=false -o hypernexus ./cmd/hypernexus
+./hypernexus serve
 ```
 
 Dashboard: <http://127.0.0.1:7778>
 
 ### Links
 
-- **GitHub**: <https://github.com/MDMAtk/TormentNexus>
-- **Live Catalog**: <https://tormentnexus.site/catalog>
-- **Blog**: <https://tormentnexus.site/blog/>
+- **GitHub**: <https://github.com/MDMAtk/HyperNexus>
+- **Live Catalog**: <https://hypernexus.site/catalog>
+- **Blog**: <https://hypernexus.site/blog/>
 
 Would love feedback on the architecture and any feature requests!
 

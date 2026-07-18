@@ -7,7 +7,7 @@
 1. Open Discord
 2. Click "+" to create a server
 3. Choose "Create My Own"
-4. Name it "TormentNexus"
+4. Name it "HyperNexus"
 5. Upload the logo (see `assets/logo.png`)
 
 ### Step 2: Create Channels
@@ -70,7 +70,7 @@
 
 1. Click "Invite People"
 2. Set to "Never Expire"
-3. Copy link: `https://discord.gg/tormentnexus`
+3. Copy link: `https://discord.gg/hypernexus`
 
 ### Step 7: Add to Landing Page
 
@@ -82,7 +82,7 @@ Update the landing page with the Discord link.
 
 ```json
 {
-  "name": "TormentNexus",
+  "name": "HyperNexus",
   "icon": "assets/logo.png",
   "channels": [
     { "name": "announcements", "type": "text", "read_only": true },

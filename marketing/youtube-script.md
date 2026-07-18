@@ -17,7 +17,7 @@
 
 "What if your AI assistant could remember everything from previous sessions? What if it had access to 26,000 tools? And what if it all ran locally on your machine, completely free?
 
-Today I'm going to show you TormentNexus — an open-source AI control plane that does exactly that."
+Today I'm going to show you HyperNexus — an open-source AI control plane that does exactly that."
 
 ---
 
@@ -32,15 +32,15 @@ Today I'm going to show you TormentNexus — an open-source AI control plane tha
 3. If you want to use local LLMs, you're stuck with basic chat interfaces
 4. There's no way to give them persistent memory
 
-I got tired of explaining my project to ChatGPT every time I opened my laptop. So I built TormentNexus."
+I got tired of explaining my project to ChatGPT every time I opened my laptop. So I built HyperNexus."
 
 ---
 
 ### [2:00-4:00] THE SOLUTION
 
-**[Screen: Show TormentNexus architecture diagram]**
+**[Screen: Show HyperNexus architecture diagram]**
 
-"TormentNexus is an open-source AI control plane that gives your AI:
+"HyperNexus is an open-source AI control plane that gives your AI:
 
 **1. Persistent Memory** — A tiered memory system that remembers across sessions
 
@@ -83,7 +83,7 @@ I got tired of explaining my project to ChatGPT every time I opened my laptop. S
 
 **3. Install locally** — One command
 
-- npx @tormentnexus/core serve
+- npx @hypernexus/core serve
 - Open dashboard at localhost:7778
 - Search, install, configure tools"
 
@@ -114,18 +114,18 @@ Everything runs locally. No cloud dependency."
 **Option 1: npm**
 
 ```bash
-npx @tormentnexus/core serve
+npx @hypernexus/core serve
 ```
 
 **Option 2: Docker**
 
 ```bash
-docker run -p 7778:7778 ghcr.io/mdmatk/tormentnexus:latest
+docker run -p 7778:7778 ghcr.io/mdmatk/hypernexus:latest
 ```
 
 **Option 3: Download**
 
-- Windows: tormentnexus-setup.exe
+- Windows: hypernexus-setup.exe
 - macOS/Linux: Install script
 
 Links in the description below."
@@ -153,7 +153,7 @@ Background: Dark (#09090b)
 Main text: "26K+ AI TOOLS" (green gradient)
 Subtext: "Open Source • Local • Free"
 Image: Screenshot of dashboard
-Logo: TormentNexus logo
+Logo: HyperNexus logo
 ```
 
 ## Tags
@@ -169,13 +169,13 @@ ai agent, open source, developer tools, coding, programming
 I built an open-source AI control plane with 26,000+ MCP tools and persistent memory.
 
 🔗 Links:
-- GitHub: https://github.com/MDMAtk/TormentNexus
-- Website: https://tormentnexus.site
+- GitHub: https://github.com/MDMAtk/HyperNexus
+- Website: https://hypernexus.site
 - Demo: https://demo.hypernexus.site
 - Discord: https://discord.gg/Hj9P3GbVxR
 
 ⚡ Quick Start:
-npx @tormentnexus/core serve
+npx @hypernexus/core serve
 
 📦 Features:
 - 26,000+ MCP tools

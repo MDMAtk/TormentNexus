@@ -1,6 +1,6 @@
-# TormentNexus Deployment Instructions
+# HyperNexus Deployment Instructions
 
-_This document contains the latest deployment instructions for the TormentNexus Universal AI Dashboard and Cognitive Control Plane (TormentNexus)._
+_This document contains the latest deployment instructions for the HyperNexus Universal AI Dashboard and Cognitive Control Plane (HyperNexus)._
 
 ## Prerequisites
 
@@ -13,8 +13,8 @@ _This document contains the latest deployment instructions for the TormentNexus 
 
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/NexusSoftMDMA/TormentNexus.git
-    cd tormentnexus
+    git clone https://github.com/NexusSoftMDMA/HyperNexus.git
+    cd hypernexus
     ```
 
 2.  **Initialize Submodules**:
@@ -39,7 +39,7 @@ _This document contains the latest deployment instructions for the TormentNexus 
 
 ## Running the Platform
 
-TormentNexus is designed as a long-running service that manages PC memory, CPU, disk, and bandwidth usage.
+HyperNexus is designed as a long-running service that manages PC memory, CPU, disk, and bandwidth usage.
 
 ### Standard Build & Run (Production/Development)
 
@@ -59,10 +59,10 @@ Use the provided startup batch file:
 `start.bat` defaults to `pnpm run build:workspace` (skipping extension-only build stages for a much faster boot). It also triggers a native-runtime preflight to verify SQLite and Electron bindings.
 
 **Startup Overrides**:
-- **Bypass Install**: `set TORMENTNEXUS_SKIP_INSTALL=1`
-- **Bypass Build**: `set TORMENTNEXUS_SKIP_BUILD=1`
-- **Force Full Monorepo Build**: `set TORMENTNEXUS_FULL_BUILD=1`
-- **Bypass Native Preflight**: `set TORMENTNEXUS_SKIP_NATIVE_PREFLIGHT=1`
+- **Bypass Install**: `set HYPERNEXUS_SKIP_INSTALL=1`
+- **Bypass Build**: `set HYPERNEXUS_SKIP_BUILD=1`
+- **Force Full Monorepo Build**: `set HYPERNEXUS_FULL_BUILD=1`
+- **Bypass Native Preflight**: `set HYPERNEXUS_SKIP_NATIVE_PREFLIGHT=1`
 
 ### Linux/macOS Startup Script
 
@@ -82,7 +82,7 @@ pnpm -C apps/maestro start
 ## Go Sidecar Kernel
 
 ### High-Performance Native Tools
-TormentNexus includes native Go implementations for core development tools. Ensure these are in your PATH for maximum performance:
+HyperNexus includes native Go implementations for core development tools. Ensure these are in your PATH for maximum performance:
 - **Ripgrep (rg)**: Required for high-speed regex search.
 - **Anyquery**: SQL interface to various data sources.
 - **Supervisor Monitor**: Background watchdog for session inactivity.
@@ -90,12 +90,12 @@ TormentNexus includes native Go implementations for core development tools. Ensu
 To build and run the Go control plane sidecar alongside the main TS engine:
 ```bash
 cd go
-go run ./cmd/tormentnexus serve
+go run ./cmd/hypernexus serve
 ```
 Alternatively, build the binary:
 ```bash
 cd go
-go build -buildvcs=false ./cmd/tormentnexus
+go build -buildvcs=false ./cmd/hypernexus
 ```
 
 ---
@@ -111,8 +111,8 @@ pnpm run build:extensions
 
 Build the production bundle inside a container:
 ```bash
-docker build -f Dockerfile.prod -t tormentnexus:latest .
-docker run -p 3000:3000 -p 4000:4000 -v tormentnexus-data:/root/.tormentnexus tormentnexus:latest
+docker build -f Dockerfile.prod -t hypernexus:latest .
+docker run -p 3000:3000 -p 4000:4000 -v hypernexus-data:/root/.hypernexus hypernexus:latest
 ```
 
 ---
@@ -143,10 +143,10 @@ pnpm run check:release-gate:ci:strict-visuals
 
 | Service | Default Port | Override | Health Check Endpoint |
 |---------|-------------|----------|-----------------------|
-| Go Kernel Sidecar | 7778 | `tormentnexus serve --port <n>` | `http://localhost:7778/health` |
+| Go Kernel Sidecar | 7778 | `hypernexus serve --port <n>` | `http://localhost:7778/health` |
 | Web Dashboard (Next.js) | 7779 | `PORT` | `http://localhost:7779/dashboard` |
 | Socket.io Swarm Server | 3001 | — | — |
-| Orchestrator tRPC | 3847 | `TORMENTNEXUS_ORCHESTRATOR_PORT` | `http://localhost:3847` |
+| Orchestrator tRPC | 3847 | `HYPERNEXUS_ORCHESTRATOR_PORT` | `http://localhost:3847` |
 
 ## Health Checks
 - `http://localhost:7778/health` - Go Kernel Sidecar Health

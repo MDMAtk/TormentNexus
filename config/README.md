@@ -4,11 +4,11 @@ This directory contains sample configuration files for both editions of the prod
 
 ## Editions
 
-### TormentNexus (Open Source)
+### HyperNexus (Open Source)
 
-- **File**: `tormentnexus-branding.json`
-- **Config Directory**: `~/.tormentnexus`
-- **Registry Key**: `TormentNexus`
+- **File**: `hypernexus-branding.json`
+- **Config Directory**: `~/.hypernexus`
+- **Registry Key**: `HyperNexus`
 - **Cloud Connectivity**: None (local only)
 
 ### HyperNexus (Corporate)
@@ -25,7 +25,7 @@ This directory contains sample configuration files for both editions of the prod
 1. Copy the appropriate branding file to your config directory:
 
    ```batch
-   copy config\tormentnexus-branding.json %USERPROFILE%\.tormentnexus\branding.json
+   copy config\hypernexus-branding.json %USERPROFILE%\.hypernexus\branding.json
    ```
 
 2. Edit the branding file to customize settings
@@ -46,7 +46,7 @@ set HN_CLOUD_AUTH=your-auth-token
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `edition` | string | `tormentnexus` or `hypernexus` |
+| `edition` | string | `hypernexus` or `hypernexus` |
 | `product_name` | string | Display name for the product |
 | `company_name` | string | Company/organization name |
 | `tray_tooltip` | string | System tray tooltip text |
@@ -69,5 +69,5 @@ Example:
 
 ```batch
 cd go
-go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/config.DefaultEdition=myedition" -o ..\bin\myapp.exe ./cmd/tormentnexus
+go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/config.DefaultEdition=myedition" -o ..\bin\myapp.exe ./cmd/hypernexus
 ```

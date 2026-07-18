@@ -1,4 +1,4 @@
-# TormentNexus — Next Level Strategy
+# HyperNexus — Next Level Strategy
 
 > **Goal:** Go from 6 stars to 1,000 in 30 days. From unknown to the default AI control plane.
 
@@ -8,7 +8,7 @@
 
 ### 1. **Live Demo** — Let people try without installing
 
-- Hosted demo at `demo.tormentnexus.site`
+- Hosted demo at `demo.hypernexus.site`
 - Pre-loaded with sample data
 - No signup required
 - One-click "Try it now" button
@@ -28,7 +28,7 @@
 ### 3. **Distribution** — Be everywhere
 
 - Product Hunt launch (target #1)
-- Twitter account (@tormentnexus)
+- Twitter account (@hypernexus)
 - YouTube channel
 - Newsletter (weekly)
 - RSS feed
@@ -50,7 +50,7 @@
 ### 5. **Monetization** — Sustainable growth
 
 - GitHub Sponsors
-- SaaS offering (cloud.tormentnexus.site)
+- SaaS offering (cloud.hypernexus.site)
 - Enterprise features
 - Training program
 - Consulting services
@@ -62,7 +62,7 @@
 ### **Hour 1: Live Demo**
 
 - [ ] Deploy demo instance to Hetzner
-- [ ] Create demo.tormentnexus.site subdomain
+- [ ] Create demo.hypernexus.site subdomain
 - [ ] Pre-load with sample data
 - [ ] Add "Try it now" button to landing page
 

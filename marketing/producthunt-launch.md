@@ -13,7 +13,7 @@
 ### Product Description
 
 ```
-TormentNexus — AI Control Plane with Persistent Memory
+HyperNexus — AI Control Plane with Persistent Memory
 
 Give your AI assistants persistent memory and access to 26,000+ tools.
 
@@ -39,7 +39,7 @@ Open source. One command install.
 ```
 Hi Product Hunt! 👋
 
-I built TormentNexus to solve a problem I had: AI assistants losing context between sessions.
+I built HyperNexus to solve a problem I had: AI assistants losing context between sessions.
 
 The key features:
 • Persistent memory that works across sessions
@@ -49,7 +49,7 @@ The key features:
 
 It's open source and I'd love your feedback!
 
-GitHub: https://github.com/MDMAtk/TormentNexus
+GitHub: https://github.com/MDMAtk/HyperNexus
 Live Demo: https://demo.hypernexus.site
 ```
 
@@ -97,12 +97,12 @@ Live Demo: https://demo.hypernexus.site
 
 ## Product Hunt Page
 
-**URL**: <https://www.producthunt.com/posts/tormentnexus>
+**URL**: <https://www.producthunt.com/posts/hypernexus>
 
 **Tagline**: Give your AI persistent memory and 26K+ tools
 
 **Topics**: Artificial Intelligence, Developer Tools, Open Source, Productivity
 
-**Website**: <https://tormentnexus.site>
+**Website**: <https://hypernexus.site>
 
-**GitHub**: <https://github.com/MDMAtk/TormentNexus>
+**GitHub**: <https://github.com/MDMAtk/HyperNexus>

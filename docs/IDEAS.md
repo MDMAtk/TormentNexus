@@ -1,4 +1,4 @@
-# TormentNexus Innovation & Refactoring Ideas
+# HyperNexus Innovation & Refactoring Ideas
 
 This document gathers innovative concepts, architectural pivots, and optimization ideas for future releases.
 

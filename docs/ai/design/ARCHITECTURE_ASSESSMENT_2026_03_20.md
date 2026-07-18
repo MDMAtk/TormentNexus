@@ -1,19 +1,19 @@
-# Architectural Assessment: TormentNexus Cognitive Control Plane
+# Architectural Assessment: HyperNexus Cognitive Control Plane
 Date: 2026-03-20
 
 ## 1. Architectural Analysis
-TormentNexus is architected as a **Local-First Cognitive Control Plane**. It sits between high-level AI agents and low-level infrastructure (tools, providers, and data).
+HyperNexus is architected as a **Local-First Cognitive Control Plane**. It sits between high-level AI agents and low-level infrastructure (tools, providers, and data).
 
 *   **Modular Kernel Design**: The system is divided into specialized "kernels" located in `packages/core`. This includes the **MCPAggregator** (tool routing), **SessionSupervisor** (process isolation), and the **ProviderTruth** service (quota and auth verification).
-*   **Verification Layer (The "Evidence Lock")**: Unlike standard agent frameworks that trust tool definitions blindly, TormentNexus incorporates a formal verification layer. This is represented by `TORMENTNEXUS_MASTER_INDEX.jsonc`, which tracks "Truth" levels (L0-L3) for tool parity across different AI platforms (Copilot, Cursor, Claude Code, etc.).
-# Architectural Assessment: tormentnexus Cognitive Control Plane
+*   **Verification Layer (The "Evidence Lock")**: Unlike standard agent frameworks that trust tool definitions blindly, HyperNexus incorporates a formal verification layer. This is represented by `HYPERNEXUS_MASTER_INDEX.jsonc`, which tracks "Truth" levels (L0-L3) for tool parity across different AI platforms (Copilot, Cursor, Claude Code, etc.).
+# Architectural Assessment: hypernexus Cognitive Control Plane
 Date: 2026-03-20
 
 ## 1. Architectural Analysis
-tormentnexus is architected as a **Local-First Cognitive Control Plane**. It sits between high-level AI agents and low-level infrastructure (tools, providers, and data).
+hypernexus is architected as a **Local-First Cognitive Control Plane**. It sits between high-level AI agents and low-level infrastructure (tools, providers, and data).
 
 *   **Modular Kernel Design**: The system is divided into specialized "kernels" located in `packages/core`. This includes the **MCPAggregator** (tool routing), **SessionSupervisor** (process isolation), and the **ProviderTruth** service (quota and auth verification).
-*   **Verification Layer (The "Evidence Lock")**: Unlike standard agent frameworks that trust tool definitions blindly, tormentnexus incorporates a formal verification layer. This is represented by `TORMENTNEXUS_MASTER_INDEX.jsonc`, which tracks "Truth" levels (L0-L3) for tool parity across different AI platforms (Copilot, Cursor, Claude Code, etc.).
+*   **Verification Layer (The "Evidence Lock")**: Unlike standard agent frameworks that trust tool definitions blindly, hypernexus incorporates a formal verification layer. This is represented by `HYPERNEXUS_MASTER_INDEX.jsonc`, which tracks "Truth" levels (L0-L3) for tool parity across different AI platforms (Copilot, Cursor, Claude Code, etc.).
 *   **Supervised Execution**: It uses a worktree-based isolation model. Every agent operation is supervised to ensure failures are contained and the "state of the world" remains truthful and observable.
 *   **Tiered Memory Architecture**: It employs a three-tier memory strategy:
     *   **L1 (Session)**: Immediate context continuity.
@@ -39,5 +39,5 @@ tormentnexus is architected as a **Local-First Cognitive Control Plane**. It sit
 
 ## 4. Recommendations
 *   **Transition to Fastify**: While Express is stable, moving the core control plane to Fastify would improve performance for high-frequency tool calls.
-*   **Automate Registry Ingestion**: Prioritize the "Registry Intelligence" pipeline to move from manual `TORMENTNEXUS_MASTER_INDEX.jsonc` updates to a dynamic, DB-backed catalog.
-*   **Automate Registry Ingestion**: Prioritize the "Registry Intelligence" pipeline to move from manual `TORMENTNEXUS_MASTER_INDEX.jsonc` updates to a dynamic, DB-backed catalog.
+*   **Automate Registry Ingestion**: Prioritize the "Registry Intelligence" pipeline to move from manual `HYPERNEXUS_MASTER_INDEX.jsonc` updates to a dynamic, DB-backed catalog.
+*   **Automate Registry Ingestion**: Prioritize the "Registry Intelligence" pipeline to move from manual `HYPERNEXUS_MASTER_INDEX.jsonc` updates to a dynamic, DB-backed catalog.

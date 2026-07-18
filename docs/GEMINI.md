@@ -57,14 +57,14 @@ As Gemini, you act in a dual capacity depending on the scale and nature of the t
 
 When analyzing future system architectures, adhere to this recommended target layout:
 
-- `tormentnexus` / `tormentnexusd` for the core control plane.
+- `hypernexus` / `hypernexusd` for the core control plane.
 - `hypermcpd` plus `hypermcp-indexer` for MCP routing and metadata work.
 - `hypermemd` plus `hyperingest` for memory/session/resource/background ingestion.
 - `hyperharness` / `hyperharnessd` for harness execution surfaces.
-- `tormentnexus-web` and `tormentnexus-native` as client applications.
+- `hypernexus-web` and `hypernexus-native` as client applications.
 
 ### Ownership Assumptions
-- `tormentnexusd` owns orchestration and operator-facing state.
+- `hypernexusd` owns orchestration and operator-facing state.
 - `hypermcpd` owns MCP lifecycle, routing, and inventory exposure.
 - `hypermcp-indexer` owns scrape/probe/cache refresh jobs.
 - `hypermemd` owns memory/session/resource persistence and serving.
@@ -82,7 +82,7 @@ When analyzing future system architectures, adhere to this recommended target la
 
 ### Build Verification
 ```bash
-cd go && go build -buildvcs=false ./cmd/tormentnexus
+cd go && go build -buildvcs=false ./cmd/hypernexus
 cd .. && pnpm -C packages/core exec tsc --noEmit
 ```
 

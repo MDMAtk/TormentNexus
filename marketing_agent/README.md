@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This directory bridges TormentNexus local billing with the cloud-hosted
+This directory bridges HyperNexus local billing with the cloud-hosted
 hypernexus.site dashboard. The Go sidecar (`port 7778`) provides all
 Stripe-related API endpoints; the marketing agent configures pricing,
 checkout flows, and customer lifecycle.
@@ -28,8 +28,8 @@ STRIPE_WEBHOOK_SECRET=whsec_xxx
 STRIPE_PRICE_ID_BASIC=price_basic_monthly
 STRIPE_PRICE_ID_PRO=price_pro_monthly
 STRIPE_PRICE_ID_ENTERPRISE=price_enterprise_monthly
-TORMENTNEXUS_DASHBOARD_URL=https://hypernexus.site
-TORMENTNEXUS_API_URL=https://api.hypernexus.site
+HYPERNEXUS_DASHBOARD_URL=https://hypernexus.site
+HYPERNEXUS_API_URL=https://api.hypernexus.site
 ```
 
 ## Plans
@@ -52,4 +52,4 @@ TORMENTNEXUS_API_URL=https://api.hypernexus.site
 
 When `STRIPE_SECRET_KEY` is empty, all endpoints simulate responses.
 The dashboard shows "Visa ending in 4242 (simulated)" and stores config
-locally in `.tormentnexus/config.json`.
+locally in `.hypernexus/config.json`.

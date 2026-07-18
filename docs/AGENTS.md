@@ -1,14 +1,14 @@
-<!-- [TORMENTNEXUS_AUTO_INJECTED] -->
+<!-- [HYPERNEXUS_AUTO_INJECTED] -->
 > [!IMPORTANT]
-> **TormentNexus Advanced Agent Mandates:**
+> **HyperNexus Advanced Agent Mandates:**
 >
 > 1. **Proactive Tooling**: You MUST use available tools frequently and proactively. Prioritize tool execution for researching, editing, executing, and validating.
-> 2. **Codebase AST & Search**: Always analyze impact and dependencies using codebase analysis/AST/search tools (`tormentnexus__repograph_search`, `tormentnexus__repograph_find_references`) before modifying code.
+> 2. **Codebase AST & Search**: Always analyze impact and dependencies using codebase analysis/AST/search tools (`hypernexus__repograph_search`, `hypernexus__repograph_find_references`) before modifying code.
 > 3. **Context Harvesting & Compaction**: Perform automatic context harvesting and compaction/pruning of the LLM context to prevent token blowups. Summarize or discard old logs/history dynamically.
 > 4. **Tool Output Compaction & Deduplication**: Deduplicate and compact verbose tool outputs. Avoid displaying duplicate or redundant logs in responses.
 > 5. **Session & Skill Injection**: Inspect and update sessions and memory states using scratchpads (`memory_scratchpad_set`) to persist key findings, rules, and skill recommendations.
 
-# AGENTS — TormentNexus Kernel & TormentNexus Contributor Guide
+# AGENTS — HyperNexus Kernel & HyperNexus Contributor Guide
 
 > **CRITICAL: ALL AGENTS MUST READ `docs/UNIVERSAL_LLM_INSTRUCTIONS.md` BEFORE PROCEEDING.**
 
@@ -60,7 +60,7 @@ This file serves as the primary coordination point for multi-agent workflows and
 3. Bump the `VERSION` file and synchronize workspaces using `node scripts/sync-versions.mjs`.
 4. Update `CHANGELOG.md` with recent feature implementations.
 5. Commit clean changes with version tag: `feat: description (v1.0.0-alpha.X)`.
-6. Push commits to `origin` and `tormentnexus-upstream` remotes.
+6. Push commits to `origin` and `hypernexus-upstream` remotes.
 
 ---
 
@@ -68,7 +68,7 @@ This file serves as the primary coordination point for multi-agent workflows and
 
 | Service | Port | Purpose |
 |---|---|---|
-| TormentNexus Go Kernel | 7778 | Authoritative native sidecar (HTTP API + tRPC) |
+| HyperNexus Go Kernel | 7778 | Authoritative native sidecar (HTTP API + tRPC) |
 | Next.js Dashboard | 7779 | Web observation deck |
 
 ---
@@ -104,13 +104,13 @@ npm publish         # requires npm login as package owner
 ```
 
 ### Pi Coding Agent Extension
-- Source: `.pi/extensions/tormentnexus.ts`
-- Installed to `~/.pi/agent/extensions/tormentnexus.ts`
+- Source: `.pi/extensions/hypernexus.ts`
+- Installed to `~/.pi/agent/extensions/hypernexus.ts`
 - Must be kept in sync with the CodeWhale extension feature set
 
 ### .codewhale Skill & Plugin
-- SKILL.md: `.codewhale/plugins/tormentnexus/skills/SKILL.md`
-- Plugin config: `.codewhale/plugins/tormentnexus/plugin.toml`
+- SKILL.md: `.codewhale/plugins/hypernexus/skills/SKILL.md`
+- Plugin config: `.codewhale/plugins/hypernexus/plugin.toml`
 - Install script: `scripts/install_codewhale.bat`
 - All must be kept current when tn-extension hook behavior changes
 
@@ -128,7 +128,7 @@ Review these when any TN API endpoint or slash command changes.
 ## 6. Safe Rebranding & Cleanup Heuristics
 
 - **Binary Exclusions during Renaming**: When executing global text replacements, you must explicitly exclude:
-  - Database directories: `.tormentnexus/`, `lancedb/`, `data/`
+  - Database directories: `.hypernexus/`, `lancedb/`, `data/`
   - Turbopack/Next cache directories: `.next-dev/`, `.next-build/`, `.turbo/`
   - Binary extensions: `.db`, `.lance`, `.sst`, `.bin`, `.exe`, `.png`, `.jpg`
 - **Windows Recursive Deletion**: On Windows hosts, if `Remove-Item` fails due to path locks or nested git indices, fall back to executing `cmd.exe /c "rmdir /S /Q <path>"` synchronously to ensure complete directory pruning.

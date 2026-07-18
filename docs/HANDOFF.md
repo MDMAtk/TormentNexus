@@ -11,12 +11,12 @@
 ### Enterprise → Commercial Global Rename
 - Every file, directory, and reference across Go, TypeScript, docs, skills (90+ files)
 - `go/internal/enterprise/` → `go/internal/commercial/`
-- `@tormentnexus/enterprise` → `@tormentnexus/commercial`
+- `@hypernexus/enterprise` → `@hypernexus/commercial`
 - Dashboard pages, components, landing pages, all skill/SKILL.md files
 
 ### Bug Fixes
 - **Duplicate route crash**: Removed 3 conflicting `/api/memory/*` endpoint registrations causing panic on startup
-- **Nginx**: Fixed bad `add_header` directive syntax in `tormentnexus.site` config
+- **Nginx**: Fixed bad `add_header` directive syntax in `hypernexus.site` config
 
 ### Infrastructure
 - **Watchdog restored**: All 6 workers (swarm v7, freellm, sidecar, dashboard, LM Studio)

@@ -1,11 +1,11 @@
-# Contributing to TormentNexus
+# Contributing to HyperNexus
 
-Thank you for your interest in contributing to TormentNexus! 🎉
+Thank you for your interest in contributing to HyperNexus! 🎉
 
 ## 🚀 Quick Start
 
 1. **Fork** the repository
-2. **Clone** your fork: `git clone https://github.com/YOUR_USERNAME/TormentNexus.git`
+2. **Clone** your fork: `git clone https://github.com/YOUR_USERNAME/HyperNexus.git`
 3. **Create** a branch: `git checkout -b feature/amazing-feature`
 4. **Make** your changes
 5. **Test** your changes: `go test ./...`
@@ -17,14 +17,14 @@ Thank you for your interest in contributing to TormentNexus! 🎉
 
 ### 🐛 Bug Reports
 
-- Use the [Bug Report template](https://github.com/MDMAtk/TormentNexus/issues/new?template=bug_report.md)
+- Use the [Bug Report template](https://github.com/MDMAtk/HyperNexus/issues/new?template=bug_report.md)
 - Include steps to reproduce
 - Include expected vs actual behavior
 - Include screenshots if applicable
 
 ### ✨ Feature Requests
 
-- Use the [Feature Request template](https://github.com/MDMAtk/TormentNexus/issues/new?template=feature_request.md)
+- Use the [Feature Request template](https://github.com/MDMAtk/HyperNexus/issues/new?template=feature_request.md)
 - Explain the problem you're trying to solve
 - Describe the solution you'd like
 - Consider alternatives
@@ -63,15 +63,15 @@ Thank you for your interest in contributing to TormentNexus! 🎉
 
 ```bash
 # Clone the repo
-git clone https://github.com/MDMAtk/TormentNexus.git
-cd TormentNexus
+git clone https://github.com/MDMAtk/HyperNexus.git
+cd HyperNexus
 
 # Install dependencies
 pnpm install
 
 # Build Go backend
 cd go
-go build -buildvcs=false -o ../bin/tormentnexus ./cmd/tormentnexus
+go build -buildvcs=false -o ../bin/hypernexus ./cmd/hypernexus
 
 # Start development
 cd ..
@@ -146,10 +146,10 @@ Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ## 🤔 Questions?
 
-- **Discord:** [Join our Discord](https://discord.gg/tormentnexus)
-- **GitHub Discussions:** [Ask a question](https://github.com/MDMAtk/TormentNexus/discussions)
-- **Email:** <dev@tormentnexus.org>
+- **Discord:** [Join our Discord](https://discord.gg/hypernexus)
+- **GitHub Discussions:** [Ask a question](https://github.com/MDMAtk/HyperNexus/discussions)
+- **Email:** <dev@hypernexus.org>
 
 ## 🙏 Thank You
 
-Your contributions make TormentNexus better for everyone. We appreciate your time and effort! ❤️
+Your contributions make HyperNexus better for everyone. We appreciate your time and effort! ❤️

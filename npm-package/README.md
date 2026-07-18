@@ -1,14 +1,14 @@
-# TormentNexus
+# HyperNexus
 
 **AI Control Plane with persistent memory and 26,000+ MCP tools catalog**
 
-[![GitHub Stars](https://img.shields.io/github/stars/MDMAtk/TormentNexus?style=social)](https://github.com/MDMAtk/TormentNexus)
-[![npm version](https://img.shields.io/npm/v/tormentnexus)](https://www.npmjs.com/package/tormentnexus)
+[![GitHub Stars](https://img.shields.io/github/stars/MDMAtk/HyperNexus?style=social)](https://github.com/MDMAtk/HyperNexus)
+[![npm version](https://img.shields.io/npm/v/hypernexus)](https://www.npmjs.com/package/hypernexus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## What is TormentNexus?
+## What is HyperNexus?
 
-TormentNexus is an open-source AI control plane that gives your AI agents:
+HyperNexus is an open-source AI control plane that gives your AI agents:
 
 - **Persistent Memory** — Tiered memory system (L1→L2→L3→L4) that remembers context across sessions
 - **26,000+ MCP Tools** — Searchable catalog of Model Context Protocol servers
@@ -20,22 +20,22 @@ TormentNexus is an open-source AI control plane that gives your AI agents:
 ### Install via npm
 
 ```bash
-npx tormentnexus serve
+npx hypernexus serve
 ```
 
 ### Install via Docker
 
 ```bash
-docker run -p 7778:7778 tormentnexus/tormentnexus
+docker run -p 7778:7778 hypernexus/hypernexus
 ```
 
 ### Install from source
 
 ```bash
-git clone https://github.com/MDMAtk/TormentNexus.git
-cd TormentNexus
-go build -buildvcs=false -o tormentnexus ./cmd/tormentnexus
-./tormentnexus serve
+git clone https://github.com/MDMAtk/HyperNexus.git
+cd HyperNexus
+go build -buildvcs=false -o hypernexus ./cmd/hypernexus
+./hypernexus serve
 ```
 
 ## Dashboard
@@ -79,7 +79,7 @@ Open <http://127.0.0.1:7778> in your browser to access the dashboard.
 
 ## MCP Catalog
 
-TormentNexus includes a searchable database of 26,000+ MCP servers:
+HyperNexus includes a searchable database of 26,000+ MCP servers:
 
 ```bash
 # Search the catalog
@@ -94,7 +94,7 @@ curl "http://127.0.0.1:7778/api/backlog/categories"
 
 ## Configuration
 
-Configuration file: `~/.tormentnexus/config.yaml`
+Configuration file: `~/.hypernexus/config.yaml`
 
 ```yaml
 host: 127.0.0.1
@@ -139,13 +139,13 @@ Quick-start templates for common workflows:
 
 ```bash
 # Cursor-like coding assistant
-tormentnexus init --template=cursor-killer
+hypernexus init --template=cursor-killer
 
 # Research assistant
-tormentnexus init --template=research-assistant
+hypernexus init --template=research-assistant
 
 # Code reviewer
-tormentnexus init --template=code-reviewer
+hypernexus init --template=code-reviewer
 ```
 
 ## Contributing
@@ -158,13 +158,13 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- **Website:** <https://tormentnexus.site>
-- **GitHub:** <https://github.com/MDMAtk/TormentNexus>
-- **Documentation:** <https://tormentnexus.site/docs>
-- **Blog:** <https://tormentnexus.site/blog>
+- **Website:** <https://hypernexus.site>
+- **GitHub:** <https://github.com/MDMAtk/HyperNexus>
+- **Documentation:** <https://hypernexus.site/docs>
+- **Blog:** <https://hypernexus.site/blog>
 
 ## Support
 
-- **Issues:** <https://github.com/MDMAtk/TormentNexus/issues>
+- **Issues:** <https://github.com/MDMAtk/HyperNexus/issues>
 - **Discord:** (coming soon)
-- **Email:** <dev@tormentnexus.org>
+- **Email:** <dev@hypernexus.org>
