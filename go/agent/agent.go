@@ -7,18 +7,18 @@ import (
 	"os"
 	"strings"
 
-	hypernexus "gitlab.com/robertpelloni/HyperNexus/tormentnexus"
+	"github.com/sashabaranov/go-openai"
 	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
 	"gitlab.com/robertpelloni/HyperNexus/tools"
-	"github.com/sashabaranov/go-openai"
+	hypernexus "gitlab.com/robertpelloni/HyperNexus/tormentnexus"
 )
 
 type Agent struct {
-	client       *openai.Client
-	messages     []openai.ChatCompletionMessage
-	tools        *tools.Registry
-	HyperNexusAdapter  *hypernexus.Adapter
-	HyperAdapter *adapters.HyperNexusAdapter
+	client            *openai.Client
+	messages          []openai.ChatCompletionMessage
+	tools             *tools.Registry
+	HyperNexusAdapter *hypernexus.Adapter
+	HyperAdapter      *adapters.HyperNexusAdapter
 }
 
 func NewAgent() *Agent {
@@ -47,9 +47,9 @@ func NewAgent() *Agent {
 				Content: systemPrompt,
 			},
 		},
-		tools:        registry,
-		HyperNexusAdapter:  hypernexusAdapter,
-		HyperAdapter: hyperAdapter,
+		tools:             registry,
+		HyperNexusAdapter: hypernexusAdapter,
+		HyperAdapter:      hyperAdapter,
 	}
 }
 
