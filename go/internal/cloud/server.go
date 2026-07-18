@@ -81,6 +81,9 @@ func (s *CloudServer) RegisterRoutes(mux *http.ServeMux) {
 	// MCP routes
 	s.mcp.RegisterRoutes(mux)
 
+	// Stripe routes
+	s.RegisterStripeRoutes(mux)
+
 	// Health check
 	mux.HandleFunc("/api/cloud/health", s.handleHealth)
 }
