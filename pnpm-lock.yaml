@@ -344,6 +344,21 @@ importers:
 
   apps/vscode: {}
 
+  apps/vscode-extension:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.41
+      '@types/vscode':
+        specifier: ^1.80.0
+        version: 1.125.0
+      esbuild:
+        specifier: '>=0.28.1'
+        version: 0.28.1
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+
   apps/web:
     dependencies:
       '@dnd-kit/core':
@@ -3594,9 +3609,6 @@ packages:
   '@types/node@20.19.27':
     resolution: {integrity: sha512-N2clP5pJhB2YnZJ3PIHFk5RkygRX5WO/5f0WC08tp0wd+sv0rsJk3MqWn3CbNmT2J505a5336jaQj4ph1AdMug==}
 
-  '@types/node@20.19.37':
-    resolution: {integrity: sha512-8kzdPJ3FsNsVIurqBs7oodNnCEVbni9yUEkaHbgptDACOPW04jimGagZ51E6+lXUwJjgnBw+hyko/lkFWCldqw==}
-
   '@types/node@20.19.41':
     resolution: {integrity: sha512-ECymXOukMnOoVkC2bb1Vc/w/836DXncOg5m8Xj1RH7xSHZJWNYY6Zh7EH477vcnD5egKNNfy2RpNOmuChhFPgQ==}
 
@@ -3641,6 +3653,9 @@ packages:
 
   '@types/use-sync-external-store@0.0.6':
     resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
+
+  '@types/vscode@1.125.0':
+    resolution: {integrity: sha512-0icm/ZQAaism87P0ekHqi4/Ju9du+Tm0RUW+y7vqRsxY2cY0FNRX1nAnaW7nT6npPt2tfHiheZ55Zm9UhqonFA==}
 
   '@types/webextension-polyfill@0.8.3':
     resolution: {integrity: sha512-GN+Hjzy9mXjWoXKmaicTegv3FJ0WFZ3aYz77Wk8TMp1IY3vEzvzj1vnsa0ggV7vMI1i+PUxe4qqnIJKCzf9aTg==}
@@ -12261,7 +12276,7 @@ snapshots:
 
   '@types/jsdom@27.0.0':
     dependencies:
-      '@types/node': 20.19.37
+      '@types/node': 20.19.41
       '@types/tough-cookie': 4.0.5
       parse5: 7.3.0
 
@@ -12282,10 +12297,6 @@ snapshots:
   '@types/ms@2.1.0': {}
 
   '@types/node@20.19.27':
-    dependencies:
-      undici-types: 6.21.0
-
-  '@types/node@20.19.37':
     dependencies:
       undici-types: 6.21.0
 
@@ -12333,6 +12344,8 @@ snapshots:
   '@types/unist@3.0.3': {}
 
   '@types/use-sync-external-store@0.0.6': {}
+
+  '@types/vscode@1.125.0': {}
 
   '@types/webextension-polyfill@0.8.3': {}
 
