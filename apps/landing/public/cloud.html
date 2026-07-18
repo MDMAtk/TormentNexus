@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HyperNexus Cloud — Your AI Finally Remembers</title>
+    <meta name="description" content="HyperNexus Cloud: persistent AI memory, 20,000+ MCP tools, works with 38+ AI agents. $50/seat/year." />
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: Inter, -apple-system, sans-serif;
+        background: #0a0a0a;
+        color: #e0e0e0;
+        min-height: 100vh;
+      }
+      .hero {
+        text-align: center;
+        padding: 100px 20px 60px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.1;
+      }
+      .hero p {
+        color: #888;
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-block;
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .btn:hover { transform: scale(1.02); }
+      .btn-primary {
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        color: #000;
+      }
+      .btn-primary:hover {
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .install-command {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 16px 24px;
+        font-family: monospace;
+        font-size: 16px;
+        color: #00ff88;
+        display: inline-block;
+        margin: 24px 0;
+      }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        max-width: 1200px;
+        margin: 80px auto;
+        padding: 0 20px;
+      }
+      .feature-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 32px;
+      }
+      .feature-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+        color: #00ff88;
+      }
+      .feature-card p {
+        color: #888;
+        line-height: 1.6;
+      }
+      .pricing-section {
+        text-align: center;
+        padding: 80px 20px;
+        background: rgba(0, 255, 136, 0.02);
+      }
+      .pricing-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 16px;
+      }
+      .pricing-section .subtitle {
+        color: #888;
+        font-size: 1.2rem;
+        margin-bottom: 48px;
+      }
+      .pricing-card {
+        max-width: 500px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.03);
+        border: 2px solid #00ff88;
+        border-radius: 16px;
+        padding: 48px 32px;
+        box-shadow: 0 0 40px rgba(0, 255, 136, 0.15);
+      }
+      .pricing-card .price {
+        font-size: 4rem;
+        font-weight: 800;
+        color: #00ff88;
+        margin: 24px 0;
+      }
+      .pricing-card .price span {
+        font-size: 1.2rem;
+        color: #888;
+        font-weight: 400;
+      }
+      .pricing-card .price-note {
+        color: #888;
+        margin-bottom: 32px;
+      }
+      .pricing-card ul {
+        list-style: none;
+        text-align: left;
+        margin-bottom: 32px;
+      }
+      .pricing-card ul li {
+        padding: 8px 0;
+        color: #ccc;
+      }
+      .pricing-card ul li::before {
+        content: "✓ ";
+        color: #00ff88;
+        font-weight: 700;
+      }
+      .how-it-works {
+        max-width: 800px;
+        margin: 80px auto;
+        padding: 0 20px;
+      }
+      .how-it-works h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 48px;
+      }
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      .step {
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+      }
+      .step-number {
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        color: #000;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .step h3 { margin-bottom: 8px; }
+      .step p { color: #888; }
+      .testimonials {
+        max-width: 1000px;
+        margin: 80px auto;
+        padding: 0 20px;
+        text-align: center;
+      }
+      .testimonials h2 {
+        font-size: 2.5rem;
+        margin-bottom: 48px;
+      }
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+      .testimonial {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 32px;
+        text-align: left;
+      }
+      .testimonial p {
+        color: #888;
+        font-style: italic;
+        margin-bottom: 16px;
+      }
+      .testimonial .author {
+        color: #00ff88;
+        font-weight: 600;
+      }
+      .faq {
+        max-width: 800px;
+        margin: 80px auto;
+        padding: 0 20px;
+      }
+      .faq h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 48px;
+      }
+      .faq-item {
+        margin-bottom: 24px;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+      }
+      .faq-item h3 { margin-bottom: 8px; }
+      .faq-item p { color: #888; }
+      .footer {
+        text-align: center;
+        padding: 60px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .footer p {
+        color: #666;
+        margin-bottom: 16px;
+      }
+      .footer a {
+        color: #00ff88;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <h1>Your AI Finally Remembers Everything</h1>
+      <p>
+        Persistent memory + 20,000+ tools for Cursor, Claude, Copilot, and 35+ other AI agents.
+        Install in 30 seconds. Works with everything you already use.
+      </p>
+      <div class="install-command">npx @hypernexus/install</div>
+      <div class="hero-buttons">
+        <a href="#pricing" class="btn btn-primary">Get Started — $50/yr</a>
+        <a href="https://gitlab.com/robertpelloni/HyperNexus" class="btn btn-secondary">View Source</a>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <h3>🧠 Persistent Memory</h3>
+        <p>AI remembers your codebase, conventions, and debugging history across sessions. No more re-explaining context every time.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🔧 20,000+ Tools</h3>
+        <p>Semantic MCP tool routing automatically injects only the relevant tools for each task. Never drown in a 50,000-token tool dump again.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🤖 38+ AI Agents</h3>
+        <p>Works with Cursor, Claude Code, GitHub Copilot, Windsurf, Aider, CodeWhale, and 30+ more. No vendor lock-in.</p>
+      </div>
+      <div class="feature-card">
+        <h3>☁️ Cloud Sync</h3>
+        <p>Memories sync across all your devices. Automatic daily backups keep your knowledge safe.</p>
+      </div>
+      <div class="feature-card">
+        <h3>👥 Team Sharing</h3>
+        <p>Shared memory pools for teams. New hires get productive in days, not weeks.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🔒 Compliance Ready</h3>
+        <p>Full audit logs of all AI actions. SSO/RBAC for enterprise. Sandboxed tool execution.</p>
+      </div>
+    </div>
+
+    <div class="pricing-section" id="pricing">
+      <h2>Simple, Transparent Pricing</h2>
+      <p class="subtitle">One price. Everything included. No hidden fees.</p>
+
+      <div class="pricing-card">
+        <h3>HyperNexus Professional</h3>
+        <p style="color: #888">Local license + cloud hosting</p>
+        <div class="price">$50 <span>/ seat / year</span></div>
+        <p class="price-note">That's $4.17/month. Less than a coffee.</p>
+        <ul>
+          <li>Lifetime local license (yours forever)</li>
+          <li>1 year cloud hosting included</li>
+          <li>Unlimited projects and memories</li>
+          <li>20,000+ MCP tool integrations</li>
+          <li>Works with 38+ AI agents</li>
+          <li>Automatic daily backups</li>
+          <li>Cross-device sync</li>
+          <li>Team knowledge sharing</li>
+          <li>Full audit logs</li>
+          <li>Priority email support</li>
+          <li>All future 1.x updates</li>
+        </ul>
+        <a href="#" class="btn btn-primary" id="checkout-button" style="width: 100%; display: block; text-align: center;">
+          Buy Now — $50/seat/year
+        </a>
+        <p style="text-align: center; margin-top: 16px; color: #888; font-size: 14px;">
+          30-day money-back guarantee. No questions asked.
+        </p>
+      </div>
+    </div>
+
+    <div class="how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div>
+            <h3>Install in 30 seconds</h3>
+            <p>Run <code style="color: #00ff88">npx @hypernexus/install</code> and it auto-detects all your AI tools. No configuration needed.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div>
+            <h3>HyperNexus learns your codebase</h3>
+            <p>It indexes your code, conventions, and patterns. Memory builds automatically as you work.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div>
+            <h3>AI gets persistent memory</h3>
+            <p>Every AI tool you use now remembers context across sessions. No more cold starts.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div>
+            <h3>Team knowledge grows</h3>
+            <p>Shared memory pools mean everyone benefits from collective knowledge. New hires onboard 70% faster.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials">
+      <h2>What Users Say</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <p>"HyperNexus cut my context setup time to zero. My AI assistants now feel like they've been on the project for years."</p>
+          <span class="author">— Early Beta User</span>
+        </div>
+        <div class="testimonial">
+          <p>"We onboard new hires in 3 days instead of 2 weeks. The shared memory means the AI already knows our codebase."</p>
+          <span class="author">— Engineering Manager</span>
+        </div>
+        <div class="testimonial">
+          <p>"Finally, AI tools that work together instead of in silos. One memory layer for Cursor, Claude, and Copilot."</p>
+          <span class="author">— Full-Stack Developer</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>What happens after year 1?</h3>
+        <p>Your local license continues working forever. Cloud features (sync, backups, team sharing) renew at $25/year, but that's completely optional.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I use it without cloud?</h3>
+        <p>Absolutely. The local license works completely offline. Cloud features are optional convenience.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Which AI agents does it work with?</h3>
+        <p>HyperNexus works with 38+ AI coding agents including Cursor, Claude Code, GitHub Copilot, Windsurf, Aider, CodeWhale, Continue, and many more.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do you offer refunds?</h3>
+        <p>Yes, 30-day money-back guarantee, no questions asked.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is there a free tier?</h3>
+        <p>The open-source core is free forever. Professional features (cloud sync, team sharing, priority support) require a license.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Questions? Contact <a href="mailto:support@hypernexus.site">support@hypernexus.site</a>
+      </p>
+      <p>
+        <a href="https://hypernexus.site/pricing.html">Pricing</a> ·
+        <a href="https://gitlab.com/robertpelloni/HyperNexus">Source</a> ·
+        <a href="https://hypernexus.site">Home</a>
+      </p>
+    </div>
+
+    <script>
+      // Stripe checkout - replace with your actual key
+      const stripe = Stripe('pk_test_YOUR_STRIPE_KEY_HERE');
+
+      document.getElementById('checkout-button').addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        // In production, this would call your backend to create a checkout session
+        // For now, redirect to a placeholder
+        window.location.href = 'https://buy.stripe.com/YOUR_PAYMENT_LINK';
+      });
+    </script>
+  </body>
+</html>
