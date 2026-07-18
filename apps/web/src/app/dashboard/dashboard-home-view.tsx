@@ -8,6 +8,7 @@ import CommandDashboard from "./command/view";
 import ManualPage from "./manual/view";
 import CloudOrchestratorDashboardPage from "./cloud-orchestrator/view";
 import SettingsDashboard from "./settings/view";
+import MarketplacePage from "./marketplace/view";
 
 export interface DashboardStatusSummary {
 	initialized: boolean;
@@ -2858,6 +2859,7 @@ export function DashboardHomeView({
         <span className="text-zinc-500 group-open:rotate-180 transition-transform">▼</span>
     </summary>
     <div className="p-4 border-t border-zinc-800 space-y-8">
+								<div id="community-marketplace" className="scroll-mt-6 pt-4"><MarketplacePage /></div>
 
 
     </div>
