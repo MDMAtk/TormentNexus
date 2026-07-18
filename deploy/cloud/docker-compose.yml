@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  cloud:
+    build:
+      context: ../..
+      dockerfile: deploy/cloud/Dockerfile
+    container_name: hypernexus-cloud
+    restart: unless-stopped
+    ports:
+      - "7778:7778"
+      - "7779:7779"
+    volumes:
+      - cloud-data:/var/lib/hypernexus
+      - cloud-backups:/var/backups/hypernexus
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - HN_MODE=cloud
+      - HN_DB_PATH=/data/hypernexus.db
+      - HN_BACKUP_DIR=/var/backups/hypernexus
+      - HN_CLOUD_DOMAIN=cloud.hypernexus.site
+    networks:
+      - hypernexus-cloud
+
+  dashboard:
+    image: node:20-alpine
+    container_name: hypernexus-dashboard
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ../../apps/web:/app
+    command: sh -c "npm install && npm run build && npm start"
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://cloud:7778
+    depends_on:
+      - cloud
+    networks:
+      - hypernexus-cloud
+
+  nginx:
+    image: nginx:alpine
+    container_name: hypernexus-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - cloud
+      - dashboard
+    networks:
+      - hypernexus-cloud
+
+volumes:
+  cloud-data:
+  cloud-backups:
+
+networks:
+  hypernexus-cloud:
+    driver: bridge
