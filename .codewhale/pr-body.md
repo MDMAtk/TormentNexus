@@ -1,6 +1,6 @@
 ## Summary
 
-Adds `crates/tn-extension` — a native Rust extension implementing the `codewhale_extension::Extension` trait with full parity to the TormentNexus Pi Coding Agent extension for persistent L2 memory, MCP tool discovery, skill registry, code search, RBAC, and context harvesting.
+Adds `crates/tn-extension` — a native Rust extension implementing the `codewhale_extension::Extension` trait with full parity to the HyperNexus Pi Coding Agent extension for persistent L2 memory, MCP tool discovery, skill registry, code search, RBAC, and context harvesting.
 
 ## Changes
 
@@ -8,7 +8,7 @@ Adds `crates/tn-extension` — a native Rust extension implementing the `codewha
 
 ### New crate: `crates/tn-extension/`
 - `Cargo.toml` — depends on `codewhale-extension`, `serde_json`, `reqwest`, `chrono`, `async-trait`
-- `src/lib.rs` — `TormentNexusExtension` implementing all lifecycle hooks
+- `src/lib.rs` — `HyperNexusExtension` implementing all lifecycle hooks
 
 ### Extension Lifecycle Hooks
 - **SessionStart** — logs session to TN L2 memory at `http://127.0.0.1:7778/api/memory/add`
@@ -25,11 +25,11 @@ Adds `crates/tn-extension` — a native Rust extension implementing the `codewha
 - **9 custom tool definitions**: `tn_memory_store`, `tn_memory_search`, `tn_memory_vector_search`, `tn_tool_search`, `tn_session_search`, `tn_skill_manage`, `tn_code_search`, `tn_context_harvest`, `tn_scratchpad`
 - **6 slash commands**: `/tn-store`, `/tn-search`, `/tn-status`, `/tn-plan`, `/tn-summary`, `/tn-purge`
 - **3 keyboard shortcuts**: `Ctrl+Shift+M` (memory search), `Ctrl+Shift+T` (tool search), `Ctrl+Shift+P` (system status)
-- **MCP server auto-registration**: points at `tormentnexus.exe mcp` with env `TORMENTNEXUS_WORKSPACE_ROOT`
+- **MCP server auto-registration**: points at `hypernexus.exe mcp` with env `HYPERNEXUS_WORKSPACE_ROOT`
 
 ### Wiring
 - `crates/tui/Cargo.toml` — added `codewhale-tn-extension` dependency
-- `crates/tui/src/core/engine.rs` — registers `TormentNexusExtension` into `ExtensionManager` at startup
+- `crates/tui/src/core/engine.rs` — registers `HyperNexusExtension` into `ExtensionManager` at startup
 - `Cargo.toml` (workspace root) — added `crates/tn-extension` as workspace member
 
 ## Dependencies

@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"sort"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 )
 
 type Definition struct {
@@ -43,8 +43,8 @@ func List(workspaceRoot string, tools []controlplane.Tool) []Definition {
 		}
 	}
 
-	tormentnexusTools := tormentnexusToolNames(workspaceRoot)
-	externalHarnessNote := "External harness; tormentnexus currently tracks install/runtime metadata only, not a source-backed tool registry."
+	hypernexusTools := hypernexusToolNames(workspaceRoot)
+	externalHarnessNote := "External harness; hypernexus currently tracks install/runtime metadata only, not a source-backed tool registry."
 	metadataHarness := func(id, description, maturity, runtime string) Definition {
 		return Definition{
 			ID:                  id,
@@ -59,22 +59,22 @@ func List(workspaceRoot string, tools []controlplane.Tool) []Definition {
 	}
 	definitions := []Definition{
 		{
-			ID:                  "tormentnexus",
-			Description:         "tormentnexus Go CLI harness",
+			ID:                  "hypernexus",
+			Description:         "hypernexus Go CLI harness",
 			Maturity:            "Experimental",
 			Primary:             true,
-			SubmodulePath:       "submodules/tormentnexus",
-			Upstream:            "https://github.com/MDMAtk/TormentNexus",
+			SubmodulePath:       "submodules/hypernexus",
+			Upstream:            "https://github.com/MDMAtk/HyperNexus",
 			Runtime:             "Go / Cobra / TUI",
 			LaunchCommand:       "go run .",
-			Capabilities:        []string{"repl", "pipe", "tormentnexus-adapter", "tool-registry"},
-			ParityNotes:         "tormentnexus can read tormentnexus tool calls directly from the assimilated submodule source.",
-			ToolCallCount:       len(tormentnexusTools),
-			ToolCallNames:       tormentnexusTools,
-			ToolSource:          "submodules/tormentnexus/tools/*.go",
+			Capabilities:        []string{"repl", "pipe", "hypernexus-adapter", "tool-registry"},
+			ParityNotes:         "hypernexus can read hypernexus tool calls directly from the assimilated submodule source.",
+			ToolCallCount:       len(hypernexusTools),
+			ToolCallNames:       hypernexusTools,
+			ToolSource:          "submodules/hypernexus/tools/*.go",
 			ToolInventoryStatus: "source-backed",
 			IntegrationLevel:    "source-backed",
-			Installed:           pathExists(filepath.Join(workspaceRoot, "submodules", "tormentnexus")),
+			Installed:           pathExists(filepath.Join(workspaceRoot, "submodules", "hypernexus")),
 		},
 		metadataHarness("opencode", "OpenCode CLI harness", "Beta", "External CLI"),
 		metadataHarness("antigravity", "Antigravity CLI harness", "Experimental", "Desktop IDE / command surface"),
@@ -159,8 +159,8 @@ func pathExists(target string) bool {
 	return err == nil
 }
 
-func tormentnexusToolNames(workspaceRoot string) []string {
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+func hypernexusToolNames(workspaceRoot string) []string {
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	entries, err := os.ReadDir(toolsDir)
 	if err != nil {
 		return nil

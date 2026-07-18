@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/config"
 )
 
 func TestCapabilitiesIncludesLocalAndUpstreamNodes(t *testing.T) {
@@ -27,7 +27,7 @@ func TestCapabilitiesIncludesLocalAndUpstreamNodes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	service := New(config.Default())
 	capabilities, err := service.Capabilities(context.Background())
@@ -63,7 +63,7 @@ func TestQueryCapabilitiesReturnsRemoteDetails(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	service := New(config.Default())
 	details, err := service.QueryCapabilities(context.Background(), "node-ts", 1500)

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/MDMAtk/TormentNexus/agents"
+	"github.com/MDMAtk/HyperNexus/agents"
 )
 
 func TestProcessSlashCommandPlanAndRepomap(t *testing.T) {

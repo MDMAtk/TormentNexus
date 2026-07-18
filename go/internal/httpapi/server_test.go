@@ -19,16 +19,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/config"
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
-	"github.com/MDMAtk/TormentNexus/internal/interop"
-	"github.com/MDMAtk/TormentNexus/internal/lockfile"
-	"github.com/MDMAtk/TormentNexus/internal/memorystore"
-	"github.com/MDMAtk/TormentNexus/internal/providers"
-	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
+	"github.com/MDMAtk/HyperNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/interop"
+	"github.com/MDMAtk/HyperNexus/internal/lockfile"
+	"github.com/MDMAtk/HyperNexus/internal/memorystore"
+	"github.com/MDMAtk/HyperNexus/internal/providers"
+	"github.com/MDMAtk/HyperNexus/internal/sessionimport"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type stubDetector struct {
 	tools []controlplane.Tool
@@ -52,8 +52,8 @@ func skipIfServerRunning(t *testing.T) {
 func TestMain(m *testing.M) {
 	// Default: point upstream to a dead address so tests dont hit real TS core.
 	// Individual tests that need a real or mock upstream override this.
-	os.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
-	os.Setenv("TORMENTNEXUS_LOCK_PATH", os.TempDir() + "/tormentnexus-test-nonexistent.lock")
+	os.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	os.Setenv("HYPERNEXUS_LOCK_PATH", os.TempDir() + "/hypernexus-test-nonexistent.lock")
 	os.Exit(m.Run())
 }
 
@@ -139,7 +139,7 @@ func TestMeshEndpoints(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	server := New(config.Default(), stubDetector{})
 
@@ -204,10 +204,10 @@ func TestMeshEndpoints(t *testing.T) {
 }
 
 func TestBridgeRouteReportsProcedureFailure(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -255,7 +255,7 @@ func TestBridgeRouteReportsProcedureFailure(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-toolchain-db"`,
 		`"procedure":"toolChaining.getChain"`,
-		`using local tool chain from tormentnexus.db`,
+		`using local tool chain from hypernexus.db`,
 		`"chain-1"`,
 		`"search_tools"`,
 	} {
@@ -266,10 +266,10 @@ func TestBridgeRouteReportsProcedureFailure(t *testing.T) {
 }
 
 func TestToolChainsListFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -319,7 +319,7 @@ func TestToolChainsListFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-toolchain-db"`,
 		`"procedure":"toolChaining.listChains"`,
-		`using local tool chains from tormentnexus.db`,
+		`using local tool chains from hypernexus.db`,
 		`"chain-1"`,
 		`"search_tools"`,
 		`"read_file"`,
@@ -331,10 +331,10 @@ func TestToolChainsListFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestPlanReadRoutesFallBackToLocalSandboxState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	sandboxDir := filepath.Join(workspace, ".tormentnexus", "sandbox")
+	sandboxDir := filepath.Join(workspace, ".hypernexus", "sandbox")
 	if err := os.MkdirAll(sandboxDir, 0o755); err != nil {
 		t.Fatalf("failed to create sandbox dir: %v", err)
 	}
@@ -448,23 +448,23 @@ func TestStartupStatusEndpoint(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	workspaceRoot := t.TempDir()
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
-	cfg.ConfigDir = filepath.Join(workspaceRoot, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(workspaceRoot, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create go config dir: %v", err)
 	}
 	if err := os.MkdirAll(cfg.MainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create main config dir: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus", "memory"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus", "memory"), 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
 		t.Fatalf("failed to seed memory store: %v", err)
 	}
 
@@ -569,23 +569,23 @@ func TestSessionContextEndpoint(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	workspaceRoot := t.TempDir()
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
-	cfg.ConfigDir = filepath.Join(workspaceRoot, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(workspaceRoot, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create go config dir: %v", err)
 	}
 	if err := os.MkdirAll(cfg.MainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create main config dir: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus", "memory"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus", "memory"), 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
 		t.Fatalf("failed to seed memory store: %v", err)
 	}
 
@@ -614,9 +614,9 @@ func TestSessionContextEndpoint(t *testing.T) {
 
 func TestSessionContextFallsBackToLocalBootstrapAndAds(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools dir: %v", err)
+		t.Fatalf("failed to create hypernexus tools dir: %v", err)
 	}
 	toolSource := `package tools
 
@@ -633,10 +633,10 @@ var ListAllTools = struct{
 }
 `
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte(toolSource), 0o644); err != nil {
-		t.Fatalf("failed to write tormentnexus tool source: %v", err)
+		t.Fatalf("failed to write hypernexus tool source: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
@@ -674,7 +674,7 @@ func TestToolsContextEndpoint(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{
 				"result": map[string]any{"data": map[string]any{"json": map[string]any{
 					"toolName":         "search_tools",
-					"query":            "search_tools tormentnexus go session",
+					"query":            "search_tools hypernexus go session",
 					"matchedPaths":     []string{"go/internal/httpapi/server.go"},
 					"observationCount": 2,
 					"summaryCount":     1,
@@ -686,7 +686,7 @@ func TestToolsContextEndpoint(t *testing.T) {
 			if err != nil {
 				t.Fatalf("failed to read searchTools body: %v", err)
 			}
-			if !strings.Contains(string(body), `"query":"search_tools tormentnexus go session"`) || !strings.Contains(string(body), `"profile":"repo-coding"`) {
+			if !strings.Contains(string(body), `"query":"search_tools hypernexus go session"`) || !strings.Contains(string(body), `"profile":"repo-coding"`) {
 				t.Fatalf("expected contextual searchTools payload, got %s", string(body))
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{
@@ -699,7 +699,7 @@ func TestToolsContextEndpoint(t *testing.T) {
 			if err != nil {
 				t.Fatalf("failed to read callTool body: %v", err)
 			}
-			if !strings.Contains(string(body), `"name":"list_all_tools"`) || !strings.Contains(string(body), `"query":"search_tools tormentnexus go session"`) {
+			if !strings.Contains(string(body), `"name":"list_all_tools"`) || !strings.Contains(string(body), `"query":"search_tools hypernexus go session"`) {
 				t.Fatalf("expected list_all_tools payload, got %s", string(body))
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{
@@ -741,23 +741,23 @@ func TestToolsContextEndpoint(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	workspaceRoot := t.TempDir()
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
-	cfg.ConfigDir = filepath.Join(workspaceRoot, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(workspaceRoot, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create go config dir: %v", err)
 	}
 	if err := os.MkdirAll(cfg.MainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create main config dir: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus", "memory"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus", "memory"), 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
 		t.Fatalf("failed to seed memory store: %v", err)
 	}
 
@@ -786,9 +786,9 @@ func TestToolsContextEndpoint(t *testing.T) {
 
 func TestToolsContextFallsBackToLocalPrompt(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools dir: %v", err)
+		t.Fatalf("failed to create hypernexus tools dir: %v", err)
 	}
 	toolSource := `package tools
 
@@ -805,10 +805,10 @@ var ListAllTools = struct{
 }
 `
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte(toolSource), 0o644); err != nil {
-		t.Fatalf("failed to write tormentnexus tool source: %v", err)
+		t.Fatalf("failed to write hypernexus tool source: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
@@ -832,7 +832,7 @@ var ListAllTools = struct{
 }
 
 func TestMCPToolAdvertisementsReportSnapshotFailure(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = string([]byte{0})
@@ -854,7 +854,7 @@ func TestMCPToolAdvertisementsReportSnapshotFailure(t *testing.T) {
 }
 
 func TestMemoryToolContextFallsBackToPersistedPrompt(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -880,7 +880,7 @@ func TestMemoryToolContextFallsBackToPersistedPrompt(t *testing.T) {
 }
 
 func TestMemorySessionBootstrapFallsBackToPersistedPrompt(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -907,7 +907,7 @@ func TestMemorySessionBootstrapFallsBackToPersistedPrompt(t *testing.T) {
 }
 
 func TestMemoryRecentRoutesFallBackToPersistedData(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -938,15 +938,15 @@ func TestMemoryRecentRoutesFallBackToPersistedData(t *testing.T) {
 func TestMemorySectionedStatusAndFormatsFallBackLocally(t *testing.T) {
 	t.Skip("Skipping test for now")
 	workspaceRoot := t.TempDir()
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus"), 0o755); err != nil {
-		t.Fatalf("failed to create .tormentnexus dir: %v", err)
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus"), 0o755); err != nil {
+		t.Fatalf("failed to create .hypernexus dir: %v", err)
 	}
 	store := `{"sections":[{"section":"project_context","entries":[{"createdAt":"2026-01-01T00:00:00Z"}]}]}`
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "sectioned_memory.json"), []byte(store), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "sectioned_memory.json"), []byte(store), 0o644); err != nil {
 		t.Fatalf("failed to seed sectioned memory: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
@@ -971,7 +971,7 @@ func TestMemoryContextsFallsBackToLocalRegistry(t *testing.T) {
 	t.Skip("Skipping test for now")
 	workspaceRoot := t.TempDir()
 	seedPersistedMemoryContexts(t, workspaceRoot)
-	contextsDir := filepath.Join(workspaceRoot, ".tormentnexus", "memory")
+	contextsDir := filepath.Join(workspaceRoot, ".hypernexus", "memory")
 	if err := os.MkdirAll(contextsDir, 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
@@ -980,7 +980,7 @@ func TestMemoryContextsFallsBackToLocalRegistry(t *testing.T) {
 		t.Fatalf("failed to seed contexts registry: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
@@ -1004,12 +1004,12 @@ func TestMemoryContextsFallsBackToLocalRegistry(t *testing.T) {
 }
 
 func TestMemoryAgentStatsFallsBackToPersistedState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
 	cfg.MainConfigDir = t.TempDir()
-	agentMemoryDir := filepath.Join(cfg.WorkspaceRoot, ".tormentnexus", "agent_memory")
+	agentMemoryDir := filepath.Join(cfg.WorkspaceRoot, ".hypernexus", "agent_memory")
 	if err := os.MkdirAll(agentMemoryDir, 0o755); err != nil {
 		t.Fatalf("mkdir agent memory dir: %v", err)
 	}
@@ -1125,7 +1125,7 @@ func TestMemoryAgentStatsFallsBackToPersistedState(t *testing.T) {
 func TestMCPEmptyStateRoutesFallBackLocally(t *testing.T) {
 	t.Skip("Skipping empty state route validation")
 	skipIfServerRunning(t)
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -1179,7 +1179,7 @@ func TestMCPEmptyStateRoutesFallBackLocally(t *testing.T) {
 
 func TestReadOnlyMemoryRoutesFallBackLocally(t *testing.T) {
 	t.Skip("Skipping test for now")
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -1229,7 +1229,7 @@ func TestReadOnlyMemoryRoutesFallBackLocally(t *testing.T) {
 
 func seedPersistedMemoryContexts(t *testing.T, workspaceRoot string) {
 	t.Helper()
-	contextsDir := filepath.Join(workspaceRoot, ".tormentnexus", "memory")
+	contextsDir := filepath.Join(workspaceRoot, ".hypernexus", "memory")
 	if err := os.MkdirAll(contextsDir, 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
@@ -1244,7 +1244,7 @@ func seedPersistedMemoryContexts(t *testing.T, workspaceRoot string) {
 
 func seedPersistedAgentMemories(t *testing.T, workspaceRoot string) {
 	t.Helper()
-	agentMemoryDir := filepath.Join(workspaceRoot, ".tormentnexus", "agent_memory")
+	agentMemoryDir := filepath.Join(workspaceRoot, ".hypernexus", "agent_memory")
 	if err := os.MkdirAll(agentMemoryDir, 0o755); err != nil {
 		t.Fatalf("mkdir agent memory dir: %v", err)
 	}
@@ -1323,7 +1323,7 @@ func seedPersistedAgentMemories(t *testing.T, workspaceRoot string) {
 					"structuredSessionSummary": map[string]any{
 						"sessionId":     "sess-1",
 						"name":          "search_tools parity session",
-						"cliType":       "tormentnexus",
+						"cliType":       "hypernexus",
 						"status":        "completed",
 						"activeGoal":    "ship parity",
 						"lastObjective": "surface jit tool context",
@@ -1362,7 +1362,7 @@ func seedPersistedAgentMemories(t *testing.T, workspaceRoot string) {
 
 func TestMemoryServiceBackedMutationsFallBackLocally(t *testing.T) {
 	skipIfServerRunning(t)
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -1437,7 +1437,7 @@ func seedPersistedAgentMemoryRelations(t *testing.T, workspaceRoot string) {
 	t.Helper()
 	seedPersistedAgentMemories(t, workspaceRoot)
 
-	agentMemoryPath := filepath.Join(workspaceRoot, ".tormentnexus", "agent_memory", "memories.json")
+	agentMemoryPath := filepath.Join(workspaceRoot, ".hypernexus", "agent_memory", "memories.json")
 	raw, err := os.ReadFile(agentMemoryPath)
 	if err != nil {
 		t.Fatalf("read persisted memories: %v", err)
@@ -1514,7 +1514,7 @@ func seedPersistedAgentMemoryRelations(t *testing.T, workspaceRoot string) {
 }
 
 func TestMemoryRelationshipRoutesFallBackToPersistedData(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -1544,15 +1544,15 @@ func TestMemoryRelationshipRoutesFallBackToPersistedData(t *testing.T) {
 
 func TestMCPAddAndRemoveServerFallBackToLocalConfiguredServers(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	tormentnexusDir := filepath.Join(workspaceRoot, ".tormentnexus")
-	if err := os.MkdirAll(tormentnexusDir, 0o755); err != nil {
-		t.Fatalf("failed to create .tormentnexus dir: %v", err)
+	hypernexusDir := filepath.Join(workspaceRoot, ".hypernexus")
+	if err := os.MkdirAll(hypernexusDir, 0o755); err != nil {
+		t.Fatalf("failed to create .hypernexus dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(tormentnexusDir, "mcp.jsonc"), []byte("{\"mcpServers\":{}}"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(hypernexusDir, "mcp.jsonc"), []byte("{\"mcpServers\":{}}"), 0o644); err != nil {
 		t.Fatalf("failed to seed mcp.jsonc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
@@ -1579,7 +1579,7 @@ func TestMCPAddAndRemoveServerFallBackToLocalConfiguredServers(t *testing.T) {
 
 func TestMCPServerTestFallsBackToStructuredProbeFailures(t *testing.T) {
 	t.Skip("Skipping local router probe validation")
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -1591,7 +1591,7 @@ func TestMCPServerTestFallsBackToStructuredProbeFailures(t *testing.T) {
 	routerReq.Header.Set("content-type", "application/json")
 	routerRecorder := httptest.NewRecorder()
 	server.Handler().ServeHTTP(routerRecorder, routerReq)
-	if routerRecorder.Code != http.StatusOK || !strings.Contains(routerRecorder.Body.String(), `"fallback":"go-local-mcp"`) || !strings.Contains(routerRecorder.Body.String(), `tormentnexus MCP router is not initialized.`) {
+	if routerRecorder.Code != http.StatusOK || !strings.Contains(routerRecorder.Body.String(), `"fallback":"go-local-mcp"`) || !strings.Contains(routerRecorder.Body.String(), `hypernexus MCP router is not initialized.`) {
 		t.Fatalf("expected local router probe fallback response, got %d %s", routerRecorder.Code, routerRecorder.Body.String())
 	}
 	if !strings.Contains(routerRecorder.Body.String(), `simulating router probe failure locally`) {
@@ -1613,15 +1613,15 @@ func TestMCPServerTestFallsBackToStructuredProbeFailures(t *testing.T) {
 func TestMCPLifecycleModesFallBackToLocalState(t *testing.T) {
 	t.Skip("Skipping test for now")
 	workspaceRoot := t.TempDir()
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools dir: %v", err)
+		t.Fatalf("failed to create hypernexus tools dir: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte("package tools\n"), 0o644); err != nil {
 		t.Fatalf("failed to seed tool dir: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
@@ -1645,7 +1645,7 @@ func TestMCPLifecycleModesFallBackToLocalState(t *testing.T) {
 }
 
 func TestMCPLoadAndUnloadToolReturnExplicitUnavailableFallback(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -1696,7 +1696,7 @@ func TestAutonomyBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -1886,7 +1886,7 @@ func TestDirectorBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -1980,7 +1980,7 @@ func TestAutoDevBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -2057,7 +2057,7 @@ func TestDarwinBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -2216,11 +2216,11 @@ func TestCouncilBridgeRoutes(t *testing.T) {
 			})
 		case "/trpc/council.sessions.byCLI":
 			body, _ := io.ReadAll(r.Body)
-			if !strings.Contains(string(body), `"cliType":"tormentnexus"`) {
+			if !strings.Contains(string(body), `"cliType":"hypernexus"`) {
 				t.Fatalf("expected council.sessions.byCLI payload, got %s", string(body))
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{
-				"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"id": "sess-cli", "cliType": "tormentnexus"}}}},
+				"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"id": "sess-cli", "cliType": "hypernexus"}}}},
 			})
 		case "/trpc/council.sessions.updateTags":
 			body, _ := io.ReadAll(r.Body)
@@ -2324,7 +2324,7 @@ func TestCouncilBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -2345,8 +2345,8 @@ func TestCouncilBridgeRoutes(t *testing.T) {
 		{name: "council sessions active", method: http.MethodGet, path: "/api/council/sessions/active", contains: `"running"`, procedure: `"procedure":"council.sessions.active"`},
 		{name: "council sessions stats", method: http.MethodGet, path: "/api/council/sessions/stats", contains: `"total":1`, procedure: `"procedure":"council.sessions.stats"`},
 		{name: "council sessions get", method: http.MethodGet, path: "/api/council/sessions/get?id=sess-1", contains: `"sess-1"`, procedure: `"procedure":"council.sessions.get"`},
-		{name: "council sessions start", method: http.MethodPost, path: "/api/council/sessions/start", body: `{"cliType":"tormentnexus"}`, contains: `"sess-2"`, procedure: `"procedure":"council.sessions.start"`},
-		{name: "council sessions bulk start", method: http.MethodPost, path: "/api/council/sessions/bulk-start", body: `{"count":2,"cliType":"tormentnexus"}`, contains: `"sess-bulk-1"`, procedure: `"procedure":"council.sessions.bulkStart"`},
+		{name: "council sessions start", method: http.MethodPost, path: "/api/council/sessions/start", body: `{"cliType":"hypernexus"}`, contains: `"sess-2"`, procedure: `"procedure":"council.sessions.start"`},
+		{name: "council sessions bulk start", method: http.MethodPost, path: "/api/council/sessions/bulk-start", body: `{"count":2,"cliType":"hypernexus"}`, contains: `"sess-bulk-1"`, procedure: `"procedure":"council.sessions.bulkStart"`},
 		{name: "council sessions bulk stop", method: http.MethodPost, path: "/api/council/sessions/bulk-stop", contains: `"stopped":2`, procedure: `"procedure":"council.sessions.bulkStop"`},
 		{name: "council sessions bulk resume", method: http.MethodPost, path: "/api/council/sessions/bulk-resume", contains: `"sess-2"`, procedure: `"procedure":"council.sessions.bulkResume"`},
 		{name: "council sessions stop", method: http.MethodPost, path: "/api/council/sessions/stop", body: `{"id":"sess-1"}`, contains: `"stopped"`, procedure: `"procedure":"council.sessions.stop"`},
@@ -2359,7 +2359,7 @@ func TestCouncilBridgeRoutes(t *testing.T) {
 		{name: "council sessions persisted", method: http.MethodGet, path: "/api/council/sessions/persisted", contains: `"sess-persisted"`, procedure: `"procedure":"council.sessions.persisted"`},
 		{name: "council sessions by tag", method: http.MethodGet, path: "/api/council/sessions/by-tag?tag=priority", contains: `"sess-tagged"`, procedure: `"procedure":"council.sessions.byTag"`},
 		{name: "council sessions by template", method: http.MethodGet, path: "/api/council/sessions/by-template?template=default", contains: `"sess-template"`, procedure: `"procedure":"council.sessions.byTemplate"`},
-		{name: "council sessions by cli", method: http.MethodGet, path: "/api/council/sessions/by-cli?cliType=tormentnexus", contains: `"sess-cli"`, procedure: `"procedure":"council.sessions.byCLI"`},
+		{name: "council sessions by cli", method: http.MethodGet, path: "/api/council/sessions/by-cli?cliType=hypernexus", contains: `"sess-cli"`, procedure: `"procedure":"council.sessions.byCLI"`},
 		{name: "council sessions update tags", method: http.MethodPost, path: "/api/council/sessions/tags/update", body: `{"id":"sess-1","tags":["priority","go"]}`, contains: `"priority","go"`, procedure: `"procedure":"council.sessions.updateTags"`},
 		{name: "council sessions add tag", method: http.MethodPost, path: "/api/council/sessions/tags/add", body: `{"id":"sess-1","tag":"priority"}`, contains: `"priority"`, procedure: `"procedure":"council.sessions.addTag"`},
 		{name: "council sessions remove tag", method: http.MethodPost, path: "/api/council/sessions/tags/remove", body: `{"id":"sess-1","tag":"priority"}`, contains: `"tags":[]`, procedure: `"procedure":"council.sessions.removeTag"`},
@@ -2431,7 +2431,7 @@ func TestDeerFlowBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -2498,7 +2498,7 @@ func TestHealerBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -2544,7 +2544,7 @@ func TestHealerBridgeRoutes(t *testing.T) {
 }
 
 func TestHealerHistoryFallsBackToEmptyList(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -2602,7 +2602,7 @@ func TestCouncilVisualBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -2717,7 +2717,7 @@ func TestCloudDevBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -2733,7 +2733,7 @@ func TestCloudDevBridgeRoutes(t *testing.T) {
 		procedure string
 	}{
 		{name: "clouddev providers", method: http.MethodGet, path: "/api/clouddev/providers", contains: `"jules"`, procedure: `"procedure":"cloudDev.listProviders"`},
-		{name: "clouddev create session", method: http.MethodPost, path: "/api/clouddev/sessions/create", body: `{"provider":"jules","projectName":"tormentnexus","task":"ship","autoAcceptPlan":false}`, contains: `"status":"pending"`, procedure: `"procedure":"cloudDev.createSession"`},
+		{name: "clouddev create session", method: http.MethodPost, path: "/api/clouddev/sessions/create", body: `{"provider":"jules","projectName":"hypernexus","task":"ship","autoAcceptPlan":false}`, contains: `"status":"pending"`, procedure: `"procedure":"cloudDev.createSession"`},
 		{name: "clouddev list sessions", method: http.MethodGet, path: "/api/clouddev/sessions?provider=jules&status=active", contains: `"status":"active"`, procedure: `"procedure":"cloudDev.listSessions"`},
 		{name: "clouddev get session", method: http.MethodGet, path: "/api/clouddev/sessions/get?sessionId=cds-1", contains: `"id":"cds-1"`, procedure: `"procedure":"cloudDev.getSession"`},
 		{name: "clouddev update status", method: http.MethodPost, path: "/api/clouddev/sessions/status", body: `{"sessionId":"cds-1","status":"awaiting_approval"}`, contains: `"awaiting_approval"`, procedure: `"procedure":"cloudDev.updateSessionStatus"`},
@@ -2885,7 +2885,7 @@ func TestConfigRouterBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3002,7 +3002,7 @@ func TestCouncilHistoryBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3091,7 +3091,7 @@ func TestCouncilBaseBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3174,7 +3174,7 @@ func TestCouncilSmartPilotBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3248,7 +3248,7 @@ func TestCouncilHooksBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3312,7 +3312,7 @@ func TestCouncilIDEBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3380,7 +3380,7 @@ func TestCouncilEvolutionBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3491,7 +3491,7 @@ func TestCouncilFineTuneBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3626,7 +3626,7 @@ func TestCouncilRotationBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3759,7 +3759,7 @@ func TestSwarmBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3866,7 +3866,7 @@ func TestBillingBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -3920,7 +3920,7 @@ func TestBillingBridgeRoutes(t *testing.T) {
 }
 
 func TestBillingRoutingReadEndpointsFallBackToLocalProviderRouting(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("GOOGLE_API_KEY", "google")
 	t.Setenv("ANTHROPIC_API_KEY", "anthropic")
 
@@ -3956,7 +3956,7 @@ func TestBillingRoutingReadEndpointsFallBackToLocalProviderRouting(t *testing.T)
 }
 
 func TestBillingReadEndpointsFallBackToLocalProviderPreview(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("OPENAI_API_KEY", "openai")
 	t.Setenv("ANTHROPIC_API_KEY", "anthropic")
 
@@ -4003,7 +4003,7 @@ func TestBillingReadEndpointsFallBackToLocalProviderPreview(t *testing.T) {
 }
 
 func TestBillingPreviewEndpointsFallBackToLocalProviderPreview(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("OPENAI_API_KEY", "openai")
 
 	server := New(config.Default(), stubDetector{})
@@ -4058,7 +4058,7 @@ func TestBillingPreviewEndpointsFallBackToLocalProviderPreview(t *testing.T) {
 }
 
 func TestBillingClearFallbackHistoryFallsBackToLocalBufferClear(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	server := New(config.Default(), stubDetector{})
 	server.fallbackBuffer.append(providerFallbackEvent{
@@ -4085,7 +4085,7 @@ func TestBillingClearFallbackHistoryFallsBackToLocalBufferClear(t *testing.T) {
 }
 
 func TestProviderReadEndpointsFallBackToLocalProviderSnapshot(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("OPENAI_API_KEY", "openai")
 	t.Setenv("ANTHROPIC_API_KEY", "anthropic")
 	t.Setenv("OLLAMA_API_KEY", "")
@@ -4122,7 +4122,7 @@ func TestProviderReadEndpointsFallBackToLocalProviderSnapshot(t *testing.T) {
 }
 
 func TestConfigAuthProvidersFallsBackToLocalOIDCAvailability(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("OIDC_CLIENT_ID", "client")
 	t.Setenv("OIDC_CLIENT_SECRET", "secret")
 	t.Setenv("OIDC_DISCOVERY_URL", "https://issuer.example/.well-known/openid-configuration")
@@ -4145,10 +4145,10 @@ func TestConfigAuthProvidersFallsBackToLocalOIDCAvailability(t *testing.T) {
 
 func TestObservabilityReadEndpointsFallBackToLocalPreview(t *testing.T) {
 	skipIfServerRunning(t)
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspaceRoot := t.TempDir()
-	dbPath := filepath.Join(workspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(workspaceRoot, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -4240,7 +4240,7 @@ func TestObservabilityReadEndpointsFallBackToLocalPreview(t *testing.T) {
 }
 
 func TestMetricsReadEndpointsFallBackToLocalPreview(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("OPENAI_API_KEY", "test-openai-key")
 
 	server := New(config.Default(), stubDetector{})
@@ -4288,7 +4288,7 @@ func TestMetricsReadEndpointsFallBackToLocalPreview(t *testing.T) {
 
 func TestConfigAlwaysVisibleToolsFallsBackToLocalJSONCPreferences(t *testing.T) {
 	mainConfigDir := t.TempDir()
-	jsoncContent := `// tormentnexus MCP configuration
+	jsoncContent := `// hypernexus MCP configuration
 {
   "mcpServers": {},
   "alwaysVisibleTools": ["legacy__tool"],
@@ -4303,7 +4303,7 @@ func TestConfigAlwaysVisibleToolsFallsBackToLocalJSONCPreferences(t *testing.T) 
 		t.Fatalf("failed to write local mcp jsonc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -4330,7 +4330,7 @@ func TestConfigAlwaysVisibleToolsFallsBackToLocalJSONCPreferences(t *testing.T) 
 }
 
 func TestSessionExportReadEndpointsFallBackLocally(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	server := New(config.Default(), stubDetector{})
 
@@ -4341,7 +4341,7 @@ func TestSessionExportReadEndpointsFallBackLocally(t *testing.T) {
 	if detectRecorder.Code != http.StatusOK {
 		t.Fatalf("expected detect-format fallback 200, got %d with body %s", detectRecorder.Code, detectRecorder.Body.String())
 	}
-	if !strings.Contains(detectRecorder.Body.String(), `"fallback":"go-local-session-export"`) || !strings.Contains(detectRecorder.Body.String(), `"format":"tormentnexus-export"`) {
+	if !strings.Contains(detectRecorder.Body.String(), `"fallback":"go-local-session-export"`) || !strings.Contains(detectRecorder.Body.String(), `"format":"hypernexus-export"`) {
 		t.Fatalf("expected local session export format detection, got %s", detectRecorder.Body.String())
 	}
 
@@ -4351,7 +4351,7 @@ func TestSessionExportReadEndpointsFallBackLocally(t *testing.T) {
 	if formatsRecorder.Code != http.StatusOK {
 		t.Fatalf("expected known-formats fallback 200, got %d with body %s", formatsRecorder.Code, formatsRecorder.Body.String())
 	}
-	if !strings.Contains(formatsRecorder.Body.String(), `"fallback":"go-local-session-export"`) || !strings.Contains(formatsRecorder.Body.String(), `"type":"tormentnexus"`) || !strings.Contains(formatsRecorder.Body.String(), `"id":"copilot"`) {
+	if !strings.Contains(formatsRecorder.Body.String(), `"fallback":"go-local-session-export"`) || !strings.Contains(formatsRecorder.Body.String(), `"type":"hypernexus"`) || !strings.Contains(formatsRecorder.Body.String(), `"id":"copilot"`) {
 		t.Fatalf("expected local known session export formats, got %s", formatsRecorder.Body.String())
 	}
 
@@ -4382,12 +4382,12 @@ func TestBrowserBridgeRoutes(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"success": true}}}})
 		case "/trpc/browser.searchHistory":
 			body, _ := io.ReadAll(r.Body)
-			if !strings.Contains(string(body), `"query":"tormentnexus"`) {
+			if !strings.Contains(string(body), `"query":"hypernexus"`) {
 				t.Fatalf("expected browser.searchHistory payload, got %s", string(body))
 			}
-			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"items": []any{map[string]any{"title": "tormentnexus"}}}}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"items": []any{map[string]any{"title": "hypernexus"}}}}}})
 		case "/trpc/browser.scrapePage":
-			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"title": "tormentnexus Docs", "content": "hello"}}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"title": "hypernexus Docs", "content": "hello"}}}})
 		case "/trpc/browser.screenshot":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"message": "Screenshot captured."}}}})
 		case "/trpc/browser.debug":
@@ -4408,7 +4408,7 @@ func TestBrowserBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -4426,8 +4426,8 @@ func TestBrowserBridgeRoutes(t *testing.T) {
 		{name: "browser status", method: http.MethodGet, path: "/api/browser/status", contains: `"pageCount":1`, procedure: `"procedure":"browser.status"`},
 		{name: "browser close page", method: http.MethodPost, path: "/api/browser/close-page", body: `{"pageId":"page-1"}`, contains: `"success":true`, procedure: `"procedure":"browser.closePage"`},
 		{name: "browser close all", method: http.MethodPost, path: "/api/browser/close-all", contains: `"success":true`, procedure: `"procedure":"browser.closeAll"`},
-		{name: "browser search history", method: http.MethodGet, path: "/api/browser/search-history?query=tormentnexus&maxResults=5", contains: `"tormentnexus"`, procedure: `"procedure":"browser.searchHistory"`},
-		{name: "browser scrape", method: http.MethodGet, path: "/api/browser/scrape", contains: `"tormentnexus Docs"`, procedure: `"procedure":"browser.scrapePage"`},
+		{name: "browser search history", method: http.MethodGet, path: "/api/browser/search-history?query=hypernexus&maxResults=5", contains: `"hypernexus"`, procedure: `"procedure":"browser.searchHistory"`},
+		{name: "browser scrape", method: http.MethodGet, path: "/api/browser/scrape", contains: `"hypernexus Docs"`, procedure: `"procedure":"browser.scrapePage"`},
 		{name: "browser screenshot", method: http.MethodPost, path: "/api/browser/screenshot", contains: `"Screenshot captured."`, procedure: `"procedure":"browser.screenshot"`},
 		{name: "browser debug", method: http.MethodPost, path: "/api/browser/debug", body: `{"action":"command","method":"Page.reload"}`, contains: `"{\"ok\":true}"`, procedure: `"procedure":"browser.debug"`},
 		{name: "browser proxy fetch", method: http.MethodPost, path: "/api/browser/proxy-fetch", body: `{"url":"https://example.com","method":"GET","headers":{}}`, contains: `"status":200`, procedure: `"procedure":"browser.proxyFetch"`},
@@ -4459,7 +4459,7 @@ func TestBrowserBridgeRoutes(t *testing.T) {
 }
 
 func TestBrowserStatusFallsBackToExplicitUnavailableState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -4531,7 +4531,7 @@ func TestSquadBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -4617,7 +4617,7 @@ func TestSupervisorBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -4668,8 +4668,8 @@ func TestConfigStatusEndpoint(t *testing.T) {
 	workspaceRoot := t.TempDir()
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
-	cfg.ConfigDir = filepath.Join(workspaceRoot, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(workspaceRoot, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create config dir: %v", err)
 	}
@@ -4707,8 +4707,8 @@ func TestConfigStatusEndpoint(t *testing.T) {
 	if payload.Data.MainConfigDir.Path != cfg.MainConfigDir || !payload.Data.MainConfigDir.Exists {
 		t.Fatalf("expected main config dir status for %s, got %+v", cfg.MainConfigDir, payload.Data.MainConfigDir)
 	}
-	if payload.Data.TormentNexusConfigFile.Exists || payload.Data.MCPConfigFile.Exists {
-		t.Fatalf("expected config files to be absent in this fixture, got tormentnexus=%+v mcp=%+v", payload.Data.TormentNexusConfigFile, payload.Data.MCPConfigFile)
+	if payload.Data.HyperNexusConfigFile.Exists || payload.Data.MCPConfigFile.Exists {
+		t.Fatalf("expected config files to be absent in this fixture, got hypernexus=%+v mcp=%+v", payload.Data.HyperNexusConfigFile, payload.Data.MCPConfigFile)
 	}
 }
 
@@ -5055,8 +5055,8 @@ func TestSupervisorSessionBridgeRoutes(t *testing.T) {
 					"data": map[string]any{
 						"json": map[string]any{
 							"command":   "pwd",
-							"cwd":       "C:\\workspace\\tormentnexus",
-							"output":    "C:\\workspace\\tormentnexus",
+							"cwd":       "C:\\workspace\\hypernexus",
+							"output":    "C:\\workspace\\hypernexus",
 							"exitCode":  0,
 							"succeeded": true,
 						},
@@ -5166,7 +5166,7 @@ func TestSupervisorSessionBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -5337,7 +5337,7 @@ func TestMCPBridgeRoutes(t *testing.T) {
 				}
 				contentText = "list_all_tools"
 			} else if strings.Contains(bodyText, `"name":"auto_call_tool"`) {
-				if !strings.Contains(bodyText, `"objective":"find the right tool"`) || !strings.Contains(bodyText, `"context":"repo: tormentnexus"`) {
+				if !strings.Contains(bodyText, `"objective":"find the right tool"`) || !strings.Contains(bodyText, `"context":"repo: hypernexus"`) {
 					t.Fatalf("expected auto_call_tool payload, got %s", bodyText)
 				}
 				contentText = "auto_call_tool"
@@ -5595,7 +5595,7 @@ func TestMCPBridgeRoutes(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{
 				"result": map[string]any{
 					"data": map[string]any{
-						"json": map[string]any{"path": "C:/tmp/tormentnexus.mcp.jsonc", "content": "// tormentnexus MCP configuration"},
+						"json": map[string]any{"path": "C:/tmp/hypernexus.mcp.jsonc", "content": "// hypernexus MCP configuration"},
 					},
 				},
 			})
@@ -5698,7 +5698,7 @@ func TestMCPBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -5715,8 +5715,8 @@ func TestMCPBridgeRoutes(t *testing.T) {
 	}{
 		{name: "list tools", method: http.MethodGet, path: "/api/mcp/tools", contains: "\"search_tools\"", procedure: "\"procedure\":\"mcp.listTools\""},
 		{name: "search tools", method: http.MethodGet, path: "/api/mcp/tools/search?query=search&profile=repo-coding", contains: "\"alwaysShow\":true", procedure: "\"procedure\":\"mcp.searchTools\""},
-		{name: "call tool", method: http.MethodPost, path: "/api/mcp/tools/call", body: `{"name":"search_tools","args":{"query":"tormentnexus"}}`, contains: "\"ok\":true", procedure: "\"procedure\":\"mcp.callTool\""},
-		{name: "auto call tool", method: http.MethodPost, path: "/api/mcp/tools/auto-call", body: `{"objective":"find the right tool","context":"repo: tormentnexus"}`, contains: "\"auto_call_tool\"", procedure: "\"procedure\":\"mcp.callTool\""},
+		{name: "call tool", method: http.MethodPost, path: "/api/mcp/tools/call", body: `{"name":"search_tools","args":{"query":"hypernexus"}}`, contains: "\"ok\":true", procedure: "\"procedure\":\"mcp.callTool\""},
+		{name: "auto call tool", method: http.MethodPost, path: "/api/mcp/tools/auto-call", body: `{"objective":"find the right tool","context":"repo: hypernexus"}`, contains: "\"auto_call_tool\"", procedure: "\"procedure\":\"mcp.callTool\""},
 		{name: "tool advertisements", method: http.MethodGet, path: "/api/mcp/tool-ads?goal=ship&objective=find%20tool&limit=6", contains: "\"list_all_tools\"", procedure: "\"procedure\":\"mcp.callTool\""},
 		{name: "get preferences", method: http.MethodGet, path: "/api/mcp/preferences", contains: "\"importantTools\":[\"search_tools\"]", procedure: "\"procedure\":\"mcp.getToolPreferences\""},
 		{name: "set preferences", method: http.MethodPost, path: "/api/mcp/preferences", body: `{"importantTools":["search_tools"]}`, contains: "\"ok\":true", procedure: "\"procedure\":\"mcp.setToolPreferences\""},
@@ -5734,7 +5734,7 @@ func TestMCPBridgeRoutes(t *testing.T) {
 		{name: "set lifecycle modes", method: http.MethodPost, path: "/api/mcp/lifecycle-modes", body: `{"lazySessionMode":true,"singleActiveServerMode":false}`, contains: "\"lazySessionMode\":true", procedure: "\"procedure\":\"mcp.setLifecycleModes\""},
 		{name: "add runtime server", method: http.MethodPost, path: "/api/mcp/runtime-servers/add", body: `{"name":"runtime-core","command":"node","args":["server.js"],"env":{"MODE":"test"}}`, contains: "\"name\":\"runtime-core\"", procedure: "\"procedure\":\"mcp.addServer\""},
 		{name: "remove runtime server", method: http.MethodPost, path: "/api/mcp/runtime-servers/remove", body: `{"name":"runtime-core"}`, contains: "\"success\":true", procedure: "\"procedure\":\"mcp.removeServer\""},
-		{name: "get jsonc config", method: http.MethodGet, path: "/api/mcp/config/jsonc", contains: "\"content\":\"// tormentnexus MCP configuration\"", procedure: "\"procedure\":\"mcp.getJsoncEditor\""},
+		{name: "get jsonc config", method: http.MethodGet, path: "/api/mcp/config/jsonc", contains: "\"content\":\"// hypernexus MCP configuration\"", procedure: "\"procedure\":\"mcp.getJsoncEditor\""},
 		{name: "save jsonc config", method: http.MethodPost, path: "/api/mcp/config/jsonc", body: `{"content":"{}"}`, contains: "\"ok\":true", procedure: "\"procedure\":\"mcp.saveJsoncEditor\""},
 		{name: "runtime servers", method: http.MethodGet, path: "/api/mcp/servers/runtime", contains: "\"runtimeConnected\":true", procedure: "\"procedure\":\"mcp.listServers\""},
 		{name: "configured servers", method: http.MethodGet, path: "/api/mcp/servers/configured", contains: "\"uuid\":\"srv-1\"", procedure: "\"procedure\":\"mcpServers.list\""},
@@ -5811,7 +5811,7 @@ func TestMCPAutoCallToolNormalizesAliasInputs(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -5833,9 +5833,9 @@ func TestMCPAutoCallToolNormalizesAliasInputs(t *testing.T) {
 
 func TestMCPReadRoutesFallBackToLocalSummary(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools dir: %v", err)
+		t.Fatalf("failed to create hypernexus tools dir: %v", err)
 	}
 	toolSource := `package tools
 
@@ -5852,10 +5852,10 @@ var AutoCallTool = struct{
 }
 `
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte(toolSource), 0o644); err != nil {
-		t.Fatalf("failed to write tormentnexus tool source: %v", err)
+		t.Fatalf("failed to write hypernexus tool source: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("HOME", workspaceRoot)
 	t.Setenv("USERPROFILE", workspaceRoot)
 	t.Setenv("APPDATA", workspaceRoot)
@@ -5890,7 +5890,7 @@ var AutoCallTool = struct{
 			contains: []string{
 				`"fallback":"go-local-mcp"`,
 				`using local MCP runtime server summary`,
-				`"name":"tormentnexus"`,
+				`"name":"hypernexus"`,
 				`"toolInventoryStatus":"source-backed"`,
 			},
 		},
@@ -5901,7 +5901,7 @@ var AutoCallTool = struct{
 				`"fallback":"go-local-mcp"`,
 				`using local MCP tool inventory`,
 				`"name":"search_tools"`,
-				`"server":"tormentnexus"`,
+				`"server":"hypernexus"`,
 			},
 		},
 	}
@@ -5926,7 +5926,7 @@ var AutoCallTool = struct{
 
 func TestToolsReadEndpointsFallBackToLocalDB(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	dbPath := filepath.Join(workspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(workspaceRoot, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -5948,7 +5948,7 @@ func TestToolsReadEndpointsFallBackToLocalDB(t *testing.T) {
 			updated_at INTEGER NOT NULL,
 			mcp_server_uuid TEXT NOT NULL
 		);
-		INSERT INTO mcp_servers (uuid, name) VALUES ('srv-1', 'tormentnexus');
+		INSERT INTO mcp_servers (uuid, name) VALUES ('srv-1', 'hypernexus');
 		INSERT INTO tools (uuid, name, description, tool_schema, is_deferred, always_on, created_at, updated_at, mcp_server_uuid) VALUES
 			('tool-1', 'search_tools', 'Search tools', '{"type":"object","properties":{"query":{"type":"string"}}}', 0, 1, 1711958400, 1711958460, 'srv-1'),
 			('tool-2', 'read_file', 'Read files', '{"type":"object","properties":{"path":{"type":"string"}}}', 0, 0, 1711958401, 1711958461, 'srv-1');
@@ -5956,7 +5956,7 @@ func TestToolsReadEndpointsFallBackToLocalDB(t *testing.T) {
 		t.Fatalf("failed to seed sqlite db: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.MainConfigDir = t.TempDir()
@@ -5973,7 +5973,7 @@ func TestToolsReadEndpointsFallBackToLocalDB(t *testing.T) {
 
 	byServerRecorder := httptest.NewRecorder()
 	server.Handler().ServeHTTP(byServerRecorder, httptest.NewRequest(http.MethodGet, "/api/tools/by-server?mcpServerUuid=srv-1", nil))
-	if byServerRecorder.Code != http.StatusOK || !strings.Contains(byServerRecorder.Body.String(), `"fallback":"go-local-tool-db"`) || !strings.Contains(byServerRecorder.Body.String(), `"server":"tormentnexus"`) {
+	if byServerRecorder.Code != http.StatusOK || !strings.Contains(byServerRecorder.Body.String(), `"fallback":"go-local-tool-db"`) || !strings.Contains(byServerRecorder.Body.String(), `"server":"hypernexus"`) {
 		t.Fatalf("expected local tools DB by-server fallback, got %d %s", byServerRecorder.Code, byServerRecorder.Body.String())
 	}
 
@@ -5992,23 +5992,23 @@ func TestToolsReadEndpointsFallBackToLocalDB(t *testing.T) {
 
 func TestFileBackedReadEndpointsFallBackLocally(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".gitmodules"), []byte("[submodule \"tormentnexus\"]\npath = submodules/tormentnexus\nurl = https://github.com/example/tormentnexus.git\n"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".gitmodules"), []byte("[submodule \"hypernexus\"]\npath = submodules/hypernexus\nurl = https://github.com/example/hypernexus.git\n"), 0o644); err != nil {
 		t.Fatalf("failed to write .gitmodules: %v", err)
 	}
 
-	tormentnexusDir := filepath.Join(workspaceRoot, ".tormentnexus")
-	handoffsDir := filepath.Join(tormentnexusDir, "handoffs")
+	hypernexusDir := filepath.Join(workspaceRoot, ".hypernexus")
+	handoffsDir := filepath.Join(hypernexusDir, "handoffs")
 	if err := os.MkdirAll(handoffsDir, 0o755); err != nil {
 		t.Fatalf("failed to create handoffs dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(tormentnexusDir, "project_context.md"), []byte("# Project Context\n\nShip reliable fallbacks."), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(hypernexusDir, "project_context.md"), []byte("# Project Context\n\nShip reliable fallbacks."), 0o644); err != nil {
 		t.Fatalf("failed to write project context: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(handoffsDir, "handoff_1710000000000.json"), []byte(`{}`), 0o644); err != nil {
 		t.Fatalf("failed to write handoff file: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -6025,7 +6025,7 @@ func TestFileBackedReadEndpointsFallBackLocally(t *testing.T) {
 			path: "/api/context/list",
 			contains: []string{
 				`"fallback":"go-local-context"`,
-				`"procedure":"tormentnexusContext.list"`,
+				`"procedure":"hypernexusContext.list"`,
 				`using local empty context list`,
 				`"data":[]`,
 			},
@@ -6035,7 +6035,7 @@ func TestFileBackedReadEndpointsFallBackLocally(t *testing.T) {
 			path: "/api/context/prompt",
 			contains: []string{
 				`"fallback":"go-local-context"`,
-				`"procedure":"tormentnexusContext.getPrompt"`,
+				`"procedure":"hypernexusContext.getPrompt"`,
 				`using local empty context prompt`,
 				`"data":""`,
 			},
@@ -6047,7 +6047,7 @@ func TestFileBackedReadEndpointsFallBackLocally(t *testing.T) {
 				`"fallback":"go-local-git"`,
 				`"procedure":"git.getModules"`,
 				`using local .gitmodules parsing`,
-				`"name":"tormentnexus"`,
+				`"name":"hypernexus"`,
 			},
 		},
 		{
@@ -6090,7 +6090,7 @@ func TestFileBackedReadEndpointsFallBackLocally(t *testing.T) {
 }
 
 func TestTestsReadEndpointsFallBackToLocalZeroState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	server := New(config.Default(), stubDetector{})
 
@@ -6140,7 +6140,7 @@ func TestTestsReadEndpointsFallBackToLocalZeroState(t *testing.T) {
 }
 
 func TestZeroStateRegistryReadEndpointsFallBackLocally(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	server := New(config.Default(), stubDetector{})
 
@@ -6175,7 +6175,7 @@ func TestZeroStateRegistryReadEndpointsFallBackLocally(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-toolchain-db"`,
 				`"procedure":"toolChaining.listAliases"`,
-				`using local tool aliases from tormentnexus.db`,
+				`using local tool aliases from hypernexus.db`,
 				`"data":[]`,
 			},
 		},
@@ -6185,7 +6185,7 @@ func TestZeroStateRegistryReadEndpointsFallBackLocally(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-toolchain-db"`,
 				`"procedure":"toolChaining.listChains"`,
-				`using local tool chains from tormentnexus.db`,
+				`using local tool chains from hypernexus.db`,
 				`"data":[]`,
 			},
 		},
@@ -6220,23 +6220,23 @@ func TestZeroStateRegistryReadEndpointsFallBackLocally(t *testing.T) {
 
 func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 	t.Skip("Skipping test for now")
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspaceRoot := t.TempDir()
 	homeDir := t.TempDir()
 	t.Setenv("USERPROFILE", homeDir)
 	t.Setenv("HOME", homeDir)
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus"), 0o755); err != nil {
-		t.Fatalf("failed to create .tormentnexus dir: %v", err)
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus"), 0o755); err != nil {
+		t.Fatalf("failed to create .hypernexus dir: %v", err)
 	}
 	if err := os.MkdirAll(filepath.Join(homeDir, "AppData", "Roaming", "Microsoft", "Windows", "PowerShell", "PSReadLine"), 0o755); err != nil {
 		t.Fatalf("failed to create powershell history dir: %v", err)
 	}
 	configJSON := `{"scripts":[{"uuid":"script-local-1","name":"Deploy local","description":"ship it","code":"echo hi"}]}`
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "config.json"), []byte(configJSON), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "config.json"), []byte(configJSON), 0o644); err != nil {
 		t.Fatalf("failed to write local config: %v", err)
 	}
-	dbPath := filepath.Join(workspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(workspaceRoot, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -6277,7 +6277,7 @@ func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 		t.Fatalf("failed to seed sqlite db: %v", err)
 	}
 	historyJSON := `[{"id":"cmd-1","command":"pnpm test","cwd":"C:\\repo","timestamp":1700000000000,"outputSnippet":"tests passed","session":"sess-1"}]`
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "shell_history.json"), []byte(historyJSON), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "shell_history.json"), []byte(historyJSON), 0o644); err != nil {
 		t.Fatalf("failed to write shell history: %v", err)
 	}
 	systemHistory := "npm install\r\ngit status\r\npnpm test\r\n"
@@ -6303,7 +6303,7 @@ func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-operator"`,
 				`"procedure":"apiKeys.list"`,
-				`using local tormentnexus workspace API key metadata`,
+				`using local hypernexus workspace API key metadata`,
 				`"key-local-1"`,
 				`"Primary"`,
 			},
@@ -6314,7 +6314,7 @@ func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-operator"`,
 				`"procedure":"savedScripts.list"`,
-				`using local saved scripts from tormentnexus config`,
+				`using local saved scripts from hypernexus config`,
 				`"script-local-1"`,
 				`"Deploy local"`,
 			},
@@ -6325,7 +6325,7 @@ func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-operator"`,
 				`"procedure":"savedScripts.get"`,
-				`using local saved script from tormentnexus config`,
+				`using local saved script from hypernexus config`,
 				`"script-local-1"`,
 				`"Deploy local"`,
 			},
@@ -6336,7 +6336,7 @@ func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-operator"`,
 				`"procedure":"toolSets.list"`,
-				`using local tool sets from tormentnexus.db`,
+				`using local tool sets from hypernexus.db`,
 				`"toolset-local-1"`,
 				`"Core local tools"`,
 				`"read_file"`,
@@ -6348,7 +6348,7 @@ func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-operator"`,
 				`"procedure":"toolSets.get"`,
-				`using local tool set from tormentnexus.db`,
+				`using local tool set from hypernexus.db`,
 				`"toolset-local-1"`,
 				`"Core local tools"`,
 				`"search_tools"`,
@@ -6395,10 +6395,10 @@ func TestOperatorListEndpointsFallBackToEmptyState(t *testing.T) {
 }
 
 func TestAuditReadEndpointsFallBackToLocalFiles(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspaceRoot := t.TempDir()
-	auditDir := filepath.Join(workspaceRoot, ".tormentnexus", "audit")
+	auditDir := filepath.Join(workspaceRoot, ".hypernexus", "audit")
 	if err := os.MkdirAll(auditDir, 0o755); err != nil {
 		t.Fatalf("failed to create audit dir: %v", err)
 	}
@@ -6466,7 +6466,7 @@ func TestAuditReadEndpointsFallBackToLocalFiles(t *testing.T) {
 
 func TestStatusReadEndpointsFallBackToLocalPreview(t *testing.T) {
 	t.Skip("Skipping test for now")
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("OPEN_WEBUI_URL", "http://localhost:7778")
 
 	server := New(config.Default(), stubDetector{})
@@ -6539,7 +6539,7 @@ func TestStatusReadEndpointsFallBackToLocalPreview(t *testing.T) {
 }
 
 func TestMarketplaceListFallsBackToLocalRegistries(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspaceRoot := t.TempDir()
 	if err := os.MkdirAll(filepath.Join(workspaceRoot, "packages", "core", "data"), 0o755); err != nil {
@@ -6548,7 +6548,7 @@ func TestMarketplaceListFallsBackToLocalRegistries(t *testing.T) {
 	if err := os.MkdirAll(filepath.Join(workspaceRoot, "packages", "mcp-registry", "src"), 0o755); err != nil {
 		t.Fatalf("failed to create mcp registry dir: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus", "skills", "alpha-tool"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus", "skills", "alpha-tool"), 0o755); err != nil {
 		t.Fatalf("failed to create installed skill dir: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(workspaceRoot, "packages", "core", "data", "skills_registry.json"), []byte(`{
@@ -6567,7 +6567,7 @@ func TestMarketplaceListFallsBackToLocalRegistries(t *testing.T) {
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
 	cfg.MainConfigDir = t.TempDir()
-	if err := os.WriteFile(filepath.Join(cfg.MainConfigDir, "mcp.jsonc"), []byte("// tormentnexus MCP configuration\n{\n  \"mcpServers\": {\n    \"tool-box\": {\n      \"command\": \"npx\",\n      \"args\": [\"@example/tool-box\"]\n    }\n  }\n}\n"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(cfg.MainConfigDir, "mcp.jsonc"), []byte("// hypernexus MCP configuration\n{\n  \"mcpServers\": {\n    \"tool-box\": {\n      \"command\": \"npx\",\n      \"args\": [\"@example/tool-box\"]\n    }\n  }\n}\n"), 0o644); err != nil {
 		t.Fatalf("failed to seed mcp jsonc: %v", err)
 	}
 	server := New(cfg, stubDetector{})
@@ -6596,10 +6596,10 @@ func TestMarketplaceListFallsBackToLocalRegistries(t *testing.T) {
 }
 
 func TestPoliciesGetFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -6638,7 +6638,7 @@ func TestPoliciesGetFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-policy-db"`,
 		`"procedure":"policies.get"`,
-		`using local tormentnexus policy record`,
+		`using local hypernexus policy record`,
 		`"uuid":"policy-1"`,
 		`"name":"Default"`,
 		`"allow":["tool.read"]`,
@@ -6651,10 +6651,10 @@ func TestPoliciesGetFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestSecretsListFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -6693,7 +6693,7 @@ func TestSecretsListFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-policy-db"`,
 		`"procedure":"secrets.list"`,
-		`using local tormentnexus workspace secrets metadata`,
+		`using local hypernexus workspace secrets metadata`,
 		`"OPENAI_API_KEY"`,
 		`"ANTHROPIC_API_KEY"`,
 	} {
@@ -6707,10 +6707,10 @@ func TestSecretsListFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestAPIKeysGetFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -6751,7 +6751,7 @@ func TestAPIKeysGetFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-policy-db"`,
 		`"procedure":"apiKeys.get"`,
-		`using local tormentnexus api key record`,
+		`using local hypernexus api key record`,
 		`"uuid":"key-1"`,
 		`"name":"Primary"`,
 		`"key":"sk_public_123"`,
@@ -6766,10 +6766,10 @@ func TestAPIKeysGetFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestLinksBacklogGetFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -6831,7 +6831,7 @@ func TestLinksBacklogGetFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-links-db"`,
 		`"procedure":"linksBacklog.get"`,
-		`using local tormentnexus links backlog record`,
+		`using local hypernexus links backlog record`,
 		`"uuid":"link-1"`,
 		`"title":"MCP"`,
 		`"tags":["mcp","tooling"]`,
@@ -6844,10 +6844,10 @@ func TestLinksBacklogGetFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestLinksBacklogStatsFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -6905,7 +6905,7 @@ func TestLinksBacklogStatsFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-links-db"`,
 		`"procedure":"linksBacklog.stats"`,
-		`using local tormentnexus links backlog aggregates`,
+		`using local hypernexus links backlog aggregates`,
 		`"total":4`,
 		`"unique":3`,
 		`"duplicates":1`,
@@ -6921,10 +6921,10 @@ func TestLinksBacklogStatsFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestLinksBacklogListFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -6985,7 +6985,7 @@ func TestLinksBacklogListFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-links-db"`,
 		`"procedure":"linksBacklog.list"`,
-		`using local tormentnexus links backlog list`,
+		`using local hypernexus links backlog list`,
 		`"uuid":"link-1"`,
 		`"title":"MCP"`,
 		`"total":1`,
@@ -7000,10 +7000,10 @@ func TestLinksBacklogListFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestOAuthClientGetFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7061,7 +7061,7 @@ func TestOAuthClientGetFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-oauth-clients-db"`,
 		`"procedure":"oauth.clients.get"`,
-		`using local tormentnexus oauth client record`,
+		`using local hypernexus oauth client record`,
 		`"client_id":"client-1"`,
 		`"client_name":"Client One"`,
 		`"redirect_uris":["https://example.com/callback"]`,
@@ -7074,10 +7074,10 @@ func TestOAuthClientGetFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestOAuthSessionGetByServerFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7122,7 +7122,7 @@ func TestOAuthSessionGetByServerFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-oauth-sessions-db"`,
 		`"procedure":"oauth.sessions.getByServer"`,
-		`using local tormentnexus oauth session record`,
+		`using local hypernexus oauth session record`,
 		`"uuid":"session-1"`,
 		`"mcp_server_uuid":"server-1"`,
 		`"client_information":{"client_id":"client-1","client_name":"Client One"}`,
@@ -7135,10 +7135,10 @@ func TestOAuthSessionGetByServerFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestCatalogGetFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7249,7 +7249,7 @@ func TestCatalogGetFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-published-catalog-db"`,
 		`"procedure":"catalog.get"`,
-		`using local tormentnexus published catalog records`,
+		`using local hypernexus published catalog records`,
 		`"uuid":"catalog-1"`,
 		`"display_name":"Catalog One"`,
 		`"latestRun":{"created_at":`,
@@ -7266,10 +7266,10 @@ func TestCatalogGetFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestSpecificFallbackGetRoutesReturnUnavailableWhenRecordMissing(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7454,10 +7454,10 @@ func TestSpecificFallbackGetRoutesReturnUnavailableWhenRecordMissing(t *testing.
 }
 
 func TestCatalogRunsFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7505,7 +7505,7 @@ func TestCatalogRunsFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-published-catalog-db"`,
 		`"procedure":"catalog.listRuns"`,
-		`using local tormentnexus published catalog validation runs`,
+		`using local hypernexus published catalog validation runs`,
 		`"uuid":"run-2"`,
 		`"outcome":"failed"`,
 		`"failure_class":"network"`,
@@ -7520,10 +7520,10 @@ func TestCatalogRunsFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestCatalogStatsFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7585,7 +7585,7 @@ func TestCatalogStatsFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-published-catalog-db"`,
 		`"procedure":"catalog.stats"`,
-		`using local tormentnexus published catalog aggregates`,
+		`using local hypernexus published catalog aggregates`,
 		`"total":5`,
 		`"validated":2`,
 		`"broken":1`,
@@ -7602,10 +7602,10 @@ func TestCatalogStatsFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestCatalogLinkedServersFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7656,7 +7656,7 @@ func TestCatalogLinkedServersFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-published-catalog-db"`,
 		`"procedure":"catalog.listLinkedServers"`,
-		`using local tormentnexus linked managed servers`,
+		`using local hypernexus linked managed servers`,
 		`"uuid":"managed-1"`,
 		`"name":"linked-one"`,
 		`"source_published_server_uuid":"catalog-1"`,
@@ -7671,10 +7671,10 @@ func TestCatalogLinkedServersFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestCatalogListFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7731,7 +7731,7 @@ func TestCatalogListFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-published-catalog-db"`,
 		`"procedure":"catalog.list"`,
-		`using local tormentnexus published catalog list`,
+		`using local hypernexus published catalog list`,
 		`"servers":[{"auth_model":"none"`,
 		`"uuid":"catalog-1"`,
 		`"display_name":"MCP Filesystem"`,
@@ -7747,10 +7747,10 @@ func TestCatalogListFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestBrowserControlsReadRoutesFallBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7842,10 +7842,10 @@ func TestBrowserControlsReadRoutesFallBackToLocalDB(t *testing.T) {
 }
 
 func TestConfigReadRoutesFallBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7917,8 +7917,8 @@ func TestOperatorFallbackGetRoutesReturnUnavailableWhenRecordMissing(t *testing.
 	mainConfigDir := t.TempDir()
 	homeDir := t.TempDir()
 
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus"), 0o755); err != nil {
-		t.Fatalf("failed to create .tormentnexus dir: %v", err)
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus"), 0o755); err != nil {
+		t.Fatalf("failed to create .hypernexus dir: %v", err)
 	}
 	scriptsPayload := []map[string]any{
 		{
@@ -7932,11 +7932,11 @@ func TestOperatorFallbackGetRoutesReturnUnavailableWhenRecordMissing(t *testing.
 	if err != nil {
 		t.Fatalf("failed to marshal scripts payload: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "saved-scripts.json"), scriptsJSON, 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "saved-scripts.json"), scriptsJSON, 0o644); err != nil {
 		t.Fatalf("failed to seed saved scripts: %v", err)
 	}
 
-	dbPath := filepath.Join(workspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(workspaceRoot, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -7981,7 +7981,7 @@ func TestOperatorFallbackGetRoutesReturnUnavailableWhenRecordMissing(t *testing.
 		t.Fatalf("failed to seed sqlite fallback db: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("USERPROFILE", homeDir)
 	t.Setenv("APPDATA", filepath.Join(homeDir, "AppData", "Roaming"))
 	t.Setenv("LOCALAPPDATA", filepath.Join(homeDir, "AppData", "Local"))
@@ -8025,10 +8025,10 @@ func TestOperatorFallbackGetRoutesReturnUnavailableWhenRecordMissing(t *testing.
 }
 
 func TestUnifiedDirectoryRoutesFallBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -8143,10 +8143,10 @@ func TestUnifiedDirectoryRoutesFallBackToLocalDB(t *testing.T) {
 }
 
 func TestWorkflowCanvasRoutesFallBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -8212,14 +8212,14 @@ func TestWorkflowCanvasRoutesFallBackToLocalDB(t *testing.T) {
 }
 
 func TestDirectorConfigGetFallsBackToLocalConfig(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspaceRoot := t.TempDir()
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus"), 0o755); err != nil {
-		t.Fatalf("failed to create .tormentnexus dir: %v", err)
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus"), 0o755); err != nil {
+		t.Fatalf("failed to create .hypernexus dir: %v", err)
 	}
 	if err := os.WriteFile(
-		filepath.Join(workspaceRoot, ".tormentnexus", "config.json"),
+		filepath.Join(workspaceRoot, ".hypernexus", "config.json"),
 		[]byte(`{"persona":"professional","defaultTopic":"mcp","enableCouncil":true}`),
 		0o644,
 	); err != nil {
@@ -8241,7 +8241,7 @@ func TestDirectorConfigGetFallsBackToLocalConfig(t *testing.T) {
 
 	for _, needle := range []string{
 		`"procedure":"directorConfig.get"`,
-		`"fallback":"go-local-tormentnexus-config"`,
+		`"fallback":"go-local-hypernexus-config"`,
 		`"persona":"professional"`,
 		`"defaultTopic":"mcp"`,
 		`"enableCouncil":true`,
@@ -8274,9 +8274,9 @@ func TestInfrastructureStatusFallsBackToLocalProbe(t *testing.T) {
 		t.Fatalf("failed to write infra config: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
-	t.Setenv("TORMENTNEXUS_INFRA_BINARY", infraBinary)
-	t.Setenv("TORMENTNEXUS_INFRA_SUBMODULE", infraSubmoduleDir)
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_INFRA_BINARY", infraBinary)
+	t.Setenv("HYPERNEXUS_INFRA_SUBMODULE", infraSubmoduleDir)
 	t.Setenv("USERPROFILE", userProfile)
 
 	cfg := config.Default()
@@ -8305,10 +8305,10 @@ func TestInfrastructureStatusFallsBackToLocalProbe(t *testing.T) {
 }
 
 func TestPoliciesListFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -8348,7 +8348,7 @@ func TestPoliciesListFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-policy-db"`,
 		`"procedure":"policies.list"`,
-		`using local tormentnexus policy records`,
+		`using local hypernexus policy records`,
 		`"policy-1"`,
 		`"policy-2"`,
 		`"allow":["tool.write"]`,
@@ -8360,7 +8360,7 @@ func TestPoliciesListFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestPulseAndBrowserStatsFallBackToLocalPreview(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	server := New(config.Default(), stubDetector{})
 
@@ -8385,7 +8385,7 @@ func TestPulseAndBrowserStatsFallBackToLocalPreview(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-browser-memory"`,
 				`"procedure":"browserExtension.stats"`,
-				`using local browser memory stats from tormentnexus.db`,
+				`using local browser memory stats from hypernexus.db`,
 				`"totalMemories":0`,
 				`"uniqueUrls":0`,
 			},
@@ -8410,10 +8410,10 @@ func TestPulseAndBrowserStatsFallBackToLocalPreview(t *testing.T) {
 }
 
 func TestPulseEventsAndBrowserMemoriesFallBackToEmptyState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspaceRoot := t.TempDir()
-	dbPath := filepath.Join(workspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(workspaceRoot, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -8467,7 +8467,7 @@ func TestPulseEventsAndBrowserMemoriesFallBackToEmptyState(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-browser-memory"`,
 				`"procedure":"browserExtension.listMemories"`,
-				`using local browser memories from tormentnexus.db`,
+				`using local browser memories from hypernexus.db`,
 				`"mem-local-2"`,
 				`"total":2`,
 			},
@@ -8478,7 +8478,7 @@ func TestPulseEventsAndBrowserMemoriesFallBackToEmptyState(t *testing.T) {
 			contains: []string{
 				`"fallback":"go-local-browser-memory"`,
 				`"procedure":"browserExtension.stats"`,
-				`using local browser memory stats from tormentnexus.db`,
+				`using local browser memory stats from hypernexus.db`,
 				`"totalMemories":2`,
 				`"uniqueUrls":2`,
 				`"tag":"tool"`,
@@ -8504,7 +8504,7 @@ func TestPulseEventsAndBrowserMemoriesFallBackToEmptyState(t *testing.T) {
 }
 
 func TestResearchQueriesFallsBackToTopicQuery(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	server := New(config.Default(), stubDetector{})
 	recorder := httptest.NewRecorder()
@@ -8559,11 +8559,11 @@ func TestResearchQueueFallsBackToLocalFiles(t *testing.T) {
     ]
   }
 }`
-	if err := os.WriteFile(filepath.Join(workspaceRoot, "TORMENTNEXUS_MASTER_INDEX.jsonc"), []byte(indexContent), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, "HYPERNEXUS_MASTER_INDEX.jsonc"), []byte(indexContent), 0o644); err != nil {
 		t.Fatalf("failed to write master index: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -8595,7 +8595,7 @@ func TestResearchQueueFallsBackToLocalFiles(t *testing.T) {
 
 func TestSettingsReadEndpointsFallBackLocally(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	mainConfigDir := filepath.Join(workspaceRoot, ".tormentnexus")
+	mainConfigDir := filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(mainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create config dir: %v", err)
 	}
@@ -8617,7 +8617,7 @@ func TestSettingsReadEndpointsFallBackLocally(t *testing.T) {
 		t.Fatalf("failed to write mcp config: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("NODE_ENV", "test")
 	t.Setenv("PORT", "4310")
 
@@ -8635,7 +8635,7 @@ func TestSettingsReadEndpointsFallBackLocally(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-settings"`,
 		`"procedure":"settings.get"`,
-		`using local .tormentnexus config fallback`,
+		`using local .hypernexus config fallback`,
 		`"theme":"local-dark"`,
 		`"enabled":true`,
 	} {
@@ -8685,7 +8685,7 @@ func TestSettingsReadEndpointsFallBackLocally(t *testing.T) {
 
 func TestServerHealthFallsBackToCachedMCPMetadata(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	mainConfigDir := filepath.Join(workspaceRoot, ".tormentnexus")
+	mainConfigDir := filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(mainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create config dir: %v", err)
 	}
@@ -8707,7 +8707,7 @@ func TestServerHealthFallsBackToCachedMCPMetadata(t *testing.T) {
 		t.Fatalf("failed to write mcp config: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -8736,7 +8736,7 @@ func TestServerHealthFallsBackToCachedMCPMetadata(t *testing.T) {
 }
 
 func TestSymbolsReadRoutesFallBackToEmptyResults(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -8780,7 +8780,7 @@ func TestSymbolsReadRoutesFallBackToEmptyResults(t *testing.T) {
 }
 
 func TestGraphSymbolsFallsBackToEmptyGraph(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -8810,7 +8810,7 @@ func TestGraphSymbolsFallsBackToEmptyGraph(t *testing.T) {
 }
 
 func TestGraphFileReadsFallBackToEmptyLists(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -8852,7 +8852,7 @@ func TestGraphFileReadsFallBackToEmptyLists(t *testing.T) {
 }
 
 func TestWorkflowReadRoutesFallBackToEngineZeroState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -8898,7 +8898,7 @@ func TestWorkflowReadRoutesFallBackToEngineZeroState(t *testing.T) {
 }
 
 func TestToolAliasResolveFallsBackToUnresolvedState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -8915,7 +8915,7 @@ func TestToolAliasResolveFallsBackToUnresolvedState(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-toolchain-db"`,
 		`"procedure":"toolChaining.resolveAlias"`,
-		`using local tool alias from tormentnexus.db`,
+		`using local tool alias from hypernexus.db`,
 		`"resolved":false`,
 	} {
 		if !strings.Contains(recorder.Body.String(), needle) {
@@ -8925,10 +8925,10 @@ func TestToolAliasResolveFallsBackToUnresolvedState(t *testing.T) {
 }
 
 func TestToolAliasesListFallsBackToLocalDB(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	workspace := t.TempDir()
-	dbPath := filepath.Join(workspace, "tormentnexus.db")
+	dbPath := filepath.Join(workspace, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
@@ -8964,7 +8964,7 @@ func TestToolAliasesListFallsBackToLocalDB(t *testing.T) {
 	for _, needle := range []string{
 		`"fallback":"go-local-toolchain-db"`,
 		`"procedure":"toolChaining.listAliases"`,
-		`using local tool aliases from tormentnexus.db`,
+		`using local tool aliases from hypernexus.db`,
 		`"alias":"search"`,
 		`"originalName":"search_tools"`,
 	} {
@@ -8975,7 +8975,7 @@ func TestToolAliasesListFallsBackToLocalDB(t *testing.T) {
 }
 
 func TestMemoryExportFallsBackToLocalSnapshotAndRegistry(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	t.Run("json_provider_snapshot", func(t *testing.T) {
 		workspaceRoot := t.TempDir()
@@ -9024,7 +9024,7 @@ func TestMemoryExportFallsBackToLocalSnapshotAndRegistry(t *testing.T) {
 
 	t.Run("registry_formats", func(t *testing.T) {
 		workspaceRoot := t.TempDir()
-		contextsDir := filepath.Join(workspaceRoot, ".tormentnexus", "memory")
+		contextsDir := filepath.Join(workspaceRoot, ".hypernexus", "memory")
 		if err := os.MkdirAll(contextsDir, 0o755); err != nil {
 			t.Fatalf("failed to create memory dir: %v", err)
 		}
@@ -9085,7 +9085,7 @@ func TestMemoryExportFallsBackToLocalSnapshotAndRegistry(t *testing.T) {
 }
 
 func TestAgentMemoryStatsFallsBackToPersistedState(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9117,7 +9117,7 @@ func TestAgentMemoryStatsFallsBackToPersistedState(t *testing.T) {
 }
 
 func TestAgentMemoryExportFallsBackToPersistedSnapshot(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9147,7 +9147,7 @@ func TestAgentMemoryExportFallsBackToPersistedSnapshot(t *testing.T) {
 }
 
 func TestAgentMemoryReadRoutesFallBackToPersistedResults(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9190,7 +9190,7 @@ func TestAgentMemoryReadRoutesFallBackToPersistedResults(t *testing.T) {
 }
 
 func TestAgentMemoryMutationRoutesFallBackToLocalPersistence(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9234,7 +9234,7 @@ func TestAgentMemoryMutationRoutesFallBackToLocalPersistence(t *testing.T) {
 }
 
 func TestAgentMemoryHandoffAndPickupFallBackToLocalPersistence(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9290,11 +9290,11 @@ func TestAgentMemoryHandoffAndPickupFallBackToLocalPersistence(t *testing.T) {
 
 func TestToolsRuntimeDetectionFallsBackLocally(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	mainConfigDir := filepath.Join(workspaceRoot, ".tormentnexus")
+	mainConfigDir := filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(mainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create main config dir: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, "apps", "tormentnexus-extension", "dist-chromium"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, "apps", "hypernexus-extension", "dist-chromium"), 0o755); err != nil {
 		t.Fatalf("failed to create chromium dist: %v", err)
 	}
 	if err := os.MkdirAll(filepath.Join(workspaceRoot, "packages", "vscode", "dist"), 0o755); err != nil {
@@ -9306,17 +9306,17 @@ func TestToolsRuntimeDetectionFallsBackLocally(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(mainConfigDir, "mcp.jsonc"), []byte(`{"mcpServers":{"core":{"command":"node"}}}`), 0o644); err != nil {
 		t.Fatalf("failed to write mcp config: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(workspaceRoot, "apps", "tormentnexus-extension", "package.json"), []byte(`{"version":"1.2.3"}`), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, "apps", "hypernexus-extension", "package.json"), []byte(`{"version":"1.2.3"}`), 0o644); err != nil {
 		t.Fatalf("failed to write extension package json: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, "apps", "tormentnexus-extension"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, "apps", "hypernexus-extension"), 0o755); err != nil {
 		t.Fatalf("failed to create extension dir: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(workspaceRoot, "packages", "vscode", "package.json"), []byte(`{"version":"0.9.0"}`), 0o644); err != nil {
 		t.Fatalf("failed to write vscode package json: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	detector := stubDetector{tools: []controlplane.Tool{
 		{Type: "codex", Name: "Codex CLI", Command: "codex", Available: true, Version: "1.0.0", Path: "C:\\tools\\codex.exe", Capabilities: []string{"chat", "code"}},
@@ -9390,12 +9390,12 @@ func TestGitStatusFallsBackLocally(t *testing.T) {
 	if output, err := initRepo.CombinedOutput(); err != nil {
 		t.Fatalf("failed to init git repo: %v (%s)", err, string(output))
 	}
-	configName := exec.Command("git", "config", "user.name", "tormentnexus Test")
+	configName := exec.Command("git", "config", "user.name", "hypernexus Test")
 	configName.Dir = workspaceRoot
 	if output, err := configName.CombinedOutput(); err != nil {
 		t.Fatalf("failed to configure git user.name: %v (%s)", err, string(output))
 	}
-	configEmail := exec.Command("git", "config", "user.email", "test@tormentnexus.local")
+	configEmail := exec.Command("git", "config", "user.email", "test@hypernexus.local")
 	configEmail.Dir = workspaceRoot
 	if output, err := configEmail.CombinedOutput(); err != nil {
 		t.Fatalf("failed to configure git user.email: %v (%s)", err, string(output))
@@ -9429,7 +9429,7 @@ func TestGitStatusFallsBackLocally(t *testing.T) {
 		t.Fatalf("failed to modify tracked file: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -9464,8 +9464,8 @@ func TestGitLogFallsBackLocally(t *testing.T) {
 		t.Fatalf("failed to init git repo: %v (%s)", err, string(output))
 	}
 	for _, args := range [][]string{
-		{"config", "user.name", "tormentnexus Test"},
-		{"config", "user.email", "test@tormentnexus.local"},
+		{"config", "user.name", "hypernexus Test"},
+		{"config", "user.email", "test@hypernexus.local"},
 	} {
 		command := exec.Command("git", args...)
 		command.Dir = workspaceRoot
@@ -9497,7 +9497,7 @@ func TestGitLogFallsBackLocally(t *testing.T) {
 		}
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -9515,7 +9515,7 @@ func TestGitLogFallsBackLocally(t *testing.T) {
 		`"procedure":"git.getLog"`,
 		`using local git log fallback`,
 		`"message":"second commit"`,
-		`"author":"tormentnexus Test"`,
+		`"author":"hypernexus Test"`,
 	} {
 		if !strings.Contains(recorder.Body.String(), needle) {
 			t.Fatalf("expected git log response to contain %s, got %s", needle, recorder.Body.String())
@@ -9528,16 +9528,16 @@ func TestGitLogFallsBackLocally(t *testing.T) {
 
 func TestSubmoduleReadEndpointsFallBackLocally(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	gitmodules := `[submodule "submodules/tormentnexus"]
-	path = submodules/tormentnexus
-	url = https://github.com/example/tormentnexus.git
+	gitmodules := `[submodule "submodules/hypernexus"]
+	path = submodules/hypernexus
+	url = https://github.com/example/hypernexus.git
 `
 	if err := os.WriteFile(filepath.Join(workspaceRoot, ".gitmodules"), []byte(gitmodules), 0o644); err != nil {
 		t.Fatalf("failed to write .gitmodules: %v", err)
 	}
 
-	tormentnexusPath := filepath.Join(workspaceRoot, "submodules", "tormentnexus")
-	if err := os.MkdirAll(filepath.Join(tormentnexusPath, "dist"), 0o755); err != nil {
+	hypernexusPath := filepath.Join(workspaceRoot, "submodules", "hypernexus")
+	if err := os.MkdirAll(filepath.Join(hypernexusPath, "dist"), 0o755); err != nil {
 		t.Fatalf("failed to create submodule dist dir: %v", err)
 	}
 	packageJSON := `{
@@ -9545,10 +9545,10 @@ func TestSubmoduleReadEndpointsFallBackLocally(t *testing.T) {
   "dependencies": {"@modelcontextprotocol/sdk": "^1.0.0"},
   "scripts": {"build": "tsc", "start": "node index.js"}
 }`
-	if err := os.WriteFile(filepath.Join(tormentnexusPath, "package.json"), []byte(packageJSON), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(hypernexusPath, "package.json"), []byte(packageJSON), 0o644); err != nil {
 		t.Fatalf("failed to write package.json: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(tormentnexusPath, "node_modules"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(hypernexusPath, "node_modules"), 0o755); err != nil {
 		t.Fatalf("failed to create node_modules dir: %v", err)
 	}
 
@@ -9563,7 +9563,7 @@ func TestSubmoduleReadEndpointsFallBackLocally(t *testing.T) {
 		t.Fatalf("failed to write main.py: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -9580,7 +9580,7 @@ func TestSubmoduleReadEndpointsFallBackLocally(t *testing.T) {
 		`"fallback":"go-local-submodules"`,
 		`"procedure":"submodule.list"`,
 		`using local .gitmodules submodule fallback`,
-		`"path":"submodules/tormentnexus"`,
+		`"path":"submodules/hypernexus"`,
 		`"status":"clean"`,
 		`"capabilities":["mcp-server","mcp-sdk","build"]`,
 		`"isInstalled":true`,
@@ -9613,7 +9613,7 @@ func TestSubmoduleReadEndpointsFallBackLocally(t *testing.T) {
 
 func TestKnowledgeReadEndpointsFallBackLocally(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	memoryDir := filepath.Join(workspaceRoot, ".tormentnexus", "memory")
+	memoryDir := filepath.Join(workspaceRoot, ".hypernexus", "memory")
 	if err := os.MkdirAll(memoryDir, 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
@@ -9638,7 +9638,7 @@ func TestKnowledgeReadEndpointsFallBackLocally(t *testing.T) {
 		t.Fatalf("failed to write resources.json: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -9683,9 +9683,9 @@ func TestKnowledgeReadEndpointsFallBackLocally(t *testing.T) {
 
 func TestMCPSearchToolsFallsBackToLocalInventory(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools dir: %v", err)
+		t.Fatalf("failed to create hypernexus tools dir: %v", err)
 	}
 	toolSource := `package tools
 
@@ -9696,10 +9696,10 @@ var SearchTools = struct{
 }
 `
 	if err := os.WriteFile(filepath.Join(toolsDir, "search.go"), []byte(toolSource), 0o644); err != nil {
-		t.Fatalf("failed to write tormentnexus tool source: %v", err)
+		t.Fatalf("failed to write hypernexus tool source: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -9732,9 +9732,9 @@ var SearchTools = struct{
 
 func TestMCPCallToolFallsBackToLocalMetaTools(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools dir: %v", err)
+		t.Fatalf("failed to create hypernexus tools dir: %v", err)
 	}
 	toolSource := `package tools
 
@@ -9751,10 +9751,10 @@ var ListAllTools = struct{
 }
 `
 	if err := os.WriteFile(filepath.Join(toolsDir, "search.go"), []byte(toolSource), 0o644); err != nil {
-		t.Fatalf("failed to write tormentnexus tool source: %v", err)
+		t.Fatalf("failed to write hypernexus tool source: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -9769,14 +9769,14 @@ var ListAllTools = struct{
 	callRequest.Header.Set("content-type", "application/json")
 	callRecorder := httptest.NewRecorder()
 	server.Handler().ServeHTTP(callRecorder, callRequest)
-	if callRecorder.Code != http.StatusOK || !strings.Contains(callRecorder.Body.String(), `"fallback":"go-local-mcp"`) || !strings.Contains(callRecorder.Body.String(), `tormentnexus`) || !strings.Contains(callRecorder.Body.String(), `search_tools`) {
+	if callRecorder.Code != http.StatusOK || !strings.Contains(callRecorder.Body.String(), `"fallback":"go-local-mcp"`) || !strings.Contains(callRecorder.Body.String(), `hypernexus`) || !strings.Contains(callRecorder.Body.String(), `search_tools`) {
 		t.Fatalf("expected local callTool fallback response, got %d %s", callRecorder.Code, callRecorder.Body.String())
 	}
 	if !strings.Contains(callRecorder.Body.String(), `using local MCP meta-tool execution`) {
 		t.Fatalf("expected local callTool fallback reason, got %s", callRecorder.Body.String())
 	}
 
-	autoRequest := httptest.NewRequest(http.MethodPost, "/api/mcp/tools/auto-call", strings.NewReader(`{"objective":"find the right tool","context":"repo: tormentnexus"}`))
+	autoRequest := httptest.NewRequest(http.MethodPost, "/api/mcp/tools/auto-call", strings.NewReader(`{"objective":"find the right tool","context":"repo: hypernexus"}`))
 	autoRequest.Header.Set("content-type", "application/json")
 	autoRecorder := httptest.NewRecorder()
 	server.Handler().ServeHTTP(autoRecorder, autoRequest)
@@ -9789,7 +9789,7 @@ var ListAllTools = struct{
 }
 
 func TestMCPToolSchemaFallsBackToLocalMetaSchemas(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9841,11 +9841,11 @@ func TestMCPRegistrySnapshotFallsBackToMasterIndex(t *testing.T) {
     ]
   }
 }`
-	if err := os.WriteFile(filepath.Join(workspaceRoot, "TORMENTNEXUS_MASTER_INDEX.jsonc"), []byte(indexContent), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, "HYPERNEXUS_MASTER_INDEX.jsonc"), []byte(indexContent), 0o644); err != nil {
 		t.Fatalf("failed to write master index fixture: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -9876,11 +9876,11 @@ func TestMCPRegistrySnapshotFallsBackToMasterIndex(t *testing.T) {
 
 func TestMCPJsoncEditorFallsBackToLocalFile(t *testing.T) {
 	mainConfigDir := t.TempDir()
-	if err := os.WriteFile(filepath.Join(mainConfigDir, "mcp.jsonc"), []byte("// tormentnexus MCP configuration\n{\n  \"mcpServers\": {}\n}\n"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(mainConfigDir, "mcp.jsonc"), []byte("// hypernexus MCP configuration\n{\n  \"mcpServers\": {}\n}\n"), 0o644); err != nil {
 		t.Fatalf("failed to write local mcp jsonc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9902,14 +9902,14 @@ func TestMCPJsoncEditorFallsBackToLocalFile(t *testing.T) {
 	if !strings.Contains(recorder.Body.String(), `using local MCP JSONC editor payload`) {
 		t.Fatalf("expected local MCP JSONC editor fallback reason, got %s", recorder.Body.String())
 	}
-	if !strings.Contains(recorder.Body.String(), `"path":"`) || !strings.Contains(recorder.Body.String(), `"content":"// tormentnexus MCP configuration`) {
+	if !strings.Contains(recorder.Body.String(), `"path":"`) || !strings.Contains(recorder.Body.String(), `"content":"// hypernexus MCP configuration`) {
 		t.Fatalf("expected local editor payload, got %s", recorder.Body.String())
 	}
 }
 
 func TestMCPJsoncEditorSaveFallsBackToLocalWrite(t *testing.T) {
 	mainConfigDir := t.TempDir()
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -9956,7 +9956,7 @@ func TestMCPJsoncEditorSaveFallsBackToLocalWrite(t *testing.T) {
 func TestMCPConfiguredServersFallBackToLocalJsonc(t *testing.T) {
 	mainConfigDir := t.TempDir()
 	workspaceRoot := t.TempDir()
-	jsoncContent := `// tormentnexus MCP configuration
+	jsoncContent := `// hypernexus MCP configuration
 {
   "mcpServers": {
     "core": {
@@ -9971,13 +9971,13 @@ func TestMCPConfiguredServersFallBackToLocalJsonc(t *testing.T) {
 		t.Fatalf("failed to write local mcp jsonc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.MainConfigDir = mainConfigDir
 
-	db, err := database.Open("sqlite", filepath.Join(workspaceRoot, "tormentnexus.db"))
+	db, err := database.Open("sqlite", filepath.Join(workspaceRoot, "hypernexus.db"))
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
 	}
@@ -10030,7 +10030,7 @@ func TestMCPConfiguredServersFallBackToLocalJsonc(t *testing.T) {
 	if !strings.Contains(listRecorder.Body.String(), `"fallback":"go-local-mcp-db"`) {
 		t.Fatalf("expected go-local-mcp-db fallback metadata, got %s", listRecorder.Body.String())
 	}
-	if !strings.Contains(listRecorder.Body.String(), `using local MCP server definitions from tormentnexus.db with JSONC metadata overlay`) {
+	if !strings.Contains(listRecorder.Body.String(), `using local MCP server definitions from hypernexus.db with JSONC metadata overlay`) {
 		t.Fatalf("expected configured server list fallback reason, got %s", listRecorder.Body.String())
 	}
 	if !strings.Contains(listRecorder.Body.String(), `"uuid":"srv-db-1"`) || !strings.Contains(listRecorder.Body.String(), `"command":"node"`) {
@@ -10051,7 +10051,7 @@ func TestMCPConfiguredServersFallBackToLocalJsonc(t *testing.T) {
 	if getRecorder.Code != http.StatusOK {
 		t.Fatalf("expected fallback get status 200, got %d with body %s", getRecorder.Code, getRecorder.Body.String())
 	}
-	if !strings.Contains(getRecorder.Body.String(), `using local MCP server definition from tormentnexus.db with JSONC metadata overlay`) {
+	if !strings.Contains(getRecorder.Body.String(), `using local MCP server definition from hypernexus.db with JSONC metadata overlay`) {
 		t.Fatalf("expected configured server get fallback reason, got %s", getRecorder.Body.String())
 	}
 	if !strings.Contains(getRecorder.Body.String(), `"uuid":"`+expectedUUID+`"`) {
@@ -10064,7 +10064,7 @@ func TestMCPConfiguredServersFallBackToLocalJsonc(t *testing.T) {
 
 func TestMCPSyncTargetsAndExportFallBackToLocalJsonc(t *testing.T) {
 	mainConfigDir := t.TempDir()
-	jsoncContent := `// tormentnexus MCP configuration
+	jsoncContent := `// hypernexus MCP configuration
 {
   "mcpServers": {
     "core": {
@@ -10080,7 +10080,7 @@ func TestMCPSyncTargetsAndExportFallBackToLocalJsonc(t *testing.T) {
 
 	appData := t.TempDir()
 	t.Setenv("APPDATA", appData)
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -10126,7 +10126,7 @@ func TestMCPSyncTargetsAndExportFallBackToLocalJsonc(t *testing.T) {
 func TestMCPToolPreferencesFallBackToLocalJsonc(t *testing.T) {
 	skipIfServerRunning(t)
 	mainConfigDir := t.TempDir()
-	jsoncContent := `// tormentnexus MCP configuration
+	jsoncContent := `// hypernexus MCP configuration
 {
   "mcpServers": {},
   "settings": {
@@ -10145,7 +10145,7 @@ func TestMCPToolPreferencesFallBackToLocalJsonc(t *testing.T) {
 		t.Fatalf("failed to write local mcp jsonc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -10196,7 +10196,7 @@ func TestMCPToolPreferencesFallBackToLocalJsonc(t *testing.T) {
 
 func TestMCPConfiguredServerMutationsFallBackToLocalJsonc(t *testing.T) {
 	mainConfigDir := t.TempDir()
-	initialConfig := `// tormentnexus MCP configuration
+	initialConfig := `// hypernexus MCP configuration
 {
   "mcpServers": {
     "core": {
@@ -10212,7 +10212,7 @@ func TestMCPConfiguredServerMutationsFallBackToLocalJsonc(t *testing.T) {
 
 	appData := t.TempDir()
 	t.Setenv("APPDATA", appData)
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -10275,7 +10275,7 @@ func TestMCPConfiguredServerMutationsFallBackToLocalJsonc(t *testing.T) {
 
 func TestMCPConfiguredServerMetadataMutationsFallBackToLocalJsonc(t *testing.T) {
 	mainConfigDir := t.TempDir()
-	jsoncContent := `// tormentnexus MCP configuration
+	jsoncContent := `// hypernexus MCP configuration
 {
   "mcpServers": {
     "core": {
@@ -10294,7 +10294,7 @@ func TestMCPConfiguredServerMetadataMutationsFallBackToLocalJsonc(t *testing.T) 
 		t.Fatalf("failed to seed local mcp jsonc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
 	cfg.ConfigDir = t.TempDir()
@@ -10336,7 +10336,7 @@ func TestMCPConfiguredServerMetadataMutationsFallBackToLocalJsonc(t *testing.T) 
 
 func TestSkillsFallBackToLocalSkillRegistry(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	skillDir := filepath.Join(workspaceRoot, ".tormentnexus", "skills", "debug")
+	skillDir := filepath.Join(workspaceRoot, ".hypernexus", "skills", "debug")
 	if err := os.MkdirAll(skillDir, 0o755); err != nil {
 		t.Fatalf("failed to create skill dir: %v", err)
 	}
@@ -10345,7 +10345,7 @@ func TestSkillsFallBackToLocalSkillRegistry(t *testing.T) {
 		t.Fatalf("failed to seed skill: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
 	cfg.ConfigDir = t.TempDir()
@@ -10402,7 +10402,7 @@ func TestSkillsFallBackToLocalSkillRegistry(t *testing.T) {
 		t.Fatalf("expected local skills save fallback reason, got %s", saveRecorder.Body.String())
 	}
 
-	writtenSkill, err := os.ReadFile(filepath.Join(workspaceRoot, ".tormentnexus", "skills", "trace", "SKILL.md"))
+	writtenSkill, err := os.ReadFile(filepath.Join(workspaceRoot, ".hypernexus", "skills", "trace", "SKILL.md"))
 	if err != nil {
 		t.Fatalf("expected created skill file: %v", err)
 	}
@@ -10485,7 +10485,7 @@ func TestImportedSessionBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -10540,7 +10540,7 @@ func TestImportedSessionScanFallsBackToGoScanner(t *testing.T) {
 		t.Fatalf("failed to seed claude session: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("HOME", workspaceRoot)
 	t.Setenv("USERPROFILE", workspaceRoot)
 	t.Setenv("APPDATA", workspaceRoot)
@@ -10587,7 +10587,7 @@ func TestImportedSessionScanFallsBackToArchivedRecords(t *testing.T) {
 		t.Fatalf("failed to seed extra discovered session: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("HOME", workspaceRoot)
 	t.Setenv("USERPROFILE", workspaceRoot)
 	t.Setenv("APPDATA", workspaceRoot)
@@ -10647,7 +10647,7 @@ func TestImportedSessionScanFallsBackToWorkspaceInstructionDoc(t *testing.T) {
 		t.Fatalf("failed to write imported instructions doc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("HOME", workspaceRoot)
 	t.Setenv("USERPROFILE", workspaceRoot)
 	t.Setenv("APPDATA", workspaceRoot)
@@ -10681,7 +10681,7 @@ func TestImportedSessionListFallsBackToGoScanner(t *testing.T) {
 		t.Fatalf("failed to seed claude session: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -10730,7 +10730,7 @@ func writeGzipFile(t *testing.T, path string, contents []byte) {
 
 func seedArchivedImportedSession(t *testing.T, workspaceRoot string) string {
 	t.Helper()
-	archiveDir := filepath.Join(workspaceRoot, ".tormentnexus", "imported_sessions", "archive", "ab", "cd")
+	archiveDir := filepath.Join(workspaceRoot, ".hypernexus", "imported_sessions", "archive", "ab", "cd")
 	transcriptHash := "abcd1234ef567890abcd1234ef567890"
 	sessionID := "imp-archived-1"
 	metadataPath := filepath.Join(archiveDir, transcriptHash+".meta.json.gz")
@@ -10767,7 +10767,7 @@ func TestImportedSessionListFallsBackToArchivedRecords(t *testing.T) {
 	workspaceRoot := t.TempDir()
 	sessionID := seedArchivedImportedSession(t, workspaceRoot)
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -10802,7 +10802,7 @@ func TestImportedSessionGetFallsBackToGoScanner(t *testing.T) {
 		t.Fatalf("failed to seed claude session: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -10844,7 +10844,7 @@ func TestImportedSessionGetFallsBackToArchivedRecords(t *testing.T) {
 	workspaceRoot := t.TempDir()
 	sessionID := seedArchivedImportedSession(t, workspaceRoot)
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -10873,7 +10873,7 @@ func TestImportedSessionGetFallsBackToArchivedRecords(t *testing.T) {
 func TestImportedSessionGetReturnsUnavailableWhenFallbackRecordMissing(t *testing.T) {
 	workspaceRoot := t.TempDir()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -10900,7 +10900,7 @@ func TestImportedSessionGetReturnsUnavailableWhenFallbackRecordMissing(t *testin
 }
 
 func TestImportedInstructionDocsFallsBackToEmptyList(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -10940,7 +10940,7 @@ func TestImportedInstructionDocsFallsBackToWorkspaceDoc(t *testing.T) {
 		t.Fatalf("failed to write imported instructions doc: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	server := New(cfg, stubDetector{})
 	defer server.Close()
 
@@ -10968,7 +10968,7 @@ func TestImportedSessionMaintenanceStatsFallsBackToGoScanner(t *testing.T) {
 		t.Fatalf("failed to seed claude session: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("HOME", workspaceRoot)
 	t.Setenv("USERPROFILE", workspaceRoot)
 	t.Setenv("APPDATA", workspaceRoot)
@@ -11010,7 +11010,7 @@ func TestStartupImportedSessionMaintenanceStatsUsesScanOnlySemantics(t *testing.
 		t.Fatalf("failed to seed claude session: %v", err)
 	}
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	t.Setenv("HOME", workspaceRoot)
 	t.Setenv("USERPROFILE", workspaceRoot)
 	t.Setenv("APPDATA", workspaceRoot)
@@ -11018,15 +11018,15 @@ func TestStartupImportedSessionMaintenanceStatsUsesScanOnlySemantics(t *testing.
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
-	cfg.ConfigDir = filepath.Join(workspaceRoot, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(workspaceRoot, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create go config dir: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".tormentnexus", "memory"), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, ".hypernexus", "memory"), 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(workspaceRoot, ".tormentnexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(workspaceRoot, ".hypernexus", "memory", "claude_mem.json"), []byte(`{"default":[]}`), 0o644); err != nil {
 		t.Fatalf("failed to seed memory store: %v", err)
 	}
 
@@ -11050,7 +11050,7 @@ func TestImportedSessionMaintenanceStatsFallsBackToArchivedRecords(t *testing.T)
 	workspaceRoot := t.TempDir()
 	seedArchivedImportedSession(t, workspaceRoot)
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspaceRoot
@@ -11212,7 +11212,7 @@ func TestMemoryBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -11325,7 +11325,7 @@ func TestAgentMemoryBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -11400,18 +11400,18 @@ func TestCodeBridgeRoutes(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []string{"src/dep.ts"}}}})
 		case "/trpc/graph.getSymbolsGraph":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"nodes": []map[string]any{{"id": "sym-1", "name": "demo"}}, "links": []map[string]any{{"source": "src/demo.ts", "target": "sym-1", "type": "defines"}}}}}})
-		case "/trpc/tormentnexusContext.list":
+		case "/trpc/hypernexusContext.list":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []string{"src/app.ts"}}}})
-		case "/trpc/tormentnexusContext.add":
+		case "/trpc/hypernexusContext.add":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": "added src/app.ts"}}})
-		case "/trpc/tormentnexusContext.remove":
+		case "/trpc/hypernexusContext.remove":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": "removed src/app.ts"}}})
-		case "/trpc/tormentnexusContext.clear":
+		case "/trpc/hypernexusContext.clear":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": "cleared"}}})
-		case "/trpc/tormentnexusContext.getPrompt":
+		case "/trpc/hypernexusContext.getPrompt":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": "Prompt context"}}})
 		case "/trpc/git.getModules":
-			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []map[string]any{{"name": "tormentnexus", "path": "submodules/tormentnexus"}}}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []map[string]any{{"name": "hypernexus", "path": "submodules/hypernexus"}}}}})
 		case "/trpc/git.getLog":
 			body, _ := io.ReadAll(r.Body)
 			if !strings.Contains(string(body), `"limit":5`) {
@@ -11442,7 +11442,7 @@ func TestCodeBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -11462,18 +11462,18 @@ func TestCodeBridgeRoutes(t *testing.T) {
 		{name: "graph consumers", method: http.MethodGet, path: "/api/graph/consumers?filePath=src/app.ts", contains: "\"src/consumer.ts\"", procedure: "\"procedure\":\"graph.getConsumers\""},
 		{name: "graph dependencies", method: http.MethodGet, path: "/api/graph/dependencies?filePath=src/app.ts", contains: "\"src/dep.ts\"", procedure: "\"procedure\":\"graph.getDependencies\""},
 		{name: "graph symbols", method: http.MethodGet, path: "/api/graph/symbols", contains: "\"sym-1\"", procedure: "\"procedure\":\"graph.getSymbolsGraph\""},
-		{name: "context list", method: http.MethodGet, path: "/api/context/list", contains: "\"src/app.ts\"", procedure: "\"procedure\":\"tormentnexusContext.list\""},
-		{name: "context add", method: http.MethodPost, path: "/api/context/add", body: "{\"filePath\":\"src/app.ts\"}", contains: "added src/app.ts", procedure: "\"procedure\":\"tormentnexusContext.add\""},
-		{name: "context remove", method: http.MethodPost, path: "/api/context/remove", body: "{\"filePath\":\"src/app.ts\"}", contains: "removed src/app.ts", procedure: "\"procedure\":\"tormentnexusContext.remove\""},
-		{name: "context clear", method: http.MethodPost, path: "/api/context/clear", contains: "cleared", procedure: "\"procedure\":\"tormentnexusContext.clear\""},
-		{name: "context prompt", method: http.MethodGet, path: "/api/context/prompt", contains: "Prompt context", procedure: "\"procedure\":\"tormentnexusContext.getPrompt\""},
-		{name: "git modules", method: http.MethodGet, path: "/api/git/modules", contains: "\"tormentnexus\"", procedure: "\"procedure\":\"git.getModules\""},
-		{name: "context list", method: http.MethodGet, path: "/api/context/list", contains: "\"src/app.ts\"", procedure: "\"procedure\":\"tormentnexusContext.list\""},
-		{name: "context add", method: http.MethodPost, path: "/api/context/add", body: "{\"filePath\":\"src/app.ts\"}", contains: "added src/app.ts", procedure: "\"procedure\":\"tormentnexusContext.add\""},
-		{name: "context remove", method: http.MethodPost, path: "/api/context/remove", body: "{\"filePath\":\"src/app.ts\"}", contains: "removed src/app.ts", procedure: "\"procedure\":\"tormentnexusContext.remove\""},
-		{name: "context clear", method: http.MethodPost, path: "/api/context/clear", contains: "cleared", procedure: "\"procedure\":\"tormentnexusContext.clear\""},
-		{name: "context prompt", method: http.MethodGet, path: "/api/context/prompt", contains: "Prompt context", procedure: "\"procedure\":\"tormentnexusContext.getPrompt\""},
-		{name: "git modules", method: http.MethodGet, path: "/api/git/modules", contains: "\"tormentnexus\"", procedure: "\"procedure\":\"git.getModules\""},
+		{name: "context list", method: http.MethodGet, path: "/api/context/list", contains: "\"src/app.ts\"", procedure: "\"procedure\":\"hypernexusContext.list\""},
+		{name: "context add", method: http.MethodPost, path: "/api/context/add", body: "{\"filePath\":\"src/app.ts\"}", contains: "added src/app.ts", procedure: "\"procedure\":\"hypernexusContext.add\""},
+		{name: "context remove", method: http.MethodPost, path: "/api/context/remove", body: "{\"filePath\":\"src/app.ts\"}", contains: "removed src/app.ts", procedure: "\"procedure\":\"hypernexusContext.remove\""},
+		{name: "context clear", method: http.MethodPost, path: "/api/context/clear", contains: "cleared", procedure: "\"procedure\":\"hypernexusContext.clear\""},
+		{name: "context prompt", method: http.MethodGet, path: "/api/context/prompt", contains: "Prompt context", procedure: "\"procedure\":\"hypernexusContext.getPrompt\""},
+		{name: "git modules", method: http.MethodGet, path: "/api/git/modules", contains: "\"hypernexus\"", procedure: "\"procedure\":\"git.getModules\""},
+		{name: "context list", method: http.MethodGet, path: "/api/context/list", contains: "\"src/app.ts\"", procedure: "\"procedure\":\"hypernexusContext.list\""},
+		{name: "context add", method: http.MethodPost, path: "/api/context/add", body: "{\"filePath\":\"src/app.ts\"}", contains: "added src/app.ts", procedure: "\"procedure\":\"hypernexusContext.add\""},
+		{name: "context remove", method: http.MethodPost, path: "/api/context/remove", body: "{\"filePath\":\"src/app.ts\"}", contains: "removed src/app.ts", procedure: "\"procedure\":\"hypernexusContext.remove\""},
+		{name: "context clear", method: http.MethodPost, path: "/api/context/clear", contains: "cleared", procedure: "\"procedure\":\"hypernexusContext.clear\""},
+		{name: "context prompt", method: http.MethodGet, path: "/api/context/prompt", contains: "Prompt context", procedure: "\"procedure\":\"hypernexusContext.getPrompt\""},
+		{name: "git modules", method: http.MethodGet, path: "/api/git/modules", contains: "\"hypernexus\"", procedure: "\"procedure\":\"git.getModules\""},
 		{name: "git log", method: http.MethodGet, path: "/api/git/log?limit=5", contains: "\"abc123\"", procedure: "\"procedure\":\"git.getLog\""},
 		{name: "git status", method: http.MethodGet, path: "/api/git/status", contains: "\"branch\":\"main\"", procedure: "\"procedure\":\"git.getStatus\""},
 		{name: "git revert", method: http.MethodPost, path: "/api/git/revert", body: "{\"hash\":\"abc123\"}", contains: "\"success\":true", procedure: "\"procedure\":\"git.revert\""},
@@ -11567,7 +11567,7 @@ func TestAdminBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -11654,7 +11654,7 @@ func TestControlBridgeRoutes(t *testing.T) {
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"name": "search_tools"}}}}})
 		case "/trpc/tools.detectCliHarnesses":
-			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"id": "tormentnexus"}}}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"id": "hypernexus"}}}}})
 		case "/trpc/tools.detectExecutionEnvironment":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"shell": "pwsh"}}}})
 		case "/trpc/tools.detectInstallSurfaces":
@@ -11713,7 +11713,7 @@ func TestControlBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -11738,7 +11738,7 @@ func TestControlBridgeRoutes(t *testing.T) {
 		{name: "tools list", method: http.MethodGet, path: "/api/tools", contains: `"search_tools"`, procedure: `"procedure":"tools.list"`},
 		{name: "tools by server", method: http.MethodGet, path: "/api/tools/by-server?mcpServerUuid=srv-1", contains: `"core"`, procedure: `"procedure":"tools.listByServer"`},
 		{name: "tools search", method: http.MethodGet, path: "/api/tools/search?query=search&limit=5", contains: `"search_tools"`, procedure: `"procedure":"tools.search"`},
-		{name: "tools detect cli harnesses", method: http.MethodGet, path: "/api/tools/detect-cli-harnesses", contains: `"tormentnexus"`, procedure: `"procedure":"tools.detectCliHarnesses"`},
+		{name: "tools detect cli harnesses", method: http.MethodGet, path: "/api/tools/detect-cli-harnesses", contains: `"hypernexus"`, procedure: `"procedure":"tools.detectCliHarnesses"`},
 		{name: "tools detect execution environment", method: http.MethodGet, path: "/api/tools/detect-execution-environment", contains: `"shell":"pwsh"`, procedure: `"procedure":"tools.detectExecutionEnvironment"`},
 		{name: "tools detect install surfaces", method: http.MethodGet, path: "/api/tools/detect-install-surfaces", contains: `"npm-global"`, procedure: `"procedure":"tools.detectInstallSurfaces"`},
 		{name: "tools get", method: http.MethodGet, path: "/api/tools/get?uuid=search_tools", contains: `"name":"search_tools"`, procedure: `"procedure":"tools.get"`},
@@ -11820,7 +11820,7 @@ func TestAgentBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -11835,7 +11835,7 @@ func TestAgentBridgeRoutes(t *testing.T) {
 		contains  string
 		procedure string
 	}{
-		{name: "agent run tool", method: http.MethodPost, path: "/api/agent/tool", body: `{"toolName":"search_tools","arguments":{"query":"tormentnexus"}}`, contains: `"tool output"`, procedure: `"procedure":"agent.runTool"`},
+		{name: "agent run tool", method: http.MethodPost, path: "/api/agent/tool", body: `{"toolName":"search_tools","arguments":{"query":"hypernexus"}}`, contains: `"tool output"`, procedure: `"procedure":"agent.runTool"`},
 		{name: "agent chat", method: http.MethodPost, path: "/api/agent/chat", body: `{"message":"hello"}`, contains: `"response":"hello"`, procedure: `"procedure":"agent.chat"`},
 		{name: "commands execute", method: http.MethodPost, path: "/api/commands/execute", body: `{"input":"/status"}`, contains: `"handled":true`, procedure: `"procedure":"commands.execute"`},
 		{name: "commands list", method: http.MethodGet, path: "/api/commands", contains: `"name":"status"`, procedure: `"procedure":"commands.list"`},
@@ -11936,7 +11936,7 @@ func TestWorkflowBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -12051,7 +12051,7 @@ func TestSymbolsAndLSPBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -12188,7 +12188,7 @@ func TestCompactBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -12328,7 +12328,7 @@ func TestGovernanceAndCatalogBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -12447,9 +12447,9 @@ func TestResearchOAuthPulseAndExportBridgeRoutes(t *testing.T) {
 		case "/trpc/sessionExport.import":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"imported": 1}}}})
 		case "/trpc/sessionExport.detectFormat":
-			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"format": "tormentnexus-export", "valid": true}}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"format": "hypernexus-export", "valid": true}}}})
 		case "/trpc/sessionExport.knownFormats":
-			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"id": "tormentnexus", "type": "tormentnexus"}}}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"id": "hypernexus", "type": "hypernexus"}}}}})
 		case "/trpc/sessionExport.history":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"id": "export-1"}}}}})
 		default:
@@ -12458,7 +12458,7 @@ func TestResearchOAuthPulseAndExportBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -12491,8 +12491,8 @@ func TestResearchOAuthPulseAndExportBridgeRoutes(t *testing.T) {
 		{name: "pulse providers", method: http.MethodGet, path: "/api/pulse/providers", contains: `"ollama":true`, procedure: `"procedure":"pulse.checkLocalProviders"`},
 		{name: "session export", method: http.MethodPost, path: "/api/session-export/export", body: `{"format":"json","includeMemories":true,"includeLogs":true,"includeMetadata":true}`, contains: `"export-1"`, procedure: `"procedure":"sessionExport.export"`},
 		{name: "session import", method: http.MethodPost, path: "/api/session-export/import", body: `{"data":"{}","merge":true,"dryRun":true}`, contains: `"imported":1`, procedure: `"procedure":"sessionExport.import"`},
-		{name: "session detect format", method: http.MethodPost, path: "/api/session-export/detect-format", body: `{"data":"{\"version\":\"1.0\",\"sessions\":[]}"}`, contains: `"tormentnexus-export"`, procedure: `"procedure":"sessionExport.detectFormat"`},
-		{name: "session known formats", method: http.MethodGet, path: "/api/session-export/formats", contains: `"type":"tormentnexus"`, procedure: `"procedure":"sessionExport.knownFormats"`},
+		{name: "session detect format", method: http.MethodPost, path: "/api/session-export/detect-format", body: `{"data":"{\"version\":\"1.0\",\"sessions\":[]}"}`, contains: `"hypernexus-export"`, procedure: `"procedure":"sessionExport.detectFormat"`},
+		{name: "session known formats", method: http.MethodGet, path: "/api/session-export/formats", contains: `"type":"hypernexus"`, procedure: `"procedure":"sessionExport.knownFormats"`},
 		{name: "session export history", method: http.MethodGet, path: "/api/session-export/history", contains: `"export-1"`, procedure: `"procedure":"sessionExport.history"`},
 	}
 
@@ -12552,7 +12552,7 @@ func TestUIHelperBridgeRoutes(t *testing.T) {
 		case "/trpc/codeMode.execute":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"success": true}}}})
 		case "/trpc/submodule.list":
-			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"path": "submodules/tormentnexus"}}}}})
+			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": []any{map[string]any{"path": "submodules/hypernexus"}}}}})
 		case "/trpc/submodule.updateAll":
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"success": true}}}})
 		case "/trpc/submodule.installDependencies":
@@ -12563,7 +12563,7 @@ func TestUIHelperBridgeRoutes(t *testing.T) {
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"success": true}}}})
 		case "/trpc/submodule.detectCapabilities":
 			body, _ := io.ReadAll(r.Body)
-			if !strings.Contains(string(body), `"path":"submodules/tormentnexus"`) {
+			if !strings.Contains(string(body), `"path":"submodules/hypernexus"`) {
 				t.Fatalf("expected submodule.detectCapabilities payload, got %s", string(body))
 			}
 			_ = json.NewEncoder(w).Encode(map[string]any{"result": map[string]any{"data": map[string]any{"json": map[string]any{"caps": []any{"build"}}}}})
@@ -12601,7 +12601,7 @@ func TestUIHelperBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -12627,12 +12627,12 @@ func TestUIHelperBridgeRoutes(t *testing.T) {
 		{name: "code mode enable", method: http.MethodPost, path: "/api/code-mode/enable", body: `{}`, contains: `"enabled":true`, procedure: `"procedure":"codeMode.enable"`},
 		{name: "code mode disable", method: http.MethodPost, path: "/api/code-mode/disable", body: `{}`, contains: `"enabled":false`, procedure: `"procedure":"codeMode.disable"`},
 		{name: "code mode execute", method: http.MethodPost, path: "/api/code-mode/execute", body: `{"code":"return 1;"}`, contains: `"success":true`, procedure: `"procedure":"codeMode.execute"`},
-		{name: "submodule list", method: http.MethodGet, path: "/api/submodules", contains: `"submodules/tormentnexus"`, procedure: `"procedure":"submodule.list"`},
+		{name: "submodule list", method: http.MethodGet, path: "/api/submodules", contains: `"submodules/hypernexus"`, procedure: `"procedure":"submodule.list"`},
 		{name: "submodule update all", method: http.MethodPost, path: "/api/submodules/update-all", body: `{}`, contains: `"success":true`, procedure: `"procedure":"submodule.updateAll"`},
-		{name: "submodule install deps", method: http.MethodPost, path: "/api/submodules/install-dependencies", body: `{"path":"submodules/tormentnexus"}`, contains: `"success":true`, procedure: `"procedure":"submodule.installDependencies"`},
-		{name: "submodule build", method: http.MethodPost, path: "/api/submodules/build", body: `{"path":"submodules/tormentnexus"}`, contains: `"success":true`, procedure: `"procedure":"submodule.build"`},
-		{name: "submodule enable", method: http.MethodPost, path: "/api/submodules/enable", body: `{"path":"submodules/tormentnexus"}`, contains: `"success":true`, procedure: `"procedure":"submodule.enable"`},
-		{name: "submodule capabilities", method: http.MethodGet, path: "/api/submodules/capabilities?path=submodules%2Ftormentnexus", contains: `"build"`, procedure: `"procedure":"submodule.detectCapabilities"`},
+		{name: "submodule install deps", method: http.MethodPost, path: "/api/submodules/install-dependencies", body: `{"path":"submodules/hypernexus"}`, contains: `"success":true`, procedure: `"procedure":"submodule.installDependencies"`},
+		{name: "submodule build", method: http.MethodPost, path: "/api/submodules/build", body: `{"path":"submodules/hypernexus"}`, contains: `"success":true`, procedure: `"procedure":"submodule.build"`},
+		{name: "submodule enable", method: http.MethodPost, path: "/api/submodules/enable", body: `{"path":"submodules/hypernexus"}`, contains: `"success":true`, procedure: `"procedure":"submodule.enable"`},
+		{name: "submodule capabilities", method: http.MethodGet, path: "/api/submodules/capabilities?path=submodules%2Fhypernexus", contains: `"build"`, procedure: `"procedure":"submodule.detectCapabilities"`},
 		{name: "suggestions list", method: http.MethodGet, path: "/api/suggestions", contains: `"sug-1"`, procedure: `"procedure":"suggestions.list"`},
 		{name: "suggestions resolve", method: http.MethodPost, path: "/api/suggestions/resolve", body: `{"id":"sug-1","status":"APPROVED"}`, contains: `"APPROVED"`, procedure: `"procedure":"suggestions.resolve"`},
 		{name: "suggestions clear", method: http.MethodPost, path: "/api/suggestions/clear", body: `{}`, contains: `"data":true`, procedure: `"procedure":"suggestions.clearAll"`},
@@ -12760,7 +12760,7 @@ func TestKnowledgeAndChainingBridgeRoutes(t *testing.T) {
 	}))
 	defer upstream.Close()
 
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	cfg := config.Default()
 	cfg.MainConfigDir = t.TempDir()
@@ -12829,7 +12829,7 @@ func TestKnowledgeAndChainingBridgeRoutes(t *testing.T) {
 }
 
 func TestKnowledgeGraphFallsBackToEmptyGraph(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = t.TempDir()
@@ -12911,12 +12911,12 @@ func TestCLIToolsEndpointReportsDetectorFailure(t *testing.T) {
 
 func TestCLIHarnessesEndpoint(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, "submodules", "tormentnexus"), 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus submodule path: %v", err)
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, "submodules", "hypernexus"), 0o755); err != nil {
+		t.Fatalf("failed to create hypernexus submodule path: %v", err)
 	}
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools path: %v", err)
+		t.Fatalf("failed to create hypernexus tools path: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte(`
 func demo() {
@@ -12924,7 +12924,7 @@ func demo() {
 	_ = Tool{Name: "read_file"}
 }
 `), 0o644); err != nil {
-		t.Fatalf("failed to seed tormentnexus tool registry: %v", err)
+		t.Fatalf("failed to seed hypernexus tool registry: %v", err)
 	}
 
 	cfg := config.Default()
@@ -12944,11 +12944,11 @@ func demo() {
 	if recorder.Code != http.StatusOK {
 		t.Fatalf("expected status 200, got %d", recorder.Code)
 	}
-	if !strings.Contains(recorder.Body.String(), "\"tormentnexus\"") {
-		t.Fatalf("expected tormentnexus in harness payload, got %s", recorder.Body.String())
+	if !strings.Contains(recorder.Body.String(), "\"hypernexus\"") {
+		t.Fatalf("expected hypernexus in harness payload, got %s", recorder.Body.String())
 	}
 	if !strings.Contains(recorder.Body.String(), "\"toolCallCount\":2") {
-		t.Fatalf("expected tormentnexus tool inventory in harness payload, got %s", recorder.Body.String())
+		t.Fatalf("expected hypernexus tool inventory in harness payload, got %s", recorder.Body.String())
 	}
 	if !strings.Contains(recorder.Body.String(), "\"toolInventoryStatus\":\"source-backed\"") {
 		t.Fatalf("expected source-backed inventory status in harness payload, got %s", recorder.Body.String())
@@ -12972,12 +12972,12 @@ func TestCLIHarnessesEndpointReportsDetectorFailure(t *testing.T) {
 
 func TestCLISummaryEndpoint(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	if err := os.MkdirAll(filepath.Join(workspaceRoot, "submodules", "tormentnexus"), 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus submodule path: %v", err)
+	if err := os.MkdirAll(filepath.Join(workspaceRoot, "submodules", "hypernexus"), 0o755); err != nil {
+		t.Fatalf("failed to create hypernexus submodule path: %v", err)
 	}
-	toolsDir := filepath.Join(workspaceRoot, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(workspaceRoot, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools path: %v", err)
+		t.Fatalf("failed to create hypernexus tools path: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte(`
 func demo() {
@@ -12985,7 +12985,7 @@ func demo() {
 	_ = Tool{Name: "read_file"}
 }
 `), 0o644); err != nil {
-		t.Fatalf("failed to seed tormentnexus tool registry: %v", err)
+		t.Fatalf("failed to seed hypernexus tool registry: %v", err)
 	}
 
 	cfg := config.Default()
@@ -13006,8 +13006,8 @@ func demo() {
 	if recorder.Code != http.StatusOK {
 		t.Fatalf("expected status 200, got %d", recorder.Code)
 	}
-	if !strings.Contains(recorder.Body.String(), "\"primaryHarness\":\"tormentnexus\"") {
-		t.Fatalf("expected tormentnexus primary harness in payload, got %s", recorder.Body.String())
+	if !strings.Contains(recorder.Body.String(), "\"primaryHarness\":\"hypernexus\"") {
+		t.Fatalf("expected hypernexus primary harness in payload, got %s", recorder.Body.String())
 	}
 	if !strings.Contains(recorder.Body.String(), "\"installedHarnessCount\":2") {
 		t.Fatalf("expected two installed harnesses in payload, got %s", recorder.Body.String())
@@ -13023,8 +13023,8 @@ func demo() {
 func TestRuntimeLocksEndpoint(t *testing.T) {
 	tempDir := t.TempDir()
 	cfg := config.Default()
-	cfg.ConfigDir = filepath.Join(tempDir, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(tempDir, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(tempDir, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(tempDir, ".hypernexus")
 
 	if err := os.MkdirAll(cfg.MainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create main config dir: %v", err)
@@ -13063,8 +13063,8 @@ func TestRuntimeLocksEndpoint(t *testing.T) {
 	if len(payload.Data) != 2 {
 		t.Fatalf("expected 2 runtime lock slots, got %d", len(payload.Data))
 	}
-	if payload.Data[0].Name != "tormentnexus-node" {
-		t.Fatalf("expected tormentnexus-node first lock slot, got %+v", payload.Data[0])
+	if payload.Data[0].Name != "hypernexus-node" {
+		t.Fatalf("expected hypernexus-node first lock slot, got %+v", payload.Data[0])
 	}
 	if payload.Data[0].LockPath != cfg.MainLockPath() {
 		t.Fatalf("expected main lock path %s, got %s", cfg.MainLockPath(), payload.Data[0].LockPath)
@@ -13075,14 +13075,14 @@ func TestRuntimeLocksEndpoint(t *testing.T) {
 	if payload.Data[0].Version != "0.99.1" || payload.Data[0].StartedAt != "2026-03-28T00:00:00Z" {
 		t.Fatalf("expected seeded main lock metadata, got %+v", payload.Data[0])
 	}
-	if payload.Data[1].Name != "tormentnexus-go" {
-		t.Fatalf("expected tormentnexus-go second lock slot, got %+v", payload.Data[1])
+	if payload.Data[1].Name != "hypernexus-go" {
+		t.Fatalf("expected hypernexus-go second lock slot, got %+v", payload.Data[1])
 	}
 	if payload.Data[1].LockPath != cfg.LockPath() {
 		t.Fatalf("expected go lock path %s, got %s", cfg.LockPath(), payload.Data[1].LockPath)
 	}
 	if payload.Data[1].Running {
-		t.Fatalf("expected tormentnexus-go lock slot to be absent, got %+v", payload.Data[1])
+		t.Fatalf("expected hypernexus-go lock slot to be absent, got %+v", payload.Data[1])
 	}
 }
 
@@ -13493,7 +13493,7 @@ func TestMemoryStatusEndpoint(t *testing.T) {
 	cfg := config.Default()
 	cfg.WorkspaceRoot = tempDir
 
-	storePath := filepath.Join(tempDir, ".tormentnexus", "sectioned_memory.json")
+	storePath := filepath.Join(tempDir, ".hypernexus", "sectioned_memory.json")
 	if err := os.MkdirAll(filepath.Dir(storePath), 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
@@ -13503,7 +13503,7 @@ func TestMemoryStatusEndpoint(t *testing.T) {
 
 	server := New(cfg, stubDetector{})
 	defer server.Close()
-	request := httptest.NewRequest(http.MethodGet, "/api/memory/tormentnexus-memory/status", nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/memory/hypernexus-memory/status", nil)
 	recorder := httptest.NewRecorder()
 
 	server.Handler().ServeHTTP(recorder, request)
@@ -13536,7 +13536,7 @@ func TestMemoryStatusEndpointReportsReadFailure(t *testing.T) {
 	cfg := config.Default()
 	cfg.WorkspaceRoot = tempDir
 
-	storePath := filepath.Join(tempDir, ".tormentnexus", "sectioned_memory.json")
+	storePath := filepath.Join(tempDir, ".hypernexus", "sectioned_memory.json")
 	if err := os.MkdirAll(filepath.Dir(storePath), 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
@@ -13546,7 +13546,7 @@ func TestMemoryStatusEndpointReportsReadFailure(t *testing.T) {
 
 	server := New(cfg, stubDetector{})
 	defer server.Close()
-	request := httptest.NewRequest(http.MethodGet, "/api/memory/tormentnexus-memory/status", nil)
+	request := httptest.NewRequest(http.MethodGet, "/api/memory/hypernexus-memory/status", nil)
 	recorder := httptest.NewRecorder()
 
 	server.Handler().ServeHTTP(recorder, request)
@@ -13572,7 +13572,7 @@ func TestRuntimeStatusEndpoint(t *testing.T) {
 			"result": map[string]any{
 				"data": map[string]any{
 					"json": []map[string]any{
-						{"id": "tormentnexus", "maturity": "Experimental"},
+						{"id": "hypernexus", "maturity": "Experimental"},
 					},
 				},
 			},
@@ -13582,8 +13582,8 @@ func TestRuntimeStatusEndpoint(t *testing.T) {
 
 	cfg := config.Default()
 	cfg.WorkspaceRoot = tempDir
-	cfg.ConfigDir = filepath.Join(tempDir, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(tempDir, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(tempDir, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(tempDir, ".hypernexus")
 
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create go config dir: %v", err)
@@ -13591,12 +13591,12 @@ func TestRuntimeStatusEndpoint(t *testing.T) {
 	if err := os.MkdirAll(cfg.MainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create main config dir: %v", err)
 	}
-	if err := os.MkdirAll(filepath.Join(tempDir, "submodules", "tormentnexus"), 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus submodule path: %v", err)
+	if err := os.MkdirAll(filepath.Join(tempDir, "submodules", "hypernexus"), 0o755); err != nil {
+		t.Fatalf("failed to create hypernexus submodule path: %v", err)
 	}
-	toolsDir := filepath.Join(tempDir, "submodules", "tormentnexus", "tools")
+	toolsDir := filepath.Join(tempDir, "submodules", "hypernexus", "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools path: %v", err)
+		t.Fatalf("failed to create hypernexus tools path: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte(`
 func demo() {
@@ -13604,10 +13604,10 @@ func demo() {
 	_ = Tool{Name: "read_file"}
 }
 `), 0o644); err != nil {
-		t.Fatalf("failed to seed tormentnexus tool registry: %v", err)
+		t.Fatalf("failed to seed hypernexus tool registry: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(tempDir, "tormentnexus.config.json"), []byte("{}"), 0o644); err != nil {
-		t.Fatalf("failed to create tormentnexus config file: %v", err)
+	if err := os.WriteFile(filepath.Join(tempDir, "hypernexus.config.json"), []byte("{}"), 0o644); err != nil {
+		t.Fatalf("failed to create hypernexus config file: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(tempDir, "mcp.jsonc"), []byte("{}"), 0o644); err != nil {
 		t.Fatalf("failed to create mcp config file: %v", err)
@@ -13638,7 +13638,7 @@ func demo() {
 		t.Fatalf("failed to write imported instructions doc: %v", err)
 	}
 
-	storePath := filepath.Join(tempDir, ".tormentnexus", "sectioned_memory.json")
+	storePath := filepath.Join(tempDir, ".hypernexus", "sectioned_memory.json")
 	if err := os.MkdirAll(filepath.Dir(storePath), 0o755); err != nil {
 		t.Fatalf("failed to create memory dir: %v", err)
 	}
@@ -13657,7 +13657,7 @@ func demo() {
 	t.Setenv("GITHUB_TOKEN", "")
 	t.Setenv("OPENAI_API_KEY", "openai")
 	t.Setenv("ANTHROPIC_API_KEY", "anthropic")
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", upstream.URL+"/trpc")
 
 	server := New(cfg, stubDetector{})
 	defer server.Close()
@@ -13681,8 +13681,8 @@ func demo() {
 	if !payload.Success {
 		t.Fatalf("expected success payload, got %#v", payload)
 	}
-	if payload.Data.Service != "tormentnexus-go" {
-		t.Fatalf("expected tormentnexus-go service, got %q", payload.Data.Service)
+	if payload.Data.Service != "hypernexus-go" {
+		t.Fatalf("expected hypernexus-go service, got %q", payload.Data.Service)
 	}
 	if len(payload.Data.Locks) != 2 {
 		t.Fatalf("expected 2 lock statuses, got %d", len(payload.Data.Locks))
@@ -13699,8 +13699,8 @@ func demo() {
 	if !payload.Data.Config.RepoConfigAvailable || !payload.Data.Config.MCPConfigAvailable {
 		t.Fatalf("expected repo config files to be available, got %+v", payload.Data.Config)
 	}
-	if !payload.Data.Config.TormentNexusSubmoduleAvailable {
-		t.Fatalf("expected tormentnexus submodule to be available")
+	if !payload.Data.Config.HyperNexusSubmoduleAvailable {
+		t.Fatalf("expected hypernexus submodule to be available")
 	}
 	if !payload.Data.ImportedInstructions.Available {
 		t.Fatalf("expected imported instructions to be available")
@@ -13715,7 +13715,7 @@ func demo() {
 		t.Fatalf("expected 49 total harness definitions, got %d", payload.Data.CLI.HarnessCount)
 	}
 	if payload.Data.CLI.InstalledHarnessCount != 1 {
-		t.Fatalf("expected 1 installed harness from tormentnexus submodule, got %d", payload.Data.CLI.InstalledHarnessCount)
+		t.Fatalf("expected 1 installed harness from hypernexus submodule, got %d", payload.Data.CLI.InstalledHarnessCount)
 	}
 	if payload.Data.CLI.SourceBackedHarnessCount != 1 || payload.Data.CLI.SourceBackedToolCount != 2 {
 		t.Fatalf("expected runtime source-backed CLI summary, got %+v", payload.Data.CLI)
@@ -13723,8 +13723,8 @@ func demo() {
 	if payload.Data.CLI.MetadataOnlyHarnessCount != 47 || payload.Data.CLI.OperatorDefinedHarnessCount != 1 {
 		t.Fatalf("expected runtime metadata/operator harness counts, got %+v", payload.Data.CLI)
 	}
-	if payload.Data.CLI.PrimaryHarness != "tormentnexus" {
-		t.Fatalf("expected tormentnexus primary harness, got %q", payload.Data.CLI.PrimaryHarness)
+	if payload.Data.CLI.PrimaryHarness != "hypernexus" {
+		t.Fatalf("expected hypernexus primary harness, got %q", payload.Data.CLI.PrimaryHarness)
 	}
 	if payload.Data.Providers.ProviderCount < payload.Data.Providers.ConfiguredCount {
 		t.Fatalf("expected provider count to cover configured providers, got providerCount=%d configured=%d", payload.Data.Providers.ProviderCount, payload.Data.Providers.ConfiguredCount)
@@ -13808,7 +13808,7 @@ func demo() {
 }
 
 func TestSavedScriptsCreateUpdateDeleteAndExecuteFallBackToLocalConfig(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:1/trpc")
 	if _, err := exec.LookPath("node"); err != nil {
 		t.Skip("node runtime not available")
 	}
@@ -13833,7 +13833,7 @@ func TestSavedScriptsCreateUpdateDeleteAndExecuteFallBackToLocalConfig(t *testin
 			t.Fatalf("expected savedScripts.create fallback to contain %s, got %s", needle, createRecorder.Body.String())
 		}
 	}
-	configRaw, err := os.ReadFile(filepath.Join(workspace, ".tormentnexus", "config.json"))
+	configRaw, err := os.ReadFile(filepath.Join(workspace, ".hypernexus", "config.json"))
 	if err != nil {
 		t.Fatalf("failed to read local config after saved script create: %v", err)
 	}
@@ -13865,7 +13865,7 @@ func TestSavedScriptsCreateUpdateDeleteAndExecuteFallBackToLocalConfig(t *testin
 			t.Fatalf("expected savedScripts.update fallback to contain %s, got %s", needle, updateRecorder.Body.String())
 		}
 	}
-	configAfterUpdate, err := os.ReadFile(filepath.Join(workspace, ".tormentnexus", "config.json"))
+	configAfterUpdate, err := os.ReadFile(filepath.Join(workspace, ".hypernexus", "config.json"))
 	if err != nil {
 		t.Fatalf("failed to read local config after saved script update: %v", err)
 	}
@@ -13898,7 +13898,7 @@ func TestSavedScriptsCreateUpdateDeleteAndExecuteFallBackToLocalConfig(t *testin
 			t.Fatalf("expected savedScripts.delete fallback to contain %s, got %s", needle, deleteRecorder.Body.String())
 		}
 	}
-	configAfterDelete, err := os.ReadFile(filepath.Join(workspace, ".tormentnexus", "config.json"))
+	configAfterDelete, err := os.ReadFile(filepath.Join(workspace, ".hypernexus", "config.json"))
 	if err != nil {
 		t.Fatalf("failed to read local config after saved script delete: %v", err)
 	}
@@ -13911,8 +13911,8 @@ func TestRuntimeStatusEndpointReportsDetectorFailure(t *testing.T) {
 	tempDir := t.TempDir()
 	cfg := config.Default()
 	cfg.WorkspaceRoot = tempDir
-	cfg.ConfigDir = filepath.Join(tempDir, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(tempDir, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(tempDir, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(tempDir, ".hypernexus")
 
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create go config dir: %v", err)
@@ -13920,8 +13920,8 @@ func TestRuntimeStatusEndpointReportsDetectorFailure(t *testing.T) {
 	if err := os.MkdirAll(cfg.MainConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create main config dir: %v", err)
 	}
-	if err := os.WriteFile(filepath.Join(tempDir, "tormentnexus.config.json"), []byte("{}"), 0o644); err != nil {
-		t.Fatalf("failed to create tormentnexus config file: %v", err)
+	if err := os.WriteFile(filepath.Join(tempDir, "hypernexus.config.json"), []byte("{}"), 0o644); err != nil {
+		t.Fatalf("failed to create hypernexus config file: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(tempDir, "mcp.jsonc"), []byte("{}"), 0o644); err != nil {
 		t.Fatalf("failed to create mcp config file: %v", err)

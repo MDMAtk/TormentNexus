@@ -11,7 +11,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type ServerEntry struct {
 	UUID               string            `json:"uuid"`
@@ -230,7 +230,7 @@ func loadLiveInventory(workspaceRoot, mainConfigDir string) (*Inventory, error) 
 		inventory.Source = "config"
 	}
 
-	dbPath := filepath.Join(workspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(workspaceRoot, "hypernexus.db")
 	db, err := database.Open("sqlite", dbPath)
 	if err == nil {
 		db.Exec("PRAGMA journal_mode=WAL")

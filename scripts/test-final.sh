@@ -9,7 +9,7 @@ p() { echo "  ✅ $1"; PASS=$((PASS+1)); }
 f() { echo "  ❌ $1"; FAIL=$((FAIL+1)); }
 
 echo "=========================================="
-echo "  TormentNexus Platform Test Suite"
+echo "  HyperNexus Platform Test Suite"
 echo "=========================================="
 echo ""
 
@@ -45,15 +45,15 @@ p "Search: ${T}s"
 
 echo "[7] Landing Pages"
 for P in "" blog/ catalog pricing newsletter blog/feed.xml sitemap.xml robots.txt; do
-    C=$(curl -s -o /dev/null -w "%{http_code}" "https://tormentnexus.site/$P")
+    C=$(curl -s -o /dev/null -w "%{http_code}" "https://hypernexus.site/$P")
     [ "$C" = "200" ] && p "/$P" || f "/$P ($C)"
 done
 
 echo "[8] Docker"
-docker ps | grep -q tormentnexus-demo && p "Demo container" || f "Demo container"
+docker ps | grep -q hypernexus-demo && p "Demo container" || f "Demo container"
 
 echo "[9] Billing Pages"
-curl -s "https://tormentnexus.site/pricing" | grep -q "Free" && p "Pricing page" || f "Pricing page"
+curl -s "https://hypernexus.site/pricing" | grep -q "Free" && p "Pricing page" || f "Pricing page"
 curl -s "https://cloud.hypernexus.site" | grep -q -i "login\|hypernexus" && p "Cloud landing" || f "Cloud landing"
 
 echo "[10] Demo Functionality"

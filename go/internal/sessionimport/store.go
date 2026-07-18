@@ -19,7 +19,7 @@ import (
 	_ "github.com/glebarez/go-sqlite"
 	"github.com/google/uuid"
 
-	"github.com/MDMAtk/TormentNexus/internal/database"
+	"github.com/MDMAtk/HyperNexus/internal/database"
 )
 
 type ImportedSessionMemoryKind string
@@ -130,9 +130,9 @@ type ImportedSessionStore struct {
 
 func NewImportedSessionStore(workspaceRoot string) *ImportedSessionStore {
 	return &ImportedSessionStore{
-		dbPath:      filepath.Join(workspaceRoot, "tormentnexus.db"),
-		archiveRoot: filepath.Join(workspaceRoot, ".tormentnexus", "imported_sessions", "archive"),
-		docsDir:     filepath.Join(workspaceRoot, ".tormentnexus", "imported_sessions", "docs"),
+		dbPath:      filepath.Join(workspaceRoot, "hypernexus.db"),
+		archiveRoot: filepath.Join(workspaceRoot, ".hypernexus", "imported_sessions", "archive"),
+		docsDir:     filepath.Join(workspaceRoot, ".hypernexus", "imported_sessions", "docs"),
 	}
 }
 

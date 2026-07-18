@@ -10,7 +10,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type VectorStore struct {
 	db                *sql.DB

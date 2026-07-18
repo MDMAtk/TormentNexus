@@ -11,12 +11,12 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/MDMAtk/TormentNexus/internal/ai"
-	"github.com/MDMAtk/TormentNexus/internal/catalogingestor"
-	"github.com/MDMAtk/TormentNexus/internal/codeexec"
-	"github.com/MDMAtk/TormentNexus/internal/commercial"
-	memorypkg "github.com/MDMAtk/TormentNexus/internal/memory"
-	"github.com/MDMAtk/TormentNexus/internal/memorystore"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/catalogingestor"
+	"github.com/MDMAtk/HyperNexus/internal/codeexec"
+	"github.com/MDMAtk/HyperNexus/internal/commercial"
+	memorypkg "github.com/MDMAtk/HyperNexus/internal/memory"
+	"github.com/MDMAtk/HyperNexus/internal/memorystore"
 	"io"
 	"io/fs"
 	"math"
@@ -35,39 +35,39 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/buildinfo"
-	"github.com/MDMAtk/TormentNexus/internal/config"
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
-	"github.com/MDMAtk/TormentNexus/internal/harnesses"
-	"github.com/MDMAtk/TormentNexus/internal/hsync"
-	"github.com/MDMAtk/TormentNexus/internal/interop"
-	"github.com/MDMAtk/TormentNexus/internal/mcp"
-	"github.com/MDMAtk/TormentNexus/internal/mesh"
-	"github.com/MDMAtk/TormentNexus/internal/orchestration"
-	"github.com/MDMAtk/TormentNexus/internal/providers"
-	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
-	"github.com/MDMAtk/TormentNexus/internal/supervisor"
-	"github.com/MDMAtk/TormentNexus/internal/tools"
-	"github.com/MDMAtk/TormentNexus/internal/workflow"
+	"github.com/MDMAtk/HyperNexus/internal/buildinfo"
+	"github.com/MDMAtk/HyperNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/harnesses"
+	"github.com/MDMAtk/HyperNexus/internal/hsync"
+	"github.com/MDMAtk/HyperNexus/internal/interop"
+	"github.com/MDMAtk/HyperNexus/internal/mcp"
+	"github.com/MDMAtk/HyperNexus/internal/mesh"
+	"github.com/MDMAtk/HyperNexus/internal/orchestration"
+	"github.com/MDMAtk/HyperNexus/internal/providers"
+	"github.com/MDMAtk/HyperNexus/internal/sessionimport"
+	"github.com/MDMAtk/HyperNexus/internal/supervisor"
+	"github.com/MDMAtk/HyperNexus/internal/tools"
+	"github.com/MDMAtk/HyperNexus/internal/workflow"
 
-	"github.com/MDMAtk/TormentNexus/internal/cache"
-	"github.com/MDMAtk/TormentNexus/internal/ctxharvester"
-	"github.com/MDMAtk/TormentNexus/internal/eventbus"
-	"github.com/MDMAtk/TormentNexus/internal/gitservice"
-	"github.com/MDMAtk/TormentNexus/internal/gossip"
-	"github.com/MDMAtk/TormentNexus/internal/healer"
-	"github.com/MDMAtk/TormentNexus/internal/metrics"
-	processmanager "github.com/MDMAtk/TormentNexus/internal/process"
-	"github.com/MDMAtk/TormentNexus/internal/repograph"
-	"github.com/MDMAtk/TormentNexus/internal/session"
-	"github.com/MDMAtk/TormentNexus/internal/skillregistry"
-	"github.com/MDMAtk/TormentNexus/internal/systray"
-	"github.com/MDMAtk/TormentNexus/internal/toolregistry"
-	"github.com/MDMAtk/TormentNexus/internal/workspaces"
+	"github.com/MDMAtk/HyperNexus/internal/cache"
+	"github.com/MDMAtk/HyperNexus/internal/ctxharvester"
+	"github.com/MDMAtk/HyperNexus/internal/eventbus"
+	"github.com/MDMAtk/HyperNexus/internal/gitservice"
+	"github.com/MDMAtk/HyperNexus/internal/gossip"
+	"github.com/MDMAtk/HyperNexus/internal/healer"
+	"github.com/MDMAtk/HyperNexus/internal/metrics"
+	processmanager "github.com/MDMAtk/HyperNexus/internal/process"
+	"github.com/MDMAtk/HyperNexus/internal/repograph"
+	"github.com/MDMAtk/HyperNexus/internal/session"
+	"github.com/MDMAtk/HyperNexus/internal/skillregistry"
+	"github.com/MDMAtk/HyperNexus/internal/systray"
+	"github.com/MDMAtk/HyperNexus/internal/toolregistry"
+	"github.com/MDMAtk/HyperNexus/internal/workspaces"
 	_ "github.com/glebarez/go-sqlite"
 	"github.com/google/uuid"
 
-	"github.com/MDMAtk/TormentNexus/internal/database"
+	"github.com/MDMAtk/HyperNexus/internal/database"
 )
 
 var sessionExportKnownFormats = []map[string]any{
@@ -76,7 +76,7 @@ var sessionExportKnownFormats = []map[string]any{
 	{"id": "opencode", "type": "opencode", "paths": []string{".docs/ai-logs"}},
 	{"id": "aider", "type": "aider", "paths": []string{".aider.chat.history.md", ".aider.tags.cache"}},
 	{"id": "windsurf", "type": "windsurf", "paths": []string{".windsurf", ".docs/ai-logs"}},
-	{"id": "tormentnexus", "type": "tormentnexus", "paths": []string{".tormentnexus", ".tormentnexus/sessions"}},
+	{"id": "hypernexus", "type": "hypernexus", "paths": []string{".hypernexus", ".hypernexus/sessions"}},
 	{"id": "continue", "type": "continue", "paths": []string{".continue", ".continue/sessions"}},
 	{"id": "copilot", "type": "copilot", "paths": []string{".github/copilot"}},
 }
@@ -316,7 +316,7 @@ type ConfigRuntimeSummary struct {
 	MainConfigDirAvailable         bool `json:"mainConfigDirAvailable"`
 	RepoConfigAvailable            bool `json:"repoConfigAvailable"`
 	MCPConfigAvailable             bool `json:"mcpConfigAvailable"`
-	TormentNexusSubmoduleAvailable bool `json:"tormentnexusSubmoduleAvailable"`
+	HyperNexusSubmoduleAvailable bool `json:"hypernexusSubmoduleAvailable"`
 }
 
 type MemoryRuntimeSummary struct {
@@ -492,7 +492,7 @@ type SummaryBucket struct {
 
 func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	memoryManager := memorystore.NewManager(filepath.Join(cfg.ConfigDir, "memory.json"))
-	codeExecutor := codeexec.NewSandbox(filepath.Join(cfg.WorkspaceRoot, ".tormentnexus", "sandbox"))
+	codeExecutor := codeexec.NewSandbox(filepath.Join(cfg.WorkspaceRoot, ".hypernexus", "sandbox"))
 	server := &Server{
 		cfg:           cfg,
 		memoryManager: memoryManager,
@@ -513,7 +513,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 		darwinState:        newLocalDarwinStateManager(filepath.Join(cfg.WorkspaceRoot, "darwin_state.json")),
 		runtimeServers:     newRuntimeServerRegistry(),
 		supervisorManager:  supervisor.NewManager(supervisor.ManagerOptions{WorktreeRoot: cfg.WorkspaceRoot, PersistencePath: filepath.Join(cfg.ConfigDir, "session-supervisor.json")}),
-		sessionState:       newLocalSessionStateManager(filepath.Join(cfg.WorkspaceRoot, ".tormentnexus-session.json")),
+		sessionState:       newLocalSessionStateManager(filepath.Join(cfg.WorkspaceRoot, ".hypernexus-session.json")),
 		workflowEngine:     workflow.NewEngine(),
 		toolsRegistry:      tools.NewRegistry(),
 		mcpAggregator:      mcp.NewAggregator(),
@@ -614,7 +614,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 		&ai.OpenRouterProvider{APIKey: os.Getenv("OPENROUTER_API_KEY")},
 		&ai.LMStudioProvider{BaseURL: "http://127.0.0.1:1234"},
 	)
-	server.highValueIngestor = hsync.NewHighValueIngestor(filepath.Join(cfg.MainConfigDir, "tormentnexus.db"), server.skillStore, server.mcpConfig)
+	server.highValueIngestor = hsync.NewHighValueIngestor(filepath.Join(cfg.MainConfigDir, "hypernexus.db"), server.skillStore, server.mcpConfig)
 	server.swarmController = orchestration.NewSwarmController(server.a2aBroker)
 	server.mcpPredictor = mcp.NewToolPredictor(server.mcpAggregator)
 	server.supervisorManager.SetPredictor(server.mcpPredictor)
@@ -1084,7 +1084,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/code/exec", s.handleCodeExec)
 	s.mux.HandleFunc("/api/gossip/message", s.handleGossipMessage)
 
-	s.mux.HandleFunc("/api/protocol/tormentnexus", s.handleTormentNexusProtocol)
+	s.mux.HandleFunc("/api/protocol/hypernexus", s.handleHyperNexusProtocol)
 
 	s.mux.HandleFunc("/health", s.handleHealth)
 	s.mux.HandleFunc("/api/shutdown", s.handleShutdown)
@@ -1253,7 +1253,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/native/healer/heal", s.handleNativeHealerHeal)
 	s.mux.HandleFunc("/api/native/healer/history", s.handleNativeHealerHistory)
 	s.mux.HandleFunc("/api/native/healer/vault", s.handleNativeHealerVault)
-	s.mux.HandleFunc("/api/native/protocol/tormentnexus", s.handleTormentNexusProtocol)
+	s.mux.HandleFunc("/api/native/protocol/hypernexus", s.handleHyperNexusProtocol)
 	s.mux.HandleFunc("/api/native/protocol/register", s.handleRegisterProtocol)
 	s.mux.HandleFunc("/api/native/harvester/add", s.handleHarvesterAdd)
 	s.mux.HandleFunc("/api/native/harvester/search", s.handleHarvesterSearch)
@@ -1756,7 +1756,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/cli/tools", s.handleCLITools)
 	s.mux.HandleFunc("/api/cli/harnesses", s.handleHarnesses)
 	s.mux.HandleFunc("/api/cli/summary", s.handleCLISummary)
-	s.mux.HandleFunc("/api/memory/tormentnexus-memory/status", s.handleMemoryStatus)
+	s.mux.HandleFunc("/api/memory/hypernexus-memory/status", s.handleMemoryStatus)
 	s.mux.HandleFunc("/api/import/sources", s.handleImportSources)
 	s.mux.HandleFunc("/api/import/roots", s.handleImportRoots)
 	s.mux.HandleFunc("/api/import/validate", s.handleImportValidate)
@@ -1792,7 +1792,7 @@ func (s *Server) registerRoutes() {
 func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{
 		"ok":        true,
-		"service":   "tormentnexus-go",
+		"service":   "hypernexus-go",
 		"version":   buildinfo.Version,
 		"uptimeSec": int(time.Since(s.startedAt).Seconds()),
 		"baseUrl":   s.cfg.BaseURL(),
@@ -1821,7 +1821,7 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 		"data": APIIndex{
-			Service: "tormentnexus-go",
+			Service: "hypernexus-go",
 			BaseURL: s.cfg.BaseURL(),
 			Routes: []RouteInfo{
 				{Path: "/health", Category: "meta", Description: "Basic service health check."},
@@ -2020,12 +2020,12 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/metrics/provider-breakdown", Category: "ops", Description: "Read provider request, latency, and cost breakdowns, with a local zero-usage Go fallback when the TypeScript metrics router is unavailable."},
 				{Path: "/api/metrics/monitoring", Category: "ops", Description: "Toggle TypeScript metrics monitoring state."},
 				{Path: "/api/metrics/routing-history", Category: "ops", Description: "Read recent LLM routing and failover decisions, with a local empty-state Go fallback when the TypeScript metrics router is unavailable."},
-				{Path: "/api/logs", Category: "ops", Description: "List observability logs, with a local tormentnexus.db fallback when the TypeScript log store is unavailable."},
-				{Path: "/api/logs/summary", Category: "ops", Description: "Read the observability summary rollup, with a local tormentnexus.db fallback when the TypeScript log store is unavailable."},
-				{Path: "/api/logs/clear", Category: "ops", Description: "Clear observability logs, with a local tormentnexus.db fallback when the TypeScript log store is unavailable."},
+				{Path: "/api/logs", Category: "ops", Description: "List observability logs, with a local hypernexus.db fallback when the TypeScript log store is unavailable."},
+				{Path: "/api/logs/summary", Category: "ops", Description: "Read the observability summary rollup, with a local hypernexus.db fallback when the TypeScript log store is unavailable."},
+				{Path: "/api/logs/clear", Category: "ops", Description: "Clear observability logs, with a local hypernexus.db fallback when the TypeScript log store is unavailable."},
 				{Path: "/api/server-health/check", Category: "ops", Description: "Bridge to the TypeScript MCP server health state for a specific server UUID, with a local cached mcp.jsonc metadata fallback when unavailable."},
 				{Path: "/api/server-health/reset", Category: "ops", Description: "Reset the TypeScript MCP server health error state for a specific server UUID."},
-				{Path: "/api/settings", Category: "control", Description: "Bridge to the full TypeScript configuration object, with a local Go .tormentnexus/config.json fallback when unavailable."},
+				{Path: "/api/settings", Category: "control", Description: "Bridge to the full TypeScript configuration object, with a local Go .hypernexus/config.json fallback when unavailable."},
 				{Path: "/api/settings/update", Category: "control", Description: "Update the TypeScript configuration object with a partial config payload."},
 				{Path: "/api/settings/providers", Category: "control", Description: "Read provider visibility, with a local Go provider catalog fallback when the TypeScript settings router is unavailable."},
 				{Path: "/api/settings/test-connection", Category: "control", Description: "Test a provider connection through the TypeScript control plane."},
@@ -2039,7 +2039,7 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/tools/detect-cli-harnesses", Category: "control", Description: "Read CLI harness detection through the TypeScript tools router, with a local Go runtime fallback when the router is unavailable."},
 				{Path: "/api/tools/detect-execution-environment", Category: "control", Description: "Read execution-environment diagnostics through the TypeScript tools router, with a local Go runtime fallback when the router is unavailable."},
 				{Path: "/api/tools/detect-install-surfaces", Category: "control", Description: "Read install-surface artifact detection through the TypeScript tools router, with a local Go filesystem fallback when the router is unavailable."},
-				{Path: "/api/tools/get", Category: "control", Description: "Read a specific tool definition, with a local tormentnexus.db tool inventory fallback when the TypeScript tools router is unavailable."},
+				{Path: "/api/tools/get", Category: "control", Description: "Read a specific tool definition, with a local hypernexus.db tool inventory fallback when the TypeScript tools router is unavailable."},
 				{Path: "/api/tools/create", Category: "control", Description: "Create a tool through the TypeScript control plane."},
 				{Path: "/api/tools/upsert-batch", Category: "control", Description: "Upsert a batch of tools through the TypeScript control plane."},
 				{Path: "/api/tools/delete", Category: "control", Description: "Delete a tool through the TypeScript control plane."},
@@ -2049,11 +2049,11 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/tool-sets/create", Category: "control", Description: "Create a tool set through the TypeScript control plane."},
 				{Path: "/api/tool-sets/update", Category: "control", Description: "Update a tool set through the TypeScript control plane."},
 				{Path: "/api/tool-sets/delete", Category: "control", Description: "Delete a tool set through the TypeScript control plane."},
-				{Path: "/api/project/context", Category: "control", Description: "Bridge to the TypeScript project context document, with a local .tormentnexus/project_context.md fallback when the TypeScript control plane is unavailable."},
+				{Path: "/api/project/context", Category: "control", Description: "Bridge to the TypeScript project context document, with a local .hypernexus/project_context.md fallback when the TypeScript control plane is unavailable."},
 				{Path: "/api/project/context/update", Category: "control", Description: "Update the TypeScript project context document."},
-				{Path: "/api/project/handoffs", Category: "control", Description: "Bridge to TypeScript project handoff metadata, with a local .tormentnexus/handoffs listing fallback when the TypeScript control plane is unavailable."},
+				{Path: "/api/project/handoffs", Category: "control", Description: "Bridge to TypeScript project handoff metadata, with a local .hypernexus/handoffs listing fallback when the TypeScript control plane is unavailable."},
 				{Path: "/api/shell/log", Category: "control", Description: "Log a shell command through the TypeScript shell service."},
-				{Path: "/api/shell/history/query", Category: "control", Description: "Bridge to TypeScript shell history search, with a local .tormentnexus/shell_history.json fallback when unavailable."},
+				{Path: "/api/shell/history/query", Category: "control", Description: "Bridge to TypeScript shell history search, with a local .hypernexus/shell_history.json fallback when unavailable."},
 				{Path: "/api/shell/history/system", Category: "control", Description: "Bridge to recent TypeScript system shell history, with a local shell history file fallback when unavailable."},
 				{Path: "/api/agent/tool", Category: "agents", Description: "Run a tool through the TypeScript agent router."},
 				{Path: "/api/agent/chat", Category: "agents", Description: "Bridge to the TypeScript agent chat surface."},
@@ -2099,8 +2099,8 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/api-keys/validate", Category: "governance", Description: "Validate an API key through the TypeScript API keys router."},
 				{Path: "/api/audit", Category: "governance", Description: "List audit logs through the TypeScript audit router, with a local empty-state fallback when the audit service is unavailable."},
 				{Path: "/api/audit/query", Category: "governance", Description: "Query audit logs through the TypeScript audit router, with a local empty-state fallback when the audit service is unavailable."},
-				{Path: "/api/scripts", Category: "operator", Description: "List saved scripts through the TypeScript saved scripts router, with a local tormentnexus config fallback when unavailable."},
-				{Path: "/api/scripts/get", Category: "operator", Description: "Read a saved script through the TypeScript saved scripts router, with a local tormentnexus config fallback when unavailable."},
+				{Path: "/api/scripts", Category: "operator", Description: "List saved scripts through the TypeScript saved scripts router, with a local hypernexus config fallback when unavailable."},
+				{Path: "/api/scripts/get", Category: "operator", Description: "Read a saved script through the TypeScript saved scripts router, with a local hypernexus config fallback when unavailable."},
 				{Path: "/api/scripts/create", Category: "operator", Description: "Create a saved script through the TypeScript saved scripts router."},
 				{Path: "/api/scripts/update", Category: "operator", Description: "Update a saved script through the TypeScript saved scripts router."},
 				{Path: "/api/scripts/delete", Category: "operator", Description: "Delete a saved script through the TypeScript saved scripts router."},
@@ -2361,14 +2361,14 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/cli/tools", Category: "cli", Description: "Detected local CLI tools and versions."},
 				{Path: "/api/cli/harnesses", Category: "cli", Description: "Harness registry metadata and install visibility."},
 				{Path: "/api/cli/summary", Category: "cli", Description: "Compact CLI and harness readiness summary."},
-				{Path: "/api/memory/tormentnexus-memory/status", Category: "memory", Description: "Read-only sectioned-memory status snapshot."},
+				{Path: "/api/memory/hypernexus-memory/status", Category: "memory", Description: "Read-only sectioned-memory status snapshot."},
 				{Path: "/api/import/roots", Category: "imports", Description: "Explicit import discovery roots and whether they exist."},
 				{Path: "/api/import/sources", Category: "imports", Description: "Discovered import artifacts from explicit roots."},
 				{Path: "/api/import/validate", Category: "imports", Description: "Validation summary for a single import artifact path."},
 				{Path: "/api/import/candidates", Category: "imports", Description: "Validated import candidates with metadata."},
 				{Path: "/api/import/manifest", Category: "imports", Description: "Structured manifest of validated import candidates."},
 				{Path: "/api/import/summary", Category: "imports", Description: "Aggregate summary of validated import candidates."},
-				{Path: "/api/runtime/locks", Category: "runtime", Description: "Visibility into main tormentnexus and kernel lock files."},
+				{Path: "/api/runtime/locks", Category: "runtime", Description: "Visibility into main hypernexus and kernel lock files."},
 				{Path: "/api/runtime/status", Category: "runtime", Description: "Top-level runtime summary across CLI, imports, providers, memory, and sessions."},
 				{Path: "/api/runtime/imported-instructions", Category: "runtime", Description: "Read-only bridge to imported instructions generated by the main fork."},
 				{Path: "/api/startup/status", Category: "runtime", Description: "Truthful kernel startup readiness snapshot, including upstream control-plane dependency state."},
@@ -2871,7 +2871,7 @@ func (s *Server) handleMCPConfiguredServers(w http.ResponseWriter, r *http.Reque
 		"bridge": map[string]any{
 			"fallback":  "go-local-mcp-db",
 			"procedure": "mcpServers.list",
-			"reason":    "upstream unavailable; using local MCP server definitions from tormentnexus.db with JSONC metadata overlay",
+			"reason":    "upstream unavailable; using local MCP server definitions from hypernexus.db with JSONC metadata overlay",
 		},
 	})
 }
@@ -2916,7 +2916,7 @@ func (s *Server) handleMCPConfiguredServerGet(w http.ResponseWriter, r *http.Req
 			"bridge": map[string]any{
 				"fallback":  "go-local-mcp-db",
 				"procedure": "mcpServers.get",
-				"reason":    "upstream unavailable; using local MCP server definition from tormentnexus.db with JSONC metadata overlay",
+				"reason":    "upstream unavailable; using local MCP server definition from hypernexus.db with JSONC metadata overlay",
 			},
 		})
 		return
@@ -2925,11 +2925,11 @@ func (s *Server) handleMCPConfiguredServerGet(w http.ResponseWriter, r *http.Req
 	writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 		"success": false,
 		"error":   "configured MCP server unavailable",
-		"detail":  "upstream unavailable; configured MCP server not present in local tormentnexus.db fallback",
+		"detail":  "upstream unavailable; configured MCP server not present in local hypernexus.db fallback",
 		"bridge": map[string]any{
 			"fallback":  "go-local-mcp-db",
 			"procedure": "mcpServers.get",
-			"reason":    "upstream unavailable; configured MCP server not present in local tormentnexus.db fallback",
+			"reason":    "upstream unavailable; configured MCP server not present in local hypernexus.db fallback",
 		},
 	})
 }
@@ -3716,7 +3716,7 @@ func (s *Server) handleMCPServerTest(w http.ResponseWriter, r *http.Request) {
 		}(),
 		"target": func() string {
 			if targetKind == "router" {
-				return "tormentnexus-router"
+				return "hypernexus-router"
 			}
 			if strings.TrimSpace(serverName) != "" {
 				return serverName
@@ -3725,7 +3725,7 @@ func (s *Server) handleMCPServerTest(w http.ResponseWriter, r *http.Request) {
 		}(),
 		"via": func() string {
 			if targetKind == "router" {
-				return "tormentnexus-router"
+				return "hypernexus-router"
 			}
 			return "direct-downstream"
 		}(),
@@ -3739,7 +3739,7 @@ func (s *Server) handleMCPServerTest(w http.ResponseWriter, r *http.Request) {
 				"kind": targetKind,
 				"displayName": func() string {
 					if targetKind == "router" {
-						return "tormentnexus router"
+						return "hypernexus router"
 					}
 					if strings.TrimSpace(serverName) != "" {
 						return serverName
@@ -3823,7 +3823,7 @@ func buildSuccess(result any, targetKind, operation, serverName, toolName string
 			"kind": targetKind,
 			"displayName": func() string {
 				if targetKind == "router" {
-					return "tormentnexus router"
+					return "hypernexus router"
 				}
 				if strings.TrimSpace(serverName) != "" {
 					return serverName
@@ -5642,14 +5642,14 @@ func (s *Server) handleGraphSymbols(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) handleContextList(w http.ResponseWriter, r *http.Request) {
 	var result any
-	upstreamBase, err := s.callUpstreamJSON(r.Context(), "tormentnexusContext.list", nil, &result)
+	upstreamBase, err := s.callUpstreamJSON(r.Context(), "hypernexusContext.list", nil, &result)
 	if err == nil {
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,
 			"data":    result,
 			"bridge": map[string]any{
 				"upstreamBase": upstreamBase,
-				"procedure":    "tormentnexusContext.list",
+				"procedure":    "hypernexusContext.list",
 			},
 		})
 		return
@@ -5660,34 +5660,34 @@ func (s *Server) handleContextList(w http.ResponseWriter, r *http.Request) {
 		"data":    []string{},
 		"bridge": map[string]any{
 			"fallback":  "go-local-context",
-			"procedure": "tormentnexusContext.list",
+			"procedure": "hypernexusContext.list",
 			"reason":    "upstream unavailable; using local empty context list",
 		},
 	})
 }
 
 func (s *Server) handleContextAdd(w http.ResponseWriter, r *http.Request) {
-	s.handleTRPCBridgeBodyCall(w, r, "tormentnexusContext.add")
+	s.handleTRPCBridgeBodyCall(w, r, "hypernexusContext.add")
 }
 
 func (s *Server) handleContextRemove(w http.ResponseWriter, r *http.Request) {
-	s.handleTRPCBridgeBodyCall(w, r, "tormentnexusContext.remove")
+	s.handleTRPCBridgeBodyCall(w, r, "hypernexusContext.remove")
 }
 
 func (s *Server) handleContextClear(w http.ResponseWriter, r *http.Request) {
-	s.handleTRPCBridgeCall(w, r, http.MethodPost, "tormentnexusContext.clear", nil)
+	s.handleTRPCBridgeCall(w, r, http.MethodPost, "hypernexusContext.clear", nil)
 }
 
 func (s *Server) handleContextPrompt(w http.ResponseWriter, r *http.Request) {
 	var result any
-	upstreamBase, err := s.callUpstreamJSON(r.Context(), "tormentnexusContext.getPrompt", nil, &result)
+	upstreamBase, err := s.callUpstreamJSON(r.Context(), "hypernexusContext.getPrompt", nil, &result)
 	if err == nil {
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,
 			"data":    result,
 			"bridge": map[string]any{
 				"upstreamBase": upstreamBase,
-				"procedure":    "tormentnexusContext.getPrompt",
+				"procedure":    "hypernexusContext.getPrompt",
 			},
 		})
 		return
@@ -5698,7 +5698,7 @@ func (s *Server) handleContextPrompt(w http.ResponseWriter, r *http.Request) {
 		"data":    "",
 		"bridge": map[string]any{
 			"fallback":  "go-local-context",
-			"procedure": "tormentnexusContext.getPrompt",
+			"procedure": "hypernexusContext.getPrompt",
 			"reason":    "upstream unavailable; using local empty context prompt",
 		},
 	})
@@ -6228,7 +6228,7 @@ type localObservabilityLog struct {
 }
 
 func (s *Server) localObservabilityLogs(filter localLogsFilter) ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -6346,7 +6346,7 @@ func (s *Server) localObservabilitySummary(filter localLogsFilter) (map[string]a
 }
 
 func (s *Server) clearLocalObservabilityLogs() error {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return err
 	}
@@ -6510,7 +6510,7 @@ func (s *Server) handleSettingsGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-settings",
 			"procedure": "settings.get",
-			"reason":    "upstream unavailable; using local .tormentnexus config fallback",
+			"reason":    "upstream unavailable; using local .hypernexus config fallback",
 		},
 	})
 }
@@ -6645,7 +6645,7 @@ func (s *Server) handleToolsList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-tool-db",
 			"procedure": "tools.list",
-			"reason":    "upstream unavailable; using local tools from tormentnexus.db",
+			"reason":    "upstream unavailable; using local tools from hypernexus.db",
 		},
 	})
 }
@@ -6686,7 +6686,7 @@ func (s *Server) handleToolsByServer(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-tool-db",
 			"procedure": "tools.listByServer",
-			"reason":    "upstream unavailable; filtering local tools from tormentnexus.db by server",
+			"reason":    "upstream unavailable; filtering local tools from hypernexus.db by server",
 		},
 	})
 }
@@ -6736,7 +6736,7 @@ func (s *Server) handleToolsSearch(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-tool-db",
 			"procedure": "tools.search",
-			"reason":    "upstream unavailable; searching local tools from tormentnexus.db",
+			"reason":    "upstream unavailable; searching local tools from hypernexus.db",
 		},
 	})
 }
@@ -6876,7 +6876,7 @@ func (s *Server) handleToolsGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-tool-db",
 			"procedure": "tools.get",
-			"reason":    "upstream unavailable; using local tool from tormentnexus.db",
+			"reason":    "upstream unavailable; using local tool from hypernexus.db",
 		},
 	})
 }
@@ -6980,7 +6980,7 @@ func (s *Server) handleToolSetsList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "toolSets.list",
-			"reason":    "upstream unavailable; using local tool sets from tormentnexus.db",
+			"reason":    "upstream unavailable; using local tool sets from hypernexus.db",
 		},
 	})
 }
@@ -7022,7 +7022,7 @@ func (s *Server) handleToolSetsGet(w http.ResponseWriter, r *http.Request) {
 				"bridge": map[string]any{
 					"fallback":  "go-local-operator",
 					"procedure": "toolSets.get",
-					"reason":    "upstream unavailable; using local tool set from tormentnexus.db",
+					"reason":    "upstream unavailable; using local tool set from hypernexus.db",
 				},
 			})
 			return
@@ -7032,11 +7032,11 @@ func (s *Server) handleToolSetsGet(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 		"success": false,
 		"error":   "tool set unavailable",
-		"detail":  "upstream unavailable; tool set was not found in local tormentnexus.db",
+		"detail":  "upstream unavailable; tool set was not found in local hypernexus.db",
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "toolSets.get",
-			"reason":    "upstream unavailable; tool set was not found in local tormentnexus.db",
+			"reason":    "upstream unavailable; tool set was not found in local hypernexus.db",
 		},
 	})
 }
@@ -7745,7 +7745,7 @@ func (s *Server) handleWorkflowCanvases(w http.ResponseWriter, r *http.Request) 
 		"bridge": map[string]any{
 			"fallback":  "go-local-workflows-db",
 			"procedure": "workflow.listCanvases",
-			"reason":    "upstream unavailable; using local tormentnexus workflow canvases",
+			"reason":    "upstream unavailable; using local hypernexus workflow canvases",
 		},
 	})
 }
@@ -7782,7 +7782,7 @@ func (s *Server) handleWorkflowCanvas(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-workflows-db",
 			"procedure": "workflow.loadCanvas",
-			"reason":    "upstream unavailable; using local tormentnexus workflow canvas",
+			"reason":    "upstream unavailable; using local hypernexus workflow canvas",
 		},
 	})
 }
@@ -7967,7 +7967,7 @@ func (s *Server) handleAPIKeysList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "apiKeys.list",
-			"reason":    "upstream unavailable; using local tormentnexus workspace API key metadata",
+			"reason":    "upstream unavailable; using local hypernexus workspace API key metadata",
 		},
 	})
 }
@@ -8005,11 +8005,11 @@ func (s *Server) handleAPIKeysGet(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
 			"error":   "API key unavailable",
-			"detail":  "upstream unavailable; API key was not found in local tormentnexus workspace metadata",
+			"detail":  "upstream unavailable; API key was not found in local hypernexus workspace metadata",
 			"bridge": map[string]any{
 				"fallback":  "go-local-policy-db",
 				"procedure": "apiKeys.get",
-				"reason":    "upstream unavailable; API key was not found in local tormentnexus workspace metadata",
+				"reason":    "upstream unavailable; API key was not found in local hypernexus workspace metadata",
 			},
 		})
 		return
@@ -8021,7 +8021,7 @@ func (s *Server) handleAPIKeysGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-policy-db",
 			"procedure": "apiKeys.get",
-			"reason":    "upstream unavailable; using local tormentnexus api key record",
+			"reason":    "upstream unavailable; using local hypernexus api key record",
 		},
 	})
 }
@@ -8168,7 +8168,7 @@ func (s *Server) handleSavedScriptsList(w http.ResponseWriter, r *http.Request) 
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "savedScripts.list",
-			"reason":    "upstream unavailable; using local saved scripts from tormentnexus config",
+			"reason":    "upstream unavailable; using local saved scripts from hypernexus config",
 		},
 	})
 }
@@ -8211,7 +8211,7 @@ func (s *Server) handleSavedScriptsGet(w http.ResponseWriter, r *http.Request) {
 				"bridge": map[string]any{
 					"fallback":  "go-local-operator",
 					"procedure": "savedScripts.get",
-					"reason":    "upstream unavailable; using local saved script from tormentnexus config",
+					"reason":    "upstream unavailable; using local saved script from hypernexus config",
 				},
 			})
 			return
@@ -8221,11 +8221,11 @@ func (s *Server) handleSavedScriptsGet(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 		"success": false,
 		"error":   "saved script unavailable",
-		"detail":  "upstream unavailable; saved script was not found in local tormentnexus config",
+		"detail":  "upstream unavailable; saved script was not found in local hypernexus config",
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "savedScripts.get",
-			"reason":    "upstream unavailable; saved script was not found in local tormentnexus config",
+			"reason":    "upstream unavailable; saved script was not found in local hypernexus config",
 		},
 	})
 }
@@ -8263,7 +8263,7 @@ func (s *Server) handleSavedScriptsCreate(w http.ResponseWriter, r *http.Request
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "savedScripts.create",
-			"reason":    "upstream unavailable; saved script to local TormentNexus config",
+			"reason":    "upstream unavailable; saved script to local HyperNexus config",
 		},
 	})
 }
@@ -8301,7 +8301,7 @@ func (s *Server) handleSavedScriptsUpdate(w http.ResponseWriter, r *http.Request
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "savedScripts.update",
-			"reason":    "upstream unavailable; updated saved script in local TormentNexus config",
+			"reason":    "upstream unavailable; updated saved script in local HyperNexus config",
 		},
 	})
 }
@@ -8339,7 +8339,7 @@ func (s *Server) handleSavedScriptsDelete(w http.ResponseWriter, r *http.Request
 		"bridge": map[string]any{
 			"fallback":  "go-local-operator",
 			"procedure": "savedScripts.delete",
-			"reason":    "upstream unavailable; deleted saved script from local TormentNexus config",
+			"reason":    "upstream unavailable; deleted saved script from local HyperNexus config",
 		},
 	})
 }
@@ -8453,7 +8453,7 @@ func (s *Server) handleLinksBacklogList(w http.ResponseWriter, r *http.Request) 
 		"bridge": map[string]any{
 			"fallback":  "go-local-links-db",
 			"procedure": "linksBacklog.list",
-			"reason":    "upstream unavailable; using local tormentnexus links backlog list",
+			"reason":    "upstream unavailable; using local hypernexus links backlog list",
 		},
 	})
 }
@@ -8489,7 +8489,7 @@ func (s *Server) handleLinksBacklogStats(w http.ResponseWriter, r *http.Request)
 		"bridge": map[string]any{
 			"fallback":  "go-local-links-db",
 			"procedure": "linksBacklog.stats",
-			"reason":    "upstream unavailable; using local tormentnexus links backlog aggregates",
+			"reason":    "upstream unavailable; using local hypernexus links backlog aggregates",
 		},
 	})
 }
@@ -8527,11 +8527,11 @@ func (s *Server) handleLinksBacklogGet(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
 			"error":   "links backlog item unavailable",
-			"detail":  "upstream unavailable; links backlog item was not found in local tormentnexus links backlog",
+			"detail":  "upstream unavailable; links backlog item was not found in local hypernexus links backlog",
 			"bridge": map[string]any{
 				"fallback":  "go-local-links-db",
 				"procedure": "linksBacklog.get",
-				"reason":    "upstream unavailable; links backlog item was not found in local tormentnexus links backlog",
+				"reason":    "upstream unavailable; links backlog item was not found in local hypernexus links backlog",
 			},
 		})
 		return
@@ -8543,7 +8543,7 @@ func (s *Server) handleLinksBacklogGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-links-db",
 			"procedure": "linksBacklog.get",
-			"reason":    "upstream unavailable; using local tormentnexus links backlog record",
+			"reason":    "upstream unavailable; using local hypernexus links backlog record",
 		},
 	})
 }
@@ -8845,7 +8845,7 @@ func (s *Server) handlePoliciesList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-policy-db",
 			"procedure": "policies.list",
-			"reason":    "upstream unavailable; using local tormentnexus policy records",
+			"reason":    "upstream unavailable; using local hypernexus policy records",
 		},
 	})
 }
@@ -8886,7 +8886,7 @@ func (s *Server) handlePoliciesGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-policy-db",
 			"procedure": "policies.get",
-			"reason":    "upstream unavailable; using local tormentnexus policy record",
+			"reason":    "upstream unavailable; using local hypernexus policy record",
 		},
 	})
 }
@@ -8934,7 +8934,7 @@ func (s *Server) handleSecretsList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-policy-db",
 			"procedure": "secrets.list",
-			"reason":    "upstream unavailable; using local tormentnexus workspace secrets metadata",
+			"reason":    "upstream unavailable; using local hypernexus workspace secrets metadata",
 		},
 	})
 }
@@ -9103,7 +9103,7 @@ func (s *Server) handleCatalogList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-published-catalog-db",
 			"procedure": "catalog.list",
-			"reason":    "upstream unavailable; using local tormentnexus published catalog list",
+			"reason":    "upstream unavailable; using local hypernexus published catalog list",
 		},
 	})
 }
@@ -9141,11 +9141,11 @@ func (s *Server) handleCatalogGet(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
 			"error":   "catalog entry unavailable",
-			"detail":  "upstream unavailable; catalog entry was not found in local tormentnexus published catalog",
+			"detail":  "upstream unavailable; catalog entry was not found in local hypernexus published catalog",
 			"bridge": map[string]any{
 				"fallback":  "go-local-published-catalog-db",
 				"procedure": "catalog.get",
-				"reason":    "upstream unavailable; catalog entry was not found in local tormentnexus published catalog",
+				"reason":    "upstream unavailable; catalog entry was not found in local hypernexus published catalog",
 			},
 		})
 		return
@@ -9157,7 +9157,7 @@ func (s *Server) handleCatalogGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-published-catalog-db",
 			"procedure": "catalog.get",
-			"reason":    "upstream unavailable; using local tormentnexus published catalog records",
+			"reason":    "upstream unavailable; using local hypernexus published catalog records",
 		},
 	})
 }
@@ -9206,7 +9206,7 @@ func (s *Server) handleCatalogRuns(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-published-catalog-db",
 			"procedure": "catalog.listRuns",
-			"reason":    "upstream unavailable; using local tormentnexus published catalog validation runs",
+			"reason":    "upstream unavailable; using local hypernexus published catalog validation runs",
 		},
 	})
 }
@@ -9258,7 +9258,7 @@ func (s *Server) handleCatalogStats(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-published-catalog-db",
 			"procedure": "catalog.stats",
-			"reason":    "upstream unavailable; using local tormentnexus published catalog aggregates",
+			"reason":    "upstream unavailable; using local hypernexus published catalog aggregates",
 		},
 	})
 }
@@ -9299,7 +9299,7 @@ func (s *Server) handleCatalogLinkedServers(w http.ResponseWriter, r *http.Reque
 		"bridge": map[string]any{
 			"fallback":  "go-local-published-catalog-db",
 			"procedure": "catalog.listLinkedServers",
-			"reason":    "upstream unavailable; using local tormentnexus linked managed servers",
+			"reason":    "upstream unavailable; using local hypernexus linked managed servers",
 		},
 	})
 }
@@ -9341,11 +9341,11 @@ func (s *Server) handleOAuthClientGet(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
 			"error":   "OAuth client unavailable",
-			"detail":  "upstream unavailable; OAuth client was not found in local tormentnexus oauth clients",
+			"detail":  "upstream unavailable; OAuth client was not found in local hypernexus oauth clients",
 			"bridge": map[string]any{
 				"fallback":  "go-local-oauth-clients-db",
 				"procedure": "oauth.clients.get",
-				"reason":    "upstream unavailable; OAuth client was not found in local tormentnexus oauth clients",
+				"reason":    "upstream unavailable; OAuth client was not found in local hypernexus oauth clients",
 			},
 		})
 		return
@@ -9357,7 +9357,7 @@ func (s *Server) handleOAuthClientGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-oauth-clients-db",
 			"procedure": "oauth.clients.get",
-			"reason":    "upstream unavailable; using local tormentnexus oauth client record",
+			"reason":    "upstream unavailable; using local hypernexus oauth client record",
 		},
 	})
 }
@@ -9399,11 +9399,11 @@ func (s *Server) handleOAuthSessionGetByServer(w http.ResponseWriter, r *http.Re
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
 			"error":   "OAuth session unavailable",
-			"detail":  "upstream unavailable; OAuth session was not found in local tormentnexus oauth sessions",
+			"detail":  "upstream unavailable; OAuth session was not found in local hypernexus oauth sessions",
 			"bridge": map[string]any{
 				"fallback":  "go-local-oauth-sessions-db",
 				"procedure": "oauth.sessions.getByServer",
-				"reason":    "upstream unavailable; OAuth session was not found in local tormentnexus oauth sessions",
+				"reason":    "upstream unavailable; OAuth session was not found in local hypernexus oauth sessions",
 			},
 		})
 		return
@@ -9415,7 +9415,7 @@ func (s *Server) handleOAuthSessionGetByServer(w http.ResponseWriter, r *http.Re
 		"bridge": map[string]any{
 			"fallback":  "go-local-oauth-sessions-db",
 			"procedure": "oauth.sessions.getByServer",
-			"reason":    "upstream unavailable; using local tormentnexus oauth session record",
+			"reason":    "upstream unavailable; using local hypernexus oauth session record",
 		},
 	})
 }
@@ -9686,7 +9686,7 @@ func (s *Server) handleSessionImport(w http.ResponseWriter, r *http.Request) {
 	skipped := 0
 	errorsList := []string{}
 
-	dbPath := filepath.Join(s.cfg.WorkspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(s.cfg.WorkspaceRoot, "hypernexus.db")
 
 	for _, sess := range pkg.Sessions {
 		if payload.Dry {
@@ -9705,7 +9705,7 @@ func (s *Server) handleSessionImport(w http.ResponseWriter, r *http.Request) {
 			SourcePath:        filepath.Join(sess.WorkingDirectory, sess.ID),
 			ExternalSessionID: sess.ID,
 			Title:             sess.Name,
-			SessionFormat:     "tormentnexus-export",
+			SessionFormat:     "hypernexus-export",
 			Transcript:        transcript,
 		}
 
@@ -9728,7 +9728,7 @@ func (s *Server) handleSessionImport(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-session-export",
 			"procedure": "sessionExport.import",
-			"reason":    "upstream unavailable; processed locally via tormentnexus.db",
+			"reason":    "upstream unavailable; processed locally via hypernexus.db",
 		},
 	})
 }
@@ -9879,7 +9879,7 @@ func (s *Server) handleBrowserExtensionListMemories(w http.ResponseWriter, r *ht
 		"bridge": map[string]any{
 			"fallback":  "go-local-browser-memory",
 			"procedure": "browserExtension.listMemories",
-			"reason":    "upstream unavailable; using local browser memories from tormentnexus.db",
+			"reason":    "upstream unavailable; using local browser memories from hypernexus.db",
 		},
 	})
 }
@@ -9918,7 +9918,7 @@ func (s *Server) handleBrowserExtensionStats(w http.ResponseWriter, r *http.Requ
 		"bridge": map[string]any{
 			"fallback":  "go-local-browser-memory",
 			"procedure": "browserExtension.stats",
-			"reason":    "upstream unavailable; using local browser memory stats from tormentnexus.db",
+			"reason":    "upstream unavailable; using local browser memory stats from hypernexus.db",
 		},
 	})
 }
@@ -10626,7 +10626,7 @@ func (s *Server) handleToolChainAliases(w http.ResponseWriter, r *http.Request) 
 		"bridge": map[string]any{
 			"fallback":  "go-local-toolchain-db",
 			"procedure": "toolChaining.listAliases",
-			"reason":    "upstream unavailable; using local tool aliases from tormentnexus.db",
+			"reason":    "upstream unavailable; using local tool aliases from hypernexus.db",
 		},
 	})
 }
@@ -10675,7 +10675,7 @@ func (s *Server) handleToolChainResolveAlias(w http.ResponseWriter, r *http.Requ
 		"bridge": map[string]any{
 			"fallback":  "go-local-toolchain-db",
 			"procedure": "toolChaining.resolveAlias",
-			"reason":    "upstream unavailable; using local tool alias from tormentnexus.db",
+			"reason":    "upstream unavailable; using local tool alias from hypernexus.db",
 		},
 	})
 }
@@ -10710,7 +10710,7 @@ func (s *Server) handleToolChainsList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-toolchain-db",
 			"procedure": "toolChaining.listChains",
-			"reason":    "upstream unavailable; using local tool chains from tormentnexus.db",
+			"reason":    "upstream unavailable; using local tool chains from hypernexus.db",
 		},
 	})
 }
@@ -10747,11 +10747,11 @@ func (s *Server) handleToolChainsGet(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
 			"error":   "tool chain unavailable",
-			"detail":  "upstream unavailable; tool chain was not found in local tormentnexus tool chains",
+			"detail":  "upstream unavailable; tool chain was not found in local hypernexus tool chains",
 			"bridge": map[string]any{
 				"fallback":  "go-local-toolchain-db",
 				"procedure": "toolChaining.getChain",
-				"reason":    "upstream unavailable; tool chain was not found in local tormentnexus tool chains",
+				"reason":    "upstream unavailable; tool chain was not found in local hypernexus tool chains",
 			},
 		})
 		return
@@ -10763,7 +10763,7 @@ func (s *Server) handleToolChainsGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-toolchain-db",
 			"procedure": "toolChaining.getChain",
-			"reason":    "upstream unavailable; using local tool chain from tormentnexus.db",
+			"reason":    "upstream unavailable; using local tool chain from hypernexus.db",
 		},
 	})
 }
@@ -10878,7 +10878,7 @@ func (s *Server) handleBrowserControlsQueryHistory(w http.ResponseWriter, r *htt
 		"bridge": map[string]any{
 			"fallback":  "go-local-browser-data-db",
 			"procedure": "browserControls.queryHistory",
-			"reason":    "upstream unavailable; using local tormentnexus browser history",
+			"reason":    "upstream unavailable; using local hypernexus browser history",
 		},
 	})
 }
@@ -10936,7 +10936,7 @@ func (s *Server) handleBrowserControlsQueryLogs(w http.ResponseWriter, r *http.R
 		"bridge": map[string]any{
 			"fallback":  "go-local-browser-data-db",
 			"procedure": "browserControls.queryConsoleLogs",
-			"reason":    "upstream unavailable; using local tormentnexus browser console logs",
+			"reason":    "upstream unavailable; using local hypernexus browser console logs",
 		},
 	})
 }
@@ -10972,7 +10972,7 @@ func (s *Server) handleBrowserControlsStats(w http.ResponseWriter, r *http.Reque
 		"bridge": map[string]any{
 			"fallback":  "go-local-browser-data-db",
 			"procedure": "browserControls.stats",
-			"reason":    "upstream unavailable; using local tormentnexus browser data stats",
+			"reason":    "upstream unavailable; using local hypernexus browser data stats",
 		},
 	})
 }
@@ -11427,7 +11427,7 @@ func (s *Server) handleRuntimeStatus(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 		"data": RuntimeStatus{
-			Service:   "tormentnexus-go",
+			Service:   "hypernexus-go",
 			Version:   buildinfo.Version,
 			BaseURL:   s.cfg.BaseURL(),
 			UptimeSec: int(time.Since(s.startedAt).Seconds()),
@@ -11440,9 +11440,9 @@ func (s *Server) handleRuntimeStatus(w http.ResponseWriter, r *http.Request) {
 				WorkspaceRootAvailable:         configStatus.WorkspaceRoot.Exists,
 				ConfigDirAvailable:             configStatus.ConfigDir.Exists,
 				MainConfigDirAvailable:         configStatus.MainConfigDir.Exists,
-				RepoConfigAvailable:            configStatus.TormentNexusConfigFile.Exists,
+				RepoConfigAvailable:            configStatus.HyperNexusConfigFile.Exists,
 				MCPConfigAvailable:             configStatus.MCPConfigFile.Exists,
-				TormentNexusSubmoduleAvailable: configStatus.TormentNexusSubmodule.Exists,
+				HyperNexusSubmoduleAvailable: configStatus.HyperNexusSubmodule.Exists,
 			},
 			CLI: CLIRuntimeSummary{
 				ToolCount:                   cliSummary.ToolCount,
@@ -11724,7 +11724,7 @@ func localKnowledgeResources(workspaceRoot string) any {
 }
 
 func (s *Server) localPlanSandboxDir() string {
-	return filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "sandbox")
+	return filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "sandbox")
 }
 
 func (s *Server) localPlanAllDiffs() []map[string]any {
@@ -11812,12 +11812,12 @@ func (s *Server) localPlanSummary() string {
 	}, "\n")
 }
 
-func (s *Server) localTormentNexusDBPath() string {
-	return filepath.Join(s.cfg.WorkspaceRoot, "tormentnexus.db")
+func (s *Server) localHyperNexusDBPath() string {
+	return filepath.Join(s.cfg.WorkspaceRoot, "hypernexus.db")
 }
 
 func (s *Server) localPolicy(uuid string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11861,7 +11861,7 @@ func (s *Server) localPolicy(uuid string) (any, error) {
 }
 
 func (s *Server) localPolicies() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11913,7 +11913,7 @@ func (s *Server) localPolicies() ([]map[string]any, error) {
 }
 
 func (s *Server) localSecrets() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11952,7 +11952,7 @@ func (s *Server) localSecrets() ([]map[string]any, error) {
 }
 
 func (s *Server) localAPIKeys() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12003,7 +12003,7 @@ func (s *Server) localAPIKeys() ([]map[string]any, error) {
 }
 
 func (s *Server) localAPIKey(uuid string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12142,7 +12142,7 @@ func (s *Server) localLinksBacklogList(limit, offset int, search, source, resear
 }
 
 func (s *Server) localOAuthClient(clientID string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12218,7 +12218,7 @@ func (s *Server) localOAuthClient(clientID string) (any, error) {
 }
 
 func (s *Server) localOAuthSessionByServer(serverUUID string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12268,7 +12268,7 @@ func (s *Server) localOAuthSessionByServer(serverUUID string) (any, error) {
 }
 
 func (s *Server) localCatalogGet(uuid string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12384,7 +12384,7 @@ func (s *Server) localMarketplaceLegacyEntries(filter string) ([]map[string]any,
 			"id":          item.Name,
 			"name":        item.Name,
 			"description": "Official Skill",
-			"author":      "tormentnexus Ecosystem",
+			"author":      "hypernexus Ecosystem",
 			"type":        "skill",
 			"source":      "official",
 			"url":         emptyStringToNilAny(item.URL),
@@ -12448,7 +12448,7 @@ func (s *Server) localMarketplaceSkillInstalled(id string) bool {
 	if strings.TrimSpace(id) == "" {
 		return false
 	}
-	_, err := os.Stat(filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "skills", id))
+	_, err := os.Stat(filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "skills", id))
 	return err == nil
 }
 
@@ -12504,7 +12504,7 @@ func (s *Server) localCatalogRuns(serverUUID string, limit int) ([]map[string]an
 		limit = 10
 	}
 
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12539,7 +12539,7 @@ func (s *Server) localCatalogRuns(serverUUID string, limit int) ([]map[string]an
 }
 
 func (s *Server) localCatalogStats() (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12585,7 +12585,7 @@ func (s *Server) localCatalogStats() (any, error) {
 }
 
 func (s *Server) localCatalogLinkedServers(publishedServerUUID string) ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12625,7 +12625,7 @@ func (s *Server) localCatalogList(limit, offset int, search, status, transport, 
 		offset = 0
 	}
 
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12803,7 +12803,7 @@ func (s *Server) localBrowserHistoryQuery(query string, limit int, since int64, 
 		limit = 50
 	}
 
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12871,7 +12871,7 @@ func (s *Server) localBrowserConsoleLogsQuery(level, search string, limit int) (
 		limit = 100
 	}
 
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12937,7 +12937,7 @@ func (s *Server) localBrowserConsoleLogsQuery(level, search string, limit int) (
 }
 
 func (s *Server) localBrowserControlsStats() (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13001,7 +13001,7 @@ func (s *Server) localBrowserExtensionMemories(search, tag string, limit, offset
 		offset = 0
 	}
 
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13094,7 +13094,7 @@ func (s *Server) localBrowserExtensionMemories(search, tag string, limit, offset
 }
 
 func (s *Server) localBrowserExtensionStats() (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13287,7 +13287,7 @@ func (s *Server) localUnifiedDirectoryStats() (any, error) {
 }
 
 func (s *Server) localWorkflowCanvases() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13318,7 +13318,7 @@ func (s *Server) localWorkflowCanvases() ([]map[string]any, error) {
 }
 
 func (s *Server) localWorkflowCanvas(id string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13341,7 +13341,7 @@ func (s *Server) localWorkflowCanvas(id string) (any, error) {
 }
 
 func (s *Server) localAuditLogs(filter localAuditFilter) ([]map[string]any, error) {
-	logPath := filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "audit", "audit-"+time.Now().UTC().Format("2006-01-02")+".jsonl")
+	logPath := filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "audit", "audit-"+time.Now().UTC().Format("2006-01-02")+".jsonl")
 	raw, err := os.ReadFile(logPath)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
@@ -14161,7 +14161,7 @@ func coalesceSubmoduleName(name string, modulePath string) string {
 
 func localProjectContext(workspaceRoot string) string {
 	const defaultContent = "# Project Context\n\nDefine your repository rules and architectural vision here."
-	content, err := os.ReadFile(filepath.Join(workspaceRoot, ".tormentnexus", "project_context.md"))
+	content, err := os.ReadFile(filepath.Join(workspaceRoot, ".hypernexus", "project_context.md"))
 	if err != nil {
 		return defaultContent
 	}
@@ -14169,7 +14169,7 @@ func localProjectContext(workspaceRoot string) string {
 }
 
 func localProjectHandoffs(workspaceRoot string) []map[string]any {
-	entries, err := os.ReadDir(filepath.Join(workspaceRoot, ".tormentnexus", "handoffs"))
+	entries, err := os.ReadDir(filepath.Join(workspaceRoot, ".hypernexus", "handoffs"))
 	if err != nil {
 		return []map[string]any{}
 	}
@@ -14210,12 +14210,12 @@ func localProjectHandoffs(workspaceRoot string) []map[string]any {
 }
 
 func localInfrastructureStatus(workspaceRoot string) map[string]any {
-	infraBinary := strings.TrimSpace(os.Getenv("TORMENTNEXUS_INFRA_BINARY"))
+	infraBinary := strings.TrimSpace(os.Getenv("HYPERNEXUS_INFRA_BINARY"))
 	if infraBinary == "" {
 		infraBinary = "mcpetes"
 	}
 
-	infraSubmoduleDir := strings.TrimSpace(os.Getenv("TORMENTNEXUS_INFRA_SUBMODULE"))
+	infraSubmoduleDir := strings.TrimSpace(os.Getenv("HYPERNEXUS_INFRA_SUBMODULE"))
 	if infraSubmoduleDir == "" {
 		infraSubmoduleDir = infraBinary
 	}
@@ -14259,7 +14259,7 @@ func localSettingsEnvironment() map[string]any {
 }
 
 func localSettingsConfig(workspaceRoot string) map[string]any {
-	configPath := filepath.Join(workspaceRoot, ".tormentnexus", "config.json")
+	configPath := filepath.Join(workspaceRoot, ".hypernexus", "config.json")
 	raw, err := os.ReadFile(configPath)
 	if err != nil {
 		return map[string]any{}
@@ -14276,7 +14276,7 @@ func localSettingsConfig(workspaceRoot string) map[string]any {
 }
 
 func writeLocalSettingsConfig(workspaceRoot string, config map[string]any) error {
-	configDir := filepath.Join(workspaceRoot, ".tormentnexus")
+	configDir := filepath.Join(workspaceRoot, ".hypernexus")
 	if err := os.MkdirAll(configDir, 0o755); err != nil {
 		return err
 	}
@@ -14453,7 +14453,7 @@ func (s *Server) localExecuteSavedScript(targetUUID string) (any, error) {
 }
 
 func (s *Server) localToolSets() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14519,7 +14519,7 @@ func (s *Server) localToolSets() ([]map[string]any, error) {
 }
 
 func (s *Server) localToolChains() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14574,7 +14574,7 @@ func (s *Server) localToolChains() ([]map[string]any, error) {
 }
 
 func (s *Server) localToolChain(id string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14664,7 +14664,7 @@ func localToolChainSteps(db *sql.DB, chainID string) ([]map[string]any, error) {
 }
 
 func (s *Server) localToolAliases() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14711,7 +14711,7 @@ func (s *Server) localToolAliases() ([]map[string]any, error) {
 }
 
 func (s *Server) localToolAlias(name string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14795,7 +14795,7 @@ func scanLocalDBTool(scanner localDBToolScanner) (map[string]any, error) {
 }
 
 func (s *Server) localDBTools() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14878,7 +14878,7 @@ func (s *Server) localDBTool(uuid string) (any, error) {
 }
 
 func (s *Server) localShellQueryHistory(query string, limit int) ([]map[string]any, error) {
-	historyPath := filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "shell_history.json")
+	historyPath := filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "shell_history.json")
 	raw, err := os.ReadFile(historyPath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -14977,7 +14977,7 @@ func normalizeResearchURL(raw string) string {
 
 func (s *Server) localResearchQueue() (map[string]any, error) {
 	statusPath := filepath.Join(s.cfg.WorkspaceRoot, "scripts", "ingestion-status.json")
-	indexPath := filepath.Join(s.cfg.WorkspaceRoot, "TORMENTNEXUS_MASTER_INDEX.jsonc")
+	indexPath := filepath.Join(s.cfg.WorkspaceRoot, "HYPERNEXUS_MASTER_INDEX.jsonc")
 
 	var statusDoc struct {
 		Processed []string `json:"processed"`
@@ -15224,7 +15224,7 @@ func (s *Server) localExecutionEnvironment(ctx context.Context) (map[string]any,
 
 	notes := []string{}
 	if strings.TrimSpace(preferredShellLabel) != "" {
-		notes = append(notes, "Prefer "+preferredShellLabel+" for default tormentnexus shell execution on this host.")
+		notes = append(notes, "Prefer "+preferredShellLabel+" for default hypernexus shell execution on this host.")
 	}
 	if supportsPosixShell {
 		for _, shell := range shells {
@@ -15265,12 +15265,12 @@ func (s *Server) localExecutionEnvironment(ctx context.Context) (map[string]any,
 func (s *Server) localInstallSurfaces() []map[string]any {
 	workspaceRoot := s.cfg.WorkspaceRoot
 	chromiumPath := firstExistingRelativePath(workspaceRoot, []string{
-		filepath.Join("apps", "tormentnexus-extension", "dist-chromium"),
+		filepath.Join("apps", "hypernexus-extension", "dist-chromium"),
 		filepath.Join("apps", "extension", "dist"),
-		filepath.Join("apps", "tormentnexus-extension", "dist"),
+		filepath.Join("apps", "hypernexus-extension", "dist"),
 	})
 	firefoxBundlePath := firstExistingRelativePath(workspaceRoot, []string{
-		filepath.Join("apps", "tormentnexus-extension", "dist-firefox"),
+		filepath.Join("apps", "hypernexus-extension", "dist-firefox"),
 	})
 	firefoxManifestPath := firstExistingRelativePath(workspaceRoot, []string{
 		filepath.Join("apps", "extension", "manifest.firefox.json"),
@@ -15285,12 +15285,12 @@ func (s *Server) localInstallSurfaces() []map[string]any {
 		installSurfaceArtifact("browser-extension-chromium", chromiumPath != "", chromiumPath, chromiumArtifactKind(chromiumPath), map[bool]string{
 			true:  "Unpacked Chromium-compatible browser extension output is available.",
 			false: "Build the browser extension to generate a Chromium/Edge unpacked bundle.",
-		}, packageVersion(workspaceRoot, filepath.Join("apps", "tormentnexus-extension", "package.json")), workspaceRoot),
+		}, packageVersion(workspaceRoot, filepath.Join("apps", "hypernexus-extension", "package.json")), workspaceRoot),
 		firefoxInstallSurface(workspaceRoot, firefoxBundlePath, firefoxManifestPath),
 		vscodeInstallSurface(workspaceRoot, vscodeBuildPath),
 		installSurfaceArtifact("mcp-client-sync", mcpConfigPath != "", mcpConfigPath, mcpConfigArtifactKind(mcpConfigPath), map[bool]string{
-			true:  "tormentnexus-managed MCP config source is present for dashboard sync and preview flows.",
-			false: "No tormentnexus MCP config source file was detected yet.",
+			true:  "hypernexus-managed MCP config source is present for dashboard sync and preview flows.",
+			false: "No hypernexus MCP config source file was detected yet.",
 		}, "", workspaceRoot),
 	}
 }
@@ -15391,8 +15391,8 @@ func fallbackControlTools(definitions []harnesses.Definition) []map[string]any {
 
 func definitionDescriptionName(id string, description string) string {
 	switch id {
-	case "tormentnexus":
-		return "tormentnexus"
+	case "hypernexus":
+		return "hypernexus"
 	case "claude":
 		return "Claude Code"
 	case "codex":
@@ -15427,8 +15427,8 @@ func definitionDescriptionName(id string, description string) string {
 
 func harnessHomepage(id string) string {
 	switch id {
-	case "tormentnexus":
-		return "https://github.com/MDMAtk/TormentNexus"
+	case "hypernexus":
+		return "https://github.com/MDMAtk/HyperNexus"
 	case "aider":
 		return "https://aider.chat/"
 	case "antigravity":
@@ -15464,8 +15464,8 @@ func harnessHomepage(id string) string {
 
 func harnessDocsURL(id string) string {
 	switch id {
-	case "tormentnexus":
-		return "https://github.com/MDMAtk/TormentNexus"
+	case "hypernexus":
+		return "https://github.com/MDMAtk/HyperNexus"
 	case "aider":
 		return "https://aider.chat/docs/"
 	case "antigravity":
@@ -15501,12 +15501,12 @@ func harnessDocsURL(id string) string {
 
 func harnessInstallHint(id string) string {
 	switch id {
-	case "tormentnexus":
-		return "Use tormentnexus's tracked `submodules/tormentnexus` checkout or install tormentnexus and ensure `tormentnexus` is on PATH."
+	case "hypernexus":
+		return "Use hypernexus's tracked `submodules/hypernexus` checkout or install hypernexus and ensure `hypernexus` is on PATH."
 	case "aider":
 		return "pip install aider-chat"
 	case "antigravity":
-		return "Download the Antigravity desktop app from https://antigravity.google/download and launch it directly; tormentnexus does not currently detect it as a PATH CLI."
+		return "Download the Antigravity desktop app from https://antigravity.google/download and launch it directly; hypernexus does not currently detect it as a PATH CLI."
 	case "claude":
 		return "npm install -g @anthropic-ai/claude-code"
 	case "codex":
@@ -15547,7 +15547,7 @@ func harnessCategory(id string) string {
 
 func harnessSessionCapable(id string) bool {
 	switch id {
-	case "tormentnexus", "aider", "claude", "codex", "gemini", "opencode", "superai-cli", "codebuff", "codemachine", "factory-droid":
+	case "hypernexus", "aider", "claude", "codex", "gemini", "opencode", "superai-cli", "codebuff", "codemachine", "factory-droid":
 		return true
 	default:
 		return false
@@ -15580,7 +15580,7 @@ func localExecutionShells() []map[string]any {
 			"resolvedPath": lookupPath("pwsh"),
 			"version":      nil,
 			"preferred":    false,
-			"notes":        []string{"Preferred tormentnexus shell on Windows for general command execution and structured scripting."},
+			"notes":        []string{"Preferred hypernexus shell on Windows for general command execution and structured scripting."},
 		},
 		{
 			"id":           "powershell",
@@ -15711,7 +15711,7 @@ func firefoxInstallSurface(workspaceRoot string, bundlePath string, manifestPath
 		"artifactPath":    emptyStringToNilAny(artifactPath),
 		"artifactKind":    emptyStringToNilAny(artifactKind),
 		"detail":          detail,
-		"declaredVersion": emptyStringToNilAny(packageVersion(workspaceRoot, filepath.Join("apps", "tormentnexus-extension", "package.json"))),
+		"declaredVersion": emptyStringToNilAny(packageVersion(workspaceRoot, filepath.Join("apps", "hypernexus-extension", "package.json"))),
 		"lastModifiedAt":  lastModifiedAtIfPresent(workspaceRoot, artifactPath),
 	}
 }
@@ -15738,12 +15738,12 @@ func vscodeInstallSurface(workspaceRoot string, buildPath string) map[string]any
 
 func chromiumArtifactKind(path string) string {
 	switch path {
-	case filepath.Join("apps", "tormentnexus-extension", "dist-chromium"):
+	case filepath.Join("apps", "hypernexus-extension", "dist-chromium"):
 		return "Chromium unpacked bundle"
 	case filepath.Join("apps", "extension", "dist"):
 		return "Legacy extension dist bundle"
-	case filepath.Join("apps", "tormentnexus-extension", "dist"):
-		return "Generic tormentnexus-extension dist bundle"
+	case filepath.Join("apps", "hypernexus-extension", "dist"):
+		return "Generic hypernexus-extension dist bundle"
 	default:
 		return ""
 	}
@@ -16078,7 +16078,7 @@ func localFallbackToolSchema(payload map[string]any) (map[string]any, error) {
 }
 
 func (s *Server) localMCPRegistrySnapshot() ([]map[string]any, error) {
-	indexPath := filepath.Join(s.cfg.WorkspaceRoot, "TORMENTNEXUS_MASTER_INDEX.jsonc")
+	indexPath := filepath.Join(s.cfg.WorkspaceRoot, "HYPERNEXUS_MASTER_INDEX.jsonc")
 	content, err := os.ReadFile(indexPath)
 	if err != nil {
 		return nil, err
@@ -16194,7 +16194,7 @@ func (s *Server) localMCPJsoncEditor() (map[string]any, error) {
 	}
 	return map[string]any{
 		"path":    jsoncPath,
-		"content": "// tormentnexus MCP configuration\n" + prettyJSON(fallback) + "\n",
+		"content": "// hypernexus MCP configuration\n" + prettyJSON(fallback) + "\n",
 	}, nil
 }
 
@@ -16214,7 +16214,7 @@ func (s *Server) saveLocalMCPJsonc(content string) error {
 		return err
 	}
 
-	jsoncBody := "// tormentnexus MCP configuration\n// This file is tormentnexus-owned and may include cached server metadata under mcpServers.<name>._meta.\n" + prettyJSON(parsed) + "\n"
+	jsoncBody := "// hypernexus MCP configuration\n// This file is hypernexus-owned and may include cached server metadata under mcpServers.<name>._meta.\n" + prettyJSON(parsed) + "\n"
 	if err := os.WriteFile(jsoncPath, []byte(jsoncBody), 0o644); err != nil {
 		return err
 	}
@@ -16234,7 +16234,7 @@ func (s *Server) saveLocalMCPJsonc(content string) error {
 }
 
 func (s *Server) localMemoryContexts() ([]map[string]any, error) {
-	contextsPath := filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "memory", "contexts.json")
+	contextsPath := filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "memory", "contexts.json")
 	raw, err := os.ReadFile(contextsPath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -16359,7 +16359,7 @@ func (s *Server) localAgentMemoryStats() (map[string]any, error) {
 }
 
 func (s *Server) localAgentMemories() ([]localAgentMemoryRecord, error) {
-	memoriesPath := filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "agent_memory", "memories.json")
+	memoriesPath := filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "agent_memory", "memories.json")
 	raw, err := os.ReadFile(memoriesPath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -17373,7 +17373,7 @@ func (s *Server) localConfiguredMCPServers() ([]map[string]any, error) {
 }
 
 func (s *Server) localConfiguredMCPServersFromDB() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -17425,7 +17425,7 @@ func (s *Server) localConfiguredMCPServersFromDB() ([]map[string]any, error) {
 }
 
 func (s *Server) localConfiguredMCPServerFromDB(uuid string) (map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -17488,7 +17488,7 @@ func (s *Server) localConfiguredMCPServerMetaByName() (map[string]any, error) {
 }
 
 func (s *Server) localWorkspaceSecretEnv() (map[string]string, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -17683,7 +17683,7 @@ func (s *Server) localSaveSkill(payload map[string]any) (map[string]any, error) 
 func (s *Server) localSkillRoots() []string {
 	return []string{
 		filepath.Join(s.cfg.WorkspaceRoot, "packages", "core", "src", "skills"),
-		filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "skills"),
+		filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "skills"),
 	}
 }
 
@@ -18348,7 +18348,7 @@ func localSessionExportFormatDetection(raw string) map[string]any {
 			if sessions, ok := record["sessions"].([]any); ok {
 				_ = sessions
 				return map[string]any{
-					"format": "tormentnexus-export",
+					"format": "hypernexus-export",
 					"valid":  true,
 				}
 			}
@@ -18602,7 +18602,7 @@ func (s *Server) scanValidatedImportSources() ([]sessionimport.ValidationResult,
 }
 
 func (s *Server) importedSessionsArchiveRoot() string {
-	return filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "imported_sessions", "archive")
+	return filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "imported_sessions", "archive")
 }
 
 func readGzipJSON(filePath string, target any) error {

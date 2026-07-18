@@ -68,7 +68,7 @@ func (d *DeploymentManager) Build(ctx context.Context) error {
 func (d *DeploymentManager) Containerize(ctx context.Context) error {
 	fmt.Printf("[*] [%s] Building container images...\n", d.Environment)
 
-	dockerCmd := exec.CommandContext(ctx, "docker", "build", "-t", "tormentnexus:latest", ".")
+	dockerCmd := exec.CommandContext(ctx, "docker", "build", "-t", "hypernexus:latest", ".")
 	if _, err := dockerCmd.CombinedOutput(); err != nil {
 		fmt.Printf("[!] Docker build warning: %v\n", err)
 	} else {

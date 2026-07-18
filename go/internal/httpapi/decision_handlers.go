@@ -15,16 +15,16 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/cache"
-	"github.com/MDMAtk/TormentNexus/internal/ctxharvester"
-	"github.com/MDMAtk/TormentNexus/internal/eventbus"
-	"github.com/MDMAtk/TormentNexus/internal/healer"
-	"github.com/MDMAtk/TormentNexus/internal/mcp"
-	"github.com/MDMAtk/TormentNexus/internal/metrics"
-	processmanager "github.com/MDMAtk/TormentNexus/internal/process"
-	"github.com/MDMAtk/TormentNexus/internal/session"
-	"github.com/MDMAtk/TormentNexus/internal/toolregistry"
-	"github.com/MDMAtk/TormentNexus/internal/workspaces"
+	"github.com/MDMAtk/HyperNexus/internal/cache"
+	"github.com/MDMAtk/HyperNexus/internal/ctxharvester"
+	"github.com/MDMAtk/HyperNexus/internal/eventbus"
+	"github.com/MDMAtk/HyperNexus/internal/healer"
+	"github.com/MDMAtk/HyperNexus/internal/mcp"
+	"github.com/MDMAtk/HyperNexus/internal/metrics"
+	processmanager "github.com/MDMAtk/HyperNexus/internal/process"
+	"github.com/MDMAtk/HyperNexus/internal/session"
+	"github.com/MDMAtk/HyperNexus/internal/toolregistry"
+	"github.com/MDMAtk/HyperNexus/internal/workspaces"
 )
 
 // ==================== MCP Decision System ====================

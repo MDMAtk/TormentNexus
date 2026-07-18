@@ -419,7 +419,7 @@ func HandlePokemonTCG(ctx context.Context, args map[string]interface{}) (ToolRes
 	}
 	u := fmt.Sprintf("https://api.pokemontcg.io/v2/cards?q=%s&pageSize=%d", url.QueryEscape(filter), n)
 	req, _ := http.NewRequestWithContext(ctx, "GET", u, nil)
-	req.Header.Set("User-Agent", "TormentNexus/1.0")
+	req.Header.Set("User-Agent", "HyperNexus/1.0")
 
 	resp, apiErr := batch6API.Do(req)
 	if apiErr != nil {

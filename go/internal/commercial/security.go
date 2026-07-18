@@ -31,7 +31,7 @@ type CommercialConfig struct {
 
 // NewCommercialWrapper creates a new wrapper with the given provider.
 func NewCommercialWrapper(provider SecurityProvider, workspaceRoot string) *CommercialWrapper {
-	cfgPath := filepath.Join(workspaceRoot, ".tormentnexus", "commercial_config.json")
+	cfgPath := filepath.Join(workspaceRoot, ".hypernexus", "commercial_config.json")
 	ew := &CommercialWrapper{
 		provider:   provider,
 		configPath: cfgPath,
@@ -102,7 +102,7 @@ func (ew *CommercialWrapper) Info() map[string]any {
 
 	return map[string]any{
 		"valid":       true,
-		"licensedTo":  "TormentNexus Commercial",
+		"licensedTo":  "HyperNexus Commercial",
 		"tier":        "commercial",
 		"maxNodes":    10,
 		"features":    []string{"sso", "rbac", "audit", "encryption"},

@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 // L3ColdArchive implements the L3 cold storage tier for long-term compressed
 // memory.  Memories that have decayed below a heat threshold are moved here

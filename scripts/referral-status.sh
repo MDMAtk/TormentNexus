@@ -1,11 +1,11 @@
 #!/bin/bash
-# TormentNexus — Referral System
+# HyperNexus — Referral System
 # Track referrals and give credits
 
-DB="/opt/tormentnexus/catalog.db"
-REFDB="/opt/tormentnexus/data/referrals.db"
+DB="/opt/hypernexus/catalog.db"
+REFDB="/opt/hypernexus/data/referrals.db"
 
-mkdir -p /opt/tormentnexus/data
+mkdir -p /opt/hypernexus/data
 
 # Create referrals table if not exists
 sqlite3 "$REFDB" <<"SQL"

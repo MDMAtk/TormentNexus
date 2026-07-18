@@ -33,9 +33,9 @@ func TestVerifyLicense(t *testing.T) {
 	sig := ed25519.Sign(privKey, []byte(msg))
 	sigHex := hex.EncodeToString(sig)
 
-	// Write mock tormentnexus.lic
+	// Write mock hypernexus.lic
 	licContent := fmt.Sprintf("holder: %s\nseats: %d\nexpires_at: %s\nsignature: %s\n", holder, seats, expiresAt, sigHex)
-	licPath := filepath.Join(tempDir, "tormentnexus.lic")
+	licPath := filepath.Join(tempDir, "hypernexus.lic")
 	if err := os.WriteFile(licPath, []byte(licContent), 0644); err != nil {
 		t.Fatalf("failed to write test license file: %v", err)
 	}

@@ -5,4 +5,4 @@ package buildinfo
 var Version = "1.0.0-b1"
 
 // ProductName is the display name of the product.
-const ProductName = "TormentNexus"
+const ProductName = "HyperNexus"

@@ -234,7 +234,7 @@ func HandleGitHubTrending(ctx context.Context, args map[string]interface{}) (Too
 	u := fmt.Sprintf("https://api.github.com/search/repositories?q=%s&sort=stars&order=desc&per_page=%d", url.QueryEscape(q), n)
 	req, _ := http.NewRequestWithContext(ctx, "GET", u, nil)
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
-	req.Header.Set("User-Agent", "TormentNexus/1.0")
+	req.Header.Set("User-Agent", "HyperNexus/1.0")
 
 	resp, apiErr := batch5API.Do(req)
 	if apiErr != nil {

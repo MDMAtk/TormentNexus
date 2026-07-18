@@ -9,10 +9,10 @@ import (
 	"os"
 )
 
-var defaultKey = []byte("tormentnexus-mesh-encryption-key") // 32 bytes
+var defaultKey = []byte("hypernexus-mesh-encryption-key") // 32 bytes
 
 func init() {
-	if envKey := os.Getenv("TORMENTNEXUS_GOSSIP_SHARED_KEY"); envKey != "" {
+	if envKey := os.Getenv("HYPERNEXUS_GOSSIP_SHARED_KEY"); envKey != "" {
 		keyBytes := []byte(envKey)
 		if len(keyBytes) > 0 {
 			defaultKey = keyBytes

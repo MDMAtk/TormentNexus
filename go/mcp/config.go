@@ -1,8 +1,8 @@
 package mcp
 
-import "github.com/MDMAtk/TormentNexus/foundation/adapters"
+import "github.com/MDMAtk/HyperNexus/foundation/adapters"
 
-// Config binds the ~/.tormentnexus/mcp.json native parsing.
+// Config binds the ~/.hypernexus/mcp.json native parsing.
 type Config struct {
 	MCPServers map[string]ServerConfig `json:"mcpServers"`
 }

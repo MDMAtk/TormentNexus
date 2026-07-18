@@ -1,13 +1,13 @@
 version: "3.8"
 
 services:
-  tormentnexus:
-    image: tormentnexus/tormentnexus:latest
-    container_name: tormentnexus
+  hypernexus:
+    image: hypernexus/hypernexus:latest
+    container_name: hypernexus
     ports:
       - "7778:7778"
     volumes:
-      - tormentnexus-data:/root/.tormentnexus
+      - hypernexus-data:/root/.hypernexus
     environment:
       - TN_HOST=0.0.0.0
       - TN_PORT=7778
@@ -20,5 +20,5 @@ services:
       retries: 3
 
 volumes:
-  tormentnexus-data:
+  hypernexus-data:
     driver: local

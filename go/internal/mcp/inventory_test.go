@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 func TestLoadConfigServersFromJSONC(t *testing.T) {
 	configDir := t.TempDir()
@@ -67,7 +67,7 @@ func TestLoadInventoryFromConfigAndDatabase(t *testing.T) {
 		t.Fatalf("failed to write mcp.json: %v", err)
 	}
 
-	db, err := database.Open("sqlite", filepath.Join(workspace, "tormentnexus.db"))
+	db, err := database.Open("sqlite", filepath.Join(workspace, "hypernexus.db"))
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
 	}

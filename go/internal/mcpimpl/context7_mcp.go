@@ -29,7 +29,7 @@ func HandleSearchLibraries(ctx context.Context, args map[string]interface{}) (To
 	if reqErr != nil {
 		return err(fmt.Sprintf("request build: %v", reqErr))
 	}
-	req.Header.Set("User-Agent", "TormentNexus/1.0")
+	req.Header.Set("User-Agent", "HyperNexus/1.0")
 
 	resp, doErr := context7HTTP.Do(req)
 	if doErr != nil {
@@ -91,7 +91,7 @@ func HandleFetchLibraryContext(ctx context.Context, args map[string]interface{})
 	if reqErr != nil {
 		return err(fmt.Sprintf("request build: %v", reqErr))
 	}
-	req.Header.Set("User-Agent", "TormentNexus/1.0")
+	req.Header.Set("User-Agent", "HyperNexus/1.0")
 
 	resp, doErr := context7HTTP.Do(req)
 	if doErr != nil {

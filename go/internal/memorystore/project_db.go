@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 // ─── Project .memdb Schema ────────────────────────────────────────────
 

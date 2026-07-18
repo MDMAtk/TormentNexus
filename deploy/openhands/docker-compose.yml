@@ -12,20 +12,20 @@ services:
       - SANDBOX_RUNTIME_CONTAINER_IMAGE=ghcr.io/all-hands-ai/openhands-sandbox
       - LLM_API_KEY=${OPENAI_API_KEY}
       - LLM_MODEL=gpt-4o
-      - TORMENTNEXUS_URL=http://tormentnexus:7778
+      - HYPERNEXUS_URL=http://hypernexus:7778
     depends_on:
-      - tormentnexus
+      - hypernexus
     restart: always
 
-  tormentnexus:
-    image: tormentnexus-core:latest
+  hypernexus:
+    image: hypernexus-core:latest
     ports:
       - "7778:7778"
     volumes:
-      - tormentnexus_data:/data
+      - hypernexus_data:/data
     environment:
-      - TORMENTNEXUS_WORKSPACE_ROOT=/data
+      - HYPERNEXUS_WORKSPACE_ROOT=/data
     restart: always
 
 volumes:
-  tormentnexus_data:
+  hypernexus_data:

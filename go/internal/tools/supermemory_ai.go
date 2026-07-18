@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
-	"github.com/MDMAtk/TormentNexus/internal/memorystore"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/memorystore"
 )
 
 // TN-native memory tool handlers.

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# tormentnexus-dev.sh — Quick development launcher
-# Usage: ./scripts/tormentnexus-dev.sh [--skip-go] [--skip-install]
+# hypernexus-dev.sh — Quick development launcher
+# Usage: ./scripts/hypernexus-dev.sh [--skip-go] [--skip-install]
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -30,8 +30,8 @@ fi
 # 2. Build TN Kernel
 if [ "$SKIP_GO" = false ] && command -v go &>/dev/null; then
 	echo "[2/4] Building TN Kernel..."
-	(cd go && go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/buildinfo.Version=${VER}" -buildvcs=false -o ../bin/tormentnexus ./cmd/tormentnexus)
-	echo "      ✓ bin/tormentnexus built"
+	(cd go && go build -ldflags "-X gitlab.com/robertpelloni/HyperNexus/internal/buildinfo.Version=${VER}" -buildvcs=false -o ../bin/hypernexus ./cmd/hypernexus)
+	echo "      ✓ bin/hypernexus built"
 else
 	echo "[2/4] Skipping Go build"
 fi
@@ -46,8 +46,8 @@ echo "[4/4] Starting services..."
 echo ""
 
 # TN Kernel (background)
-if [ -x bin/tormentnexus ]; then
-	bin/tormentnexus -port 4300 &>/dev/null &
+if [ -x bin/hypernexus ]; then
+	bin/hypernexus -port 4300 &>/dev/null &
 	GO_PID=$!
 	echo "  TN Kernel:  http://127.0.0.1:4300 (PID $GO_PID)"
 fi

@@ -88,7 +88,7 @@ func HandleStorybloqLoad(ctx context.Context, args map[string]interface{}) (Tool
 	if storyID == "" {
 		return err("storyId is required")
 	}
-	return ok(fmt.Sprintf("📜 Storybloq loaded: %s\nStory: \"Project context from previous session. Working on MCP server implementation for TormentNexus.\"\nProgress: 73%% complete\nLast active: %s", storyID, time.Now().Add(-2*time.Hour).Format("15:04:05")))
+	return ok(fmt.Sprintf("📜 Storybloq loaded: %s\nStory: \"Project context from previous session. Working on MCP server implementation for HyperNexus.\"\nProgress: 73%% complete\nLast active: %s", storyID, time.Now().Add(-2*time.Hour).Format("15:04:05")))
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -408,7 +408,7 @@ func HandleSQLMonitorGetMetrics(ctx context.Context, args map[string]interface{}
 func HandleSkillzList(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
 	category, _ := getString(args, "category")
 	if category == "" {
-		return ok("📚 Loaded skills (24 total):\n  system: memory, planning, code-review, test-gen\n  user: api-design, deployment, monitoring\n  custom: tormentnexus-tools, mcp-bridge\nUse category filter or 'all' for full list")
+		return ok("📚 Loaded skills (24 total):\n  system: memory, planning, code-review, test-gen\n  user: api-design, deployment, monitoring\n  custom: hypernexus-tools, mcp-bridge\nUse category filter or 'all' for full list")
 	}
 	return ok(fmt.Sprintf("📚 Skills in \"%s\": %d modules\n  1. %s-toolkit\n  2. %s-analyzer\n  3. %s-optimizer", category, 3, category, category, category))
 }

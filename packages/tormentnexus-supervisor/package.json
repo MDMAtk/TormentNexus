@@ -1,11 +1,11 @@
 {
-  "name": "@tormentnexus/supervisor",
+  "name": "@hypernexus/supervisor",
   "version": "1.0.0-alpha.255",
-  "description": "TormentNexus Supervisor - Watchdog and Automation Agent",
+  "description": "HyperNexus Supervisor - Watchdog and Automation Agent",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "tormentnexus-supervisor": "./dist/index.js"
+    "hypernexus-supervisor": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",

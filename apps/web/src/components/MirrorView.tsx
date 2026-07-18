@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { createReconnectPolicy, getReconnectDelayMs, resolveCoreSseUrl, shouldRetryReconnect } from '@tormentnexus/ui';
+import { createReconnectPolicy, getReconnectDelayMs, resolveCoreSseUrl, shouldRetryReconnect } from '@hypernexus/ui';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function MirrorView() {

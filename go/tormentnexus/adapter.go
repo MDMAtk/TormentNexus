@@ -1,44 +1,44 @@
-package tormentnexus
+package hypernexus
 
 import (
 	"fmt"
 )
 
-// Adapter facilitates the seamless assimilation of SuperCLI into the TormentNexus ecosystem.
-// When assimilated, TormentNexus becomes the underlying engine for Memory, Context Management, and MCP.
+// Adapter facilitates the seamless assimilation of SuperCLI into the HyperNexus ecosystem.
+// When assimilated, HyperNexus becomes the underlying engine for Memory, Context Management, and MCP.
 type Adapter struct {
 	Assimilated         bool
-	TormentNexusCoreURL string
+	HyperNexusCoreURL string
 }
 
 func NewAdapter() *Adapter {
 	return &Adapter{
 		Assimilated:         true,
-		TormentNexusCoreURL: "internal://tormentnexus-core",
+		HyperNexusCoreURL: "internal://hypernexus-core",
 	}
 }
 
-// GetMemoryContext retrieves persistent memory from TormentNexus instead of local files
+// GetMemoryContext retrieves persistent memory from HyperNexus instead of local files
 func (a *Adapter) GetMemoryContext() string {
 	if a.Assimilated {
-		return "[TormentNexus Context]: Utilizing highly optimized global memory graph."
+		return "[HyperNexus Context]: Utilizing highly optimized global memory graph."
 	}
 	return "Local memory mode."
 }
 
-// RouteMCP routes all Model Context Protocol calls through TormentNexus
+// RouteMCP routes all Model Context Protocol calls through HyperNexus
 func (a *Adapter) RouteMCP(request string) string {
 	if a.Assimilated {
-		return fmt.Sprintf("[TormentNexus MCP Router]: Delegating '%s' to TormentNexus Control Plane.", request)
+		return fmt.Sprintf("[HyperNexus MCP Router]: Delegating '%s' to HyperNexus Control Plane.", request)
 	}
 	return "Local MCP fallback."
 }
 
-// ManageContext Window utilizes TormentNexus's advanced compression and semantic retrieval
+// ManageContext Window utilizes HyperNexus's advanced compression and semantic retrieval
 func (a *Adapter) ManageContextWindow(history []string) []string {
 	if a.Assimilated {
-		fmt.Println("[TormentNexus Assimilation]: Context window managed by TormentNexus Core.")
-		// In a real integration, this would call out to TormentNexus's context trimmer
+		fmt.Println("[HyperNexus Assimilation]: Context window managed by HyperNexus Core.")
+		// In a real integration, this would call out to HyperNexus's context trimmer
 		return history
 	}
 	return history

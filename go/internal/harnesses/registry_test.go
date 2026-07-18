@@ -5,18 +5,18 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 )
 
 func TestListBuildsHarnessDefinitions(t *testing.T) {
 	workspaceRoot := t.TempDir()
-	tormentnexusPath := filepath.Join(workspaceRoot, "submodules", "tormentnexus")
-	if err := os.MkdirAll(tormentnexusPath, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus path: %v", err)
+	hypernexusPath := filepath.Join(workspaceRoot, "submodules", "hypernexus")
+	if err := os.MkdirAll(hypernexusPath, 0o755); err != nil {
+		t.Fatalf("failed to create hypernexus path: %v", err)
 	}
-	toolsDir := filepath.Join(tormentnexusPath, "tools")
+	toolsDir := filepath.Join(hypernexusPath, "tools")
 	if err := os.MkdirAll(toolsDir, 0o755); err != nil {
-		t.Fatalf("failed to create tormentnexus tools path: %v", err)
+		t.Fatalf("failed to create hypernexus tools path: %v", err)
 	}
 	if err := os.WriteFile(filepath.Join(toolsDir, "registry.go"), []byte(`
 func demo() {
@@ -24,7 +24,7 @@ func demo() {
 	_ = Tool{Name: "read_file"}
 }
 `), 0o644); err != nil {
-		t.Fatalf("failed to seed tormentnexus tool registry: %v", err)
+		t.Fatalf("failed to seed hypernexus tool registry: %v", err)
 	}
 
 	definitions := List(workspaceRoot, []controlplane.Tool{
@@ -38,13 +38,13 @@ func demo() {
 		t.Fatalf("expected 49 harness definitions, got %d", len(definitions))
 	}
 	if !definitions[0].Primary || !definitions[0].Installed {
-		t.Fatalf("expected tormentnexus to be primary and installed, got %+v", definitions[0])
+		t.Fatalf("expected hypernexus to be primary and installed, got %+v", definitions[0])
 	}
 	if definitions[0].ToolCallCount != 2 {
-		t.Fatalf("expected 2 tormentnexus tool calls, got %+v", definitions[0])
+		t.Fatalf("expected 2 hypernexus tool calls, got %+v", definitions[0])
 	}
 	if definitions[0].ToolInventoryStatus != "source-backed" || definitions[0].IntegrationLevel != "source-backed" {
-		t.Fatalf("expected tormentnexus to be source-backed, got %+v", definitions[0])
+		t.Fatalf("expected hypernexus to be source-backed, got %+v", definitions[0])
 	}
 	installed := map[string]bool{}
 	for _, definition := range definitions {

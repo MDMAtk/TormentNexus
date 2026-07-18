@@ -16,7 +16,7 @@ var assets embed.FS
 func main() {
 	var startupURL string
 	for _, arg := range os.Args {
-		if strings.HasPrefix(arg, "tormentnexus://") {
+		if strings.HasPrefix(arg, "hypernexus://") {
 			startupURL = arg
 			break
 		}
@@ -27,7 +27,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "TormentNexus Desktop",
+		Title:  "HyperNexus Desktop",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{

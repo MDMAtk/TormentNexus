@@ -6,7 +6,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 )
 
 // SpacedRepetitionMetadata tracks Leitner / SuperMemo SM-2 state for memory entries

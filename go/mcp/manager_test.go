@@ -8,12 +8,12 @@ import (
 
 func TestServerManagerUsesAdapterConfigPathAndToolHints(t *testing.T) {
 	home := t.TempDir()
-	tormentnexusDir := filepath.Join(home, ".tormentnexus")
-	if err := os.MkdirAll(tormentnexusDir, 0o755); err != nil {
+	hypernexusDir := filepath.Join(home, ".hypernexus")
+	if err := os.MkdirAll(hypernexusDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
 	config := `{"mcpServers":{"demo":{"command":"cmd","args":["/c","echo demo"]}}}`
-	configPath := filepath.Join(tormentnexusDir, "mcp.json")
+	configPath := filepath.Join(hypernexusDir, "mcp.json")
 	if err := os.WriteFile(configPath, []byte(config), 0o644); err != nil {
 		t.Fatal(err)
 	}

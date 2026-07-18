@@ -1,4 +1,4 @@
-// TormentNexus VS Code Extension
+// HyperNexus VS Code Extension
 // Activates on startup and provides MCP server + custom commands
 
 const vscode = require("vscode");
@@ -42,7 +42,7 @@ function tnSearch(query) {
 }
 
 function activate(context) {
-  console.log("TormentNexus extension activating...");
+  console.log("HyperNexus extension activating...");
 
   // Log startup to TN
   tnPost("/api/memory/add", {
@@ -55,23 +55,23 @@ function activate(context) {
 
   // Register commands
   context.subscriptions.push(
-    vscode.commands.registerCommand("tormentnexus.tnStore", async () => {
+    vscode.commands.registerCommand("hypernexus.tnStore", async () => {
       const content = await vscode.window.showInputBox({
-        prompt: "What do you want to store in TormentNexus?",
+        prompt: "What do you want to store in HyperNexus?",
         placeHolder: "e.g., project uses React 19 with Vite",
       });
       if (!content) return;
       await tnPost("/api/memory/add", {
         content: JSON.stringify({ content, tags: ["agent:vscode"], category: "memory" }),
       });
-      vscode.window.showInformationMessage("✅ Stored in TormentNexus");
+      vscode.window.showInformationMessage("✅ Stored in HyperNexus");
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("tormentnexus.tnSearch", async () => {
+    vscode.commands.registerCommand("hypernexus.tnSearch", async () => {
       const query = await vscode.window.showInputBox({
-        prompt: "What do you want to find in TormentNexus?",
+        prompt: "What do you want to find in HyperNexus?",
         placeHolder: "e.g., React patterns",
       });
       if (!query) return;
@@ -81,14 +81,14 @@ function activate(context) {
         return;
       }
       const text = results.map((r) => `• ${r.text || r.content || ""}`).join("\n\n");
-      const panel = vscode.window.createWebviewPanel("tnSearch", "TormentNexus Results", vscode.ViewColumn.One);
+      const panel = vscode.window.createWebviewPanel("tnSearch", "HyperNexus Results", vscode.ViewColumn.One);
       panel.webview.html = `<!DOCTYPE html><html><body><pre>${text}</pre></body></html>`;
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("tormentnexus.tnStatus", async () => {
-      vscode.window.showInformationMessage("TormentNexus MCP server configured in .vscode/mcp.json");
+    vscode.commands.registerCommand("hypernexus.tnStatus", async () => {
+      vscode.window.showInformationMessage("HyperNexus MCP server configured in .vscode/mcp.json");
     })
   );
 }

@@ -14,7 +14,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/mcp"
+	"github.com/MDMAtk/HyperNexus/internal/mcp"
 )
 
 type SessionState string
@@ -1039,7 +1039,7 @@ func detectExecutionPolicy(requestedProfile string) *ExecutionPolicy {
 		return toPolicy("fallback", preferred, fallbackReason("Compatibility mode was requested, but no conservative shell profile was verified", preferred))
 	default:
 		if runtime.GOOS == "windows" && powerShell != nil {
-			return toPolicy("powershell", powerShell, powerShell.Label+" selected automatically as TormentNexus's preferred Windows execution shell for general harness supervision.")
+			return toPolicy("powershell", powerShell, powerShell.Label+" selected automatically as HyperNexus's preferred Windows execution shell for general harness supervision.")
 		}
 		if posix != nil {
 			return toPolicy("posix", posix, posix.Label+" selected automatically because no verified PowerShell shell was preferred for this host.")
@@ -1078,15 +1078,15 @@ func buildExecutionPolicyEnv(policy *ExecutionPolicy) map[string]string {
 		return map[string]string{}
 	}
 	env := map[string]string{
-		"TORMENTNEXUS_EXECUTION_PROFILE_REQUESTED": policy.RequestedProfile,
-		"TORMENTNEXUS_EXECUTION_PROFILE_EFFECTIVE": policy.EffectiveProfile,
-		"TORMENTNEXUS_EXECUTION_SHELL_ID":          derefPolicyString(policy.ShellID),
-		"TORMENTNEXUS_EXECUTION_SHELL_LABEL":       derefPolicyString(policy.ShellLabel),
-		"TORMENTNEXUS_EXECUTION_SHELL_FAMILY":      derefPolicyString(policy.ShellFamily),
-		"TORMENTNEXUS_EXECUTION_SHELL_PATH":        derefPolicyString(policy.ShellPath),
-		"TORMENTNEXUS_EXECUTION_POLICY_REASON":     policy.Reason,
-		"TORMENTNEXUS_SUPPORTS_POWERSHELL":         boolEnvValue(policy.SupportsPowerShell),
-		"TORMENTNEXUS_SUPPORTS_POSIX_SHELL":        boolEnvValue(policy.SupportsPosixShell),
+		"HYPERNEXUS_EXECUTION_PROFILE_REQUESTED": policy.RequestedProfile,
+		"HYPERNEXUS_EXECUTION_PROFILE_EFFECTIVE": policy.EffectiveProfile,
+		"HYPERNEXUS_EXECUTION_SHELL_ID":          derefPolicyString(policy.ShellID),
+		"HYPERNEXUS_EXECUTION_SHELL_LABEL":       derefPolicyString(policy.ShellLabel),
+		"HYPERNEXUS_EXECUTION_SHELL_FAMILY":      derefPolicyString(policy.ShellFamily),
+		"HYPERNEXUS_EXECUTION_SHELL_PATH":        derefPolicyString(policy.ShellPath),
+		"HYPERNEXUS_EXECUTION_POLICY_REASON":     policy.Reason,
+		"HYPERNEXUS_SUPPORTS_POWERSHELL":         boolEnvValue(policy.SupportsPowerShell),
+		"HYPERNEXUS_SUPPORTS_POSIX_SHELL":        boolEnvValue(policy.SupportsPosixShell),
 	}
 	if policy.ShellPath != nil && strings.TrimSpace(*policy.ShellPath) != "" {
 		env["SHELL"] = strings.TrimSpace(*policy.ShellPath)
@@ -1107,7 +1107,7 @@ func executionPolicyLogShellSuffix(policy *ExecutionPolicy) string {
 
 func fallbackReason(prefix string, preferred *shellCandidate) string {
 	if preferred == nil {
-		return prefix + "; TormentNexus could not verify any shell on this host."
+		return prefix + "; HyperNexus could not verify any shell on this host."
 	}
 	return prefix + "; falling back to " + preferred.Label + "."
 }

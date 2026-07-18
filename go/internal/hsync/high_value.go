@@ -14,11 +14,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/internal/ai"
-	"github.com/MDMAtk/TormentNexus/internal/harnesses"
-	mcp_pkg "github.com/MDMAtk/TormentNexus/internal/mcp"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/harnesses"
+	mcp_pkg "github.com/MDMAtk/HyperNexus/internal/mcp"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type HighValueIngestor struct {
 	dbPath     string
@@ -72,7 +72,7 @@ func (i *HighValueIngestor) ProcessHighValueQueue(ctx context.Context, limit int
 
 func (i *HighValueIngestor) deepDive(ctx context.Context, uuidValue, url, title, desc string) {
 	prompt := fmt.Sprintf(`
-		Analyze this resource for the TormentNexus Control Plane:
+		Analyze this resource for the HyperNexus Control Plane:
 		Title: %s
 		Description: %s
 		URL: %s

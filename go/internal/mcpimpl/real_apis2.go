@@ -173,7 +173,7 @@ func HandleGitHubSearchRepos(ctx context.Context, args map[string]interface{}) (
 	u := fmt.Sprintf("https://api.github.com/search/repositories?q=%s&per_page=%d&sort=%s&order=desc", url.QueryEscape(q), n, sort)
 	req, _ := http.NewRequestWithContext(ctx, "GET", u, nil)
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
-	req.Header.Set("User-Agent", "TormentNexus/1.0")
+	req.Header.Set("User-Agent", "HyperNexus/1.0")
 
 	resp, apiErr := moreAPI.Do(req)
 	if apiErr != nil {
@@ -231,7 +231,7 @@ func HandleGitHubRepoInfo(ctx context.Context, args map[string]interface{}) (Too
 	u := fmt.Sprintf("https://api.github.com/repos/%s", repo)
 	req, _ := http.NewRequestWithContext(ctx, "GET", u, nil)
 	req.Header.Set("Accept", "application/vnd.github.v3+json")
-	req.Header.Set("User-Agent", "TormentNexus/1.0")
+	req.Header.Set("User-Agent", "HyperNexus/1.0")
 
 	resp, apiErr := moreAPI.Do(req)
 	if apiErr != nil {

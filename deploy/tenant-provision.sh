@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# TormentNexus Multi-Tenant Provisioning Script
+# HyperNexus Multi-Tenant Provisioning Script
 # Usage: ./tenant-provision.sh <tenant-id> <tenant-port>
 #   tenant-id:   unique org identifier (e.g., "acme-corp")
 #   tenant-port: unique web dashboard port (e.g., 3001, 3002...)
@@ -26,7 +26,7 @@ version: '3.8'
 
 services:
   web-${TENANT_ID}:
-    image: tormentnexus-web:latest
+    image: hypernexus-web:latest
     container_name: tn-web-${TENANT_ID}
     deploy:
       resources:
@@ -46,7 +46,7 @@ services:
     restart: on-failure:5
 
   sidecar-${TENANT_ID}:
-    image: tormentnexus-sidecar:latest
+    image: hypernexus-sidecar:latest
     container_name: tn-sidecar-${TENANT_ID}
     deploy:
       resources:
@@ -54,9 +54,9 @@ services:
           cpus: '0.5'
           memory: 512M
     environment:
-      - TORMENTNEXUS_GOSSIP_SHARED_KEY=${AUTH_TOKEN}
+      - HYPERNEXUS_GOSSIP_SHARED_KEY=${AUTH_TOKEN}
     volumes:
-      - ${DATA_ROOT}/${TENANT_ID}/data:/root/.tormentnexus
+      - ${DATA_ROOT}/${TENANT_ID}/data:/root/.hypernexus
     networks:
       - tenant-network
     restart: on-failure:5

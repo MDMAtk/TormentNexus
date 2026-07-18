@@ -1,5 +1,5 @@
 {
-  "name": "@tormentnexus/adk",
+  "name": "@hypernexus/adk",
   "version": "1.0.0-alpha.255",
   "private": true,
   "main": "dist/index.js",

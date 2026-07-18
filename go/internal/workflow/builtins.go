@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/internal/tools"
+	"github.com/MDMAtk/HyperNexus/internal/tools"
 )
 
 // ShellStep creates a step that runs a shell command
@@ -41,11 +41,11 @@ func ShellStep(id, name, command, cwd string, deps ...string) *Step {
 	}
 }
 
-// FullBuildWorkflow creates the standard TormentNexus monorepo build workflow
+// FullBuildWorkflow creates the standard HyperNexus monorepo build workflow
 func FullBuildWorkflow(workspaceRoot string) *Workflow {
-	return NewWorkflow("full-build", "Full Monorepo Build", "Complete TormentNexus monorepo build pipeline", []*Step{
+	return NewWorkflow("full-build", "Full Monorepo Build", "Complete HyperNexus monorepo build pipeline", []*Step{
 		ShellStep("install", "Install Dependencies", "pnpm install --frozen-lockfile", workspaceRoot),
-		ShellStep("go-build", "Build TN Kernel", "go build -buildvcs=false ./cmd/tormentnexus", workspaceRoot+"/go"),
+		ShellStep("go-build", "Build TN Kernel", "go build -buildvcs=false ./cmd/hypernexus", workspaceRoot+"/go"),
 		ShellStep("ts-build", "Build TypeScript Workspace", "pnpm run build:workspace", workspaceRoot, "install"),
 	})
 }

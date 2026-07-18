@@ -1,36 +1,36 @@
 ---
-name: tormentnexus
-description: TormentNexus AI control plane integration
+name: hypernexus
+description: HyperNexus AI control plane integration
 version: 1.0.0
 ---
 
-# TormentNexus Integration
+# HyperNexus Integration
 
-TormentNexus is a local AI control plane on port 7778 with L2 memory, tool discovery, session import, skill registry, and code search.
+HyperNexus is a local AI control plane on port 7778 with L2 memory, tool discovery, session import, skill registry, and code search.
 
 ## MCP Tools Available
 
-All TN tools are available through the `mcp_tormentnexus_*` namespace:
+All TN tools are available through the `mcp_hypernexus_*` namespace:
 
 ### Memory & Context
-- **mcp_tormentnexus_memory_scratchpad_*** — L1 scratchpad (get/set/append)
-- **mcp_tormentnexus_memory_extract_relations** — knowledge graph extraction
-- **mcp_tormentnexus_add_bookmark** — bookmark storage with tags
+- **mcp_hypernexus_memory_scratchpad_*** — L1 scratchpad (get/set/append)
+- **mcp_hypernexus_memory_extract_relations** — knowledge graph extraction
+- **mcp_hypernexus_add_bookmark** — bookmark storage with tags
 
 ### Discovery & Routing
-- **mcp_tormentnexus_mcp_list_servers/tools** — discover capabilities
-- **mcp_tormentnexus_mcp_call_tool** — route to downstream MCP servers
-- **mcp_tormentnexus_mcp_status** — check TN runtime health
+- **mcp_hypernexus_mcp_list_servers/tools** — discover capabilities
+- **mcp_hypernexus_mcp_call_tool** — route to downstream MCP servers
+- **mcp_hypernexus_mcp_status** — check TN runtime health
 
 ### System
-- **mcp_tormentnexus_bash** — shell execution
-- **mcp_tormentnexus_read/write/edit/grep/find/ls** — file operations
-- **mcp_tormentnexus_repomap** — repo map generation
+- **mcp_hypernexus_bash** — shell execution
+- **mcp_hypernexus_read/write/edit/grep/find/ls** — file operations
+- **mcp_hypernexus_repomap** — repo map generation
 
 ### Integrations
-- **mcp_tormentnexus_system_status** — system health
-- **mcp_tormentnexus_code_interpreter** — code execution
-- **mcp_tormentnexus_install_mcp_server** — install new MCP servers
+- **mcp_hypernexus_system_status** — system health
+- **mcp_hypernexus_code_interpreter** — code execution
+- **mcp_hypernexus_install_mcp_server** — install new MCP servers
 
 ## Workflow
 

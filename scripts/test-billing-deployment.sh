@@ -1,9 +1,9 @@
 #!/bin/bash
-# TormentNexus — Billing & Deployment Test Suite
+# HyperNexus — Billing & Deployment Test Suite
 
 KERNEL="http://127.0.0.1:8090"
 DEMO="https://demo.hypernexus.site"
-LANDING="https://tormentnexus.site"
+LANDING="https://hypernexus.site"
 CLOUD="https://cloud.hypernexus.site"
 PASS=0
 FAIL=0
@@ -74,8 +74,8 @@ echo "═══ B. DEPLOYMENT & INFRASTRUCTURE ═══"
 # ==========================================
 
 echo "[B1] Docker"
-docker ps | grep -q "tormentnexus-demo" && p "Demo container running" || f "Demo container"
-docker images | grep -q "tormentnexus" && p "Docker image exists" || f "Docker image"
+docker ps | grep -q "hypernexus-demo" && p "Demo container running" || f "Demo container"
+docker images | grep -q "hypernexus" && p "Docker image exists" || f "Docker image"
 
 echo "[B2] PM2 Services"
 ssh hetzner 'pm2 list 2>/dev/null | grep -q "tn-kernel.*online"' && p "tn-kernel online" || f "tn-kernel"
@@ -97,7 +97,7 @@ CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://demo.hypernexus.site")
 echo "[B6] DNS Resolution"
 dig +short demo.hypernexus.site | grep -q "." && p "demo.hypernexus.site" || f "demo DNS"
 dig +short cloud.hypernexus.site | grep -q "." && p "cloud.hypernexus.site" || f "cloud DNS"
-dig +short tormentnexus.site | grep -q "." && p "tormentnexus.site" || f "landing DNS"
+dig +short hypernexus.site | grep -q "." && p "hypernexus.site" || f "landing DNS"
 
 # ==========================================
 echo ""
@@ -179,9 +179,9 @@ echo "═══ G. ENRICHMENT ═══"
 # ==========================================
 
 echo "[G1] Catalog Enrichment"
-ENRICHED=$(ssh hetzner 'sqlite3 /opt/tormentnexus/catalog.db "SELECT count(*) FROM links_backlog WHERE description IS NOT NULL AND length(description) > 20"')
+ENRICHED=$(ssh hetzner 'sqlite3 /opt/hypernexus/catalog.db "SELECT count(*) FROM links_backlog WHERE description IS NOT NULL AND length(description) > 20"')
 p "Enriched entries: $ENRICHED"
-TOTAL=$(ssh hetzner 'sqlite3 /opt/tormentnexus/catalog.db "SELECT count(*) FROM links_backlog"')
+TOTAL=$(ssh hetzner 'sqlite3 /opt/hypernexus/catalog.db "SELECT count(*) FROM links_backlog"')
 p "Total entries: $TOTAL"
 
 # ==========================================

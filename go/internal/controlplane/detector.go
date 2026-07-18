@@ -51,7 +51,7 @@ func NewDetector(timeout, ttl time.Duration) *Detector {
 			{Type: "go", Name: "Go", Command: "go", VersionArgs: []string{"version"}, Capabilities: []string{"build", "test", "server"}},
 			{Type: "node", Name: "Node.js", Command: "node", VersionArgs: []string{"--version"}, Capabilities: []string{"runtime", "scripts"}},
 			{Type: "python", Name: "Python", Command: "python", VersionArgs: []string{"--version"}, Capabilities: []string{"runtime", "scripts"}},
-			{Type: "tormentnexus", Name: "tormentnexus CLI", Command: "tormentnexus", VersionArgs: []string{"version"}, Capabilities: []string{"chat", "edit", "repl", "tormentnexus-adapter"}},
+			{Type: "hypernexus", Name: "hypernexus CLI", Command: "hypernexus", VersionArgs: []string{"version"}, Capabilities: []string{"chat", "edit", "repl", "hypernexus-adapter"}},
 			{Type: "antigravity", Name: "Antigravity CLI", Command: "antigravity", VersionArgs: []string{"--version"}, Capabilities: []string{"chat", "desktop", "editor", "automation"}},
 			{Type: "opencode", Name: "OpenCode CLI", Command: "opencode", VersionArgs: []string{"--version"}, Capabilities: []string{"chat", "edit", "multi-file", "autonomous"}},
 			{Type: "claude", Name: "Claude CLI", Command: "claude", VersionArgs: []string{"--version"}, Capabilities: []string{"chat", "code", "analyze"}},

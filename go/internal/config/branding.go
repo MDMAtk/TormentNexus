@@ -11,7 +11,7 @@ import (
 type Edition string
 
 const (
-	EditionTormentNexus Edition = "tormentnexus" // Open source, free edition
+	EditionHyperNexus Edition = "hypernexus" // Open source, free edition
 	EditionHyperNexus   Edition = "hypernexus"   // Corporate, closed source edition
 )
 
@@ -20,7 +20,7 @@ type BrandingConfig struct {
 	// Edition determines the product branding and behavior
 	Edition Edition `json:"edition"`
 
-	// ProductName is the display name (TormentNexus or HyperNexus)
+	// ProductName is the display name (HyperNexus or HyperNexus)
 	ProductName string `json:"product_name"`
 
 	// CompanyName is the company/organization name
@@ -103,20 +103,20 @@ func loadBrandingConfig() *BrandingConfig {
 		}
 	}
 
-	// Default to TormentNexus (open source)
-	return TormentNexusBranding()
+	// Default to HyperNexus (open source)
+	return HyperNexusBranding()
 }
 
-// TormentNexusBranding returns branding for the open source edition
-func TormentNexusBranding() *BrandingConfig {
+// HyperNexusBranding returns branding for the open source edition
+func HyperNexusBranding() *BrandingConfig {
 	return &BrandingConfig{
-		Edition:        EditionTormentNexus,
-		ProductName:    "TormentNexus",
-		CompanyName:    "TormentNexus Team",
-		TrayTooltip:    "TormentNexus (Running)",
-		DashboardTitle: "TormentNexus Dashboard",
-		ConfigDir:      ".tormentnexus",
-		RegistryKey:    "TormentNexus",
+		Edition:        EditionHyperNexus,
+		ProductName:    "HyperNexus",
+		CompanyName:    "HyperNexus Team",
+		TrayTooltip:    "HyperNexus (Running)",
+		DashboardTitle: "HyperNexus Dashboard",
+		ConfigDir:      ".hypernexus",
+		RegistryKey:    "HyperNexus",
 	}
 }
 
@@ -149,10 +149,10 @@ func loadFromFile() (*BrandingConfig, error) {
 		return loadFromPath(hyperNexusConfig)
 	}
 
-	// Check for TormentNexus config
-	tormentNexusConfig := filepath.Join(homeDir, ".tormentnexus", "branding.json")
-	if _, err := os.Stat(tormentNexusConfig); err == nil {
-		return loadFromPath(tormentNexusConfig)
+	// Check for HyperNexus config
+	hyperNexusConfig := filepath.Join(homeDir, ".hypernexus", "branding.json")
+	if _, err := os.Stat(hyperNexusConfig); err == nil {
+		return loadFromPath(hyperNexusConfig)
 	}
 
 	return nil, os.ErrNotExist

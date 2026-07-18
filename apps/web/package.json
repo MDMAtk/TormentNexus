@@ -1,5 +1,5 @@
 {
-  "name": "@tormentnexus/web",
+  "name": "@hypernexus/web",
   "version": "1.0.0-alpha.255",
   "private": true,
   "scripts": {
@@ -11,8 +11,8 @@
     "lint": "echo \"Linting skipped\""
   },
   "dependencies": {
-    "@tormentnexus/ui": "workspace:*",
-    "@tormentnexus/commercial": "workspace:*",
+    "@hypernexus/ui": "workspace:*",
+    "@hypernexus/commercial": "workspace:*",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",

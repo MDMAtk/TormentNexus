@@ -2,7 +2,7 @@ package tools
 
 import (
 	"fmt"
-	"github.com/MDMAtk/TormentNexus/mcp"
+	"github.com/MDMAtk/HyperNexus/mcp"
 )
 
 func (r *Registry) registerAdvancedTools() {

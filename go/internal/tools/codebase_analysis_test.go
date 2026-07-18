@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/MDMAtk/TormentNexus/internal/repograph"
+	"github.com/MDMAtk/HyperNexus/internal/repograph"
 )
 
 func TestCodebaseAnalysisTools(t *testing.T) {

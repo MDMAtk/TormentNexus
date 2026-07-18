@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/MDMAtk/TormentNexus/internal/memorystore"
-	"github.com/MDMAtk/TormentNexus/internal/repograph"
+	"github.com/MDMAtk/HyperNexus/internal/memorystore"
+	"github.com/MDMAtk/HyperNexus/internal/repograph"
 )
 
 var GlobalVectorStore *memorystore.VectorStore

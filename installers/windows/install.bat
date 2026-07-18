@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-title TormentNexus Installer
+title HyperNexus Installer
 color 0B
 
 echo.
@@ -35,8 +35,8 @@ if %errorlevel% neq 0 (
 )
 
 :: Set installation directory
-set "INSTALL_DIR=%USERPROFILE%\.tormentnexus"
-set "BINARY_NAME=tormentnexus.exe"
+set "INSTALL_DIR=%USERPROFILE%\.hypernexus"
+set "BINARY_NAME=hypernexus.exe"
 
 echo  [1/6] Creating installation directory...
 if not exist "%INSTALL_DIR%" mkdir "%INSTALL_DIR%"
@@ -44,7 +44,7 @@ echo        OK - %INSTALL_DIR%
 echo.
 
 :: Copy binary
-echo  [2/6] Installing TormentNexus binary...
+echo  [2/6] Installing HyperNexus binary...
 copy /y "%~dp0%BINARY_NAME%" "%INSTALL_DIR%\%BINARY_NAME%" >nul 2>&1
 if %errorlevel% neq 0 (
     echo  [!] Failed to copy binary. Please run as administrator.
@@ -56,8 +56,8 @@ echo.
 
 :: Create config directory
 echo  [3/6] Creating configuration directory...
-if not exist "%INSTALL_DIR%\.tormentnexus" mkdir "%INSTALL_DIR%\.tormentnexus"
-echo        OK - %INSTALL_DIR%\.tormentnexus
+if not exist "%INSTALL_DIR%\.hypernexus" mkdir "%INSTALL_DIR%\.hypernexus"
+echo        OK - %INSTALL_DIR%\.hypernexus
 echo.
 
 :: Create default config
@@ -78,7 +78,7 @@ echo     "catalog": true,
 echo     "autoInstall": false
 echo   }
 echo }
-) > "%INSTALL_DIR%\.tormentnexus\config.json"
+) > "%INSTALL_DIR%\.hypernexus\config.json"
 echo        OK - config.json created
 echo.
 
@@ -90,20 +90,20 @@ echo.
 
 :: Create start menu shortcut
 echo  [6/6] Creating start menu shortcut...
-set "START_MENU=%APPDATA%\Microsoft\Windows\Start Menu\Programs\TormentNexus"
+set "START_MENU=%APPDATA%\Microsoft\Windows\Start Menu\Programs\HyperNexus"
 if not exist "%START_MENU%" mkdir "%START_MENU%"
 
 (
 echo @echo off
-echo title TormentNexus Server
+echo title HyperNexus Server
 echo cd /d "%INSTALL_DIR%"
 echo "%INSTALL_DIR%\%BINARY_NAME%" serve
 echo pause
-) > "%START_MENU%\Start TormentNexus.bat"
+) > "%START_MENU%\Start HyperNexus.bat"
 
 (
 echo @echo off
-echo title TormentNexus Dashboard
+echo title HyperNexus Dashboard
 echo start http://localhost:7778
 echo.
 ) > "%START_MENU%\Open Dashboard.bat"
@@ -117,27 +117,27 @@ echo  INSTALLATION COMPLETE!
 echo.
 echo  ============================================================
 echo.
-echo  TormentNexus has been installed to:
+echo  HyperNexus has been installed to:
 echo    %INSTALL_DIR%
 echo.
-echo  To start TormentNexus:
+echo  To start HyperNexus:
 echo    1. Open a new command prompt (PATH must refresh)
-echo    2. Run: tormentnexus serve
+echo    2. Run: hypernexus serve
 echo    3. Open: http://localhost:7778
 echo.
 echo  Or use the Start Menu shortcuts:
-echo    - Start TormentNexus
+echo    - Start HyperNexus
 echo    - Open Dashboard
 echo.
 echo  ============================================================
 echo.
 
 :: Ask to start now
-set /p START_NOW="  Start TormentNexus now? (Y/N): "
+set /p START_NOW="  Start HyperNexus now? (Y/N): "
 if /i "%START_NOW%"=="Y" (
     echo.
-    echo  Starting TormentNexus...
-    start "TormentNexus" cmd /k "cd /d "%INSTALL_DIR%" && "%INSTALL_DIR%\%BINARY_NAME%" serve"
+    echo  Starting HyperNexus...
+    start "HyperNexus" cmd /k "cd /d "%INSTALL_DIR%" && "%INSTALL_DIR%\%BINARY_NAME%" serve"
     timeout /t 3 >nul
     start http://localhost:7778
 )

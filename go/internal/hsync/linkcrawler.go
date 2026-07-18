@@ -12,10 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 const defaultOpenRouterFreeModel = "openrouter/free"
 
@@ -232,7 +232,7 @@ func DefaultLinkAnalysisClassifier(ctx context.Context, title, description, cont
 	`, title, description, content[:min(2000, len(content))])
 
 	response, err := ai.AutoRouteWithModel(ctx, defaultOpenRouterFreeModel, []ai.Message{
-		{Role: "system", Content: "You are a technical analyst for the TormentNexus control plane. Output JSON only."},
+		{Role: "system", Content: "You are a technical analyst for the HyperNexus control plane. Output JSON only."},
 		{Role: "user", Content: prompt},
 	})
 	if err != nil {

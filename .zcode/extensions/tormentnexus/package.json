@@ -1,6 +1,6 @@
 {
-  "name": "tormentnexus",
-  "displayName": "TormentNexus",
+  "name": "hypernexus",
+  "displayName": "HyperNexus",
   "description": "AI control plane — L2 memory, tool discovery, session import",
   "version": "1.0.0",
   "publisher": "robertpelloni",
@@ -11,9 +11,9 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [
-      { "command": "tormentnexus.tnStore", "title": "TormentNexus: Store in memory" },
-      { "command": "tormentnexus.tnSearch", "title": "TormentNexus: Search memory" },
-      { "command": "tormentnexus.tnStatus", "title": "TormentNexus: Check status" }
+      { "command": "hypernexus.tnStore", "title": "HyperNexus: Store in memory" },
+      { "command": "hypernexus.tnSearch", "title": "HyperNexus: Search memory" },
+      { "command": "hypernexus.tnStatus", "title": "HyperNexus: Check status" }
     ]
   }
 }

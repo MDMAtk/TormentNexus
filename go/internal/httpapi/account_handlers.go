@@ -279,7 +279,7 @@ func generateID() string {
 
 // provisionContainers — shell out to the tenant provision script
 func provisionContainers(subdomain, plan string, seats int) (string, error) {
-	script := "/opt/tormentnexus/deploy/stripe-webhook-provisioner.sh"
+	script := "/opt/hypernexus/deploy/stripe-webhook-provisioner.sh"
 	cmd := exec.Command("bash", script, subdomain, "admin@hypernexus.site", subdomain, plan)
 	out, err := cmd.CombinedOutput()
 	return string(out), err

@@ -11,7 +11,7 @@ pass() { echo "  ✅ $1"; PASS=$((PASS + 1)); }
 fail() { echo "  ❌ $1"; FAIL=$((FAIL + 1)); ERRORS="$ERRORS\n- $1"; }
 
 echo "=========================================="
-echo "  TormentNexus Full Platform Test Suite"
+echo "  HyperNexus Full Platform Test Suite"
 echo "=========================================="
 echo ""
 
@@ -77,13 +77,13 @@ pass "Search response: ${TIME}s"
 # 10. Landing Pages
 log "Testing Landing Pages..."
 for PAGE in "" "blog/" "catalog" "pricing" "newsletter" "blog/feed.xml" "sitemap.xml" "robots.txt"; do
-    RESULT=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "https://tormentnexus.site/$PAGE" 2>/dev/null)
+    RESULT=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "https://hypernexus.site/$PAGE" 2>/dev/null)
     if [ "$RESULT" = "200" ]; then pass "/$PAGE"; else fail "/$PAGE (HTTP $RESULT)"; fi
 done
 
 # 11. Docker
 log "Testing Docker..."
-docker ps | grep -q "tormentnexus-demo" && pass "Demo container running" || fail "Demo container running"
+docker ps | grep -q "hypernexus-demo" && pass "Demo container running" || fail "Demo container running"
 
 # 12. Memory System
 log "Testing Memory System..."

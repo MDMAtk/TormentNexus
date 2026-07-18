@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
+	"github.com/MDMAtk/HyperNexus/internal/sessionimport"
 )
 
 func (s *Server) handleNativeSessionExport(w http.ResponseWriter, r *http.Request) {

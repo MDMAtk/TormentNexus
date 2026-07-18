@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/buildinfo"
+	"github.com/MDMAtk/HyperNexus/internal/buildinfo"
 )
 
 type managedProcess struct {
@@ -27,11 +27,11 @@ func cmdStart(args []string) int {
 	workspaceRoot := detectWorkspaceRoot()
 	goBinary := findGoBinary(workspaceRoot)
 	if goBinary == "" {
-		fmt.Println("[CLI] No Go binary found. Build with: cd go && go build -o tormentnexus.exe ./cmd/tormentnexus")
+		fmt.Println("[CLI] No Go binary found. Build with: cd go && go build -o hypernexus.exe ./cmd/hypernexus")
 		return 1
 	}
 
-	fmt.Printf("[CLI] TormentNexus v%s\n", buildinfo.Version)
+	fmt.Printf("[CLI] HyperNexus v%s\n", buildinfo.Version)
 	fmt.Printf("[CLI] Workspace: %s\n", workspaceRoot)
 	fmt.Printf("[CLI] Go binary: %s\n", goBinary)
 
@@ -129,12 +129,12 @@ func cmdStart(args []string) int {
 
 func cmdStop(args []string) int {
 	// Kill TN Kernel
-	exec.Command("taskkill", "/F", "/IM", "tormentnexus.exe").Run()
+	exec.Command("taskkill", "/F", "/IM", "hypernexus.exe").Run()
 
 	// Kill dashboard node processes on relevant ports
 	exec.Command("taskkill", "/F", "/FI", "WINDOWTITLE eq *next*").Run()
 
-	fmt.Println("[CLI] All TormentNexus services stopped.")
+	fmt.Println("[CLI] All HyperNexus services stopped.")
 	return 0
 }
 
@@ -150,7 +150,7 @@ func cmdStatus(args []string) int {
 		{"Dashboard (7779)", "http://127.0.0.1:7779/"},
 	}
 
-	fmt.Println("[CLI] TormentNexus Status")
+	fmt.Println("[CLI] HyperNexus Status")
 	fmt.Println("[CLI] ─────────────────────────────")
 	for _, c := range checks {
 		status := checkHealth(c.URL)
@@ -164,7 +164,7 @@ func cmdStatus(args []string) int {
 // ─── Helpers ───
 
 func detectWorkspaceRoot() string {
-	if w := os.Getenv("TORMENTNEXUS_WORKSPACE"); w != "" {
+	if w := os.Getenv("HYPERNEXUS_WORKSPACE"); w != "" {
 		return w
 	}
 	// Walk up from cwd looking for go.mod in a 'go' subdirectory
@@ -185,9 +185,9 @@ func detectWorkspaceRoot() string {
 
 func findGoBinary(workspaceRoot string) string {
 	candidates := []string{
-		filepath.Join(workspaceRoot, "tormentnexus.exe"),
-		filepath.Join(workspaceRoot, "bin", "tormentnexus.exe"),
-		filepath.Join(workspaceRoot, "go", "tormentnexus.exe"),
+		filepath.Join(workspaceRoot, "hypernexus.exe"),
+		filepath.Join(workspaceRoot, "bin", "hypernexus.exe"),
+		filepath.Join(workspaceRoot, "go", "hypernexus.exe"),
 	}
 	for _, c := range candidates {
 		if _, err := os.Stat(c); err == nil {

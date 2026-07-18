@@ -6,10 +6,10 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/MDMAtk/TormentNexus/agents"
-	"github.com/MDMAtk/TormentNexus/foundation/adapters"
-	foundationorchestration "github.com/MDMAtk/TormentNexus/foundation/orchestration"
-	foundationrepomap "github.com/MDMAtk/TormentNexus/foundation/repomap"
+	"github.com/MDMAtk/HyperNexus/agents"
+	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
+	foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
 )
 
 // ProcessSlashCommand mimics Claude Code's native terminal interception primitives.
@@ -52,9 +52,9 @@ func handleHelp(m *model) (tea.Model, tea.Cmd) {
   /plan      - Build a foundation-backed orchestration plan
   /repomap   - Generate a foundation-backed repo map
   /providers - Show provider visibility and defaults
-  /adapters  - Show TormentNexus/TormentNexus + MCP adapter status
+  /adapters  - Show HyperNexus/HyperNexus + MCP adapter status
   /mcp       - Show adapter-backed MCP tool hints
-  /exit      - Closes tormentnexus`)
+  /exit      - Closes hypernexus`)
 	return *m, nil
 }
 
@@ -112,10 +112,10 @@ func handleProviders(m *model) (tea.Model, tea.Cmd) {
 
 func handleAdapters(m *model) (tea.Model, tea.Cmd) {
 	m.loading = false
-	hyper := adapters.NewTormentNexusAdapter(m.director.WorkingDir)
+	hyper := adapters.NewHyperNexusAdapter(m.director.WorkingDir)
 	mcpAdapter := adapters.NewMCPAdapter(m.director.WorkingDir)
 	payload, _ := json.MarshalIndent(map[string]any{
-		"tormentnexus": hyper.Status(),
+		"hypernexus": hyper.Status(),
 		"mcp":       mcpAdapter.Status(),
 	}, "", "  ")
 	m.history = append(m.history, "[Foundation Adapters]\n"+string(payload))

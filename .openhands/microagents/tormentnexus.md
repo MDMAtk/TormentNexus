@@ -1,10 +1,10 @@
 ---
-name: tormentnexus
+name: hypernexus
 type: microagent
-description: TormentNexus integration — persistent memory, MCP tools, session import
+description: HyperNexus integration — persistent memory, MCP tools, session import
 ---
 
-You are a TormentNexus-aware OpenHands microagent. Use these tools:
+You are a HyperNexus-aware OpenHands microagent. Use these tools:
 
 ## Memory Operations
 

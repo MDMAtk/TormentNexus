@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# TormentNexus Stripe Webhook → Auto-Provision
+# HyperNexus Stripe Webhook → Auto-Provision
 # Called by the Go sidecar when a new subscription is created.
 # Arguments passed as env vars from the billing webhook handler:
 #   TENANT_ID, TENANT_EMAIL, TENANT_ORG, PLAN_TYPE
@@ -53,7 +53,7 @@ basic | *)
 esac
 
 # Run provisioning
-/opt/tormentnexus/deploy/tenant-provision.sh "$TENANT_ID" "$NEXT_PORT"
+/opt/hypernexus/deploy/tenant-provision.sh "$TENANT_ID" "$NEXT_PORT"
 
 # Log to Stripe tracking
 echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) | $TENANT_ID | $TENANT_EMAIL | $TENANT_ORG | $PLAN_TYPE | $NEXT_PORT" >>"${DATA_ROOT}/provisioning.log"

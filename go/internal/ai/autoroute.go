@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-    "github.com/MDMAtk/TormentNexus/internal/providers"
+    "github.com/MDMAtk/HyperNexus/internal/providers"
 )
 
 type Router struct {

@@ -21,13 +21,13 @@ echo ""
 
 # Generate private key and certificate
 openssl req -x509 \
-    -nodes \
-    -days $DAYS \
-    -newkey rsa:2048 \
-    -keyout ssl/key.pem \
-    -out ssl/cert.pem \
-    -subj "/C=US/ST=State/L=City/O=HyperNexus/CN=$DOMAIN" \
-    -addext "subjectAltName=DNS:$DOMAIN,DNS:www.$DOMAIN"
+	-nodes \
+	-days $DAYS \
+	-newkey rsa:2048 \
+	-keyout ssl/key.pem \
+	-out ssl/cert.pem \
+	-subj "/C=US/ST=State/L=City/O=HyperNexus/CN=$DOMAIN" \
+	-addext "subjectAltName=DNS:$DOMAIN,DNS:www.$DOMAIN"
 
 echo ""
 echo "========================================="

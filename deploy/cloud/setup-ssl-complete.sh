@@ -11,16 +11,16 @@ HYPERNEXUS_DIR="/opt/HyperNexus"
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
-    echo "Please run as root (sudo ./setup-ssl-complete.sh)"
-    exit 1
+	echo "Please run as root (sudo ./setup-ssl-complete.sh)"
+	exit 1
 fi
 
 # Step 1: Install certbot if not present
 echo "Step 1: Checking certbot installation..."
-if ! command -v certbot &> /dev/null; then
-    echo "Installing certbot..."
-    apt-get update
-    apt-get install -y certbot
+if ! command -v certbot &>/dev/null; then
+	echo "Installing certbot..."
+	apt-get update
+	apt-get install -y certbot
 fi
 echo "✓ Certbot installed"
 echo ""
@@ -38,13 +38,13 @@ echo "Domain: $DOMAIN"
 echo ""
 
 certbot certonly \
-    --standalone \
-    --preferred-challenges http \
-    -d "$DOMAIN" \
-    --email "admin@hypernexus.site" \
-    --agree-tos \
-    --non-interactive \
-    --force-renewal
+	--standalone \
+	--preferred-challenges http \
+	-d "$DOMAIN" \
+	--email "admin@hypernexus.site" \
+	--agree-tos \
+	--non-interactive \
+	--force-renewal
 
 echo "✓ SSL certificate generated"
 echo ""
@@ -73,7 +73,7 @@ echo ""
 
 # Step 6: Set up auto-renewal
 echo "Step 6: Setting up auto-renewal..."
-cat > /etc/cron.d/hypernexus-ssl << EOF
+cat >/etc/cron.d/hypernexus-ssl <<EOF
 # Auto-renew SSL certificate for HyperNexus
 0 0 1 * * root certbot renew --quiet --deploy-hook "cp /etc/letsencrypt/live/$DOMAIN/fullchain.pem $HYPERNEXUS_DIR/deploy/cloud/ssl/cert.pem && cp /etc/letsencrypt/live/$DOMAIN/privkey.pem $HYPERNEXUS_DIR/deploy/cloud/ssl/key.pem && cd $HYPERNEXUS_DIR/deploy/cloud && docker-compose restart nginx"
 EOF
@@ -92,10 +92,10 @@ echo ""
 echo "Step 8: Testing SSL configuration..."
 sleep 5
 if curl -s -o /dev/null -w "%{http_code}" "https://$DOMAIN/api/cloud/health" | grep -q "200"; then
-    echo "✓ SSL is working!"
+	echo "✓ SSL is working!"
 else
-    echo "⚠ SSL test failed - checking configuration..."
-    docker-compose logs nginx | tail -20
+	echo "⚠ SSL test failed - checking configuration..."
+	docker-compose logs nginx | tail -20
 fi
 echo ""
 

@@ -18,7 +18,7 @@ func (f *NativeFileTools) ReadFile(path string) (string, error) {
 }
 
 // NativeTerminalTools provides native creack/pty or os/exec capabilities
-// to match Supervisor and TerminalService from TS TormentNexus
+// to match Supervisor and TerminalService from TS HyperNexus
 type NativeTerminalTools struct{}
 
 func (t *NativeTerminalTools) ExecuteCommand(command string) (string, error) {

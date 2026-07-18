@@ -127,7 +127,7 @@ export interface GoStartupStatus {
         missingSections?: string[];
         lastUpdatedAt?: string | null;
       };
-      tormentnexus?: {
+      hypernexus?: {
         ready?: boolean;
         enabled?: boolean;
         storeExists?: boolean;

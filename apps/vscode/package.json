@@ -1,8 +1,8 @@
 {
-  "name": "tormentnexus",
-  "displayName": "TormentNexus — AI Control Plane",
+  "name": "hypernexus",
+  "displayName": "HyperNexus — AI Control Plane",
   "version": "1.0.0",
-  "publisher": "tormentnexus",
+  "publisher": "hypernexus",
   "description": "Universal AI control plane: persistent memory, MCP tool routing, session import, enterprise RBAC. Works with every AI coding agent.",
   "categories": ["AI", "Other"],
   "activationEvents": ["onStartupFinished"],
@@ -19,9 +19,9 @@
       {"command": "tn.status", "key": "ctrl+shift+p"}
     ],
     "configuration": {
-      "title": "TormentNexus",
+      "title": "HyperNexus",
       "properties": {
-        "tormentnexus.url": {"type": "string", "default": "http://127.0.0.1:7778", "description": "TN Kernel URL"}
+        "hypernexus.url": {"type": "string", "default": "http://127.0.0.1:7778", "description": "TN Kernel URL"}
       }
     }
   }

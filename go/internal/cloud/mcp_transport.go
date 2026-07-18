@@ -14,19 +14,19 @@ import (
 
 // MCPStreamableHTTP handles Streamable HTTP transport for MCP
 type MCPStreamableHTTP struct {
-	am         *AccountManager
+	am          *AccountManager
 	provisioner *Provisioner
-	sessions   map[string]*MCPSession
-	mu         sync.RWMutex
+	sessions    map[string]*MCPSession
+	mu          sync.RWMutex
 }
 
 // MCPSession represents an MCP session
 type MCPSession struct {
-	ID        string    `json:"id"`
-	AccountID string    `json:"account_id"`
-	ContainerID string  `json:"container_id"`
-	CreatedAt time.Time `json:"created_at"`
-	LastPing  time.Time `json:"last_ping"`
+	ID          string    `json:"id"`
+	AccountID   string    `json:"account_id"`
+	ContainerID string    `json:"container_id"`
+	CreatedAt   time.Time `json:"created_at"`
+	LastPing    time.Time `json:"last_ping"`
 }
 
 // MCPRequest represents an MCP JSON-RPC request
@@ -55,9 +55,9 @@ type MCPError struct {
 // NewMCPStreamableHTTP creates a new MCP Streamable HTTP handler
 func NewMCPStreamableHTTP(am *AccountManager, provisioner *Provisioner) *MCPStreamableHTTP {
 	return &MCPStreamableHTTP{
-		am:         am,
+		am:          am,
 		provisioner: provisioner,
-		sessions:   make(map[string]*MCPSession),
+		sessions:    make(map[string]*MCPSession),
 	}
 }
 

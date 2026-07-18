@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type ImportedSession struct {
 	ID                string `json:"id"`
@@ -24,7 +24,7 @@ type ImportedSession struct {
 func ImportSession(dbPath string, session ImportedSession) error {
 	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
-		return fmt.Errorf("failed to open tormentnexus.db: %w", err)
+		return fmt.Errorf("failed to open hypernexus.db: %w", err)
 	}
 	defer db.Close()
 

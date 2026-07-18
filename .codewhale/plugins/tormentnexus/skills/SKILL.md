@@ -1,20 +1,20 @@
 ---
-name: tormentnexus
-description: TormentNexus AI control plane — L2 vector memory, semantic tool discovery, skill registry, session import, code search, subagent orchestration, and commercial RBAC
+name: hypernexus
+description: HyperNexus AI control plane — L2 vector memory, semantic tool discovery, skill registry, session import, code search, subagent orchestration, and commercial RBAC
 metadata:
-  short-description: TormentNexus AI control plane
+  short-description: HyperNexus AI control plane
 ---
 
-# TormentNexus Integration
+# HyperNexus Integration
 
-TormentNexus is a local AI control plane running on port 7778 with persistent L2 vector memory, semantic tool discovery, imported sessions, a skill registry, commercial RBAC, and subagent orchestration.
+HyperNexus is a local AI control plane running on port 7778 with persistent L2 vector memory, semantic tool discovery, imported sessions, a skill registry, commercial RBAC, and subagent orchestration.
 
-CodeWhale connects to it via MCP stdio (`tormentnexus.exe mcp`). The MCP server is auto-configured in `~/.codewhale/mcp.json` by the TN installer.
+CodeWhale connects to it via MCP stdio (`hypernexus.exe mcp`). The MCP server is auto-configured in `~/.codewhale/mcp.json` by the TN installer.
 
 ## Architecture Overview
 
 ```
-CodeWhale ⇄ MCP (tormentnexus.exe mcp) ⇄ TN Kernel (port 7778)
+CodeWhale ⇄ MCP (hypernexus.exe mcp) ⇄ TN Kernel (port 7778)
                                      ⇄ 20+ downstream MCP servers
                                      ⇄ SQLite L2 vector memory
                                      ⇄ Session import store (542+ sessions)
@@ -22,75 +22,75 @@ CodeWhale ⇄ MCP (tormentnexus.exe mcp) ⇄ TN Kernel (port 7778)
                                      ⇄ Commercial RBAC
 ```
 
-The Kernel runs as the "TormentNexusKernel" Windows service on port 7778.
+The Kernel runs as the "HyperNexusKernel" Windows service on port 7778.
 
 ---
 
 ## MCP Tools
 
-The `tormentnexus` MCP server provides 49+ tools. Tools are prefixed `mcp_tormentnexus_*`:
+The `hypernexus` MCP server provides 49+ tools. Tools are prefixed `mcp_hypernexus_*`:
 
 ### Memory & Knowledge
 | Tool | Description |
 |------|-------------|
-| `mcp_tormentnexus_memory_scratchpad_get` | Read L1 ephemeral working memory |
-| `mcp_tormentnexus_memory_scratchpad_set` | Write to L1 scratchpad |
-| `mcp_tormentnexus_memory_scratchpad_append` | Append to L1 scratchpad |
-| `mcp_tormentnexus_memory_extract_relations` | Extract knowledge graph relations |
-| `mcp_tormentnexus_add_bookmark` | Store a bookmark (lighter than full memory) |
+| `mcp_hypernexus_memory_scratchpad_get` | Read L1 ephemeral working memory |
+| `mcp_hypernexus_memory_scratchpad_set` | Write to L1 scratchpad |
+| `mcp_hypernexus_memory_scratchpad_append` | Append to L1 scratchpad |
+| `mcp_hypernexus_memory_extract_relations` | Extract knowledge graph relations |
+| `mcp_hypernexus_add_bookmark` | Store a bookmark (lighter than full memory) |
 
 ### File & System
 | Tool | Description |
 |------|-------------|
-| `mcp_tormentnexus_read` | Read file contents |
-| `mcp_tormentnexus_write` | Write file contents |
-| `mcp_tormentnexus_edit` | Edit file |
-| `mcp_tormentnexus_grep` | Search file contents |
-| `mcp_tormentnexus_find` | Find files |
-| `mcp_tormentnexus_ls` | List directory |
-| `mcp_tormentnexus_bash` | Execute shell command (sandboxed) |
-| `mcp_tormentnexus_repomap` | Generate repository map |
+| `mcp_hypernexus_read` | Read file contents |
+| `mcp_hypernexus_write` | Write file contents |
+| `mcp_hypernexus_edit` | Edit file |
+| `mcp_hypernexus_grep` | Search file contents |
+| `mcp_hypernexus_find` | Find files |
+| `mcp_hypernexus_ls` | List directory |
+| `mcp_hypernexus_bash` | Execute shell command (sandboxed) |
+| `mcp_hypernexus_repomap` | Generate repository map |
 
 ### MCP Routing (via TN Kernel)
 | Tool | Description |
 |------|-------------|
-| `mcp_tormentnexus_mcp_list_servers` | List all registered MCP servers |
-| `mcp_tormentnexus_mcp_list_tools` | List tools from a specific server |
-| `mcp_tormentnexus_mcp_call_tool` | Call a tool on a downstream server |
-| `mcp_tormentnexus_mcp_server_test` | Check server health |
-| `mcp_tormentnexus_mcp_status` | Overall MCP mesh status |
+| `mcp_hypernexus_mcp_list_servers` | List all registered MCP servers |
+| `mcp_hypernexus_mcp_list_tools` | List tools from a specific server |
+| `mcp_hypernexus_mcp_call_tool` | Call a tool on a downstream server |
+| `mcp_hypernexus_mcp_server_test` | Check server health |
+| `mcp_hypernexus_mcp_status` | Overall MCP mesh status |
 
 ### Windows & UI Automation
 | Tool | Description |
 |------|-------------|
-| `mcp_tormentnexus_inspect_window_ui` | Inspect accessibility tree |
-| `mcp_tormentnexus_simulate_input` | Simulate keyboard/mouse input |
-| `mcp_tormentnexus_list_processes` | List running processes |
-| `mcp_tormentnexus_kill_process` | Kill a process |
-| `mcp_tormentnexus_detect_chat_surface` | Detect AI chat windows |
-| `mcp_tormentnexus_detect_chat_state` | Check chat state |
-| `mcp_tormentnexus_click_chat_button` | Click chat UI buttons |
-| `mcp_tormentnexus_set_chat_input` | Set chat input field |
-| `mcp_tormentnexus_submit_chat_input` | Submit chat input |
-| `mcp_tormentnexus_advance_chat` | Advance chat session |
+| `mcp_hypernexus_inspect_window_ui` | Inspect accessibility tree |
+| `mcp_hypernexus_simulate_input` | Simulate keyboard/mouse input |
+| `mcp_hypernexus_list_processes` | List running processes |
+| `mcp_hypernexus_kill_process` | Kill a process |
+| `mcp_hypernexus_detect_chat_surface` | Detect AI chat windows |
+| `mcp_hypernexus_detect_chat_state` | Check chat state |
+| `mcp_hypernexus_click_chat_button` | Click chat UI buttons |
+| `mcp_hypernexus_set_chat_input` | Set chat input field |
+| `mcp_hypernexus_submit_chat_input` | Submit chat input |
+| `mcp_hypernexus_advance_chat` | Advance chat session |
 
 ### Commercial & Integrations
 | Tool | Description |
 |------|-------------|
-| `mcp_tormentnexus_jira_create_issue` | Create a Jira issue |
-| `mcp_tormentnexus_confluence_search` | Search Confluence |
-| `mcp_tormentnexus_cloud_troubleshoot` | Cloud troubleshooting |
-| `mcp_tormentnexus_generate_devops_pipeline` | Generate CI/CD pipeline |
-| `mcp_tormentnexus_install_mcp_server` | Install new MCP servers |
+| `mcp_hypernexus_jira_create_issue` | Create a Jira issue |
+| `mcp_hypernexus_confluence_search` | Search Confluence |
+| `mcp_hypernexus_cloud_troubleshoot` | Cloud troubleshooting |
+| `mcp_hypernexus_generate_devops_pipeline` | Generate CI/CD pipeline |
+| `mcp_hypernexus_install_mcp_server` | Install new MCP servers |
 
 ### System
 | Tool | Description |
 |------|-------------|
-| `mcp_tormentnexus_code_interpreter` | Run code in sandbox |
-| `mcp_tormentnexus_download_llamafile` | Download a llamafile |
-| `mcp_tormentnexus_system_status` | Show system status |
-| `mcp_tormentnexus_billing_status` | Show billing info |
-| `mcp_tormentnexus_get_system_stats` | Get system statistics |
+| `mcp_hypernexus_code_interpreter` | Run code in sandbox |
+| `mcp_hypernexus_download_llamafile` | Download a llamafile |
+| `mcp_hypernexus_system_status` | Show system status |
+| `mcp_hypernexus_billing_status` | Show billing info |
+| `mcp_hypernexus_get_system_stats` | Get system statistics |
 
 ---
 
@@ -171,14 +171,14 @@ GET http://127.0.0.1:7778/api/code/search?q=<query>&scope=<ast-grep|deepcontext|
 
 ### 1. Pre-Task Context Harvesting
 Before starting significant work, harvest context from L2 memory:
-1. Use `mcp_tormentnexus_memory_scratchpad_get` to check current L1 scratchpad
+1. Use `mcp_hypernexus_memory_scratchpad_get` to check current L1 scratchpad
 2. Search L2 via Kernel API: `GET /api/memory/search?q=<task description>&limit=5`
 3. Optionally search skills: `GET /api/skills/search?q=<task description>&limit=5`
-4. Store the findings in the L1 scratchpad (`mcp_tormentnexus_memory_scratchpad_append`)
+4. Store the findings in the L1 scratchpad (`mcp_hypernexus_memory_scratchpad_append`)
 
 ### 2. Storing Knowledge
 After key decisions, fixes, or discoveries:
-1. **For lightweight**: Use `mcp_tormentnexus_add_bookmark` 
+1. **For lightweight**: Use `mcp_hypernexus_add_bookmark` 
 2. **For full memory**: POST to `/api/memory/add` with structured JSON content including tags
 3. **For project-specific memories**: Include a `project:<dirname>` tag so they sync to `.memdb`
 
@@ -193,10 +193,10 @@ Tag conventions:
 
 ### 3. Tool Discovery
 When unsure what tool to use:
-1. List available MCP servers: `mcp_tormentnexus_mcp_list_servers`
-2. List tools from a server: `mcp_tormentnexus_mcp_list_tools` with server name
+1. List available MCP servers: `mcp_hypernexus_mcp_list_servers`
+2. List tools from a server: `mcp_hypernexus_mcp_list_tools` with server name
 3. Semantic search: `GET /api/mcp/native/search?query=<natural language description>`
-4. Route through Kernel: `mcp_tormentnexus_mcp_call_tool` for downstream servers
+4. Route through Kernel: `mcp_hypernexus_mcp_call_tool` for downstream servers
 
 ### 4. Session & Skill Discovery
 - Search imported sessions: `GET /api/memory/search?q=<query>&type=session`
@@ -208,16 +208,16 @@ When searching code across the workspace:
 - **AST patterns**: Use the TN Kernel's code search with `scope=ast-grep`
 - **Semantic search**: Use `scope=deepcontext`
 - **File/pattern**: Use `scope=file`
-- Or directly use `mcp_tormentnexus_grep` for simple regex
+- Or directly use `mcp_hypernexus_grep` for simple regex
 
 ### 6. Commercial RBAC
-The TN Kernel enforces commercial authorization for dangerous operations. If a destructive tool call is blocked, use `mcp_tormentnexus_memory_scratchpad_set` or the TN Kernel memory API to record what you were doing and why before proceeding with explicitly authorized alternatives.
+The TN Kernel enforces commercial authorization for dangerous operations. If a destructive tool call is blocked, use `mcp_hypernexus_memory_scratchpad_set` or the TN Kernel memory API to record what you were doing and why before proceeding with explicitly authorized alternatives.
 
 ### 7. Per-Turn Memory Injection
 After each significant user request, consider:
 1. What relevant context might L2 have?
 2. Search Kernel memory API for related memories
-3. If found, use `mcp_tormentnexus_memory_scratchpad_append` to bring it into the current L1 context
+3. If found, use `mcp_hypernexus_memory_scratchpad_append` to bring it into the current L1 context
 
 ---
 
@@ -247,7 +247,7 @@ Fetch and display:
 - L2 vault count: `GET /api/memory/fts-search?q=the&limit=1`
 - L3 cold archive count: `GET /api/memory/cold-archive/count`
 - Mesh peers: `GET /api/mesh/status`
-- MCP server status: `mcp_tormentnexus_mcp_status`
+- MCP server status: `mcp_hypernexus_mcp_status`
 
 ### `/tn-plan` — Plan Management
 Interactive multi-step:
@@ -294,9 +294,9 @@ A structured pre-task routine:
 The MCP server is auto-configured. To verify:
 
 ```
-codewhale mcp list        # Should show "tormentnexus"
-codewhale mcp connect tormentnexus  # Test the connection
-codewhale mcp tools       # Show all tools (includes mcp_tormentnexus_*)
+codewhale mcp list        # Should show "hypernexus"
+codewhale mcp connect hypernexus  # Test the connection
+codewhale mcp tools       # Show all tools (includes mcp_hypernexus_*)
 ```
 
 Kernel health check:

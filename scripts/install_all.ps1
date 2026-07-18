@@ -1,4 +1,4 @@
-# TormentNexus Universal Installer and Service Supervisor Setup
+# HyperNexus Universal Installer and Service Supervisor Setup
 # =============================================================
 # Run in PowerShell (Administrator recommended for Windows Service registration).
 
@@ -15,7 +15,7 @@ if ($scriptPath) {
 }
 
 Write-Host "=========================================================" -ForegroundColor Cyan
-Write-Host "         TormentNexus System Installer & Supervisord     " -ForegroundColor Cyan
+Write-Host "         HyperNexus System Installer & Supervisord     " -ForegroundColor Cyan
 Write-Host "=========================================================" -ForegroundColor Cyan
 Write-Host "Working Directory: $repoRoot" -ForegroundColor DarkGray
 Write-Host ""
@@ -32,7 +32,7 @@ if ($isAdmin) {
 Write-Host ""
 
 # 2. Kill Stale Services to prevent lock contention
-Write-Host "--- 1. Pruning Existing TormentNexus Processes ---" -ForegroundColor Cyan
+Write-Host "--- 1. Pruning Existing HyperNexus Processes ---" -ForegroundColor Cyan
 $ports = @(7778, 7779, 4000)
 foreach ($port in $ports) {
     Write-Host "Checking port $port..." -ForegroundColor DarkGray
@@ -49,7 +49,7 @@ foreach ($port in $ports) {
 }
 
 # Kill processes by name
-$names = @("tormentnexus", "watchdog")
+$names = @("hypernexus", "watchdog")
 foreach ($name in $names) {
     $procs = Get-Process -Name $name -ErrorAction SilentlyContinue
     if ($procs) {
@@ -73,7 +73,7 @@ if (Test-Path .\build.bat) {
     cmd.exe /c .\build.bat
 } else {
     Set-Location go
-    go build -buildvcs=false -o ..\bin\tormentnexus.exe ./cmd/tormentnexus
+    go build -buildvcs=false -o ..\bin\hypernexus.exe ./cmd/hypernexus
     Set-Location $repoRoot
 }
 Write-Host "Workspace build completed successfully." -ForegroundColor Green
@@ -104,7 +104,7 @@ if (Test-Path .\scripts\install-mcp-clients.py) {
 Write-Host ""
 
 # 6. Service Installation/Execution Configuration
-Write-Host "--- 5. Launching TormentNexus Services ---" -ForegroundColor Cyan
+Write-Host "--- 5. Launching HyperNexus Services ---" -ForegroundColor Cyan
 if ($isAdmin) {
     Write-Host "Registering and starting Windows Services..." -ForegroundColor DarkGray
     if (Test-Path .\install_services.bat) {
@@ -119,7 +119,7 @@ if ($isAdmin) {
 
 if ($runServicesLocally) {
     Write-Host "Starting Go Sidecar (port 7778) in background..." -ForegroundColor DarkGray
-    Start-Process -FilePath "bin\tormentnexus.exe" -ArgumentList "serve --port 7778" -WindowStyle Hidden
+    Start-Process -FilePath "bin\hypernexus.exe" -ArgumentList "serve --port 7778" -WindowStyle Hidden
 
     Write-Host "Starting Next.js Dashboard (port 7779) in background..." -ForegroundColor DarkGray
     $dashPath = Join-Path $repoRoot "apps\web"

@@ -18,7 +18,7 @@ func main() {
 		"db_v3_28389376.db",
 		"db_v4_28368896.db",
 		"db_v5_28016640.db",
-		"tormentnexus.db",
+		"hypernexus.db",
 	}
 
 	tables := []string{

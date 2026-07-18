@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
-	"github.com/MDMAtk/TormentNexus/internal/gossip"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/gossip"
 )
 
 // InitGossipStore initializes the schemas required for gossip metadata tracking.

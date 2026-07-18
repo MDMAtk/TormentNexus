@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/gossip"
+	"github.com/MDMAtk/HyperNexus/internal/gossip"
 )
 
 func (s *Server) handleMemoryList(w http.ResponseWriter, r *http.Request) {

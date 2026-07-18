@@ -10,7 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type RegistryServer struct {
 	Name        string `json:"name"`
@@ -45,7 +45,7 @@ func SyncGlamaMCP(ctx context.Context, dbPath string) (*SyncReport, error) {
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", "TormentNexus/Glama-Scraper")
+	req.Header.Set("User-Agent", "HyperNexus/Glama-Scraper")
 
 	resp, err := client.Do(req)
 	if err != nil {

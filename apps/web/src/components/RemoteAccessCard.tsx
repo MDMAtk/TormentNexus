@@ -35,7 +35,7 @@ export default function RemoteAccessCard() {
         try {
             await executeTool.mutateAsync({
                 name: isActive ? 'stop_remote_access' : 'start_remote_access',
-                args: isActive ? {} : { port: 3000, label: 'tormentnexus-dashboard' },
+                args: isActive ? {} : { port: 3000, label: 'hypernexus-dashboard' },
             });
             await refreshStatus();
         } catch (e: any) {
@@ -53,7 +53,7 @@ export default function RemoteAccessCard() {
             </div>
 
             <p className="text-sm text-zinc-400 mb-4">
-                Expose your TormentNexus Dashboard securely via Cloudflare Tunnel to access it from your mobile device.
+                Expose your HyperNexus Dashboard securely via Cloudflare Tunnel to access it from your mobile device.
             </p>
 
             {error && (

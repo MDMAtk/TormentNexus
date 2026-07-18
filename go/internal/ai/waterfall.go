@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/internal/providers"
+	"github.com/MDMAtk/HyperNexus/internal/providers"
 )
 
 type WaterfallClient struct {

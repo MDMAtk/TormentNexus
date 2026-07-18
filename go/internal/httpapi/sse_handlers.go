@@ -179,7 +179,7 @@ func (s *Server) handleSSEMessage(w http.ResponseWriter, r *http.Request) {
 				"tools": map[string]any{},
 			},
 			"serverInfo": map[string]any{
-				"name":    "tormentnexus-cloud",
+				"name":    "hypernexus-cloud",
 				"version": "1.0.0",
 			},
 		}

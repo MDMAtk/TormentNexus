@@ -1101,13 +1101,13 @@ var dispatchMap = map[string]func(ctx context.Context, args map[string]interface
 	"HandleGetAccountCash":                              HandleGetAccountCash,                              // from trading212_mcp_server.go
 	"HandleGetAccountInfo_mcp_paradex_py":               HandleGetAccountInfo_mcp_paradex_py,               // from mcp_paradex_py.go
 	"HandleGetAccountInfo_powersun_tron_mcp":            HandleGetAccountInfo_powersun_tron_mcp,            // from powersun_tron_mcp.go
-	"HandleGetAccountSummary":                           HandleGetAccountSummary,                           // from tormentnexusels_mcp_server_saxo.go
+	"HandleGetAccountSummary":                           HandleGetAccountSummary,                           // from hypernexusels_mcp_server_saxo.go
 	"HandleGetAccount_bitget_mcp_server":                HandleGetAccount_bitget_mcp_server,                // from bitget_mcp_server.go
 	"HandleGetAccount_brightdata_mcp":                   HandleGetAccount_brightdata_mcp,                   // from brightdata_mcp.go
 	"HandleGetAccount_mcp_klever_vm":                    HandleGetAccount_mcp_klever_vm,                    // from mcp_klever_vm.go
 	"HandleGetAccount_solscan_mcp":                      HandleGetAccount_solscan_mcp,                      // from solscan_mcp.go
 	"HandleGetAccount_stellar_mcp":                      HandleGetAccount_stellar_mcp,                      // from stellar_mcp.go
-	"HandleGetAccounts_tormentnexusels_mcp_server_saxo": HandleGetAccounts_tormentnexusels_mcp_server_saxo, // from tormentnexusels_mcp_server_saxo.go
+	"HandleGetAccounts_hypernexusels_mcp_server_saxo": HandleGetAccounts_hypernexusels_mcp_server_saxo, // from hypernexusels_mcp_server_saxo.go
 	"HandleGetAccounts_monzo_mcp":                       HandleGetAccounts_monzo_mcp,                       // from monzo_mcp.go
 	"HandleGetAccounts_monzo_mcp_bfdcampos":             HandleGetAccounts_monzo_mcp_bfdcampos,             // from monzo_mcp_bfdcampos.go
 	"HandleGetActiveSprite":                             HandleGetActiveSprite,                             // from aseprite_mcp.go

@@ -1,5 +1,5 @@
 {
-  "name": "@tormentnexus/search",
+  "name": "@hypernexus/search",
   "version": "1.0.0-alpha.255",
   "private": true,
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@tormentnexus/adk": "workspace:*",
+    "@hypernexus/adk": "workspace:*",
     "@vscode/ripgrep": "^1.17.0"
   },
   "devDependencies": {

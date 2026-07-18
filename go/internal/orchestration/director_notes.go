@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
 )
 
 type DirectorNote struct {
@@ -31,7 +31,7 @@ func NewDirectorNotesManager() *DirectorNotesManager {
 
 func (m *DirectorNotesManager) SynthesizeSessionNote(ctx context.Context, objective string, transcript string) (*DirectorNote, error) {
 	prompt := fmt.Sprintf(`
-		You are the TormentNexus Director.
+		You are the HyperNexus Director.
 		Summarize the following session transcript into a high-level note.
 		
 		OBJECTIVE: %s
@@ -48,7 +48,7 @@ func (m *DirectorNotesManager) SynthesizeSessionNote(ctx context.Context, object
 	`, objective, transcript[:min(8000, len(transcript))])
 
 	resp, err := ai.AutoRoute(ctx, []ai.Message{
-		{Role: "system", Content: "You are the TormentNexus Director."},
+		{Role: "system", Content: "You are the HyperNexus Director."},
 		{Role: "user", Content: prompt},
 	})
 

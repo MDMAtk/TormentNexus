@@ -18,7 +18,7 @@ type L3Archive struct {
 }
 
 func NewL3Archive(workspaceRoot string) *L3Archive {
-	dir := filepath.Join(workspaceRoot, ".tormentnexus", "memory", "l3_archive")
+	dir := filepath.Join(workspaceRoot, ".hypernexus", "memory", "l3_archive")
 	_ = os.MkdirAll(dir, 0755)
 	return &L3Archive{baseDir: dir}
 }

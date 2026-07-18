@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 )
 
 func TestVectorStoreAdvancedFeatures(t *testing.T) {
@@ -46,9 +46,9 @@ func TestVectorStoreAdvancedFeatures(t *testing.T) {
 		Type:           controlplane.MemoryWorking,
 		Kind:           "fact",
 		Category:       "project-info",
-		Tags:           "tormentnexus",
+		Tags:           "hypernexus",
 		SourceURL:      "http://example.com/project",
-		Content:        "TormentNexus has 232 Go files",
+		Content:        "HyperNexus has 232 Go files",
 		Importance:     0.5,
 		HeatScore:      30.0,
 		Embedding:      []float32{-0.1, 0.4, 0.1},
@@ -160,8 +160,8 @@ func TestVectorStoreAdvancedFeatures(t *testing.T) {
 		Type:           controlplane.MemoryWorking,
 		Kind:           "fact",
 		Category:       "project-info",
-		Tags:           "tormentnexus",
-		Content:        "TormentNexus has 232 Go files", // Identical to test-2 content to guarantee Jaccard sim > 0.8
+		Tags:           "hypernexus",
+		Content:        "HyperNexus has 232 Go files", // Identical to test-2 content to guarantee Jaccard sim > 0.8
 		Importance:     0.4,
 		HeatScore:      20.0,
 		CreatedAt:      time.Now(),

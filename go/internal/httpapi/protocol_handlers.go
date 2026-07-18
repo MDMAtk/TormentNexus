@@ -7,14 +7,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/eventbus"
-	"github.com/MDMAtk/TormentNexus/internal/protocol"
-	"github.com/MDMAtk/TormentNexus/internal/supervisor"
+	"github.com/MDMAtk/HyperNexus/internal/eventbus"
+	"github.com/MDMAtk/HyperNexus/internal/protocol"
+	"github.com/MDMAtk/HyperNexus/internal/supervisor"
 )
 
-// handleTormentNexusProtocol handles inbound tormentnexus:// deep links passed from the OS
+// handleHyperNexusProtocol handles inbound hypernexus:// deep links passed from the OS
 // or client dispatchers.
-func (s *Server) handleTormentNexusProtocol(w http.ResponseWriter, r *http.Request) {
+func (s *Server) handleHyperNexusProtocol(w http.ResponseWriter, r *http.Request) {
 	var rawURL string
 
 	if r.Method == http.MethodPost {
@@ -49,10 +49,10 @@ func (s *Server) handleTormentNexusProtocol(w http.ResponseWriter, r *http.Reque
 	}
 
 	// Validate scheme
-	if u.Scheme != "tormentnexus" {
+	if u.Scheme != "hypernexus" {
 		writeJSON(w, http.StatusBadRequest, map[string]any{
 			"success": false,
-			"error":   "invalid URL scheme; expected tormentnexus://",
+			"error":   "invalid URL scheme; expected hypernexus://",
 		})
 		return
 	}
@@ -285,6 +285,6 @@ func (s *Server) handleRegisterProtocol(w http.ResponseWriter, r *http.Request) 
 
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
-		"message": "Successfully registered tormentnexus:// protocol handler in Windows registry.",
+		"message": "Successfully registered hypernexus:// protocol handler in Windows registry.",
 	})
 }

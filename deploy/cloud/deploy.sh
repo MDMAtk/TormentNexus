@@ -7,17 +7,17 @@ echo "========================================="
 echo ""
 
 # Check if Docker is installed
-if ! command -v docker &> /dev/null; then
-    echo "Error: Docker is not installed"
-    echo "Please install Docker first: https://docs.docker.com/get-docker/"
-    exit 1
+if ! command -v docker &>/dev/null; then
+	echo "Error: Docker is not installed"
+	echo "Please install Docker first: https://docs.docker.com/get-docker/"
+	exit 1
 fi
 
 # Check if Docker Compose is installed
-if ! command -v docker-compose &> /dev/null; then
-    echo "Error: Docker Compose is not installed"
-    echo "Please install Docker Compose first: https://docs.docker.com/compose/install/"
-    exit 1
+if ! command -v docker-compose &>/dev/null; then
+	echo "Error: Docker Compose is not installed"
+	echo "Please install Docker Compose first: https://docs.docker.com/compose/install/"
+	exit 1
 fi
 
 # Create necessary directories
@@ -28,16 +28,16 @@ mkdir -p ssl
 
 # Check for SSL certificates
 if [ ! -f ssl/cert.pem ] || [ ! -f ssl/key.pem ]; then
-    echo ""
-    echo "Warning: SSL certificates not found"
-    echo "The server will run on HTTP only"
-    echo ""
-    echo "To enable HTTPS:"
-    echo "1. Generate SSL certificates (e.g., using Let's Encrypt)"
-    echo "2. Copy them to ssl/cert.pem and ssl/key.pem"
-    echo "3. Uncomment the SSL section in nginx.conf"
-    echo "4. Restart the deployment"
-    echo ""
+	echo ""
+	echo "Warning: SSL certificates not found"
+	echo "The server will run on HTTP only"
+	echo ""
+	echo "To enable HTTPS:"
+	echo "1. Generate SSL certificates (e.g., using Let's Encrypt)"
+	echo "2. Copy them to ssl/cert.pem and ssl/key.pem"
+	echo "3. Uncomment the SSL section in nginx.conf"
+	echo "4. Restart the deployment"
+	echo ""
 fi
 
 # Build and start services

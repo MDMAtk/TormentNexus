@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 )
 
-// TormentNexusMcpServerEntry represents a single MCP server entry in the JSON config.
-type TormentNexusMcpServerEntry struct {
+// HyperNexusMcpServerEntry represents a single MCP server entry in the JSON config.
+type HyperNexusMcpServerEntry struct {
 	Type        string            `json:"type,omitempty"`
 	Command     string            `json:"command,omitempty"`
 	Args        []string          `json:"args,omitempty"`
@@ -50,19 +50,19 @@ type McpToolMetadata struct {
 
 // McpJsonConfig represents the top-level MCP JSON configuration file.
 type McpJsonConfig struct {
-	McpServers map[string]TormentNexusMcpServerEntry `json:"mcpServers"`
+	McpServers map[string]HyperNexusMcpServerEntry `json:"mcpServers"`
 }
 
 // LoadMcpJsonConfig loads the MCP JSON configuration from the standard paths.
-// It searches for tormentnexus.config.json or mcp.json in the workspace and config directories.
+// It searches for hypernexus.config.json or mcp.json in the workspace and config directories.
 func LoadMcpJsonConfig() (*McpJsonConfig, error) {
 	// Search paths in order of precedence
 	paths := []string{
-		"tormentnexus.config.json",
+		"hypernexus.config.json",
 		"mcp.json",
 		"mcp.jsonc",
-		filepath.Join(os.Getenv("HOME"), ".tormentnexus", "config.json"),
-		filepath.Join(os.Getenv("USERPROFILE"), ".tormentnexus", "config.json"),
+		filepath.Join(os.Getenv("HOME"), ".hypernexus", "config.json"),
+		filepath.Join(os.Getenv("USERPROFILE"), ".hypernexus", "config.json"),
 	}
 
 	for _, p := range paths {
@@ -73,13 +73,13 @@ func LoadMcpJsonConfig() (*McpJsonConfig, error) {
 				return nil, fmt.Errorf("failed to parse %s: %w", p, err)
 			}
 			if config.McpServers == nil {
-				config.McpServers = make(map[string]TormentNexusMcpServerEntry)
+				config.McpServers = make(map[string]HyperNexusMcpServerEntry)
 			}
 			return &config, nil
 		}
 	}
 
 	return &McpJsonConfig{
-		McpServers: make(map[string]TormentNexusMcpServerEntry),
+		McpServers: make(map[string]HyperNexusMcpServerEntry),
 	}, nil
 }

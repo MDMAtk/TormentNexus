@@ -1,9 +1,9 @@
 #!/bin/bash
-# Wrapper script for TormentNexus MCP inside Docker
+# Wrapper script for HyperNexus MCP inside Docker
 # Writes the lockfile pointing to host's TN API, then launches MCP server
 
-mkdir -p /root/.tormentnexus
-cat >/root/.tormentnexus/lock <<'EOF'
+mkdir -p /root/.hypernexus
+cat >/root/.hypernexus/lock <<'EOF'
 {
   "host": "host.docker.internal",
   "port": 7778,
@@ -12,4 +12,4 @@ cat >/root/.tormentnexus/lock <<'EOF'
 }
 EOF
 
-exec /tn/tormentnexus-linux mcp
+exec /tn/hypernexus-linux mcp

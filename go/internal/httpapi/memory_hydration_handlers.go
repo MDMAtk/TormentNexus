@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/MDMAtk/TormentNexus/internal/memorystore"
+	"github.com/MDMAtk/HyperNexus/internal/memorystore"
 )
 
 // handleMemoryHydrate triggers the memory hydration engine to scan the

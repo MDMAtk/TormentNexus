@@ -1,9 +1,9 @@
 #!/bin/bash
-# TormentNexus — Catalog DB Tracking & Versioning
+# HyperNexus — Catalog DB Tracking & Versioning
 # Tracks enrichment progress and creates snapshots
 
-DB_PATH="/opt/tormentnexus/catalog.db"
-TRACKING_DIR="/opt/tormentnexus/data/catalog-tracking"
+DB_PATH="/opt/hypernexus/catalog.db"
+TRACKING_DIR="/opt/hypernexus/data/catalog-tracking"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 mkdir -p "$TRACKING_DIR"

@@ -1,9 +1,9 @@
 {
-  "edition": "tormentnexus",
-  "product_name": "TormentNexus",
-  "company_name": "TormentNexus Team",
-  "tray_tooltip": "TormentNexus (Running)",
-  "dashboard_title": "TormentNexus Dashboard",
-  "config_dir": ".tormentnexus",
-  "registry_key": "TormentNexus"
+  "edition": "hypernexus",
+  "product_name": "HyperNexus",
+  "company_name": "HyperNexus Team",
+  "tray_tooltip": "HyperNexus (Running)",
+  "dashboard_title": "HyperNexus Dashboard",
+  "config_dir": ".hypernexus",
+  "registry_key": "HyperNexus"
 }

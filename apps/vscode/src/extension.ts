@@ -4,7 +4,7 @@ import WebSocket from 'ws';
 let socket: WebSocket | null = null;
 let statusBarItem: vscode.StatusBarItem;
 let outputChannel: vscode.OutputChannel;
-let sidebarProvider: TormentNexusSidebarProvider | null = null;
+let sidebarProvider: HyperNexusSidebarProvider | null = null;
 let reconnectTimer: NodeJS.Timeout | null = null;
 let lastActivityTime = Date.now();
 let debounceTimer: NodeJS.Timeout | null = null;
@@ -114,7 +114,7 @@ function log(message: string) {
     emitInspectorLog('info', message);
 }
 
-function emitInspectorLog(level: 'info' | 'warn' | 'error', message: string, url = 'vscode://tormentnexus-vscode-extension') {
+function emitInspectorLog(level: 'info' | 'warn' | 'error', message: string, url = 'vscode://hypernexus-vscode-extension') {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
         return;
     }
@@ -227,7 +227,7 @@ function getWorkspaceState() {
 }
 
 function resolveCoreHttpUrl(): string {
-    const config = vscode.workspace.getConfiguration('tormentnexus');
+    const config = vscode.workspace.getConfiguration('hypernexus');
     const wsUrl = config.get<string>('coreUrl', 'ws://localhost:3001');
 
     try {
@@ -240,7 +240,7 @@ function resolveCoreHttpUrl(): string {
 }
 
 function resolveDashboardBaseUrl(): string {
-    const config = vscode.workspace.getConfiguration('tormentnexus');
+    const config = vscode.workspace.getConfiguration('hypernexus');
     const configured = config.get<string>('dashboardUrl', 'http://localhost:3000');
     return configured.replace(/\/$/, '');
 }
@@ -301,8 +301,8 @@ async function createSidebarSnapshot(): Promise<SidebarSnapshot> {
     };
 }
 
-class TormentNexusSidebarProvider implements vscode.WebviewViewProvider {
-    public static readonly viewType = 'tormentnexus.dispatchView';
+class HyperNexusSidebarProvider implements vscode.WebviewViewProvider {
+    public static readonly viewType = 'hypernexus.dispatchView';
     private view?: vscode.WebviewView;
 
     resolveWebviewView(webviewView: vscode.WebviewView): void | Thenable<void> {
@@ -513,7 +513,7 @@ class TormentNexusSidebarProvider implements vscode.WebviewViewProvider {
 </head>
 <body>
     <div class="card">
-        <h2>TormentNexus Mini Dashboard</h2>
+        <h2>HyperNexus Mini Dashboard</h2>
         <div class="grid">
             <div class="metric">
                 <div class="label">Connection</div>
@@ -553,12 +553,12 @@ class TormentNexusSidebarProvider implements vscode.WebviewViewProvider {
             <button id="templatesBtn">Debate Templates</button>
             <button id="architectBtn">Architect Mode</button>
         </div>
-        <div class="muted" style="margin-top: 8px;">Dashboard-linked actions open the richer TormentNexus web UI when a direct Core endpoint does not exist yet.</div>
+        <div class="muted" style="margin-top: 8px;">Dashboard-linked actions open the richer HyperNexus web UI when a direct Core endpoint does not exist yet.</div>
     </div>
 
     <div class="card">
         <h3>Research Agent</h3>
-        <textarea id="researchQuery" placeholder="Ask TormentNexus to research a topic…"></textarea>
+        <textarea id="researchQuery" placeholder="Ask HyperNexus to research a topic…"></textarea>
         <div class="row">
             <select id="researchDepth">
                 <option value="1">Depth 1</option>
@@ -573,7 +573,7 @@ class TormentNexusSidebarProvider implements vscode.WebviewViewProvider {
 
     <div class="card">
         <h3>Coder Agent</h3>
-        <textarea id="codeTask" placeholder="Describe a coding task for TormentNexus…"></textarea>
+        <textarea id="codeTask" placeholder="Describe a coding task for HyperNexus…"></textarea>
         <div class="row">
             <button id="codeBtn">Run Coder</button>
         </div>
@@ -582,7 +582,7 @@ class TormentNexusSidebarProvider implements vscode.WebviewViewProvider {
     <div class="card">
         <h3>Recent Tasks</h3>
         <ul id="feed" class="feed">
-            <li><span class="muted">Waiting for TormentNexus activity…</span></li>
+            <li><span class="muted">Waiting for HyperNexus activity…</span></li>
         </ul>
     </div>
 
@@ -672,35 +672,35 @@ class TormentNexusSidebarProvider implements vscode.WebviewViewProvider {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    outputChannel = vscode.window.createOutputChannel('TormentNexus Bridge');
-    sidebarProvider = new TormentNexusSidebarProvider();
-    context.subscriptions.push(vscode.window.registerWebviewViewProvider(TormentNexusSidebarProvider.viewType, sidebarProvider));
+    outputChannel = vscode.window.createOutputChannel('HyperNexus Bridge');
+    sidebarProvider = new HyperNexusSidebarProvider();
+    context.subscriptions.push(vscode.window.registerWebviewViewProvider(HyperNexusSidebarProvider.viewType, sidebarProvider));
 
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.command = 'tormentnexus.connect';
+    statusBarItem.command = 'hypernexus.connect';
     updateStatusBar(false);
     statusBarItem.show();
     context.subscriptions.push(statusBarItem);
     context.subscriptions.push(outputChannel);
 
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.connect', connectToCore));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.disconnect', disconnectFromCore));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.showStatus', showHubStatus));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.runAgent', runAgentDispatch));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.searchMemory', searchMemory));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.ingestSelectionToRag', ingestSelectionToRag));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.ingestUrl', ingestUrl));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.rememberSelection', rememberSelection));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.listTools', listTools));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.invokeTool', invokeTool));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.openDashboard', () => openDashboardRoute(DASHBOARD_ROUTES.home, 'Opened dashboard')));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.showLogs', showLogs));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.startDebate', startDebate));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.viewAnalytics', viewAnalytics));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.listDebateTemplates', listDebateTemplates));
-    context.subscriptions.push(vscode.commands.registerCommand('tormentnexus.architectMode', architectMode));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.connect', connectToCore));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.disconnect', disconnectFromCore));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.showStatus', showHubStatus));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.runAgent', runAgentDispatch));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.searchMemory', searchMemory));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.ingestSelectionToRag', ingestSelectionToRag));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.ingestUrl', ingestUrl));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.rememberSelection', rememberSelection));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.listTools', listTools));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.invokeTool', invokeTool));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.openDashboard', () => openDashboardRoute(DASHBOARD_ROUTES.home, 'Opened dashboard')));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.showLogs', showLogs));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.startDebate', startDebate));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.viewAnalytics', viewAnalytics));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.listDebateTemplates', listDebateTemplates));
+    context.subscriptions.push(vscode.commands.registerCommand('hypernexus.architectMode', architectMode));
 
-    const config = vscode.workspace.getConfiguration('tormentnexus');
+    const config = vscode.workspace.getConfiguration('hypernexus');
     if (config.get<boolean>('autoConnect', true)) {
         void connectToCore();
     }
@@ -758,7 +758,7 @@ export function activate(context: vscode.ExtensionContext) {
         addActivity('system', 'Terminal capture unavailable', 'VS Code runtime does not expose terminal write event.');
     }
 
-    addActivity('system', 'Extension activated', 'TormentNexus VS Code bridge is online.');
+    addActivity('system', 'Extension activated', 'HyperNexus VS Code bridge is online.');
     addChatHistory('system', 'extension', 'VS Code extension bridge activated.');
 }
 
@@ -768,11 +768,11 @@ export function deactivate() {
 
 function updateStatusBar(connected: boolean) {
     if (connected) {
-        statusBarItem.text = '$(plug) TormentNexus: Connected';
-        statusBarItem.tooltip = 'Connected to TormentNexus Core';
+        statusBarItem.text = '$(plug) HyperNexus: Connected';
+        statusBarItem.tooltip = 'Connected to HyperNexus Core';
         statusBarItem.backgroundColor = undefined;
     } else {
-        statusBarItem.text = '$(debug-disconnect) TormentNexus: Disconnected';
+        statusBarItem.text = '$(debug-disconnect) HyperNexus: Disconnected';
         statusBarItem.tooltip = 'Click to Connect';
         statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
     }
@@ -792,7 +792,7 @@ async function connectToCore() {
         return;
     }
 
-    const config = vscode.workspace.getConfiguration('tormentnexus');
+    const config = vscode.workspace.getConfiguration('hypernexus');
     const url = config.get<string>('coreUrl', 'ws://localhost:3001');
     addActivity('system', 'Connecting to core', url);
 
@@ -806,14 +806,14 @@ async function connectToCore() {
                 reconnectTimer = null;
             }
             socket?.send(JSON.stringify({
-                type: 'TORMENTNEXUS_CLIENT_HELLO',
+                type: 'HYPERNEXUS_CLIENT_HELLO',
                 clientType: 'vscode-extension',
-                clientName: 'TormentNexus VS Code Bridge',
+                clientName: 'HyperNexus VS Code Bridge',
                 platform: `${vscode.env.appName} ${vscode.version}`,
                 capabilities: VSCODE_BRIDGE_CAPABILITIES,
                 hookPhases: VSCODE_BRIDGE_HOOK_PHASES,
             }));
-            addActivity('status', 'Connected to TormentNexus Core', url);
+            addActivity('status', 'Connected to HyperNexus Core', url);
             void sidebarProvider?.refreshSnapshot();
         });
 
@@ -829,7 +829,7 @@ async function connectToCore() {
         socket.on('close', () => {
             updateStatusBar(false);
             socket = null;
-            addActivity('status', 'Disconnected from TormentNexus Core', 'Retrying in 5 seconds.');
+            addActivity('status', 'Disconnected from HyperNexus Core', 'Retrying in 5 seconds.');
             void sidebarProvider?.refreshSnapshot();
             reconnectTimer = setTimeout(() => {
                 void connectToCore();
@@ -858,7 +858,7 @@ function disconnectFromCore() {
     }
 
     updateStatusBar(false);
-    addActivity('status', 'Disconnected manually', 'TormentNexus Core connection closed.');
+    addActivity('status', 'Disconnected manually', 'HyperNexus Core connection closed.');
     void sidebarProvider?.refreshSnapshot();
 }
 
@@ -879,7 +879,7 @@ async function showHubStatus() {
     const status = await fetchHubStatus();
     addActivity('status', 'Hub status checked', `${status.connectionState}; researcher=${status.researcher}; coder=${status.coder}`);
     addChatHistory('system', 'extension', `Hub status checked: ${status.connectionState}; researcher=${status.researcher}; coder=${status.coder}`);
-    void vscode.window.showInformationMessage(`TormentNexus Hub ${status.connectionState} — Researcher: ${status.researcher}, Coder: ${status.coder}`);
+    void vscode.window.showInformationMessage(`HyperNexus Hub ${status.connectionState} — Researcher: ${status.researcher}, Coder: ${status.coder}`);
 }
 
 async function dispatchResearchTask(query: string, depth: number): Promise<unknown> {
@@ -927,7 +927,7 @@ async function runAgentDispatch() {
         { label: 'Research Agent', value: 'research' },
         { label: 'Coder Agent', value: 'code' },
     ], {
-        placeHolder: 'Choose which TormentNexus expert to run',
+        placeHolder: 'Choose which HyperNexus expert to run',
     });
 
     if (!target) {
@@ -975,7 +975,7 @@ async function runAgentDispatch() {
 
 async function rememberSelection() {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
-        void vscode.window.showWarningMessage('TormentNexus Core is not connected. Connect first to save context.');
+        void vscode.window.showWarningMessage('HyperNexus Core is not connected. Connect first to save context.');
         return;
     }
 
@@ -1009,7 +1009,7 @@ async function rememberSelection() {
     }));
 
     addActivity('memory', 'Saved editor context to memory', vscode.workspace.asRelativePath(editor.document.uri));
-    void vscode.window.showInformationMessage(`Saved context from ${vscode.workspace.asRelativePath(editor.document.uri)} to TormentNexus memory.`);
+    void vscode.window.showInformationMessage(`Saved context from ${vscode.workspace.asRelativePath(editor.document.uri)} to HyperNexus memory.`);
 }
 
 async function ingestSelectionToRag() {
@@ -1042,7 +1042,7 @@ async function ingestSelectionToRag() {
     });
 
     addActivity('rag', 'Ingested editor content into RAG', `${relativePath} (${response.chunksIngested} chunks)`);
-    void vscode.window.showInformationMessage(`Ingested ${relativePath} into TormentNexus RAG (${response.chunksIngested} chunks).`);
+    void vscode.window.showInformationMessage(`Ingested ${relativePath} into HyperNexus RAG (${response.chunksIngested} chunks).`);
 }
 
 async function ingestUrl() {
@@ -1055,7 +1055,7 @@ async function ingestUrl() {
     })();
 
     const url = await vscode.window.showInputBox({
-        prompt: 'URL to ingest into TormentNexus Knowledge',
+        prompt: 'URL to ingest into HyperNexus Knowledge',
         placeHolder: 'https://example.com/docs',
         value: seededUrl,
         ignoreFocusOut: true,
@@ -1082,7 +1082,7 @@ async function ingestUrl() {
     addChatHistory('user', 'extension', `URL ingest requested: ${trimmedUrl}`);
     addChatHistory('assistant', 'extension', `URL ingest result: ${summarizeText(response.result, 900)}`);
     addActivity('memory', 'Ingested URL into Knowledge', trimmedUrl);
-    void vscode.window.showInformationMessage(`Ingested URL into TormentNexus Knowledge: ${trimmedUrl}`);
+    void vscode.window.showInformationMessage(`Ingested URL into HyperNexus Knowledge: ${trimmedUrl}`);
 }
 
 async function searchMemory() {
@@ -1105,7 +1105,7 @@ async function listTools() {
 async function invokeTool() {
     const name = await vscode.window.showInputBox({
         prompt: 'Tool name',
-        placeHolder: 'Enter the TormentNexus tool name to invoke',
+        placeHolder: 'Enter the HyperNexus tool name to invoke',
         ignoreFocusOut: true,
     });
     if (!name?.trim()) {
@@ -1137,7 +1137,7 @@ async function invokeTool() {
     outputChannel.show(true);
     outputChannel.appendLine(`\n=== Tool Invocation: ${name.trim()} ===\n${formatResult(response.result.data)}\n`);
     addActivity('tool', 'Invoked tool', name.trim());
-    void vscode.window.showInformationMessage(`Tool ${name.trim()} executed. See TormentNexus Bridge output for details.`);
+    void vscode.window.showInformationMessage(`Tool ${name.trim()} executed. See HyperNexus Bridge output for details.`);
 }
 
 async function showLogs() {
@@ -1187,11 +1187,11 @@ async function architectMode() {
     outputChannel.appendLine(`\n=== Architect Mode Research ===\n${formatResult(research)}\n`);
     outputChannel.appendLine(`\n=== Architect Mode Plan ===\n${formatResult(code)}\n`);
     addActivity('code', 'Architect mode completed', task.trim());
-    void vscode.window.showInformationMessage('Architect mode completed. See TormentNexus Bridge output for research and plan details.');
+    void vscode.window.showInformationMessage('Architect mode completed. See HyperNexus Bridge output for research and plan details.');
 }
 
 async function handleMessage(msg: Record<string, unknown>) {
-    if (msg.type === 'TORMENTNEXUS_CORE_MANIFEST') {
+    if (msg.type === 'HYPERNEXUS_CORE_MANIFEST') {
         const manifest = msg.manifest as { connectedClients?: Array<{ clientName?: string }>; supportedHookPhases?: string[] } | undefined;
         addActivity(
             'system',

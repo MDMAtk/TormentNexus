@@ -23,8 +23,8 @@ import (
 //   STRIPE_PRICE_ID_BASIC     — price_xxx for $29/mo plan
 //   STRIPE_PRICE_ID_PRO       — price_xxx for $99/mo plan
 //   STRIPE_PRICE_ID_COMMERCIAL — price_xxx for $499/mo plan
-//   TORMENTNEXUS_DASHBOARD_URL — https://hypernexus.site
-//   TORMENTNEXUS_API_URL      — https://api.hypernexus.site
+//   HYPERNEXUS_DASHBOARD_URL — https://hypernexus.site
+//   HYPERNEXUS_API_URL      — https://api.hypernexus.site
 
 func stripeSecretKey() string {
 	if k := os.Getenv("STRIPE_SECRET_KEY"); k != "" {
@@ -50,14 +50,14 @@ func stripePriceID(plan string) string {
 }
 
 func dashboardURL() string {
-	if u := os.Getenv("TORMENTNEXUS_DASHBOARD_URL"); u != "" {
+	if u := os.Getenv("HYPERNEXUS_DASHBOARD_URL"); u != "" {
 		return u
 	}
 	return "https://hypernexus.site"
 }
 
 func apiBaseURL() string {
-	if u := os.Getenv("TORMENTNEXUS_API_URL"); u != "" {
+	if u := os.Getenv("HYPERNEXUS_API_URL"); u != "" {
 		return u
 	}
 	return "http://127.0.0.1:7778"

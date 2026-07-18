@@ -44,13 +44,13 @@ func (dd *DownstreamDiscovery) SetDiscoveryTimeout(timeout time.Duration) {
 	dd.discoveryTimeout = timeout
 }
 
-// isSameServerInstance checks if a server is the same TormentNexus instance.
+// isSameServerInstance checks if a server is the same HyperNexus instance.
 func isSameServerInstance(params map[string]interface{}, namespaceUUID string) bool {
 	name, ok := params["name"].(string)
 	if !ok {
 		return false
 	}
-	return name == "tormentnexus-unified-"+namespaceUUID
+	return name == "hypernexus-unified-"+namespaceUUID
 }
 
 // DiscoverTools discovers tools from all eligible downstream servers.

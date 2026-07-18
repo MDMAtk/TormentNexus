@@ -33,10 +33,10 @@
     "env": {},
     "enabled": true
   },
-  "tormentnexus-supervisor": {
+  "hypernexus-supervisor": {
     "command": "node",
     "args": [
-      "C:\\Users\\hyper\\workspace\\tormentnexus\\packages\\tormentnexus-supervisor\\dist\\index.js"
+      "C:\\Users\\hyper\\workspace\\hypernexus\\packages\\hypernexus-supervisor\\dist\\index.js"
     ],
     "env": {
       "NODE_ENV": "production"
@@ -577,7 +577,7 @@
   "serena": {
     "command": "uvx",
     "args": [
-      "--from git+https://github.com/ortormentnexus/serena",
+      "--from git+https://github.com/orhypernexus/serena",
       "serena",
       "start-mcp-server",
       "--context",
@@ -586,11 +586,11 @@
     "env": {},
     "enabled": true
   },
-  "tormentnexus-mcp": {
+  "hypernexus-mcp": {
     "command": "npx",
     "args": [
       "-y",
-      "tormentnexus-mcp-server"
+      "hypernexus-mcp-server"
     ],
     "env": {},
     "enabled": true

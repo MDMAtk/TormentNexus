@@ -17,7 +17,7 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type Bookmark struct {
 	ID              int         `json:"id"`
@@ -299,7 +299,7 @@ func SyncBobbyBookmarks(ctx context.Context, dbPath string, baseURL string, perP
 			break
 		}
 		req.Header.Set("Accept", "application/json")
-		req.Header.Set("User-Agent", "TormentNexus/BobbyBookmarks-Go-Adapter")
+		req.Header.Set("User-Agent", "HyperNexus/BobbyBookmarks-Go-Adapter")
 
 		resp, err := client.Do(req)
 		if err != nil {

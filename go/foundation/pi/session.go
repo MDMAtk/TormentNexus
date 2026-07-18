@@ -51,7 +51,7 @@ func NewSessionStore(baseDir string) *SessionStore {
 }
 
 func DefaultSessionStore(cwd string) *SessionStore {
-	return NewSessionStore(filepath.Join(cwd, ".tormentnexus", "foundation", "sessions"))
+	return NewSessionStore(filepath.Join(cwd, ".hypernexus", "foundation", "sessions"))
 }
 
 func (s *SessionStore) BaseDir() string {

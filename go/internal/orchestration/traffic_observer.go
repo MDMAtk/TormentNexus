@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/ai"
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 )
 
 type TrafficObserver struct {

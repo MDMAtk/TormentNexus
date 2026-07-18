@@ -33,7 +33,7 @@ If applicable, add screenshots to help explain your problem.
 
 - OS: [e.g. Windows 11, macOS 14, Ubuntu 22.04]
 - Browser: [e.g. Chrome 120, Firefox 121]
-- TormentNexus Version: [e.g. 1.0.0-alpha.257]
+- HyperNexus Version: [e.g. 1.0.0-alpha.257]
 - Node.js Version: [e.g. 24.0.0]
 - Go Version: [e.g. 1.25.0]
 

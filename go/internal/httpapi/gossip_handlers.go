@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/MDMAtk/TormentNexus/internal/gossip"
+	"github.com/MDMAtk/HyperNexus/internal/gossip"
 )
 
 func (s *Server) handleGossipMessage(w http.ResponseWriter, r *http.Request) {

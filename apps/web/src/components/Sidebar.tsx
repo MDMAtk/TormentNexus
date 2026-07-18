@@ -36,11 +36,11 @@ import { SIDEBAR_SECTIONS } from "./mcp/nav-config";
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const SIDEBAR_COLLAPSE_STORAGE_KEY =
-	"tormentnexus_sidebar_collapsed_sections_v1";
-const SIDEBAR_FAVORITES_STORAGE_KEY = "tormentnexus_sidebar_favorites_v1";
-const SIDEBAR_RECENT_STORAGE_KEY = "tormentnexus_sidebar_recent_routes_v1";
+	"hypernexus_sidebar_collapsed_sections_v1";
+const SIDEBAR_FAVORITES_STORAGE_KEY = "hypernexus_sidebar_favorites_v1";
+const SIDEBAR_RECENT_STORAGE_KEY = "hypernexus_sidebar_recent_routes_v1";
 const SIDEBAR_RECENT_SEARCHES_STORAGE_KEY =
-	"tormentnexus_sidebar_recent_searches_v1";
+	"hypernexus_sidebar_recent_searches_v1";
 const MAX_RECENT_ROUTES = 8;
 const MAX_RECENT_SEARCHES = 6;
 
@@ -213,8 +213,8 @@ export function Sidebar({ className }: SidebarProps) {
 		const actions: PaletteItem[] = [
 			{
 				kind: "action" as const,
-				id: "open-tormentnexus",
-				title: "Open TormentNexus Dashboard",
+				id: "open-hypernexus",
+				title: "Open HyperNexus Dashboard",
 				section: "Actions",
 				description: "Go to /dashboard/mcp",
 				icon: Command,
@@ -393,7 +393,7 @@ export function Sidebar({ className }: SidebarProps) {
 	};
 
 	const runPaletteAction = (id: string) => {
-		if (id === "open-tormentnexus") {
+		if (id === "open-hypernexus") {
 			closePalette();
 			router.push("/dashboard/mcp");
 			return;
@@ -459,7 +459,7 @@ export function Sidebar({ className }: SidebarProps) {
 		const url = URL.createObjectURL(blob);
 		const link = document.createElement("a");
 		link.href = url;
-		link.download = `tormentnexus-nav-preferences-${new Date().toISOString().slice(0, 10)}.json`;
+		link.download = `hypernexus-nav-preferences-${new Date().toISOString().slice(0, 10)}.json`;
 		document.body.appendChild(link);
 		link.click();
 		link.remove();
@@ -708,7 +708,7 @@ export function Sidebar({ className }: SidebarProps) {
 			<div className="space-y-4 py-4">
 				<div className="px-3 py-2 space-y-5 max-h-[calc(100vh-2rem)] overflow-auto">
 					<h2 className="mb-1 px-4 text-lg font-semibold tracking-tight text-white">
-						TormentNexus Navigation
+						HyperNexus Navigation
 					</h2>
 					<div className="px-3">
 						<input

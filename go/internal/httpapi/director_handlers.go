@@ -96,7 +96,7 @@ func (s *Server) handleDirectorUpdateConfig(w http.ResponseWriter, r *http.Reque
 	}
 
 	// Native Go fallback: write to local config file
-	configPath := filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "config.json")
+	configPath := filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "config.json")
 	os.MkdirAll(filepath.Dir(configPath), 0755)
 
 	existing := localSettingsConfig(s.cfg.WorkspaceRoot)
@@ -113,7 +113,7 @@ func (s *Server) handleDirectorUpdateConfig(w http.ResponseWriter, r *http.Reque
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 		"data":    map[string]any{"ok": true, "updated": len(payload)},
-		"bridge":  map[string]any{"fallback": "go-local-director", "procedure": "director.updateConfig", "reason": "upstream unavailable; updated local .tormentnexus/config.json"},
+		"bridge":  map[string]any{"fallback": "go-local-director", "procedure": "director.updateConfig", "reason": "upstream unavailable; updated local .hypernexus/config.json"},
 	})
 }
 
@@ -129,7 +129,7 @@ func (s *Server) handleDirectorConfigGet(w http.ResponseWriter, r *http.Request)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 		"data":    result,
-		"bridge":  map[string]any{"fallback": "go-local-tormentnexus-config", "procedure": "directorConfig.get", "reason": "upstream unavailable; using local .tormentnexus/config.json"},
+		"bridge":  map[string]any{"fallback": "go-local-hypernexus-config", "procedure": "directorConfig.get", "reason": "upstream unavailable; using local .hypernexus/config.json"},
 	})
 }
 
@@ -142,13 +142,13 @@ func (s *Server) handleDirectorConfigTest(w http.ResponseWriter, r *http.Request
 	}
 
 	// Native Go fallback: validate the local config file exists and is parseable
-	configPath := filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "config.json")
+	configPath := filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "config.json")
 	cfg := localSettingsConfig(s.cfg.WorkspaceRoot)
 	errors := []string{}
 	warnings := []string{}
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		errors = append(errors, "config file not found at .tormentnexus/config.json")
+		errors = append(errors, "config file not found at .hypernexus/config.json")
 	}
 
 	if cfg == nil || len(cfg) == 0 {
@@ -192,7 +192,7 @@ func (s *Server) handleDirectorConfigUpdate(w http.ResponseWriter, r *http.Reque
 	}
 
 	// Native Go fallback: update single key in local config
-	configPath := filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "config.json")
+	configPath := filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "config.json")
 	os.MkdirAll(filepath.Dir(configPath), 0755)
 	cfg := localSettingsConfig(s.cfg.WorkspaceRoot)
 	if cfg == nil {

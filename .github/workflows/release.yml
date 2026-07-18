@@ -46,13 +46,13 @@ jobs:
           EXT=""
           if [ "$GOOS" = "windows" ]; then EXT=".exe"; fi
           go build -buildvcs=false -ldflags="-s -w" \
-            -o ../tormentnexus-${{ matrix.suffix }}${EXT} \
-            ./cmd/tormentnexus
+            -o ../hypernexus-${{ matrix.suffix }}${EXT} \
+            ./cmd/hypernexus
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: tormentnexus-${{ matrix.suffix }}
-          path: tormentnexus-${{ matrix.suffix }}*
+          name: hypernexus-${{ matrix.suffix }}
+          path: hypernexus-${{ matrix.suffix }}*
 
   build-windows-installer:
     name: Build Windows Installer (NSIS)
@@ -63,7 +63,7 @@ jobs:
       - name: Download Windows binary
         uses: actions/download-artifact@v4
         with:
-          name: tormentnexus-windows-amd64
+          name: hypernexus-windows-amd64
           path: build/
       - name: Install NSIS
         run: choco install nsis -y
@@ -72,9 +72,9 @@ jobs:
           Remove-Item -Recurse -Force installer `
             -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Path installer -Force
-          Copy-Item "build/tormentnexus-windows-amd64.exe" `
-            "installer/tormentnexus.exe"
-          Copy-Item "installers/windows/tormentnexus.nsi" `
+          Copy-Item "build/hypernexus-windows-amd64.exe" `
+            "installer/hypernexus.exe"
+          Copy-Item "installers/windows/hypernexus.nsi" `
             "installer/"
           Copy-Item "installers/windows/install-gui.ps1" `
             "installer/"
@@ -85,12 +85,12 @@ jobs:
         run: |
           cd installer
           & "C:\Program Files (x86)\NSIS\makensis.exe" `
-            tormentnexus.nsi
+            hypernexus.nsi
       - name: Upload installer
         uses: actions/upload-artifact@v4
         with:
           name: windows-installer
-          path: installer/tormentnexus-setup.exe
+          path: installer/hypernexus-setup.exe
 
   create-release:
     name: Create GitHub Release
@@ -110,7 +110,7 @@ jobs:
       - name: Create release archives
         run: |
           mkdir -p release
-          for dir in binaries/tormentnexus-*; do
+          for dir in binaries/hypernexus-*; do
             name=$(basename $dir)
             if [[ "$name" == *"windows"* ]]; then
               zip "release/${name}.zip" "$dir"/*
@@ -122,7 +122,7 @@ jobs:
           cp installers/windows/install.bat release/
           cp installers/macos/install-terminal.sh release/
           cp installers/linux/install.sh release/
-          cp installer/tormentnexus-setup.exe release/ \
+          cp installer/hypernexus-setup.exe release/ \
             2>/dev/null || true
           ls -la release/
       - name: Create Release

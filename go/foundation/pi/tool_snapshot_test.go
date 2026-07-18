@@ -33,7 +33,7 @@ func TestToolResultSnapshots(t *testing.T) {
   ],
   "isError": false
 }`)
-	mustExecSnapshot(t, runtime, "edit", EditToolInput{Path: "snap.txt", Edits: []EditReplacement{{OldText: "hello", NewText: "tormentnexus"}}}, `{
+	mustExecSnapshot(t, runtime, "edit", EditToolInput{Path: "snap.txt", Edits: []EditReplacement{{OldText: "hello", NewText: "hypernexus"}}}, `{
   "toolName": "edit",
   "content": [
     {
@@ -42,7 +42,7 @@ func TestToolResultSnapshots(t *testing.T) {
     }
   ],
   "details": {
-    "diff": "tormentnexus",
+    "diff": "hypernexus",
     "firstChangedLine": 1
   },
   "isError": false
@@ -88,11 +88,11 @@ func normalizeToolResultSnapshot(t *testing.T, result *ToolResult) string {
 	text = strings.ReplaceAll(text, "\r\n", "\n")
 	text = strings.ReplaceAll(text, filepath.Join(os.TempDir(), ""), "")
 	if strings.Contains(text, "@@") {
-		text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-tormentnexus\n", "")
+		text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-hypernexus\n", "")
 	}
-	text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-tormentnexus", "tormentnexus")
-	text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-hello\n+tormentnexus\n", "tormentnexus")
-	text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-hello\n+tormentnexus", "tormentnexus")
+	text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-hypernexus", "hypernexus")
+	text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-hello\n+hypernexus\n", "hypernexus")
+	text = strings.ReplaceAll(text, "@@ -1,5 +1,4 @@\n-hello\n+hypernexus", "hypernexus")
 	var decoded map[string]any
 	if err := json.Unmarshal([]byte(text), &decoded); err != nil {
 		return normalizeJSON(text)
@@ -111,10 +111,10 @@ func normalizeToolResultSnapshot(t *testing.T, result *ToolResult) string {
 		if diff, ok := details["diff"].(string); ok {
 			diff = strings.ReplaceAll(diff, "\r\n", "\n")
 			diff = ansiPattern.ReplaceAllString(diff, "")
-			if strings.Contains(diff, "tormentnexus") {
-				details["diff"] = "tormentnexus"
+			if strings.Contains(diff, "hypernexus") {
+				details["diff"] = "hypernexus"
 			} else if strings.Contains(diff, "htormentnelloxus") {
-				details["diff"] = "tormentnexus"
+				details["diff"] = "hypernexus"
 			} else {
 				details["diff"] = diff
 			}

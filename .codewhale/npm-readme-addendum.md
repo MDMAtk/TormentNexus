@@ -1,7 +1,7 @@
 
-## TormentNexus Extension
+## HyperNexus Extension
 
-CodeWhale 0.8.66+ includes a built-in **TormentNexus extension** (`crates/tn-extension`) compiled directly into the binary — no separate plugin or DLL needed. It provides:
+CodeWhale 0.8.66+ includes a built-in **HyperNexus extension** (`crates/tn-extension`) compiled directly into the binary — no separate plugin or DLL needed. It provides:
 
 ### Lifecycle Hooks
 - **SessionStart** — logs session info to TN L2 memory on port 7778
@@ -20,6 +20,6 @@ CodeWhale 0.8.66+ includes a built-in **TormentNexus extension** (`crates/tn-ext
 - 3 keyboard shortcuts: `Ctrl+Shift+M` (memory), `Ctrl+Shift+T` (tools), `Ctrl+Shift+P` (status)
 
 ### MCP Server Auto-Registration
-The extension automatically registers the `tormentnexus` MCP server pointing at `tormentnexus.exe mcp`. Enable it by keeping the TormentNexus Kernel running on `http://127.0.0.1:7778`.
+The extension automatically registers the `hypernexus` MCP server pointing at `hypernexus.exe mcp`. Enable it by keeping the HyperNexus Kernel running on `http://127.0.0.1:7778`.
 
 > Extension source: `crates/tn-extension` — implements `codewhale_extension::Extension` trait.

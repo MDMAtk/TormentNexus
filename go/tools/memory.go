@@ -13,7 +13,7 @@ type NativeMemoryTools struct {
 
 func NewNativeMemoryTools() *NativeMemoryTools {
 	return &NativeMemoryTools{
-		dbPath: "./.tormentnexus_knowledge.db",
+		dbPath: "./.hypernexus_knowledge.db",
 	}
 }
 

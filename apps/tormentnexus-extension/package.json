@@ -1,13 +1,13 @@
 {
-  "name": "tormentnexus-extension",
+  "name": "hypernexus-extension",
   "version": "1.0.0-alpha.255",
-  "description": "TormentNexus Extension",
+  "description": "HyperNexus Extension",
   "license": "MIT",
   "private": true,
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/srbhptl39/TormentNexus-Extension.git"
+    "url": "https://github.com/srbhptl39/HyperNexus-Extension.git"
   },
   "type": "module",
   "scripts": {

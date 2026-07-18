@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/foundation/adapters"
-	foundationorchestration "github.com/MDMAtk/TormentNexus/foundation/orchestration"
+	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
 )
 
 // Director Agent translates the TS core Director orchestrator.
@@ -18,12 +18,12 @@ type Director struct {
 	State        map[string]interface{}
 	History      []Message
 	WorkingDir   string
-	HyperAdapter *adapters.TormentNexusAdapter
+	HyperAdapter *adapters.HyperNexusAdapter
 }
 
 func NewDirector(provider ILLMProvider) *Director {
 	cwd, _ := os.Getwd()
-	hyperAdapter := adapters.NewTormentNexusAdapter(cwd)
+	hyperAdapter := adapters.NewHyperNexusAdapter(cwd)
 	return &Director{
 		Name:         "Director",
 		Provider:     provider,
@@ -33,7 +33,7 @@ func NewDirector(provider ILLMProvider) *Director {
 		History: []Message{
 			{
 				Role:    RoleSystem,
-				Content: strings.Join([]string{"You are the TormentNexus TechLead Director. Your role is absolute architectural supervision. Plan, delegate, and review.", hyperAdapter.BuildSystemContext()}, "\n\n"),
+				Content: strings.Join([]string{"You are the HyperNexus TechLead Director. Your role is absolute architectural supervision. Plan, delegate, and review.", hyperAdapter.BuildSystemContext()}, "\n\n"),
 			},
 		},
 	}

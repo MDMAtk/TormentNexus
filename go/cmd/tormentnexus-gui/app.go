@@ -29,5 +29,5 @@ func (a *App) GetStartupURL() string {
 
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, welcome to TormentNexus!", name)
+	return fmt.Sprintf("Hello %s, welcome to HyperNexus!", name)
 }

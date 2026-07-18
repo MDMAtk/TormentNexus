@@ -10,8 +10,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"gitlab.com/robertpelloni/HyperNexus/internal/cloud"
 	_ "github.com/glebarez/go-sqlite"
+	"gitlab.com/robertpelloni/HyperNexus/internal/cloud"
 )
 
 func main() {

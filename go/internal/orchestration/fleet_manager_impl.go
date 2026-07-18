@@ -3,9 +3,9 @@ package orchestration
 import (
 	"context"
 
-	"github.com/MDMAtk/TormentNexus/internal/session"
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
-	"github.com/MDMAtk/TormentNexus/internal/supervisor"
+	"github.com/MDMAtk/HyperNexus/internal/session"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/supervisor"
 )
 
 type FleetManagerPlus struct {

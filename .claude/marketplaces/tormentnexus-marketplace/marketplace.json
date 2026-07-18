@@ -1,9 +1,9 @@
 {
   "plugins": {
-    "tormentnexus@tormentnexus-marketplace": {
+    "hypernexus@hypernexus-marketplace": {
       "source": {
         "source": "local",
-        "path": "C:\\Users\\hyper\\workspace\\tormentnexus\\.claude\\plugins\\cache\\tormentnexus"
+        "path": "C:\\Users\\hyper\\workspace\\hypernexus\\.claude\\plugins\\cache\\hypernexus"
       }
     }
   }

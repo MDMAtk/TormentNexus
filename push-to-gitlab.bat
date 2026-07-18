@@ -6,7 +6,7 @@ REM Stage all changes
 git add -A
 
 REM Commit with descriptive message
-git commit -m "feat: corporate mode - HyperNexus/TormentNexus dual edition support
+git commit -m "feat: corporate mode - HyperNexus/HyperNexus dual edition support
 
 - Added branding configuration system (go/internal/config/branding.go)
 - Updated system tray to use dynamic branding

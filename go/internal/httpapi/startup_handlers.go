@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/config"
-	"github.com/MDMAtk/TormentNexus/internal/interop"
-	"github.com/MDMAtk/TormentNexus/internal/memorystore"
-	"github.com/MDMAtk/TormentNexus/internal/mesh"
-	"github.com/MDMAtk/TormentNexus/internal/cache"
+	"github.com/MDMAtk/HyperNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/interop"
+	"github.com/MDMAtk/HyperNexus/internal/memorystore"
+	"github.com/MDMAtk/HyperNexus/internal/mesh"
+	"github.com/MDMAtk/HyperNexus/internal/cache"
 )
 
 type StartupBlockingReason struct {
@@ -148,7 +148,7 @@ func (s *Server) buildStartupStatus(ctx context.Context) (StartupStatus, error) 
 				"workspaceRootAvailable": configStatus.WorkspaceRoot.Exists,
 				"goConfigDirAvailable":   configStatus.ConfigDir.Exists,
 				"mainConfigDirAvailable": configStatus.MainConfigDir.Exists,
-				"repoConfigAvailable":    configStatus.TormentNexusConfigFile.Exists,
+				"repoConfigAvailable":    configStatus.HyperNexusConfigFile.Exists,
 				"mcpConfigAvailable":     configStatus.MCPConfigFile.Exists,
 			},
 			"memory": map[string]any{
@@ -209,8 +209,8 @@ func (s *Server) importedSessionMaintenanceStats(ctx context.Context) ImportedSe
 	if _, err := s.callUpstreamJSON(ctx, "session.importedMaintenanceStats", nil, &stats); err == nil {
 		return stats
 	}
-	// Ensure .tormentnexus/imported_sessions exists
-	_ = os.MkdirAll(filepath.Join(s.cfg.WorkspaceRoot, ".tormentnexus", "imported_sessions"), 0755)
+	// Ensure .hypernexus/imported_sessions exists
+	_ = os.MkdirAll(filepath.Join(s.cfg.WorkspaceRoot, ".hypernexus", "imported_sessions"), 0755)
 	return ImportedSessionMaintenanceStats{}
 }
 

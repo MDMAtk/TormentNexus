@@ -15,7 +15,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/internal/orchestration"
+	"github.com/MDMAtk/HyperNexus/internal/orchestration"
 )
 
 // skillEntry is the JSON shape returned for a single skill.

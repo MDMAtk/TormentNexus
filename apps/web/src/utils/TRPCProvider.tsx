@@ -1,7 +1,7 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, splitLink, unstable_httpSubscriptionLink } from "@trpc/client";
-import { resolveTrpcHttpUrl } from "@tormentnexus/ui";
+import { resolveTrpcHttpUrl } from "@hypernexus/ui";
 import React, { useState } from "react";
 import { trpc } from "./trpc";
 

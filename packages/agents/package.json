@@ -1,5 +1,5 @@
 {
-  "name": "@tormentnexus/agents",
+  "name": "@hypernexus/agents",
   "version": "1.0.0-alpha.255",
   "private": true,
   "main": "dist/index.js",
@@ -17,8 +17,8 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@tormentnexus/adk": "workspace:*",
-    "@tormentnexus/ai": "workspace:*",
+    "@hypernexus/adk": "workspace:*",
+    "@hypernexus/ai": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "zod": "^3.22.4"
   },

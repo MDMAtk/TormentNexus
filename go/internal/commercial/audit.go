@@ -26,7 +26,7 @@ type Auditor struct {
 
 // NewAuditor creates a new commercial auditor.
 func NewAuditor(workspaceRoot string) *Auditor {
-	logDir := filepath.Join(workspaceRoot, ".tormentnexus", "audit")
+	logDir := filepath.Join(workspaceRoot, ".hypernexus", "audit")
 	_ = os.MkdirAll(logDir, 0755)
 	return &Auditor{LogDir: logDir}
 }

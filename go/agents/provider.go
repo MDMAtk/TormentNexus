@@ -5,18 +5,18 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/MDMAtk/TormentNexus/foundation/adapters"
+	"github.com/MDMAtk/HyperNexus/foundation/adapters"
 	"github.com/sashabaranov/go-openai"
 )
 
-// GeminiTormentNexusProvider implements ILLMProvider targeting Gemini (default) or OpenAI endpoints.
-// It exposes all of our newly ported native CLI parity tools exactly as the TormentNexus TS Core did.
-type GeminiTormentNexusProvider struct {
+// GeminiHyperNexusProvider implements ILLMProvider targeting Gemini (default) or OpenAI endpoints.
+// It exposes all of our newly ported native CLI parity tools exactly as the HyperNexus TS Core did.
+type GeminiHyperNexusProvider struct {
 	Client *openai.Client
 	Model  string
 }
 
-func NewGeminiTormentNexusProvider() ILLMProvider {
+func NewGeminiHyperNexusProvider() ILLMProvider {
 	apiKey := os.Getenv("GEMINI_API_KEY")
 	if apiKey == "" {
 		apiKey = "dummy_for_compilation"
@@ -25,7 +25,7 @@ func NewGeminiTormentNexusProvider() ILLMProvider {
 	config := openai.DefaultConfig(apiKey)
 	config.BaseURL = "https://generativelanguage.googleapis.com/v1beta/"
 
-	baseLayer := &GeminiTormentNexusProvider{
+	baseLayer := &GeminiHyperNexusProvider{
 		Client: openai.NewClientWithConfig(config),
 		Model:  "gemini-1.5-pro",
 	}
@@ -35,7 +35,7 @@ func NewGeminiTormentNexusProvider() ILLMProvider {
 }
 
 // FetchLegacyToolArray holds the actual 649+ internal commands securely blocked from the JSON request loop natively.
-func (p *GeminiTormentNexusProvider) FetchLegacyToolArray() []Tool {
+func (p *GeminiHyperNexusProvider) FetchLegacyToolArray() []Tool {
 	return []Tool{
 		{
 			Name:        "apply_search_replace",
@@ -55,7 +55,7 @@ func (p *GeminiTormentNexusProvider) FetchLegacyToolArray() []Tool {
 	}
 }
 
-func (p *GeminiTormentNexusProvider) Chat(ctx context.Context, messages []Message, tools []Tool) (Message, error) {
+func (p *GeminiHyperNexusProvider) Chat(ctx context.Context, messages []Message, tools []Tool) (Message, error) {
 	prompt := ""
 	if len(messages) > 0 {
 		prompt = messages[len(messages)-1].Content
@@ -67,7 +67,7 @@ func (p *GeminiTormentNexusProvider) Chat(ctx context.Context, messages []Messag
 	}, nil
 }
 
-func (p *GeminiTormentNexusProvider) Stream(ctx context.Context, messages []Message, tools []Tool, chunkChan chan<- string) error {
+func (p *GeminiHyperNexusProvider) Stream(ctx context.Context, messages []Message, tools []Tool, chunkChan chan<- string) error {
 	defer close(chunkChan)
 	// Example bypass
 	chunkChan <- "Stream initialized... "
@@ -75,6 +75,6 @@ func (p *GeminiTormentNexusProvider) Stream(ctx context.Context, messages []Mess
 	return nil
 }
 
-func (p *GeminiTormentNexusProvider) GetModelName() string {
+func (p *GeminiHyperNexusProvider) GetModelName() string {
 	return p.Model
 }

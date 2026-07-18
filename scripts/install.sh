@@ -3,7 +3,7 @@ set -e
 
 echo ""
 echo "========================================"
-echo "  TormentNexus Installer v1.0.0"
+echo "  HyperNexus Installer v1.0.0"
 echo "========================================"
 echo ""
 
@@ -25,7 +25,7 @@ echo "[*] Detected platform: ${MACHINE}"
 
 # Set installation directory
 INSTALL_DIR="$HOME/.local/bin"
-CONFIG_DIR="$HOME/.tormentnexus"
+CONFIG_DIR="$HOME/.hypernexus"
 
 echo "[*] Installing to user directory: ${INSTALL_DIR}"
 mkdir -p "$INSTALL_DIR"
@@ -34,27 +34,27 @@ mkdir -p "$CONFIG_DIR/memory"
 
 # Download or copy binary
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-if [ -f "$SCRIPT_DIR/tormentnexus" ]; then
-	echo "[*] Installing tormentnexus binary..."
-	cp "$SCRIPT_DIR/tormentnexus" "$INSTALL_DIR/tormentnexus"
-	chmod +x "$INSTALL_DIR/tormentnexus"
-elif [ -f "$SCRIPT_DIR/tormentnexus-gui" ]; then
-	echo "[*] Installing tormentnexus-gui binary..."
-	cp "$SCRIPT_DIR/tormentnexus-gui" "$INSTALL_DIR/tormentnexus"
-	chmod +x "$INSTALL_DIR/tormentnexus"
+if [ -f "$SCRIPT_DIR/hypernexus" ]; then
+	echo "[*] Installing hypernexus binary..."
+	cp "$SCRIPT_DIR/hypernexus" "$INSTALL_DIR/hypernexus"
+	chmod +x "$INSTALL_DIR/hypernexus"
+elif [ -f "$SCRIPT_DIR/hypernexus-gui" ]; then
+	echo "[*] Installing hypernexus-gui binary..."
+	cp "$SCRIPT_DIR/hypernexus-gui" "$INSTALL_DIR/hypernexus"
+	chmod +x "$INSTALL_DIR/hypernexus"
 else
 	echo -e "${RED}[!] No binary found in $SCRIPT_DIR${NC}"
-	echo "    Expected: tormentnexus or tormentnexus-gui"
+	echo "    Expected: hypernexus or hypernexus-gui"
 	exit 1
 fi
 
 # Create default configuration
 echo "[*] Creating default configuration..."
 cat >"$CONFIG_DIR/config.yaml" <<'EOF'
-# TormentNexus Configuration
+# HyperNexus Configuration
 host: 127.0.0.1
 port: 7778
-workspace: ~/workspace/tormentnexus
+workspace: ~/workspace/hypernexus
 
 # Memory Configuration
 memory:
@@ -89,27 +89,27 @@ echo "========================================"
 echo -e "  ${GREEN}Installation Complete!${NC}"
 echo "========================================"
 echo ""
-echo "TormentNexus has been installed to:"
-echo "  $INSTALL_DIR/tormentnexus"
+echo "HyperNexus has been installed to:"
+echo "  $INSTALL_DIR/hypernexus"
 echo ""
 echo "Configuration file:"
 echo "  $CONFIG_DIR/config.yaml"
 echo ""
-echo "To start TormentNexus:"
-echo "  tormentnexus serve"
+echo "To start HyperNexus:"
+echo "  hypernexus serve"
 echo ""
 echo "Dashboard will be available at:"
 echo "  http://127.0.0.1:7778"
 echo ""
 
 # Ask to start now
-read -p "Start TormentNexus now? (y/n) " -n 1 -r
+read -p "Start HyperNexus now? (y/n) " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-	echo "[*] Starting TormentNexus..."
-	nohup "$INSTALL_DIR/tormentnexus" serve >/tmp/tormentnexus.log 2>&1 &
+	echo "[*] Starting HyperNexus..."
+	nohup "$INSTALL_DIR/hypernexus" serve >/tmp/hypernexus.log 2>&1 &
 	sleep 2
-	echo -e "${GREEN}[✓] TormentNexus started${NC}"
+	echo -e "${GREEN}[✓] HyperNexus started${NC}"
 	echo "[*] Dashboard: http://127.0.0.1:7778"
 
 	# Open browser

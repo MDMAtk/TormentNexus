@@ -19,7 +19,7 @@ type McpConfigStore struct {
 func NewMcpConfigStore(filePath string) *McpConfigStore {
 	if filePath == "" {
 		home, _ := os.UserHomeDir()
-		filePath = filepath.Join(home, ".tormentnexus", "mcp-servers.json")
+		filePath = filepath.Join(home, ".hypernexus", "mcp-servers.json")
 	}
 	return &McpConfigStore{
 		filePath: filePath,
@@ -39,7 +39,7 @@ func (cs *McpConfigStore) Load() (*McpJsonConfig, error) {
 	if err != nil {
 		if os.IsNotExist(err) {
 			cs.config = &McpJsonConfig{
-				McpServers: make(map[string]TormentNexusMcpServerEntry),
+				McpServers: make(map[string]HyperNexusMcpServerEntry),
 			}
 			return cs.config, nil
 		}
@@ -52,7 +52,7 @@ func (cs *McpConfigStore) Load() (*McpJsonConfig, error) {
 	}
 
 	if config.McpServers == nil {
-		config.McpServers = make(map[string]TormentNexusMcpServerEntry)
+		config.McpServers = make(map[string]HyperNexusMcpServerEntry)
 	}
 
 	cs.config = &config
@@ -87,13 +87,13 @@ func (cs *McpConfigStore) Save() error {
 }
 
 // UpsertServer adds or updates an MCP server entry in the config.
-func (cs *McpConfigStore) UpsertServer(name string, entry TormentNexusMcpServerEntry) error {
+func (cs *McpConfigStore) UpsertServer(name string, entry HyperNexusMcpServerEntry) error {
 	cs.mu.Lock()
 	defer cs.mu.Unlock()
 
 	if cs.config == nil {
 		cs.config = &McpJsonConfig{
-			McpServers: make(map[string]TormentNexusMcpServerEntry),
+			McpServers: make(map[string]HyperNexusMcpServerEntry),
 		}
 	}
 
@@ -113,15 +113,15 @@ func (cs *McpConfigStore) RemoveServer(name string) error {
 }
 
 // ListServers returns all server entries.
-func (cs *McpConfigStore) ListServers() map[string]TormentNexusMcpServerEntry {
+func (cs *McpConfigStore) ListServers() map[string]HyperNexusMcpServerEntry {
 	cs.mu.RLock()
 	defer cs.mu.RUnlock()
 
 	if cs.config == nil {
-		return make(map[string]TormentNexusMcpServerEntry)
+		return make(map[string]HyperNexusMcpServerEntry)
 	}
 
-	result := make(map[string]TormentNexusMcpServerEntry, len(cs.config.McpServers))
+	result := make(map[string]HyperNexusMcpServerEntry, len(cs.config.McpServers))
 	for k, v := range cs.config.McpServers {
 		result[k] = v
 	}

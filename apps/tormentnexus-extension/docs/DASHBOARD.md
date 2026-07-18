@@ -10,8 +10,8 @@
 
 | Package | Version | Location |
 |---------|---------|----------|
-| `tormentnexus-extension` (root) | 0.7.3 | `package.json` |
-| `tormentnexus-extension` (root) | 0.7.3 | `package.json` |
+| `hypernexus-extension` (root) | 0.7.3 | `package.json` |
+| `hypernexus-extension` (root) | 0.7.3 | `package.json` |
 | `chrome-extension` | 0.7.3 | `chrome-extension/package.json` |
 | `@extension/content` | 0.7.3 | `pages/content/package.json` |
 

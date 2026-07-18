@@ -7,11 +7,11 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/MDMAtk/TormentNexus/foundation/adapters"
-	"github.com/MDMAtk/TormentNexus/foundation/assimilation"
-	"github.com/MDMAtk/TormentNexus/foundation/compat"
-	foundationpi "github.com/MDMAtk/TormentNexus/foundation/pi"
-	"github.com/MDMAtk/TormentNexus/foundation/repomap"
+	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	"github.com/MDMAtk/HyperNexus/foundation/assimilation"
+	"github.com/MDMAtk/HyperNexus/foundation/compat"
+	foundationpi "github.com/MDMAtk/HyperNexus/foundation/pi"
+	"github.com/MDMAtk/HyperNexus/foundation/repomap"
 	"github.com/spf13/cobra"
 )
 
@@ -191,16 +191,16 @@ var foundationRepomapCmd = &cobra.Command{
 
 var foundationAdaptersCmd = &cobra.Command{
 	Use:   "adapters",
-	Short: "Inspect TormentNexus/TormentNexus, provider, and MCP adapter seams for the foundation runtime",
+	Short: "Inspect HyperNexus/HyperNexus, provider, and MCP adapter seams for the foundation runtime",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cwd, err := os.Getwd()
 		if err != nil {
 			return err
 		}
-		hyperAdapter := adapters.NewTormentNexusAdapter(cwd)
+		hyperAdapter := adapters.NewHyperNexusAdapter(cwd)
 		mcpAdapter := adapters.NewMCPAdapter(cwd)
 		payload := map[string]any{
-			"tormentnexus": hyperAdapter.Status(),
+			"hypernexus": hyperAdapter.Status(),
 			"mcp":       mcpAdapter.Status(),
 		}
 		enc := json.NewEncoder(os.Stdout)

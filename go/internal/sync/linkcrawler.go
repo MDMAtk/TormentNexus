@@ -12,10 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 var (
 	scriptTagRegex   = regexp.MustCompile(`(?is)<script[^>]*>.*?</script>`)

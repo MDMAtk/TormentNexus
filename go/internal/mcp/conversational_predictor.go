@@ -172,7 +172,7 @@ func (p *ConversationalPredictor) PredictFromWindow(
 	}
 
 	systemPrompt := fmt.Sprintf(
-		`You are a predictive tool routing assistant embedded in a developer AI system (TormentNexus).
+		`You are a predictive tool routing assistant embedded in a developer AI system (HyperNexus).
 Given the recent conversation window below, select up to %d tools from the provided catalog that the user is MOST LIKELY to need next.
 
 Rules:
@@ -207,11 +207,11 @@ type PredictorCatalogEntry struct {
 // callOllama sends a chat completion request to the local Ollama server.
 // Falls back to a zero-dependency heuristic on connection failure.
 func (p *ConversationalPredictor) callOllama(ctx context.Context, system, user string) ([]string, error) {
-	ollamaURL := os.Getenv("TORMENTNEXUS_OLLAMA_URL")
+	ollamaURL := os.Getenv("HYPERNEXUS_OLLAMA_URL")
 	if ollamaURL == "" {
 		ollamaURL = "http://127.0.0.1:11434"
 	}
-	model := os.Getenv("TORMENTNEXUS_LOCAL_PREDICT_MODEL")
+	model := os.Getenv("HYPERNEXUS_LOCAL_PREDICT_MODEL")
 	if model == "" {
 		model = "gemma4"
 	}

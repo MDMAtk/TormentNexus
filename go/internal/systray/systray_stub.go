@@ -4,7 +4,7 @@ package systray
 
 import (
 	"os"
-	"github.com/MDMAtk/TormentNexus/internal/eventbus"
+	"github.com/MDMAtk/HyperNexus/internal/eventbus"
 )
 
 // Start is a no-op on non-Windows platforms

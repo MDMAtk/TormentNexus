@@ -42,7 +42,7 @@ echo.
 REM Get commit message
 set /p COMMIT_MSG="Enter commit message (or press Enter for default): "
 if "%COMMIT_MSG%"=="" (
-    set "COMMIT_MSG=feat: corporate mode - HyperNexus/TormentNexus dual edition support
+    set "COMMIT_MSG=feat: corporate mode - HyperNexus/HyperNexus dual edition support
 
 - Added branding configuration system (go/internal/config/branding.go)
 - Updated system tray to use dynamic branding

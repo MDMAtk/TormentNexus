@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/config"
-	"github.com/MDMAtk/TormentNexus/internal/lockfile"
-	"github.com/MDMAtk/TormentNexus/internal/mcpimpl"
-	roottools "github.com/MDMAtk/TormentNexus/tools"
+	"github.com/MDMAtk/HyperNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/lockfile"
+	"github.com/MDMAtk/HyperNexus/internal/mcpimpl"
+	roottools "github.com/MDMAtk/HyperNexus/tools"
 )
 
 // ─── Supervisor Settings and Profiles ───
@@ -33,7 +33,7 @@ type SupervisorSettings struct {
 
 func getSettingsPath() string {
 	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".tormentnexus", "supervisor-settings.json")
+	return filepath.Join(home, ".hypernexus", "supervisor-settings.json")
 }
 
 func loadSettings() (SupervisorSettings, error) {
@@ -488,7 +488,7 @@ func (s *MCPServer) HandleRequest(req MCPRequest) MCPResponse {
 		resp.Result = map[string]any{
 			"protocolVersion": "2024-11-05",
 			"capabilities":    map[string]any{"tools": map[string]any{"listChanged": false}},
-			"serverInfo":      map[string]any{"name": "tormentnexus", "version": "1.0.0"},
+			"serverInfo":      map[string]any{"name": "hypernexus", "version": "1.0.0"},
 		}
 	case "notifications/initialized":
 		resp.Result = map[string]any{}
@@ -997,7 +997,7 @@ func cmdMCP(args []string) int {
 	if _, err := http.Get(tnKernelURL + "/health"); err != nil {
 		execPath, execErr := os.Executable()
 		if execErr == nil {
-			workspaceRoot := os.Getenv("TORMENTNEXUS_WORKSPACE_ROOT")
+			workspaceRoot := os.Getenv("HYPERNEXUS_WORKSPACE_ROOT")
 			if workspaceRoot == "" {
 				workspaceRoot, _ = os.Getwd()
 			}
@@ -1023,7 +1023,7 @@ func cmdMCP(args []string) int {
 	}
 
 	log.SetOutput(os.Stderr)
-	log.Printf("[MCP] TormentNexus MCP Server starting (TN Kernel: %s)", tnKernelURL)
+	log.Printf("[MCP] HyperNexus MCP Server starting (TN Kernel: %s)", tnKernelURL)
 
 	server := NewMCPServer(tnKernelURL)
 	scanner := bufio.NewScanner(os.Stdin)
@@ -1069,16 +1069,16 @@ func init() {
 func writeMCPConfig(workspaceRoot string) {
 	config := map[string]any{
 		"mcpServers": map[string]any{
-			"tormentnexus": map[string]any{
-				"command": filepath.Join(workspaceRoot, "tormentnexus.exe"),
+			"hypernexus": map[string]any{
+				"command": filepath.Join(workspaceRoot, "hypernexus.exe"),
 				"args":    []string{"mcp"},
 				"env": map[string]string{
-					"TORMENTNEXUS_WORKSPACE_ROOT": workspaceRoot,
+					"HYPERNEXUS_WORKSPACE_ROOT": workspaceRoot,
 				},
 			},
 		},
 	}
 	data, _ := json.MarshalIndent(config, "", "  ")
-	os.WriteFile("tormentnexus-mcp-config.json", data, 0644)
-	log.Printf("[MCP] Written config template to tormentnexus-mcp-config.json")
+	os.WriteFile("hypernexus-mcp-config.json", data, 0644)
+	log.Printf("[MCP] Written config template to hypernexus-mcp-config.json")
 }

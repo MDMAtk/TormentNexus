@@ -2,13 +2,13 @@
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-	title: "TormentNexus",
+	title: "HyperNexus",
 	tagline: "AI Control Plane with Persistent Memory & 26,000+ MCP Tools",
 	favicon: "img/favicon.ico",
-	url: "https://docs.tormentnexus.site",
+	url: "https://docs.hypernexus.site",
 	baseUrl: "/",
 	organizationName: "MDMAtk",
-	projectName: "TormentNexus",
+	projectName: "HyperNexus",
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
 
@@ -20,12 +20,12 @@ const config = {
 				docs: {
 					sidebarPath: "./sidebars.js",
 					editUrl:
-						"https://github.com/MDMAtk/TormentNexus/tree/main/docs-site/",
+						"https://github.com/MDMAtk/HyperNexus/tree/main/docs-site/",
 				},
 				blog: {
 					showReadingTime: true,
 					editUrl:
-						"https://github.com/MDMAtk/TormentNexus/tree/main/docs-site/",
+						"https://github.com/MDMAtk/HyperNexus/tree/main/docs-site/",
 				},
 				theme: {
 					customCss: "./src/css/custom.css",
@@ -42,9 +42,9 @@ const config = {
 				respectPrefersColorScheme: true,
 			},
 			navbar: {
-				title: "TormentNexus",
+				title: "HyperNexus",
 				logo: {
-					alt: "TormentNexus Logo",
+					alt: "HyperNexus Logo",
 					src: "img/logo.svg",
 				},
 				items: [
@@ -56,7 +56,7 @@ const config = {
 					},
 					{ to: "/blog", label: "Blog", position: "left" },
 					{
-						href: "https://github.com/MDMAtk/TormentNexus",
+						href: "https://github.com/MDMAtk/HyperNexus",
 						label: "GitHub",
 						position: "right",
 					},
@@ -83,7 +83,7 @@ const config = {
 							{ label: "Discord", href: "https://discord.gg/Hj9P3GbVxR" },
 							{
 								label: "GitHub",
-								href: "https://github.com/MDMAtk/TormentNexus",
+								href: "https://github.com/MDMAtk/HyperNexus",
 							},
 						],
 					},
@@ -91,11 +91,11 @@ const config = {
 						title: "More",
 						items: [
 							{ label: "Blog", to: "/blog" },
-							{ label: "Website", href: "https://tormentnexus.site" },
+							{ label: "Website", href: "https://hypernexus.site" },
 						],
 					},
 				],
-				copyright: `Copyright © ${new Date().getFullYear()} TormentNexus. Built with Docusaurus.`,
+				copyright: `Copyright © ${new Date().getFullYear()} HyperNexus. Built with Docusaurus.`,
 			},
 			prism: {
 				theme: require("prism-react-renderer").themes.github,

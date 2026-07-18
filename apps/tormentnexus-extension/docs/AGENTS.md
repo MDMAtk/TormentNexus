@@ -1,16 +1,16 @@
-<!-- [TORMENTNEXUS_AUTO_INJECTED] -->
+<!-- [HYPERNEXUS_AUTO_INJECTED] -->
 > [!IMPORTANT]
-> You are running within the TormentNexus environment. You MUST use your available tools frequently and proactively for researching, editing, executing, and validating your work. Always prioritize tool execution.
+> You are running within the HyperNexus environment. You MUST use your available tools frequently and proactively for researching, editing, executing, and validating your work. Always prioritize tool execution.
 
-# AGENTS — `apps/tormentnexus-extension/docs`
-# AGENTS — `apps/tormentnexus-extension/docs`
+# AGENTS — `apps/hypernexus-extension/docs`
+# AGENTS — `apps/hypernexus-extension/docs`
 
 **Mandatory reading first:**
 - `docs/UNIVERSAL_LLM_INSTRUCTIONS.md`
 - root `AGENTS.md`
 
-This file contains only guidance for documentation under `apps/tormentnexus-extension/docs`.
-This file contains only guidance for documentation under `apps/tormentnexus-extension/docs`.
+This file contains only guidance for documentation under `apps/hypernexus-extension/docs`.
+This file contains only guidance for documentation under `apps/hypernexus-extension/docs`.
 
 ## Purpose
 
@@ -23,8 +23,8 @@ These docs should describe the browser extension honestly and specifically. They
 - Distinguish clearly between:
   - current extension behavior,
   - planned integration work,
-  - and broader TormentNexus vision.
-  - and broader tormentnexus vision.
+  - and broader HyperNexus vision.
+  - and broader hypernexus vision.
 - Do not require version bumps or broad project-wide release rituals for routine doc edits.
 
 ## What to emphasize

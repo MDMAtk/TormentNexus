@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/config"
 )
 
 // handleServiceConnectivity reports the health of connections between
@@ -146,11 +146,11 @@ func (s *Server) handleMCPClientSync(w http.ResponseWriter, r *http.Request) {
 	sd := config.DefaultServiceDiscovery()
 	kernelBase := sd.KernelBaseURL()
 
-	// Build TormentNexus MCP server entries for the target client
+	// Build HyperNexus MCP server entries for the target client
 	servers := map[string]any{
-		"tormentnexus": map[string]any{
+		"hypernexus": map[string]any{
 			"url":   fmt.Sprintf("%s/mcp", kernelBase),
-			"notes": "TormentNexus Go Control Plane — aggregated MCP router",
+			"notes": "HyperNexus Go Control Plane — aggregated MCP router",
 		},
 	}
 

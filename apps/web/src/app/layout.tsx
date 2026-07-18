@@ -16,16 +16,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "TormentNexus",
-    template: "%s | TormentNexus",
+    default: "HyperNexus",
+    template: "%s | HyperNexus",
   },
   description: "Local AI operations control plane for MCP routing, provider fallback, session supervision, and a unified dashboard.",
 };
 
 import { TRPCProvider } from "../utils/TRPCProvider";
-import { Toaster, commercialRegistry } from "@tormentnexus/ui";
+import { Toaster, commercialRegistry } from "@hypernexus/ui";
 import { Navigation } from "../components/Navigation";
-import { OidcConfig, RbacManager, AuditLogViewer } from "@tormentnexus/commercial";
+import { OidcConfig, RbacManager, AuditLogViewer } from "@hypernexus/commercial";
 
 // Bind the commercial compliance components to the runtime registry
 commercialRegistry.OidcConfig = OidcConfig;

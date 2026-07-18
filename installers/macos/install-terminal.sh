@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# TormentNexus macOS/Linux Installer
+# HyperNexus macOS/Linux Installer
 # Terminal-based installer with progress UI
 
 set -e
@@ -15,9 +15,9 @@ DIM='\033[2m'
 NC='\033[0m'
 
 # ── Configuration ──
-REPO="MDMAtk/TormentNexus"
+REPO="MDMAtk/HyperNexus"
 VERSION="1.0.0-b4"
-INSTALL_DIR="$HOME/.tormentnexus"
+INSTALL_DIR="$HOME/.hypernexus"
 
 # ── Detect Platform ──
 detect_platform() {
@@ -124,7 +124,7 @@ install() {
 	# Step 1: Create directories
 	echo -e "  ${BOLD}[1/5]${NC} Creating installation directory..."
 	mkdir -p "$INSTALL_DIR"
-	mkdir -p "$INSTALL_DIR/.tormentnexus"
+	mkdir -p "$INSTALL_DIR/.hypernexus"
 	mkdir -p "$INSTALL_DIR/logs"
 	log "$INSTALL_DIR"
 	show_progress 20 100
@@ -132,8 +132,8 @@ install() {
 	echo ""
 
 	# Step 2: Download binary
-	echo -e "  ${BOLD}[2/5]${NC} Downloading TormentNexus..."
-	local archive_name="tormentnexus-${PLATFORM}.tar.gz"
+	echo -e "  ${BOLD}[2/5]${NC} Downloading HyperNexus..."
+	local archive_name="hypernexus-${PLATFORM}.tar.gz"
 	local download_url="https://github.com/${REPO}/releases/download/${VERSION}/${archive_name}"
 	local archive_path="$INSTALL_DIR/$archive_name"
 
@@ -150,10 +150,10 @@ install() {
 	rm -f "$archive_path"
 
 	# Find and rename binary
-	local binary=$(find "$INSTALL_DIR" -name "tormentnexus-*" -type f -executable 2>/dev/null | head -1)
+	local binary=$(find "$INSTALL_DIR" -name "hypernexus-*" -type f -executable 2>/dev/null | head -1)
 	if [ -n "$binary" ]; then
-		mv "$binary" "$INSTALL_DIR/tormentnexus"
-		chmod +x "$INSTALL_DIR/tormentnexus"
+		mv "$binary" "$INSTALL_DIR/hypernexus"
+		chmod +x "$INSTALL_DIR/hypernexus"
 	fi
 
 	log "Extracted"
@@ -163,7 +163,7 @@ install() {
 
 	# Step 4: Create config
 	echo -e "  ${BOLD}[4/5]${NC} Creating configuration..."
-	cat >"$INSTALL_DIR/.tormentnexus/config.json" <<'EOF'
+	cat >"$INSTALL_DIR/.hypernexus/config.json" <<'EOF'
 {
   "version": "1.0.0",
   "server": {
@@ -200,7 +200,7 @@ EOF
 	if [ -n "$shell_rc" ]; then
 		if ! grep -q "$INSTALL_DIR" "$shell_rc"; then
 			echo "" >>"$shell_rc"
-			echo "# TormentNexus" >>"$shell_rc"
+			echo "# HyperNexus" >>"$shell_rc"
 			echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >>"$shell_rc"
 			log "Added to $shell_rc"
 		else
@@ -219,17 +219,17 @@ EOF
 
 	# Create launchd service (macOS)
 	if [ "$(uname)" = "Darwin" ]; then
-		local plist="$HOME/Library/LaunchAgents/com.tormentnexus.kernel.plist"
+		local plist="$HOME/Library/LaunchAgents/com.hypernexus.kernel.plist"
 		cat >"$plist" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.tormentnexus.kernel</string>
+    <string>com.hypernexus.kernel</string>
     <key>ProgramArguments</key>
     <array>
-        <string>$INSTALL_DIR/tormentnexus</string>
+        <string>$INSTALL_DIR/hypernexus</string>
         <string>serve</string>
     </array>
     <key>RunAtLoad</key>
@@ -250,16 +250,16 @@ EOF
 
 	# Create systemd service (Linux)
 	if [ "$(uname)" = "Linux" ]; then
-		local service="$HOME/.config/systemd/user/tormentnexus.service"
+		local service="$HOME/.config/systemd/user/hypernexus.service"
 		mkdir -p "$(dirname "$service")"
 		cat >"$service" <<EOF
 [Unit]
-Description=TormentNexus AI Control Plane
+Description=HyperNexus AI Control Plane
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=$INSTALL_DIR/tormentnexus serve
+ExecStart=$INSTALL_DIR/hypernexus serve
 WorkingDirectory=$INSTALL_DIR
 Restart=on-failure
 RestartSec=5
@@ -279,11 +279,11 @@ EOF
 	echo -e "${GREEN}╚═══════════════════════════════════════════════════════════╝${NC}"
 	echo ""
 	echo -e "  ${BOLD}Location:${NC}  $INSTALL_DIR"
-	echo -e "  ${BOLD}Binary:${NC}    $INSTALL_DIR/tormentnexus"
-	echo -e "  ${BOLD}Config:${NC}    $INSTALL_DIR/.tormentnexus/config.json"
+	echo -e "  ${BOLD}Binary:${NC}    $INSTALL_DIR/hypernexus"
+	echo -e "  ${BOLD}Config:${NC}    $INSTALL_DIR/.hypernexus/config.json"
 	echo ""
 	echo -e "  ${BOLD}Quick Start:${NC}"
-	echo -e "    ${CYAN}tormentnexus serve${NC}"
+	echo -e "    ${CYAN}hypernexus serve${NC}"
 	echo ""
 	echo -e "  ${BOLD}Dashboard:${NC}"
 	echo -e "    ${CYAN}http://localhost:7778${NC}"
@@ -292,14 +292,14 @@ EOF
 	echo ""
 
 	# Ask to start
-	read -p "  Start TormentNexus now? (y/n): " -n 1 -r
+	read -p "  Start HyperNexus now? (y/n): " -n 1 -r
 	echo ""
 
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		echo ""
-		log_info "Starting TormentNexus..."
+		log_info "Starting HyperNexus..."
 
-		"$INSTALL_DIR/tormentnexus" serve >"$INSTALL_DIR/logs/stdout.log" 2>&1 &
+		"$INSTALL_DIR/hypernexus" serve >"$INSTALL_DIR/logs/stdout.log" 2>&1 &
 		local pid=$!
 
 		sleep 3

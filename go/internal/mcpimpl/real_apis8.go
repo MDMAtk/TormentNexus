@@ -21,7 +21,7 @@ func HandleDadJoke(ctx context.Context, args map[string]interface{}) (ToolRespon
 	}
 	req, _ := http.NewRequestWithContext(ctx, "GET", u, nil)
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", "TormentNexus/1.0")
+	req.Header.Set("User-Agent", "HyperNexus/1.0")
 	resp, apiErr := batch8.Do(req)
 	if apiErr != nil {
 		return ok("Why don't scientists trust atoms? They make up everything!")

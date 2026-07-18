@@ -9,7 +9,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 func (s *Server) handleConfigList(w http.ResponseWriter, r *http.Request) {
 	var result any
@@ -38,7 +38,7 @@ func (s *Server) handleConfigList(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-config-db",
 			"procedure": "config.list",
-			"reason":    "upstream unavailable; using local tormentnexus config table",
+			"reason":    "upstream unavailable; using local hypernexus config table",
 		},
 	})
 }
@@ -75,7 +75,7 @@ func (s *Server) handleConfigGet(w http.ResponseWriter, r *http.Request) {
 		"bridge": map[string]any{
 			"fallback":  "go-local-config-db",
 			"procedure": "config.get",
-			"reason":    "upstream unavailable; using local tormentnexus config value",
+			"reason":    "upstream unavailable; using local hypernexus config value",
 		},
 	})
 }
@@ -174,7 +174,7 @@ func (s *Server) handleConfigGetSessionLifetime(w http.ResponseWriter, r *http.R
 			"bridge": map[string]any{
 				"fallback":  "go-local-config-db",
 				"procedure": "config.getSessionLifetime",
-				"reason":    "upstream unavailable; using local tormentnexus session lifetime config",
+				"reason":    "upstream unavailable; using local hypernexus session lifetime config",
 			},
 		})
 		return
@@ -187,7 +187,7 @@ func (s *Server) handleConfigGetSessionLifetime(w http.ResponseWriter, r *http.R
 		"bridge": map[string]any{
 			"fallback":  "go-local-config-db",
 			"procedure": "config.getSessionLifetime",
-			"reason":    "upstream unavailable; using local tormentnexus session lifetime config",
+			"reason":    "upstream unavailable; using local hypernexus session lifetime config",
 		},
 	})
 }
@@ -323,7 +323,7 @@ func (s *Server) handleConfigBooleanFallback(w http.ResponseWriter, r *http.Requ
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 		"data":    value,
-		"bridge":  map[string]any{"fallback": "go-local-config-db", "procedure": procedure, "reason": "upstream unavailable; using local tormentnexus config value"},
+		"bridge":  map[string]any{"fallback": "go-local-config-db", "procedure": procedure, "reason": "upstream unavailable; using local hypernexus config value"},
 	})
 }
 
@@ -347,12 +347,12 @@ func (s *Server) handleConfigScalarFallback(w http.ResponseWriter, r *http.Reque
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 		"data":    value,
-		"bridge":  map[string]any{"fallback": "go-local-config-db", "procedure": procedure, "reason": "upstream unavailable; using local tormentnexus config value"},
+		"bridge":  map[string]any{"fallback": "go-local-config-db", "procedure": procedure, "reason": "upstream unavailable; using local hypernexus config value"},
 	})
 }
 
 func (s *Server) localConfigList() ([]map[string]any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +381,7 @@ func (s *Server) localConfigList() ([]map[string]any, error) {
 }
 
 func (s *Server) localConfigValue(key string) (any, error) {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +421,7 @@ func (s *Server) localConfigInt(key string, defaultValue int) (int, error) {
 }
 
 func (s *Server) setLocalConfigValue(key string, value string) error {
-	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localHyperNexusDBPath())
 	if err != nil {
 		return err
 	}

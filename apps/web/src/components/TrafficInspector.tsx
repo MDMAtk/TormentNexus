@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { createReconnectPolicy, getReconnectDelayMs, resolveCoreSseUrl, shouldRetryReconnect } from '@tormentnexus/ui';
+import { createReconnectPolicy, getReconnectDelayMs, resolveCoreSseUrl, shouldRetryReconnect } from '@hypernexus/ui';
 import { trpc } from '@/utils/trpc';
 
 interface Packet {
@@ -37,7 +37,7 @@ export function TrafficInspector() {
                 wsRef.current.close();
             }
 
-            // Connect to TormentNexus Core Bridge
+            // Connect to HyperNexus Core Bridge
             const ws = new WebSocket(wsUrl);
 
             ws.onopen = () => {

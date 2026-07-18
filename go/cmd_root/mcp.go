@@ -23,7 +23,7 @@ var mcpCmd = &cobra.Command{
 		}
 
 		// Dynamically find the TN kernel path relative to the running executable directory first,
-		// and fall back to the workspace bin/tormentnexus.exe.
+		// and fall back to the workspace bin/hypernexus.exe.
 		execPath, err := os.Executable()
 		if err != nil {
 			execPath = ""
@@ -31,19 +31,19 @@ var mcpCmd = &cobra.Command{
 
 		var kernelPath string
 		if execPath != "" {
-			kernelPath = filepath.Join(filepath.Dir(execPath), "bin", "tormentnexus.exe")
+			kernelPath = filepath.Join(filepath.Dir(execPath), "bin", "hypernexus.exe")
 			if _, err := os.Stat(kernelPath); err == nil {
 				goto found
 			}
-			kernelPath = filepath.Join(filepath.Dir(execPath), "tormentnexus.exe")
+			kernelPath = filepath.Join(filepath.Dir(execPath), "hypernexus.exe")
 			if _, err := os.Stat(kernelPath); err == nil {
 				goto found
 			}
 		}
 
-		kernelPath = filepath.Join(cwd, "bin", "tormentnexus.exe")
+		kernelPath = filepath.Join(cwd, "bin", "hypernexus.exe")
 		if _, err := os.Stat(kernelPath); os.IsNotExist(err) {
-			kernelPath = filepath.Join(cwd, "go", "bin", "tormentnexus.exe")
+			kernelPath = filepath.Join(cwd, "go", "bin", "hypernexus.exe")
 			if _, err := os.Stat(kernelPath); os.IsNotExist(err) {
 				fmt.Fprintf(os.Stderr, "TN Kernel binary not found. Please run 'build.bat' or compile inside the 'go' folder first.\n")
 				os.Exit(1)

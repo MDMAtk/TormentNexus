@@ -5,24 +5,24 @@ let serverUrl = "http://localhost:7778";
 let isConnected = false;
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log("TormentNexus extension activated");
+	console.log("HyperNexus extension activated");
 
 	// Load configuration
-	const config = vscode.workspace.getConfiguration("tormentnexus");
+	const config = vscode.workspace.getConfiguration("hypernexus");
 	serverUrl = config.get("serverUrl", "http://localhost:7778");
 
 	// Register commands
 	context.subscriptions.push(
-		vscode.commands.registerCommand("tormentnexus.connect", connect),
-		vscode.commands.registerCommand("tormentnexus.disconnect", disconnect),
-		vscode.commands.registerCommand("tormentnexus.searchTools", searchTools),
-		vscode.commands.registerCommand("tormentnexus.addMemory", addMemory),
-		vscode.commands.registerCommand("tormentnexus.searchMemory", searchMemory),
+		vscode.commands.registerCommand("hypernexus.connect", connect),
+		vscode.commands.registerCommand("hypernexus.disconnect", disconnect),
+		vscode.commands.registerCommand("hypernexus.searchTools", searchTools),
+		vscode.commands.registerCommand("hypernexus.addMemory", addMemory),
+		vscode.commands.registerCommand("hypernexus.searchMemory", searchMemory),
 		vscode.commands.registerCommand(
-			"tormentnexus.openDashboard",
+			"hypernexus.openDashboard",
 			openDashboard,
 		),
-		vscode.commands.registerCommand("tormentnexus.refresh", refresh),
+		vscode.commands.registerCommand("hypernexus.refresh", refresh),
 	);
 
 	// Register tree data providers
@@ -32,12 +32,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.window.registerTreeDataProvider(
-			"tormentnexus.memory",
+			"hypernexus.memory",
 			memoryProvider,
 		),
-		vscode.window.registerTreeDataProvider("tormentnexus.tools", toolsProvider),
+		vscode.window.registerTreeDataProvider("hypernexus.tools", toolsProvider),
 		vscode.window.registerTreeDataProvider(
-			"tormentnexus.status",
+			"hypernexus.status",
 			statusProvider,
 		),
 	);
@@ -53,19 +53,19 @@ async function connect() {
 		const response = await axios.get(`${serverUrl}/health`);
 		if (response.data.ok) {
 			isConnected = true;
-			vscode.window.showInformationMessage("TormentNexus connected!");
-			vscode.commands.executeCommand("tormentnexus.refresh");
+			vscode.window.showInformationMessage("HyperNexus connected!");
+			vscode.commands.executeCommand("hypernexus.refresh");
 		}
 	} catch (error) {
 		isConnected = false;
-		vscode.window.showErrorMessage("Failed to connect to TormentNexus");
+		vscode.window.showErrorMessage("Failed to connect to HyperNexus");
 	}
 }
 
 function disconnect() {
 	isConnected = false;
-	vscode.window.showInformationMessage("TormentNexus disconnected");
-	vscode.commands.executeCommand("tormentnexus.refresh");
+	vscode.window.showInformationMessage("HyperNexus disconnected");
+	vscode.commands.executeCommand("hypernexus.refresh");
 }
 
 async function searchTools() {
@@ -167,9 +167,9 @@ function openDashboard() {
 
 function refresh() {
 	// Refresh all tree views
-	vscode.commands.executeCommand("tormentnexus.memory.refresh");
-	vscode.commands.executeCommand("tormentnexus.tools.refresh");
-	vscode.commands.executeCommand("tormentnexus.status.refresh");
+	vscode.commands.executeCommand("hypernexus.memory.refresh");
+	vscode.commands.executeCommand("hypernexus.tools.refresh");
+	vscode.commands.executeCommand("hypernexus.status.refresh");
 }
 
 // Tree Data Providers
@@ -334,5 +334,5 @@ class StatusTreeProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 }
 
 export function deactivate() {
-	console.log("TormentNexus extension deactivated");
+	console.log("HyperNexus extension deactivated");
 }

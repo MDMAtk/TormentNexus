@@ -3,7 +3,7 @@ package pi
 import (
 	"encoding/json"
 
-	"github.com/MDMAtk/TormentNexus/foundation/compat"
+	"github.com/MDMAtk/HyperNexus/foundation/compat"
 )
 
 type ThinkingLevel string
@@ -104,7 +104,7 @@ type FoundationSpec struct {
 func DefaultFoundationSpec() FoundationSpec {
 	return FoundationSpec{
 		Name:       "pi-go-foundation",
-		Philosophy: "Minimal terminal coding harness with exact model-facing tool contracts, strong extension seams, and native integration points for TormentNexus and TormentNexus.",
+		Philosophy: "Minimal terminal coding harness with exact model-facing tool contracts, strong extension seams, and native integration points for HyperNexus and HyperNexus.",
 		Agent: AgentConfig{
 			InitialState: AgentState{
 				SystemPrompt:  "You are a helpful coding agent.",

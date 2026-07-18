@@ -26,21 +26,21 @@ func Default() Config {
 
 func DefaultConfigDir() string {
 	// Check new env var first, then old one for backward compat
-	if configured := os.Getenv("TORMENTNEXUS_CONFIG_DIR"); configured != "" {
+	if configured := os.Getenv("HYPERNEXUS_CONFIG_DIR"); configured != "" {
 		return configured
 	}
-	if configured := os.Getenv("TORMENTNEXUS_GO_CONFIG_DIR"); configured != "" {
+	if configured := os.Getenv("HYPERNEXUS_GO_CONFIG_DIR"); configured != "" {
 		return configured
 	}
 
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return ".tormentnexus"
+		return ".hypernexus"
 	}
 
-	// Migrate from old .tormentnexus-go if it exists
-	oldDir := filepath.Join(homeDir, ".tormentnexus-go")
-	newDir := filepath.Join(homeDir, ".tormentnexus")
+	// Migrate from old .hypernexus-go if it exists
+	oldDir := filepath.Join(homeDir, ".hypernexus-go")
+	newDir := filepath.Join(homeDir, ".hypernexus")
 	if oldInfo, oldErr := os.Stat(oldDir); oldErr == nil && oldInfo.IsDir() {
 		if newInfo, newErr := os.Stat(newDir); newErr != nil || !newInfo.IsDir() {
 			// Old dir exists, new doesn't — migrate
@@ -58,25 +58,25 @@ func DefaultConfigDir() string {
 }
 
 func DefaultMainConfigDir() string {
-	if configured := os.Getenv("TORMENTNEXUS_MAIN_CONFIG_DIR"); configured != "" {
+	if configured := os.Getenv("HYPERNEXUS_MAIN_CONFIG_DIR"); configured != "" {
 		return configured
 	}
 
 	// Fallback to legacy env var for backward compatibility
-	if legacy := os.Getenv("TORMENTNEXUS_CONFIG_DIR"); legacy != "" {
+	if legacy := os.Getenv("HYPERNEXUS_CONFIG_DIR"); legacy != "" {
 		return legacy
 	}
 
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return ".tormentnexus"
+		return ".hypernexus"
 	}
 
-	return filepath.Join(homeDir, ".tormentnexus")
+	return filepath.Join(homeDir, ".hypernexus")
 }
 
 func DefaultWorkspaceRoot() string {
-	if configured := os.Getenv("TORMENTNEXUS_WORKSPACE_ROOT"); configured != "" {
+	if configured := os.Getenv("HYPERNEXUS_WORKSPACE_ROOT"); configured != "" {
 		return configured
 	}
 
@@ -101,7 +101,7 @@ func (c Config) MainLockPath() string {
 }
 
 func (c Config) ImportedInstructionsPath() string {
-	return filepath.Join(c.WorkspaceRoot, ".tormentnexus", "imported_sessions", "docs", "auto-imported-agent-instructions.md")
+	return filepath.Join(c.WorkspaceRoot, ".hypernexus", "imported_sessions", "docs", "auto-imported-agent-instructions.md")
 }
 
 // AccountDBPath returns the path to the accounts SQLite database.

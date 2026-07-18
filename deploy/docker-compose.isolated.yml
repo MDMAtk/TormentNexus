@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Isolated web dashboard portal per account group
   web-isolated:
-    image: tormentnexus-web:latest
+    image: hypernexus-web:latest
     build:
       context: .
       target: web
@@ -26,7 +26,7 @@ services:
 
   # Go native sidecar daemon per account group
   sidecar-isolated:
-    image: tormentnexus-sidecar:latest
+    image: hypernexus-sidecar:latest
     build:
       context: .
       target: sidecar
@@ -36,9 +36,9 @@ services:
           cpus: '0.5'
           memory: 512M
     environment:
-      - TORMENTNEXUS_GOSSIP_SHARED_KEY=${CLOUDMCP_SSE_AUTH_TOKEN:-}
+      - HYPERNEXUS_GOSSIP_SHARED_KEY=${CLOUDMCP_SSE_AUTH_TOKEN:-}
     volumes:
-      - tenant-data:/root/.tormentnexus
+      - tenant-data:/root/.hypernexus
     networks:
       - tenant-network
     restart: on-failure:5

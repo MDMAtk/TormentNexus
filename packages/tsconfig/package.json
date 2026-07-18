@@ -1,5 +1,5 @@
 {
-  "name": "@tormentnexus/tsconfig",
+  "name": "@hypernexus/tsconfig",
   "version": "1.0.0-alpha.255",
   "private": true,
   "main": "src/index.ts",

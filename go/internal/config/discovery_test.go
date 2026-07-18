@@ -21,10 +21,10 @@ func TestDefaultServiceDiscovery(t *testing.T) {
 }
 
 func TestServiceDiscoveryFromEnv(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_GO_PORT", "5500")
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://192.168.1.100:7779/trpc")
-	t.Setenv("TORMENTNEXUS_BRIDGE_PORT", "4001")
-	t.Setenv("TORMENTNEXUS_DASHBOARD_PORT", "8080")
+	t.Setenv("HYPERNEXUS_GO_PORT", "5500")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://192.168.1.100:7779/trpc")
+	t.Setenv("HYPERNEXUS_BRIDGE_PORT", "4001")
+	t.Setenv("HYPERNEXUS_DASHBOARD_PORT", "8080")
 
 	sd := DefaultServiceDiscovery()
 
@@ -43,7 +43,7 @@ func TestServiceDiscoveryFromEnv(t *testing.T) {
 }
 
 func TestServiceDiscoveryDedupTRPCURLs(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:7779/trpc")
+	t.Setenv("HYPERNEXUS_TRPC_UPSTREAM", "http://127.0.0.1:7779/trpc")
 	sd := DefaultServiceDiscovery()
 
 	// The env URL should be first but not duplicated
@@ -78,7 +78,7 @@ func TestServiceDiscoveryBaseURLs(t *testing.T) {
 }
 
 func TestServiceDiscoveryInvalidEnvPort(t *testing.T) {
-	t.Setenv("TORMENTNEXUS_GO_PORT", "not-a-number")
+	t.Setenv("HYPERNEXUS_GO_PORT", "not-a-number")
 	sd := DefaultServiceDiscovery()
 
 	// Should fall back to default

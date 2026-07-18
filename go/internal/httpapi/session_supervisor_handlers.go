@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
-	"github.com/MDMAtk/TormentNexus/internal/supervisor"
+	"github.com/MDMAtk/HyperNexus/internal/sessionimport"
+	"github.com/MDMAtk/HyperNexus/internal/supervisor"
 )
 
 func (s *Server) handleSupervisorSessionList(w http.ResponseWriter, r *http.Request) {

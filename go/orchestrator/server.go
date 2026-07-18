@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-// Server encapsulates the Fiber app for the TormentNexus Orchestrator
+// Server encapsulates the Fiber app for the HyperNexus Orchestrator
 type Server struct {
 	App *fiber.App
 }
@@ -17,7 +17,7 @@ type Server struct {
 func NewServer() *Server {
 	app := fiber.New(fiber.Config{
 		DisableStartupMessage: false,
-		AppName:               "TormentNexus / TormentNexus Orchestrator",
+		AppName:               "HyperNexus / HyperNexus Orchestrator",
 	})
 
 	// Middleware
@@ -47,7 +47,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status":    "ok",
-			"name":      "@tormentnexus/core-go",
+			"name":      "@hypernexus/core-go",
 			"mcpReady":  true, // To be wired to actual MCP status
 			"timestamp": "now",
 		})
@@ -55,6 +55,6 @@ func setupRoutes(app *fiber.App) {
 
 	// Stub for tRPC equivalent or REST bridges
 	api.Get("/v1/status", func(c *fiber.Ctx) error {
-		return c.JSON(fiber.Map{"status": "tormentnexus_active"})
+		return c.JSON(fiber.Map{"status": "hypernexus_active"})
 	})
 }

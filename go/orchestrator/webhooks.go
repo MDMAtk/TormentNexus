@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	foundationorchestration "github.com/MDMAtk/TormentNexus/foundation/orchestration"
+	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
 )
 
 type WebhookPayload struct {
@@ -16,19 +16,19 @@ type WebhookPayload struct {
 	Data   json.RawMessage `json:"data"`
 }
 
-// HandleTormentNexusWebhook processes real-time synchronization routes mirroring the JULES TS implementation.
-func HandleTormentNexusWebhook(payload WebhookPayload, queue *TaskQueue, ws *TelemetrySocket) (map[string]interface{}, error) {
+// HandleHyperNexusWebhook processes real-time synchronization routes mirroring the JULES TS implementation.
+func HandleHyperNexusWebhook(payload WebhookPayload, queue *TaskQueue, ws *TelemetrySocket) (map[string]interface{}, error) {
 	source := payload.Source
 	if source == "" {
 		source = "unknown"
 	}
 
-	// 1. Log natively into GORM TormentNexusa mapped model
+	// 1. Log natively into GORM HyperNexusa mapped model
 	actionLog := KeeperLog{
 		ID:        uuid.New().String(),
 		SessionId: "global",
 		Type:      "info",
-		Message:   fmt.Sprintf("Received TormentNexus signal: %s from %s", payload.Type, source),
+		Message:   fmt.Sprintf("Received HyperNexus signal: %s from %s", payload.Type, source),
 		Metadata:  string(payload.Data),
 	}
 	if err := DB.Create(&actionLog).Error; err != nil {
@@ -59,7 +59,7 @@ func HandleTormentNexusWebhook(payload WebhookPayload, queue *TaskQueue, ws *Tel
 	}
 
 	rawJson, _ := json.Marshal(emitPayload)
-	ws.Broadcast(fmt.Sprintf(`{"event": "tormentnexus_signal_received", "payload": %s}`, string(rawJson)))
+	ws.Broadcast(fmt.Sprintf(`{"event": "hypernexus_signal_received", "payload": %s}`, string(rawJson)))
 
 	return map[string]interface{}{"success": true, "processed": true, "plan": plan}, nil
 }

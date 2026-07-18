@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/MDMAtk/TormentNexus/internal/lockfile"
+	"github.com/MDMAtk/HyperNexus/internal/lockfile"
 )
 
 func TestDiscoverControlPlanes(t *testing.T) {

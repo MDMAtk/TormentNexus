@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/config"
-	"github.com/MDMAtk/TormentNexus/internal/lockfile"
+	"github.com/MDMAtk/HyperNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/lockfile"
 )
 
 // sharedTRPCClient returns a singleton HTTP client with connection pooling
@@ -59,10 +59,10 @@ type UpstreamCallResult struct {
 }
 
 // ResolveTRPCBases returns the ordered list of tRPC upstream base URLs.
-// If TORMENTNEXUS_TRPC_UPSTREAM is set, it is used exclusively (no lockfile or defaults).
+// If HYPERNEXUS_TRPC_UPSTREAM is set, it is used exclusively (no lockfile or defaults).
 // Otherwise, lockfile-recorded base is tried first, then discovery defaults.
 func ResolveTRPCBases(mainLockPath string) []string {
-	configured := strings.TrimSpace(os.Getenv("TORMENTNEXUS_TRPC_UPSTREAM"))
+	configured := strings.TrimSpace(os.Getenv("HYPERNEXUS_TRPC_UPSTREAM"))
 	if configured != "" {
 		// When explicit upstream is set, use it exclusively —
 		// this prevents tests from accidentally hitting real servers.

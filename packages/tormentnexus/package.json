@@ -1,10 +1,10 @@
 {
-  "name": "@tormentnexus/core",
+  "name": "@hypernexus/core",
   "version": "1.0.0-b15",
   "description": "AI Control Plane with Persistent Memory - 26,000+ MCP Tools",
   "main": "index.js",
   "bin": {
-    "tormentnexus": "./index.js",
+    "hypernexus": "./index.js",
     "tn": "./index.js"
   },
   "scripts": {
@@ -22,15 +22,15 @@
     "ollama",
     "local-ai"
   ],
-  "author": "TormentNexus",
+  "author": "HyperNexus",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MDMAtk/TormentNexus.git"
+    "url": "https://github.com/MDMAtk/HyperNexus.git"
   },
-  "homepage": "https://tormentnexus.site",
+  "homepage": "https://hypernexus.site",
   "bugs": {
-    "url": "https://github.com/MDMAtk/TormentNexus/issues"
+    "url": "https://github.com/MDMAtk/HyperNexus/issues"
   },
   "engines": {
     "node": ">=18.0.0"

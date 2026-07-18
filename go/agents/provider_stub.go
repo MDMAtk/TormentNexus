@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/MDMAtk/TormentNexus/foundation/adapters"
+	"github.com/MDMAtk/HyperNexus/foundation/adapters"
 )
 
 // DefaultProvider simulates the LLM locally.
@@ -18,17 +18,17 @@ func (p *DefaultProvider) Chat(ctx context.Context, messages []Message, tools []
 	execution := adapters.PrepareProviderExecution(adapters.ProviderExecutionRequest{Prompt: prompt, CostPreference: "budget"})
 	return Message{
 		Role:    RoleAssistant,
-		Content: fmt.Sprintf("I am the new Native Go TormentNexus Director. %s", execution.ExecutionHint),
+		Content: fmt.Sprintf("I am the new Native Go HyperNexus Director. %s", execution.ExecutionHint),
 	}, nil
 }
 
 func (p *DefaultProvider) Stream(ctx context.Context, messages []Message, tools []Tool, chunkChan chan<- string) error {
 	chunkChan <- "I am the "
-	chunkChan <- "Native Go TormentNexus Director."
+	chunkChan <- "Native Go HyperNexus Director."
 	close(chunkChan)
 	return nil
 }
 
 func (p *DefaultProvider) GetModelName() string {
-	return "tormentnexus-native-stub-1.0"
+	return "hypernexus-native-stub-1.0"
 }

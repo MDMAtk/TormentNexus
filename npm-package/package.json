@@ -1,10 +1,10 @@
 {
-  "name": "tormentnexus",
+  "name": "hypernexus",
   "version": "1.0.0",
   "description": "AI Control Plane with persistent memory and 26K+ MCP tools catalog",
   "main": "dist/index.js",
   "bin": {
-    "tormentnexus": "./bin/tormentnexus"
+    "hypernexus": "./bin/hypernexus"
   },
   "scripts": {
     "postinstall": "node scripts/install-binary.js"
@@ -19,15 +19,15 @@
     "local-ai",
     "model-context-protocol"
   ],
-  "author": "TormentNexus Team <dev@tormentnexus.org>",
+  "author": "HyperNexus Team <dev@hypernexus.org>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MDMAtk/TormentNexus.git"
+    "url": "https://github.com/MDMAtk/HyperNexus.git"
   },
-  "homepage": "https://tormentnexus.site",
+  "homepage": "https://hypernexus.site",
   "bugs": {
-    "url": "https://github.com/MDMAtk/TormentNexus/issues"
+    "url": "https://github.com/MDMAtk/HyperNexus/issues"
   },
   "engines": {
     "node": ">=18.0.0"

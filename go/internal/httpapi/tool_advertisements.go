@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
 )
 
 type ToolSuggestionSnapshot struct {

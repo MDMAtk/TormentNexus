@@ -8,7 +8,7 @@ import (
 	"runtime"
 )
 
-// RegisterProtocol registers the tormentnexus:// protocol handler in the OS.
+// RegisterProtocol registers the hypernexus:// protocol handler in the OS.
 func RegisterProtocol() error {
 	if runtime.GOOS != "windows" {
 		return fmt.Errorf("protocol registration is only supported on Windows")
@@ -20,11 +20,11 @@ func RegisterProtocol() error {
 	}
 	execPath = filepath.Clean(execPath)
 
-	// Register under HKCU\Software\Classes\tormentnexus so it doesn't require Admin privileges
+	// Register under HKCU\Software\Classes\hypernexus so it doesn't require Admin privileges
 	commands := [][]string{
-		{"add", `HKCU\Software\Classes\tormentnexus`, "/ve", "/t", "REG_SZ", "/d", "URL:TormentNexus Protocol", "/f"},
-		{"add", `HKCU\Software\Classes\tormentnexus`, "/v", "URL Protocol", "/t", "REG_SZ", "/d", "", "/f"},
-		{"add", `HKCU\Software\Classes\tormentnexus\shell\open\command`, "/ve", "/t", "REG_SZ", "/d", fmt.Sprintf(`"%s" "%%1"`, execPath), "/f"},
+		{"add", `HKCU\Software\Classes\hypernexus`, "/ve", "/t", "REG_SZ", "/d", "URL:HyperNexus Protocol", "/f"},
+		{"add", `HKCU\Software\Classes\hypernexus`, "/v", "URL Protocol", "/t", "REG_SZ", "/d", "", "/f"},
+		{"add", `HKCU\Software\Classes\hypernexus\shell\open\command`, "/ve", "/t", "REG_SZ", "/d", fmt.Sprintf(`"%s" "%%1"`, execPath), "/f"},
 	}
 
 	for _, args := range commands {

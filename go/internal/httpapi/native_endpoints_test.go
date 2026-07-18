@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/config"
-	"github.com/MDMAtk/TormentNexus/internal/workflow"
+	"github.com/MDMAtk/HyperNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/workflow"
 )
 
 func newNativeTestServer(t *testing.T) (*Server, string) {
@@ -21,8 +21,8 @@ func newNativeTestServer(t *testing.T) (*Server, string) {
 	workspace := t.TempDir()
 	cfg := config.Default()
 	cfg.WorkspaceRoot = workspace
-	cfg.ConfigDir = filepath.Join(workspace, ".tormentnexus-go")
-	cfg.MainConfigDir = filepath.Join(workspace, ".tormentnexus")
+	cfg.ConfigDir = filepath.Join(workspace, ".hypernexus-go")
+	cfg.MainConfigDir = filepath.Join(workspace, ".hypernexus")
 	if err := os.MkdirAll(cfg.ConfigDir, 0o755); err != nil {
 		t.Fatalf("failed to create config dir: %v", err)
 	}

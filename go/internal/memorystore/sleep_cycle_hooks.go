@@ -7,7 +7,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
 )
 
 // buryOrphanedMemories finds memories whose session_id no longer has any
@@ -17,7 +17,7 @@ func BuryOrphanedMemories(ctx context.Context, db *sql.DB, limbo *L4LimboVault) 
 	var tblCount int
 	_ = db.QueryRowContext(ctx, "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='imported_session_memories'").Scan(&tblCount)
 	if tblCount == 0 {
-		// Table is in tormentnexus.db, not memory.db — skip orphan burial
+		// Table is in hypernexus.db, not memory.db — skip orphan burial
 		return nil
 	}
 	rows, err := db.QueryContext(ctx, `

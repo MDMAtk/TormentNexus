@@ -175,7 +175,7 @@ func HandleMusicSearch(ctx context.Context, args map[string]interface{}) (ToolRe
 		u = fmt.Sprintf("https://musicbrainz.org/ws/2/artist?query=%s&fmt=json&limit=5", url.QueryEscape(artist))
 	}
 	req, _ := http.NewRequestWithContext(ctx, "GET", u, nil)
-	req.Header.Set("User-Agent", "TormentNexus/1.0 ( tornexus@dev )")
+	req.Header.Set("User-Agent", "HyperNexus/1.0 ( tornexus@dev )")
 	req.Header.Set("Accept", "application/json")
 	resp, apiErr := batch10.Do(req)
 	if apiErr != nil {

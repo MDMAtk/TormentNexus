@@ -8,7 +8,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 type SearchResult struct {
 	ID        string `json:"id"`
@@ -20,14 +20,14 @@ type SearchResult struct {
 	Title     string `json:"title,omitempty"`
 }
 
-// Search executes a fast full-text or LIKE search directly across the TormentNexus local SQLite database.
+// Search executes a fast full-text or LIKE search directly across the HyperNexus local SQLite database.
 // This serves as the TN Kernel fallback for the more complex LanceDB vector router in TypeScript.
 func Search(workspaceRoot string, query string, limit int) ([]SearchResult, error) {
 	if limit <= 0 {
 		limit = 50
 	}
 
-	dbPath := filepath.Join(workspaceRoot, "tormentnexus.db")
+	dbPath := filepath.Join(workspaceRoot, "hypernexus.db")
 	if _, err := os.Stat(dbPath); err != nil {
 		if os.IsNotExist(err) {
 			return []SearchResult{}, nil

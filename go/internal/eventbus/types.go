@@ -1,7 +1,7 @@
 package eventbus
 
 import (
-	"github.com/MDMAtk/TormentNexus/internal/orchestration"
+	"github.com/MDMAtk/HyperNexus/internal/orchestration"
 )
 
 type A2ASignalPayload struct {

@@ -47,7 +47,7 @@ type HydrationStore struct {
 
 // NewHydrationStore creates or loads a hydration store at the given path.
 func NewHydrationStore(workspaceRoot string) *HydrationStore {
-	storeDir := filepath.Join(workspaceRoot, ".tormentnexus", "hydration")
+	storeDir := filepath.Join(workspaceRoot, ".hypernexus", "hydration")
 	storePath := filepath.Join(storeDir, "context.json")
 
 	hs := &HydrationStore{
@@ -376,14 +376,14 @@ func (hs *HydrationStore) ingestAgentInstructions(workspaceRoot string) int {
 		count++
 	}
 
-	// .tormentnexus/instructions.md
-	if data, err := os.ReadFile(filepath.Join(workspaceRoot, ".tormentnexus", "instructions.md")); err == nil {
+	// .hypernexus/instructions.md
+	if data, err := os.ReadFile(filepath.Join(workspaceRoot, ".hypernexus", "instructions.md")); err == nil {
 		hs.Add(HydrationEntry{
 			Section: "agent_instructions",
-			Key:     "tormentnexus-instructions",
+			Key:     "hypernexus-instructions",
 			Content: string(data),
 			Source:  "file-scan",
-			Tags:    []string{"tormentnexus", "instructions"},
+			Tags:    []string{"hypernexus", "instructions"},
 		})
 		count++
 	}
@@ -399,7 +399,7 @@ func (hs *HydrationStore) ingestConfigFiles(workspaceRoot string) int {
 		key  string
 		tags []string
 	}{
-		{filepath.Join(workspaceRoot, "go", "cmd", "tormentnexus", "main.go"), "go-main-entrypoint", []string{"go", "entrypoint"}},
+		{filepath.Join(workspaceRoot, "go", "cmd", "hypernexus", "main.go"), "go-main-entrypoint", []string{"go", "entrypoint"}},
 		{filepath.Join(workspaceRoot, "apps", "web", "next.config.js"), "nextjs-config", []string{"nextjs", "config"}},
 		{filepath.Join(workspaceRoot, "go", "internal", "config", "config.go"), "go-config", []string{"go", "config"}},
 		{filepath.Join(workspaceRoot, "tsconfig.json"), "tsconfig", []string{"typescript", "config"}},
@@ -430,7 +430,7 @@ func (hs *HydrationStore) ingestRepoGraphSummary(workspaceRoot string) int {
 	count := 0
 
 	// Check for repograph cache
-	graphPath := filepath.Join(workspaceRoot, ".tormentnexus", "repograph.json")
+	graphPath := filepath.Join(workspaceRoot, ".hypernexus", "repograph.json")
 	if data, err := os.ReadFile(graphPath); err == nil {
 		var graph struct {
 			Modules []struct {
@@ -468,10 +468,10 @@ func (hs *HydrationStore) ingestEnvironment() int {
 
 	// Check for key env vars
 	keyEnvs := []string{
-		"TORMENTNEXUS_TRPC_UPSTREAM",
-		"TORMENTNEXUS_GO_PORT",
-		"TORMENTNEXUS_WORKSPACE_ROOT",
-		"TORMENTNEXUS_MAIN_CONFIG_DIR",
+		"HYPERNEXUS_TRPC_UPSTREAM",
+		"HYPERNEXUS_GO_PORT",
+		"HYPERNEXUS_WORKSPACE_ROOT",
+		"HYPERNEXUS_MAIN_CONFIG_DIR",
 	}
 	for _, key := range keyEnvs {
 		if val := os.Getenv(key); val != "" {

@@ -9,7 +9,7 @@ func TestInventoryCoversKeySources(t *testing.T) {
 	}
 
 	wanted := map[string]bool{
-		"tormentnexus": false,
+		"hypernexus": false,
 		"pi":        false,
 		"aider":     false,
 		"opencode":  false,

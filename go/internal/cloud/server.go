@@ -12,11 +12,11 @@ import (
 
 // CloudServer represents the cloud server
 type CloudServer struct {
-	am         *AccountManager
+	am          *AccountManager
 	provisioner *Provisioner
-	backup     *BackupManager
-	mcp        *MCPStreamableHTTP
-	db         *sql.DB
+	backup      *BackupManager
+	mcp         *MCPStreamableHTTP
+	db          *sql.DB
 }
 
 // NewCloudServer creates a new cloud server
@@ -27,11 +27,11 @@ func NewCloudServer(db *sql.DB, backupDir string) *CloudServer {
 	mcp := NewMCPStreamableHTTP(am, provisioner)
 
 	return &CloudServer{
-		am:         am,
+		am:          am,
 		provisioner: provisioner,
-		backup:     backup,
-		mcp:        mcp,
-		db:         db,
+		backup:      backup,
+		mcp:         mcp,
+		db:          db,
 	}
 }
 
@@ -436,7 +436,7 @@ func (s *CloudServer) handleBackup(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"success":    true,
+		"success":     true,
 		"backup_file": backupFile,
 	})
 }

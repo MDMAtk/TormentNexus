@@ -18,7 +18,7 @@ jobs:
         run: |
           cd go
           go build -buildvcs=false \
-            -o tormentnexus-bin ./cmd/tormentnexus
+            -o hypernexus-bin ./cmd/hypernexus
       - name: Vet
         run: cd go && go vet ./... 2>&1 | head -50 || true
       - name: Test

@@ -1,15 +1,15 @@
 #!/bin/bash
-# TormentNexus — Growth Dashboard
+# HyperNexus — Growth Dashboard
 # Track all growth metrics in one place
 
 echo "=========================================="
-echo "  TormentNexus Growth Dashboard"
+echo "  HyperNexus Growth Dashboard"
 echo "  $(date)"
 echo "=========================================="
 echo ""
 
 # GitHub Stars
-STARS=$(curl -s https://api.github.com/repos/MDMAtk/TormentNexus | grep -o '"stargazers_count": [0-9]*' | grep -o '[0-9]*')
+STARS=$(curl -s https://api.github.com/repos/MDMAtk/HyperNexus | grep -o '"stargazers_count": [0-9]*' | grep -o '[0-9]*')
 echo "⭐ GitHub Stars: $STARS"
 
 # Demo Health
@@ -22,14 +22,14 @@ TOTAL=$(echo "$STATS" | grep -o '"total":[0-9]*' | grep -o '[0-9]*')
 echo "📚 Catalog Entries: $TOTAL"
 
 # Enrichment Progress
-ENRICHED=$(ssh hetzner 'sqlite3 /opt/tormentnexus/catalog.db "SELECT count(*) FROM links_backlog WHERE description IS NOT NULL AND length(description) > 20;"' 2>/dev/null)
+ENRICHED=$(ssh hetzner 'sqlite3 /opt/hypernexus/catalog.db "SELECT count(*) FROM links_backlog WHERE description IS NOT NULL AND length(description) > 20;"' 2>/dev/null)
 echo "✨ Enriched Entries: $ENRICHED"
 
 # Landing Pages
 echo ""
 echo "📄 Landing Pages:"
 for PAGE in "" "blog/" "catalog" "pricing" "newsletter"; do
-	CODE=$(curl -s -o /dev/null -w "%{http_code}" "https://tormentnexus.site/$PAGE" 2>/dev/null)
+	CODE=$(curl -s -o /dev/null -w "%{http_code}" "https://hypernexus.site/$PAGE" 2>/dev/null)
 	echo "  /$PAGE: $CODE"
 done
 
@@ -44,7 +44,7 @@ done
 # Docker Status
 echo ""
 echo "🐳 Docker:"
-docker ps | grep tormentnexus | wc -l | xargs -I {} echo "  Running containers: {}"
+docker ps | grep hypernexus | wc -l | xargs -I {} echo "  Running containers: {}"
 
 # PM2 Services
 echo ""

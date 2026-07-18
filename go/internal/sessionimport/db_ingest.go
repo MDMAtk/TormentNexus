@@ -11,7 +11,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 func buildImportedSessionRecordInputsFromDatabase(ctx context.Context, candidate Candidate) ([]ImportedSessionRecordInput, error) {
 	db, err := database.Open("sqlite", candidate.SourcePath)
@@ -23,14 +23,14 @@ func buildImportedSessionRecordInputsFromDatabase(ctx context.Context, candidate
 	switch candidate.SourceTool {
 	case "llm-cli":
 		return buildLLMDatabaseRecordInputs(ctx, db, candidate)
-	case "tormentnexus-mcp":
-		return buildTormentNexusDatabaseRecordInputs(ctx, db, candidate)
+	case "hypernexus-mcp":
+		return buildHyperNexusDatabaseRecordInputs(ctx, db, candidate)
 	default:
 		return nil, fmt.Errorf("database-log ingestion is not yet implemented natively for %s", candidate.SourceTool)
 	}
 }
 
-func buildTormentNexusDatabaseRecordInputs(ctx context.Context, db *sql.DB, candidate Candidate) ([]ImportedSessionRecordInput, error) {
+func buildHyperNexusDatabaseRecordInputs(ctx context.Context, db *sql.DB, candidate Candidate) ([]ImportedSessionRecordInput, error) {
 	results := make([]ImportedSessionRecordInput, 0)
 	seen := map[string]struct{}{}
 
@@ -40,7 +40,7 @@ func buildTormentNexusDatabaseRecordInputs(ctx context.Context, db *sql.DB, cand
 		if id == "" {
 			continue
 		}
-		transcript := strings.TrimSpace(buildTormentNexusLedgerTranscript(row))
+		transcript := strings.TrimSpace(buildHyperNexusLedgerTranscript(row))
 		if transcript == "" {
 			continue
 		}
@@ -51,20 +51,20 @@ func buildTormentNexusDatabaseRecordInputs(ctx context.Context, db *sql.DB, cand
 		seen[sourcePath] = struct{}{}
 		lastModified := toTimestampMs(row["created_at"])
 		externalSessionID := nonEmptyString(stringValue(row["conversation_id"]), id)
-		title := nonEmptyString(sanitizeSentence(stringValue(row["summary"]), 120), "TormentNexus ledger "+id)
+		title := nonEmptyString(sanitizeSentence(stringValue(row["summary"]), 120), "HyperNexus ledger "+id)
 		metadata := map[string]any{
-			"tormentnexusProject":         row["project"],
-			"tormentnexusRole":            row["role"],
-			"tormentnexusTable":           "session_ledger",
-			"tormentnexusConversationId":  row["conversation_id"],
-			"tormentnexusEventType":       nonEmptyString(stringValue(row["event_type"]), "session"),
-			"tormentnexusConfidenceScore": row["confidence_score"],
-			"tormentnexusImportance":      row["importance"],
+			"hypernexusProject":         row["project"],
+			"hypernexusRole":            row["role"],
+			"hypernexusTable":           "session_ledger",
+			"hypernexusConversationId":  row["conversation_id"],
+			"hypernexusEventType":       nonEmptyString(stringValue(row["event_type"]), "session"),
+			"hypernexusConfidenceScore": row["confidence_score"],
+			"hypernexusImportance":      row["importance"],
 		}
-		if metadata["tormentnexusEventType"] == "correction" && intValueOr(row["importance"], 0) >= 3 && strings.TrimSpace(stringValue(row["summary"])) != "" {
+		if metadata["hypernexusEventType"] == "correction" && intValueOr(row["importance"], 0) >= 3 && strings.TrimSpace(stringValue(row["summary"])) != "" {
 			metadata["behavioralWarnings"] = []string{sanitizeSentence(stringValue(row["summary"]), 220)}
 		}
-		input, err := buildImportedSessionRecordInputFromTranscript(candidate.SourceTool, sourcePath, "tormentnexus-ledger", title, transcript, filepath.Dir(candidate.SourcePath), externalSessionID, lastModified, metadata, nil)
+		input, err := buildImportedSessionRecordInputFromTranscript(candidate.SourceTool, sourcePath, "hypernexus-ledger", title, transcript, filepath.Dir(candidate.SourcePath), externalSessionID, lastModified, metadata, nil)
 		if err != nil {
 			return nil, err
 		}
@@ -77,7 +77,7 @@ func buildTormentNexusDatabaseRecordInputs(ctx context.Context, db *sql.DB, cand
 		if project == "" {
 			continue
 		}
-		transcript := strings.TrimSpace(buildTormentNexusHandoffTranscript(row))
+		transcript := strings.TrimSpace(buildHyperNexusHandoffTranscript(row))
 		if transcript == "" {
 			continue
 		}
@@ -88,9 +88,9 @@ func buildTormentNexusDatabaseRecordInputs(ctx context.Context, db *sql.DB, cand
 		seen[sourcePath] = struct{}{}
 		parsedMetadata := parseJSONObject(stringValue(row["metadata"]))
 		metadata := map[string]any{
-			"tormentnexusProject": project,
-			"tormentnexusTable":   "session_handoffs",
-			"tormentnexusVersion": row["version"],
+			"hypernexusProject": project,
+			"hypernexusTable":   "session_handoffs",
+			"hypernexusVersion": row["version"],
 		}
 		for key, value := range parsedMetadata {
 			metadata[key] = value
@@ -100,7 +100,7 @@ func buildTormentNexusDatabaseRecordInputs(ctx context.Context, db *sql.DB, cand
 		if extracted := extractWorkingDirectory(parsedMetadata); extracted != nil {
 			workingDirectory = *extracted
 		}
-		input, err := buildImportedSessionRecordInputFromTranscript(candidate.SourceTool, sourcePath, "tormentnexus-handoff", "TormentNexus handoff "+project, transcript, workingDirectory, "handoff:"+project, lastModified, metadata, nil)
+		input, err := buildImportedSessionRecordInputFromTranscript(candidate.SourceTool, sourcePath, "hypernexus-handoff", "HyperNexus handoff "+project, transcript, workingDirectory, "handoff:"+project, lastModified, metadata, nil)
 		if err != nil {
 			return nil, err
 		}
@@ -394,9 +394,9 @@ func parseJSONStringArrayLoose(value any) []string {
 	}
 }
 
-func buildTormentNexusLedgerTranscript(row map[string]any) string {
+func buildHyperNexusLedgerTranscript(row map[string]any) string {
 	lines := []string{
-		fmt.Sprintf("TormentNexus session ledger for project %s", sanitizeSentence(nonEmptyString(stringValue(row["project"]), "default"), 120)),
+		fmt.Sprintf("HyperNexus session ledger for project %s", sanitizeSentence(nonEmptyString(stringValue(row["project"]), "default"), 120)),
 		stringValue(row["summary"]),
 	}
 	if eventType := stringValue(row["event_type"]); strings.TrimSpace(eventType) != "" && eventType != "session" {
@@ -438,9 +438,9 @@ func buildTormentNexusLedgerTranscript(row map[string]any) string {
 	return strings.Join(filterNonEmpty(lines), "\n")
 }
 
-func buildTormentNexusHandoffTranscript(row map[string]any) string {
+func buildHyperNexusHandoffTranscript(row map[string]any) string {
 	lines := []string{
-		fmt.Sprintf("TormentNexus handoff for project %s", sanitizeSentence(nonEmptyString(stringValue(row["project"]), "default"), 120)),
+		fmt.Sprintf("HyperNexus handoff for project %s", sanitizeSentence(nonEmptyString(stringValue(row["project"]), "default"), 120)),
 		stringValue(row["last_summary"]),
 		stringValue(row["key_context"]),
 	}

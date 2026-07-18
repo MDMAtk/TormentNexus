@@ -142,10 +142,10 @@ func HandleListDatabases_aws_athena_mcp(ctx context.Context, args map[string]int
 func HandleListTables_sqlite_explorer_fastmcp_mcp_server(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
 	dbPath, _ := getString(args, "dbPath")
 	if dbPath == "" {
-		dbPath = "tormentnexus.db"
+		dbPath = "hypernexus.db"
 	}
 	if _, err := os.Stat(dbPath); err != nil {
-		return ok(fmt.Sprintf("Database %q not found. Try: tormentnexus.db, catalog.db", dbPath))
+		return ok(fmt.Sprintf("Database %q not found. Try: hypernexus.db, catalog.db", dbPath))
 	}
 	return ok(fmt.Sprintf("SQLite database: %s\nUse: sqlite3 %s '.tables'", dbPath, dbPath))
 }
@@ -242,7 +242,7 @@ func HandleRunQuery_sqlite_explorer_fastmcp_mcp_server(ctx context.Context, args
 	}
 	db := dbPath
 	if db == "" {
-		db = "tormentnexus.db"
+		db = "hypernexus.db"
 	}
 	return ok(fmt.Sprintf("SQLite query on %s:\n%s\n\nRun: sqlite3 %s \"%s\"", db, truncateStr(query, 200), db, query))
 }

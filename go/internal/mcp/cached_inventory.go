@@ -224,7 +224,7 @@ func (ci *CachedInventory) MarshalJSON() ([]byte, error) {
 // --- Internal snapshot builders ---
 
 func buildConfigSnapshot() *CachedInventorySnapshot {
-	// Load from tormentnexus.config.json / mcp.jsonc
+	// Load from hypernexus.config.json / mcp.jsonc
 	config, err := LoadMcpJsonConfig()
 	if err != nil {
 		return &CachedInventorySnapshot{

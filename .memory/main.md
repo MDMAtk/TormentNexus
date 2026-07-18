@@ -1,8 +1,8 @@
-# TormentNexus — Project Roadmap
+# HyperNexus — Project Roadmap
 
 ## Project Purpose
 
-TormentNexus is a Cognitive Kernel / Universal AI Control Plane for multi-agent workflows, MCP tools, and context-aware memory. It assimilates MCP servers from public catalogs, generates Go-native implementations, and provides a unified API surface via a Go sidecar + Next.js dashboard.
+HyperNexus is a Cognitive Kernel / Universal AI Control Plane for multi-agent workflows, MCP tools, and context-aware memory. It assimilates MCP servers from public catalogs, generates Go-native implementations, and provides a unified API surface via a Go sidecar + Next.js dashboard.
 
 ## Current State (June 22, 2026)
 
@@ -27,9 +27,9 @@ TormentNexus is a Cognitive Kernel / Universal AI Control Plane for multi-agent 
 
 ### Services Registered (auto-start on boot)
 
-- TormentNexusSidecar
-- TormentNexusDashboard
-- TormentNexusWatchdog
+- HyperNexusSidecar
+- HyperNexusDashboard
+- HyperNexusWatchdog
 
 ## Key Decisions Made
 
@@ -37,7 +37,7 @@ TormentNexus is a Cognitive Kernel / Universal AI Control Plane for multi-agent 
 2. **LM Studio for trends**: Trends analyzer uses local LM Studio (port 1234) instead of freellm — lighter workload.
 3. **No more free-llm-fallback**: Removed because it returned empty responses 90% of the time.
 4. **pythonw for silent workers**: All Python workers run with `pythonw.exe` + `CREATE_NO_WINDOW` to prevent console popups.
-5. **Git LFS narrowed**: Only specific large DB files (`provider_metrics.db`, `tormentnexus.db`, `catalog.db`) are LFS-tracked — small DBs stay under regular git.
+5. **Git LFS narrowed**: Only specific large DB files (`provider_metrics.db`, `hypernexus.db`, `catalog.db`) are LFS-tracked — small DBs stay under regular git.
 6. **Ports moved**: Orchestrator 8080→7778, Dashboard 3000→7779, tRPC 4100→7779.
 
 ## Completed Milestones
@@ -62,7 +62,7 @@ TormentNexus is a Cognitive Kernel / Universal AI Control Plane for multi-agent 
 8. **L3 Cold Archive** — long-term compressed memory tier
 9. **Fleet-Wide Intelligence** — cross-machine memory sharing
 10. **Wails Native Runtime** — Go-native desktop shell
-11. **Deep Link Protocol** — `tormentnexus://` protocol
+11. **Deep Link Protocol** — `hypernexus://` protocol
 12. **Compliance Boundary** — SSO/RBAC/Audit enterprise wrapper
 13. **New Native Tools** — browser-use and browsermcp specialized logic
 

@@ -41,9 +41,9 @@ func parseLicenseYAML(data []byte) map[string]string {
 	return m
 }
 
-// VerifyLicense loads and validates a tormentnexus.lic signed YAML license block.
+// VerifyLicense loads and validates a hypernexus.lic signed YAML license block.
 func VerifyLicense(workspaceRoot string) (*License, error) {
-	licPath := filepath.Join(workspaceRoot, "tormentnexus.lic")
+	licPath := filepath.Join(workspaceRoot, "hypernexus.lic")
 	data, err := os.ReadFile(licPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read license file: %w", err)

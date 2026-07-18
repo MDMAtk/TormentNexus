@@ -1,14 +1,14 @@
 ---
-description: Store a memory in TormentNexus L2 memory. Use to persist key decisions, patterns, code conventions, and important context cross-session.
+description: Store a memory in HyperNexus L2 memory. Use to persist key decisions, patterns, code conventions, and important context cross-session.
 ---
 
-# Store in TormentNexus (/tn-store)
+# Store in HyperNexus (/tn-store)
 
-When I say "tn-store" or "store this in TN", help me save information to TormentNexus L2 memory.
+When I say "tn-store" or "store this in TN", help me save information to HyperNexus L2 memory.
 
 1. **Identify Content** — Extract the key information to store (decision, pattern, convention, finding)
 2. **Tag** — Add relevant tags (e.g., `project:foo`, `pattern`, `api`, `decision`)
-3. **Store** — Use `mcp_tormentnexus_memory_scratchpad_set` with the content
+3. **Store** — Use `mcp_hypernexus_memory_scratchpad_set` with the content
 4. **Confirm** — Summarize what was saved
 
-To check existing context: `mcp_tormentnexus_memory_scratchpad_get`
+To check existing context: `mcp_hypernexus_memory_scratchpad_get`

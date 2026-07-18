@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// AutoDrive State Machine provides Roo Code / Cline level autonomy within TormentNexus.
+// AutoDrive State Machine provides Roo Code / Cline level autonomy within HyperNexus.
 // It bypasses the need for the TS orchestrator driving a loop.
 type AutoDrive struct {
 	MaxIterations int

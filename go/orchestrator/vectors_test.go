@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/MDMAtk/TormentNexus/agents"
+	"github.com/MDMAtk/HyperNexus/agents"
 )
 
 func TestVectorDatabaseSimilarityLoops(t *testing.T) {

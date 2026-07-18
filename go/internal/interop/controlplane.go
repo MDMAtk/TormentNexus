@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/lockfile"
+	"github.com/MDMAtk/HyperNexus/internal/lockfile"
 )
 
 type ControlPlaneStatus struct {
@@ -21,8 +21,8 @@ type ControlPlaneStatus struct {
 
 func DiscoverControlPlanes(mainLockPath, goLockPath string) []ControlPlaneStatus {
 	return []ControlPlaneStatus{
-		readStatus("tormentnexus-node", mainLockPath),
-		readStatus("tormentnexus-go", goLockPath),
+		readStatus("hypernexus-node", mainLockPath),
+		readStatus("hypernexus-go", goLockPath),
 	}
 }
 

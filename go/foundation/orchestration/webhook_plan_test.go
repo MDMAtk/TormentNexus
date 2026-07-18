@@ -3,7 +3,7 @@ package orchestration
 import "testing"
 
 func TestBuildWebhookPlan(t *testing.T) {
-	plan := BuildWebhookPlan("repo_updated", "tormentnexus")
+	plan := BuildWebhookPlan("repo_updated", "hypernexus")
 	if len(plan.QueueActions) != 1 || plan.QueueActions[0] != "index_codebase" {
 		t.Fatalf("unexpected plan: %#v", plan)
 	}

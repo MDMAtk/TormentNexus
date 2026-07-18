@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	InjectedHeaderMarker = "<!-- [TORMENTNEXUS_AUTO_INJECTED] -->"
-	InjectedHeaderBlock  = `<!-- [TORMENTNEXUS_AUTO_INJECTED] -->
+	InjectedHeaderMarker = "<!-- [HYPERNEXUS_AUTO_INJECTED] -->"
+	InjectedHeaderBlock  = `<!-- [HYPERNEXUS_AUTO_INJECTED] -->
 > [!IMPORTANT]
-> You are running within the TormentNexus environment. You MUST use your available tools frequently and proactively for researching, editing, executing, and validating your work. Always prioritize tool execution.
+> You are running within the HyperNexus environment. You MUST use your available tools frequently and proactively for researching, editing, executing, and validating your work. Always prioritize tool execution.
 
 `
 )
@@ -52,7 +52,7 @@ func StartInstructionWatcher(workspaceRoot string) {
 					if lowerName == "node_modules" || lowerName == ".git" || lowerName == ".next" ||
 						lowerName == ".turbo" || lowerName == "dist" || lowerName == "bin" ||
 						lowerName == "go" || lowerName == "out" || lowerName == "build" ||
-						lowerName == "lancedb" || lowerName == ".tormentnexus" || lowerName == "data" {
+						lowerName == "lancedb" || lowerName == ".hypernexus" || lowerName == "data" {
 						return filepath.SkipDir
 					}
 					return nil

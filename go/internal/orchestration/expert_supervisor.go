@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/HyperNexus/internal/ai"
 )
 
 type ExpertSupervisor struct {
@@ -27,7 +27,7 @@ type SupervisorCheckResult struct {
 
 func (s *ExpertSupervisor) EvaluateProgress(ctx context.Context, goal string, transcript []string) (*SupervisorCheckResult, error) {
 	prompt := fmt.Sprintf(`
-		You are the TormentNexus Expert Supervisor.
+		You are the HyperNexus Expert Supervisor.
 		Your goal is to evaluate if the team has successfully completed the assigned task.
 		
 		ORIGINAL GOAL: %s
@@ -45,7 +45,7 @@ func (s *ExpertSupervisor) EvaluateProgress(ctx context.Context, goal string, tr
 	`, goal, strings.Join(transcript, "\n\n"))
 
 	resp, err := ai.AutoRouteWithModel(ctx, s.ModelID, []ai.Message{
-		{Role: "system", Content: "You are the TormentNexus Expert Supervisor."},
+		{Role: "system", Content: "You are the HyperNexus Expert Supervisor."},
 		{Role: "user", Content: prompt},
 	})
 	if err != nil {

@@ -10,17 +10,17 @@ import (
 	"time"
 )
 
-type TormentNexusControlPlaneProvider struct {
+type HyperNexusControlPlaneProvider struct {
 	BaseURL string
 }
 
-func NewTormentNexusProvider() *TormentNexusControlPlaneProvider {
-	return &TormentNexusControlPlaneProvider{
+func NewHyperNexusProvider() *HyperNexusControlPlaneProvider {
+	return &HyperNexusControlPlaneProvider{
 		BaseURL: "http://127.0.0.1:4000",
 	}
 }
 
-func (p *TormentNexusControlPlaneProvider) Chat(ctx context.Context, messages []Message, tools []Tool) (Message, error) {
+func (p *HyperNexusControlPlaneProvider) Chat(ctx context.Context, messages []Message, tools []Tool) (Message, error) {
 	// Re-map messages to the format expected by the /api/agent/chat endpoint
 	type payloadMsg struct {
 		Role    string `json:"role"`
@@ -53,13 +53,13 @@ func (p *TormentNexusControlPlaneProvider) Chat(ctx context.Context, messages []
 	client := &http.Client{Timeout: 120 * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
-		return Message{}, fmt.Errorf("failed to contact TormentNexus Control Plane: %w", err)
+		return Message{}, fmt.Errorf("failed to contact HyperNexus Control Plane: %w", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return Message{}, fmt.Errorf("TormentNexus API error: %s - %s", resp.Status, string(body))
+		return Message{}, fmt.Errorf("HyperNexus API error: %s - %s", resp.Status, string(body))
 	}
 
 	var result struct {
@@ -73,11 +73,11 @@ func (p *TormentNexusControlPlaneProvider) Chat(ctx context.Context, messages []
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return Message{}, fmt.Errorf("failed to parse TormentNexus response: %w", err)
+		return Message{}, fmt.Errorf("failed to parse HyperNexus response: %w", err)
 	}
 
 	if !result.Success {
-		return Message{}, fmt.Errorf("TormentNexus rejected chat: %s", result.Error)
+		return Message{}, fmt.Errorf("HyperNexus rejected chat: %s", result.Error)
 	}
 
 	return Message{
@@ -86,7 +86,7 @@ func (p *TormentNexusControlPlaneProvider) Chat(ctx context.Context, messages []
 	}, nil
 }
 
-func (p *TormentNexusControlPlaneProvider) Stream(ctx context.Context, messages []Message, tools []Tool, chunkChan chan<- string) error {
+func (p *HyperNexusControlPlaneProvider) Stream(ctx context.Context, messages []Message, tools []Tool, chunkChan chan<- string) error {
 	// Fallback to synchronous chat if streaming isn't perfectly supported on the TN Kernel yet
 	msg, err := p.Chat(ctx, messages, tools)
 	if err != nil {
@@ -97,6 +97,6 @@ func (p *TormentNexusControlPlaneProvider) Stream(ctx context.Context, messages 
 	return nil
 }
 
-func (p *TormentNexusControlPlaneProvider) GetModelName() string {
-	return "tormentnexus-router-active"
+func (p *HyperNexusControlPlaneProvider) GetModelName() string {
+	return "hypernexus-router-active"
 }

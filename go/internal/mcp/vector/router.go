@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/internal/llm"
+	"github.com/MDMAtk/HyperNexus/internal/llm"
 )
 
 type ToolRouter struct {

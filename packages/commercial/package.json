@@ -1,5 +1,5 @@
 {
-  "name": "@tormentnexus/commercial",
+  "name": "@hypernexus/commercial",
   "version": "1.0.0-alpha.255",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,7 @@
     "lint": "echo \"Linting skipped\""
   },
   "dependencies": {
-    "@tormentnexus/ui": "workspace:*",
+    "@hypernexus/ui": "workspace:*",
     "lucide-react": "^0.562.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

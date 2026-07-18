@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/cache"
-	"github.com/MDMAtk/TormentNexus/internal/mcp"
-	roottools "github.com/MDMAtk/TormentNexus/tools"
+	"github.com/MDMAtk/HyperNexus/internal/cache"
+	"github.com/MDMAtk/HyperNexus/internal/mcp"
+	roottools "github.com/MDMAtk/HyperNexus/tools"
 )
 
 func (s *Server) handleMCPStatus(w http.ResponseWriter, r *http.Request) {

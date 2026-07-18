@@ -14,14 +14,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/buildinfo"
-	"github.com/MDMAtk/TormentNexus/internal/config"
-	"github.com/MDMAtk/TormentNexus/internal/controlplane"
-	"github.com/MDMAtk/TormentNexus/internal/httpapi"
-	"github.com/MDMAtk/TormentNexus/internal/license"
-	"github.com/MDMAtk/TormentNexus/internal/lockfile"
-	"github.com/MDMAtk/TormentNexus/internal/protocol"
-	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
+	"github.com/MDMAtk/HyperNexus/internal/buildinfo"
+	"github.com/MDMAtk/HyperNexus/internal/config"
+	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"github.com/MDMAtk/HyperNexus/internal/httpapi"
+	"github.com/MDMAtk/HyperNexus/internal/license"
+	"github.com/MDMAtk/HyperNexus/internal/lockfile"
+	"github.com/MDMAtk/HyperNexus/internal/protocol"
+	"github.com/MDMAtk/HyperNexus/internal/sessionimport"
 	"path/filepath"
 )
 
@@ -32,7 +32,7 @@ func main() {
 func run(args []string) int {
 	command := "serve"
 	if len(args) > 0 {
-		if strings.HasPrefix(args[0], "tormentnexus://") {
+		if strings.HasPrefix(args[0], "hypernexus://") {
 			return runDeepLink(args[0])
 		}
 		switch args[0] {
@@ -65,12 +65,12 @@ func run(args []string) int {
 }
 
 func cmdRegisterProtocol(args []string) int {
-	log.Printf("Registering tormentnexus:// protocol handler...")
+	log.Printf("Registering hypernexus:// protocol handler...")
 	if err := protocol.RegisterProtocol(); err != nil {
 		log.Printf("[ERROR] failed to register protocol handler: %v", err)
 		return 1
 	}
-	log.Printf("Successfully registered tormentnexus:// protocol handler in Windows registry.")
+	log.Printf("Successfully registered hypernexus:// protocol handler in Windows registry.")
 	return 0
 }
 
@@ -78,11 +78,11 @@ func runDeepLink(deepLink string) int {
 	cfg := config.Default()
 	record, err := lockfile.Read(cfg.LockPath())
 	if err != nil {
-		log.Printf("TormentNexus TN Kernel is not currently running. Please start it using 'tormentnexus serve' first.")
+		log.Printf("HyperNexus TN Kernel is not currently running. Please start it using 'hypernexus serve' first.")
 		return 1
 	}
 
-	targetURL := fmt.Sprintf("http://%s:%d/api/native/protocol/tormentnexus", record.Host, record.Port)
+	targetURL := fmt.Sprintf("http://%s:%d/api/native/protocol/hypernexus", record.Host, record.Port)
 
 	payload, err := json.Marshal(map[string]string{"url": deepLink})
 	if err != nil {
@@ -92,7 +92,7 @@ func runDeepLink(deepLink string) int {
 
 	resp, err := http.Post(targetURL, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
-		log.Printf("Failed to dispatch deep link to running TormentNexus server: %v", err)
+		log.Printf("Failed to dispatch deep link to running HyperNexus server: %v", err)
 		return 1
 	}
 	defer resp.Body.Close()
@@ -120,7 +120,7 @@ func runServe(args []string) int {
 	}
 
 	// Verify offline license if present in workspace root
-	licPath := filepath.Join(cfg.WorkspaceRoot, "tormentnexus.lic")
+	licPath := filepath.Join(cfg.WorkspaceRoot, "hypernexus.lic")
 	if _, err := os.Stat(licPath); err == nil {
 		lic, err := license.VerifyLicense(cfg.WorkspaceRoot)
 		if err != nil {
@@ -129,7 +129,7 @@ func runServe(args []string) int {
 		}
 		log.Printf("Licensed to: %s (Seats: %d, Expires: %s)", lic.Holder, lic.Seats, lic.ExpiresAt.Format(time.RFC822))
 	} else {
-		log.Printf("No tormentnexus.lic license file found. Running under free limitations.")
+		log.Printf("No hypernexus.lic license file found. Running under free limitations.")
 	}
 
 	record := lockfile.Record{

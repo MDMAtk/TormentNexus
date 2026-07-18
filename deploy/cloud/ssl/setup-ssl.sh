@@ -10,26 +10,26 @@ DOMAIN="cloud.hypernexus.site"
 EMAIL="admin@hypernexus.site"
 
 # Check if certbot is installed
-if ! command -v certbot &> /dev/null; then
-    echo "Certbot not found. Installing..."
-    
-    # Detect OS and install certbot
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        if command -v apt-get &> /dev/null; then
-            sudo apt-get update
-            sudo apt-get install -y certbot python3-certbot-nginx
-        elif command -v yum &> /dev/null; then
-            sudo yum install -y certbot python3-certbot-nginx
-        else
-            echo "Error: Unsupported Linux distribution"
-            echo "Please install certbot manually: https://certbot.eff.org/"
-            exit 1
-        fi
-    else
-        echo "Error: Unsupported operating system"
-        echo "Please install certbot manually: https://certbot.eff.org/"
-        exit 1
-    fi
+if ! command -v certbot &>/dev/null; then
+	echo "Certbot not found. Installing..."
+
+	# Detect OS and install certbot
+	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		if command -v apt-get &>/dev/null; then
+			sudo apt-get update
+			sudo apt-get install -y certbot python3-certbot-nginx
+		elif command -v yum &>/dev/null; then
+			sudo yum install -y certbot python3-certbot-nginx
+		else
+			echo "Error: Unsupported Linux distribution"
+			echo "Please install certbot manually: https://certbot.eff.org/"
+			exit 1
+		fi
+	else
+		echo "Error: Unsupported operating system"
+		echo "Please install certbot manually: https://certbot.eff.org/"
+		exit 1
+	fi
 fi
 
 echo "Stopping nginx temporarily..."
@@ -41,12 +41,12 @@ echo ""
 
 # Generate certificate using standalone mode
 sudo certbot certonly \
-    --standalone \
-    --preferred-challenges http \
-    -d "$DOMAIN" \
-    --email "$EMAIL" \
-    --agree-tos \
-    --non-interactive
+	--standalone \
+	--preferred-challenges http \
+	-d "$DOMAIN" \
+	--email "$EMAIL" \
+	--agree-tos \
+	--non-interactive
 
 echo ""
 echo "Copying certificates..."
@@ -60,7 +60,7 @@ echo ""
 echo "Setting up auto-renewal..."
 
 # Create renewal hook
-sudo tee /etc/letsencrypt/renewal-hooks/deploy/hypernexus.sh > /dev/null << 'EOF'
+sudo tee /etc/letsencrypt/renewal-hooks/deploy/hypernexus.sh >/dev/null <<'EOF'
 #!/bin/bash
 # Copy renewed certificates
 cp /etc/letsencrypt/live/cloud.hypernexus.site/fullchain.pem /path/to/HyperNexus/deploy/cloud/ssl/cert.pem

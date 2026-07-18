@@ -7,48 +7,48 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/tormentnexus"
+	"github.com/MDMAtk/HyperNexus/hypernexus"
 )
 
-type TormentNexusStatus struct {
+type HyperNexusStatus struct {
 	Assimilated       bool           `json:"assimilated"`
-	TormentNexusCoreURL       string         `json:"tormentnexusCoreUrl,omitempty"`
+	HyperNexusCoreURL       string         `json:"hypernexusCoreUrl,omitempty"`
 	MemoryContext     string         `json:"memoryContext,omitempty"`
 	Provider          ProviderStatus `json:"provider"`
 	MCPServerNames    []string       `json:"mcpServerNames,omitempty"`
 	MCPConfigPath     string         `json:"mcpConfigPath,omitempty"`
-	TormentNexusRepoPath string         `json:"tormentnexusRepoPath,omitempty"`
+	HyperNexusRepoPath string         `json:"hypernexusRepoPath,omitempty"`
 	Warnings          []string       `json:"warnings,omitempty"`
 }
 
-type TormentNexusAdapter struct {
-	tormentnexusAdapter *tormentnexus.Adapter
+type HyperNexusAdapter struct {
+	hypernexusAdapter *hypernexus.Adapter
 	workingDir  string
 	homeDir     string
 }
 
-func NewTormentNexusAdapter(workingDir string) *TormentNexusAdapter {
+func NewHyperNexusAdapter(workingDir string) *HyperNexusAdapter {
 	homeDir, _ := os.UserHomeDir()
-	return &TormentNexusAdapter{
-		tormentnexusAdapter: tormentnexus.NewAdapter(),
+	return &HyperNexusAdapter{
+		hypernexusAdapter: hypernexus.NewAdapter(),
 		workingDir:  workingDir,
 		homeDir:     homeDir,
 	}
 }
 
-func (a *TormentNexusAdapter) Status() TormentNexusStatus {
-	status := TormentNexusStatus{
-		Assimilated:   a.tormentnexusAdapter != nil && a.tormentnexusAdapter.Assimilated,
+func (a *HyperNexusAdapter) Status() HyperNexusStatus {
+	status := HyperNexusStatus{
+		Assimilated:   a.hypernexusAdapter != nil && a.hypernexusAdapter.Assimilated,
 		MemoryContext: a.MemoryContext(),
 		Provider:      BuildProviderStatus(),
 	}
-	if a.tormentnexusAdapter != nil {
-		status.TormentNexusCoreURL = a.tormentnexusAdapter.TormentNexusCoreURL
+	if a.hypernexusAdapter != nil {
+		status.HyperNexusCoreURL = a.hypernexusAdapter.HyperNexusCoreURL
 	}
-	if repoPath, ok := a.findTormentNexusRepo(); ok {
-		status.TormentNexusRepoPath = repoPath
+	if repoPath, ok := a.findHyperNexusRepo(); ok {
+		status.HyperNexusRepoPath = repoPath
 	} else {
-		status.Warnings = append(status.Warnings, "adjacent tormentnexus repo not found")
+		status.Warnings = append(status.Warnings, "adjacent hypernexus repo not found")
 	}
 	if configPath, names, err := a.listMCPServers(); err == nil {
 		status.MCPConfigPath = configPath
@@ -59,28 +59,28 @@ func (a *TormentNexusAdapter) Status() TormentNexusStatus {
 	return status
 }
 
-func (a *TormentNexusAdapter) MemoryContext() string {
-	if a.tormentnexusAdapter == nil {
+func (a *HyperNexusAdapter) MemoryContext() string {
+	if a.hypernexusAdapter == nil {
 		return ""
 	}
-	return a.tormentnexusAdapter.GetMemoryContext()
+	return a.hypernexusAdapter.GetMemoryContext()
 }
 
-func (a *TormentNexusAdapter) RouteMCP(request string) string {
-	if a.tormentnexusAdapter == nil {
+func (a *HyperNexusAdapter) RouteMCP(request string) string {
+	if a.hypernexusAdapter == nil {
 		return request
 	}
-	return a.tormentnexusAdapter.RouteMCP(request)
+	return a.hypernexusAdapter.RouteMCP(request)
 }
 
-func (a *TormentNexusAdapter) BuildSystemContext() string {
+func (a *HyperNexusAdapter) BuildSystemContext() string {
 	status := a.Status()
 	parts := []string{
-		"[TormentNexus Adapter]",
+		"[HyperNexus Adapter]",
 		fmt.Sprintf("Assimilated: %t", status.Assimilated),
 	}
-	if status.TormentNexusCoreURL != "" {
-		parts = append(parts, fmt.Sprintf("TormentNexus Core URL: %s", status.TormentNexusCoreURL))
+	if status.HyperNexusCoreURL != "" {
+		parts = append(parts, fmt.Sprintf("HyperNexus Core URL: %s", status.HyperNexusCoreURL))
 	}
 	if status.MemoryContext != "" {
 		parts = append(parts, status.MemoryContext)
@@ -91,8 +91,8 @@ func (a *TormentNexusAdapter) BuildSystemContext() string {
 	if len(status.MCPServerNames) > 0 {
 		parts = append(parts, fmt.Sprintf("Configured MCP servers: %s", strings.Join(status.MCPServerNames, ", ")))
 	}
-	if status.TormentNexusRepoPath != "" {
-		parts = append(parts, fmt.Sprintf("TormentNexus repo: %s", status.TormentNexusRepoPath))
+	if status.HyperNexusRepoPath != "" {
+		parts = append(parts, fmt.Sprintf("HyperNexus repo: %s", status.HyperNexusRepoPath))
 	}
 	if len(status.Warnings) > 0 {
 		parts = append(parts, fmt.Sprintf("Warnings: %s", strings.Join(status.Warnings, "; ")))
@@ -100,7 +100,7 @@ func (a *TormentNexusAdapter) BuildSystemContext() string {
 	return strings.Join(parts, "\n")
 }
 
-func (a *TormentNexusAdapter) listMCPServers() (string, []string, error) {
+func (a *HyperNexusAdapter) listMCPServers() (string, []string, error) {
 	configPath, config, err := ParseMCPConfig(a.homeDir)
 	if err != nil {
 		return configPath, nil, fmt.Errorf("mcp config unavailable: %w", err)
@@ -113,16 +113,16 @@ func (a *TormentNexusAdapter) listMCPServers() (string, []string, error) {
 	return configPath, names, nil
 }
 
-func (a *TormentNexusAdapter) findTormentNexusRepo() (string, bool) {
+func (a *HyperNexusAdapter) findHyperNexusRepo() (string, bool) {
 	candidates := []string{}
 	if a.workingDir != "" {
 		candidates = append(candidates,
-			filepath.Join(a.workingDir, "..", "tormentnexus"),
-			filepath.Join(a.workingDir, "../tormentnexus"),
+			filepath.Join(a.workingDir, "..", "hypernexus"),
+			filepath.Join(a.workingDir, "../hypernexus"),
 		)
 	}
 	if a.homeDir != "" {
-		candidates = append(candidates, filepath.Join(a.homeDir, "workspace", "tormentnexus"))
+		candidates = append(candidates, filepath.Join(a.homeDir, "workspace", "hypernexus"))
 	}
 	for _, candidate := range candidates {
 		clean := filepath.Clean(candidate)

@@ -1,5 +1,5 @@
 <# 
-    TormentNexus Windows Installer
+    HyperNexus Windows Installer
     Graphical installer with progress UI
 #>
 
@@ -10,15 +10,15 @@ Add-Type -AssemblyName System.Drawing
 $ErrorActionPreference = "Stop"
 
 # ── Configuration ──
-$REPO = "MDMAtk/TormentNexus"
+$REPO = "MDMAtk/HyperNexus"
 $VERSION = "1.0.0-b4"
-$INSTALL_DIR = "$env:USERPROFILE\.tormentnexus"
-$BINARY_NAME = "tormentnexus.exe"
-$SERVICE_NAME = "TormentNexus"
+$INSTALL_DIR = "$env:USERPROFILE\.hypernexus"
+$BINARY_NAME = "hypernexus.exe"
+$SERVICE_NAME = "HyperNexus"
 
 # ── Main Form ──
 $form = New-Object System.Windows.Forms.Form
-$form.Text = "TormentNexus Installer"
+$form.Text = "HyperNexus Installer"
 $form.Size = New-Object System.Drawing.Size(520, 420)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedDialog"
@@ -28,7 +28,7 @@ $form.ForeColor = [System.Drawing.Color]::White
 
 # ── Logo / Title ──
 $lblTitle = New-Object System.Windows.Forms.Label
-$lblTitle.Text = "TORMENTNEXUS"
+$lblTitle.Text = "HYPERNEXUS"
 $lblTitle.Font = New-Object System.Drawing.Font("Consolas", 24, [System.Drawing.FontStyle]::Bold)
 $lblTitle.ForeColor = [System.Drawing.Color]::FromArgb(0, 255, 136)
 $lblTitle.AutoSize = $true
@@ -104,7 +104,7 @@ $form.Controls.Add($txtLog)
 
 # ── Buttons ──
 $btnInstall = New-Object System.Windows.Forms.Button
-$btnInstall.Text = "Install TormentNexus"
+$btnInstall.Text = "Install HyperNexus"
 $btnInstall.Size = New-Object System.Drawing.Size(200, 40)
 $btnInstall.Location = New-Object System.Drawing.Point(25, 330)
 $btnInstall.FlatStyle = "Flat"
@@ -168,7 +168,7 @@ $btnInstall.Add_Click({
     
     try {
         Log "=========================================="
-        Log "  TormentNexus Installer v$VERSION"
+        Log "  HyperNexus Installer v$VERSION"
         Log "=========================================="
         Log ""
         
@@ -179,8 +179,8 @@ $btnInstall.Add_Click({
         if (!(Test-Path $INSTALL_DIR)) {
             New-Item -ItemType Directory -Path $INSTALL_DIR -Force | Out-Null
         }
-        if (!(Test-Path "$INSTALL_DIR\.tormentnexus")) {
-            New-Item -ItemType Directory -Path "$INSTALL_DIR\.tormentnexus" -Force | Out-Null
+        if (!(Test-Path "$INSTALL_DIR\.hypernexus")) {
+            New-Item -ItemType Directory -Path "$INSTALL_DIR\.hypernexus" -Force | Out-Null
         }
         if (!(Test-Path "$INSTALL_DIR\logs")) {
             New-Item -ItemType Directory -Path "$INSTALL_DIR\logs" -Force | Out-Null
@@ -189,11 +189,11 @@ $btnInstall.Add_Click({
         SetProgress 20
         
         # Step 2: Download binary
-        SetStatus "Downloading TormentNexus..."
-        Log "[2/5] Downloading TormentNexus binary..."
+        SetStatus "Downloading HyperNexus..."
+        Log "[2/5] Downloading HyperNexus binary..."
         
-        $downloadUrl = "https://github.com/$REPO/releases/download/$VERSION/tormentnexus-windows-amd64.zip"
-        $zipPath = "$INSTALL_DIR\tormentnexus.zip"
+        $downloadUrl = "https://github.com/$REPO/releases/download/$VERSION/hypernexus-windows-amd64.zip"
+        $zipPath = "$INSTALL_DIR\hypernexus.zip"
         
         Log "       URL: $downloadUrl"
         DownloadFile $downloadUrl $zipPath
@@ -229,7 +229,7 @@ $btnInstall.Add_Click({
             }
         } | ConvertTo-Json -Depth 5
         
-        $config | Out-File -FilePath "$INSTALL_DIR\.tormentnexus\config.json" -Encoding UTF8
+        $config | Out-File -FilePath "$INSTALL_DIR\.hypernexus\config.json" -Encoding UTF8
         Log "       OK - config.json created"
         SetProgress 80
         
@@ -248,7 +248,7 @@ $btnInstall.Add_Click({
         SetProgress 90
         
         # Create start menu shortcuts
-        $startMenu = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\TormentNexus"
+        $startMenu = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\HyperNexus"
         if (!(Test-Path $startMenu)) {
             New-Item -ItemType Directory -Path $startMenu -Force | Out-Null
         }
@@ -256,21 +256,21 @@ $btnInstall.Add_Click({
         $shell = New-Object -ComObject WScript.Shell
         
         # Start shortcut
-        $shortcut = $shell.CreateShortcut("$startMenu\Start TormentNexus.lnk")
+        $shortcut = $shell.CreateShortcut("$startMenu\Start HyperNexus.lnk")
         $shortcut.TargetPath = "$INSTALL_DIR\$BINARY_NAME"
         $shortcut.Arguments = "serve"
         $shortcut.WorkingDirectory = $INSTALL_DIR
-        $shortcut.Description = "Start TormentNexus Server"
+        $shortcut.Description = "Start HyperNexus Server"
         $shortcut.Save()
         
         # Dashboard shortcut
         $shortcut = $shell.CreateShortcut("$startMenu\Dashboard.lnk")
         $shortcut.TargetPath = "http://localhost:7778"
-        $shortcut.Description = "Open TormentNexus Dashboard"
+        $shortcut.Description = "Open HyperNexus Dashboard"
         $shortcut.Save()
         
         # Desktop shortcut
-        $shortcut = $shell.CreateShortcut("$env:USERPROFILE\Desktop\TormentNexus.lnk")
+        $shortcut = $shell.CreateShortcut("$env:USERPROFILE\Desktop\HyperNexus.lnk")
         $shortcut.TargetPath = "$INSTALL_DIR\$BINARY_NAME"
         $shortcut.Arguments = "serve"
         $shortcut.WorkingDirectory = $INSTALL_DIR
@@ -287,7 +287,7 @@ $btnInstall.Add_Click({
         Log "  Location: $INSTALL_DIR"
         Log "  Binary:   $INSTALL_DIR\$BINARY_NAME"
         Log ""
-        Log "  Run: tormentnexus serve"
+        Log "  Run: hypernexus serve"
         Log "  Dashboard: http://localhost:7778"
         Log ""
         
@@ -309,7 +309,7 @@ $btnInstall.Add_Click({
 
 # ── Launch Function ──
 $btnLaunch.Add_Click({
-    Log "Starting TormentNexus..."
+    Log "Starting HyperNexus..."
     SetStatus "Starting server..."
     
     $process = Start-Process -FilePath "$INSTALL_DIR\$BINARY_NAME" -ArgumentList "serve" -WorkingDirectory $INSTALL_DIR -PassThru -WindowStyle Hidden

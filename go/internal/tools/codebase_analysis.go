@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/MDMAtk/TormentNexus/internal/repograph"
+	"github.com/MDMAtk/HyperNexus/internal/repograph"
 )
 
 // ensureGraphBuilt ensures that the global repository graph is populated.

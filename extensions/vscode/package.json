@@ -1,9 +1,9 @@
 {
-  "name": "tormentnexus",
-  "displayName": "TormentNexus",
+  "name": "hypernexus",
+  "displayName": "HyperNexus",
   "description": "AI Control Plane with Persistent Memory & 26,000+ MCP Tools",
   "version": "1.0.0",
-  "publisher": "tormentnexus",
+  "publisher": "hypernexus",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -22,77 +22,77 @@
   ],
   "icon": "images/icon.png",
   "activationEvents": [
-    "onView:tormentnexus.memory",
-    "onView:tormentnexus.tools",
-    "onCommand:tormentnexus.connect",
-    "onCommand:tormentnexus.searchTools"
+    "onView:hypernexus.memory",
+    "onView:hypernexus.tools",
+    "onCommand:hypernexus.connect",
+    "onCommand:hypernexus.searchTools"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "tormentnexus",
-          "title": "TormentNexus",
+          "id": "hypernexus",
+          "title": "HyperNexus",
           "icon": "images/sidebar.svg"
         }
       ]
     },
     "views": {
-      "tormentnexus": [
+      "hypernexus": [
         {
-          "id": "tormentnexus.memory",
+          "id": "hypernexus.memory",
           "name": "Memory"
         },
         {
-          "id": "tormentnexus.tools",
+          "id": "hypernexus.tools",
           "name": "MCP Tools"
         },
         {
-          "id": "tormentnexus.status",
+          "id": "hypernexus.status",
           "name": "Status"
         }
       ]
     },
     "commands": [
       {
-        "command": "tormentnexus.connect",
-        "title": "TormentNexus: Connect to Server"
+        "command": "hypernexus.connect",
+        "title": "HyperNexus: Connect to Server"
       },
       {
-        "command": "tormentnexus.disconnect",
-        "title": "TormentNexus: Disconnect"
+        "command": "hypernexus.disconnect",
+        "title": "HyperNexus: Disconnect"
       },
       {
-        "command": "tormentnexus.searchTools",
-        "title": "TormentNexus: Search MCP Tools"
+        "command": "hypernexus.searchTools",
+        "title": "HyperNexus: Search MCP Tools"
       },
       {
-        "command": "tormentnexus.addMemory",
-        "title": "TormentNexus: Add Memory"
+        "command": "hypernexus.addMemory",
+        "title": "HyperNexus: Add Memory"
       },
       {
-        "command": "tormentnexus.searchMemory",
-        "title": "TormentNexus: Search Memory"
+        "command": "hypernexus.searchMemory",
+        "title": "HyperNexus: Search Memory"
       },
       {
-        "command": "tormentnexus.openDashboard",
-        "title": "TormentNexus: Open Dashboard"
+        "command": "hypernexus.openDashboard",
+        "title": "HyperNexus: Open Dashboard"
       },
       {
-        "command": "tormentnexus.refresh",
-        "title": "TormentNexus: Refresh"
+        "command": "hypernexus.refresh",
+        "title": "HyperNexus: Refresh"
       }
     ],
     "configuration": {
-      "title": "TormentNexus",
+      "title": "HyperNexus",
       "properties": {
-        "tormentnexus.serverUrl": {
+        "hypernexus.serverUrl": {
           "type": "string",
           "default": "http://localhost:7778",
-          "description": "TormentNexus server URL"
+          "description": "HyperNexus server URL"
         },
-        "tormentnexus.autoConnect": {
+        "hypernexus.autoConnect": {
           "type": "boolean",
           "default": true,
           "description": "Auto-connect on startup"

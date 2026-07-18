@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	foundationpi "github.com/MDMAtk/TormentNexus/foundation/pi"
-	foundationrepomap "github.com/MDMAtk/TormentNexus/foundation/repomap"
+	foundationpi "github.com/MDMAtk/HyperNexus/foundation/pi"
+	foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
 )
 
 func TestExecuteFoundationToolAndSessions(t *testing.T) {
@@ -48,23 +48,23 @@ func TestExecuteFoundationToolAndSessions(t *testing.T) {
 
 func TestFoundationAdaptersPayloadAndRepomap(t *testing.T) {
 	cwd := t.TempDir()
-	tormentnexusDir := filepath.Join(cwd, "..", "tormentnexus")
-	if err := os.MkdirAll(tormentnexusDir, 0o755); err != nil {
+	hypernexusDir := filepath.Join(cwd, "..", "hypernexus")
+	if err := os.MkdirAll(hypernexusDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(tormentnexusDir, "README.md"), []byte("# TormentNexus"), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(hypernexusDir, "README.md"), []byte("# HyperNexus"), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	payload := foundationAdaptersPayload(cwd)
-	if payload["tormentnexus"] == nil || payload["mcp"] == nil {
+	if payload["hypernexus"] == nil || payload["mcp"] == nil {
 		t.Fatalf("unexpected adapter payload: %#v", payload)
 	}
 	setMCPEnv(t, cwd)
-	tormentnexusDir2 := filepath.Join(cwd, ".tormentnexus")
-	if err := os.MkdirAll(tormentnexusDir2, 0o755); err != nil {
+	hypernexusDir2 := filepath.Join(cwd, ".hypernexus")
+	if err := os.MkdirAll(hypernexusDir2, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(tormentnexusDir2, "mcp.json"), []byte(`{"mcpServers":{"demo":{"command":"cmd","args":["/c","echo demo"]}}}`), 0o644); err != nil {
+	if err := os.WriteFile(filepath.Join(hypernexusDir2, "mcp.json"), []byte(`{"mcpServers":{"demo":{"command":"cmd","args":["/c","echo demo"]}}}`), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	mcpTools, err := listFoundationMCPTools(cwd)

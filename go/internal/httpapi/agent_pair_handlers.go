@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MDMAtk/TormentNexus/internal/orchestration"
+	"github.com/MDMAtk/HyperNexus/internal/orchestration"
 )
 
 func (s *Server) handlePairSessionRun(w http.ResponseWriter, r *http.Request) {

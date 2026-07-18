@@ -4,42 +4,42 @@ setlocal EnableDelayedExpansion
 for /f "tokens=*" %%v in ('type VERSION') do set VER=%%v
 
 echo ================================================
-echo  TormentNexus TORMENTNEXUS v%VER%
+echo  HyperNexus HYPERNEXUS v%VER%
 echo  The Neural Operating System (Go-Native)
 echo ================================================
 echo.
 
 REM -- 1. Locate Go sidecar binary --
-if not exist bin\tormentnexus.exe (
+if not exist bin\hypernexus.exe (
     echo [FATAL] Go sidecar binary not found. Please run build.bat first.
     exit /b 1
 )
 
 REM -- 2. Quick install dependencies (optional) --
 set SKIP_INSTALL=0
-if /I "%TORMENTNEXUS_SKIP_INSTALL%"=="1" set SKIP_INSTALL=1
+if /I "%HYPERNEXUS_SKIP_INSTALL%"=="1" set SKIP_INSTALL=1
 if "%SKIP_INSTALL%"=="1" (
-    echo   Skipping pnpm install (TORMENTNEXUS_SKIP_INSTALL=1)
+    echo   Skipping pnpm install (HYPERNEXUS_SKIP_INSTALL=1)
 ) else (
     echo   Installing dependencies...
     call pnpm install --ignore-scripts 2>nul || call pnpm install
 )
 
-REM -- 3. Start TormentNexus Server on port 7778 --
+REM -- 3. Start HyperNexus Server on port 7778 --
 set GO_PORT=7778
-curl -s -o nul -w "%%{http_code}" http://127.0.0.1:%GO_PORT%/health > "%TEMP%\tormentnexus_go_check.txt" 2>nul
-set /p GO_CHECK=<"%TEMP%\tormentnexus_go_check.txt"
+curl -s -o nul -w "%%{http_code}" http://127.0.0.1:%GO_PORT%/health > "%TEMP%\hypernexus_go_check.txt" 2>nul
+set /p GO_CHECK=<"%TEMP%\hypernexus_go_check.txt"
 if "!GO_CHECK!"=="200" (
     echo   Go sidecar already running on port %GO_PORT%.
 ) else (
     echo   Starting Go sidecar on port %GO_PORT%...
-    start /B bin\tormentnexus.exe serve --port %GO_PORT% > nul 2>&1
+    start /B bin\hypernexus.exe serve --port %GO_PORT% > nul 2>&1
 )
 
 REM -- 4. Start Next.js dashboard on port 7779 --
 set DASH_PORT=7779
-curl -s -o nul -w "%%{http_code}" http://127.0.0.1:%DASH_PORT%/dashboard > "%TEMP%\tormentnexus_web_check.txt" 2>nul
-set /p WEB_CHECK=<"%TEMP%\tormentnexus_web_check.txt"
+curl -s -o nul -w "%%{http_code}" http://127.0.0.1:%DASH_PORT%/dashboard > "%TEMP%\hypernexus_web_check.txt" 2>nul
+set /p WEB_CHECK=<"%TEMP%\hypernexus_web_check.txt"
 if "!WEB_CHECK!"=="200" (
     echo   Next.js dashboard already running on port %DASH_PORT%.
 ) else (

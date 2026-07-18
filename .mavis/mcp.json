@@ -1,15 +1,15 @@
 {
   "mcpServers": {
-    "tormentnexus": {
-      "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+    "hypernexus": {
+      "command": "C:\\Users\\hyper\\workspace\\hypernexus\\hypernexus.exe",
       "args": ["mcp"],
       "env": {
-        "TORMENTNEXUS_WORKSPACE_ROOT": "C:\\Users\\hyper\\workspace\\tormentnexus"
+        "HYPERNEXUS_WORKSPACE_ROOT": "C:\\Users\\hyper\\workspace\\hypernexus"
       },
       "enabled": true,
       "configured": true,
       "builtin": false,
-      "description": "TormentNexus AI control plane — L2 memory, tool search, session import, skill registry, code search, subagent orchestration"
+      "description": "HyperNexus AI control plane — L2 memory, tool search, session import, skill registry, code search, subagent orchestration"
     }
   }
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# TormentNexus Linux Installer
-# This script installs TormentNexus and sets it up as a systemd service
+# HyperNexus Linux Installer
+# This script installs HyperNexus and sets it up as a systemd service
 
 set -e
 
@@ -36,17 +36,17 @@ echo ""
 # Detect architecture
 ARCH=$(uname -m)
 if [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
-	BINARY_NAME="tormentnexus-linux-arm64"
+	BINARY_NAME="hypernexus-linux-arm64"
 	echo -e "  ${GREEN}Detected: ARM64${NC}"
 else
-	BINARY_NAME="tormentnexus-linux-amd64"
+	BINARY_NAME="hypernexus-linux-amd64"
 	echo -e "  ${GREEN}Detected: x86_64${NC}"
 fi
 echo ""
 
 # Set installation directory
-INSTALL_DIR="$HOME/.tormentnexus"
-BINARY_PATH="$INSTALL_DIR/tormentnexus"
+INSTALL_DIR="$HOME/.hypernexus"
+BINARY_PATH="$INSTALL_DIR/hypernexus"
 
 echo "  [1/6] Creating installation directory..."
 mkdir -p "$INSTALL_DIR"
@@ -54,7 +54,7 @@ echo -e "        ${GREEN}OK${NC} - $INSTALL_DIR"
 echo ""
 
 # Copy binary
-echo "  [2/6] Installing TormentNexus binary..."
+echo "  [2/6] Installing HyperNexus binary..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cp "$SCRIPT_DIR/$BINARY_NAME" "$BINARY_PATH"
 chmod +x "$BINARY_PATH"
@@ -63,13 +63,13 @@ echo ""
 
 # Create config directory
 echo "  [3/6] Creating configuration directory..."
-mkdir -p "$INSTALL_DIR/.tormentnexus"
-echo -e "        ${GREEN}OK${NC} - $INSTALL_DIR/.tormentnexus"
+mkdir -p "$INSTALL_DIR/.hypernexus"
+echo -e "        ${GREEN}OK${NC} - $INSTALL_DIR/.hypernexus"
 echo ""
 
 # Create default config
 echo "  [4/6] Creating default configuration..."
-cat >"$INSTALL_DIR/.tormentnexus/config.json" <<'EOF'
+cat >"$INSTALL_DIR/.hypernexus/config.json" <<'EOF'
 {
   "version": "1.0.0",
   "server": {
@@ -103,7 +103,7 @@ fi
 if [ -n "$SHELL_RC" ]; then
 	if ! grep -q "$INSTALL_DIR" "$SHELL_RC"; then
 		echo "" >>"$SHELL_RC"
-		echo "# TormentNexus" >>"$SHELL_RC"
+		echo "# HyperNexus" >>"$SHELL_RC"
 		echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >>"$SHELL_RC"
 		echo -e "        ${GREEN}OK${NC} - Added to $SHELL_RC"
 	else
@@ -117,12 +117,12 @@ echo ""
 
 # Create systemd service
 echo "  [6/6] Creating systemd service..."
-SERVICE_FILE="$HOME/.config/systemd/user/tormentnexus.service"
+SERVICE_FILE="$HOME/.config/systemd/user/hypernexus.service"
 mkdir -p "$HOME/.config/systemd/user"
 
 cat >"$SERVICE_FILE" <<EOF
 [Unit]
-Description=TormentNexus AI Control Plane
+Description=HyperNexus AI Control Plane
 After=network.target
 
 [Service]
@@ -147,33 +147,33 @@ echo -e "  ${GREEN}INSTALLATION COMPLETE!${NC}"
 echo ""
 echo "  ============================================================"
 echo ""
-echo "  TormentNexus has been installed to:"
+echo "  HyperNexus has been installed to:"
 echo "    $INSTALL_DIR"
 echo ""
-echo "  To start TormentNexus:"
+echo "  To start HyperNexus:"
 echo "    1. Open a new terminal"
-echo "    2. Run: tormentnexus serve"
+echo "    2. Run: hypernexus serve"
 echo "    3. Open: http://localhost:7778"
 echo ""
 echo "  Or start the background service:"
-echo "    systemctl --user start tormentnexus"
-echo "    systemctl --user enable tormentnexus  # Start on boot"
+echo "    systemctl --user start hypernexus"
+echo "    systemctl --user enable hypernexus  # Start on boot"
 echo ""
 echo "  ============================================================"
 echo ""
 
 # Ask to start now
-read -p "  Start TormentNexus now? (y/n): " -n 1 -r
+read -p "  Start HyperNexus now? (y/n): " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
 	echo ""
-	echo "  Starting TormentNexus..."
+	echo "  Starting HyperNexus..."
 	mkdir -p "$INSTALL_DIR/logs"
 	"$BINARY_PATH" serve >"$INSTALL_DIR/logs/stdout.log" 2>&1 &
 	SERV_PID=$!
 	sleep 2
 	if kill -0 $SERV_PID 2>/dev/null; then
-		echo -e "  ${GREEN}TormentNexus is running (PID: $SERV_PID)${NC}"
+		echo -e "  ${GREEN}HyperNexus is running (PID: $SERV_PID)${NC}"
 		echo "  Dashboard: http://localhost:7778"
 		xdg-open http://localhost:7778 2>/dev/null || echo "  Open http://localhost:7778 in your browser"
 	else

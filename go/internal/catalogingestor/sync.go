@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/TormentNexus/internal/database")
+	"github.com/MDMAtk/HyperNexus/internal/database")
 
 func SyncRegisteredToolsToCatalog(workspaceRoot string, toolNames []string) error {
 	dbPath := filepath.Join(workspaceRoot, "catalog.db")
@@ -45,7 +45,7 @@ func SyncRegisteredToolsToCatalog(workspaceRoot string, toolNames []string) erro
 		uid := uuid.New().String()
 		canonicalID := "native-tool:" + tool
 		displayName := "Go Native: " + tool
-		desc := fmt.Sprintf("Built-in, high-performance Go-native TormentNexus tool: %s", tool)
+		desc := fmt.Sprintf("Built-in, high-performance Go-native HyperNexus tool: %s", tool)
 		tags := "[\"native\", \"always-on\", \"performance\"]"
 		categories := "[\"core\", \"utility\"]"
 		transport := "in-process"

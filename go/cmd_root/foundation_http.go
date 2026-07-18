@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/MDMAtk/TormentNexus/foundation/adapters"
-	"github.com/MDMAtk/TormentNexus/foundation/compat"
-	foundationorchestration "github.com/MDMAtk/TormentNexus/foundation/orchestration"
-	foundationpi "github.com/MDMAtk/TormentNexus/foundation/pi"
-	foundationrepomap "github.com/MDMAtk/TormentNexus/foundation/repomap"
+	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	"github.com/MDMAtk/HyperNexus/foundation/compat"
+	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
+	foundationpi "github.com/MDMAtk/HyperNexus/foundation/pi"
+	foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
 )
 
 type foundationExecRequest struct {
@@ -66,10 +66,10 @@ func currentFoundationRuntime() (*foundationpi.Runtime, string, error) {
 }
 
 func foundationAdaptersPayload(cwd string) map[string]any {
-	hyperAdapter := adapters.NewTormentNexusAdapter(cwd)
+	hyperAdapter := adapters.NewHyperNexusAdapter(cwd)
 	mcpAdapter := adapters.NewMCPAdapter(cwd)
 	return map[string]any{
-		"tormentnexus": hyperAdapter.Status(),
+		"hypernexus": hyperAdapter.Status(),
 		"mcp":       mcpAdapter.Status(),
 	}
 }

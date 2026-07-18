@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * TormentNexus OpenCode Integration v1.0
+ * HyperNexus OpenCode Integration v1.0
  *
- * Full bridge: OpenCode ↔ TormentNexus (port 7778)
+ * Full bridge: OpenCode ↔ HyperNexus (port 7778)
  * ───────────────────────────────────────────────────────────
  * Features (parity with Pi extension + OpenCode-native extras):
  * - 12 custom MCP tools (memory, tools, sessions, skills,
@@ -23,8 +23,8 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 
-const TN_BASE = process.env.TORMENTNEXUS_URL || "http://127.0.0.1:7778";
-const TN_WORKSPACE = process.env.TORMENTNEXUS_WORKSPACE || process.cwd();
+const TN_BASE = process.env.HYPERNEXUS_URL || "http://127.0.0.1:7778";
+const TN_WORKSPACE = process.env.HYPERNEXUS_WORKSPACE || process.cwd();
 
 // ─── HTTP helpers ────────────────────────────────────────────
 
@@ -122,7 +122,7 @@ async function harvestContext(prompt) {
 		const memories = Array.isArray(data) ? data : (data.memories ?? []);
 		if (memories.length === 0) return "";
 		return (
-			"\n## Relevant Context (TormentNexus L2)\n" +
+			"\n## Relevant Context (HyperNexus L2)\n" +
 			memories
 				.map((m) => `- ${(m.content ?? JSON.stringify(m)).slice(0, 200)}`)
 				.join("\n")
@@ -138,7 +138,7 @@ const TOOLS = [
 	{
 		name: "tn_memory_store",
 		description:
-			"Save an important decision, pattern, or fact to TormentNexus L2 memory with tags for future retrieval.",
+			"Save an important decision, pattern, or fact to HyperNexus L2 memory with tags for future retrieval.",
 		inputSchema: {
 			type: "object",
 			properties: {
@@ -164,7 +164,7 @@ const TOOLS = [
 	{
 		name: "tn_memory_search",
 		description:
-			"Search TormentNexus L2/L3 memory by keyword, tag, or category. Returns ranked matches from past sessions.",
+			"Search HyperNexus L2/L3 memory by keyword, tag, or category. Returns ranked matches from past sessions.",
 		inputSchema: {
 			type: "object",
 			properties: {
@@ -233,7 +233,7 @@ const TOOLS = [
 	{
 		name: "tn_skill_manage",
 		description:
-			"Access and search the TormentNexus skill registry with thousands of reusable AI capability modules.",
+			"Access and search the HyperNexus skill registry with thousands of reusable AI capability modules.",
 		inputSchema: {
 			type: "object",
 			properties: {
@@ -279,7 +279,7 @@ const TOOLS = [
 	{
 		name: "tn_context_harvest",
 		description:
-			"Manually trigger context harvesting from TormentNexus L2 memory. Pulls relevant past memories into the current session.",
+			"Manually trigger context harvesting from HyperNexus L2 memory. Pulls relevant past memories into the current session.",
 		inputSchema: {
 			type: "object",
 			properties: {
@@ -320,19 +320,19 @@ const TOOLS = [
 	{
 		name: "tn_system_status",
 		description:
-			"Get comprehensive TormentNexus system health: services, providers, memory tiers, mesh peers, tool counts.",
+			"Get comprehensive HyperNexus system health: services, providers, memory tiers, mesh peers, tool counts.",
 		inputSchema: { type: "object", properties: {} },
 	},
 	{
 		name: "tn_billing_status",
 		description:
-			"Check TormentNexus provider billing status, quotas, and fallback chain configuration.",
+			"Check HyperNexus provider billing status, quotas, and fallback chain configuration.",
 		inputSchema: { type: "object", properties: {} },
 	},
 	{
 		name: "tn_audit_log",
 		description:
-			"Record a tool call or action to the TormentNexus commercial audit log for compliance.",
+			"Record a tool call or action to the HyperNexus commercial audit log for compliance.",
 		inputSchema: {
 			type: "object",
 			properties: {
@@ -428,9 +428,9 @@ const SLASH_COMMANDS = {
 // ─── System Prompt Injection ──────────────────────────────────
 
 const SYSTEM_PROMPT_ADDITION = `
-## TormentNexus Integration
+## HyperNexus Integration
 
-You have access to TormentNexus — a local AI control plane running on port 7778 with persistent in-memory scratchpad, L2 vector memory (semantic + FTS5), L3 cold archive, MCP tool discovery across servers, imported sessions from Claude Code/Aider/Gemini, and a skill registry. Use these tools:
+You have access to HyperNexus — a local AI control plane running on port 7778 with persistent in-memory scratchpad, L2 vector memory (semantic + FTS5), L3 cold archive, MCP tool discovery across servers, imported sessions from Claude Code/Aider/Gemini, and a skill registry. Use these tools:
 
 ### Memory Tools
 - \`tn_memory_store\` — Save important decisions with tags
@@ -460,24 +460,24 @@ You have access to TormentNexus — a local AI control plane running on port 777
 4. Use \`tn_code_search\` with scope="ast-grep" for structural code queries
 5. Use \`@memory:keyword\` inline in prompts to auto-expand L2 context
 
-All tool calls are checked against TormentNexus commercial RBAC policies.
+All tool calls are checked against HyperNexus commercial RBAC policies.
 `;
 
 // ─── Export Plugin ────────────────────────────────────────────
 
 /**
- * OpenCode Plugin: TormentNexus Integration
+ * OpenCode Plugin: HyperNexus Integration
  *
  * Register this with OpenCode via:
- *   opencode plugin install ./tormentnexus-opencode.js
+ *   opencode plugin install ./hypernexus-opencode.js
  *
- * Or place it in ~/.opencode/plugins/tormentnexus/index.js
+ * Or place it in ~/.opencode/plugins/hypernexus/index.js
  */
 module.exports = {
-	name: "tormentnexus",
+	name: "hypernexus",
 	version: "1.0.0",
 	description:
-		"TormentNexus integration — persistent memory, MCP tools, sessions, skills, and commercial RBAC for OpenCode.",
+		"HyperNexus integration — persistent memory, MCP tools, sessions, skills, and commercial RBAC for OpenCode.",
 
 	// MCP tool definitions
 	tools: TOOLS,
@@ -614,10 +614,10 @@ module.exports = {
 		if (ok) {
 			const status = await tnJson("/api/runtime/status");
 			context.log(
-				`TormentNexus connected: v${status.version ?? "?"} | ${status.cli?.toolCount ?? "?"} tools | ${status.cli?.availableToolCount ?? "?"} available`,
+				`HyperNexus connected: v${status.version ?? "?"} | ${status.cli?.toolCount ?? "?"} tools | ${status.cli?.availableToolCount ?? "?"} available`,
 			);
 		} else {
-			context.log("TormentNexus: TN Kernel not reachable at " + TN_BASE);
+			context.log("HyperNexus: TN Kernel not reachable at " + TN_BASE);
 		}
 
 		// Install to OpenCode config
@@ -627,11 +627,11 @@ module.exports = {
 		// Write MCP server config for OpenCode to discover
 		const mcpConfig = {
 			mcpServers: {
-				tormentnexus: {
+				hypernexus: {
 					command:
-						process.platform === "win32" ? "tormentnexus.exe" : "tormentnexus",
+						process.platform === "win32" ? "hypernexus.exe" : "hypernexus",
 					args: ["mcp"],
-					env: { TORMENTNEXUS_WORKSPACE_ROOT: TN_WORKSPACE },
+					env: { HYPERNEXUS_WORKSPACE_ROOT: TN_WORKSPACE },
 					type: "stdio",
 				},
 			},
