@@ -12,7 +12,6 @@ type Edition string
 
 const (
 	EditionHyperNexus Edition = "hypernexus" // Open source, free edition
-	EditionHyperNexus   Edition = "hypernexus"   // Corporate, closed source edition
 )
 
 // BrandingConfig holds all branding-related configuration
@@ -90,7 +89,7 @@ func loadBrandingConfig() *BrandingConfig {
 	// Try to detect from environment variable
 	if edition := os.Getenv("HN_EDITION"); edition != "" {
 		if edition == "hypernexus" || edition == "corporate" {
-			return HyperNexusBranding()
+			return HyperNexusCorporateBranding()
 		}
 	}
 
@@ -120,8 +119,8 @@ func HyperNexusBranding() *BrandingConfig {
 	}
 }
 
-// HyperNexusBranding returns branding for the corporate edition
-func HyperNexusBranding() *BrandingConfig {
+// HyperNexusCorporateBranding returns branding for the corporate edition
+func HyperNexusCorporateBranding() *BrandingConfig {
 	return &BrandingConfig{
 		Edition:        EditionHyperNexus,
 		ProductName:    "HyperNexus",
@@ -141,12 +140,6 @@ func loadFromFile() (*BrandingConfig, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return nil, err
-	}
-
-	// Check for HyperNexus config first
-	hyperNexusConfig := filepath.Join(homeDir, ".hypernexus", "branding.json")
-	if _, err := os.Stat(hyperNexusConfig); err == nil {
-		return loadFromPath(hyperNexusConfig)
 	}
 
 	// Check for HyperNexus config
