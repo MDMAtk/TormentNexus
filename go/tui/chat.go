@@ -8,7 +8,7 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/MDMAtk/HyperNexus/agents"
+	"gitlab.com/robertpelloni/HyperNexus/agents"
 )
 
 type model struct {

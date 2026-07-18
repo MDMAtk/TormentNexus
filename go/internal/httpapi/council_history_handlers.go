@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/internal/orchestration"
+	"gitlab.com/robertpelloni/HyperNexus/internal/orchestration"
 )
 
 func (s *Server) handleCouncilHistoryStatus(w http.ResponseWriter, r *http.Request) {

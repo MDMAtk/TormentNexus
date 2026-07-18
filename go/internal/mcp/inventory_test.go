@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 func TestLoadConfigServersFromJSONC(t *testing.T) {
 	configDir := t.TempDir()

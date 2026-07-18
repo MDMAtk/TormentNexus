@@ -2,100 +2,56 @@
 
 > **One-command install:** `npx @hypernexus/install`
 >
-> Local-first, open-source AI control plane with persistent multi-tier memory, MCP tool orchestration across 20,000+ servers, multi-agent swarm coordination, and corporate-grade security — all running on your machine.
+> Local-first, **100% open-source** AI control plane with persistent multi-tier memory, semantic MCP tool routing across 20,000+ servers, autonomous healing agents, and multi-agent swarm coordination.
 >
 > **📄 [Read the Technical Whitepaper](https://hypernexus.site/hypernexus_whitepaper.html)** | **💬 [Join Discord](https://discord.gg/Hj9P3GbVxR)**
 
-## Installation
-
-### Quick Start (Windows)
-
-```bash
-scripts\install.bat
-```
-
-### Quick Start (macOS / Linux)
-
-```bash
-python3 scripts/install-client-support.py
-```
-
-### GUI Installer
-
-```bash
-python3 scripts/install-gui.py
-```
-
-### What Gets Installed
-
-The installer detects and configures HyperNexus for **38+ AI coding agents**.
-Each client receives every integration it supports:
-
-| Client | SKILL | MCP | CMD | HOOK | EXT | AGENT |
-|--------|-------|-----|-----|------|-----|-------|
-| Claude Code | x | x | x | x | - | - |
-| Cursor | x | x | x | x | x | - |
-| Windsurf | x | x | x | x | x | - |
-| Gemini | x | x | x | - | x | x |
-| Codex CLI | x | x | x | - | - | - |
-| Grok Build | x | x | x | x | x | - |
-| Antigravity | x | x | - | - | x | x |
-| Aider | - | x | - | - | - | - |
-| CodeWhale | x | x | x | x | x | - |
-| Goose | x | x | x | x | x | - |
-| Pi | x | x | x | - | x | - |
-| Cline / Roo | x | x | x | x | - | - |
-| + 26 more | x | x | varies | varies | varies | varies |
-
-### Corporate On-Premises Installation
-
-For enterprises running HyperNexus behind a firewall:
-
-```bash
-python3 scripts/install-client-support.py --mode corporate
-scripts\install.bat corporate
-```
-
-Corporate mode adds:
-
-- **SSO/OIDC** configuration for enterprise identity providers
-- **RBAC roles** with admin/user/auditor defaults
-- **Audit logging** to local SQLite with daily rotation
-- **Multi-tenant isolation** for on-premises tenant separation
-- **Enterprise license** key setup
-
-### Server Deployment
-
-```bash
-GOOS=linux GOARCH=amd64 go build -o tn-kernel ./cmd/hypernexus
-pm2 start tn-kernel --name tn-kernel -- serve -port 8090 -host 127.0.0.1
-```
-
 ---
 
-# HyperNexus: The Cognitive Kernel — Universal Open-Source AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory
+## 🏢 Corporate & Enterprise Deployments (HyperNexus Cloud)
 
-![Version](https://img.shields.io/badge/version-1.0.0--b1-blue)
-![Build](https://img.shields.io/badge/build-passing-brightgreen)
-![Go](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)
-![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=next.js)
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![License](https://img.shields.io/badge/license-MIT%2FOSS-orange)
-
-> **HyperNexus** is a local-first, open-source universal AI control plane and coding harness engineered to give your LLM agents infinite persistent memory, tool orchestration, and autonomous infrastructure assimilation—all running locally on your machine or in production.
-
----
-
-## 🏢 Corporate & Enterprise Deployments (HyperNexus)
-
-For professional, corporate, and enterprise deployments, visit **[HyperNexus](https://hypernexus.site)**.
-**HyperNexus** is the official licensed, certified, authoritative, cloud-hosted corporate installation of the HyperNexus kernel. It provides:
-
+For professional, corporate, and enterprise deployments, **[HyperNexus](https://hypernexus.site)** serves as the official licensed, certified, authoritative cloud-hosted corporate installation of the project. It extends the open-source core with:
+- **Certified Cloud Hosting**: Managed high-availability infrastructure with automated deployment gates.
 - **Tenant Isolation**: Automated provisioning scripts to spin up per-tenant containers with isolated volumes and resource limits.
-- **Enterprise-Grade Security**: Full SSO support and fine-grained Role-Based Access Control (RBAC) middleware.
-- **Air-Gapped & VPC Support**: Production-ready deployment configurations with daily audit logs for SIEM integration.
-- **Stripe Billing Integration**: Built-in webhook configurations and subscription seats management.
+- **Enterprise-Grade Security**: Full Single Sign-On (SSO/OIDC) integration and fine-grained Role-Based Access Control (RBAC).
+- **Air-Gapped & VPC Support**: Native support for secure, private on-premises corporate infrastructure.
+- **Stripe Billing & Seats Management**: Turnkey integration for teams, volume-based seat licensing, and corporate billing.
+
+---
+
+## ⚡ High-Value Development Features
+
+HyperNexus is engineered to give your AI coding agents the context, tools, and resilience they need to operate at peak efficiency. Here are the core development features running out of the box:
+
+### 1. Dual-Tier Memory Architecture (L1 / L2)
+Context windows are finite; memory must be infinite.
+- **L1 — Ephemeral Scratchpad**: Lighting-fast in-memory context tied to active agent turns.
+- **L2 — Semantic Vault**: Permanent memory storage powered by SQLite and `sqlite-vec`. Saves exact transcripts, heuristics, and agent insights.
+- **Context Harvesting**: Agents autonomously query the L2 Vault to pull in relevant historical heuristics based on prompt similarity, avoiding cold-starts.
+
+### 2. Semantic MCP Tool Routing
+Models shouldn't be drowned in a 50,000-token tool schema dump.
+- **Top-K Vector Matching**: HyperNexus dynamically embeds and queries its catalog of **20,000+ MCP servers** to inject only the most relevant tool definitions.
+- **Universal Client Parity**: Standardized, byte-for-byte identical tool signatures across **38+ supported AI agents** (Claude Code, Gemini, Cursor, Windsurf, Aider, etc.).
+
+### 3. Autonomous Immune System & Code Healer
+No more broken builds or stuck agents.
+- **HealerService**: Executes a tight `Diagnose → Fix → Verify → Retry` loop using native compilers and test runners (`tsc`, `vitest`, `go test`).
+- **Knowledge Persistence**: Successfully solved pathogens are stored in the L2 memory vault to immunize future sessions.
+
+### 4. Multi-Agent Swarms & Consensus Engine
+Run specialized models in collaborative, peer-to-peer developer councils.
+- **A2A Protocol**: Standardized communication protocol for agent-to-agent coordination.
+- **Role Rotation**: Dynamic state machine assigning tasks to Planner, Implementer, Tester, and Critic roles.
+- **Debate & Scoring**: Interactive consensus voting to select the most optimal implementation before executing code.
+
+### 5. Resilient LLM Waterfall
+Never fail a build due to API rate limits or outages.
+- **Prioritized Failover**: Seamless cascading fallback routing (e.g., Primary NIM APIs → OpenRouter Aggregator → Local LM Studio / Ollama).
+- **Graceful Error Recovery**: Out-of-the-box handling of `429` (Rate Limits) and `5xx` (Server Errors).
+
+### 6. Native Browser Automation
+- **chromedp Handlers**: Provides agents with native headless browser automation to navigate, screenshot, click, fill forms, and scrape web applications.
 
 ---
 
@@ -623,7 +579,7 @@ All API endpoints return a standardized envelope:
 npx @hypernexus/install
 
 # 2. Or clone and build from source
-git clone https://github.com/MDMAtk/HyperNexus.git
+git clone https://gitlab.com/robertpelloni/HyperNexus.git
 cd hypernexus
 pnpm install && pnpm rebuild better-sqlite3
 cd go && go build -buildvcs=false ./cmd/hypernexus && cd ..

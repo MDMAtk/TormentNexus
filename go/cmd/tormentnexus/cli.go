@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/buildinfo"
+	"gitlab.com/robertpelloni/HyperNexus/internal/buildinfo"
 )
 
 type managedProcess struct {

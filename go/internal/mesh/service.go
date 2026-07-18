@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
-	"github.com/MDMAtk/HyperNexus/internal/interop"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/interop"
 )
 
 var (

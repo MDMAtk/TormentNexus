@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/MDMAtk/HyperNexus/internal/eventbus"
+	"gitlab.com/robertpelloni/HyperNexus/internal/eventbus"
 )
 
 func (s *Server) handleEventBusPublish(w http.ResponseWriter, r *http.Request) {

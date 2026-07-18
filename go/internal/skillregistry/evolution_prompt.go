@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
 )
 
 type LowPerformingSkill struct {

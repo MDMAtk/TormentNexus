@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/MDMAtk/HyperNexus/agents"
+	"gitlab.com/robertpelloni/HyperNexus/agents"
 )
 
 func TestBuildPromptResponseIncludesFoundationRoute(t *testing.T) {

@@ -5,18 +5,18 @@
   "license": "MIT",
   "architecture": {
     "64bit": {
-      "url": "https://github.com/MDMAtk/HyperNexus/releases/download/v1.0.0-b4/hypernexus-windows-amd64.zip",
+      "url": "https://gitlab.com/robertpelloni/HyperNexus/releases/download/v1.0.0-b4/hypernexus-windows-amd64.zip",
       "hash": "PLACEHOLDER_HASH"
     }
   },
   "bin": "hypernexus.exe",
   "checkver": {
-    "github": "https://github.com/MDMAtk/HyperNexus"
+    "github": "https://gitlab.com/robertpelloni/HyperNexus"
   },
   "autoupdate": {
     "architecture": {
       "64bit": {
-        "url": "https://github.com/MDMAtk/HyperNexus/releases/download/v$version/hypernexus-windows-amd64.zip"
+        "url": "https://gitlab.com/robertpelloni/HyperNexus/releases/download/v$version/hypernexus-windows-amd64.zip"
       }
     }
   },

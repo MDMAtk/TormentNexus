@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/MDMAtk/HyperNexus/internal/orchestration"
+	"gitlab.com/robertpelloni/HyperNexus/internal/orchestration"
 )
 
 func (s *Server) handleCouncilBaseStatus(w http.ResponseWriter, r *http.Request) {

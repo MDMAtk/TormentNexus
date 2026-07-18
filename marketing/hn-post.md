@@ -5,7 +5,7 @@
 Show HN: HyperNexus – Open-source AI control plane with 26K+ MCP tools catalog
 
 ## URL
-<https://github.com/MDMAtk/HyperNexus>
+<https://gitlab.com/robertpelloni/HyperNexus>
 
 ## Body (first comment)
 
@@ -38,7 +38,7 @@ HyperNexus provides:
 ### Try it
 
 ```bash
-git clone https://github.com/MDMAtk/HyperNexus.git
+git clone https://gitlab.com/robertpelloni/HyperNexus.git
 cd HyperNexus
 go build -buildvcs=false -o hypernexus ./cmd/hypernexus
 ./hypernexus serve

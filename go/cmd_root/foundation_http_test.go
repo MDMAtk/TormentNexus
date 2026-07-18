@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	foundationpi "github.com/MDMAtk/HyperNexus/foundation/pi"
-	foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
+	foundationpi "gitlab.com/robertpelloni/HyperNexus/foundation/pi"
+	foundationrepomap "gitlab.com/robertpelloni/HyperNexus/foundation/repomap"
 )
 
 func TestExecuteFoundationToolAndSessions(t *testing.T) {

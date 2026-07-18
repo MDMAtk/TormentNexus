@@ -17,7 +17,7 @@
 - **Tagline**: AI Control Plane with 26K+ Tools & Persistent Memory
 - **Category**: Developer Tools, Artificial Intelligence
 - **Website**: <https://hypernexus.site>
-- **GitHub**: <https://github.com/MDMAtk/HyperNexus>
+- **GitHub**: <https://gitlab.com/robertpelloni/HyperNexus>
 
 ### Description (260 chars)
 

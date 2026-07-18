@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/sync"
+	"gitlab.com/robertpelloni/HyperNexus/internal/sync"
 )
 
 func main() {

@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"sort"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 type Definition struct {
@@ -64,7 +64,7 @@ func List(workspaceRoot string, tools []controlplane.Tool) []Definition {
 			Maturity:            "Experimental",
 			Primary:             true,
 			SubmodulePath:       "submodules/hypernexus",
-			Upstream:            "https://github.com/MDMAtk/HyperNexus",
+			Upstream:            "https://gitlab.com/robertpelloni/HyperNexus",
 			Runtime:             "Go / Cobra / TUI",
 			LaunchCommand:       "go run .",
 			Capabilities:        []string{"repl", "pipe", "hypernexus-adapter", "tool-registry"},

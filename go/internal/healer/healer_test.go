@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 type mockVault struct {

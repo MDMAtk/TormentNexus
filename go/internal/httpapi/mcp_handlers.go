@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/cache"
-	"github.com/MDMAtk/HyperNexus/internal/mcp"
-	roottools "github.com/MDMAtk/HyperNexus/tools"
+	"gitlab.com/robertpelloni/HyperNexus/internal/cache"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mcp"
+	roottools "gitlab.com/robertpelloni/HyperNexus/tools"
 )
 
 func (s *Server) handleMCPStatus(w http.ResponseWriter, r *http.Request) {

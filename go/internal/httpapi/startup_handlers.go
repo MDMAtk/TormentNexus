@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
-	"github.com/MDMAtk/HyperNexus/internal/interop"
-	"github.com/MDMAtk/HyperNexus/internal/memorystore"
-	"github.com/MDMAtk/HyperNexus/internal/mesh"
-	"github.com/MDMAtk/HyperNexus/internal/cache"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/interop"
+	"gitlab.com/robertpelloni/HyperNexus/internal/memorystore"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mesh"
+	"gitlab.com/robertpelloni/HyperNexus/internal/cache"
 )
 
 type StartupBlockingReason struct {

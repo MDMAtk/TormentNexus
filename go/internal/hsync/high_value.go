@@ -14,11 +14,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
-	"github.com/MDMAtk/HyperNexus/internal/harnesses"
-	mcp_pkg "github.com/MDMAtk/HyperNexus/internal/mcp"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/harnesses"
+	mcp_pkg "gitlab.com/robertpelloni/HyperNexus/internal/mcp"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 type HighValueIngestor struct {
 	dbPath     string

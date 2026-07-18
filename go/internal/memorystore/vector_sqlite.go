@@ -13,11 +13,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 type l1Entry struct {
 	value      controlplane.L2VaultRecord

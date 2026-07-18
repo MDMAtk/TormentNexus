@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
 )
 
 func TestCapabilitiesIncludesLocalAndUpstreamNodes(t *testing.T) {

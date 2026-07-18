@@ -7,11 +7,11 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
-	"github.com/MDMAtk/HyperNexus/foundation/assimilation"
-	"github.com/MDMAtk/HyperNexus/foundation/compat"
-	foundationpi "github.com/MDMAtk/HyperNexus/foundation/pi"
-	"github.com/MDMAtk/HyperNexus/foundation/repomap"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/assimilation"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/compat"
+	foundationpi "gitlab.com/robertpelloni/HyperNexus/foundation/pi"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/repomap"
 	"github.com/spf13/cobra"
 )
 

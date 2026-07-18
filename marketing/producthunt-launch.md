@@ -49,7 +49,7 @@ The key features:
 
 It's open source and I'd love your feedback!
 
-GitHub: https://github.com/MDMAtk/HyperNexus
+GitHub: https://gitlab.com/robertpelloni/HyperNexus
 Live Demo: https://demo.hypernexus.site
 ```
 
@@ -105,4 +105,4 @@ Live Demo: https://demo.hypernexus.site
 
 **Website**: <https://hypernexus.site>
 
-**GitHub**: <https://github.com/MDMAtk/HyperNexus>
+**GitHub**: <https://gitlab.com/robertpelloni/HyperNexus>

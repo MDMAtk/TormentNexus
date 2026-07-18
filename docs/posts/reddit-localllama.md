@@ -19,7 +19,7 @@ npm install -g @hypernexus/cli
 tn status
 ```
 
-GitHub: <https://github.com/MDMAtk/HyperNexus>
+GitHub: <https://gitlab.com/robertpelloni/HyperNexus>
 npm: <https://www.npmjs.com/search?q=%40hypernexus>
 
 Built with Go + TypeScript + Next.js. Production-deployed on Hetzner with Stripe billing and Docker tenant isolation.

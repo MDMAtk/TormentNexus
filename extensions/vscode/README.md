@@ -47,7 +47,7 @@ AI Control Plane with Persistent Memory & 26,000+ MCP Tools
 
 ## Links
 
-- [GitHub](https://github.com/MDMAtk/HyperNexus)
+- [GitHub](https://gitlab.com/robertpelloni/HyperNexus)
 - [Website](https://hypernexus.site)
 - [Discord](https://discord.gg/Hj9P3GbVxR)
 

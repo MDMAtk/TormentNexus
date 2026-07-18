@@ -1,6 +1,6 @@
 package mcp
 
-import "github.com/MDMAtk/HyperNexus/foundation/adapters"
+import "gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
 
 // Config binds the ~/.hypernexus/mcp.json native parsing.
 type Config struct {

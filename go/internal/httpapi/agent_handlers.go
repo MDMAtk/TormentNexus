@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
-	"github.com/MDMAtk/HyperNexus/internal/orchestration"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/orchestration"
 )
 
 func (s *Server) handleAgentChat(w http.ResponseWriter, r *http.Request) {

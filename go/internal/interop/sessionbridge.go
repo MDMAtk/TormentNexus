@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
-	"github.com/MDMAtk/HyperNexus/internal/lockfile"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/lockfile"
 )
 
 // sharedTRPCClient returns a singleton HTTP client with connection pooling

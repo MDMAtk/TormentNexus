@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/buildinfo"
+	"gitlab.com/robertpelloni/HyperNexus/internal/buildinfo"
 )
 
 // handleSystemOverview returns a unified snapshot using Go-native data

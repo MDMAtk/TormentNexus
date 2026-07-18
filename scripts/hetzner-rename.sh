@@ -12,9 +12,9 @@ echo ""
 # Configuration
 OLD_NAME="tormentnexus"
 NEW_NAME="hypernexus"
-OLD_GIT_URL="https://github.com/NexusSoftMDMA/TormentNexus.git"
+OLD_GIT_URL="https://gitlab.com/robertpelloni/HyperNexus.git"
 NEW_GIT_URL="https://gitlab.com/robertpelloni/HyperNexus.git"
-OLD_MODULE="github.com/MDMAtk/TormentNexus"
+OLD_MODULE="gitlab.com/robertpelloni/HyperNexus"
 NEW_MODULE="gitlab.com/robertpelloni/HyperNexus"
 WORK_DIR="/opt/tormentnexus"
 
@@ -51,7 +51,7 @@ echo "Step 3: Updating start.sh..."
 if [ -f start.sh ]; then
 	cp start.sh start.sh.backup
 	sed -i "s|TormentNexus TORMENTNEXUS|HyperNexus HYPERNEXUS|g" start.sh
-	sed -i "s|github.com/MDMAtk/TormentNexus|$NEW_MODULE|g" start.sh
+	sed -i "s|gitlab.com/robertpelloni/HyperNexus|$NEW_MODULE|g" start.sh
 	sed -i "s|bin/tormentnexus|bin/hypernexus|g" start.sh
 	echo "  ✓ start.sh updated"
 else

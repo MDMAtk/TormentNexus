@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
-	"github.com/MDMAtk/HyperNexus/internal/workflow"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/workflow"
 )
 
 func newNativeTestServer(t *testing.T) (*Server, string) {

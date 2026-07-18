@@ -7,7 +7,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 // buryOrphanedMemories finds memories whose session_id no longer has any

@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
 )
 
 // Client represents a Model Context Protocol client.

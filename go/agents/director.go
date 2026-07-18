@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
-	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
+	foundationorchestration "gitlab.com/robertpelloni/HyperNexus/foundation/orchestration"
 )
 
 // Director Agent translates the TS core Director orchestrator.

@@ -6,7 +6,7 @@
   "bin": { "tndocs": "./cli.js" },
   "scripts": { "install": "node setup.js" },
   "keywords": ["hypernexus", "docs", "mcp", "api", "reference", "tools"],
-  "repository": { "type": "git", "url": "git+https://github.com/MDMAtk/HyperNexus.git" },
+  "repository": { "type": "git", "url": "git+https://gitlab.com/robertpelloni/HyperNexus.git" },
   "license": "MIT",
   "files": ["setup.js", "cli.js", "package.json"]
 }

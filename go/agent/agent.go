@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus"
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
-	"github.com/MDMAtk/HyperNexus/tools"
+	hypernexus "gitlab.com/robertpelloni/HyperNexus/tormentnexus"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
+	"gitlab.com/robertpelloni/HyperNexus/tools"
 	"github.com/sashabaranov/go-openai"
 )
 

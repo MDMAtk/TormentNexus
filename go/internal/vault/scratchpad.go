@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 type Scratchpad struct {
 	db        *sql.DB

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
 )
 
 // DefaultProvider simulates the LLM locally.

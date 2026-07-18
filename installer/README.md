@@ -4,7 +4,7 @@
 
 ### Windows
 
-1. Download `hypernexus-setup.exe` from [Releases](https://github.com/MDMAtk/HyperNexus/releases)
+1. Download `hypernexus-setup.exe` from [Releases](https://gitlab.com/robertpelloni/HyperNexus/releases)
 2. Run the installer as Administrator
 3. Follow the installation wizard
 4. Launch HyperNexus from Start Menu or Desktop shortcut
@@ -20,7 +20,7 @@ Or manually:
 
 ```bash
 # Clone the repository
-git clone https://github.com/MDMAtk/HyperNexus.git
+git clone https://gitlab.com/robertpelloni/HyperNexus.git
 cd HyperNexus
 
 # Run the installer
@@ -123,5 +123,5 @@ Ensure your firewall allows connections to the HyperNexus port (default: 7778).
 
 For issues and questions:
 
-- GitHub Issues: <https://github.com/MDMAtk/HyperNexus/issues>
+- GitHub Issues: <https://gitlab.com/robertpelloni/HyperNexus/issues>
 - Documentation: <https://hypernexus.site/docs>

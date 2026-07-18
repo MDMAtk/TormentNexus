@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
+	foundationorchestration "gitlab.com/robertpelloni/HyperNexus/foundation/orchestration"
 )
 
 // Orchestrator manages multiple sub-agents (Maestro/Codemachine parity)

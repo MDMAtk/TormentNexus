@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/internal/tools"
+	"gitlab.com/robertpelloni/HyperNexus/internal/tools"
 )
 
 // ShellStep creates a step that runs a shell command

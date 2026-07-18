@@ -14,7 +14,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/MDMAtk/HyperNexus/internal/orchestration"
+	"gitlab.com/robertpelloni/HyperNexus/internal/orchestration"
 )
 
 // TestSkillHandlerList verifies GET /api/skills/list returns registered skills.

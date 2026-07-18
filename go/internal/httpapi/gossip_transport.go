@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/gossip"
-	"github.com/MDMAtk/HyperNexus/internal/mesh"
+	"gitlab.com/robertpelloni/HyperNexus/internal/gossip"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mesh"
 )
 
 type HTTPGossipTransport struct {

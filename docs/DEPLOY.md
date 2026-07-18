@@ -13,7 +13,7 @@ _This document contains the latest deployment instructions for the HyperNexus Un
 
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/NexusSoftMDMA/HyperNexus.git
+    git clone https://gitlab.com/robertpelloni/HyperNexus.git
     cd hypernexus
     ```
 

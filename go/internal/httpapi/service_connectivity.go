@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
 )
 
 // handleServiceConnectivity reports the health of connections between

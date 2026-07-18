@@ -3,7 +3,7 @@ package pi
 import (
 	"encoding/json"
 
-	"github.com/MDMAtk/HyperNexus/foundation/compat"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/compat"
 )
 
 type ThinkingLevel string

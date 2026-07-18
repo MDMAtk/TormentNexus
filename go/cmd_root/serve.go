@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"time"
 
-	foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
-	"github.com/MDMAtk/HyperNexus/mcp"
-	"github.com/MDMAtk/HyperNexus/orchestrator"
+	foundationrepomap "gitlab.com/robertpelloni/HyperNexus/foundation/repomap"
+	"gitlab.com/robertpelloni/HyperNexus/mcp"
+	"gitlab.com/robertpelloni/HyperNexus/orchestrator"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/websocket/v2"

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/internal/mesh"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mesh"
 )
 
 func (s *Server) handleMeshStatus(w http.ResponseWriter, r *http.Request) {

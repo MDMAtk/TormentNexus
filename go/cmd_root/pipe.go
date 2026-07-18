@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/MDMAtk/HyperNexus/agent"
+	"gitlab.com/robertpelloni/HyperNexus/agent"
 	"github.com/spf13/cobra"
 )
 

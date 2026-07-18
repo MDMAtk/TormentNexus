@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 type Manager struct {

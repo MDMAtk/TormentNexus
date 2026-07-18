@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/lockfile"
+	"gitlab.com/robertpelloni/HyperNexus/internal/lockfile"
 )
 
 type ControlPlaneStatus struct {

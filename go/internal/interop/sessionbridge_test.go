@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/MDMAtk/HyperNexus/internal/lockfile"
+	"gitlab.com/robertpelloni/HyperNexus/internal/lockfile"
 )
 
 func TestResolveTRPCBasesUsesConfiguredExclusivelyWhenSet(t *testing.T) {

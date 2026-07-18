@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-    "github.com/MDMAtk/HyperNexus/internal/providers"
+    "gitlab.com/robertpelloni/HyperNexus/internal/providers"
 )
 
 type Router struct {

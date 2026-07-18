@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 const SwarmPromptPlanner = `You are the Swarm Planner. Your goal is to architect a high-level implementation strategy for the task.
 Focus on:

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
 )
 
 func (s *Server) handleLLMGenerate(w http.ResponseWriter, r *http.Request) {

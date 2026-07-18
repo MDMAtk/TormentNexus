@@ -41,7 +41,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/harnesses"
+	"gitlab.com/robertpelloni/HyperNexus/internal/harnesses"
 )
 
 // ---------- Configuration ----------

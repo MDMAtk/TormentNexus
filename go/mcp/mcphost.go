@@ -9,7 +9,7 @@ import (
 
 	"github.com/mark3labs/mcp-go/client"
 	"github.com/mark3labs/mcp-go/mcp"
-	"github.com/MDMAtk/HyperNexus/agents"
+	"gitlab.com/robertpelloni/HyperNexus/agents"
 )
 
 // MCPTrafficMonitor acts as a global singleton hook for WebSocket Dashboards

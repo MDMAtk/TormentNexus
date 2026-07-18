@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
+	foundationorchestration "gitlab.com/robertpelloni/HyperNexus/foundation/orchestration"
 )
 
 type WebhookPayload struct {

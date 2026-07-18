@@ -273,7 +273,7 @@ The result? AI that actually understands your project, your patterns, and your p
 **[2:30-3:00] CTA**
 "Try it free at demo.hypernexus.site
 
-Open source: github.com/MDMAtk/HyperNexus
+Open source: gitlab.com/robertpelloni/HyperNexus
 
 What would you build with AI that remembers everything?"
 

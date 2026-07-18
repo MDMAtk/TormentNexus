@@ -2,7 +2,7 @@
 
 **AI Control Plane with persistent memory and 26,000+ MCP tools catalog**
 
-[![GitHub Stars](https://img.shields.io/github/stars/MDMAtk/HyperNexus?style=social)](https://github.com/MDMAtk/HyperNexus)
+[![GitHub Stars](https://img.shields.io/github/stars/MDMAtk/HyperNexus?style=social)](https://gitlab.com/robertpelloni/HyperNexus)
 [![npm version](https://img.shields.io/npm/v/hypernexus)](https://www.npmjs.com/package/hypernexus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -32,7 +32,7 @@ docker run -p 7778:7778 hypernexus/hypernexus
 ### Install from source
 
 ```bash
-git clone https://github.com/MDMAtk/HyperNexus.git
+git clone https://gitlab.com/robertpelloni/HyperNexus.git
 cd HyperNexus
 go build -buildvcs=false -o hypernexus ./cmd/hypernexus
 ./hypernexus serve
@@ -159,12 +159,12 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## Links
 
 - **Website:** <https://hypernexus.site>
-- **GitHub:** <https://github.com/MDMAtk/HyperNexus>
+- **GitHub:** <https://gitlab.com/robertpelloni/HyperNexus>
 - **Documentation:** <https://hypernexus.site/docs>
 - **Blog:** <https://hypernexus.site/blog>
 
 ## Support
 
-- **Issues:** <https://github.com/MDMAtk/HyperNexus/issues>
+- **Issues:** <https://gitlab.com/robertpelloni/HyperNexus/issues>
 - **Discord:** (coming soon)
 - **Email:** <dev@hypernexus.org>

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 type ConsensusEngine struct {

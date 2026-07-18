@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/MDMAtk/HyperNexus/internal/git"
+	"gitlab.com/robertpelloni/HyperNexus/internal/git"
 )
 
 func (s *Server) handleSubmoduleUpdateAll(w http.ResponseWriter, r *http.Request) {

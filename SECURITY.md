@@ -76,7 +76,7 @@ No known security issues at this time.
 ## Security Advisories
 
 Security advisories will be published at:
-<https://github.com/MDMAtk/HyperNexus/security/advisories>
+<https://gitlab.com/robertpelloni/HyperNexus/security/advisories>
 
 ## Contact
 

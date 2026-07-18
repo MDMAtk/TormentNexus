@@ -466,7 +466,7 @@ Fast, single binary, low resource usage. Much lighter than Node.js alternatives.
 
 ## 📞 Contact
 
-- **GitHub:** <https://github.com/MDMAtk/HyperNexus>
+- **GitHub:** <https://gitlab.com/robertpelloni/HyperNexus>
 - **Website:** <https://hypernexus.site>
 - **Email:** <dev@hypernexus.org>
 - **Discord:** (coming soon)

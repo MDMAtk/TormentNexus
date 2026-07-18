@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
 )
 
 // PipeProcessor mimics Simon Willison's "LLM CLI" and Charmbracelet's "Crush".

@@ -9,7 +9,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 func (s *Server) handleConfigList(w http.ResponseWriter, r *http.Request) {
 	var result any

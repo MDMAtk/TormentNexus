@@ -30,5 +30,5 @@ Would love technical feedback, especially on:
 - Memory tier architecture best practices
 - Go sidecar design patterns
 
-Repo: <https://github.com/MDMAtk/HyperNexus>
+Repo: <https://gitlab.com/robertpelloni/HyperNexus>
 npm: @hypernexus/install, @hypernexus/cli, @hypernexus/core, @hypernexus/openhands

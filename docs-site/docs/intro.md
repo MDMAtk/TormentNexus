@@ -35,7 +35,7 @@ docker run -p 7778:7778 ghcr.io/mdmatk/hypernexus:latest
 
 ### Option 4: Download
 
-- **Windows**: Download `hypernexus-setup.exe` from [GitHub Releases](https://github.com/MDMAtk/HyperNexus/releases)
+- **Windows**: Download `hypernexus-setup.exe` from [GitHub Releases](https://gitlab.com/robertpelloni/HyperNexus/releases)
 - **macOS**: Download `hypernexus-darwin-*.tar.gz`
 - **Linux**: Download `hypernexus-linux-*.tar.gz`
 
@@ -108,5 +108,5 @@ Create a config file at `~/.hypernexus/config.json`:
 
 ## Need Help?
 
-- [GitHub Issues](https://github.com/MDMAtk/HyperNexus/issues)
+- [GitHub Issues](https://gitlab.com/robertpelloni/HyperNexus/issues)
 - [Discord](https://discord.gg/Hj9P3GbVxR)

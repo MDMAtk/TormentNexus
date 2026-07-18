@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 // FTSMemorySearch provides full-text search across L2 and L3 memory tiers

@@ -10,9 +10,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/foundation/compat"
-	foundationpi "github.com/MDMAtk/HyperNexus/foundation/pi"
-	foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/compat"
+	foundationpi "gitlab.com/robertpelloni/HyperNexus/foundation/pi"
+	foundationrepomap "gitlab.com/robertpelloni/HyperNexus/foundation/repomap"
 )
 
 // Registry holds all available tools for the agent.

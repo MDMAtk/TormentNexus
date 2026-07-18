@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/providers"
+	"gitlab.com/robertpelloni/HyperNexus/internal/providers"
 )
 
 func (s *Server) handleBillingStatus(w http.ResponseWriter, r *http.Request) {

@@ -14,10 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
-	"github.com/MDMAtk/HyperNexus/internal/lockfile"
-	"github.com/MDMAtk/HyperNexus/internal/mcpimpl"
-	roottools "github.com/MDMAtk/HyperNexus/tools"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/lockfile"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mcpimpl"
+	roottools "gitlab.com/robertpelloni/HyperNexus/tools"
 )
 
 // ─── Supervisor Settings and Profiles ───

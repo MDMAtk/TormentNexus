@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 // TaskQueue replaces Redis/BullMQ by natively acting on SQLite locally.
 // Implements the specific "Jules Autopilot" global rule:

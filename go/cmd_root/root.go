@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/MDMAtk/HyperNexus/tui"
+	"gitlab.com/robertpelloni/HyperNexus/tui"
 	"github.com/spf13/cobra"
 	"os"
 )

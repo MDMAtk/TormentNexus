@@ -47,7 +47,7 @@ I've been working on **HyperNexus** — an open-source AI control plane that giv
 curl -fsSL https://raw.githubusercontent.com/MDMAtk/HyperNexus/main/scripts/install.sh | bash
 
 # Or clone and build
-git clone https://github.com/MDMAtk/HyperNexus.git
+git clone https://gitlab.com/robertpelloni/HyperNexus.git
 cd HyperNexus
 go build -buildvcs=false -o hypernexus ./cmd/hypernexus
 ./hypernexus serve
@@ -57,7 +57,7 @@ Dashboard: <http://127.0.0.1:7778>
 
 ### Links
 
-- **GitHub**: <https://github.com/MDMAtk/HyperNexus>
+- **GitHub**: <https://gitlab.com/robertpelloni/HyperNexus>
 - **Live Catalog**: <https://hypernexus.site/catalog>
 - **Blog**: <https://hypernexus.site/blog/>
 

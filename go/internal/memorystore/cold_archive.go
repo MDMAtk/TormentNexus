@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 // L3ColdArchive implements the L3 cold storage tier for long-term compressed
 // memory.  Memories that have decayed below a heat threshold are moved here

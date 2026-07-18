@@ -13,7 +13,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/mcp"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mcp"
 )
 
 type ConversationMonitor struct {

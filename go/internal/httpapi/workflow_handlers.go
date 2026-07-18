@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/internal/workflow"
+	"gitlab.com/robertpelloni/HyperNexus/internal/workflow"
 )
 
 func (s *Server) handleNativeWorkflowList(w http.ResponseWriter, r *http.Request) {

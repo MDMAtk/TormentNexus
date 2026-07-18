@@ -328,6 +328,7 @@ func hiddenWndProc(hWnd windows.HWND, msg uint32, wParam uintptr, lParam uintptr
 		case WM_RBUTTONUP:
 			pSetForegroundWindow.Call(uintptr(hWnd))
 			hMenu, _, _ := pCreatePopupMenu.Call()
+			branding := config.GetBranding()
 
 			// ── Last 10 Log Events (clickable sub-items) ──
 			logMutex.Lock()

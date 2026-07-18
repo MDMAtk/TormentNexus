@@ -14,14 +14,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/buildinfo"
-	"github.com/MDMAtk/HyperNexus/internal/config"
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
-	"github.com/MDMAtk/HyperNexus/internal/httpapi"
-	"github.com/MDMAtk/HyperNexus/internal/license"
-	"github.com/MDMAtk/HyperNexus/internal/lockfile"
-	"github.com/MDMAtk/HyperNexus/internal/protocol"
-	"github.com/MDMAtk/HyperNexus/internal/sessionimport"
+	"gitlab.com/robertpelloni/HyperNexus/internal/buildinfo"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/httpapi"
+	"gitlab.com/robertpelloni/HyperNexus/internal/license"
+	"gitlab.com/robertpelloni/HyperNexus/internal/lockfile"
+	"gitlab.com/robertpelloni/HyperNexus/internal/protocol"
+	"gitlab.com/robertpelloni/HyperNexus/internal/sessionimport"
 	"path/filepath"
 )
 

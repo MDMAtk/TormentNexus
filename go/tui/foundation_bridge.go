@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/MDMAtk/HyperNexus/agents"
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
-	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
+	"gitlab.com/robertpelloni/HyperNexus/agents"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
+	foundationorchestration "gitlab.com/robertpelloni/HyperNexus/foundation/orchestration"
 )
 
 type PromptDisplayMsg struct {

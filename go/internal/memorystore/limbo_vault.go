@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 // L4LimboVault stores lost, forgotten, or discarded memories.

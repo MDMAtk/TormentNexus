@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/internal/interop"
+	"gitlab.com/robertpelloni/HyperNexus/internal/interop"
 )
 
 type SessionBootstrapPayload struct {

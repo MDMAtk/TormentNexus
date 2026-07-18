@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
-	"github.com/MDMAtk/HyperNexus/foundation/compat"
-	foundationorchestration "github.com/MDMAtk/HyperNexus/foundation/orchestration"
-	foundationpi "github.com/MDMAtk/HyperNexus/foundation/pi"
-	foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/compat"
+	foundationorchestration "gitlab.com/robertpelloni/HyperNexus/foundation/orchestration"
+	foundationpi "gitlab.com/robertpelloni/HyperNexus/foundation/pi"
+	foundationrepomap "gitlab.com/robertpelloni/HyperNexus/foundation/repomap"
 )
 
 type foundationExecRequest struct {

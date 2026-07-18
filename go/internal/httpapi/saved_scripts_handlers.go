@@ -23,7 +23,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
 	"github.com/google/uuid"
 )
 

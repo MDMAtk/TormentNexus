@@ -174,7 +174,7 @@
 - **Branch topology**: `jules/baseline-128-hardened` had 7 unique commits diverging from `main` at `82a896d4f` (the merge base)
 - **Conflict resolution strategy**: For this repo, `registry.go` conflicts should always be resolved by taking the branch with the full implementation (not stubs). The jules branch consistently has more complete tool registrations.
 - **Fast-forward efficiency**: When branches like `assimilation-pipeline` and `assimilation-final` are behind main (no unique commits), use `git push <commit>:refs/heads/<branch>` to fast-forward them to the merged tip — this avoids creating unnecessary merge commits.
-- **GitHub remote**: The repo URL has moved to `https://github.com/MDMAtk/HyperNexus.git` (GitHub redirects from old `NexusSoftMDMA/HyperNexus` URL)
+- **GitHub remote**: The repo URL has moved to `https://gitlab.com/robertpelloni/HyperNexus.git` (GitHub redirects from old `NexusSoftMDMA/HyperNexus` URL)
 
 ### README.md Rewrite Observations
 
@@ -234,7 +234,7 @@
 
 ### MCP Server Observations
 
-- **Local Module Replacing**: Setting `replace github.com/NexusSoftMDMA/HyperNexus => ../` and requiring `github.com/NexusSoftMDMA/HyperNexus v0.0.0` in `go/go.mod` allows the Go sidecar module to import `"github.com/NexusSoftMDMA/HyperNexus/tools"` without invoking network proxy lookups.
+- **Local Module Replacing**: Setting `replace gitlab.com/robertpelloni/HyperNexus => ../` and requiring `gitlab.com/robertpelloni/HyperNexus v0.0.0` in `go/go.mod` allows the Go sidecar module to import `"gitlab.com/robertpelloni/HyperNexus/tools"` without invoking network proxy lookups.
 - **Unused Import Errors**: The Go compiler enforces unused imports strictly. Having a python compiler feedback loop that isolates files failing due to unused imports into `_disabled` and regenerates the dispatch map dynamically ensures compilation success.
 - **Console Window Output**: To prevent JSON-RPC stream corruption for stdio client runners, all logging must be written strictly to `os.Stderr`.
 

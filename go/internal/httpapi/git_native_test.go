@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
 )
 
 func TestSubmoduleUpdateAllFallsBackToNativeGitReport(t *testing.T) {

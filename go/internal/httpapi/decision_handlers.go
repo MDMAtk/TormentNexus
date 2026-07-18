@@ -15,16 +15,16 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/cache"
-	"github.com/MDMAtk/HyperNexus/internal/ctxharvester"
-	"github.com/MDMAtk/HyperNexus/internal/eventbus"
-	"github.com/MDMAtk/HyperNexus/internal/healer"
-	"github.com/MDMAtk/HyperNexus/internal/mcp"
-	"github.com/MDMAtk/HyperNexus/internal/metrics"
-	processmanager "github.com/MDMAtk/HyperNexus/internal/process"
-	"github.com/MDMAtk/HyperNexus/internal/session"
-	"github.com/MDMAtk/HyperNexus/internal/toolregistry"
-	"github.com/MDMAtk/HyperNexus/internal/workspaces"
+	"gitlab.com/robertpelloni/HyperNexus/internal/cache"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ctxharvester"
+	"gitlab.com/robertpelloni/HyperNexus/internal/eventbus"
+	"gitlab.com/robertpelloni/HyperNexus/internal/healer"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mcp"
+	"gitlab.com/robertpelloni/HyperNexus/internal/metrics"
+	processmanager "gitlab.com/robertpelloni/HyperNexus/internal/process"
+	"gitlab.com/robertpelloni/HyperNexus/internal/session"
+	"gitlab.com/robertpelloni/HyperNexus/internal/toolregistry"
+	"gitlab.com/robertpelloni/HyperNexus/internal/workspaces"
 )
 
 // ==================== MCP Decision System ====================

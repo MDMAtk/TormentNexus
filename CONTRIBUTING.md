@@ -17,14 +17,14 @@ Thank you for your interest in contributing to HyperNexus! 🎉
 
 ### 🐛 Bug Reports
 
-- Use the [Bug Report template](https://github.com/MDMAtk/HyperNexus/issues/new?template=bug_report.md)
+- Use the [Bug Report template](https://gitlab.com/robertpelloni/HyperNexus/issues/new?template=bug_report.md)
 - Include steps to reproduce
 - Include expected vs actual behavior
 - Include screenshots if applicable
 
 ### ✨ Feature Requests
 
-- Use the [Feature Request template](https://github.com/MDMAtk/HyperNexus/issues/new?template=feature_request.md)
+- Use the [Feature Request template](https://gitlab.com/robertpelloni/HyperNexus/issues/new?template=feature_request.md)
 - Explain the problem you're trying to solve
 - Describe the solution you'd like
 - Consider alternatives
@@ -63,7 +63,7 @@ Thank you for your interest in contributing to HyperNexus! 🎉
 
 ```bash
 # Clone the repo
-git clone https://github.com/MDMAtk/HyperNexus.git
+git clone https://gitlab.com/robertpelloni/HyperNexus.git
 cd HyperNexus
 
 # Install dependencies
@@ -147,7 +147,7 @@ Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 ## 🤔 Questions?
 
 - **Discord:** [Join our Discord](https://discord.gg/hypernexus)
-- **GitHub Discussions:** [Ask a question](https://github.com/MDMAtk/HyperNexus/discussions)
+- **GitHub Discussions:** [Ask a question](https://gitlab.com/robertpelloni/HyperNexus/discussions)
 - **Email:** <dev@hypernexus.org>
 
 ## 🙏 Thank You

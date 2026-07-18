@@ -1,6 +1,6 @@
 package tools
 
-import foundationrepomap "github.com/MDMAtk/HyperNexus/foundation/repomap"
+import foundationrepomap "gitlab.com/robertpelloni/HyperNexus/foundation/repomap"
 
 // RepoMapTool wraps the native foundation repomap package for legacy callers.
 type RepoMapTool struct {

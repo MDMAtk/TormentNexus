@@ -39,7 +39,7 @@ docker run -p 7778:7778 ghcr.io/mdmatk/hypernexus:latest
 ## Links
 
 - [Website](https://hypernexus.site)
-- [GitHub](https://github.com/MDMAtk/HyperNexus)
+- [GitHub](https://gitlab.com/robertpelloni/HyperNexus)
 - [Documentation](https://hypernexus.site/docs)
 - [Discord](https://discord.gg/Hj9P3GbVxR)
 

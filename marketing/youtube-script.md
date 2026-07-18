@@ -169,7 +169,7 @@ ai agent, open source, developer tools, coding, programming
 I built an open-source AI control plane with 26,000+ MCP tools and persistent memory.
 
 🔗 Links:
-- GitHub: https://github.com/MDMAtk/HyperNexus
+- GitHub: https://gitlab.com/robertpelloni/HyperNexus
 - Website: https://hypernexus.site
 - Demo: https://demo.hypernexus.site
 - Discord: https://discord.gg/Hj9P3GbVxR

@@ -19,16 +19,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/config"
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
-	"github.com/MDMAtk/HyperNexus/internal/interop"
-	"github.com/MDMAtk/HyperNexus/internal/lockfile"
-	"github.com/MDMAtk/HyperNexus/internal/memorystore"
-	"github.com/MDMAtk/HyperNexus/internal/providers"
-	"github.com/MDMAtk/HyperNexus/internal/sessionimport"
+	"gitlab.com/robertpelloni/HyperNexus/internal/config"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/interop"
+	"gitlab.com/robertpelloni/HyperNexus/internal/lockfile"
+	"gitlab.com/robertpelloni/HyperNexus/internal/memorystore"
+	"gitlab.com/robertpelloni/HyperNexus/internal/providers"
+	"gitlab.com/robertpelloni/HyperNexus/internal/sessionimport"
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 type stubDetector struct {
 	tools []controlplane.Tool

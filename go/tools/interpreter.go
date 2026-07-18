@@ -1,7 +1,7 @@
 package tools
 
 import (
-	"github.com/MDMAtk/HyperNexus/repl"
+	"gitlab.com/robertpelloni/HyperNexus/repl"
 )
 
 var sessions = make(map[string]*repl.Session)

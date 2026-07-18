@@ -23,11 +23,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MDMAtk/HyperNexus.git"
+    "url": "https://gitlab.com/robertpelloni/HyperNexus.git"
   },
   "homepage": "https://hypernexus.site",
   "bugs": {
-    "url": "https://github.com/MDMAtk/HyperNexus/issues"
+    "url": "https://gitlab.com/robertpelloni/HyperNexus/issues"
   },
   "engines": {
     "node": ">=18.0.0"

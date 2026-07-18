@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/MDMAtk/HyperNexus/internal/eventbus"
-	"github.com/MDMAtk/HyperNexus/internal/supervisor"
+	"gitlab.com/robertpelloni/HyperNexus/internal/eventbus"
+	"gitlab.com/robertpelloni/HyperNexus/internal/supervisor"
 )
 
 func TestHandleHyperNexusProtocol(t *testing.T) {

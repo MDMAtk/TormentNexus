@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/eventbus"
-	"github.com/MDMAtk/HyperNexus/internal/protocol"
-	"github.com/MDMAtk/HyperNexus/internal/supervisor"
+	"gitlab.com/robertpelloni/HyperNexus/internal/eventbus"
+	"gitlab.com/robertpelloni/HyperNexus/internal/protocol"
+	"gitlab.com/robertpelloni/HyperNexus/internal/supervisor"
 )
 
 // handleHyperNexusProtocol handles inbound hypernexus:// deep links passed from the OS

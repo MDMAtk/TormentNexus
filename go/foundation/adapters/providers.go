@@ -5,8 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/config"
-	"github.com/MDMAtk/HyperNexus/llm"
+	"gitlab.com/robertpelloni/HyperNexus/config"
+	"gitlab.com/robertpelloni/HyperNexus/llm"
 )
 
 type ProviderStatus struct {

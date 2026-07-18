@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
-	"github.com/MDMAtk/HyperNexus/internal/memorystore"
-	"github.com/MDMAtk/HyperNexus/internal/tools"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/memorystore"
+	"gitlab.com/robertpelloni/HyperNexus/internal/tools"
 )
 
 func (s *Server) handleGetMemory(w http.ResponseWriter, r *http.Request) {

@@ -4,7 +4,7 @@
   "description": "HyperNexus CLI — Access your AI memory and MCP tools from the terminal. tn search, tn store, tn status, and more.",
   "bin": { "tn": "./tn.js" },
   "keywords": ["hypernexus", "cli", "tn", "ai-memory", "mcp", "terminal"],
-  "repository": { "type": "git", "url": "git+https://github.com/MDMAtk/HyperNexus.git" },
+  "repository": { "type": "git", "url": "git+https://gitlab.com/robertpelloni/HyperNexus.git" },
   "license": "MIT",
   "files": ["tn.js", "package.json"]
 }

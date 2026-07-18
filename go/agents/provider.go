@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/MDMAtk/HyperNexus/foundation/adapters"
+	"gitlab.com/robertpelloni/HyperNexus/foundation/adapters"
 	"github.com/sashabaranov/go-openai"
 )
 

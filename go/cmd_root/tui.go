@@ -3,7 +3,7 @@ package cmd
 import (
 	"log"
 
-	"github.com/MDMAtk/HyperNexus/tui"
+	"gitlab.com/robertpelloni/HyperNexus/tui"
 	"github.com/spf13/cobra"
 )
 

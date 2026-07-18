@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/agents"
+	"gitlab.com/robertpelloni/HyperNexus/agents"
 )
 
 // HandleIndexCodebase explicitly proxies out the TS handler triggering our new Vector Store recursively.

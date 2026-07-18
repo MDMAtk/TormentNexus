@@ -16,9 +16,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
-	"github.com/MDMAtk/HyperNexus/internal/codeexec"
-	"github.com/MDMAtk/HyperNexus/internal/controlplane"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/codeexec"
+	"gitlab.com/robertpelloni/HyperNexus/internal/controlplane"
 )
 
 // Diagnosis represents an LLM-generated diagnosis of an error.

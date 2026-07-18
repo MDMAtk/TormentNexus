@@ -6,6 +6,6 @@
     "It also has 26,000+ MCP servers indexed and searchable. Databases, filesystems, browsers, APIs - one click to install.",
     "Works with local LLMs (LM Studio, Ollama, DeepSeek). No data leaves your machine unless you want it to.",
     "Built in Go. Single binary. Fast startup. Low resource usage.",
-    "Open source: https://github.com/MDMAtk/HyperNexus\n\nTry it now: https://hypernexus.site"
+    "Open source: https://gitlab.com/robertpelloni/HyperNexus\n\nTry it now: https://hypernexus.site"
   ]
 }

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/mcp"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mcp"
 )
 
 type runtimeServerRecord struct {

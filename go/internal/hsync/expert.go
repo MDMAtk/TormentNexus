@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/MDMAtk/HyperNexus/internal/mcp"
-	"github.com/MDMAtk/HyperNexus/internal/orchestration"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mcp"
+	"gitlab.com/robertpelloni/HyperNexus/internal/orchestration"
 )
 
 type ExpertManager struct {

@@ -6,7 +6,7 @@ import (
 
 	_ "github.com/glebarez/go-sqlite"
 
-	"github.com/MDMAtk/HyperNexus/internal/database")
+	"gitlab.com/robertpelloni/HyperNexus/internal/database")
 
 // IndexSkillsToCatalog indexes the currently loaded skills into the given catalog.db
 // It creates a published_skills table if it doesn't exist, to enable unified search

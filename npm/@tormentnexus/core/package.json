@@ -6,7 +6,7 @@
   "bin": { "tncore": "./cli.js" },
   "scripts": { "install": "node setup.js" },
   "keywords": ["hypernexus", "mcp", "ai-memory", "vector-store", "rag", "ai-agent", "llm"],
-  "repository": { "type": "git", "url": "git+https://github.com/MDMAtk/HyperNexus.git" },
+  "repository": { "type": "git", "url": "git+https://gitlab.com/robertpelloni/HyperNexus.git" },
   "license": "MIT",
   "files": ["setup.js", "cli.js", "index.js", "package.json"]
 }

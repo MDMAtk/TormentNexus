@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
 )
 
 // SkillEvolutionRecord tracks the performance of a specific skill version

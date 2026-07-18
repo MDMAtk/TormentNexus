@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/MDMAtk/HyperNexus/internal/mcp"
+	"gitlab.com/robertpelloni/HyperNexus/internal/mcp"
 )
 
 // handleNativeRouterSearch searches the Go-native MCP router (L1+L2).

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/MDMAtk/HyperNexus/internal/ai"
+	"gitlab.com/robertpelloni/HyperNexus/internal/ai"
 )
 
 type PairRole string

@@ -31,7 +31,7 @@ Your AI assistants forget everything between sessions. HyperNexus fixes that.
 ✅ Local LLM support
 ✅ One command install
 
-GitHub: https://github.com/MDMAtk/HyperNexus
+GitHub: https://gitlab.com/robertpelloni/HyperNexus
 
 Tweet 2 (Demo):
 Try it now — no install needed:
@@ -81,7 +81,7 @@ Works with:
 Your AI. Your data. Your rules.
 
 Tweet 7 (CTA):
-⭐ Star us on GitHub: https://github.com/MDMAtk/HyperNexus
+⭐ Star us on GitHub: https://gitlab.com/robertpelloni/HyperNexus
 💬 Join Discord: https://discord.gg/hypernexus
 📖 Read the blog: https://hypernexus.site/blog/
 

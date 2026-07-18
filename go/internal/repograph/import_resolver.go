@@ -43,7 +43,7 @@ func (rgs *RepoGraphService) resolveGoImport(importPath string) string {
 }
 
 // detectGoModule reads the go.mod file to determine the module path.
-// Falls back to "github.com/MDMAtk/HyperNexus" if go.mod is not found.
+// Falls back to "gitlab.com/robertpelloni/HyperNexus" if go.mod is not found.
 func (rgs *RepoGraphService) detectGoModule() string {
 	rgs.goModuleMu.Do(func() {
 		candidates := []string{
@@ -64,7 +64,7 @@ func (rgs *RepoGraphService) detectGoModule() string {
 			}
 		}
 		// Fallback
-		rgs.goModule = "github.com/MDMAtk/HyperNexus"
+		rgs.goModule = "gitlab.com/robertpelloni/HyperNexus"
 	})
 	return rgs.goModule
 }
