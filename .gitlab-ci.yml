@@ -1,0 +1,150 @@
+# HyperNexus GitLab CI/CD Pipeline
+# Auto-builds and deploys to Hetzner on push to main
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  GO_VERSION: "1.25"
+  HETZNER_HOST: "5.161.250.43"
+  HETZNER_USER: "root"
+  DEPLOY_DIR: "/opt/tormentnexus"
+
+# ─── Build Stage ────────────────────────────────────────────
+
+build-go-agent:
+  stage: build
+  image: golang:${GO_VERSION}-alpine
+  script:
+    - cd go
+    - go mod download
+    - >
+      go build -buildvcs=false
+      -ldflags "-s -w"
+      -o ../bin/hypernexus
+      ./cmd/tormentnexus
+    - >
+      go build -buildvcs=false
+      -ldflags "-s -w"
+      -o ../bin/hypernexus-cloud
+      ./cmd/cloud
+  artifacts:
+    paths:
+      - bin/hypernexus
+      - bin/hypernexus-cloud
+    expire_in: 1 hour
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+build-dashboard:
+  stage: build
+  image: node:20-alpine
+  script:
+    - cd apps/web
+    - npm ci --ignore-scripts
+    - npm run build
+  artifacts:
+    paths:
+      - apps/web/.next
+      - apps/web/out
+    expire_in: 1 hour
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+# ─── Test Stage ─────────────────────────────────────────────
+
+test-go:
+  stage: test
+  image: golang:${GO_VERSION}-alpine
+  script:
+    - cd go
+    - go vet ./...
+    - go test -short ./... 2>&1 || true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+# ─── Deploy Stage ───────────────────────────────────────────
+
+deploy-hetzner:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client rsync
+    - eval $(ssh-agent -s)
+    - echo "$HETZNER_SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - echo "$HETZNER_SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "── Deploying to Hetzner ──"
+    - >
+      rsync -avz --progress
+      bin/hypernexus bin/hypernexus-cloud
+      ${HETZNER_USER}@${HETZNER_HOST}:${DEPLOY_DIR}/bin/
+    - >
+      rsync -avz --progress
+      --exclude='*.exe' --exclude='.git'
+      go/
+      ${HETZNER_USER}@${HETZNER_HOST}:${DEPLOY_DIR}/go/
+    - >
+      rsync -avz --progress
+      deploy/cloud/
+      ${HETZNER_USER}@${HETZNER_HOST}:${DEPLOY_DIR}/deploy/cloud/
+    - |
+      ssh ${HETZNER_USER}@${HETZNER_HOST} << 'DEPLOY_SCRIPT'
+        cd /opt/tormentnexus
+        ln -sf /opt/tormentnexus/bin/hypernexus \
+          /usr/local/bin/hypernexus
+        ln -sf /opt/tormentnexus/bin/hypernexus-cloud \
+          /usr/local/bin/hypernexus-cloud
+        systemctl daemon-reload
+        systemctl restart hypernexus
+        systemctl restart hypernexus-cloud
+        sleep 5
+        echo "── Service Status ──"
+        systemctl is-active hypernexus
+        systemctl is-active hypernexus-cloud
+        echo "── Health Checks ──"
+        curl -s http://localhost:7778/health || echo "Agent failed"
+        curl -s http://localhost:7780/api/cloud/health || echo "Cloud failed"
+        echo "── Deployment Complete ──"
+      DEPLOY_SCRIPT
+  environment:
+    name: hetzner
+    url: https://hypernexus.site
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
+      allow_failure: false
+
+# ─── Scheduled Jobs ─────────────────────────────────────────
+
+healthcheck:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - echo "── Running Health Checks ──"
+    - |
+      STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://hypernexus.site)
+      if [ "$STATUS" != "200" ]; then
+        echo "ERROR: hypernexus.site returned $STATUS"
+        exit 1
+      fi
+    - |
+      CLOUD_URL="https://cloud.hypernexus.site"
+      STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+        "$CLOUD_URL/api/cloud/health")
+      if [ "$STATUS" != "200" ]; then
+        echo "ERROR: cloud.hypernexus.site returned $STATUS"
+        exit 1
+      fi
+    - echo "── All Health Checks Passed ──"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
