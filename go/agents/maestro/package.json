@@ -229,7 +229,7 @@
     "dompurify": "^3.3.0",
     "electron-store": "^8.1.0",
     "electron-updater": "^6.6.2",
-    "fastify": "^4.25.2",
+    "fastify": "^5.10.0",
     "js-tiktoken": "^1.0.21",
     "marked": "^17.0.1",
     "mermaid": "^11.12.1",
@@ -245,7 +245,7 @@
     "rehype-slug": "^6.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
-    "ws": "^8.16.0"
+    "ws": "^8.21.1"
   },
   "devDependencies": {
     "@electron/notarize": "^3.1.1",
@@ -271,7 +271,7 @@
     "autoprefixer": "^10.4.16",
     "canvas": "^3.2.0",
     "concurrently": "^8.2.2",
-    "electron": "^35.7.5",
+    "electron": "^43.1.1",
     "electron-builder": "^24.9.1",
     "electron-playwright-helpers": "^2.0.1",
     "electron-rebuild": "^3.2.9",
@@ -283,13 +283,13 @@
     "jsdom": "^27.2.0",
     "lucide-react": "^0.303.0",
     "playwright": "^1.57.0",
-    "postcss": "^8.4.33",
+    "postcss": "^8.5.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
     "typescript-eslint": "^8.50.1",
-    "vite": "^7.3.1",
+    "vite": "^8.1.5",
     "vite-plugin-electron": "^0.28.2",
     "vitest": "^4.0.15"
   },
