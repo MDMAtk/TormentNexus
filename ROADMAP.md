@@ -4,474 +4,269 @@
 
 ---
 
+## 💰 Pricing Strategy
+
+### Two Models, One Product
+
+| | **Local License** | **Cloud Subscription** |
+|---|---|---|
+| **Price** | $50 one-time (lifetime per major version) | $5/month |
+| **Renewal** | $25/year for upgrades to new major versions | Auto-renews |
+| **Storage** | Local SQLite + your own backups | Managed cloud storage |
+| **Memory** | Your machine, your control | Synced across devices |
+| **MCP Sandboxing** | Runs on your hardware | Isolated cloud containers |
+| **Native Tools** | ✅ Full access | ✅ Full access |
+| **Expiration** | Never (but upgrades cost $25/year) | Stops if you stop paying |
+| **Best For** | Privacy-focused devs, teams with own infra | Convenience, teams, cloud-first |
+
+### Why This Pricing Works
+
+1. **$50 is impulse-buy territory** — No procurement process needed
+2. **$5/month is cheaper than coffee** — Easy to justify for persistent AI memory
+3. **Lifetime license builds trust** — You own it forever
+4. **Cloud subscription funds development** — Recurring revenue sustains the project
+5. **Both options exist** — Users choose what fits their workflow
+
+### Revenue Projections
+
+| Milestone | Users | MRR | ARR |
+|-----------|-------|-----|-----|
+| Launch (Month 1) | 50 | $250 | $3,000 |
+| Growth (Month 3) | 500 | $2,500 | $30,000 |
+| Scale (Month 6) | 2,000 | $10,000 | $120,000 |
+| Maturity (Year 1) | 10,000 | $50,000 | $600,000 |
+
+---
+
 ## 🎯 Strategic Pillars
 
 ### 1. **Distribution** — Be Everywhere
 
-- Docker Hub, npm, Homebrew, VS Code Marketplace
+- GitLab (primary), GitHub (mirror)
+- Docker Hub, npm, Homebrew
+- VS Code Marketplace
 - One-click install on any platform
-- Pre-built templates for instant value
 
 ### 2. **Community** — Build the Ecosystem
 
-- Marketplace for sharing MCP configs and templates
-- Discord community for support and collaboration
+- MCP tool marketplace
+- Discord community
 - Open contribution model
+- Plugin/extension system
 
 ### 3. **Product** — Solve Real Problems
 
-- Focus on 3 killer use cases
-- AI-powered onboarding
-- Smart suggestions and recommendations
+- Persistent AI memory (L1/L2)
+- 20,000+ MCP tool routing
+- Multi-agent coordination
+- Cloud sync and collaboration
 
 ### 4. **Monetization** — Sustainable Growth
 
-- Hosted SaaS (cloud.hypernexus.site)
-- Enterprise features (SSO, audit, RBAC)
-- Training and certification
+- **Local License:** $50 lifetime
+- **Cloud Subscription:** $5/month
+- **Enterprise:** Custom pricing (SSO, RBAC, SLA)
+- **Training:** Certification program
 
 ---
 
 ## 📅 Timeline
 
-### **Phase 1: Launch (Week 1)** — July 14-20, 2026
+### **Phase 1: Launch** — July 2026
 
-**Goal:** Get distribution channels live, start marketing push
+**Goal:** Public launch, first paying customers
 
-| Day | Task | Owner | Status |
-|-----|------|-------|--------|
-| Mon | Docker image to Docker Hub | MiMo | ⏳ |
-| Mon | npm package publish | MiMo | ⏳ |
-| Mon | One-click templates (3) | MiMo | ⏳ |
-| Tue | CDP posting script | MiMo | ⏳ |
-| Tue | DeepSeek content generator | MiMo | ⏳ |
-| Wed | Product Hunt launch prep | MiMo | ⏳ |
-| Wed | Reddit post (r/MachineLearning) | Auto | ⏳ |
-| Wed | Hacker News (Show HN) | Auto | ⏳ |
-| Thu | Twitter thread | Auto | ⏳ |
-| Thu | YouTube video script | MiMo | ⏳ |
-| Fri | VS Code extension (basic) | MiMo | ⏳ |
-| Fri | Getting Started tutorial | MiMo | ⏳ |
+| Week | Task | Status |
+|------|------|--------|
+| 1 | Cloud infrastructure deployed | ✅ |
+| 1 | GitLab CI/CD pipeline | ✅ |
+| 1 | SSL and monitoring | ✅ |
+| 2 | Cloud landing page | 🔄 |
+| 2 | Pricing page + Stripe | ⏳ |
+| 2 | Product Hunt launch | ⏳ |
+| 2 | Reddit/HN posts | ⏳ |
 
 **Deliverables:**
 
-- [ ] Docker image on Docker Hub
-- [ ] npm package on npmjs.com
-- [ ] 3 templates (cursor-killer, research-assistant, code-reviewer)
-- [ ] CDP automation script
-- [ ] Posts live on Reddit, HN, Twitter
-- [ ] Product Hunt launch page ready
+- [x] Cloud API running at cloud.hypernexus.site
+- [x] 14 services on Hetzner
+- [x] CI/CD with auto-deploy
+- [ ] Landing page with pricing
+- [ ] Stripe checkout flow
+- [ ] Product Hunt page
 
 ---
 
-### **Phase 2: Growth (Weeks 2-3)** — July 21 - August 3, 2026
+### **Phase 2: Growth** — August 2026
 
-**Goal:** Build community, improve product, scale distribution
+**Goal:** Build community, improve product, scale
 
-| Task | Priority | Effort | Impact |
-|------|----------|--------|--------|
-| VS Code extension (full) | P0 | 3 days | High |
-| Community marketplace | P0 | 5 days | High |
-| Discord server setup | P1 | 1 day | Medium |
-| API documentation | P1 | 2 days | Medium |
-| Test coverage → 80% | P1 | 3 days | Medium |
-| Performance benchmarks | P2 | 1 day | Medium |
-| Blog series (5 posts) | P2 | 3 days | Medium |
-| Video tutorials | P2 | 5 days | Medium |
+| Task | Priority | Impact |
+|------|----------|--------|
+| MCP client examples | P0 | High |
+| API documentation | P0 | High |
+| VS Code extension | P0 | High |
+| Community Discord | P1 | Medium |
+| Video tutorials | P1 | Medium |
+| Blog series | P1 | Medium |
+| Enterprise outreach | P2 | High |
 
-**Deliverables:**
+**Metrics:**
 
-- [ ] VS Code extension published
-- [ ] Marketplace MVP live
-- [ ] Discord with 100+ members
-- [ ] API docs published
-- [ ] 80% test coverage
+- 500+ GitLab stars
+- 50 paying customers
+- $500 MRR
+- 50+ Discord members
 
 ---
 
-### **Phase 3: Scale (Weeks 4-6)** — August 4-24, 2026
+### **Phase 3: Scale** — Q4 2026
 
-**Goal:** Monetize, partner, expand
+**Goal:** Enterprise adoption, team features
 
-| Task | Priority | Effort | Impact |
-|------|----------|--------|--------|
-| Hosted SaaS | P0 | 10 days | Critical |
-| Stripe checkout flow | P0 | 2 days | Critical |
-| Enterprise features | P1 | 10 days | High |
-| DeepSeek partnership | P1 | 3 days | High |
-| Ollama collaboration | P1 | 2 days | Medium |
-| Mobile app (iOS/Android) | P2 | 15 days | Medium |
-| Training program | P2 | 5 days | Medium |
+| Task | Priority | Impact |
+|------|----------|--------|
+| Team accounts | P0 | High |
+| SSO/SAML integration | P0 | High |
+| Audit logs | P0 | Medium |
+| Custom domains | P1 | Medium |
+| White-label support | P1 | High |
+| Mobile companion app | P2 | Medium |
 
-**Deliverables:**
+**Metrics:**
 
-- [ ] SaaS live at cloud.hypernexus.site
-- [ ] Pricing page (Free, Pro, Team)
-- [ ] Enterprise features
-- [ ] Partnership announcements
-- [ ] Mobile app beta
+- 5,000+ GitLab stars
+- 500 paying customers
+- $5,000 MRR
+- 1+ enterprise pilot
 
 ---
 
-### **Phase 4: Dominate (Months 2-3)** — August-September 2026
+### **Phase 4: Maturity** — 2027
 
-**Goal:** Become the standard for AI memory and tools
+**Goal:** Market leader, sustainable business
 
-| Task | Priority | Effort | Impact |
-|------|----------|--------|--------|
-| GitHub Copilot integration | P0 | 5 days | Critical |
-| Notion/Obsidian sync | P1 | 5 days | High |
-| Conference talks | P1 | 3 days | High |
-| Security audit | P1 | 5 days | Medium |
-| SOC2 compliance | P2 | 20 days | Medium |
-| Enterprise sales | P1 | Ongoing | High |
+| Task | Priority | Impact |
+|------|----------|--------|
+| Plugin marketplace | P0 | High |
+| Training certification | P0 | Medium |
+| International expansion | P1 | Medium |
+| Acquisition readiness | P2 | High |
 
-**Deliverables:**
+**Metrics:**
 
-- [ ] Copilot integration live
-- [ ] Notion/Obsidian plugins
-- [ ] 3+ conference talks accepted
-- [ ] Security audit published
-- [ ] 10+ enterprise customers
+- 20,000+ GitLab stars
+- 2,000 paying customers
+- $20,000 MRR
+- Profitable operations
 
 ---
 
-## 🏗️ Technical Roadmap
+## 🏢 Enterprise Value Proposition
 
-### **Q3 2026 (Jul-Sep)**
+### Why Corporations Should Pay
 
-#### Core Platform
+**Problem:** Every developer using AI tools (Cursor, Claude, Copilot) has:
 
-- [ ] Memory system optimization (10x faster search)
-- [ ] Catalog expansion to 50,000 entries
-- [ ] Real-time sync between devices
-- [ ] Multi-user collaboration
-- [ ] Backup and restore
+- No persistent memory between sessions
+- No shared knowledge across team
+- No audit trail of AI actions
+- No sandboxing of tool execution
+- No compliance controls
 
-#### Developer Experience
+**Solution:** HyperNexus provides:
 
-- [ ] TypeScript SDK
-- [ ] Python SDK
-- [ ] Go SDK
-- [ ] CLI improvements
-- [ ] VS Code extension
-- [ ] JetBrains plugin
+- ✅ Persistent memory that survives sessions
+- ✅ Team-wide knowledge sharing
+- ✅ Full audit logs of all AI actions
+- ✅ Sandboxed MCP tool execution
+- ✅ SSO/RBAC for compliance
 
-#### Integrations
+### ROI for Enterprises
 
-- [ ] GitHub Copilot
-- [ ] Cursor
-- [ ] VS Code
-- [ ] JetBrains
-- [ ] Notion
-- [ ] Obsidian
-- [ ] Slack
-- [ ] Discord
+| Metric | Without HyperNexus | With HyperNexus | Improvement |
+|--------|-------------------|-----------------|-------------|
+| Context setup time | 15 min/session | 0 min (automatic) | 100% |
+| Knowledge reuse | 0% (lost each session) | 80%+ | ∞ |
+| Debugging time | 2 hours/issue | 30 min/issue | 75% |
+| Onboarding new devs | 2 weeks | 3 days | 70% |
+| AI tool compliance | None | Full audit trail | 100% |
 
-### **Q4 2026 (Oct-Dec)**
+### Corporate Pricing (Custom)
 
-#### Enterprise
-
-- [ ] SSO/SAML
-- [ ] Audit logs
-- [ ] Role-based access control
-- [ ] Data residency
-- [ ] SLA guarantees
-- [ ] Priority support
-
-#### AI Features
-
-- [ ] Multi-model support
-- [ ] Model routing
-- [ ] Cost optimization
-- [ ] Performance monitoring
-- [ ] A/B testing
-
-#### Platform
-
-- [ ] Mobile apps (iOS, Android)
-- [ ] Desktop apps (Windows, Mac, Linux)
-- [ ] Browser extension
-- [ ] API gateway
-- [ ] Webhooks
+| Tier | Users | Price | Includes |
+|------|-------|-------|----------|
+| **Team** | 5-20 | $500/month | SSO, shared memory, audit logs |
+| **Business** | 20-100 | $2,000/month | + RBAC, custom domains, SLA |
+| **Enterprise** | 100+ | Custom | + On-prem, air-gapped, dedicated support |
 
 ---
 
-## 💰 Monetization Strategy
+## 🔧 Technical Roadmap
 
-### **Free Tier**
+### Memory System (Stable)
 
-- 1 project
-- 100 memories
-- 10 MCP tools
-- Community support
-- Basic analytics
+- [x] L1 Session Memory (ephemeral)
+- [x] L2 Semantic Vault (SQLite + vectors)
+- [ ] L3 Cloud Sync (encrypted)
+- [ ] L4 Team Knowledge Graph
 
-### **Pro ($19/month)**
+### MCP Ecosystem (Stable)
 
-- Unlimited projects
-- 10,000 memories
-- Unlimited MCP tools
-- Priority support
-- Advanced analytics
-- Custom templates
+- [x] 20,000+ servers indexed
+- [x] Semantic tool routing
+- [ ] Tool marketplace
+- [ ] Custom tool builder
 
-### **Team ($49/month)**
+### Cloud Platform (Beta)
 
-- Everything in Pro
-- 5 team members
-- Shared memory
-- Collaboration tools
-- Admin dashboard
-- SSO
+- [x] User accounts
+- [x] Docker provisioning
+- [x] MCP Streamable HTTP
+- [ ] Memory sync
+- [ ] Team collaboration
+- [ ] Usage metering
 
-### **Enterprise (Custom)**
+### Agent Coordination (Beta)
 
-- Everything in Team
-- Unlimited team members
-- SSO/SAML
-- Audit logs
-- RBAC
-- SLA guarantees
-- Dedicated support
-- Custom integrations
+- [x] A2A protocol
+- [x] Role rotation
+- [ ] Persistent agent identities
+- [ ] Cross-session learning
+- [ ] Agent marketplace
 
 ---
 
 ## 📊 Key Metrics
 
-### **Acquisition**
+### Product Metrics
 
-- GitHub stars
-- npm downloads
-- Docker pulls
-- Website visitors
-- Sign-ups
+| Metric | Current | Target (6mo) |
+|--------|---------|--------------|
+| MCP Servers Indexed | 20,000+ | 50,000+ |
+| Native Tools | 50+ | 200+ |
+| Supported Agents | 38+ | 50+ |
+| Test Coverage | 20% | 80% |
+| API Latency (p95) | 50ms | 20ms |
 
-### **Activation**
+### Business Metrics
 
-- First project created
-- First memory stored
-- First MCP tool installed
-- First template used
-
-### **Retention**
-
-- Daily active users
-- Weekly active users
-- Monthly active users
-- Memory usage
-- Tool usage
-
-### **Revenue**
-
-- MRR (Monthly Recurring Revenue)
-- ARR (Annual Recurring Revenue)
-- ARPU (Average Revenue Per User)
-- Churn rate
-- LTV (Lifetime Value)
-
-### **Referral**
-
-- GitHub forks
-- npm dependents
-- Community contributions
-- Blog mentions
-- Social shares
+| Metric | Current | Target (6mo) |
+|--------|---------|--------------|
+| Total Users | ~10 | 5,000 |
+| Paying Customers | 0 | 500 |
+| MRR | $0 | $5,000 |
+| Churn Rate | N/A | <5% |
+| NPS | N/A | 50+ |
 
 ---
 
-## 🎯 Success Milestones
+## 🎯 Decision Log
 
-### **Month 1 (August 2026)**
-
-- [ ] 500 GitHub stars
-- [ ] 1,000 npm downloads
-- [ ] 500 Docker pulls
-- [ ] 100 community members
-- [ ] 10 contributors
-- [ ] $500 MRR
-
-### **Month 3 (October 2026)**
-
-- [ ] 5,000 GitHub stars
-- [ ] 10,000 npm downloads
-- [ ] 5,000 Docker pulls
-- [ ] 500 community members
-- [ ] 50 contributors
-- [ ] $5,000 MRR
-
-### **Month 6 (January 2027)**
-
-- [ ] 20,000 GitHub stars
-- [ ] 50,000 npm downloads
-- [ ] 20,000 Docker pulls
-- [ ] 2,000 community members
-- [ ] 100 contributors
-- [ ] $25,000 MRR
-
-### **Year 1 (July 2027)**
-
-- [ ] 50,000 GitHub stars
-- [ ] 200,000 npm downloads
-- [ ] 100,000 Docker pulls
-- [ ] 10,000 community members
-- [ ] 500 contributors
-- [ ] $100,000 MRR
-
----
-
-## 🚀 Go-To-Market Strategy
-
-### **Pre-Launch (Now)**
-
-1. Build distribution channels (Docker, npm, Homebrew)
-2. Create marketing materials (posts, videos, tutorials)
-3. Set up analytics and tracking
-4. Prepare Product Hunt launch
-5. Build automation scripts
-
-### **Launch Week**
-
-1. Product Hunt launch (target #1)
-2. Reddit posts (r/MachineLearning, r/LocalLLaMA)
-3. Hacker News (Show HN)
-4. Twitter thread
-5. YouTube video
-6. Email to personal network
-
-### **Post-Launch**
-
-1. Daily social media posts
-2. Weekly blog posts
-3. Monthly video tutorials
-4. Quarterly conference talks
-5. Continuous community engagement
-
----
-
-## 🤝 Partnership Strategy
-
-### **Tier 1: Strategic Partners**
-
-- DeepSeek — Official integration, co-marketing
-- Ollama — Featured in ecosystem
-- LM Studio — Deep integration
-- GitHub — Copilot integration
-
-### **Tier 2: Technology Partners**
-
-- Notion — Knowledge base sync
-- Obsidian — Note-taking integration
-- Slack — Bot integration
-- Discord — Bot integration
-
-### **Tier 3: Distribution Partners**
-
-- Docker Hub — Featured image
-- npm — Featured package
-- VS Code Marketplace — Featured extension
-- Homebrew — Official formula
-
----
-
-## 📚 Content Strategy
-
-### **Blog (Weekly)**
-
-- Technical deep dives
-- Tutorial series
-- Case studies
-- Industry analysis
-- Community spotlights
-
-### **Video (Bi-weekly)**
-
-- YouTube tutorials
-- Demo videos
-- Conference talks
-- Live streams
-- Shorts/Reels
-
-### **Social (Daily)**
-
-- Twitter threads
-- LinkedIn posts
-- Reddit comments
-- Hacker News
-- Discord/Slack
-
-### **Documentation (Continuous)**
-
-- Getting started guide
-- API reference
-- Tutorials
-- Examples
-- Best practices
-
----
-
-## 🏆 Competitive Advantages
-
-### **1. Catalog Moat**
-
-26,000+ MCP servers indexed and searchable. No one else has this.
-
-### **2. Memory System**
-
-Tiered memory (L1→L2→L3→L4) with GraphRAG. Most AI tools have no memory.
-
-### **3. Local-First**
-
-Works with local LLMs. No data leaves your machine unless you want it to.
-
-### **4. Open Source**
-
-Community-driven development. Anyone can contribute.
-
-### **5. Go Backend**
-
-Fast, single binary, low resource usage. Much lighter than Node.js alternatives.
-
----
-
-## ⚠️ Risks & Mitigations
-
-### **Risk: MCP Standard Changes**
-
-- Mitigation: Abstract MCP layer, support multiple versions
-- Monitoring: Track MCP spec changes
-
-### **Risk: Competition from Big Players**
-
-- Mitigation: Focus on community and open source
-- Monitoring: Track OpenAI, Anthropic, Google moves
-
-### **Risk: Low Adoption**
-
-- Mitigation: Strong marketing, partnerships, community
-- Monitoring: Track metrics daily
-
-### **Risk: Technical Debt**
-
-- Mitigation: Regular refactoring, test coverage
-- Monitoring: Code quality metrics
-
-### **Risk: Burnout**
-
-- Mitigation: Build community, delegate, automate
-- Monitoring: Personal energy levels
-
----
-
-## 📞 Contact
-
-- **GitHub:** <https://gitlab.com/robertpelloni/HyperNexus>
-- **Website:** <https://hypernexus.site>
-- **Email:** <dev@hypernexus.org>
-- **Discord:** (coming soon)
-- **Twitter:** (coming soon)
-
----
-
-*This roadmap is a living document. Update it as priorities change and new opportunities arise.*
+| Date | Decision | Rationale |
+|------|----------|-----------|
+| 2026-07-18 | Migrate to GitLab | Better CI/CD, avoid GitHub vendor lock-in |
+| 2026-07-18 | $50 lifetime + $5/month cloud | Impulse-buy pricing, both options available |
+| 2026-07-18 | Hetzner for hosting | Cost-effective, good performance |
+| 2026-07-18 | MCP Streamable HTTP | Standard protocol, broad compatibility |
+| 2026-07-18 | Sandboxed cloud containers | Security, isolation, compliance |

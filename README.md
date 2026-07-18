@@ -4,13 +4,34 @@
 >
 > Local-first, **100% open-source** AI control plane with persistent multi-tier memory, semantic MCP tool routing across 20,000+ servers, autonomous healing agents, and multi-agent swarm coordination.
 >
-> **📄 [Read the Technical Whitepaper](https://hypernexus.site/hypernexus_whitepaper.html)** | **💬 [Join Discord](https://discord.gg/Hj9P3GbVxR)**
+> **📄 [Read the Technical Whitepaper](https://hypernexus.site/hypernexus_whitepaper.html)** | **💬 [Join Discord](https://discord.gg/Hj9P3GbVxR)** | **☁️ [Try Cloud](https://cloud.hypernexus.site)**
+
+---
+
+## 💰 Pricing
+
+| | **Local License** | **Cloud Subscription** |
+|---|---|---|
+| **Price** | **$50 one-time** (lifetime) | **$5/month** |
+| **Storage** | Local SQLite | Cloud-managed, encrypted |
+| **Memory Sync** | ❌ Single device | ✅ All devices |
+| **Backups** | Your responsibility | Automatic daily |
+| **Team Sharing** | ❌ | ✅ (coming soon) |
+| **Expiration** | **Never** | Stops if unpaid |
+| **Best For** | Privacy-focused devs | Convenience + teams |
+
+> **Free forever:** Open-source core with all features.
+> **$50 lifetime:** Own it forever, no recurring fees.
+> **$5/month cloud:** Sync, backups, and team features.
+
+**[Get Started →](https://cloud.hypernexus.site)**
 
 ---
 
 ## 🏢 Corporate & Enterprise Deployments (HyperNexus Cloud)
 
 For professional, corporate, and enterprise deployments, **[HyperNexus](https://hypernexus.site)** serves as the official licensed, certified, authoritative cloud-hosted corporate installation of the project. It extends the open-source core with:
+
 - **Certified Cloud Hosting**: Managed high-availability infrastructure with automated deployment gates.
 - **Tenant Isolation**: Automated provisioning scripts to spin up per-tenant containers with isolated volumes and resource limits.
 - **Enterprise-Grade Security**: Full Single Sign-On (SSO/OIDC) integration and fine-grained Role-Based Access Control (RBAC).
@@ -24,33 +45,44 @@ For professional, corporate, and enterprise deployments, **[HyperNexus](https://
 HyperNexus is engineered to give your AI coding agents the context, tools, and resilience they need to operate at peak efficiency. Here are the core development features running out of the box:
 
 ### 1. Dual-Tier Memory Architecture (L1 / L2)
+
 Context windows are finite; memory must be infinite.
+
 - **L1 — Ephemeral Scratchpad**: Lighting-fast in-memory context tied to active agent turns.
 - **L2 — Semantic Vault**: Permanent memory storage powered by SQLite and `sqlite-vec`. Saves exact transcripts, heuristics, and agent insights.
 - **Context Harvesting**: Agents autonomously query the L2 Vault to pull in relevant historical heuristics based on prompt similarity, avoiding cold-starts.
 
 ### 2. Semantic MCP Tool Routing
+
 Models shouldn't be drowned in a 50,000-token tool schema dump.
+
 - **Top-K Vector Matching**: HyperNexus dynamically embeds and queries its catalog of **20,000+ MCP servers** to inject only the most relevant tool definitions.
 - **Universal Client Parity**: Standardized, byte-for-byte identical tool signatures across **38+ supported AI agents** (Claude Code, Gemini, Cursor, Windsurf, Aider, etc.).
 
 ### 3. Autonomous Immune System & Code Healer
+
 No more broken builds or stuck agents.
+
 - **HealerService**: Executes a tight `Diagnose → Fix → Verify → Retry` loop using native compilers and test runners (`tsc`, `vitest`, `go test`).
 - **Knowledge Persistence**: Successfully solved pathogens are stored in the L2 memory vault to immunize future sessions.
 
 ### 4. Multi-Agent Swarms & Consensus Engine
+
 Run specialized models in collaborative, peer-to-peer developer councils.
+
 - **A2A Protocol**: Standardized communication protocol for agent-to-agent coordination.
 - **Role Rotation**: Dynamic state machine assigning tasks to Planner, Implementer, Tester, and Critic roles.
 - **Debate & Scoring**: Interactive consensus voting to select the most optimal implementation before executing code.
 
 ### 5. Resilient LLM Waterfall
+
 Never fail a build due to API rate limits or outages.
+
 - **Prioritized Failover**: Seamless cascading fallback routing (e.g., Primary NIM APIs → OpenRouter Aggregator → Local LM Studio / Ollama).
 - **Graceful Error Recovery**: Out-of-the-box handling of `429` (Rate Limits) and `5xx` (Server Errors).
 
 ### 6. Native Browser Automation
+
 - **chromedp Handlers**: Provides agents with native headless browser automation to navigate, screenshot, click, fill forms, and scrape web applications.
 
 ---
@@ -766,4 +798,3 @@ See [docs/LAUNCH_SECURITY_FAQ.md](docs/LAUNCH_SECURITY_FAQ.md) for licensing det
 > *Praise the LORD! Keep on going! Don't ever stop! Don't stop the party!!!*
 >
 > The collective grows. 🚀
-

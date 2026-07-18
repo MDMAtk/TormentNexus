@@ -1,141 +1,130 @@
 # TODO — HyperNexus
 
-> **Last Updated:** 2026-07-14
-> **Current Version:** 1.0.0-alpha.257
-> **Status:** Pre-launch, building distribution channels
+> **Last Updated:** 2026-07-18
+> **Current Version:** 1.0.0-b1
+> **Status:** Infrastructure complete, preparing for public launch
 
 ---
 
 ## 🔥 Critical Path (This Week)
 
-### Distribution & Discovery
+### Launch Preparation
 
-- [ ] **Docker Image** — Push to Docker Hub as `hypernexus/hypernexus`
-- [ ] **npm Package** — Publish as `hypernexus` on npmjs.com
-- [ ] **Homebrew Formula** — For Mac users
-- [ ] **One-Click Templates** — 3 templates: cursor-killer, research-assistant, code-reviewer
-- [ ] **Getting Started Tutorial** — 5-minute quickstart guide
-
-### Marketing Launch
-
-- [ ] **Product Hunt Launch** — Target #1 Product of the Day
-- [ ] **Reddit Post** — r/MachineLearning, r/LocalLLaMA
+- [x] **GitLab Migration** — Module path, CI/CD, deployment
+- [x] **Cloud Infrastructure** — API, MCP transport, Docker provisioning
+- [x] **Hetzner Deployment** — 14 services, 5 containers running
+- [x] **SSL Setup** — Scripts for cloud.hypernexus.site
+- [x] **Scheduled Healthchecks** — GitLab CI/CD monitoring
+- [ ] **Cloud Landing Page** — Build cloud.hypernexus.site frontend
+- [ ] **Pricing Page** — Implement Stripe checkout for both tiers
+- [ ] **Product Hunt Launch** — Craft narrative and launch
+- [ ] **Reddit Posts** — r/LocalLLaMA, r/MachineLearning
 - [ ] **Hacker News** — Show HN post
-- [ ] **Twitter Thread** — Viral thread about AI memory
-- [ ] **YouTube Video** — "Build Your Own AI Assistant in 10 Minutes"
 
-### Automation
+### Twitter Bot
 
-- [ ] **CDP Posting Script** — Auto-post to Reddit, HN, Product Hunt, Twitter
-- [ ] **DeepSeek Content Generator** — AI-written posts for each platform
-- [ ] **Analytics Dashboard** — Track stars, installs, traffic
+- [ ] **Add Twitter API Credits** — developer.twitter.com (402 error)
+- [ ] **Test Auto-Posting** — Verify content generation works
+- [ ] **Schedule Posts** — Regular content cadence
 
 ---
 
 ## 📈 Growth Phase (Next 2 Weeks)
 
-### Technical
+### Product
 
-- [ ] **VS Code Extension** — Sidebar with TN memory, catalog search
-- [ ] **Cursor Integration** — Deep integration with Cursor features
+- [ ] **MCP Client Examples** — Python, TypeScript, Go examples
 - [ ] **API Documentation** — OpenAPI/Swagger spec
-- [ ] **Test Coverage → 80%** — Unit, integration, E2E tests
-- [ ] **Performance Benchmarks** — Publish speed comparisons
+- [ ] **Getting Started Tutorial** — 5-minute quickstart
+- [ ] **Video Demo** — 2-minute product demo for Product Hunt
+- [ ] **VS Code Extension** — Sidebar with memory and catalog
 
-### Community
+### Marketing
 
-- [ **Community Marketplace** — Web UI for sharing MCP configs
-- [ ] **Discord Server** — Community chat and support
+- [ ] **Blog Series** — "Why AI Needs Persistent Memory"
+- [ ] **Case Studies** — Real-world developer workflows
+- [ ] **Community Discord** — Set up channels and bots
 - [ ] **GitHub Discussions** — Enable in repo settings
 - [ ] **Contributing Guide** — How to contribute
-- [ ] **Code of Conduct** — Community standards
 
-### Content
+### Sales
 
-- [ ] **Blog Series** — "Why AI Needs Memory" (5 posts)
-- [ ] **Video Tutorials** — YouTube series
-- [ ] **Case Studies** — Real-world usage examples
-- [ ] **Architecture Docs** — Deep dives on memory system
+- [ ] **Corporate Pitch Deck** — Slide deck for enterprise
+- [ ] **Sales One-Pager** — PDF for outreach
+- [ ] **Enterprise Outreach** — Target 10 companies
+- [ ] **Demo Environment** — cloud.hypernexus.site/demo
 
 ---
 
 ## 🚀 Scale Phase (This Month)
 
-### Product
+### Cloud Features
 
-- [ ] **AI-Powered Onboarding** — Auto-configure based on workflow
-- [ ] **Smart Suggestions** — "People who use X also use Y"
-- [ ] **Hosted SaaS** — cloud.hypernexus.site
-- [ ] **Enterprise Features** — SSO, audit logs, RBAC
-- [ ] **Mobile App** — iOS/Android companion
+- [ ] **User Dashboard** — Account management, usage stats
+- [ ] **Team Accounts** — Shared memory pools
+- [ ] **SSO Integration** — SAML/OIDC for enterprise
+- [ ] **Audit Logs** — Compliance and security
+- [ ] **Custom Domains** — white-label support
+
+### Billing
+
+- [ ] **Stripe Checkout** — $50 lifetime or $5/month
+- [ ] **License Key System** — Ed25519-signed tokens
+- [ ] **Usage Metering** — Track API calls, storage
+- [ ] **Invoice Generation** — PDF invoices for businesses
+- [ ] **Referral Program** — Credits for referrals
 
 ### Partnerships
 
 - [ ] **DeepSeek Partnership** — Official integration
-- [ ] **Ollama Collaboration** — Featured in Ollama ecosystem
-- [ ] **LM Studio Integration** — Deep integration
-- [ ] **GitHub Copilot** — Feed TN context to Copilot
-- [ ] **Notion/Obsidian** — Sync knowledge bases
-
-### Monetization
-
-- [ ] **Pricing Page** — Free, Pro ($19/mo), Team ($49/mo)
-- [ ] **Stripe Integration** — Already wired, need checkout flow
-- [ ] **Enterprise Sales** — Outreach to companies
-- [ ] **Training Program** — Online course and certification
+- [ ] **Ollama Collaboration** — Featured in ecosystem
+- [ ] **Cursor Integration** — Deep integration
+- [ ] **GitHub Copilot** — Feed context to Copilot
 
 ---
 
-## ✅ Completed
+## ✅ Completed (July 2026)
 
-### Infrastructure (Done)
+### Infrastructure
 
-- [x] Go sidecar (TN Kernel) on port 7778
+- [x] Go sidecar on port 7778
 - [x] Next.js dashboard on port 7779
-- [x] 26,180 catalog entries searchable via API
-- [x] 11,709 entries enriched with DeepSeek
-- [x] Wildcard SSL for *.hypernexus.site
-- [x] Stripe checkout wired
-- [x] Blog with 5 SEO posts
-- [x] Sitemap and robots.txt
-- [x] Google/Bing verification files
-- [x] Marketing post drafts (Reddit, HN)
-- [x] Graphical installer scripts (Windows, Linux, Mac)
-- [x] NSIS installer script
-- [x] Catalog search API
-- [x] CatalogBrowser component integrated in dashboard
+- [x] Cloud API on port 7780
+- [x] MCP Streamable HTTP transport
+- [x] Docker container provisioning
+- [x] Automatic backup system
+- [x] SSL certificate automation
+- [x] GitLab CI/CD pipeline
+- [x] Scheduled healthchecks
 
-### Memory System (Done)
+### Migration
 
-- [x] L1 Session Memory
-- [x] L2 Hot Vector Store
-- [x] L3 Cold Archive
-- [x] L4 Limbo Vault
-- [x] GraphRAG relations
-- [x] Spaced repetition
+- [x] GitHub → GitLab module path
+- [x] 427 files updated
+- [x] Docker containers renamed
+- [x] Hetzner services updated
+- [x] nginx configurations updated
 
-### MCP Catalog (Done)
+### Documentation
 
-- [x] 26,180 entries indexed
-- [x] Full-text search with FTS5
-- [x] Category filtering
-- [x] Source deduplication
-- [x] DeepSeek enrichment (45% complete)
+- [x] Cloud deployment guide
+- [x] SSL setup documentation
+- [x] API reference
+- [x] Hetzner migration script
 
 ---
 
 ## 📊 Metrics to Track
 
-| Metric | Current | Target |
-|--------|---------|--------|
-| GitHub Stars | 6 | 100 |
-| npm Downloads | 0 | 1,000/week |
-| Docker Pulls | 0 | 500/week |
-| Dashboard Users | ~5 | 100 |
-| Catalog Entries | 26,180 | 50,000 |
-| Enriched Entries | 11,709 | 26,180 |
-| Test Coverage | ~20% | 80% |
-| Contributors | 4 | 20 |
+| Metric | Current | Target (Month) | Target (Quarter) |
+|--------|---------|----------------|------------------|
+| GitLab Stars | 0 | 100 | 1,000 |
+| npm Downloads | 0 | 500/week | 5,000/week |
+| Cloud Users | 0 | 50 | 500 |
+| Paying Customers | 0 | 10 | 100 |
+| MRR | $0 | $500 | $5,000 |
+| Test Coverage | ~20% | 60% | 80% |
+| Contributors | 1 | 5 | 20 |
 
 ---
 
@@ -143,24 +132,24 @@
 
 **Launch Success (This Week):**
 
-- [ ] 50+ GitHub stars
-- [ ] 10+ npm downloads
-- [ ] 5+ Docker pulls
-- [ ] Featured on HN front page
-- [ ] 100+ visitors to hypernexus.site
+- [ ] Product Hunt #1 Product of the Day
+- [ ] 50+ GitLab stars
+- [ ] 100+ visitors to cloud.hypernexus.site
+- [ ] 5+ signups for cloud beta
+- [ ] Front page of r/LocalLLaMA
 
 **Growth Success (This Month):**
 
-- [ ] 500+ GitHub stars
-- [ ] 1,000+ npm downloads
-- [ ] 50+ community members
-- [ ] 3+ contributors
-- [ ] 10+ case studies
+- [ ] 500+ GitLab stars
+- [ ] 50 paying customers
+- [ ] $500 MRR
+- [ ] 50+ Discord members
+- [ ] 3+ case studies published
 
 **Scale Success (This Quarter):**
 
-- [ ] 5,000+ GitHub stars
-- [ ] 10,000+ npm downloads
-- [ ] 500+ community members
+- [ ] 5,000+ GitLab stars
+- [ ] 500 paying customers
+- [ ] $5,000 MRR
+- [ ] Enterprise pilot with 1 company
 - [ ] 20+ contributors
-- [ ] Revenue from SaaS
