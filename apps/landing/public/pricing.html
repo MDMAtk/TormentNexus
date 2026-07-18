@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pricing — HyperNexus</title>
+    <meta name="description" content="HyperNexus pricing: $50/seat for local license + cloud hosting. One price, everything included." />
     <style>
       * {
         margin: 0;
@@ -35,123 +36,191 @@
         color: #888;
         font-size: 1.2rem;
       }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 24px;
-        max-width: 1200px;
+      .pricing-container {
+        max-width: 600px;
         margin: 0 auto;
       }
       .card {
         background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid #00ff88;
         border-radius: 16px;
-        padding: 32px;
+        padding: 48px 32px;
         position: relative;
-      }
-      .card.popular {
-        border-color: #00ff88;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+        box-shadow: 0 0 40px rgba(0, 255, 136, 0.15);
       }
       .badge {
         position: absolute;
-        top: -12px;
+        top: -14px;
         left: 50%;
         transform: translateX(-50%);
         background: linear-gradient(135deg, #00ff88, #00ccff);
         color: #000;
-        padding: 4px 16px;
+        padding: 6px 24px;
         border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
       }
       .card h2 {
-        font-size: 1.5rem;
+        font-size: 2rem;
         margin-bottom: 8px;
+        text-align: center;
+      }
+      .card .subtitle {
+        color: #888;
+        text-align: center;
+        margin-bottom: 32px;
+        font-size: 1.1rem;
+      }
+      .price-box {
+        text-align: center;
+        margin-bottom: 32px;
+        padding: 24px;
+        background: rgba(0, 255, 136, 0.05);
+        border-radius: 12px;
       }
       .price {
-        font-size: 3rem;
-        font-weight: 700;
-        margin: 16px 0;
+        font-size: 4rem;
+        font-weight: 800;
+        color: #00ff88;
+        line-height: 1;
       }
       .price span {
-        font-size: 1rem;
+        font-size: 1.2rem;
         color: #888;
+        font-weight: 400;
       }
-      .price-old {
-        text-decoration: line-through;
-        color: #94a3b8;
-        font-size: 20px;
-        margin-bottom: 4px;
+      .price-note {
+        color: #888;
+        font-size: 14px;
+        margin-top: 8px;
       }
-      .price-sale {
-        color: #ef4444;
-        font-size: 12px;
-        font-weight: 800;
+      .divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 32px 0;
+      }
+      .section-title {
+        font-size: 14px;
+        font-weight: 600;
         text-transform: uppercase;
-        margin-bottom: 8px;
+        letter-spacing: 1px;
+        color: #00ccff;
+        margin-bottom: 16px;
       }
       .features {
         list-style: none;
-        margin: 24px 0;
+        margin-bottom: 32px;
       }
       .features li {
-        padding: 8px 0;
-        color: #888;
+        padding: 10px 0;
+        color: #ccc;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
       }
       .features li::before {
-        content: "✓ ";
+        content: "✓";
         color: #00ff88;
+        font-weight: 700;
+        min-width: 20px;
+      }
+      .features li.highlight {
+        color: #fff;
+        font-weight: 500;
       }
       .btn {
         display: block;
         width: 100%;
-        padding: 14px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
+        padding: 18px;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 700;
         text-align: center;
         text-decoration: none;
-        transition: transform 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: none;
+        cursor: pointer;
       }
       .btn:hover {
         transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
       }
       .btn-primary {
         background: linear-gradient(135deg, #00ff88, #00ccff);
         color: #000;
       }
-      .btn-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-      .enterprise {
+      .guarantee {
         text-align: center;
-        margin-top: 60px;
-        padding: 40px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .enterprise h2 {
-        font-size: 2rem;
-        margin-bottom: 16px;
-      }
-      .enterprise p {
+        margin-top: 24px;
         color: #888;
-        margin-bottom: 24px;
+        font-size: 14px;
       }
-      .note {
+      .guarantee strong {
+        color: #00ff88;
+      }
+      .comparison {
+        max-width: 800px;
+        margin: 80px auto 0;
+      }
+      .comparison h2 {
         text-align: center;
-        margin-top: 40px;
+        font-size: 2rem;
+        margin-bottom: 32px;
+      }
+      .comparison table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .comparison th,
+      .comparison td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .comparison th {
+        color: #00ccff;
+        font-weight: 600;
+      }
+      .comparison td:first-child {
+        color: #fff;
+        font-weight: 500;
+      }
+      .comparison .check {
+        color: #00ff88;
+      }
+      .comparison .x {
+        color: #666;
+      }
+      .faq {
+        max-width: 800px;
+        margin: 80px auto 0;
+      }
+      .faq h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 32px;
+      }
+      .faq-item {
+        margin-bottom: 24px;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+      }
+      .faq-item h3 {
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      .faq-item p {
+        color: #888;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 80px;
         color: #666;
         font-size: 14px;
       }
-      .note a {
+      .footer a {
         color: #00ff88;
         text-decoration: none;
       }
@@ -159,82 +228,174 @@
   </head>
   <body>
     <div class="header">
-      <h1>Simple, Transparent Pricing</h1>
-      <p>Start free. Scale as you grow. No hidden fees.</p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h2>Community</h2>
-        <p style="color: #888">Perfect for getting started</p>
-        <div class="price">$0 <span>/month</span></div>
-        <ul class="features">
-          <li>1 project</li>
-          <li>100 memories</li>
-          <li>10 MCP tools</li>
-          <li>Community support</li>
-          <li>Basic analytics</li>
-          <li>Local LLM support</li>
-          <li>Self-hosted only</li>
-        </ul>
-        <a
-          href="https://gitlab.com/robertpelloni/HyperNexus"
-          class="btn btn-secondary"
-          >Get Started Free</a
-        >
-      </div>
-
-      <div class="card popular">
-        <div class="badge">Most Popular</div>
-        <h2>Professional</h2>
-        <p style="color: #888">
-          For growing teams that need governance and compliance
-        </p>
-        <div class="price-old">$100</div>
-        <div class="price-sale">SALE ENDING SOON!</div>
-        <div class="price">$5 <span>/ seat / month</span></div>
-        <ul class="features">
-          <li>Unlimited projects</li>
-          <li>Unlimited memories</li>
-          <li>Unlimited MCP tools</li>
-          <li>Priority support</li>
-          <li>Advanced analytics</li>
-          <li>Custom templates</li>
-          <li>API access</li>
-          <li>Webhooks</li>
-          <li>SSO authentication</li>
-          <li>Role-based access</li>
-          <li>Audit logs</li>
-        </ul>
-        <a href="https://cloud.hypernexus.site" class="btn btn-primary"
-          >Buy Now →</a
-        >
-      </div>
-
-      <div class="card">
-        <h2>Enterprise</h2>
-        <p style="color: #888">Custom deployment and dedicated support</p>
-        <div class="price">Custom</div>
-        <ul class="features">
-          <li>Everything in Professional</li>
-          <li>Unlimited team members</li>
-          <li>Dedicated support</li>
-          <li>Custom integrations</li>
-          <li>SLA guarantees</li>
-          <li>On-premise deployment</li>
-          <li>Custom training</li>
-          <li>Compliance certifications</li>
-        </ul>
-        <a href="mailto:enterprise@hypernexus.site" class="btn btn-secondary"
-          >Contact Sales</a
-        >
-      </div>
-    </div>
-
-    <div class="note">
+      <h1>One Price. Everything Included.</h1>
       <p>
-        For personal use, individual developers, non-commercial, or self-hosted
-        deployments → <a href="https://hypernexus.site">HyperNexus.site</a>
+        $50/seat gets you local license + cloud hosting for 1 full year.
+      </p>
+    </div>
+
+    <div class="pricing-container">
+      <div class="card">
+        <div class="badge">COMPLETE PACKAGE</div>
+        <h2>HyperNexus Professional</h2>
+        <p class="subtitle">Local license + cloud hosting — everything you need</p>
+
+        <div class="price-box">
+          <div class="price">$50 <span>/ seat / year</span></div>
+          <p class="price-note">That's $4.17/month. Less than a coffee.</p>
+        </div>
+
+        <div class="section-title">What's Included</div>
+        <ul class="features">
+          <li class="highlight">
+            Lifetime local license (yours forever)
+          </li>
+          <li class="highlight">
+            1 year cloud hosting included
+          </li>
+          <li>Unlimited projects and memories</li>
+          <li>20,000+ MCP tool integrations</li>
+          <li>Works with 38+ AI agents</li>
+          <li>Multi-tier memory (L1/L2/L3)</li>
+          <li>Automatic daily backups</li>
+          <li>Cross-device sync</li>
+          <li>Team knowledge sharing</li>
+          <li>Full audit logs</li>
+          <li>Priority email support</li>
+          <li>All future 1.x updates</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <div class="section-title">After Year 1</div>
+        <ul class="features">
+          <li>Local license continues working forever</li>
+          <li>Cloud renewal: $25/year (optional)</li>
+          <li>Keep your data — export anytime</li>
+          <li>No lock-in, no vendor hostage</li>
+        </ul>
+
+        <a href="https://cloud.hypernexus.site" class="btn btn-primary">
+          Get Started →
+        </a>
+
+        <p class="guarantee">
+          <strong>30-day money-back guarantee.</strong> No questions asked.
+        </p>
+      </div>
+    </div>
+
+    <div class="comparison">
+      <h2>How We Compare</h2>
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>HyperNexus</th>
+          <th>Cursor</th>
+          <th>GitHub Copilot</th>
+        </tr>
+        <tr>
+          <td>Persistent Memory</td>
+          <td class="check">✓ Included</td>
+          <td class="x">✗</td>
+          <td class="x">✗</td>
+        </tr>
+        <tr>
+          <td>MCP Tool Catalog</td>
+          <td class="check">✓ 20,000+</td>
+          <td class="x">Limited</td>
+          <td class="x">Limited</td>
+        </tr>
+        <tr>
+          <td>Multi-Agent Support</td>
+          <td class="check">✓ 38+ agents</td>
+          <td class="x">✗</td>
+          <td class="x">✗</td>
+        </tr>
+        <tr>
+          <td>Cloud Hosting</td>
+          <td class="check">✓ Included</td>
+          <td class="check">✓</td>
+          <td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Local-First Option</td>
+          <td class="check">✓ Full offline</td>
+          <td class="x">✗</td>
+          <td class="x">✗</td>
+        </tr>
+        <tr>
+          <td>Open Source Core</td>
+          <td class="check">✓ 100%</td>
+          <td class="x">✗</td>
+          <td class="x">✗</td>
+        </tr>
+        <tr>
+          <td>Annual Price</td>
+          <td class="check">$50/seat</td>
+          <td>$240/seat</td>
+          <td>$120/seat</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <h3>What happens after year 1?</h3>
+        <p>
+          Your local license continues working forever — no expiration. Cloud
+          features (sync, backups, team sharing) renew at $25/year, but that's
+          completely optional. Your data is always yours.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I use it without cloud?</h3>
+        <p>
+          Absolutely. The local license works completely offline. Cloud features
+          are optional convenience — sync across devices, automatic backups, and
+          team collaboration.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>What if I'm not satisfied?</h3>
+        <p>
+          We offer a 30-day money-back guarantee, no questions asked. We're
+          confident HyperNexus will transform your AI workflow.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Do you offer team/enterprise pricing?</h3>
+        <p>
+          Yes! For teams of 5+, we offer volume discounts and enterprise features
+          like SSO, RBAC, and dedicated support. Contact
+          <a href="mailto:sales@hypernexus.site" style="color: #00ff88"
+            >sales@hypernexus.site</a
+          >.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Which AI agents does it work with?</h3>
+        <p>
+          HyperNexus works with 38+ AI coding agents including Cursor, Claude
+          Code, GitHub Copilot, Windsurf, Aider, CodeWhale, Continue, and many
+          more. One install configures them all.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Questions? Contact
+        <a href="mailto:support@hypernexus.site">support@hypernexus.site</a>
+      </p>
+      <p style="margin-top: 16px">
+        <a href="https://hypernexus.site">← Back to HyperNexus</a>
       </p>
     </div>
   </body>

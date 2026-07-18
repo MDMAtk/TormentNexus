@@ -10,21 +10,22 @@
 
 ## 💰 Pricing
 
-| | **Local License** | **Cloud Subscription** |
-|---|---|---|
-| **Price** | **$50 one-time** (lifetime) | **$5/month** |
-| **Storage** | Local SQLite | Cloud-managed, encrypted |
-| **Memory Sync** | ❌ Single device | ✅ All devices |
-| **Backups** | Your responsibility | Automatic daily |
-| **Team Sharing** | ❌ | ✅ (coming soon) |
-| **Expiration** | **Never** | Stops if unpaid |
-| **Best For** | Privacy-focused devs | Convenience + teams |
+| | **HyperNexus Professional** |
+|---|---|
+| **Price** | **$50/seat/year** |
+| **What's Included** | Local license + cloud hosting |
+| **Local License** | ✅ Lifetime (yours forever) |
+| **Cloud Hosting** | ✅ 1 year included |
+| **Renewal** | $25/year for cloud (optional) |
+| **Memory** | Unlimited (L1/L2/L3) |
+| **MCP Tools** | 20,000+ included |
+| **Support** | Priority email |
+| **Updates** | All 1.x updates free |
 
-> **Free forever:** Open-source core with all features.
-> **$50 lifetime:** Own it forever, no recurring fees.
-> **$5/month cloud:** Sync, backups, and team features.
+> **One price. Everything included.**
+> Local license never expires. Cloud renewal is optional.
 
-**[Get Started →](https://cloud.hypernexus.site)**
+**[Get Started →](https://cloud.hypernexus.site)** | **[View Pricing Page](https://hypernexus.site/pricing.html)**
 
 ---
 

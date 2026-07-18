@@ -1,152 +1,78 @@
 # Pricing Strategy — HyperNexus
 
 > **Last Updated:** 2026-07-18
-> **Status:** Draft — Ready for implementation
+> **Status:** Ready for implementation
 
 ---
 
-## 💰 Pricing Models
+## 💰 Pricing Model
 
-### Option A: Local License (One-Time Purchase)
+### One Package: $50/Seat/Year
 
 | | Details |
 |---|---|
-| **Price** | $50 |
-| **Duration** | Lifetime for current major version |
-| **Upgrades** | $25/year for new major versions |
-| **Storage** | Local SQLite on user's machine |
-| **Backups** | User's responsibility |
-| **Support** | Community (GitHub/GitLab issues) |
-| **Updates** | Security patches free forever |
+| **Price** | $50/seat/year |
+| **Includes** | Local license + cloud hosting |
+| **Local License** | Lifetime (never expires) |
+| **Cloud Hosting** | 1 year included |
+| **Cloud Renewal** | $25/year (optional) |
+| **Storage** | Cloud-managed + local SQLite |
+| **Backups** | Automatic daily |
+| **Support** | Priority email |
+| **Updates** | All 1.x updates free |
 
-**What You Get:**
+### Why This Pricing Works
 
-- Full HyperNexus agent + dashboard
-- L1/L2 memory system (local)
-- 20,000+ MCP tool routing
-- Multi-agent coordination
-- Native tools (filesystem, web, etc.)
-- All future 1.x updates
-- Community support
-
-**Best For:**
-
-- Privacy-focused developers
-- Teams with own infrastructure
-- Offline/air-gapped environments
-- Budget-conscious users
-- Hobbyists and learners
-
----
-
-### Option B: Cloud Subscription (Monthly)
-
-| | Details |
-|---|---|
-| **Price** | $5/month |
-| **Billing** | Monthly, auto-renew |
-| **Cancellation** | Immediate loss of access |
-| **Storage** | Cloud-managed, encrypted |
-| **Backups** | Automatic daily backups |
-| **Support** | Email support |
-| **Updates** | Always latest version |
-
-**What You Get:**
-
-- Everything in Local License, PLUS:
-- Cloud-synced memory across devices
-- Sandboxed MCP container execution
-- Automatic backups (30-day retention)
-- Usage dashboard and analytics
-- Priority email support
-- Team sharing (coming soon)
-
-**Best For:**
-
-- Cloud-first developers
-- Multi-device users
-- Teams wanting managed infrastructure
-- Users who don't want to manage backups
-- Convenience-focused workflows
-
----
-
-### Option C: Enterprise (Custom Pricing)
-
-| Tier | Users | Price | Includes |
-|------|-------|-------|----------|
-| **Team** | 5-20 | $500/month | SSO, shared memory, audit logs |
-| **Business** | 20-100 | $2,000/month | + RBAC, custom domains, SLA |
-| **Enterprise** | 100+ | Custom | + On-prem, air-gapped, dedicated support |
-
-**What You Get:**
-
-- Everything in Cloud, PLUS:
-- Single Sign-On (SAML/OIDC)
-- Role-Based Access Control
-- Audit logs for compliance
-- Shared team memory pools
-- Custom domain support
-- Dedicated support channel
-- SLA guarantees (99.9% uptime)
-- On-premises deployment option
-
-**Best For:**
-
-- Regulated industries (finance, healthcare)
-- Companies with compliance requirements
-- Teams needing shared AI knowledge
-- Organizations wanting vendor support
+1. **Simple** — One price, everything included
+2. **Affordable** — $4.17/month, less than coffee
+3. **No lock-in** — Local license works forever
+4. **Low risk** — 30-day money-back guarantee
+5. **Predictable** — No surprise charges
 
 ---
 
 ## 🧠 Psychology of Pricing
 
-### Why $50 is the Right Price
+### Why $50/Year is the Right Price
 
 1. **Impulse buy territory** — No procurement process needed
 2. **Less than a dinner out** — Easy to justify
-3. **Lifetime feels permanent** — Builds trust and loyalty
-4. **Lower than competitors** — Cursor costs $20/month, GitHub Copilot $10/month
-5. **One-time pain** — No recurring mental overhead
+3. **Annual feels like a deal** — "Only $4.17/month!"
+4. **Lower than competitors** — Cursor is $240/year, Copilot is $120/year
+5. **Includes everything** — No hidden costs or upsells
 
-### Why $5/month for Cloud
+### The Value Proposition
 
-1. **Cheaper than coffee** — Starbucks costs more
-2. **Sticky once adopted** — Memory makes switching hard
-3. **Recurring revenue** — Funds ongoing development
-4. **Lower barrier than $50** — "I'll try it for a month"
-5. **Automatic value** — Backups, sync, updates included
+**For $50/year, you get:**
 
-### The Expiration Psychology
+- Persistent AI memory across all sessions
+- 20,000+ MCP tool integrations
+- Works with 38+ AI agents
+- Cloud sync and backups
+- Team knowledge sharing
+- Full audit logs
 
-**Local License (Never Expires):**
+**Without HyperNexus:**
 
-- "I own this forever" — feels safe
-- No anxiety about cancellation
-- Trust in the product
-- Willing to pay more upfront
+- 15 min/session wasted re-explaining context
+- 70% longer onboarding for new hires
+- No knowledge sharing across team
+- No compliance controls
 
-**Cloud Subscription (Expires if Unpaid):**
-
-- "I'm renting convenience" — expected
-- Data export tools before cancellation
-- Grace period (30 days) before deletion
-- Clear value for ongoing payment
+**ROI:** $50/year saves $4,687/developer/year in lost productivity.
 
 ---
 
 ## 📊 Competitive Analysis
 
-| Product | Price | Memory | Tools | Cloud |
-|---------|-------|--------|-------|-------|
-| **HyperNexus Local** | $50 lifetime | ✅ L1/L2 | 20,000+ | ❌ |
-| **HyperNexus Cloud** | $5/month | ✅ L1/L2/L3 | 20,000+ | ✅ |
-| Cursor | $20/month | ❌ | Limited | ✅ |
-| GitHub Copilot | $10/month | ❌ | Limited | ✅ |
-| Claude Code | $20/month | ❌ | Limited | ✅ |
-| Aider | Free | ❌ | Limited | ❌ |
-| Continue | Free | ❌ | Limited | ❌ |
+| Product | Annual Price | Memory | Tools | Cloud | Open Source |
+|---------|--------------|--------|-------|-------|-------------|
+| **HyperNexus** | **$50/seat** | ✅ L1/L2/L3 | 20,000+ | ✅ | ✅ Core |
+| Cursor | $240/seat | ❌ | Limited | ✅ | ❌ |
+| GitHub Copilot | $120/seat | ❌ | Limited | ✅ | ❌ |
+| Claude Code | $240/seat | ❌ | Limited | ✅ | ❌ |
+| Aider | Free | ❌ | Limited | ❌ | ✅ |
+| Continue | Free | ❌ | Limited | ❌ | ✅ |
 
 **HyperNexus Differentiation:**
 
@@ -158,12 +84,35 @@
 
 ---
 
+## 💼 Enterprise Pricing
+
+For teams of 5+, we offer volume discounts:
+
+| Tier | Users | Price | Includes |
+|------|-------|-------|----------|
+| **Team** | 5-20 | $500/month | SSO, shared memory, audit logs |
+| **Business** | 20-100 | $2,000/month | + RBAC, custom domains, SLA |
+| **Enterprise** | 100+ | Custom | + On-prem, air-gapped, dedicated support |
+
+**Enterprise Features:**
+
+- Single Sign-On (SAML/OIDC)
+- Role-Based Access Control
+- Audit logs for compliance
+- Shared team memory pools
+- Custom domain support
+- Dedicated support channel
+- SLA guarantees (99.9% uptime)
+- On-premises deployment option
+
+---
+
 ## 🚀 Implementation Plan
 
 ### Phase 1: Stripe Integration (Week 1)
 
-- [ ] Create Stripe products (local license, cloud subscription)
-- [ ] Implement checkout flow on hypernexus.site
+- [ ] Create Stripe product: "HyperNexus Professional - $50/seat/year"
+- [ ] Implement checkout flow on cloud.hypernexus.site
 - [ ] License key generation (Ed25519-signed tokens)
 - [ ] Email delivery of license keys
 - [ ] Account creation and management
@@ -171,20 +120,12 @@
 ### Phase 2: License Validation (Week 2)
 
 - [ ] License key validation in Go sidecar
-- [ ] Grace period handling (7 days for cloud)
+- [ ] Cloud renewal handling ($25/year after year 1)
 - [ ] License expiration notifications
 - [ ] Offline validation for local licenses
-- [ ] Upgrade path from v1 to v2
+- [ ] Data export tools
 
-### Phase 3: Cloud Billing (Week 3)
-
-- [ ] Usage metering (API calls, storage)
-- [ ] Invoice generation
-- [ ] Payment failure handling
-- [ ] Account suspension flow
-- [ ] Data export before deletion
-
-### Phase 4: Enterprise Sales (Week 4)
+### Phase 3: Enterprise Sales (Week 3)
 
 - [ ] Sales one-pager
 - [ ] Corporate pitch deck
@@ -199,9 +140,8 @@
 ### A/B Tests to Run
 
 1. **Price sensitivity** — Test $40 vs $50 vs $60
-2. **Annual discount** — Test $50/year vs $5/month
-3. **Trial length** — Test 7-day vs 14-day vs 30-day
-4. **Feature gating** — Test what drives upgrades
+2. **Trial length** — Test 7-day vs 14-day vs 30-day
+3. **Feature gating** — Test what drives upgrades
 
 ### Metrics to Track
 
@@ -209,9 +149,8 @@
 |--------|--------|-------------|
 | Conversion rate | 5% | Visitors → signups |
 | Trial-to-paid | 20% | Trial → paying |
-| Monthly churn | <5% | Cancellations / active |
+| Annual renewal | 80% | Year 1 → Year 2 |
 | LTV:CAC | >3:1 | Lifetime value / acquisition cost |
-| Expansion revenue | 20% | Upgrades / total revenue |
 
 ---
 
@@ -219,7 +158,7 @@
 
 ### Launch Sequence
 
-1. **Product Hunt** — Free tier generates awareness
+1. **Product Hunt** — Generate awareness
 2. **Reddit (r/LocalLLaMA)** — Community-driven adoption
 3. **Hacker News** — Technical credibility
 4. **Twitter/X** — Viral content from marketing agent
@@ -229,7 +168,7 @@
 ### Messaging Framework
 
 **For Developers:**
-> "Your AI finally remembers everything. Install in 30 seconds, works with every tool you already use."
+> "Your AI finally remembers everything. $50/year, works with every tool you already use."
 
 **For Teams:**
 > "Shared AI memory for your entire team. Stop re-explaining your codebase to every new hire."
@@ -241,17 +180,17 @@
 
 ## 📋 FAQ
 
-**Q: What happens to my data if I stop paying for cloud?**
-A: You have 30 days to export everything. After that, data is permanently deleted. Local licenses never have this issue.
+**Q: What happens after year 1?**
+A: Your local license continues working forever. Cloud features (sync, backups, team sharing) renew at $25/year, but that's completely optional.
 
-**Q: Can I switch from cloud to local?**
-A: Yes! Export your memory from cloud and import locally. Your license converts automatically.
+**Q: Can I use it without cloud?**
+A: Absolutely. The local license works completely offline. Cloud features are optional convenience.
 
 **Q: Is there a free tier?**
-A: The open-source core is free forever. Cloud features require a subscription.
+A: The open-source core is free forever. Professional features require a license.
 
 **Q: Do you offer refunds?**
-A: Yes, 30-day money-back guarantee on all plans.
+A: Yes, 30-day money-back guarantee, no questions asked.
 
 **Q: Can I self-host the cloud version?**
 A: Enterprise tier includes on-premises deployment. Contact <sales@hypernexus.site>.

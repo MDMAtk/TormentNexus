@@ -6,26 +6,23 @@
 
 ## 💰 Pricing Strategy
 
-### Two Models, One Product
+### One Package: $50/Seat/Year
 
-| | **Local License** | **Cloud Subscription** |
-|---|---|---|
-| **Price** | $50 one-time (lifetime per major version) | $5/month |
-| **Renewal** | $25/year for upgrades to new major versions | Auto-renews |
-| **Storage** | Local SQLite + your own backups | Managed cloud storage |
-| **Memory** | Your machine, your control | Synced across devices |
-| **MCP Sandboxing** | Runs on your hardware | Isolated cloud containers |
-| **Native Tools** | ✅ Full access | ✅ Full access |
-| **Expiration** | Never (but upgrades cost $25/year) | Stops if you stop paying |
-| **Best For** | Privacy-focused devs, teams with own infra | Convenience, teams, cloud-first |
+| | Details |
+|---|---|
+| **Price** | $50/seat/year |
+| **Includes** | Local license + cloud hosting |
+| **Local License** | Lifetime (never expires) |
+| **Cloud Hosting** | 1 year included |
+| **Cloud Renewal** | $25/year (optional) |
 
 ### Why This Pricing Works
 
-1. **$50 is impulse-buy territory** — No procurement process needed
-2. **$5/month is cheaper than coffee** — Easy to justify for persistent AI memory
-3. **Lifetime license builds trust** — You own it forever
-4. **Cloud subscription funds development** — Recurring revenue sustains the project
-5. **Both options exist** — Users choose what fits their workflow
+1. **Simple** — One price, everything included
+2. **Affordable** — $4.17/month, less than coffee
+3. **No lock-in** — Local license works forever
+4. **Low risk** — 30-day money-back guarantee
+5. **Predictable** — No surprise charges
 
 ### Revenue Projections
 
