@@ -35,13 +35,7 @@ const SESSION_STATUS_PRIORITY: Record<
 	stopped: 0,
 };
 
-const TABS = [
-	{ id: "console", label: "Mission Control" },
-	{ id: "mcp", label: "MCP & Tool Registry" },
-	{ id: "memory", label: "Memory & GraphRAG" },
-	{ id: "workflows", label: "Swarm & Workflows" },
-	{ id: "settings", label: "Settings & Commercial" },
-] as const;
+
 
 export function sortSessions(sessions: DashboardSessionSummary[]) {
 	if (!Array.isArray(sessions)) return [];
@@ -76,11 +70,9 @@ export function DashboardHomeClient() {
 function DashboardHomeClientContent() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const activeTab = searchParams.get("tab") || "console";
 
-	const handleTabChange = (tabId: string) => {
-		router.replace(`/dashboard?tab=${tabId}`);
-	};
+
+
 
 	const utils = trpc.useUtils();
 	const toolsClient = trpc.tools as any;
@@ -351,7 +343,7 @@ function DashboardHomeClientContent() {
 	const renderActiveTab = () => {
 		return (
 			<DashboardHomeView
-				activeTab={activeTab}
+
 				generatedAtLabel={
 					currentTimestamp
 						? new Date(currentTimestamp).toLocaleTimeString()
@@ -382,12 +374,8 @@ function DashboardHomeClientContent() {
 				}}
 				pendingSessionActionId={pendingSessionActionId}
 			>
-				{activeTab === "browser" && (
-					<>
-						<BrowserToolWidget />
-						<VibeCheckWidget />
-					</>
-				)}
+				<BrowserToolWidget />
+				<VibeCheckWidget />
 			</DashboardHomeView>
 		);
 	};

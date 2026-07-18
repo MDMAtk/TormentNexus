@@ -5,7 +5,7 @@ import {
   getPreferredWebPorts,
   readTormentNexusStartLockRecord,
   summarizeBrowserExtensionArtifacts,
-} from './dev_tabby_ready_helpers.mjs';
+} from './testing/dev_tabby_ready_helpers.mjs';
 
 const REPO_ROOT = process.cwd();
 const WEB_PORT_CANDIDATES = [3000, 3010, 3020, 3030, 3040];
