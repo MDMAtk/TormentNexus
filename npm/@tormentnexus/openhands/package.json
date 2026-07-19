@@ -1,0 +1,12 @@
+{
+  "name": "@tormentnexus/openhands",
+  "version": "1.0.0-b1",
+  "description": "TormentNexus for OpenHands — Persistent AI memory, MCP tools, and context harvesting in your autonomous agent",
+  "main": "index.js",
+  "bin": { "tnopenhands": "./cli.js" },
+  "scripts": { "install": "node setup.js" },
+  "keywords": ["tormentnexus", "openhands", "mcp", "memory", "ai-agent"],
+  "repository": { "type": "git", "url": "git+https://github.com/MDMAtk/TormentNexus.git" },
+  "license": "MIT",
+  "files": ["setup.js", "cli.js", "microagent.md", "config.toml", "index.js", "package.json"]
+}

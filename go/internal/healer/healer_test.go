@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
+	"github.com/MDMAtk/TormentNexus/internal/controlplane"
 )
 
 type mockVault struct {

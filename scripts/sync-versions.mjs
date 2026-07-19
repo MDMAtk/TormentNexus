@@ -31,6 +31,8 @@ const patterns = [
   'apps/tormentnexus-extension/package.json',
   'apps/vscode/package.json',
   'apps/tormentnexus-extension/packages/*/package.json',
+  'apps/tormentnexus-extension/pages/*/package.json',
+  'apps/tormentnexus-extension/chrome-extension/package.json',
   'cli/mcp-router-cli/package.json',
 ];
 

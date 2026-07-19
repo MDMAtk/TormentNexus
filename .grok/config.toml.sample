@@ -1,0 +1,5 @@
+# TormentNexus MCP server — merge into ~/.grok/config.toml
+[mcp_servers.tormentnexus]
+command = "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe"
+args = ["mcp"]
+enabled = true

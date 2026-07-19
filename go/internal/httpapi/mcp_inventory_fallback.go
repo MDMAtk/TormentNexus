@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/harnesses"
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcp"
+	"github.com/MDMAtk/TormentNexus/internal/harnesses"
+	"github.com/MDMAtk/TormentNexus/internal/mcp"
 )
 
 type localMCPInventoryView struct {

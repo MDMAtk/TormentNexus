@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing — TormentNexus</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          Inter,
+          -apple-system,
+          sans-serif;
+        background: #0a0a0a;
+        color: #e0e0e0;
+        min-height: 100vh;
+        padding: 60px 20px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .header h1 {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .header p {
+        color: #888;
+        font-size: 1.2rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 32px;
+        position: relative;
+      }
+      .card.popular {
+        border-color: #00ff88;
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+      }
+      .badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        color: #000;
+        padding: 4px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .card h2 {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+      }
+      .price {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 16px 0;
+      }
+      .price span {
+        font-size: 1rem;
+        color: #888;
+      }
+      .price-old {
+        text-decoration: line-through;
+        color: #94a3b8;
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+      .price-sale {
+        color: #ef4444;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .features {
+        list-style: none;
+        margin: 24px 0;
+      }
+      .features li {
+        padding: 8px 0;
+        color: #888;
+      }
+      .features li::before {
+        content: "✓ ";
+        color: #00ff88;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: transform 0.2s;
+      }
+      .btn:hover {
+        transform: scale(1.02);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        color: #000;
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .enterprise {
+        text-align: center;
+        margin-top: 60px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .enterprise h2 {
+        font-size: 2rem;
+        margin-bottom: 16px;
+      }
+      .enterprise p {
+        color: #888;
+        margin-bottom: 24px;
+      }
+      .note {
+        text-align: center;
+        margin-top: 40px;
+        color: #666;
+        font-size: 14px;
+      }
+      .note a {
+        color: #00ff88;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Simple, Transparent Pricing</h1>
+      <p>Start free. Scale as you grow. No hidden fees.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Community</h2>
+        <p style="color: #888">Perfect for getting started</p>
+        <div class="price">$0 <span>/month</span></div>
+        <ul class="features">
+          <li>1 project</li>
+          <li>100 memories</li>
+          <li>10 MCP tools</li>
+          <li>Community support</li>
+          <li>Basic analytics</li>
+          <li>Local LLM support</li>
+          <li>Self-hosted only</li>
+        </ul>
+        <a
+          href="https://github.com/MDMAtk/TormentNexus"
+          class="btn btn-secondary"
+          >Get Started Free</a
+        >
+      </div>
+
+      <div class="card popular">
+        <div class="badge">Most Popular</div>
+        <h2>Professional</h2>
+        <p style="color: #888">
+          For growing teams that need governance and compliance
+        </p>
+        <div class="price-old">$100</div>
+        <div class="price-sale">SALE ENDING SOON!</div>
+        <div class="price">$5 <span>/ seat / month</span></div>
+        <ul class="features">
+          <li>Unlimited projects</li>
+          <li>Unlimited memories</li>
+          <li>Unlimited MCP tools</li>
+          <li>Priority support</li>
+          <li>Advanced analytics</li>
+          <li>Custom templates</li>
+          <li>API access</li>
+          <li>Webhooks</li>
+          <li>SSO authentication</li>
+          <li>Role-based access</li>
+          <li>Audit logs</li>
+        </ul>
+        <a href="https://cloud.hypernexus.site" class="btn btn-primary"
+          >Buy Now →</a
+        >
+      </div>
+
+      <div class="card">
+        <h2>Enterprise</h2>
+        <p style="color: #888">Custom deployment and dedicated support</p>
+        <div class="price">Custom</div>
+        <ul class="features">
+          <li>Everything in Professional</li>
+          <li>Unlimited team members</li>
+          <li>Dedicated support</li>
+          <li>Custom integrations</li>
+          <li>SLA guarantees</li>
+          <li>On-premise deployment</li>
+          <li>Custom training</li>
+          <li>Compliance certifications</li>
+        </ul>
+        <a href="mailto:enterprise@hypernexus.site" class="btn btn-secondary"
+          >Contact Sales</a
+        >
+      </div>
+    </div>
+
+    <div class="note">
+      <p>
+        For personal use, individual developers, non-commercial, or self-hosted
+        deployments → <a href="https://tormentnexus.site">TormentNexus.site</a>
+      </p>
+    </div>
+  </body>
+</html>

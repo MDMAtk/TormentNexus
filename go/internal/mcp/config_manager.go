@@ -7,7 +7,7 @@ package mcp
  * WHAT: Go-native implementation of the MCP configuration manager.
  * Handles reading, writing, and syncing mcp.jsonc server definitions.
  *
- * WHY: Total Autonomy — The Go sidecar must be capable of managing its own
+ * WHY: Total Autonomy — The TN Kernel must be capable of managing its own
  * MCP ecosystem and server lifecycle without the Node control plane.
  */
 

@@ -5,7 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"sync"
+
+	"github.com/MDMAtk/TormentNexus/internal/memorystore"
+	"github.com/MDMAtk/TormentNexus/internal/repograph"
 )
+
+var GlobalVectorStore *memorystore.VectorStore
+var GlobalRepoGraph *repograph.RepoGraphService
 
 type ToolResponse struct {
 	Content []TextContent `json:"content"`
@@ -48,6 +54,20 @@ func getInt(args map[string]interface{}, key string) (int, bool) {
 	return 0, false
 }
 
+func getFloat(args map[string]interface{}, key string) (float64, bool) {
+	v, ok := args[key]
+	if !ok {
+		return 0, false
+	}
+	switch n := v.(type) {
+	case float64:
+		return n, true
+	case int:
+		return float64(n), true
+	}
+	return 0, false
+}
+
 func getBool(args map[string]interface{}, key string) (bool, bool) {
 	if v, ok := args[key]; ok {
 		if b, ok := v.(bool); ok {
@@ -68,6 +88,18 @@ func NewRegistry() *Registry {
 	r := &Registry{
 		handlers: make(map[string]ToolHandler),
 	}
+	// Built-in tools — handlers are in server.go (the only clean handler file).
+	// Additional tools are served via the MCP server (mcp_server.go) and
+	// mcpimpl dispatch (5,400+ generated handlers).
+	r.Register("echo", HandleEcho)
+	r.Register("hello_world", HandleHelloWorld)
+	r.Register("codebase_search", HandleCodebaseSearch)
+	r.Register("codebase_outline", HandleCodebaseOutline)
+	// TN-native memory tools — same backend as /api/memory/* HTTP API and tn_memory_store pi extension
+	r.Register("add_memory", HandleAddMemory)
+	r.Register("search_memory", HandleSearchMemory)
+	r.Register("delete_memory", HandleDeleteMemory)
+	r.Register("memory_stats", HandleMemoryStats)
 	return r
 }
 
@@ -102,6 +134,26 @@ func (r *Registry) List() []string {
 		names = append(names, name)
 	}
 	return names
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 var _ = json.Marshal

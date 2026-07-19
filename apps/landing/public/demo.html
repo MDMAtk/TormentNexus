@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TormentNexus Demo — Try AI with Persistent Memory</title>
+    <meta
+      name="description"
+      content="Try TormentNexus live — search 26,000+ MCP tools, explore persistent memory, and see AI that remembers. No install required."
+    />
+    <meta
+      property="og:title"
+      content="TormentNexus Demo — Try AI with Persistent Memory"
+    />
+    <meta
+      property="og:description"
+      content="Search 26,000+ MCP tools. See persistent memory in action. No install required."
+    />
+    <meta property="og:url" content="https://demo.hypernexus.site" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Plausible Analytics -->
+    <script
+      defer
+      data-domain="demo.hypernexus.site"
+      src="https://plausible.io/js/script.js"
+    ></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        background: #0a0a0a;
+        color: #e0e0e0;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        background: rgba(0, 0, 0, 0.8);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .nav-links {
+        display: flex;
+        gap: 24px;
+      }
+      .nav-links a {
+        color: #888;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: #00ff88;
+      }
+
+      /* Hero */
+      .hero {
+        text-align: center;
+        padding: 60px 24px;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 255, 136, 0.05) 0%,
+          transparent 100%
+        );
+      }
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .hero p {
+        font-size: 1.2rem;
+        color: #888;
+        max-width: 600px;
+        margin: 0 auto 32px;
+      }
+
+      /* Search Box */
+      .search-container {
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .search-input {
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 18px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+      .search-input:focus {
+        border-color: #00ff88;
+      }
+      .search-input::placeholder {
+        color: #666;
+      }
+
+      /* Results */
+      .results {
+        max-width: 800px;
+        margin: 32px auto;
+        padding: 0 24px;
+      }
+      .result-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        transition: border-color 0.2s;
+      }
+      .result-card:hover {
+        border-color: #00ff88;
+      }
+      .result-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #00ff88;
+      }
+      .result-url {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 8px;
+        word-break: break-all;
+      }
+      .result-description {
+        font-size: 14px;
+        color: #888;
+        line-height: 1.5;
+      }
+      .result-meta {
+        display: flex;
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .badge-source {
+        background: rgba(0, 204, 255, 0.1);
+        color: #00ccff;
+      }
+      .badge-category {
+        background: rgba(0, 255, 136, 0.1);
+        color: #00ff88;
+      }
+
+      /* Stats Bar */
+      .stats-bar {
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.02);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .stat {
+        text-align: center;
+      }
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #00ff88;
+      }
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        margin-top: 4px;
+      }
+
+      /* CTA */
+      .cta {
+        text-align: center;
+        padding: 60px 24px;
+      }
+      .cta h2 {
+        font-size: 2rem;
+        margin-bottom: 16px;
+      }
+      .cta p {
+        color: #888;
+        margin-bottom: 32px;
+      }
+      .btn {
+        display: inline-block;
+        padding: 14px 32px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 0.2s;
+      }
+      .btn:hover {
+        transform: scale(1.05);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        color: #000;
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* Feedback Widget */
+      .feedback-widget {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 1000;
+      }
+      .feedback-btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+        transition: transform 0.2s;
+      }
+      .feedback-btn:hover {
+        transform: scale(1.1);
+      }
+      .feedback-modal {
+        display: none;
+        position: fixed;
+        bottom: 100px;
+        right: 24px;
+        width: 320px;
+        background: #1a1a1a;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      }
+      .feedback-modal.show {
+        display: block;
+      }
+      .feedback-modal h3 {
+        margin-bottom: 16px;
+      }
+      .feedback-modal textarea {
+        width: 100%;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 14px;
+        resize: vertical;
+        min-height: 100px;
+        margin-bottom: 12px;
+      }
+      .feedback-modal button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        border: none;
+        border-radius: 8px;
+        color: #000;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* Loading */
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+      }
+
+      /* Empty State */
+      .empty-state {
+        text-align: center;
+        padding: 60px 24px;
+        color: #666;
+      }
+      .empty-state h3 {
+        font-size: 1.5rem;
+        margin-bottom: 16px;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">🧠 TormentNexus</div>
+      <div class="nav-links">
+        <a href="https://tormentnexus.site">Home</a>
+        <a href="https://tormentnexus.site/blog/">Blog</a>
+        <a href="https://tormentnexus.site/catalog">Catalog</a>
+        <a href="https://tormentnexus.site/pricing">Pricing</a>
+        <a href="https://github.com/MDMAtk/TormentNexus">GitHub</a>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <h1>Try TormentNexus Live</h1>
+      <p>
+        Search 26,000+ MCP tools. See persistent memory in action. No install
+        required.
+      </p>
+
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Search MCP tools... (e.g., postgres, docker, github)"
+          autofocus
+        />
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value" id="totalEntries">26,180</div>
+        <div class="stat-label">MCP Tools</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="totalCategories">7</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="totalSources">60+</div>
+        <div class="stat-label">Sources</div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results">
+      <div class="empty-state">
+        <h3>🔍 Start Searching</h3>
+        <p>
+          Try searching for "postgres", "docker", "github", or any tool you
+          need.
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h2>Ready to Give Your AI a Memory?</h2>
+      <p>
+        Install TormentNexus in 10 seconds and start building AI that remembers.
+      </p>
+      <a
+        href="https://tormentnexus.site/pricing"
+        class="btn btn-primary"
+        onclick="trackEvent('cta_click', 'pricing')"
+        >Get Started Free</a
+      >
+      <a
+        href="https://github.com/MDMAtk/TormentNexus"
+        class="btn btn-secondary"
+        style="margin-left: 12px"
+        onclick="trackEvent('cta_click', 'github')"
+        >View on GitHub</a
+      >
+    </div>
+
+    <!-- Feedback Widget -->
+    <div class="feedback-widget">
+      <button class="feedback-btn" onclick="toggleFeedback()">💬</button>
+      <div class="feedback-modal" id="feedbackModal">
+        <h3>Send Feedback</h3>
+        <textarea
+          id="feedbackText"
+          placeholder="What do you think? How can we improve?"
+        ></textarea>
+        <button onclick="submitFeedback()">Send Feedback</button>
+      </div>
+    </div>
+
+    <script>
+      // Analytics
+      function trackEvent(name, label) {
+        if (typeof plausible !== "undefined") {
+          plausible(name, { props: { label } });
+        }
+        console.log("Event:", name, label);
+      }
+
+      // Search
+      let searchTimeout;
+      const searchInput = document.getElementById("searchInput");
+      const resultsDiv = document.getElementById("results");
+
+      searchInput.addEventListener("input", (e) => {
+        clearTimeout(searchTimeout);
+        const query = e.target.value.trim();
+
+        if (query.length < 2) {
+          resultsDiv.innerHTML = `
+          <div class="empty-state">
+            <h3>🔍 Start Searching</h3>
+            <p>Try searching for "postgres", "docker", "github", or any tool you need.</p>
+          </div>
+        `;
+          return;
+        }
+
+        searchTimeout = setTimeout(() => {
+          search(query);
+        }, 300);
+      });
+
+      async function search(query) {
+        resultsDiv.innerHTML = '<div class="loading">Searching...</div>';
+
+        try {
+          const response = await fetch(
+            `/api/backlog/search?q=${encodeURIComponent(query)}&limit=20`,
+          );
+          const data = await response.json();
+
+          if (data.results && data.results.length > 0) {
+            trackEvent("search", query);
+            resultsDiv.innerHTML = data.results
+              .map(
+                (r) => `
+            <div class="result-card">
+              <div class="result-title">${r.title.replace(/\*\*/g, "")}</div>
+              <div class="result-url">${r.url}</div>
+              ${r.description ? `<div class="result-description">${r.description}</div>` : ""}
+              <div class="result-meta">
+                <span class="badge badge-source">${r.source}</span>
+                <span class="badge badge-category">${r.category}</span>
+              </div>
+            </div>
+          `,
+              )
+              .join("");
+          } else {
+            resultsDiv.innerHTML = `
+            <div class="empty-state">
+              <h3>No results found</h3>
+              <p>Try a different search term.</p>
+            </div>
+          `;
+          }
+        } catch (err) {
+          resultsDiv.innerHTML = `
+          <div class="empty-state">
+            <h3>Error</h3>
+            <p>Something went wrong. Please try again.</p>
+          </div>
+        `;
+        }
+      }
+
+      // Load stats
+      async function loadStats() {
+        try {
+          const response = await fetch("/api/backlog/stats");
+          const data = await response.json();
+          document.getElementById("totalEntries").textContent =
+            data.total?.toLocaleString() || "26,180";
+        } catch (err) {
+          console.error("Failed to load stats:", err);
+        }
+      }
+
+      // Feedback
+      function toggleFeedback() {
+        document.getElementById("feedbackModal").classList.toggle("show");
+      }
+
+      async function submitFeedback() {
+        const text = document.getElementById("feedbackText").value;
+        if (!text.trim()) return;
+
+        trackEvent("feedback", text.substring(0, 100));
+
+        // Send to API (placeholder)
+        console.log("Feedback:", text);
+
+        document.getElementById("feedbackText").value = "";
+        toggleFeedback();
+        alert("Thank you for your feedback!");
+      }
+
+      // Initialize
+      loadStats();
+
+      // Track page view
+      trackEvent("page_view", "demo");
+    </script>
+  </body>
+</html>

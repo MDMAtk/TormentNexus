@@ -173,7 +173,11 @@ func (d *DiscoveryService) broadcastLoop(ctx context.Context, conn *net.UDPConn,
 			if err != nil {
 				continue
 			}
-			conn.Write(data)
+			if encrypted, encErr := encryptAESGCM(data, defaultKey); encErr == nil {
+				conn.Write(encrypted)
+			} else {
+				conn.Write(data)
+			}
 		}
 	}
 }
@@ -206,8 +210,13 @@ func (d *DiscoveryService) listenLoop(ctx context.Context, conn *net.UDPConn) {
 			continue
 		}
 
+		pktData := buf[:n]
+		if decrypted, decErr := decryptAESGCM(buf[:n], defaultKey); decErr == nil {
+			pktData = decrypted
+		}
+
 		var pkt BeaconPacket
-		if err := json.Unmarshal(buf[:n], &pkt); err != nil {
+		if err := json.Unmarshal(pktData, &pkt); err != nil {
 			continue
 		}
 

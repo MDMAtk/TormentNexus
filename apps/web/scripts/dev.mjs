@@ -20,7 +20,7 @@ function readOption(flagNames, fallback) {
 
 const port = readOption(['--port', '-p'], process.env.PORT || '3000');
 const host = readOption(['--host', '--hostname', '-H'], process.env.HOSTNAME || 'localhost');
-const lockPath = resolve(webDir, '.next', 'dev', 'lock');
+const lockPath = resolve(webDir, '.next-dev', 'dev', 'lock');
 const portMarkerPath = resolve(webDir, '.tormentnexus-dev-port.json');
 
 function writePortMarker() {
@@ -74,9 +74,20 @@ if (existsSync(lockPath)) {
   }
 }
 
+const buildDir = resolve(webDir, ".next-dev");
+if (existsSync(buildDir)) {
+  try {
+    rmSync(buildDir, { recursive: true, force: true });
+    console.log("[web:dev] Cleared .next-dev directory to prevent cache conflicts");
+  } catch (error) {
+    console.warn("[web:dev] Could not clear .next-dev directory:", error instanceof Error ? error.message : String(error));
+  }
+}
+
 writePortMarker();
 
-const child = spawn(process.execPath, [nextBin, 'dev', '--port', port], {
+const devArgs = process.platform === 'win32' ? [nextBin, 'dev', '--webpack', '--port', port] : [nextBin, 'dev', '--port', port];
+const child = spawn(process.execPath, devArgs, {
   stdio: 'inherit',
   cwd: webDir,
   env: {

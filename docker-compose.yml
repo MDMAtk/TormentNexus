@@ -1,65 +1,24 @@
+version: "3.8"
+
 services:
-  web:
-    build:
-      context: .
-      target: web
+  tormentnexus:
+    image: tormentnexus/tormentnexus:latest
+    container_name: tormentnexus
     ports:
-      - "3001:3000"
-    environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://localhost:3000
-    depends_on:
-      - core
-    restart: always
-
-  core:
-    build:
-      context: .
-      target: core
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - DATABASE_URL=data/tormentnexus.db
-      - REDIS_URL=redis://redis:6379
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=tormentnexus
-    depends_on:
-      - db
-      - redis
-    restart: always
+      - "7778:7778"
     volumes:
-      - ./data:/app/data
-      - ./documents:/app/documents
-      - ./sessions:/app/sessions
-      - ./profiles:/app/profiles
-      - ./handoffs:/app/handoffs
-      - ./logs:/app/logs
-      - ./agents:/app/agents
-      - ./skills:/app/skills
-
-  db:
-    image: postgres:15-alpine
-    ports:
-      - "5432:5432"
+      - tormentnexus-data:/root/.tormentnexus
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=tormentnexus
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: always
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    restart: always
+      - TN_HOST=0.0.0.0
+      - TN_PORT=7778
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:7778/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
 
 volumes:
-  postgres_data:
-  redis_data:
+  tormentnexus-data:
+    driver: local

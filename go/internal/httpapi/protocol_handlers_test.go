@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/eventbus"
-	"github.com/tormentnexushq/tormentnexus-go/internal/supervisor"
+	"github.com/MDMAtk/TormentNexus/internal/eventbus"
+	"github.com/MDMAtk/TormentNexus/internal/supervisor"
 )
 
 func TestHandleTormentNexusProtocol(t *testing.T) {

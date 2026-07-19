@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/buildinfo"
+	"github.com/MDMAtk/TormentNexus/internal/buildinfo"
 )
 
 // handleSystemOverview returns a unified snapshot using Go-native data
@@ -110,20 +110,20 @@ func (s *Server) handleSystemOverview(w http.ResponseWriter, r *http.Request) {
 			"startupStatus": map[string]any{
 				"status":  "running",
 				"ready":   true,
-				"summary": "Go sidecar operational",
+				"summary": "TN Kernel operational",
 				"bridge":  startupBridge,
 			},
 			"sessions": map[string]any{
-				"list":  sessionsData,
+				"list":   sessionsData,
 				"bridge": sessionsBridge,
 			},
 			"memory": map[string]any{
-				"items": []any{},
-				"count": 0,
+				"items":  []any{},
+				"count":  0,
 				"bridge": memoryBridge,
 			},
 			"health": map[string]any{
-				"goSidecar":  goHealth,
+				"tnKernel":   goHealth,
 				"tsCore":     coreHealth,
 				"coreBridge": coreBridge,
 			},

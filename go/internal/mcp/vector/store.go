@@ -8,8 +8,9 @@ import (
 	"sync"
 	"time"
 
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 type VectorStore struct {
 	db                *sql.DB
@@ -22,7 +23,7 @@ type VectorStore struct {
 }
 
 func Open(path string) (*VectorStore, error) {
-	db, err := sql.Open("sqlite", path)
+	db, err := database.Open("sqlite", path)
 	if err != nil {
 		return nil, fmt.Errorf("open %s: %w", path, err)
 	}

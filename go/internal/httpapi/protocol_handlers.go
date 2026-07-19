@@ -7,8 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/eventbus"
-	"github.com/tormentnexushq/tormentnexus-go/internal/supervisor"
+	"github.com/MDMAtk/TormentNexus/internal/eventbus"
+	"github.com/MDMAtk/TormentNexus/internal/protocol"
+	"github.com/MDMAtk/TormentNexus/internal/supervisor"
 )
 
 // handleTormentNexusProtocol handles inbound tormentnexus:// deep links passed from the OS
@@ -177,10 +178,113 @@ func (s *Server) handleTormentNexusProtocol(w http.ResponseWriter, r *http.Reque
 			},
 		})
 
+	case "focus":
+		tab := queryParams.Get("tab")
+		if tab == "" {
+			tab = "console"
+		}
+		if s.eventBus != nil {
+			s.eventBus.EmitEvent(eventbus.SystemEventType("dashboard:focus"), "protocol", map[string]any{
+				"tab":       tab,
+				"timestamp": time.Now().UnixMilli(),
+			})
+		}
+		writeJSON(w, http.StatusOK, map[string]any{
+			"success": true,
+			"data": map[string]any{
+				"action":  "focus",
+				"tab":     tab,
+				"message": "dashboard focus event emitted successfully",
+			},
+		})
+
+	case "search-memory":
+		query := queryParams.Get("query")
+		if query == "" {
+			query = queryParams.Get("q")
+		}
+		if query == "" {
+			writeJSON(w, http.StatusBadRequest, map[string]any{
+				"success": false,
+				"error":   "missing query parameter for search-memory action",
+			})
+			return
+		}
+		if s.eventBus != nil {
+			s.eventBus.EmitEvent(eventbus.SystemEventType("memory:search-trigger"), "protocol", map[string]any{
+				"query":     query,
+				"timestamp": time.Now().UnixMilli(),
+			})
+		}
+		writeJSON(w, http.StatusOK, map[string]any{
+			"success": true,
+			"data": map[string]any{
+				"action":  "search-memory",
+				"query":   query,
+				"message": "memory search trigger event emitted successfully",
+			},
+		})
+
+	case "trigger-tool":
+		toolName := queryParams.Get("tool")
+		if toolName == "" {
+			writeJSON(w, http.StatusBadRequest, map[string]any{
+				"success": false,
+				"error":   "missing tool parameter for trigger-tool action",
+			})
+			return
+		}
+		args := make(map[string]any)
+		for k, v := range queryParams {
+			if k != "tool" && len(v) > 0 {
+				args[k] = v[0]
+			}
+		}
+		if s.eventBus != nil {
+			s.eventBus.EmitEvent(eventbus.SystemEventType("tool:trigger"), "protocol", map[string]any{
+				"tool":      toolName,
+				"arguments": args,
+				"timestamp": time.Now().UnixMilli(),
+			})
+		}
+		writeJSON(w, http.StatusOK, map[string]any{
+			"success": true,
+			"data": map[string]any{
+				"action":    "trigger-tool",
+				"tool":      toolName,
+				"arguments": args,
+				"message":   "tool trigger event emitted successfully",
+			},
+		})
+
 	default:
 		writeJSON(w, http.StatusBadRequest, map[string]any{
 			"success": false,
-			"error":   "unknown action '" + action + "'; supported: attach, create",
+			"error":   "unknown action '" + action + "'; supported: attach, create, focus, search-memory, trigger-tool",
 		})
 	}
+}
+
+// handleRegisterProtocol registers the custom protocol with the OS
+func (s *Server) handleRegisterProtocol(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{
+			"success": false,
+			"error":   "Method not allowed",
+		})
+		return
+	}
+
+	if err := protocol.RegisterProtocol(); err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{
+			"success": false,
+			"error":   "failed to register protocol handler: " + err.Error(),
+		})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"message": "Successfully registered tormentnexus:// protocol handler in Windows registry.",
+	})
 }

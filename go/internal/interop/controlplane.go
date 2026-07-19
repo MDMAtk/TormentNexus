@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/lockfile"
+	"github.com/MDMAtk/TormentNexus/internal/lockfile"
 )
 
 type ControlPlaneStatus struct {

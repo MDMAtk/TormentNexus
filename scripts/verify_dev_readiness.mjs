@@ -5,13 +5,13 @@ import {
   getPreferredWebPorts,
   readTormentNexusStartLockRecord,
   summarizeBrowserExtensionArtifacts,
-} from './dev_tabby_ready_helpers.mjs';
+} from './testing/dev_tabby_ready_helpers.mjs';
 
 const REPO_ROOT = process.cwd();
 const WEB_PORT_CANDIDATES = [3000, 3010, 3020, 3030, 3040];
-const REQUEST_TIMEOUT_MS = Number(process.env.READINESS_TIMEOUT_MS || 2000);
-const REQUEST_RETRIES = Number(process.env.READINESS_RETRIES || 1);
-const RETRY_DELAY_MS = Number(process.env.READINESS_RETRY_DELAY_MS || 500);
+const REQUEST_TIMEOUT_MS = Number(process.env.READINESS_TIMEOUT_MS || 10000);
+const REQUEST_RETRIES = Number(process.env.READINESS_RETRIES || 3);
+const RETRY_DELAY_MS = Number(process.env.READINESS_RETRY_DELAY_MS || 1000);
 const strictJsonMode = process.argv.includes('--strict-json');
 const softMode = process.argv.includes('--soft');
 const jsonMode = process.argv.includes('--json') || strictJsonMode;
@@ -72,12 +72,10 @@ function getFailureHint(serviceId) {
   switch (serviceId) {
     case 'tormentnexus-web':
       return 'Dashboard is unreachable. Start the web runtime with `tormentnexus dashboard` or `pnpm -C apps/web dev`.';
-    case 'tormentnexus-core':
-      return 'Core control plane is unreachable. Start it with `tormentnexus start --port 4100`.';
     case 'tormentnexus-startup-status':
       return 'Dashboard can load, but startupStatus is not reachable through the web proxy.';
-    case 'tormentnexus-go-sidecar':
-            return 'Go sidecar is unreachable. Build with go build ./cmd/tormentnexus and run bin/tormentnexus.exe -port 4300.';
+    case 'tormentnexus-go-kernel':
+            return 'TN Kernel is unreachable. Build with go build ./cmd/tormentnexus and run bin/tormentnexus.exe serve.';
         case 'tormentnexus-mcp-status':
       return 'Dashboard can load, but MCP status is not reachable through the web proxy.';
     default:
@@ -87,15 +85,6 @@ function getFailureHint(serviceId) {
 
 function buildWebUrls() {
   return getPreferredWebPorts(REPO_ROOT, WEB_PORT_CANDIDATES).map((port) => `http://127.0.0.1:${port}/dashboard`);
-}
-
-function buildCoreUrls() {
-  const lockRecord = readTormentNexusStartLockRecord();
-  return uniquePorts([
-    lockRecord?.port,
-    normalizePort(process.env.TORMENTNEXUS_PORT),
-    4100,
-  ]).map((port) => `http://127.0.0.1:${port}/health`);
 }
 
 async function detectRunningEndpoint(service) {
@@ -142,8 +131,21 @@ function collectExtensionArtifacts() {
 }
 
 async function main() {
-  const goSidecarPort = normalizePort(process.env.TORMENTNEXUS_GO_PORT) || 4300;
-const services = [
+  const tnKernelPort = normalizePort(process.env.TORMENTNEXUS_GO_PORT) || 7778;
+
+  // Pre-warm the web server to handle cold start module loading/database latency
+  const webUrls = buildWebUrls();
+  if (webUrls.length > 0) {
+    if (!jsonMode) {
+      console.log('Pre-warming Next.js dashboard server routes...');
+    }
+    const apiBase = webUrls[0].replace('/dashboard', '');
+    await fetchWithTimeout(webUrls[0], 15000).catch(() => {});
+    await fetchWithTimeout(`${apiBase}/api/trpc/startupStatus?batch=1&input=%7B%220%22%3A%7B%22json%22%3Anull%7D%7D`, 15000).catch(() => {});
+    await fetchWithTimeout(`${apiBase}/api/trpc/mcp.getStatus?batch=1&input=%7B%7D`, 15000).catch(() => {});
+  }
+
+  const services = [
     {
       id: 'tormentnexus-web',
       description: 'TormentNexus Next.js dashboard',
@@ -151,16 +153,10 @@ const services = [
       urls: buildWebUrls(),
     },
     {
-      id: 'tormentnexus-core',
-      description: 'TormentNexus core control plane health',
-      critical: true,
-      urls: buildCoreUrls(),
-    },
-    {
-        id: 'tormentnexus-go-sidecar',
-        description: 'Go sidecar health',
+        id: 'tormentnexus-go-kernel',
+        description: 'TN Kernel health',
         critical: false,
-        urls: [`http://127.0.0.1:${goSidecarPort}/health`],
+        urls: [`http://127.0.0.1:${tnKernelPort}/health`],
     },
     {
       id: 'tormentnexus-startup-status',

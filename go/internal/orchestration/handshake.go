@@ -6,7 +6,7 @@ package orchestration
  *
  * WHAT: Go-native implementation of the A2A Handshake protocol.
  *
- * WHY: Total Autonomy — Go sidecar must be capable of negotiating
+ * WHY: Total Autonomy — TN Kernel must be capable of negotiating
  * tasks between native agents without Node control plane.
  */
 

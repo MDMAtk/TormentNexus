@@ -647,9 +647,9 @@ export default function ToolsPage() {
                         </div>
 
                         <div className="space-y-3">
-                            {category.tools.map(tool => (
+                            {category.tools.map((tool, idx) => (
                                 <article
-                                    key={tool.name}
+                                    key={`${tool.name}:${idx}`}
                                     className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden"
                                 >
                                     <button

@@ -16,9 +16,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
-	"github.com/tormentnexushq/tormentnexus-go/internal/codeexec"
-	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
+	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/codeexec"
+	"github.com/MDMAtk/TormentNexus/internal/controlplane"
 )
 
 // Diagnosis represents an LLM-generated diagnosis of an error.

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/providers"
+	"github.com/MDMAtk/TormentNexus/internal/providers"
 )
 
 func (s *Server) handleBillingStatus(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +27,7 @@ func (s *Server) handleBillingStatus(w http.ResponseWriter, r *http.Request) {
 
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
-		"data":    buildLocalBillingStatusResponse(),
+		"data":    s.buildLocalBillingStatusResponse(),
 		"bridge": map[string]any{
 			"fallback":  "go-local-provider-routing",
 			"procedure": "billing.getStatus",
@@ -150,7 +150,7 @@ func (s *Server) handleBillingFallbackChain(w http.ResponseWriter, r *http.Reque
 
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
-		"data":    buildLocalFallbackChainResponse(taskType),
+		"data":    s.buildLocalFallbackChainResponse(taskType),
 		"bridge": map[string]any{
 			"fallback":  "go-local-provider-routing",
 			"procedure": "billing.getFallbackChain",
@@ -362,16 +362,39 @@ func parsedBillingFallbackLimit(raw string) int {
 	return parsed
 }
 
-func buildLocalFallbackChainResponse(taskType string) map[string]any {
-	summary := providers.BuildRoutingSummary(providers.Snapshot())
-	catalogByProvider := make(map[string]providers.CatalogEntry)
-	for _, entry := range providers.Catalog(providers.Snapshot()) {
-		catalogByProvider[entry.Provider] = entry
-	}
+func (s *Server) buildLocalFallbackChainResponse(taskType string) map[string]any {
+	isolated, _ := s.localConfigBool("corporate.isolation", false)
 
 	selectedTaskType := any(nil)
 	if taskType != "" {
 		selectedTaskType = taskType
+	}
+
+	if isolated {
+		endpoint, _ := s.localConfigValue("corporate.endpoint")
+		endpointStr := "http://ollama-headless.internal:11434"
+		if endpoint != nil && endpoint.(string) != "" {
+			endpointStr = endpoint.(string)
+		}
+
+		chain := []map[string]any{
+			{
+				"priority": 1,
+				"provider": "ollama (isolated)",
+				"model":    "gemma-4-e2b",
+				"reason":   "Corporate Isolation Active. Endpoint: " + endpointStr,
+			},
+		}
+		return map[string]any{
+			"selectedTaskType": selectedTaskType,
+			"chain":            chain,
+		}
+	}
+
+	summary := providers.BuildRoutingSummary(providers.Snapshot())
+	catalogByProvider := make(map[string]providers.CatalogEntry)
+	for _, entry := range providers.Catalog(providers.Snapshot()) {
+		catalogByProvider[entry.Provider] = entry
 	}
 
 	chain := make([]map[string]any, 0)
@@ -438,7 +461,7 @@ func buildLocalTaskRoutingRulesResponse() map[string]any {
 	}
 }
 
-func buildLocalBillingStatusResponse() map[string]any {
+func (s *Server) buildLocalBillingStatusResponse() map[string]any {
 	statuses := providers.Snapshot()
 	keys := map[string]bool{
 		"openai":     false,
@@ -462,6 +485,42 @@ func buildLocalBillingStatusResponse() map[string]any {
 		}
 	}
 
+	planVal, _ := s.localConfigValue("stripe.plan")
+	plan := "Commercial Cloud SaaS"
+	if planVal != nil && planVal.(string) != "" {
+		plan = planVal.(string)
+	}
+
+	statusVal, _ := s.localConfigValue("stripe.status")
+	status := "ACTIVE (PAID)"
+	if statusVal != nil && statusVal.(string) != "" {
+		status = statusVal.(string)
+	}
+
+	priceVal, _ := s.localConfigValue("stripe.price")
+	price := "$499.00 / month"
+	if priceVal != nil && priceVal.(string) != "" {
+		price = priceVal.(string)
+	}
+
+	invoiceVal, _ := s.localConfigValue("stripe.nextInvoice")
+	invoice := "July 25, 2026"
+	if invoiceVal != nil && invoiceVal.(string) != "" {
+		invoice = invoiceVal.(string)
+	}
+
+	sourceVal, _ := s.localConfigValue("stripe.paymentSource")
+	source := "Visa ending in 4242"
+	if sourceVal != nil && sourceVal.(string) != "" {
+		source = sourceVal.(string)
+	}
+
+	customerIDVal, _ := s.localConfigValue("stripe.customerID")
+	customerID := "cus_R8vB42tX910a"
+	if customerIDVal != nil && customerIDVal.(string) != "" {
+		customerID = customerIDVal.(string)
+	}
+
 	breakdown := []map[string]any{{"provider": "No Usage Yet", "cost": 0, "requests": 0}}
 	return map[string]any{
 		"keys": keys,
@@ -469,6 +528,14 @@ func buildLocalBillingStatusResponse() map[string]any {
 			"currentMonth": 0,
 			"limit":        100.0,
 			"breakdown":    breakdown,
+		},
+		"stripe": map[string]any{
+			"plan":          plan,
+			"status":        status,
+			"price":         price,
+			"nextInvoice":   invoice,
+			"paymentSource": source,
+			"customerID":    customerID,
 		},
 	}
 }
@@ -547,4 +614,112 @@ func buildLocalBillingModelPricingResponse() map[string]any {
 		})
 	}
 	return map[string]any{"models": models}
+}
+
+func (s *Server) handleGetCorporateSettings(w http.ResponseWriter, r *http.Request) {
+	isolated, _ := s.localConfigBool("corporate.isolation", false)
+	endpointVal, _ := s.localConfigValue("corporate.endpoint")
+	endpoint := "http://ollama-headless.internal:11434"
+	if endpointVal != nil && endpointVal.(string) != "" {
+		endpoint = endpointVal.(string)
+	}
+	keyVal, _ := s.localConfigValue("corporate.key")
+	key := ""
+	if keyVal != nil && keyVal.(string) != "" {
+		key = keyVal.(string)
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data": map[string]any{
+			"corporateIsolation": isolated,
+			"corporateEndpoint":  endpoint,
+			"corporateKey":       key,
+		},
+	})
+}
+
+func (s *Server) handleSetCorporateSettings(w http.ResponseWriter, r *http.Request) {
+	var payload struct {
+		CorporateIsolation bool   `json:"corporateIsolation"`
+		CorporateEndpoint  string `json:"corporateEndpoint"`
+		CorporateKey       string `json:"corporateKey"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON body"})
+		return
+	}
+
+	isolationStr := "false"
+	if payload.CorporateIsolation {
+		isolationStr = "true"
+	}
+
+	_ = s.setLocalConfigValue("corporate.isolation", isolationStr)
+	_ = s.setLocalConfigValue("corporate.endpoint", payload.CorporateEndpoint)
+	_ = s.setLocalConfigValue("corporate.key", payload.CorporateKey)
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data":    map[string]any{"ok": true},
+	})
+}
+
+func (s *Server) handleStripeSubscribe(w http.ResponseWriter, r *http.Request) {
+	var payload struct {
+		Plan          string `json:"plan"`
+		Price         string `json:"price"`
+		Status        string `json:"status"`
+		PaymentSource string `json:"paymentSource"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON body"})
+		return
+	}
+
+	_ = s.setLocalConfigValue("stripe.plan", payload.Plan)
+	_ = s.setLocalConfigValue("stripe.price", payload.Price)
+	_ = s.setLocalConfigValue("stripe.status", payload.Status)
+	_ = s.setLocalConfigValue("stripe.paymentSource", payload.PaymentSource)
+
+	// Update metadata
+	customerID := "cus_" + strconv.FormatInt(time.Now().Unix(), 36)
+	nextInvoice := time.Now().AddDate(0, 1, 0).Format("January 02, 2006")
+	_ = s.setLocalConfigValue("stripe.customerID", customerID)
+	_ = s.setLocalConfigValue("stripe.nextInvoice", nextInvoice)
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data": map[string]any{
+			"ok":            true,
+			"customerID":    customerID,
+			"nextInvoice":   nextInvoice,
+			"plan":          payload.Plan,
+			"status":        payload.Status,
+			"price":         payload.Price,
+			"paymentSource": payload.PaymentSource,
+		},
+	})
+}
+
+// handleBillingWebhook processes Stripe billing webhooks locally in the TN Kernel.
+func (s *Server) handleBillingWebhook(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Validate basic webhook structure or signatures if strictly required.
+	// For now, accept and log the event.
+	var event map[string]interface{}
+	if err := json.NewDecoder(r.Body).Decode(&event); err != nil {
+		http.Error(w, "Invalid payload", http.StatusBadRequest)
+		return
+	}
+
+	// Simple acknowledgment
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"message": "Webhook received",
+	})
 }

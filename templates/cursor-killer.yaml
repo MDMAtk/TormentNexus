@@ -1,0 +1,111 @@
+# Template: Cursor Killer
+# A coding-focused AI assistant with persistent memory
+
+name: cursor-killer
+description: "AI coding assistant with persistent memory and 26K+ tool catalog"
+version: 1.0.0
+
+# Memory configuration
+memory:
+  l1_session: true
+  l2_hot_store: true
+  l3_cold_archive: true
+  l4_limbo: false
+
+  # Auto-store code context
+  auto_store:
+    enabled: true
+    triggers:
+      - file_open
+      - file_save
+      - terminal_command
+      - error_message
+
+# Tools to pre-install
+tools:
+  - name: filesystem
+    description: "Read, write, and manage files"
+    config:
+      allowed_paths:
+        - "."
+        - "~"
+
+  - name: terminal
+    description: "Execute shell commands"
+    config:
+      allowed_commands:
+        - "git"
+        - "npm"
+        - "pnpm"
+        - "node"
+        - "python"
+        - "go"
+        - "cargo"
+
+  - name: git
+    description: "Git operations"
+    config:
+      auto_commit: false
+      auto_push: false
+
+  - name: browser
+    description: "Web browsing and documentation lookup"
+    config:
+      enabled: true
+
+# Provider configuration
+providers:
+  - name: deepseek
+    model: deepseek-chat
+    priority: 1
+    use_for:
+      - code_generation
+      - code_review
+      - explanation
+
+  - name: lmstudio
+    model: local
+    priority: 2
+    use_for:
+      - quick_questions
+      - simple_tasks
+
+# System prompt
+system_prompt: |
+  You are a coding assistant with persistent memory. You remember:
+  - Previous conversations and decisions
+  - Code patterns and preferences
+  - Project structure and architecture
+  - Bug fixes and solutions that worked
+
+  When you learn something useful, store it in memory for future reference.
+
+  You have access to 26,000+ MCP tools. When you need a capability you don't have,
+  search the catalog for an appropriate tool.
+
+# Dashboard configuration
+dashboard:
+  theme: dark
+  layout: coding
+  widgets:
+    - memory_explorer
+    - tool_catalog
+    - file_browser
+    - terminal
+    - git_history
+
+# Hooks
+hooks:
+  on_file_open:
+    - action: store_context
+      params: { type: "file_context" }
+
+  on_error:
+    - action: search_memory
+      params: { query: "similar errors" }
+    - action: store_solution
+      params: { type: "error_solution" }
+
+  on_commit:
+    - action: store_context
+      params: { type: "git_commit" }

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Newsletter — TormentNexus</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        background: #0a0a0a;
+        color: #e0e0e0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        max-width: 500px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      p {
+        color: #888;
+        margin-bottom: 24px;
+        line-height: 1.6;
+      }
+      form {
+        display: flex;
+        gap: 8px;
+      }
+      input[type="email"] {
+        flex: 1;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+        outline: none;
+      }
+      input[type="email"]:focus {
+        border-color: #00ff88;
+      }
+      button {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #00ff88, #00ccff);
+        border: none;
+        border-radius: 8px;
+        color: #000;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      button:hover {
+        transform: scale(1.05);
+      }
+      .features {
+        margin-top: 32px;
+        text-align: left;
+      }
+      .features li {
+        list-style: none;
+        padding: 8px 0;
+        color: #888;
+      }
+      .features li::before {
+        content: "✓ ";
+        color: #00ff88;
+      }
+      .success {
+        display: none;
+        color: #00ff88;
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🧠 TormentNexus</h1>
+      <p>
+        Get weekly updates on AI memory, MCP tools, and open source development.
+      </p>
+
+      <form id="newsletter-form" onsubmit="handleSubmit(event)">
+        <input type="email" id="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+      </form>
+
+      <div class="success" id="success">✅ Check your email to confirm!</div>
+
+      <ul class="features">
+        <li>Weekly AI insights and tutorials</li>
+        <li>New MCP tool discoveries</li>
+        <li>Product updates and releases</li>
+        <li>Community spotlights</li>
+        <li>No spam, unsubscribe anytime</li>
+      </ul>
+    </div>
+
+    <script>
+      function handleSubmit(e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+
+        // Send to Buttondown or similar service
+        // For now, just show success
+        document.getElementById("newsletter-form").style.display = "none";
+        document.getElementById("success").style.display = "block";
+
+        // Track event
+        if (typeof gtag !== "undefined") {
+          gtag("event", "newsletter_signup", {
+            event_category: "engagement",
+            event_label: email,
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 package eventbus
 
 import (
-	"github.com/tormentnexushq/tormentnexus-go/internal/orchestration"
+	"github.com/MDMAtk/TormentNexus/internal/orchestration"
 )
 
 type A2ASignalPayload struct {

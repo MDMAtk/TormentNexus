@@ -1,0 +1,38 @@
+{
+  "manifest_version": "0.2",
+  "name": "TormentNexus",
+  "display_name": "TormentNexus",
+  "version": "1.0.0",
+  "description": "TormentNexus AI control plane — persistent L2 vector memory, semantic tool discovery, imported sessions, and skill registry.",
+  "long_description": "TormentNexus is a local AI control plane with persistent L2 vector memory, semantic tool discovery, imported sessions, and a skill registry. It provides 49+ MCP tools including memory management, file operations, system control, and routing to 20+ downstream MCP servers.\n\nKey capabilities:\n- L1/L2 memory with scratchpad and graph extraction\n- Semantic tool discovery across all connected MCP servers\n- Session import, branch, and compaction\n- Skill registry and management\n- Code search and repo map generation\n- Enterprise integrations (Jira, Confluence, DevOps)",
+  "author": {
+    "name": "Robert Pelloni",
+    "url": "https://github.com/robertpelloni"
+  },
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robertpelloni/tormentnexus"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/robertpelloni/tormentnexus",
+  "tools": [
+    {
+      "name": "*",
+      "description": "All TormentNexus MCP tools"
+    }
+  ],
+  "server": {
+    "type": "command",
+    "entry_point": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+    "mcp_config": {
+      "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+      "args": ["mcp"]
+    }
+  },
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["win32", "darwin", "linux"]
+  },
+  "keywords": ["memory", "tools", "search", "sessions", "integration", "orchestration"]
+}

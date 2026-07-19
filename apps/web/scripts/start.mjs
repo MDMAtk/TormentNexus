@@ -19,7 +19,7 @@ function readOption(flagNames, fallback) {
 
 const port = readOption(['--port', '-p'], process.env.PORT || '3000');
 const host = readOption(['--host', '--hostname', '-H'], process.env.HOSTNAME || '0.0.0.0');
-const standaloneServer = resolve(webDir, '.next', 'standalone', 'apps', 'web', 'server.js');
+const standaloneServer = resolve(webDir, '.next-build', 'standalone', 'apps', 'web', 'server.js');
 const portMarkerPath = resolve(webDir, '.tormentnexus-dev-port.json');
 
 function writePortMarker() {
@@ -41,7 +41,7 @@ const child = spawn(process.execPath, [standaloneServer], {
     ...process.env,
     PORT: String(port),
     HOSTNAME: host,
-    TORMENTNEXUS_TRPC_UPSTREAM: process.env.TORMENTNEXUS_TRPC_UPSTREAM || 'http://127.0.0.1:4100/trpc',
+    TORMENTNEXUS_TRPC_UPSTREAM: process.env.TORMENTNEXUS_TRPC_UPSTREAM || 'http://127.0.0.1:7778/trpc',
   },
 });
 

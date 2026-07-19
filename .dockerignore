@@ -9,6 +9,8 @@
 !apps/
 !apps/web/
 !apps/web/**
+!apps/tormentnexus-extension/
+!apps/tormentnexus-extension/**
 !packages/
 !packages/adk/
 !packages/adk/**
@@ -16,8 +18,12 @@
 !packages/agents/**
 !packages/ai/
 !packages/ai/**
-!packages/core/
-!packages/core/**
+!packages/enterprise/
+!packages/enterprise/**
+!packages/tormentnexus/
+!packages/tormentnexus/**
+!go/
+!go/**
 !packages/mcp-registry/
 !packages/mcp-registry/**
 !packages/memory/

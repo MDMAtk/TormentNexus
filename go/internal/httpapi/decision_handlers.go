@@ -15,16 +15,16 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/cache"
-	"github.com/tormentnexushq/tormentnexus-go/internal/ctxharvester"
-	"github.com/tormentnexushq/tormentnexus-go/internal/eventbus"
-	"github.com/tormentnexushq/tormentnexus-go/internal/healer"
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcp"
-	"github.com/tormentnexushq/tormentnexus-go/internal/metrics"
-	processmanager "github.com/tormentnexushq/tormentnexus-go/internal/process"
-	"github.com/tormentnexushq/tormentnexus-go/internal/session"
-	"github.com/tormentnexushq/tormentnexus-go/internal/toolregistry"
-	"github.com/tormentnexushq/tormentnexus-go/internal/workspaces"
+	"github.com/MDMAtk/TormentNexus/internal/cache"
+	"github.com/MDMAtk/TormentNexus/internal/ctxharvester"
+	"github.com/MDMAtk/TormentNexus/internal/eventbus"
+	"github.com/MDMAtk/TormentNexus/internal/healer"
+	"github.com/MDMAtk/TormentNexus/internal/mcp"
+	"github.com/MDMAtk/TormentNexus/internal/metrics"
+	processmanager "github.com/MDMAtk/TormentNexus/internal/process"
+	"github.com/MDMAtk/TormentNexus/internal/session"
+	"github.com/MDMAtk/TormentNexus/internal/toolregistry"
+	"github.com/MDMAtk/TormentNexus/internal/workspaces"
 )
 
 // ==================== MCP Decision System ====================

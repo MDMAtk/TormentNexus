@@ -7,14 +7,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
-	_ "modernc.org/sqlite"
-)
+	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 type l1Entry struct {
 	value      controlplane.L2VaultRecord
@@ -31,14 +34,16 @@ type QueryPayload struct {
 }
 
 type VectorStore struct {
-	db      *sql.DB
-	mu      sync.Mutex
-	l1Cache map[string]*l1Entry
-	l1Max   int
+	db            *sql.DB
+	mu            sync.Mutex
+	l1Cache       map[string]*l1Entry
+	l1Max         int
+	coldArchive   *L3ColdArchive
+	relationStore *RelationStore
 }
 
 func NewVectorStore(dbPath string) (*VectorStore, error) {
-	db, err := sql.Open("sqlite", dbPath)
+	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		return nil, err
 	}
@@ -63,15 +68,57 @@ func NewVectorStore(dbPath string) (*VectorStore, error) {
 		return nil, fmt.Errorf("failed to init vector schema: %w", err)
 	}
 
+	if err := InitSpacedRepetition(db); err != nil {
+		db.Close()
+		return nil, fmt.Errorf("failed to init spaced repetition schema: %w", err)
+	}
+
+	if err := InitScratchpad(db); err != nil {
+		db.Close()
+		return nil, fmt.Errorf("failed to init scratchpad schema: %w", err)
+	}
+
+	// Initialize FTS5 full-text search (creates l2_memory_fts virtual table + triggers)
+	if _, err := db.Exec(ftsSchemaSQL); err != nil {
+		fmt.Printf("Warning: failed to init FTS5 schema: %v\n", err)
+	}
+	// Rebuild FTS index from existing L2 vault data (async — can be slow)
+	go rebuildFTSIndex(db)
+
+	var l3 *L3ColdArchive
+	var l3Err error
+	if dbPath == ":memory:" {
+		l3, l3Err = NewColdArchive(":memory:")
+	} else {
+		l3, l3Err = NewColdArchive(filepath.Join(filepath.Dir(dbPath), "l3_cold_archive.db"))
+	}
+	if l3Err != nil {
+		fmt.Printf("Warning: failed to initialize L3 Cold Archive: %v\n", l3Err)
+	}
+
+	relStore, err := NewRelationStore(db)
+	if err != nil {
+		fmt.Printf("Warning: failed to initialize RelationStore: %v\n", err)
+	}
+
 	return &VectorStore{
-		db:      db,
-		l1Cache: make(map[string]*l1Entry),
-		l1Max:   100,
+		db:            db,
+		l1Cache:       make(map[string]*l1Entry),
+		l1Max:         100,
+		coldArchive:   l3,
+		relationStore: relStore,
 	}, nil
 }
 
 func (s *VectorStore) Close() error {
+	if s.coldArchive != nil {
+		_ = s.coldArchive.Close()
+	}
 	return s.db.Close()
+}
+
+func (s *VectorStore) DB() *sql.DB {
+	return s.db
 }
 
 func (s *VectorStore) Commit(ctx context.Context, entry controlplane.L2VaultRecord) error {
@@ -104,7 +151,7 @@ func (s *VectorStore) Commit(ctx context.Context, entry controlplane.L2VaultReco
 			heat_score = excluded.heat_score,
 			last_accessed_at = excluded.last_accessed_at,
 			created_at = excluded.created_at
-	`, entry.ID, entry.SessionID, string(entry.Type), entry.Kind, entry.Category, entry.Tags, entry.SourceURL, entry.Content, entry.Importance, entry.HeatScore, entry.LastAccessedAt, entry.CreatedAt)
+	`, entry.ID, entry.SessionID, string(entry.Type), entry.Kind, entry.Category, entry.Tags, entry.SourceURL, entry.Content, entry.Importance, entry.HeatScore, entry.LastAccessedAt.UTC().Format("2006-01-02 15:04:05"), entry.CreatedAt.UTC().Format("2006-01-02 15:04:05"))
 	if err != nil {
 		return fmt.Errorf("memorystore commit insert: %w", err)
 	}
@@ -220,10 +267,10 @@ func (s *VectorStore) SemanticSearch(ctx context.Context, query string, limit in
 				return nil, err
 			}
 			r.Type = controlplane.MemoryType(mType)
-			
+
 			vec := decodeVec(blob, len(blob)/4)
 			sim := cosineSim(queryVec, vec)
-			
+
 			// Boost score slightly using importance
 			boostedSim := sim * (0.8 + 0.2*r.Importance)
 			if boostedSim >= 0.3 {
@@ -244,7 +291,9 @@ func (s *VectorStore) SemanticSearch(ctx context.Context, query string, limit in
 			results[i] = c.record
 			s.incrementHeatLocked(ctx, c.record.ID)
 		}
-		return results, nil
+
+		results, err = s.fallbackL3Search(ctx, results, queryText, limit)
+		return results, err
 	}
 
 	// Check L1 cache first for manual / working memory queries (supporting text filter)
@@ -275,50 +324,123 @@ func (s *VectorStore) SemanticSearch(ctx context.Context, query string, limit in
 		}
 	}
 
-	// Fall back to keyword search with optional filters
+	// Fall back to keyword search (using FTS5 with LIKE fallback)
 	var args []interface{}
 	sqlQuery := `
 		SELECT id, session_id, memory_type, memory_kind, category, tags, source_url, content, importance, heat_score, last_accessed_at, created_at
 		FROM l2_vault
 		WHERE memory_type != 'archive'
 	`
+	useFTS := false
 	if queryText != "" {
-		sqlQuery += " AND content LIKE ?"
-		args = append(args, "%"+queryText+"%")
-	}
-	if filterKind != "" {
-		sqlQuery += " AND memory_kind = ?"
-		args = append(args, filterKind)
-	}
-	if filterCategory != "" {
-		sqlQuery += " AND category = ?"
-		args = append(args, filterCategory)
-	}
-	sqlQuery += " ORDER BY importance DESC, heat_score DESC, created_at DESC LIMIT ?"
-	args = append(args, limit)
+		cleanQuery := strings.TrimSpace(queryText)
+		if cleanQuery != "" {
+			// Try FTS5 MATCH query first
+			ftsQuery := sqlQuery + " AND id IN (SELECT id FROM l2_vault_fts WHERE content MATCH ?)"
+			var ftsArgs []interface{}
+			ftsArgs = append(ftsArgs, cleanQuery)
+			if filterKind != "" {
+				ftsQuery += " AND memory_kind = ?"
+				ftsArgs = append(ftsArgs, filterKind)
+			}
+			if filterCategory != "" {
+				ftsQuery += " AND category = ?"
+				ftsArgs = append(ftsArgs, filterCategory)
+			}
+			ftsQuery += " ORDER BY importance DESC, heat_score DESC, created_at DESC LIMIT ?"
+			ftsArgs = append(ftsArgs, limit)
 
-	rows, err := s.db.QueryContext(ctx, sqlQuery, args...)
-	if err != nil {
-		return nil, fmt.Errorf("memorystore search: %w", err)
-	}
-	defer rows.Close()
-
-	var results []controlplane.L2VaultRecord
-	for rows.Next() {
-		var r controlplane.L2VaultRecord
-		var mType string
-		if err := rows.Scan(&r.ID, &r.SessionID, &mType, &r.Kind, &r.Category, &r.Tags, &r.SourceURL, &r.Content, &r.Importance, &r.HeatScore, &r.LastAccessedAt, &r.CreatedAt); err != nil {
-			return nil, err
+			rows, err := s.db.QueryContext(ctx, ftsQuery, ftsArgs...)
+			if err == nil {
+				defer rows.Close()
+				useFTS = true
+				var results []controlplane.L2VaultRecord
+				for rows.Next() {
+					var r controlplane.L2VaultRecord
+					var mType string
+					if err := rows.Scan(&r.ID, &r.SessionID, &mType, &r.Kind, &r.Category, &r.Tags, &r.SourceURL, &r.Content, &r.Importance, &r.HeatScore, &r.LastAccessedAt, &r.CreatedAt); err != nil {
+						return nil, err
+					}
+					r.Type = controlplane.MemoryType(mType)
+					results = append(results, r)
+				}
+				for _, r := range results {
+					s.incrementHeatLocked(ctx, r.ID)
+				}
+				if len(results) == 0 {
+					results, err = s.fallbackL3Search(ctx, results, queryText, limit)
+					return results, err
+				}
+				return results, nil
+			}
 		}
-		r.Type = controlplane.MemoryType(mType)
-		results = append(results, r)
 	}
 
-	// Update heat and last_accessed_at for hits
-	for _, r := range results {
-		s.incrementHeatLocked(ctx, r.ID)
+	// Fallback to LIKE query if FTS wasn't used
+	if !useFTS {
+		if queryText != "" {
+			sqlQuery += " AND content LIKE ?"
+			args = append(args, "%"+queryText+"%")
+		}
+		if filterKind != "" {
+			sqlQuery += " AND memory_kind = ?"
+			args = append(args, filterKind)
+		}
+		if filterCategory != "" {
+			sqlQuery += " AND category = ?"
+			args = append(args, filterCategory)
+		}
+		sqlQuery += " ORDER BY importance DESC, heat_score DESC, created_at DESC LIMIT ?"
+		args = append(args, limit)
+
+		rows, err := s.db.QueryContext(ctx, sqlQuery, args...)
+		if err != nil {
+			return nil, fmt.Errorf("memorystore search: %w", err)
+		}
+		defer rows.Close()
+
+		var results []controlplane.L2VaultRecord
+		for rows.Next() {
+			var r controlplane.L2VaultRecord
+			var mType string
+			if err := rows.Scan(&r.ID, &r.SessionID, &mType, &r.Kind, &r.Category, &r.Tags, &r.SourceURL, &r.Content, &r.Importance, &r.HeatScore, &r.LastAccessedAt, &r.CreatedAt); err != nil {
+				return nil, err
+			}
+			r.Type = controlplane.MemoryType(mType)
+			results = append(results, r)
+		}
+
+		for _, r := range results {
+			s.incrementHeatLocked(ctx, r.ID)
+		}
+		results, err = s.fallbackL3Search(ctx, results, queryText, limit)
+		return results, err
 	}
 
+	results, err := s.fallbackL3Search(ctx, nil, queryText, limit)
+	return results, err
+}
+
+func (s *VectorStore) fallbackL3Search(ctx context.Context, results []controlplane.L2VaultRecord, queryText string, limit int) ([]controlplane.L2VaultRecord, error) {
+	if len(results) > 0 || queryText == "" || s.coldArchive == nil {
+		return results, nil
+	}
+	s.mu.Unlock()
+	defer s.mu.Lock()
+	coldResults, err := s.coldArchive.SearchCold(ctx, queryText, limit)
+	if err != nil {
+		return results, nil
+	}
+	for _, r := range coldResults {
+		promoted, err := s.coldArchive.Promote(ctx, r.ID)
+		if err == nil && promoted != nil {
+			errCommit := s.Commit(ctx, *promoted)
+			if errCommit != nil {
+				fmt.Printf("Warning: fallbackL3Search: failed to promote memory %s back to L2: %v\n", promoted.ID, errCommit)
+			}
+			results = append(results, *promoted)
+		}
+	}
 	return results, nil
 }
 
@@ -539,6 +661,37 @@ func (s *VectorStore) ForgettingCurveDecay(ctx context.Context) error {
 		return fmt.Errorf("ForgettingCurveDecay archive promotion: %w", err)
 	}
 
+	// Archive demotion to L3 Cold Archive: memories with heat score < 10.0 move to L3
+	if s.coldArchive != nil {
+		rows, err := s.db.QueryContext(ctx, `
+			SELECT id, session_id, memory_type, memory_kind, category, tags, source_url, content, importance, heat_score, last_accessed_at, created_at
+			FROM l2_vault
+			WHERE heat_score < 10.0 AND memory_type != 'archive'
+		`)
+		if err == nil {
+			var records []controlplane.L2VaultRecord
+			for rows.Next() {
+				var r controlplane.L2VaultRecord
+				var mType string
+				if err := rows.Scan(&r.ID, &r.SessionID, &mType, &r.Kind, &r.Category, &r.Tags, &r.SourceURL, &r.Content, &r.Importance, &r.HeatScore, &r.LastAccessedAt, &r.CreatedAt); err == nil {
+					r.Type = controlplane.MemoryType(mType)
+					records = append(records, r)
+				}
+			}
+			rows.Close()
+
+			for _, r := range records {
+				errArchive := s.coldArchive.Archive(ctx, r)
+				if errArchive == nil {
+					_, _ = s.db.ExecContext(ctx, `DELETE FROM l2_vault WHERE id = ?`, r.ID)
+					_, _ = s.db.ExecContext(ctx, `DELETE FROM vec_l2_vault WHERE id = ?`, r.ID)
+					_, _ = s.db.ExecContext(ctx, `DELETE FROM l2_vault_fts WHERE id = ?`, r.ID)
+					delete(s.l1Cache, r.ID)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -668,3 +821,75 @@ func (s *VectorStore) ConsolidateMemories(ctx context.Context) error {
 	return nil
 }
 
+// MentalModelReflection synthesizes recent experiences into generalized rules/facts
+func (s *VectorStore) MentalModelReflection(ctx context.Context) error {
+	s.mu.Lock()
+	// Fetch recent non-reflection memories
+	rows, err := s.db.QueryContext(ctx, `
+		SELECT content FROM l2_vault
+		WHERE memory_kind != 'reflection' AND memory_type != 'archive'
+		ORDER BY last_accessed_at DESC LIMIT 20
+	`)
+	s.mu.Unlock()
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	var memories []string
+	for rows.Next() {
+		var content string
+		if err := rows.Scan(&content); err == nil {
+			memories = append(memories, content)
+		}
+	}
+
+	if len(memories) == 0 {
+		return nil
+	}
+
+	// Prepare LLM prompt
+	prompt := "You are a mental model synthesizer. Review the following recent experiences and facts from the project:\n\n"
+	for _, m := range memories {
+		prompt += fmt.Sprintf("- %s\n", m)
+	}
+	prompt += "\nSynthesize them into 1-3 generalized facts, project rules, or mental model guidelines. Return ONLY the new synthesized items, one per line, starting with 'Fact:' or 'Guideline:'. Do not write any preamble, explanation, or markdown formatting."
+
+	// Call LLM
+	messages := []ai.Message{
+		{Role: "user", Content: prompt},
+	}
+	resp, err := ai.AutoRoute(ctx, messages)
+	if err != nil {
+		return fmt.Errorf("MentalModelReflection LLM call: %w", err)
+	}
+
+	lines := strings.Split(resp.Content, "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		if strings.HasPrefix(line, "Fact:") || strings.HasPrefix(line, "Guideline:") {
+			// Commit the reflection back to database
+			entry := controlplane.L2VaultRecord{
+				ID:         fmt.Sprintf("reflect-%d", time.Now().UnixNano()),
+				SessionID:  "system",
+				Type:       controlplane.MemoryLongTerm,
+				Kind:       "reflection",
+				Category:   "synthesized",
+				Content:    line,
+				Importance: 0.8,
+				HeatScore:  80.0,
+				CreatedAt:  controlplane.Now(),
+			}
+			_ = s.Commit(ctx, entry)
+		}
+	}
+
+	return nil
+}
+
+func (s *VectorStore) RelationStore() *RelationStore {
+	return s.relationStore
+}

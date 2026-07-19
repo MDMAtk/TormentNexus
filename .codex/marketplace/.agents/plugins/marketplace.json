@@ -1,0 +1,21 @@
+{
+  "name": "tormentnexus-marketplace",
+  "interface": {
+    "displayName": "TormentNexus"
+  },
+  "plugins": [
+    {
+      "name": "tormentnexus",
+      "source": {
+        "source": "local",
+        "path": "./plugins/tormentnexus"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Infrastructure"
+    }
+  ]
+}
+

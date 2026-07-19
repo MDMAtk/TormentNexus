@@ -1,17 +1,47 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-const GO_SIDECAR_BASE =
-	process.env.TORMENTNEXUS_GO_SIDECAR_URL || "http://127.0.0.1:7778";
+const TN_KERNEL_BASE =
+	process.env.TORMENTNEXUS_TN_KERNEL_URL || "http://127.0.0.1:7778";
 
 /**
- * Go sidecar reverse proxy.
+ * TN Kernel reverse proxy.
  *
- * Browser requests to /api/go/<path> are forwarded to the Go sidecar
- * at GO_SIDECAR_BASE/<path>.  The path is passed through verbatim so
- * that callers can target any sidecar endpoint — e.g. /api/go/health
- * → http://127.0.0.1:4300/health, or /api/go/api/mcp/status →
- * http://127.0.0.1:4300/api/mcp/status.
+ * Browser requests to /api/go/<path> are forwarded to the TN Kernel
+ * at TN_KERNEL_BASE/<path>.  The path is passed through verbatim so
+ * that callers can target any kernel endpoint — e.g. /api/go/health
+ * → http://127.0.0.1:7778/health, or /api/go/api/mcp/status →
+ * http://127.0.0.1:7778/api/mcp/status.
  */
+
+function remapPath(path: string): string {
+	const map: Record<string, string> = {
+		"api/imports": "api/import/summary",
+		"api/healer": "api/healer/history",
+		"api/deerflow": "api/deerflow/status",
+		"api/cold-archive": "api/memory/cold-archive",
+		"api/cli-harnesses": "api/tools/detect-cli-harnesses",
+		"api/cloud-dev": "api/clouddev/sessions",
+		"api/browser": "api/browser/status",
+		"api/browser-extension": "api/browser-extension/stats",
+		"api/logs-metrics": "api/metrics/stats",
+		"api/observability": "api/pulse/status",
+		"api/mesh": "api/mesh/status",
+		"api/runtime": "api/runtime/status"
+	};
+	if (map[path]) {
+		return map[path];
+	}
+	if (
+		!path.startsWith("api/") &&
+		!path.startsWith("trpc/") &&
+		!path.startsWith("health") &&
+		!path.startsWith("version") &&
+		!path.startsWith("well-known")
+	) {
+		return "api/" + path;
+	}
+	return path;
+}
 
 export async function GET(
 	request: NextRequest,
@@ -19,7 +49,7 @@ export async function GET(
 ) {
 	const resolvedParams = await params;
 	const pathSegments = resolvedParams.path.join("/");
-	const targetURL = `${GO_SIDECAR_BASE}/${pathSegments}`;
+	const targetURL = `${TN_KERNEL_BASE}/${remapPath(pathSegments)}`;
 
 	try {
 		const response = await fetch(targetURL, {
@@ -47,9 +77,9 @@ export async function GET(
 		});
 	} catch (error) {
 		const message =
-			error instanceof Error ? error.message : "Go sidecar unreachable";
+			error instanceof Error ? error.message : "TN Kernel unreachable";
 		return NextResponse.json(
-			{ success: false, error: message, sidecarURL: targetURL },
+			{ success: false, error: message, kernelURL: targetURL },
 			{ status: 502 },
 		);
 	}
@@ -61,7 +91,7 @@ export async function POST(
 ) {
 	const resolvedParams = await params;
 	const pathSegments = resolvedParams.path.join("/");
-	const targetURL = `${GO_SIDECAR_BASE}/${pathSegments}`;
+	const targetURL = `${TN_KERNEL_BASE}/${remapPath(pathSegments)}`;
 
 	try {
 		let body: string | null = null;
@@ -91,9 +121,9 @@ export async function POST(
 		});
 	} catch (error) {
 		const message =
-			error instanceof Error ? error.message : "Go sidecar unreachable";
+			error instanceof Error ? error.message : "TN Kernel unreachable";
 		return NextResponse.json(
-			{ success: false, error: message, sidecarURL: targetURL },
+			{ success: false, error: message, kernelURL: targetURL },
 			{ status: 502 },
 		);
 	}

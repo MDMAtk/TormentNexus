@@ -1,0 +1,22 @@
+{
+  "name": "@tormentnexus/commercial",
+  "version": "1.0.0-alpha.255",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "node build.mjs",
+    "lint": "echo \"Linting skipped\""
+  },
+  "dependencies": {
+    "@tormentnexus/ui": "workspace:*",
+    "lucide-react": "^0.562.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sonner": "^2.0.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.3.3"
+  }
+}

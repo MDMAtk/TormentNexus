@@ -48,7 +48,7 @@ func BuildRoutingSummary(statuses []Status) RoutingSummary {
 		candidates := make([]RoutingCandidate, 0, len(taskProviderOrder[taskType]))
 		for index, provider := range taskProviderOrder[taskType] {
 			status := statusByProvider[provider]
-			reason := "not configured in Go sidecar environment"
+			reason := "not configured in TN Kernel environment"
 			if status.Configured {
 				reason = "configured provider in preferred Node routing order"
 			} else if index == 0 {
@@ -74,7 +74,7 @@ func BuildRoutingSummary(statuses []Status) RoutingSummary {
 		Tasks:           tasks,
 		Limitations: []string{
 			"Read-only summary only; this does not execute quota-aware model selection.",
-			"Ordering reflects current Node task defaults and provider preferences, filtered by configured credentials in the Go sidecar environment.",
+			"Ordering reflects current Node task defaults and provider preferences, filtered by configured credentials in the TN Kernel environment.",
 			"Live rate limits, quota exhaustion, and fallback events remain Node control-plane responsibilities.",
 		},
 	}

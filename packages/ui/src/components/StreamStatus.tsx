@@ -17,7 +17,7 @@ export function StreamStatus() {
   useEffect(() => {
     const checkSidecar = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:4300/health', { signal: AbortSignal.timeout(2000) });
+        const res = await fetch('http://127.0.0.1:7778/health', { signal: AbortSignal.timeout(2000) });
         setSidecarOnline(res.ok);
       } catch {
         setSidecarOnline(false);
@@ -29,8 +29,8 @@ export function StreamStatus() {
     return () => clearInterval(timer);
   }, []);
 
-  const tsLive = healthQuery.data?.status === 'running';
-  const isError = healthQuery.isError;
+  const tsLive = healthQuery.data?.status === 'running' || healthQuery.data?.ok === true;
+  const isError = healthQuery.isError && sidecarOnline === false;
 
   return (
     <div className="flex items-center gap-2">

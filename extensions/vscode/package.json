@@ -1,0 +1,117 @@
+{
+  "name": "tormentnexus",
+  "displayName": "TormentNexus",
+  "description": "AI Control Plane with Persistent Memory & 26,000+ MCP Tools",
+  "version": "1.0.0",
+  "publisher": "tormentnexus",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Machine Learning",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "mcp",
+    "memory",
+    "llm",
+    "tools",
+    "agent"
+  ],
+  "icon": "images/icon.png",
+  "activationEvents": [
+    "onView:tormentnexus.memory",
+    "onView:tormentnexus.tools",
+    "onCommand:tormentnexus.connect",
+    "onCommand:tormentnexus.searchTools"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tormentnexus",
+          "title": "TormentNexus",
+          "icon": "images/sidebar.svg"
+        }
+      ]
+    },
+    "views": {
+      "tormentnexus": [
+        {
+          "id": "tormentnexus.memory",
+          "name": "Memory"
+        },
+        {
+          "id": "tormentnexus.tools",
+          "name": "MCP Tools"
+        },
+        {
+          "id": "tormentnexus.status",
+          "name": "Status"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "tormentnexus.connect",
+        "title": "TormentNexus: Connect to Server"
+      },
+      {
+        "command": "tormentnexus.disconnect",
+        "title": "TormentNexus: Disconnect"
+      },
+      {
+        "command": "tormentnexus.searchTools",
+        "title": "TormentNexus: Search MCP Tools"
+      },
+      {
+        "command": "tormentnexus.addMemory",
+        "title": "TormentNexus: Add Memory"
+      },
+      {
+        "command": "tormentnexus.searchMemory",
+        "title": "TormentNexus: Search Memory"
+      },
+      {
+        "command": "tormentnexus.openDashboard",
+        "title": "TormentNexus: Open Dashboard"
+      },
+      {
+        "command": "tormentnexus.refresh",
+        "title": "TormentNexus: Refresh"
+      }
+    ],
+    "configuration": {
+      "title": "TormentNexus",
+      "properties": {
+        "tormentnexus.serverUrl": {
+          "type": "string",
+          "default": "http://localhost:7778",
+          "description": "TormentNexus server URL"
+        },
+        "tormentnexus.autoConnect": {
+          "type": "boolean",
+          "default": true,
+          "description": "Auto-connect on startup"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

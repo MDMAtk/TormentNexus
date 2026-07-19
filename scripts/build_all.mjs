@@ -408,8 +408,18 @@ function detectGradleCommand(jetbrainsRoot) {
 function runJetBrainsBuild() {
   const jetbrainsRoot = path.join(repoRoot, "packages", "jetbrains");
 
+  if (!existsSync(path.join(jetbrainsRoot, "build.gradle")) && !existsSync(path.join(jetbrainsRoot, "settings.gradle"))) {
+    printStep("Skipping JetBrains plugin build because `build.gradle` and `settings.gradle` are missing in `packages/jetbrains`.");
+    return;
+  }
+
   if (!existsSync(jetbrainsRoot)) {
     printStep("Skipping JetBrains plugin build because `packages/jetbrains` is not present.");
+    return;
+  }
+
+  if (!existsSync(path.join(jetbrainsRoot, "build.gradle")) && !existsSync(path.join(jetbrainsRoot, "build.gradle.kts")) && !existsSync(path.join(jetbrainsRoot, "settings.gradle")) && !existsSync(path.join(jetbrainsRoot, "settings.gradle.kts"))) {
+    printStep("Skipping JetBrains plugin build because `packages/jetbrains` has no gradle configuration files.");
     return;
   }
 

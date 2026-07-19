@@ -1,0 +1,16 @@
+manifest_version: 1
+
+name: tormentnexus
+description: TormentNexus AI control plane — persistent L2 vector memory, semantic tool discovery, imported sessions, skill registry, code search, subagent orchestration
+source: https://github.com/robertpelloni/tormentnexus
+
+transport:
+  type: stdio
+  command: C:\Users\hyper\workspace\tormentnexus\tormentnexus.exe
+  args:
+    - mcp
+  env:
+    TORMENTNEXUS_WORKSPACE_ROOT: C:\Users\hyper\workspace\tormentnexus
+
+auth:
+  type: none

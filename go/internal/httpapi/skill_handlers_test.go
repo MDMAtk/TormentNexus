@@ -14,7 +14,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/orchestration"
+	"github.com/MDMAtk/TormentNexus/internal/orchestration"
 )
 
 // TestSkillHandlerList verifies GET /api/skills/list returns registered skills.

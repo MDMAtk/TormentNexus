@@ -1,0 +1,8 @@
+FROM golang:1.26-alpine AS build
+WORKDIR /app
+COPY go/ ./
+RUN go build -buildvcs=false -ldflags="-s -w" -o tn-kernel ./cmd/tormentnexus
+FROM alpine:latest
+COPY --from=build /app/tn-kernel /usr/local/bin/tn-kernel
+EXPOSE 7778
+CMD ["tn-kernel", "serve", "-host", "0.0.0.0", "-port", "7778"]

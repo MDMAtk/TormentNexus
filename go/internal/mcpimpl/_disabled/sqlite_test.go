@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/glebarez/go-sqlite"
 )
 
 func TestHandleSqliteTools(t *testing.T) {

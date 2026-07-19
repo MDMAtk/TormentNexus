@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/config"
 )
 
 // handleServiceConnectivity reports the health of connections between
-// the Go sidecar and all upstream/downstream services.
+// the TN Kernel and all upstream/downstream services.
 func (s *Server) handleServiceConnectivity(w http.ResponseWriter, r *http.Request) {
 	sd := config.DefaultServiceDiscovery()
 
@@ -33,11 +33,11 @@ func (s *Server) handleServiceConnectivity(w http.ResponseWriter, r *http.Reques
 	bridgeStatus := checkHTTPService(ctx, sd.BridgeBaseURL(), "bridge")
 	services["bridge"] = bridgeStatus
 
-	// 4. Go sidecar self-status
-	services["goSidecar"] = map[string]any{
+	// 4. TN Kernel self-status
+	services["tnKernel"] = map[string]any{
 		"status":    "running",
-		"port":      sd.GoSidecarPort,
-		"baseURL":   sd.GoSidecarBaseURL(),
+		"port":      sd.KernelPort,
+		"baseURL":   sd.KernelBaseURL(),
 		"reachable": true,
 	}
 
@@ -57,11 +57,11 @@ func (s *Server) handleServiceConnectivity(w http.ResponseWriter, r *http.Reques
 		"allHealthy": allHealthy,
 		"services":   services,
 		"discovery": map[string]any{
-			"goSidecarPort":  sd.GoSidecarPort,
-			"trpcUpstreams":  sd.TRPCUpstreamURLs,
-			"bridgePort":     sd.BridgePort,
-			"dashboardPort":  sd.DashboardPort,
-			"dashboardHost":  sd.DashboardHost,
+			"kernelPort":    sd.KernelPort,
+			"trpcUpstreams": sd.TRPCUpstreamURLs,
+			"bridgePort":    sd.BridgePort,
+			"dashboardPort": sd.DashboardPort,
+			"dashboardHost": sd.DashboardHost,
 		},
 	})
 }
@@ -144,12 +144,12 @@ func (s *Server) handleMCPClientSync(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sd := config.DefaultServiceDiscovery()
-	sidecarBase := sd.GoSidecarBaseURL()
+	kernelBase := sd.KernelBaseURL()
 
 	// Build TormentNexus MCP server entries for the target client
 	servers := map[string]any{
 		"tormentnexus": map[string]any{
-			"url":   fmt.Sprintf("%s/mcp", sidecarBase),
+			"url":   fmt.Sprintf("%s/mcp", kernelBase),
 			"notes": "TormentNexus Go Control Plane — aggregated MCP router",
 		},
 	}
@@ -157,9 +157,9 @@ func (s *Server) handleMCPClientSync(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
 		"data": map[string]any{
-			"client":        req.Client,
-			"servers":       servers,
-			"sidecarBase":   sidecarBase,
+			"client":     req.Client,
+			"servers":    servers,
+			"kernelBase": kernelBase,
 		},
 	})
 }

@@ -1,0 +1,336 @@
+# MEMORY.md — Multi-Agent Observations
+
+## Session 2026-07-11 (Stripe Limits, Alpine Migration, and Docker Workspace Alignment)
+
+### Stripe Invoice Limits & Quantity Selector
+- **Stripe Transaction Cap**: Stripe enforces a strict maximum invoice/transaction cap of **$999,999.99** per session. Setting the `adjustable_quantity` maximum parameter to a value (like one billion) that multiplied by the unit price exceeds this cap causes Stripe's client-side payment app to fail with a `400 Bad Request`. Limit the maximum quantity to a safe value (like `100,000` for a `$5` seat price) to keep the total checkout price valid.
+
+### Docker Alpine Migration & GPG/Seccomp Bypass
+- **Debian APT GPG Failures**: Compiling newer Debian Bookworm images on older host Linux kernels often triggers signature verification failures (`At least one invalid signature was encountered`) due to libseccomp filtering. Migrating to Alpine-based runner and builder stages (`node:20-alpine`) resolves this seccomp issue.
+
+### Docker Workspace Isolation Alignment
+- **Workspace Manifest Whitelisting**: If a monorepo workspace package (like `tormentnexus-extension` or `packages/enterprise`) is excluded in the build context via `.dockerignore`, Turborepo will fail with `No package found in workspace`. Copying the package directories (or at least their manifests) and using `--ignore-scripts` during `pnpm install` ensures dependency resolution succeeds cleanly.
+
+## Session 2026-07-08 (JSX Balancing, Port Consolidation, SQLite Gotchas & Swarm Refinement)
+
+### Port Consolidation & Upstream tRPC routing
+- **Upstream Port Alignment**: Corrected the default upstream tRPC proxy port from the decommissioned `7787` to the active Go sidecar port `7778` inside [route.ts](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/src/app/api/trpc/[trpc]/route.ts) and [start.mjs](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/scripts/start.mjs). This resolved the HTTP 500 page rendering errors on the dashboard console.
+
+### SQLite Driver Semicolon Gotcha
+- **Multi-query Execution**: SQLite driver implementations (like `modernc.org/sqlite`) typically execute only the first query inside a semicolon-separated SQL string passed to `db.Exec()`. Splitting table creations (`published_mcp_servers` and `links_backlog`) into individual `Exec` calls guarantees both tables are successfully created on startup.
+
+### Catalog Database Mismatch Fix
+- **Table vs Database Alignment**: When scraper tasks attempt to query the `links_backlog` table, they must target `catalog.db` directly rather than `tormentnexus.db`. Routing queries via `localTormentNexusDBPath()` causes sqlite errors due to missing tables. 
+
+### Nondestructive Script Clean-up
+- **Pruning Dev Workspace**: Keeping script files organized (e.g. archiving unused scrapers/pipelines to `scripts/archive/` and keeping task runners in the root of `scripts/`) ensures developer workspaces stay maintainable and uncluttered.
+
+### Win32 GUI Notification Isolation
+- **Non-Interactive GUI Limits (Session 0)**: Spawning Win32 notification icons via `Shell_NotifyIconW` from headless background tasks/runners fails silently on Windows due to session isolation. To display the taskbar system tray icon, the sidecar binary `tormentnexus.exe` must be run interactively directly from the user's desktop command prompt.
+
+### Swarm Database Schema Correction
+- **Missing Columns Triage**: Restructured `swarm_v6.py` query fields to select `classification` (mapped as `category`) and `description` to align with the actual SQLite columns in `assimilation_state.db`, resolving schema crash errors.
+
+## Session 2026-07-04 (Go Unit Tests & Database Contention)
+
+### Session Restoration UI integration
+
+- **Cross-Origins & Proxies**: Calling Go-native supervisor endpoints directly from Next.js web application requires mapping correct callback functions (`restoreImportedSession`) and targeting the Go API proxy port `7778` natively.
+- **Go Compilation Warnings**: Go 1.24+ treats unused package imports (like `"path/filepath"`) as direct build errors. Keeping unused libraries pruned from internal HTTP handler files ensures smooth compilation.
+
+### Database Lock Contention
+
+- **Concurrent Test Runs**: Running `go test ./...` in the presence of an active background sidecar daemon (`tormentnexus.exe serve`) will result in `database is locked (5) (SQLITE_BUSY)` failures. Terminating the background sidecar daemon temporarily clears locks and allows unit tests to execute cleanly.
+
+## Session 2026-07-03 (Default Tool Selection & React Fragment Tab Wrapping)
+
+### React JSX Tab Wrapping
+
+- **React Fragment Wrapper requirements**: When wrapping multiple sibling layout elements (like consecutive dashboard section divs) inside conditional tab blocks (e.g. `{activeTab === "settings" && (...)`), they must be enclosed in React Fragments (`<>...</>`) to satisfy JSX single-root compiling constraints.
+
+## Session 2026-07-02 (E2E Integration Verification & Port Configuration)
+
+### E2E Port Configuration
+
+- **Active Port Routing**: Verification scripts (like `e2e_integration_verify.py`) must be configured to target the active Go sidecar port `7778` instead of the legacy `4300` port to prevent connection refused failures when verifying native endpoints.
+
+## Session 2026-07-02 (Go Unit Test Stabilization & Message Loops)
+
+### Go Unit Tests on Windows
+
+- **Blocking GUI Message Loops**: Spawning system tray icon loops (`systray.Start`) during Go unit test execution on Windows causes the tests to hang indefinitely because headless environments do not dispatch Windows messages. Wrapping the startup logic inside `if flag.Lookup("test.v") == nil` safely bypasses it when running `go test`.
+
+## Session 2026-07-02 (Next.js tRPC Proxy Stability & Webpack Dev Server Migration)
+
+### tRPC Proxy Resilience
+
+- **Proxy Abort Handlers**: Integrating a `3000ms` `AbortController` timeout on Next.js upstream tRPC fetches prevents the proxy handler from blocking indefinitely when the TS control plane is offline.
+- **Go Sidecar Redirects**: Adding `startupStatus` to `GO_NATIVE_PROCEDURES` inside [route.ts](file:///c:/Users/hyper/workspace/tormentnexus/apps/web/src/app/api/trpc/[trpc]/route.ts) bypasses the TS core proxy completely, routing status checks directly to the Go sidecar (`7778`) for immediate, reliable responses.
+
+### Next.js Dev Server on Windows
+
+- **Turbopack Cache Corruption**: On Windows hosts, Turbopack (`next dev`) frequently runs into `ENOENT` or `os error 3` path errors when compiling SST cache directories. Using the `--webpack` flag restores dev server stability.
+
+## Session 2026-07-02 (Secure P2P Gossip, OS Deep Links & Wails GUI Compilation)
+
+### Secure UDP Gossip Protocol
+
+- **AES-GCM Shared-Key Payload Encryption**: When gossiping memory state over P2P network sockets, encrypting raw serialization data using AES-GCM with a default shared key secures transport channels against network interception.
+- **Optimized Re-Gossip Routing**: To minimize JSON marshaling and encryption computational latency on intermediate peer nodes, store and forward raw incoming encrypted packets directly, bypassing decrypt-encrypt cycles during packet gossiping.
+
+### OS Deep Link Integration
+
+- **Non-Privileged Registry Mapping**: Custom protocol schemes (like `tormentnexus://`) can be registered under `HKCU\Software\Classes` on Windows. This registry mapping does not require administrator privileges, allowing the sidecar daemon to configure deep-link routing automatically.
+
+### Wails Standalone Asset Build
+
+- **Next.js Turbopack Packaging**: Standard Next.js builds can be packaged into Wails-native embedded resources by utilizing `copy-assets.mjs` to target and copy production client static resources recursively to the Wails assets compile folder.
+
+## Session 2026-07-01 (Native Go Session Ingestion & Windows IPv6 Gotchas)
+
+### Port Binding and IPv6 Resolution
+
+- **Windows Localhost Loopback**: On Windows systems, python's default URL resolution resolves `localhost` to IPv6 `[::1]` first. If a Go sidecar daemon binds explicitly to IPv4 `127.0.0.1:7778`, connections using `localhost` will hang in a `SYN_SENT` state. Hardcoding `127.0.0.1` directly avoids this loopback resolution latency.
+- **Go SQLite Constraints handling**: When performing bulk session imports through custom endpoints, tables like `imported_sessions` may enforce strict database constraints (such as `NOT NULL UNIQUE` on `transcript_hash` or `normalized_session`). Handlers must calculate unique transaction hashes and map default structures (`{}`) to prevent query execution panics.
+
+## Session 2026-07-01 (TormentNexus Unified Dashboard & Sidebar Navigation)
+
+### Layout Refactoring Heuristics
+
+- **Programmatic View Transformations**: When doing multi-chunk replacements in complex React view components (like `dashboard-home-view.tsx`), it is safer to utilize dedicated Python helper scripts rather than interactive search-and-replace tools to guarantee syntactic accuracy and avoid losing block scope bounds (such as function parameters or return values).
+- **Consolidated Sidebar Config remapping**: In single-page condensed dashboard architectures, mapping sidebar links to query parameters (e.g. `/dashboard?tab=page-a`) ensures instant UI synchronization without full-page reloads, providing a streamlined operator experience.
+
+## Session 2026-06-26 (tRPC Batching, TS Control Plane Decommission, and Wails static export)
+
+### tRPC Batch Processing Native Fast-Path
+
+- **Full Bypass Verification**: Batch tRPC queries (represented as comma-separated procedure paths) must check that *all* procedures are present in `GO_NATIVE_PROCEDURES`. Resolving all native procedures inside Next.js `route.ts` using `getCompatPayload` allows the application to completely bypass proxying to the TS control plane, allowing a clean decommission.
+
+### TS Control Plane Decommissioning
+
+- **SSE Stream Destination**: Standardize SSE streams in the dashboard around the Go sidecar's `/api/sse` port rather than port `3001` or `/api/mesh/stream` to ensure proper mesh status monitoring and event streaming.
+- **Watchdog Port Removal**: When decommissioned services are taken offline, watchdog scripts checking TCP ports must be cleaned up to prevent false-positive alert notifications.
+
+### Wails static export configuration
+
+- **Next.js Export Mode**: Next.js applications wrapped inside Wails require a static HTML export (`output: "export"`). Since standard server components cannot be statically generated, routing all requests to the Go API port ensures zero runtime issues. Use a custom build script (`copy-assets.js`) to recursively sync Next.js static output files to the Go assets directory.
+
+## Session 2026-06-26 (tRPC Upstream Alignment & Wails GUI App Skeleton)
+
+### tRPC Upstream Base Alignment
+
+- **Port Matching Accuracy**: When configuring Service Discovery, default upstream tRPC urls must target the active TS control plane daemon port (e.g., `7787`) rather than the frontend port (e.g., `7779`). Incorrect port mapping causes Go-to-TS interop calls to timeout or receive 502/refused responses.
+
+### Wails GUI App Bootstrap
+
+- **Embedded Asset Targets**: When using `//go:embed` for frontend directories in Wails, the target folder must exist and contain at least one file. Seeding a simple `placeholder.txt` inside `frontend/dist` prevents Go compiler failures during early skeleton design.
+
+### Tool Code Hygiene
+
+- **Unused/Experimental Code Quarantine**: Auto-generated tools that are unregistered and contain compilation/redeclaration errors should be moved or renamed to `.bak` to keep compiler paths clean and block-free for active targets.
+
+## Session 2026-06-26 (L3 Cold Archive Integration & SQLite Timestamp Formatting)
+
+### Memory Tiering & Cache Heuristics
+
+- **SQLite julianday() Precision**: Go `time.Time` values passed as direct query parameters are serialized into format representations that SQLite's `julianday()` function cannot parse, resulting in `NULL` values. Standardize timestamp serialization to ISO-8601 UTC string formats (e.g. `entry.LastAccessedAt.UTC().Format("2006-01-02 15:04:05")`) to guarantee correct time differences.
+- **Write-Through L1 Cache Eviction**: When a memory record is demoted/archived to L3 Cold Archive, it must be explicitly evicted from `s.l1Cache` (using `delete(s.l1Cache, r.ID)`). Failing to evict allows semantic text matching to hit L1 cache and return stale working copies directly, bypassing the L3 fallback search mechanism.
+
+## Session 2026-06-26 (Native Tool Integration & Compilation Fixes)
+
+### Compilation & Tool Hygiene
+
+- **Go Tool Indentation and Comments**: Avoid leaving conversational comments or unindented imports inside tool Go files as it triggers compilation errors in package scope.
+- **Go Tool Compiler Healing**: Running `reset_compilation_broken_tools.py` regularly helps quarantine syntactically invalid tool files by parsing compiler errors and resetting database status to `pending`, ensuring monorepo stability.
+- **Native Go Tool Implementations**: Porting tool integrations to native Go tool registries (like `chunkhound` and `probe`) using helpers from `registry.go` (like `ok` and `err`) allows low-latency execution and direct SQLite database access.
+
+## Session 2026-06-26 (Dashboard Hub Condensation & Verification)
+
+### React and Hydration Stability Observations
+
+- **Hydration Mismatch Mitigation**: Query parameter checks (e.g. `window.location.search`) in global layout components like the `Sidebar` must be deferred until the component is mounted on the client (`mounted` state check). This guarantees identical initial HTML structure between server-rendered (SSR) and client-rendered content, eliminating React hydration warning spam.
+- **Unique React Loop Keys**: When mapping dynamic data such as lists of MCP tools where multiple instances of tools or servers can exist (or tool names lack unique IDs), utilizing just `tool.name` or `tool.uuid` triggers React duplicate key errors. Combining server name, tool name, and array mapping indices (e.g., `key={\`${tool.server ?? ''}__\${tool.name ?? ''}__\${idx}\`}`) prevents rendering identity bugs and cleans up the browser console.
+- **Safeguarding Event Listeners**: Always verify that key browser event attributes (such as `event.key`) are defined before invoking string methods like `.toLowerCase()` on them to prevent unhandled TypeError exceptions during system-level keystrokes.
+- **Process Event Context Scopes**: Event handlers registered on Node `process` events (e.g., `uncaughtException` and `unhandledRejection`) loose object-oriented `this` context binding when invoked by the runtime. Use lexical closures referencing outer-scope variables/functions instead of `this` to perform cleanup/exit operations safely.
+
+### Layout & Routing Condensation Heuristics
+
+- **High-Fidelity Tabbed Consolidation**: Condensed 60 separate subpage folders into 3 major hub pages (System `/dashboard`, MCP Tool Services `/dashboard/mcp`, and Agent Swarm `/dashboard/swarm`).
+- **Tab State and History Sync**: Integrating Next.js `useSearchParams()` with `router.replace` allows seamless navigation tab switching that synchronizes with the URL address bar and updates the sidebar navigation highlighted status automatically.
+- **Client-Side Redirection Fallbacks**: Rewriting the `page.tsx` files of condensed routes with immediate client-side client redirects (`router.replace`) ensures complete backward compatibility for bookmarks and direct links without breaking any feature flows.
+
+## Session 2026-06-26 (Go Sidecar Redeclaration & Port Hardening)
+
+### Code Generation & Compiler Redeclaration Observations
+
+- **Duplicate Helper Functions**: Auto-generated tools (like `quantdinger.go`) often include embedded helper functions like `ok`, `err`, `getString`, `getInt`, and `getBool`. When compiled in the same `tools` package scope, they conflict with the definitions in `registry.go` and break Go package compilation.
+- **Auto-Healing Loop Resolution**: Using `reset_compilation_broken_tools.py` successfully parses the failing files, quarantines them (deletes the bad file), and sets their DB status back to `'pending'` so they can be regenerated by the watchdog swarm cleanly without these redeclarations.
+- **Port Management**: The TS control plane runs on `4100` and serves the core tRPC/health status. Starting it directly with `pnpm -C packages/cli dev --port 4100` enables the watchdog daemon to recognize it as `OK` and avoids port-based health-check failures.
+
+## Session 2026-06-17 (Merge & Documentation Session)
+
+### Merge Architecture Observations
+
+- **Branch topology**: `jules/baseline-128-hardened` had 7 unique commits diverging from `main` at `82a896d4f` (the merge base)
+- **Conflict resolution strategy**: For this repo, `registry.go` conflicts should always be resolved by taking the branch with the full implementation (not stubs). The jules branch consistently has more complete tool registrations.
+- **Fast-forward efficiency**: When branches like `assimilation-pipeline` and `assimilation-final` are behind main (no unique commits), use `git push <commit>:refs/heads/<branch>` to fast-forward them to the merged tip — this avoids creating unnecessary merge commits.
+- **GitHub remote**: The repo URL has moved to `https://github.com/MDMAtk/TormentNexus.git` (GitHub redirects from old `NexusSoftMDMA/TormentNexus` URL)
+
+### README.md Rewrite Observations
+
+- A comprehensive README for this project needs: architecture diagram, monorepo structure tree, capability table, dashboard routes, API categories, and a "what's planned" section
+- The README title should capture all 4 pillars: multi-agent, MCP tools, memory, and universal LLM routing
+- Shields/badges for version, build, Go, TypeScript, Next.js, React, and license add immediate credibility
+- Table of Contents is essential for a 650+ line document
+- Using ASCII art for architecture diagrams is more reliable than Mermaid in plain markdown (though Mermaid works in GitHub)
+
+## Session 2026-06-18 (Staging & Cleanup Session)
+
+### Swarm Observations
+
+- **Swarm stopped by itself**: No active swarm process found. The `swarm_v8.out` log shows it was hitting provider errors (nvidia empty responses) before stopping. May need a fresh run.
+- **73 empty stub files committed**: Swarm creates zero-byte `.go` stub files that Go's build system silently ignores (no `package` declaration). These need to be filled before they become functional.
+- **LLM provider flakiness**: Nvidia models (deepseek-v4-pro, deepseek-v4-flash, qwen-coder) returning empty responses consistently — may need to rotate providers or add retry fallbacks.
+
+### Cleanup Observations
+
+- **`.out` files grow large**: `swarm_forever.out` was 304KB, `swarm_norepair.out` was 182KB. These should be `.gitignore`'d after review.
+- **`.pid` files are ephemeral**: Should never be tracked — they change every restart.
+
+### Gotchas & Git Quirks
+
+- **`data/` is gitignored** but `.db` files inside it may be tracked if added before the ignore rule. Always use `git add -f` or `git add -u` for DB files, never `git add data/`
+- **`*.db-shm` and `*.db-wal`** are ignored — SQLite WAL files won't be committed. Good for avoiding large binary diffs.
+- **`go-sidecar.pid`** is untracked (runtime file) — correct, don't track it.
+- **`swarm_*.out` files** accumulate and can bloat the repo. Consider `.gitignore` them after review, or keep a few as progress evidence.
+- **`tormentnexus.db`**, **`catalog.db`**, **`provider_metrics.db`** are large binary files. If tracked, every commit that touches them adds significant size. Consider using Git LFS or only tracking them on release commits.
+- **Merge conflicts in `.gitignore`**: When the remote branch has fewer rules, always take `ours` (main) since it has the more comprehensive, tested ignore list.
+- **Merge conflicts in `CHANGELOG.md`**: When the remote branch has older alpha versions, always take `ours` (main) with the newer version history. The remote's changelog is likely stale.
+- **Merge conflicts in binary `.db` files**: Never attempt textual merge. Always take the newer version (`ours` during forward merge, or the one with the larger file size / more recent timestamp).
+- **Branch names with slashes** like `jules/baseline-128-hardened-2272628885254508907` require `refs/heads/` prefix in `git push`: `git push origin <commit>:refs/heads/<branch-name>`
+- **`git checkout --ours` vs `--theirs`**: In a merge, `ours` = the branch you're currently on (main), `theirs` = the branch being merged. This is counter-intuitive when rebasing.
+
+### Failure Lessons
+
+- **bobbybookmarks.com** DNS resolution fails consistently from this environment — permanently blocked. Use Smithery.ai or Glama.ai for MCP server catalog discovery.
+- **`--repair` flag** in swarm causes premature exit — use `--forever` without `--repair`
+- **`tormentnexus-upstream` remote** does not exist — only `origin` and `origin-backup` (dead). All pushes go to `origin`.
+- **`.out` files from swarm** are large and should be ignored by `.gitignore` to prevent repo bloat. Add `*.out` and `swarm_*.out` to `.gitignore`.
+- **Deleting tracked files**: When swarm removes broken tool files, `git add -A` will stage the deletions. This is correct — commit them as part of cleanup.
+- **Merge conflicts in `go/internal/tools/registry.go`**: This file always conflicts when merging branches because every branch adds tool registrations. The correct resolution is to take the version with the most registrations (usually the branch being merged), then verify `go build` compiles.
+- **Windows `EBUSY` errors**: When Git cannot unlink `.db` files (they're locked by a running process), use `git checkout -f` or close the process before switching branches.
+
+### Preferences
+
+- Always stage and commit `.db` files per user instruction "stage and track db always"
+- Use `--forever` mode for swarm to avoid premature shutdown
+- Tag commits with version: `v1.0.0-alpha.X`
+- After any merge, verify `go build ./cmd/tormentnexus` compiles clean
+- When a README.md rewrite is done, immediately commit it separately so it doesn't get lost in merge noise
+- Fast-forward feature branches that are fully merged rather than leaving them stale
+- Delete feature branches on GitHub after they are fully merged into main
+
+## Session 2026-06-24 (MCP Parity & Compile Hardening)
+
+### MCP Server Observations
+
+- **Local Module Replacing**: Setting `replace github.com/NexusSoftMDMA/TormentNexus => ../` and requiring `github.com/NexusSoftMDMA/TormentNexus v0.0.0` in `go/go.mod` allows the Go sidecar module to import `"github.com/NexusSoftMDMA/TormentNexus/tools"` without invoking network proxy lookups.
+- **Unused Import Errors**: The Go compiler enforces unused imports strictly. Having a python compiler feedback loop that isolates files failing due to unused imports into `_disabled` and regenerates the dispatch map dynamically ensures compilation success.
+- **Console Window Output**: To prevent JSON-RPC stream corruption for stdio client runners, all logging must be written strictly to `os.Stderr`.
+
+## Session 2026-06-24 (Dashboard Consolidation & MCP Robustness)
+
+### Stdio MCP Protocol Robustness
+
+- **JSON-RPC Parameters**: The MCP spec allows `params` to be optional or a JSON array (`[]`) for methods like `tools/list`. Using `json.RawMessage` for the request envelope's `params` field prevents unmarshal errors on standard client handshakes, dynamically decoding the struct parameters only inside handlers that strictly require them (like `tools/call`).
+- **Dashboard Layout**: Overview dashboards should avoid repeating structural readouts (like detailed metrics `dl` blocks) if they already exist in top-level cards, balancing screen estate and avoiding unnecessary page height.
+
+### Page Consolidation & Binary Pathing Heuristics
+
+- **Page De-duplication**: Pages with similar intent (like `/dashboard/config` form and `/dashboard/settings` raw JSON text area) should be consolidated into a single route with a tabbed interface. This reduces code footprint, streamlines navigation, and improves UX.
+- **Root Binary Pathing**: When the monorepo has two Go projects (e.g., a root Cobra CLI and a subfolder sidecar), they may compile binaries with the same name. If configurations or start scripts prioritize the root directory path (`tormentnexus.exe`), overwrite the root binary with the sidecar server so that subcommands like `mcp` can execute without Cobra CLI path conflicts.
+- **PowerShell Overwriting**: When using PowerShell in Windows, `Copy-Item` requires the `-Force` flag to overwrite an existing binary; otherwise, it silently leaves the target unchanged.
+
+## Session 2026-06-24 (Dashboard Consolidation Phase 2 & 3)
+
+### Agent & Knowledge Consolidation Heuristics
+
+- **Complex Page Consolidation**: Grouping multiple related subpages (e.g., `/dashboard/director`, `/dashboard/council`, `/dashboard/supervisor`, `/dashboard/squads`, `/dashboard/swarm`) into a single route with a tabbed interface makes the dashboard significantly cleaner and more cohesive, while preserving routing logic.
+- **Tab Layout Structure**: Using Framer Motion's `AnimatePresence` and `motion.div` transitions on tab panels creates a high-end, responsive feel.
+- **Vitest Workspace Matching**: Vitest scans all git worktrees recursively by default, matching nested test files. To run a fast, scoped test check, limit the matches by targeting specific directories or using exact path matching.
+
+### Session Supervisor Robustness
+
+- **Process Spawning Try-Catch**: When the SessionSupervisor or PtySupervisor attempts to restore active sessions from `session-supervisor.json` on startup, it executes `spawnProcess` (e.g. `node-pty`). If a shell path or binary is missing on the host, it throws a synchronous error (like `Error: File not found: ...`). Wrapping the spawn block in a try-catch ensures that individual session start failures are handled gracefully (marking the session as 'error' state) rather than raising an uncaught exception that completely crashes the main MCP server.
+
+## Session 2026-06-25 (Pure Go Vector Index & Memory Consolidation)
+
+### Vector Search Architecture
+
+- **Pure Go Cosine Similarity**: Computing cosine similarity in pure Go is highly efficient (takes < 2ms for 20,000 vectors of 384 dimensions) and avoids heavy CGO dependencies (`sqlite-vec` or external database links), making it ideal for local-first desktop agents.
+- **Double-Value Helper Rules**: The swarm generator sometimes outputs invalid brackets or files. Running the compiler reset script (`compiler_reset.py`) clears these quickly and maintains compiler safety.
+- **L1 In-Memory Caching**: Mirroring BobbyBookmarks' tiered design using in-memory caches inside the `VectorStore` structure provides rapid key-value retrieval for hot memories during chat loops.
+
+## Session 2026-06-25 (Dashboard Consolidation Phase 4 & Dev Hardening)
+
+### Dashboard Consolidation
+
+- **Brain & Memory Consolidation**: Unified `/dashboard/brain` and `/dashboard/memory` (and its hydration pages) into a tabbed layout in `/dashboard/brain/page.tsx` called **TormentNexus Cognitive Hub**. This groups Symbols Graph, Memory Vault, URL Ingestion, Expert Agents, Observations logs, and Hydration sync under a single sidebar tab.
+- **Client Redirects**: Replacing redundant page paths (like `/dashboard/memory`) with a client-side Next.js `useRouter.push()` redirect ensures backward compatibility for older bookmarks.
+- **Turbo Filter validation**: When a package doesn't exist in the workspace, Turbo's `--filter` triggers an error. Custom dev tools (like `scripts/dev_tabby_ready.mjs`) must avoid hardcoded package exclusion filters that target deleted packages (like `mcp-superassistant` or `@extension/hmr`).
+
+## Session 2026-06-26 (Go Parity & Trigger Hardening)
+
+### SQLite FTS5 Trigger Syntax
+
+- **Trigger Deletes**: The CGO-based trigger syntax `INSERT INTO fts_table(fts_table, ...) VALUES('delete', ...)` only works on external-content FTS5 virtual tables. On standard virtual tables, it throws a `SQL logic error (1)`. Replacing these triggers with standard `DELETE FROM fts_table WHERE id = old.id` resolves compatibility issues across memory stores.
+
+### Code-Gen Swarm Sanitization
+
+- **English Commentary / Invalid Files**: Occasionally the LLM code-generation swarm outputs files filled with English commentary/discussions instead of valid Go syntax (e.g. `browser_tools_mcp.go`), or files with missing return statements (e.g. `osaurus.go`). Extending the compiler healing loop to scan and remove these files while resetting their database status to `'pending'` ensures code base hygiene.
+
+## Session 2026-06-26 (WebSocket Integration & Client Telemetry Alignment)
+
+### WebSocket Telemetry Heuristics
+
+- **WebSocket Broker Mounting**: Instantiating and initializing WebSocket telemetry managers (like calling `server.StartWSBroker()`) during sidecar startup guarantees that real-time event listeners are bound before routes begin serving traffic.
+- **Dynamic Port & Path Resolution**: Centralizing WebSocket URL resolution in shared frontend helper libraries (e.g., `resolveCoreWsUrl`) prevents components like `TrafficInspector` from hardcoding target ports (like `3001`), seamlessly adapting telemetry flows as backend layers shift to Go-native servers on port `4300` at `/api/mcp/traffic/ws`.
+- **PowerShell script Execution**: In PowerShell environments on Windows, scripts must be run as `.\build.bat` rather than `build.bat` to avoid command execution exceptions.
+
+## Session 2026-07-06 (R19 — Batch MCP Server Implementation)
+
+### Batch Stub Implementation Pattern
+
+- **20 pure 6-line stubs** replaced with real Go handlers in one file (`mcp_servers_batch.go`)
+- Each handler now parses args, returns meaningful responses, some with real HTTP API calls
+- Name-based discovery: used GitHub to find original repos where possible
+- **arXiv MCP server** added with HandleSearchArxiv + HandleGetAbstract (real arXiv API queries)
+- Common pitfalls: `err` variable shadowing the `err()` helper function, unused `json` imports
+
+### File Organization
+
+- Consolidating many simple handlers into a single batch file reduces file count and discovery overhead
+- Dispatch.go and registry.go must be updated in sync with handler additions
+- Old stub files must be deleted to avoid "redeclared" compile errors
+
+### Executive Protocol R8
+
+- 297 task branches all point to commits already in main — no unique work to merge
+- Two remotes: origin (MDMAtk/TormentNexus ahead by 10 commits), origin-backup (HyperNexusSoft/HyperNexus)
+- Version bumped from alpha.239 to alpha.240
+
+## Session 2026-06-30 (Go Sidecar Port Cleanups & Route Verification)
+
+### Active Port Alignment
+
+- **Port 4300 Legacy Cleanup**: Components checking Go Sidecar status (such as `StreamStatus.tsx` in `@tormentnexus/ui`) must point to the active Go sidecar port `7778`, not the legacy `4300` port, to avoid browser-level connection refused errors.
+- **RSC Dynamic Route compilation**: Next.js redirect pages (like squads, director, and council pages) must be compiled and served successfully to handle App Router `_rsc` dynamic pre-fetches during client-side tab navigation.
+
+## Session 2026-07-09 (Legacy Core Decommissioning & Extension URL Alignment)
+
+### Legacy Core Decommissioning
+- **Core Decommission**: Completely decommissioned and removed all references to the legacy TypeScript control plane (`tormentnexus-core`) which ran on port `4100`. This includes removing checks from `verify_dev_readiness.mjs`, making `spawnCliDev()` a no-op in `dev_tabby_ready.mjs`, removing CLI status checks in `cli.go`, removing the container service from `docker-compose.isolated.yml` and `tenant-provision.sh`, and updating `ConnectionStatus.tsx` to fallback to `tormentnexus-go`.
+- **Pre-warming & Readiness Checks**: Added pre-warming routes inside `verify_dev_readiness.mjs` for both `startupStatus` and `mcp.getStatus` proxy endpoints, and increased the default check timeout to `10000ms`. This prevents Next.js runtime compilation cold start delays from triggering false timeout negatives.
+
+### Chrome Extension Integration
+- **Default Connection Port**: Configured Chrome extension websocket/SSE background connection endpoints to point to the active Go sidecar on `127.0.0.1:7778` rather than the decommissioned Node/TS server.

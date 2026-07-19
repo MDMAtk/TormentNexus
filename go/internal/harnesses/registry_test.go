@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
+	"github.com/MDMAtk/TormentNexus/internal/controlplane"
 )
 
 func TestListBuildsHarnessDefinitions(t *testing.T) {

@@ -1,0 +1,15 @@
+[core]
+workspace_base = "./workspace"
+
+[mcp]
+enabled = true
+
+[mcp.servers.tormentnexus]
+command = "tormentnexus"
+args = ["mcp"]
+env = { TORMENTNEXUS_WORKSPACE_ROOT = "C:/Users/hyper/workspace/tormentnexus" }
+
+[tormentnexus]
+url = "http://127.0.0.1:7778"
+auto_connect = true
+context_harvest = true

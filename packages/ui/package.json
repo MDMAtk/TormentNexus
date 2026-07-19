@@ -1,6 +1,6 @@
 {
   "name": "@tormentnexus/ui",
-  "version": "1.0.0-alpha.157",
+  "version": "1.0.0-alpha.255",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -8,7 +8,6 @@
     "lint": "echo \"Linting skipped\""
   },
   "dependencies": {
-    "@tormentnexus/core": "workspace:*",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",

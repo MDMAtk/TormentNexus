@@ -1,18 +1,18 @@
 package skillregistry
 
 import (
-	"database/sql"
 	"fmt"
 	"strings"
 
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 // IndexSkillsToCatalog indexes the currently loaded skills into the given catalog.db
 // It creates a published_skills table if it doesn't exist, to enable unified search
 // across MCP servers and internal skills.
 func (sr *SkillRegistry) IndexSkillsToCatalog(catalogDBPath string) error {
-	db, err := sql.Open("sqlite", catalogDBPath)
+	db, err := database.Open("sqlite", catalogDBPath)
 	if err != nil {
 		return fmt.Errorf("failed to open catalog.db: %w", err)
 	}

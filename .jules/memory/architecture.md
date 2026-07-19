@@ -1,6 +1,6 @@
 ### Project Architecture & Design Philosophy
 TormentNexus is built on a **Dual-Core Architecture** designed for maximum autonomy and performance:
-1.  **Go Kernel (TormentNexus Sidecar)**: Acts as the high-performance Control Plane. It handles low-level system operations, tool execution, and long-term memory (L2 Vault) management. It is designed to be CGo-free using `modernc.org/sqlite` for portability.
+1.  **Go Kernel (TN Kernel)**: Acts as the high-performance Control Plane. It handles low-level system operations, tool execution, and long-term memory (L2 Vault) management. It is designed to be CGo-free using `modernc.org/sqlite` for portability.
 2.  **TypeScript Dashboard (Next.js)**: Serves as the user-facing observation deck and orchestration layer, communicating with the Go kernel via tRPC and REST APIs.
 
 ### Core Patterns & Decisions

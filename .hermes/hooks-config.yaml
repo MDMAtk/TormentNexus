@@ -1,0 +1,20 @@
+# TormentNexus hooks — merge this into your ~/.hermes/config.yaml
+# Registers shell-script hooks that log to TormentNexus L2 memory at key lifecycle events.
+# See: hermes hooks list — hermes hooks test <event>
+
+hooks:
+  on_session_start:
+    - command: C:\Users\hyper\workspace\tormentnexus\.hermes\hooks\session-start.bat
+      timeout: 10
+  on_session_end:
+    - command: C:\Users\hyper\workspace\tormentnexus\.hermes\hooks\session-end.bat
+      timeout: 10
+  pre_tool_call:
+    - command: C:\Users\hyper\workspace\tormentnexus\.hermes\hooks\pre-tool-call.bat
+      timeout: 10
+  post_tool_call:
+    - command: C:\Users\hyper\workspace\tormentnexus\.hermes\hooks\post-tool-call.bat
+      timeout: 10
+  pre_llm_call:
+    - command: C:\Users\hyper\workspace\tormentnexus\.hermes\hooks\pre-llm-call.bat
+      timeout: 10

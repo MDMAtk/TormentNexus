@@ -12,8 +12,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 type DebateRecord struct {
 	ID        string         `json:"id"`
@@ -440,7 +441,7 @@ func (s *DebateHistoryStore) ClearAll(ctx context.Context) (int64, error) {
 }
 
 func (s *DebateHistoryStore) open(ctx context.Context) (*sql.DB, error) {
-	db, err := sql.Open("sqlite", s.dbPath)
+	db, err := database.Open("sqlite", s.dbPath)
 	if err != nil {
 		return nil, err
 	}

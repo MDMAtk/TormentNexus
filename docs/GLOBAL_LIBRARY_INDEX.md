@@ -1,6 +1,6 @@
 # Global Library Index
 
-This document is an aggregated index of all autonomous models, multi-agent frameworks, SDKs, memory backends, and contextual RAG architectures identified by the user to be assimilated into the Hypercode core.
+This document is an aggregated index of all autonomous models, multi-agent frameworks, SDKs, memory backends, and contextual RAG architectures identified by the user to be assimilated into the Tormentnexus core.
 This document is an aggregated index of all autonomous models, multi-agent frameworks, SDKs, memory backends, and contextual RAG architectures identified by the user to be assimilated into the TormentNexus core.
 
 ---
@@ -863,7 +863,7 @@ This document is an aggregated index of all autonomous models, multi-agent frame
 - [https://github.com/ZeframLou/call-me](https://github.com/ZeframLou/call-me)
 - [https://github.com/Zipstack/unstract](https://github.com/Zipstack/unstract)
 - [https://github.com/abagames/slash-criticalthink](https://github.com/abagames/slash-criticalthink)
-- [https://github.com/abhigyanpatwari/GitHypercode](https://github.com/abhigyanpatwari/GitHypercode)
+- [https://github.com/abhigyanpatwari/GitTormentnexus](https://github.com/abhigyanpatwari/GitTormentnexus)
 - [https://github.com/abi/screenshot-to-code](https://github.com/abi/screenshot-to-code)
 - [https://github.com/acertainKnight/project-thoth](https://github.com/acertainKnight/project-thoth)
 - [https://github.com/adityaprasad-sudo/Explore-Singapore](https://github.com/adityaprasad-sudo/Explore-Singapore)

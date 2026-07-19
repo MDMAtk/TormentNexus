@@ -17,7 +17,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/ai"
 )
 
 type CoderAgent struct {

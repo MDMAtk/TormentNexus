@@ -1,0 +1,33 @@
+---
+description: TormentNexus AI control plane integration — L2 memory, tool discovery, session import
+alwaysApply: true
+---
+
+# TormentNexus Integration
+
+TormentNexus is a local AI control plane running on port 7778 with persistent L2 vector memory, semantic tool discovery, imported sessions, and a skill registry.
+
+## MCP Tools Available
+
+The `tormentnexus` MCP server should be configured in `.cursor/mcp.json`. If not, it provides 49+ tools:
+
+### Memory & Context
+- `mcp_tormentnexus_memory_scratchpad_get/set/append` — L1 working memory
+- `mcp_tormentnexus_memory_extract_relations` — knowledge graph
+- `mcp_tormentnexus_add_bookmark` — save URLs with tags
+
+### Discovery & Routing
+- `mcp_tormentnexus_mcp_list_servers/tools` — discover capabilities
+- `mcp_tormentnexus_mcp_call_tool` — route to 20+ downstream servers
+
+### System Tools
+- `mcp_tormentnexus_bash/read/write/edit/grep/find/ls` — file and system ops
+- `mcp_tormentnexus_repomap` — repo map generation
+
+## Best Practices
+
+1. Use `mcp_tormentnexus_memory_scratchpad_get` before significant work to check for relevant context
+2. Use `mcp_tormentnexus_memory_scratchpad_set` after key decisions to persist knowledge cross-session
+3. Use `mcp_tormentnexus_mcp_list_tools` when unsure what tools are available
+4. Use `mcp_tormentnexus_repomap` for codebase orientation in unfamiliar projects
+5. Route complex commercial integrations through TN kernel via `mcp_tormentnexus_mcp_call_tool`

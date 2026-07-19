@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/config"
 )
 
 func TestCapabilitiesIncludesLocalAndUpstreamNodes(t *testing.T) {

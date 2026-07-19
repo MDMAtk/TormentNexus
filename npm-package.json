@@ -1,0 +1,7 @@
+{
+  "name": "tormentnexus",
+  "version": "1.0.0",
+  "bin": {"tn": "./scripts/tn"},
+  "description": "TormentNexus — universal AI control plane CLI + client installer",
+  "scripts": {"install": "python3 scripts/install-client-support.py"}
+}

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "tormentnexus": {
+      "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+      "args": ["mcp"],
+      "alwaysAllow": ["*"],
+      "disabled": false,
+      "timeout": 60
+    }
+  }
+}

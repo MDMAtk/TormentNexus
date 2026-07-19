@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/buildinfo"
+	"github.com/MDMAtk/TormentNexus/internal/buildinfo"
 )
 
 type managedProcess struct {
@@ -48,17 +48,17 @@ func cmdStart(args []string) int {
 
 	processes := []*managedProcess{}
 
-	// 1. Start Go sidecar
+	// 1. Start TN Kernel
 	if runtime == "go" || runtime == "auto" {
 		goPort := 7778
-		goProc := startGoSidecar(goBinary, workspaceRoot, goPort)
+		goProc := startTNKernel(goBinary, workspaceRoot, goPort)
 		if goProc == nil {
 			goPort = 7777
-			goProc = startGoSidecar(goBinary, workspaceRoot, goPort)
+			goProc = startTNKernel(goBinary, workspaceRoot, goPort)
 		}
 		if goProc != nil {
 			processes = append(processes, &managedProcess{
-				Name:     "Go sidecar",
+				Name:     "TN Kernel",
 				Cmd:      goProc,
 				Port:     goPort,
 				ReadyURL: fmt.Sprintf("http://127.0.0.1:%d/health", goPort),
@@ -66,9 +66,9 @@ func cmdStart(args []string) int {
 					return goProc.Process.Signal(os.Interrupt)
 				},
 			})
-			fmt.Printf("[CLI] ✅ Go sidecar started on port %d\n", goPort)
+			fmt.Printf("[CLI] ✅ TN Kernel started on port %d\n", goPort)
 		} else {
-			fmt.Println("[CLI] ❌ Failed to start Go sidecar")
+			fmt.Println("[CLI] ❌ Failed to start TN Kernel")
 		}
 	}
 
@@ -128,7 +128,7 @@ func cmdStart(args []string) int {
 }
 
 func cmdStop(args []string) int {
-	// Kill Go sidecar
+	// Kill TN Kernel
 	exec.Command("taskkill", "/F", "/IM", "tormentnexus.exe").Run()
 
 	// Kill dashboard node processes on relevant ports
@@ -143,12 +143,11 @@ func cmdStatus(args []string) int {
 		Name string
 		URL  string
 	}{
-		{"Go sidecar", "http://127.0.0.1:7778/health"},
-		{"Go sidecar (alt)", "http://127.0.0.1:7777/health"},
+		{"TN Kernel", "http://127.0.0.1:7778/health"},
+		{"TN Kernel (alt)", "http://127.0.0.1:7777/health"},
 		{"Dashboard", "http://127.0.0.1:3000/dashboard"},
 		{"Dashboard (dev)", "http://127.0.0.1:7779/"},
 		{"Dashboard (7779)", "http://127.0.0.1:7779/"},
-		{"TS control plane", "http://127.0.0.1:4100/health"},
 	}
 
 	fmt.Println("[CLI] TormentNexus Status")
@@ -198,13 +197,13 @@ func findGoBinary(workspaceRoot string) string {
 	return ""
 }
 
-func startGoSidecar(binary, workspaceRoot string, port int) *exec.Cmd {
+func startTNKernel(binary, workspaceRoot string, port int) *exec.Cmd {
 	cmd := exec.Command(binary, "serve", "--port", fmt.Sprintf("%d", port))
 	cmd.Dir = workspaceRoot
 	cmd.Stdout = nil
 	cmd.Stderr = nil
 	if err := cmd.Start(); err != nil {
-		fmt.Printf("[CLI] Failed to start Go sidecar on port %d: %v\n", port, err)
+		fmt.Printf("[CLI] Failed to start TN Kernel on port %d: %v\n", port, err)
 		return nil
 	}
 	return cmd

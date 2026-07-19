@@ -1,0 +1,399 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 1270px;
+        height: 760px;
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
+        background: #09090b;
+        color: #e4e4e7;
+        overflow: hidden;
+      }
+      .slide {
+        width: 1270px;
+        height: 760px;
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* Slide 1: Hero */
+      .slide-1 {
+        background: linear-gradient(135deg, #09090b 0%, #1a1a2e 100%);
+        text-align: center;
+      }
+      .slide-1 h1 {
+        font-size: 72px;
+        font-weight: 900;
+        letter-spacing: -3px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #22c55e, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .slide-1 p {
+        font-size: 24px;
+        color: #a1a1aa;
+        max-width: 800px;
+        margin: 0 auto 40px;
+      }
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+      }
+      .stat {
+        text-align: center;
+      }
+      .stat-value {
+        font-size: 48px;
+        font-weight: 900;
+        color: #22c55e;
+      }
+      .stat-label {
+        font-size: 14px;
+        color: #71717a;
+        margin-top: 8px;
+      }
+
+      /* Slide 2: Features */
+      .slide-2 {
+        background: #09090b;
+      }
+      .slide-2 h2 {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 40px;
+        color: #fff;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .feature-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 32px;
+      }
+      .feature-icon {
+        font-size: 40px;
+        margin-bottom: 16px;
+      }
+      .feature-card h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #fff;
+      }
+      .feature-card p {
+        font-size: 14px;
+        color: #a1a1aa;
+        line-height: 1.6;
+      }
+
+      /* Slide 3: Dashboard */
+      .slide-3 {
+        background: #09090b;
+        padding: 40px;
+      }
+      .slide-3 h2 {
+        font-size: 36px;
+        font-weight: 800;
+        margin-bottom: 30px;
+        color: #fff;
+        text-align: center;
+      }
+      .dashboard-mock {
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 12px;
+        padding: 24px;
+        height: 500px;
+      }
+      .dash-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #222;
+      }
+      .dash-logo {
+        font-size: 20px;
+        font-weight: 800;
+        color: #22c55e;
+      }
+      .dash-nav {
+        display: flex;
+        gap: 16px;
+      }
+      .dash-nav a {
+        color: #666;
+        font-size: 14px;
+        text-decoration: none;
+      }
+      .dash-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .dash-card {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 20px;
+      }
+      .dash-card-title {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .dash-card-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: #22c55e;
+      }
+      .dash-card-sub {
+        font-size: 12px;
+        color: #444;
+        margin-top: 4px;
+      }
+
+      /* Slide 4: Architecture */
+      .slide-4 {
+        background: #09090b;
+        text-align: center;
+      }
+      .slide-4 h2 {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 40px;
+        color: #fff;
+      }
+      .arch-diagram {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        align-items: center;
+      }
+      .arch-box {
+        background: rgba(34, 197, 94, 0.1);
+        border: 2px solid rgba(34, 197, 94, 0.3);
+        border-radius: 16px;
+        padding: 32px;
+        width: 200px;
+        text-align: center;
+      }
+      .arch-box h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #22c55e;
+        margin-bottom: 8px;
+      }
+      .arch-box p {
+        font-size: 14px;
+        color: #a1a1aa;
+      }
+      .arch-arrow {
+        font-size: 40px;
+        color: #333;
+      }
+
+      /* Slide 5: CTA */
+      .slide-5 {
+        background: linear-gradient(135deg, #09090b 0%, #1a2e1a 100%);
+        text-align: center;
+      }
+      .slide-5 h2 {
+        font-size: 64px;
+        font-weight: 900;
+        margin-bottom: 24px;
+        color: #fff;
+      }
+      .slide-5 p {
+        font-size: 24px;
+        color: #a1a1aa;
+        margin-bottom: 40px;
+      }
+      .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .btn {
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .btn-primary {
+        background: #22c55e;
+        color: #000;
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Slide 1: Hero -->
+    <div class="slide slide-1">
+      <h1>TormentNexus</h1>
+      <p>AI Control Plane with Persistent Memory & 26,000+ MCP Tools</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">26,180</div>
+          <div class="stat-label">MCP Tools</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">4-Tier</div>
+          <div class="stat-label">Memory System</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Open Source</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Features -->
+    <div class="slide slide-2">
+      <h2>Why TormentNexus?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>Persistent Memory</h3>
+          <p>
+            4-tier memory system (L1-L4) remembers everything across sessions.
+            No more repeating yourself.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔧</div>
+          <h3>26,000+ Tools</h3>
+          <p>
+            Search the entire MCP ecosystem from one catalog. Install tools with
+            one click.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏠</div>
+          <h3>Local-First</h3>
+          <p>
+            Works with Ollama, LM Studio, DeepSeek. No cloud dependency. Your
+            data stays local.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>Multi-Agent</h3>
+          <p>
+            Connect multiple AI agents. Share memory and tools across your
+            entire workflow.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Unified Dashboard</h3>
+          <p>
+            Monitor agents, memory, tools, and sessions from one beautiful
+            interface.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Single Binary</h3>
+          <p>
+            Go backend compiles to one file. Runs on a Raspberry Pi. Zero
+            dependencies.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Dashboard -->
+    <div class="slide slide-3">
+      <h2>Beautiful Dashboard</h2>
+      <div class="dashboard-mock">
+        <div class="dash-header">
+          <div class="dash-logo">⚡ TormentNexus</div>
+          <div class="dash-nav">
+            <a href="#">Mission Control</a>
+            <a href="#">Memory</a>
+            <a href="#">MCP Tools</a>
+            <a href="#">Settings</a>
+          </div>
+        </div>
+        <div class="dash-content">
+          <div class="dash-card">
+            <div class="dash-card-title">MCP Servers</div>
+            <div class="dash-card-value">26,180</div>
+            <div class="dash-card-sub">Tools indexed</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-title">Memory</div>
+            <div class="dash-card-value">86,281</div>
+            <div class="dash-card-sub">Records stored</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-title">Sessions</div>
+            <div class="dash-card-value">1,247</div>
+            <div class="dash-card-sub">Active today</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-title">Uptime</div>
+            <div class="dash-card-value">99.9%</div>
+            <div class="dash-card-sub">Last 30 days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Architecture -->
+    <div class="slide slide-4">
+      <h2>Simple Architecture</h2>
+      <div class="arch-diagram">
+        <div class="arch-box">
+          <h3>AI Agents</h3>
+          <p>Claude, GPT, Gemini, Ollama</p>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">
+          <h3>TormentNexus</h3>
+          <p>Control Plane + Memory</p>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">
+          <h3>26K+ Tools</h3>
+          <p>Databases, APIs, Files</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: CTA -->
+    <div class="slide slide-5">
+      <h2>Get Started Today</h2>
+      <p>Open source. Self-hosted. Free forever.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-primary">⭐ Star on GitHub</a>
+        <a href="#" class="btn btn-secondary">📦 Download</a>
+      </div>
+    </div>
+  </body>
+</html>

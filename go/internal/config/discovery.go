@@ -10,8 +10,8 @@ import (
 // ServiceDiscovery holds resolved endpoints for all TormentNexus services.
 // This replaces hardcoded ports with a centralized, environment-driven configuration.
 type ServiceDiscovery struct {
-	// GoSidecarPort is the port the Go control plane listens on.
-	GoSidecarPort int
+	// KernelPort is the port the Go control plane listens on.
+	KernelPort int
 
 	// TRPCUpstreamURLs are the tRPC endpoints for the TypeScript core,
 	// tried in order until one responds.
@@ -30,8 +30,9 @@ type ServiceDiscovery struct {
 // DefaultServiceDiscovery returns the standard TormentNexus service topology.
 func DefaultServiceDiscovery() ServiceDiscovery {
 	sd := ServiceDiscovery{
-		GoSidecarPort: 4300,
+		KernelPort: 4300,
 		TRPCUpstreamURLs: []string{
+			"http://127.0.0.1:7787/trpc",
 			"http://127.0.0.1:7779/trpc",
 			"http://127.0.0.1:4000/trpc",
 			"http://127.0.0.1:3847/trpc",
@@ -44,7 +45,7 @@ func DefaultServiceDiscovery() ServiceDiscovery {
 	// Override from environment variables
 	if v := os.Getenv("TORMENTNEXUS_GO_PORT"); v != "" {
 		if p, err := strconv.Atoi(v); err == nil && p > 0 {
-			sd.GoSidecarPort = p
+			sd.KernelPort = p
 		}
 	}
 
@@ -89,9 +90,9 @@ func (sd ServiceDiscovery) BridgeBaseURL() string {
 	return "http://127.0.0.1:" + strconv.Itoa(sd.BridgePort)
 }
 
-// GoSidecarBaseURL returns the fully qualified Go sidecar URL.
-func (sd ServiceDiscovery) GoSidecarBaseURL() string {
-	return "http://127.0.0.1:" + strconv.Itoa(sd.GoSidecarPort)
+// KernelBaseURL returns the fully qualified TN Kernel URL.
+func (sd ServiceDiscovery) KernelBaseURL() string {
+	return "http://127.0.0.1:" + strconv.Itoa(sd.KernelPort)
 }
 
 func dedupStrings(items []string) []string {

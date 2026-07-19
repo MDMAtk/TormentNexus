@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperNexus — Demo Observation Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-darker: #09090b;
+            --bg-dark: #121214;
+            --bg-card: rgba(24, 24, 27, 0.6);
+            --border-glow: rgba(59, 130, 246, 0.2);
+            --border-color: rgba(39, 39, 42, 0.8);
+            
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.15);
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.1);
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --text-dark: #52525b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-dark) transparent;
+        }
+
+        body {
+            background-color: var(--bg-darker);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 455%);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Login Screen Override */
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #18181b 0%, #09090b 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(16px);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            border-radius: 14px;
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        }
+
+        .login-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-github {
+            background: #24292e;
+            color: white;
+        }
+        .btn-github:hover {
+            background: #2f363d;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .btn-google {
+            background: #ffffff;
+            color: #1f1f1f;
+        }
+        .btn-google:hover {
+            background: #f5f5f5;
+            box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+        }
+
+        /* Dashboard Layout */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar styling */
+        aside {
+            background: rgba(18, 18, 20, 0.95);
+            border-right: 1px solid var(--border-color);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            margin-bottom: 40px;
+        }
+
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            border-left: 2px solid var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Content panel */
+        main {
+            padding: 40px;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .badge-live {
+            background: var(--success-glow);
+            border: 1px solid var(--success);
+            color: var(--success);
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-live .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--success);
+            border-radius: 50%;
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .4; }
+        }
+
+        /* Widgets Grid */
+        .grid-widgets {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .widget-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .widget-card h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .widget-val {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--text-main);
+        }
+
+        .widget-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Section Layout */
+        .section-split {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(8px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Console and Terminal */
+        .terminal-container {
+            background: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            overflow: hidden;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .terminal-header {
+            background: #18181b;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background-color: var(--danger); }
+        .dot-yellow { background-color: var(--warning); }
+        .dot-green { background-color: var(--success); }
+
+        .terminal-body {
+            padding: 16px;
+            height: 300px;
+            overflow-y: auto;
+            color: #38bdf8;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #09090b;
+            border-top: 1px solid #27272a;
+        }
+
+        .prompt-symbol {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .terminal-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            width: 100%;
+        }
+
+        /* Log Stream */
+        .log-stream {
+            height: 374px;
+            overflow-y: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            background: #09090b;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #27272a;
+        }
+
+        .log-line {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .log-time { color: var(--text-muted); }
+        .log-service { color: var(--primary); }
+        .log-msg { color: var(--text-main); }
+
+        /* Memory Graph Mockup */
+        .memory-graph-box {
+            height: 250px;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(39, 39, 42, 0.2) 0%, transparent 70%);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .node {
+            position: absolute;
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-8px) translateX(4px); }
+        }
+
+        /* Details */
+        .tenant-card {
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 10px;
+            background: rgba(39, 39, 42, 0.2);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tenant-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tenant-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .stripe-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── AUTH / LOGIN SCREEN ── -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="logo-badge">H</div>
+            <h2>HyperNexus Corporate Demo</h2>
+            <p>Select an authentication provider to enter the mock observation deck.</p>
+            <button class="auth-btn btn-github" onclick="login('github')">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                Sign in with GitHub
+            </button>
+            <button class="auth-btn btn-google" onclick="login('google')">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                Sign in with Google
+            </button>
+        </div>
+    </div>
+
+    <!-- ── MAIN DASHBOARD INTERFACE ── -->
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside>
+            <div>
+                <a href="#" class="brand">
+                    <div class="brand-icon">H</div>
+                    <span class="brand-name">HyperNexus</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#" class="nav-item active">🎛️ Overview</a>
+                    <a href="#" class="nav-item" onclick="alert('Demo Mode: Sub-pages are locked. Use Overview interface.')">🔌 MCP Registry</a>
+                    <a href="#" class="nav-item" onclick="alert('Demo Mode: Sub-pages are locked. Use Overview interface.')">🧠 Memory Graph</a>
+                    <a href="#" class="nav-item" onclick="alert('Demo Mode: Sub-pages are locked. Use Overview interface.')">🔐 SSO / Access</a>
+                    <a href="#" class="nav-item" onclick="alert('Demo Mode: Sub-pages are locked. Use Overview interface.')">💳 Stripe Billing</a>
+                </div>
+            </div>
+            <div style="font-size:12px; color:var(--text-muted); border-top: 1px solid var(--border-color); padding-top:16px;">
+                Logged in as:<br>
+                <strong style="color:white;" id="user-display">demo-user@hypernexus.site</strong>
+            </div>
+        </aside>
+
+        <!-- Main Observation Area -->
+        <main>
+            <!-- Page Header -->
+            <div class="header-actions">
+                <div class="page-title">
+                    <h1>Observation Deck</h1>
+                    <p>Live status & execution harness tracking for the TormentNexus kernel.</p>
+                </div>
+                <div class="badge-live">
+                    <span class="pulse-dot"></span>
+                    Mock Commercial Mode Active
+                </div>
+            </div>
+
+            <!-- Metrics Widgets -->
+            <div class="grid-widgets">
+                <div class="widget-card">
+                    <h3>Kernel Uptime</h3>
+                    <div class="widget-val" id="uptime-val">00h 02m 14s</div>
+                    <div class="widget-desc">🟢 Watchdog healthy</div>
+                </div>
+                <div class="widget-card">
+                    <h3>Active Tools</h3>
+                    <div class="widget-val">11,024</div>
+                    <div class="widget-desc">⚡ 3,900+ Go-native modules</div>
+                </div>
+                <div class="widget-card">
+                    <h3>Average Latency</h3>
+                    <div class="widget-val">&lt; 24ms</div>
+                    <div class="widget-desc">🚀 Hot cache hit rate: 98%</div>
+                </div>
+                <div class="widget-card">
+                    <h3>Gossip Mesh</h3>
+                    <div class="widget-val">9 nodes</div>
+                    <div class="widget-desc">🔑 Encrypted UDP gossip active</div>
+                </div>
+            </div>
+
+            <!-- Interactive Split Section -->
+            <div class="section-split">
+                <!-- Left: Terminal Simulator -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🔌 Interactive MCP Tool Terminal</span>
+                        <span class="text-muted" style="font-size:12px;">Type 'help' or list tools</span>
+                    </div>
+                    
+                    <div class="terminal-container">
+                        <div class="terminal-header">
+                            <div class="terminal-dots">
+                                <span class="terminal-dot dot-red"></span>
+                                <span class="terminal-dot dot-yellow"></span>
+                                <span class="terminal-dot dot-green"></span>
+                            </div>
+                            <span style="color:var(--text-muted); font-size:11px;">bash — tormentnexus-cli</span>
+                        </div>
+                        <div class="terminal-body" id="term-body">
+                            <div>Welcome to TormentNexus shell (v1.0.0-alpha.255).</div>
+                            <div>Connected to TN Kernel on 127.0.0.1:8090.</div>
+                            <br>
+                            <div>Type "help" to view available tools, or trigger "search" to query memory.</div>
+                            <br>
+                        </div>
+                        <div class="terminal-input-line">
+                            <span class="prompt-symbol">tn-kernel $</span>
+                            <input type="text" class="terminal-input" id="term-input" onkeydown="handleCommand(event)" placeholder="Type a command...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Memory Graph visualizer -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🧠 Local Memory Graph</span>
+                    </div>
+                    <div class="memory-graph-box" id="graph-box">
+                        <div class="node" style="top:20%; left:20%; animation-delay: 0s;">Company: Mid-Market</div>
+                        <div class="node" style="top:50%; left:40%; animation-delay: 0.5s;">Stripe: ACTIVE</div>
+                        <div class="node" style="top:30%; left:60%; animation-delay: 1s;">OAuth: GitHub</div>
+                        <div class="node" style="top:70%; left:15%; animation-delay: 1.5s;">License: Ed25519</div>
+                        <div class="node" style="top:65%; left:65%; animation-delay: 2s;">Watchdog: OK</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Split Section -->
+            <div class="section-split">
+                <!-- Left: Live Log Monitor -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📋 Live Kernel Event Stream</span>
+                    </div>
+                    <div class="log-stream" id="log-box">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Tenant & Billing info -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">🏢 Commercial Governance</span>
+                    </div>
+                    <div class="tenant-card stripe-card">
+                        <div class="tenant-info">
+                            <h4>Commercial Cloud SaaS</h4>
+                            <p>Stripe Subscription Plan</p>
+                        </div>
+                        <div style="font-weight: 700; color: var(--success); font-size:14px;">$499.00 / mo</div>
+                    </div>
+                    <div class="tenant-card">
+                        <div class="tenant-info">
+                            <h4>Tenant: main-prod</h4>
+                            <p>Docker container isolated</p>
+                        </div>
+                        <span style="font-size:11px; font-weight:600; color:var(--primary);">RUNNING</span>
+                    </div>
+                    <div class="tenant-card">
+                        <div class="tenant-info">
+                            <h4>PII Scrubbing Gateway</h4>
+                            <p>Data loss prevention filter</p>
+                        </div>
+                        <span style="font-weight:600; color:var(--success); font-size:12px;">ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Log stream mock generator
+        const services = ['gossip-mesh', 'watchdog', 'http-api', 'mcp-registry', 'billing-router', 'oauth-flow'];
+        const logs = [
+            'Initialized UDP gossip protocol on port 7779.',
+            'Watchdog repair check #145: all services healthy.',
+            'Stripe subscription status sync complete for customer cus_R8vB42tX910a.',
+            'API requested: GET /api/v1/deals - 200 OK.',
+            'Ed25519 license validation signature confirmed.',
+            'PII filter cleaned 3 social security numbers from log buffer.',
+            'SAML SSO configurations reloaded.',
+            'Assimilated new client capability from peer node: node-west-4.',
+            'Spaced-repetition memory hydration complete: 145 nodes promoted.',
+            'Browser extension WebSocket handshake established.'
+        ];
+
+        function addLog() {
+            const box = document.getElementById('log-box');
+            if (!box) return;
+            const time = new Date().toLocaleTimeString();
+            const service = services[Math.floor(Math.random() * services.length)];
+            const msg = logs[Math.floor(Math.random() * logs.length)];
+            
+            const line = document.createElement('div');
+            line.className = 'log-line';
+            line.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-service">[${service}]</span> <span class="log-msg">${msg}</span>`;
+            box.appendChild(line);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        setInterval(addLog, 4000);
+        // Seed initial logs
+        for(let i=0; i<10; i++) { addLog(); }
+
+        // Kernel Uptime Clock
+        let uptimeSeconds = 134;
+        function updateUptime() {
+            uptimeSeconds++;
+            const h = Math.floor(uptimeSeconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((uptimeSeconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (uptimeSeconds % 60).toString().padStart(2, '0');
+            const uptimeEl = document.getElementById('uptime-val');
+            if (uptimeEl) uptimeEl.innerText = `${h}h ${m}m ${s}s`;
+        }
+        setInterval(updateUptime, 1000);
+
+        // Terminal Simulator Logic
+        function handleCommand(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('term-input');
+                const val = input.value.trim();
+                if (!val) return;
+                
+                const body = document.getElementById('term-body');
+                body.innerHTML += `<div><span class="prompt-symbol">tn-kernel $</span> ${val}</div>`;
+                
+                // Process command
+                const cmd = val.toLowerCase();
+                if (cmd === 'help') {
+                    body.innerHTML += `
+                        <div style="color:var(--text-muted)">Available commands:</div>
+                        <div style="color:var(--text-muted)">  - list tools       : Displays all active native tools</div>
+                        <div style="color:var(--text-muted)">  - search [query]   : Queries local fact memory db</div>
+                        <div style="color:var(--text-muted)">  - sys status       : Queries system metrics</div>
+                        <div style="color:var(--text-muted)">  - clear            : Clears the terminal screen</div>
+                    `;
+                } else if (cmd === 'list tools') {
+                    body.innerHTML += `
+                        <div style="color:var(--success)">Found 3 active native tool categories:</div>
+                        <div>  1. File System  : read_file, write_to_file, list_dir</div>
+                        <div>  2. Code Sandbox : run_command, compile_go</div>
+                        <div>  3. Network      : read_url_content, query_gossip</div>
+                    `;
+                } else if (cmd.startsWith('search')) {
+                    const q = val.substring(6).trim();
+                    body.innerHTML += `
+                        <div style="color:var(--success)">Querying fact memory graph for "${q || 'everything'}"...</div>
+                        <div>  -> [Fact Match] Company size evaluated as "Mid-Market" (score 0.98)</div>
+                        <div>  -> [Fact Match] Stripe billing state: "ACTIVE" (score 0.95)</div>
+                        <div>  -> [Fact Match] GITHUB_CLIENT_ID verified (score 0.90)</div>
+                    `;
+                    // Dynamically update memory graph visualizer nodes
+                    updateGraphNodes(q);
+                } else if (cmd === 'sys status') {
+                    body.innerHTML += `
+                        <div style="color:var(--success)">System Status Summary:</div>
+                        <div>  CPU usage : 1.2%</div>
+                        <div>  Memory    : 24.5MB</div>
+                        <div>  SSO Auth  : GitHub & Google configured</div>
+                        <div>  Database  : SQLite (tormentnexus.db) active</div>
+                    `;
+                } else if (cmd === 'clear') {
+                    body.innerHTML = '';
+                } else {
+                    body.innerHTML += `<div style="color:var(--danger)">Error: Unknown command "${val}". Type "help" for a list of commands.</div>`;
+                }
+                
+                input.value = '';
+                body.scrollTop = body.scrollHeight;
+            }
+        }
+
+        function updateGraphNodes(query) {
+            const box = document.getElementById('graph-box');
+            if (!box) return;
+            box.innerHTML = '';
+            const mockNodes = [
+                `Query: ${query || 'Everything'}`,
+                'Fact: SAML SSO Active',
+                'Status: Go Kernel 100% OK',
+                'Billing: Stripe Verified',
+                'Audit Trail: Immutable JSONL'
+            ];
+            mockNodes.forEach((nodeTxt, i) => {
+                const n = document.createElement('div');
+                n.className = 'node';
+                n.style.top = `${20 + (i*12)}%`;
+                n.style.left = `${15 + (i*13)}%`;
+                n.style.animationDelay = `${i*0.4}s`;
+                n.innerText = nodeTxt;
+                box.appendChild(n);
+            });
+        }
+
+        // Login Screen Flows
+        function login(provider) {
+            document.getElementById('user-display').innerText = `demo-${provider}-user@hypernexus.site`;
+            const screen = document.getElementById('login-screen');
+            screen.style.opacity = 0;
+            setTimeout(() => {
+                screen.style.visibility = 'hidden';
+            }, 500);
+        }
+    </script>
+</body>
+</html>

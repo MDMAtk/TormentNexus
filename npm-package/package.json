@@ -1,0 +1,51 @@
+{
+  "name": "tormentnexus",
+  "version": "1.0.0",
+  "description": "AI Control Plane with persistent memory and 26K+ MCP tools catalog",
+  "main": "dist/index.js",
+  "bin": {
+    "tormentnexus": "./bin/tormentnexus"
+  },
+  "scripts": {
+    "postinstall": "node scripts/install-binary.js"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "mcp",
+    "memory",
+    "tools",
+    "agents",
+    "local-ai",
+    "model-context-protocol"
+  ],
+  "author": "TormentNexus Team <dev@tormentnexus.org>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MDMAtk/TormentNexus.git"
+  },
+  "homepage": "https://tormentnexus.site",
+  "bugs": {
+    "url": "https://github.com/MDMAtk/TormentNexus/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin/",
+    "dist/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ]
+}

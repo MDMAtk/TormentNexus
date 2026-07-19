@@ -10,7 +10,7 @@ package mcp
  *       the session working set.
  *
  * WHY: The TypeScript ConversationalToolInjector (Phase 113) calls this
- *      sidecar endpoint first before falling back to cloud LLMs. By handling
+ *      kernel endpoint first before falling back to cloud LLMs. By handling
  *      prediction here natively we keep latency low (<200ms for local Ollama)
  *      and avoid cloud API costs for routine tool routing.
  *
@@ -213,7 +213,7 @@ func (p *ConversationalPredictor) callOllama(ctx context.Context, system, user s
 	}
 	model := os.Getenv("TORMENTNEXUS_LOCAL_PREDICT_MODEL")
 	if model == "" {
-		model = "gemma3:12b"
+		model = "gemma4"
 	}
 
 	reqBody, _ := json.Marshal(map[string]any{

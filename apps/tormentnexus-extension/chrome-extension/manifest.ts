@@ -2,6 +2,13 @@ import { readFileSync } from 'node:fs';
 
 const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
+function convertToChromeVersion(semver: string): string {
+  const cleaned = semver.replace(/-alpha\./g, '.').replace(/-beta\./g, '.').replace(/-rc\./g, '.').replace(/-/g, '.');
+  const parts = cleaned.split('.').map(p => parseInt(p, 10)).filter(p => !isNaN(p));
+  if (parts.length === 0) return '1.0.0';
+  return parts.slice(0, 4).join('.');
+}
+
 /**
  * @prop default_locale
  * if you want to support multiple languages, you can use the following reference
@@ -26,7 +33,7 @@ const manifest = {
       id: 'extension@tormentnexus.local',
     },
   },
-  version: packageJson.version,
+  version: convertToChromeVersion(packageJson.version),
   description: 'TormentNexus Extension',
   host_permissions: [
     '*://*.perplexity.ai/*',

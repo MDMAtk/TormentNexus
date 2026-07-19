@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/llm"
+	"github.com/MDMAtk/TormentNexus/internal/llm"
 )
 
 type ToolRouter struct {

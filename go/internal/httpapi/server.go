@@ -9,14 +9,18 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"flag"
 	"fmt"
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
-	"github.com/tormentnexushq/tormentnexus-go/internal/codeexec"
-	"github.com/tormentnexushq/tormentnexus-go/internal/enterprise"
-	"github.com/tormentnexushq/tormentnexus-go/internal/memorystore"
+	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/catalogingestor"
+	"github.com/MDMAtk/TormentNexus/internal/codeexec"
+	"github.com/MDMAtk/TormentNexus/internal/commercial"
+	memorypkg "github.com/MDMAtk/TormentNexus/internal/memory"
+	"github.com/MDMAtk/TormentNexus/internal/memorystore"
 	"io"
 	"io/fs"
 	"math"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -31,35 +35,39 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/buildinfo"
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
-	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
-	"github.com/tormentnexushq/tormentnexus-go/internal/harnesses"
-	"github.com/tormentnexushq/tormentnexus-go/internal/hsync"
-	"github.com/tormentnexushq/tormentnexus-go/internal/interop"
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcp"
-	"github.com/tormentnexushq/tormentnexus-go/internal/mesh"
-	"github.com/tormentnexushq/tormentnexus-go/internal/orchestration"
-	"github.com/tormentnexushq/tormentnexus-go/internal/providers"
-	"github.com/tormentnexushq/tormentnexus-go/internal/sessionimport"
-	"github.com/tormentnexushq/tormentnexus-go/internal/supervisor"
-	"github.com/tormentnexushq/tormentnexus-go/internal/tools"
-	"github.com/tormentnexushq/tormentnexus-go/internal/workflow"
+	"github.com/MDMAtk/TormentNexus/internal/buildinfo"
+	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/TormentNexus/internal/harnesses"
+	"github.com/MDMAtk/TormentNexus/internal/hsync"
+	"github.com/MDMAtk/TormentNexus/internal/interop"
+	"github.com/MDMAtk/TormentNexus/internal/mcp"
+	"github.com/MDMAtk/TormentNexus/internal/mesh"
+	"github.com/MDMAtk/TormentNexus/internal/orchestration"
+	"github.com/MDMAtk/TormentNexus/internal/providers"
+	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
+	"github.com/MDMAtk/TormentNexus/internal/supervisor"
+	"github.com/MDMAtk/TormentNexus/internal/tools"
+	"github.com/MDMAtk/TormentNexus/internal/workflow"
 
+	"github.com/MDMAtk/TormentNexus/internal/cache"
+	"github.com/MDMAtk/TormentNexus/internal/ctxharvester"
+	"github.com/MDMAtk/TormentNexus/internal/eventbus"
+	"github.com/MDMAtk/TormentNexus/internal/gitservice"
+	"github.com/MDMAtk/TormentNexus/internal/gossip"
+	"github.com/MDMAtk/TormentNexus/internal/healer"
+	"github.com/MDMAtk/TormentNexus/internal/metrics"
+	processmanager "github.com/MDMAtk/TormentNexus/internal/process"
+	"github.com/MDMAtk/TormentNexus/internal/repograph"
+	"github.com/MDMAtk/TormentNexus/internal/session"
+	"github.com/MDMAtk/TormentNexus/internal/skillregistry"
+	"github.com/MDMAtk/TormentNexus/internal/systray"
+	"github.com/MDMAtk/TormentNexus/internal/toolregistry"
+	"github.com/MDMAtk/TormentNexus/internal/workspaces"
+	_ "github.com/glebarez/go-sqlite"
 	"github.com/google/uuid"
-	"github.com/tormentnexushq/tormentnexus-go/internal/cache"
-	"github.com/tormentnexushq/tormentnexus-go/internal/ctxharvester"
-	"github.com/tormentnexushq/tormentnexus-go/internal/eventbus"
-	"github.com/tormentnexushq/tormentnexus-go/internal/gitservice"
-	"github.com/tormentnexushq/tormentnexus-go/internal/healer"
-	"github.com/tormentnexushq/tormentnexus-go/internal/metrics"
-	processmanager "github.com/tormentnexushq/tormentnexus-go/internal/process"
-	"github.com/tormentnexushq/tormentnexus-go/internal/repograph"
-	"github.com/tormentnexushq/tormentnexus-go/internal/session"
-	"github.com/tormentnexushq/tormentnexus-go/internal/skillregistry"
-	"github.com/tormentnexushq/tormentnexus-go/internal/toolregistry"
-	"github.com/tormentnexushq/tormentnexus-go/internal/workspaces"
-	_ "modernc.org/sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database"
 )
 
 var sessionExportKnownFormats = []map[string]any{
@@ -75,20 +83,28 @@ var sessionExportKnownFormats = []map[string]any{
 
 // corsMiddleware wraps an http.Handler to add CORS headers for all responses.
 // This allows the Next.js dashboard (port 3000) and browser extensions to
-// call Go sidecar endpoints without CORS blocks.
+// call TN Kernel endpoints without CORS blocks.
 func corsMiddleware(next http.Handler) http.Handler {
-	allowedOrigins := []string{
-		"http://localhost:3000",
-		"http://127.0.0.1:3000",
-		"http://localhost:5173",
-		"http://127.0.0.1:5173",
-	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
-		for _, allowed := range allowedOrigins {
-			if origin == allowed || origin == "" {
-				w.Header().Set("Access-Control-Allow-Origin", allowed)
-				break
+		if origin != "" {
+			if strings.HasPrefix(origin, "http://localhost:") || strings.HasPrefix(origin, "http://127.0.0.1:") || strings.HasPrefix(origin, "chrome-extension://") || strings.HasPrefix(origin, "moz-extension://") || strings.HasPrefix(origin, "extension://") {
+				w.Header().Set("Access-Control-Allow-Origin", origin)
+			} else {
+				allowedOrigins := []string{
+					"http://localhost:3000",
+					"http://127.0.0.1:3000",
+					"http://localhost:5173",
+					"http://127.0.0.1:5173",
+					"http://localhost:7779",
+					"http://127.0.0.1:7779",
+				}
+				for _, allowed := range allowedOrigins {
+					if origin == allowed {
+						w.Header().Set("Access-Control-Allow-Origin", allowed)
+						break
+					}
+				}
 			}
 		}
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -97,7 +113,9 @@ func corsMiddleware(next http.Handler) http.Handler {
 			w.WriteHeader(http.StatusNoContent)
 			return
 		}
+		systray.NotifyActivity("in")
 		next.ServeHTTP(w, r)
+		systray.NotifyActivity("out")
 	})
 }
 
@@ -127,6 +145,7 @@ type Server struct {
 	mcpDecision        *mcp.DecisionSystem
 	nativeRouter       *mcp.NativeMCPRouter
 	a2aLogger          *orchestration.A2ALogger
+	accountDB          *sql.DB
 	a2aBroker          *orchestration.A2ABroker
 	taskQueue          *orchestration.TaskQueue
 	swarmController    *orchestration.SwarmController
@@ -161,13 +180,17 @@ type Server struct {
 	healerService    *healer.HealerService
 	cacheService     *cache.Cache
 	repoGraph        *repograph.RepoGraphService
+	gossipProtocol   *gossip.Protocol
+	gossipTransport  *HTTPGossipTransport
+	discoveryService *mesh.DiscoveryService
 
 	// Phase 113 — conversational tool injection
 	conversationalPredictor *mcp.ConversationalPredictor
+	udpGossip               *mesh.GossipProtocol
 
-	// --- Enterprise Security (alpha.129+) ---
-	enterpriseWrapper *enterprise.EnterpriseWrapper
-	auditor           *enterprise.Auditor
+	// --- Commercial Security (alpha.129+) ---
+	commercialWrapper *commercial.CommercialWrapper
+	auditor           *commercial.Auditor
 }
 
 // eventBusAdapter wraps *eventbus.EventBus so it satisfies the string-based
@@ -407,7 +430,7 @@ type ImportedSessionMaintenanceStats struct {
 	MissingRetentionSummaryCount int `json:"missingRetentionSummaryCount"`
 }
 
-type importedSessionArchiveSidecar struct {
+type importedSessionArchiveFile struct {
 	SessionID               string         `json:"sessionId"`
 	SourceTool              string         `json:"sourceTool"`
 	SourcePath              string         `json:"sourcePath"`
@@ -506,6 +529,53 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.directorNotes = orchestration.NewDirectorNotesManager()
 	server.expertManager = hsync.NewExpertManager(server.goDirector, server.mcpPredictor)
 
+	// Initialize catalog.db tables if they are missing
+	if catalogDB, err := database.Open("sqlite", filepath.Join(cfg.WorkspaceRoot, "catalog.db")); err == nil {
+		if _, err := catalogDB.Exec(`
+			CREATE TABLE IF NOT EXISTS published_mcp_servers (
+				uuid TEXT PRIMARY KEY,
+				canonical_id TEXT UNIQUE NOT NULL,
+				display_name TEXT NOT NULL,
+				description TEXT,
+				tags TEXT,
+				categories TEXT,
+				transport TEXT,
+				status TEXT,
+				created_at TEXT,
+				updated_at TEXT
+			)
+		`); err != nil {
+			fmt.Printf("[Server] Failed to create published_mcp_servers table: %v\n", err)
+		}
+		if _, err := catalogDB.Exec(`
+			CREATE TABLE IF NOT EXISTS links_backlog (
+				uuid TEXT PRIMARY KEY,
+				url TEXT NOT NULL,
+				normalized_url TEXT UNIQUE NOT NULL,
+				title TEXT,
+				description TEXT,
+				tags TEXT,
+				source TEXT,
+				is_duplicate BOOLEAN DEFAULT 0,
+				duplicate_of TEXT,
+				research_status TEXT DEFAULT 'pending',
+				http_status INTEGER,
+				page_title TEXT,
+				page_description TEXT,
+				favicon_url TEXT,
+				cluster_id TEXT,
+				bobbybookmarks_bookmark_id INTEGER,
+				import_session_id TEXT,
+				synced_at TEXT,
+				created_at TEXT,
+				updated_at TEXT
+			)
+		`); err != nil {
+			fmt.Printf("[Server] Failed to create links_backlog table: %v\n", err)
+		}
+		_ = catalogDB.Close()
+	}
+
 	// Populate skill registry from store
 	if skillIDs, err := server.skillStore.ListSkills(); err == nil {
 		for _, id := range skillIDs {
@@ -525,7 +595,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 		}
 	}
 
-	// Register all local skills as provided by this sidecar in the A2A skill registry
+	// Register all local skills as provided by this kernel in the A2A skill registry
 	if skillIDs, err := server.skillStore.ListSkills(); err == nil {
 		for _, id := range skillIDs {
 			orchestration.GlobalSkillRegistry.RegisterAgentSkill("http://localhost:4300", id)
@@ -562,6 +632,8 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	// Refresh from live inventory
 	if inv, err := mcp.LoadInventory(cfg.WorkspaceRoot, cfg.MainConfigDir); err == nil {
 		server.mcpDecision.RefreshFromInventory(inv)
+		// Inject skills from SkillStore into the decision system for unified prediction
+		server.mcpDecision.InjectSkills(server.skillStore)
 		// Initialize Go-native MCP Router
 		server.nativeRouter = mcp.NewNativeMCPRouter(server.mcpDecision, nil, mcp.DefaultRouterConfig())
 		if inv != nil {
@@ -571,18 +643,95 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 
 	// --- Initialize new Go-native services ---
 	server.eventBus = eventbus.New(1000)
+	if flag.Lookup("test.v") == nil {
+		systray.Start(server.eventBus)
+		StartInstructionWatcher(cfg.WorkspaceRoot)
+	}
 	memoryVS, _ := memorystore.NewVectorStore(filepath.Join(cfg.ConfigDir, "memory.db"))
+	tools.GlobalVectorStore = memoryVS
 	server.memoryReactor = memorystore.NewMemoryReactor(cfg.WorkspaceRoot, memoryVS)
 	server.memoryArchiver = memorystore.NewMemoryArchiver(cfg.WorkspaceRoot, memoryVS)
 	server.importCache = newImportScanCache()
 
-	// Initialize Enterprise Security Wrapper (with placeholder provider)
-	server.auditor = enterprise.NewAuditor(cfg.WorkspaceRoot)
-	server.enterpriseWrapper = enterprise.NewEnterpriseWrapper(nil)
+	// Initialize Gossip and UDP Discovery
+	nodeID := server.mesh.LocalNodeID()
+	discovery := mesh.NewDiscoveryService(nodeID, cfg.Port, []string{"memory-status", "gossip-sync"}, mesh.DefaultDiscoveryConfig())
+	server.discoveryService = discovery
+	if err := discovery.Start(context.Background()); err == nil {
+		transport := NewHTTPGossipTransport(nodeID, discovery)
+		server.gossipTransport = transport
+		adapter := memorystore.NewGossipStoreAdapter(memoryVS)
+		gConfig := gossip.DefaultConfig()
+		gConfig.NodeID = nodeID
+		if proto, errProto := gossip.NewProtocol(gConfig, transport, adapter); errProto == nil {
+			server.gossipProtocol = proto
+			_ = proto.Start(context.Background())
+			fmt.Printf("[Gossip] Started P2P memory sync as node %s\n", nodeID)
+
+			// Initialize UDP-based Gossip memory sync
+			udpPort := cfg.Port + 100
+			server.udpGossip = mesh.NewGossipProtocol(nodeID, udpPort, nil)
+			if errUdp := server.udpGossip.Start(context.Background()); errUdp == nil {
+				fmt.Printf("[Gossip] Started UDP P2P memory sync on port %d\n", udpPort)
+				server.udpGossip.OnMessage(func(msg mesh.GossipMessage) {
+					if content, ok := msg.Payload["content"]; ok {
+						server.memoryManager.AddMemory(content)
+					}
+				})
+			} else {
+				fmt.Printf("[Gossip] Failed to start UDP protocol: %v\n", errUdp)
+			}
+
+			// Start periodic peer registration from discovery
+			go func() {
+				ticker := time.NewTicker(10 * time.Second)
+				for range ticker.C {
+					for _, p := range discovery.Peers() {
+						proto.AddPeer(p.NodeID)
+						// Register peer in UDP Gossip protocol
+						udpPeerAddr := net.JoinHostPort(p.Addr, strconv.Itoa(p.Port+100))
+						server.udpGossip.AddPeer(udpPeerAddr)
+					}
+				}
+			}()
+		} else {
+			fmt.Printf("[Gossip] Failed to start protocol: %v\n", errProto)
+		}
+	} else {
+		fmt.Printf("[Gossip] Failed to start discovery: %v\n", err)
+	}
+
+	// Initialize Commercial Security Wrapper (with placeholder provider)
+	server.auditor = commercial.NewAuditor(cfg.WorkspaceRoot)
+	server.commercialWrapper = commercial.NewCommercialWrapper(commercial.NewSimpleRBACProvider(), cfg.WorkspaceRoot)
 	server.consensusEngine = orchestration.NewConsensusEngine(server.debateHistory, memoryVS)
 	server.eventBus.OnGlobal(func(ev eventbus.SystemEvent) {
 		if data, err := json.Marshal(ev); err == nil {
 			GlobalSSEBroker.Broadcast(data)
+		}
+
+		if ev.Type == "memory:created" || ev.Type == "memory:updated" {
+			if server.gossipProtocol != nil {
+				var memID string
+				if m, ok := ev.Payload.(map[string]any); ok {
+					if id, ok := m["id"].(string); ok {
+						memID = id
+					}
+				} else if id, ok := ev.Payload.(string); ok {
+					memID = id
+				}
+				if memID != "" {
+					go func() {
+						ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+						defer cancel()
+						adapter := memorystore.NewGossipStoreAdapter(memoryVS)
+						entries, err := adapter.GetEntries(ctx, []string{memID})
+						if err == nil && len(entries) > 0 {
+							_ = server.gossipProtocol.BroadcastUpdate(ctx, entries)
+						}
+					}()
+				}
+			}
 		}
 	})
 	server.a2aBroker.SetEventBus(&eventBusAdapter{server.eventBus})
@@ -614,6 +763,7 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.healerService = healer.NewHealerService(nil, "", nil, memoryVS) // LLM provider wired later
 	server.cacheService = cache.New(cache.CacheOptions{MaxSize: 500, DefaultTTL: 60000})
 	server.repoGraph = repograph.NewRepoGraphService(cfg.WorkspaceRoot)
+	tools.GlobalRepoGraph = server.repoGraph
 
 	// Register workspace on startup
 	_ = server.workspaceTracker.RegisterWorkspace(cfg.WorkspaceRoot)
@@ -627,8 +777,30 @@ func New(cfg config.Config, detector controlplane.ToolProvider) *Server {
 	server.workflowEngine.Register(workflow.LintAndTestWorkflow(cfg.WorkspaceRoot))
 	server.workflowEngine.Register(workflow.LifecycleWorkflow(cfg.WorkspaceRoot, server.toolsRegistry))
 
+	// Start background prompt evolution loop
+	skillregistry.StartPromptEvolutionLoop(context.Background(), memoryVS.DB(), 12*time.Hour)
+
+	server.StartWSBroker()
 	server.registerRoutes()
 	return server
+}
+
+func (s *Server) Close() error {
+	var errs []string
+	if s.memoryReactor != nil && s.memoryReactor.VectorStore() != nil {
+		if err := s.memoryReactor.VectorStore().Close(); err != nil {
+			errs = append(errs, fmt.Sprintf("closing vector store: %v", err))
+		}
+	}
+	if s.memoryManager != nil {
+		if err := s.memoryManager.Close(); err != nil {
+			errs = append(errs, fmt.Sprintf("closing memory manager: %v", err))
+		}
+	}
+	if len(errs) > 0 {
+		return fmt.Errorf("errors closing server: %s", strings.Join(errs, "; "))
+	}
+	return nil
 }
 
 func (s *Server) Handler() http.Handler {
@@ -669,20 +841,28 @@ func (s *Server) PreWarmCaches() {
 		}
 	}()
 	go func() {
-		// Bobbybookmarks auto-sync: initial sync after startup delay, then periodic re-syncs
+		// Sync registered native tools into catalog.db on startup
+		time.Sleep(5 * time.Second)
+		if err := catalogingestor.SyncRegisteredToolsToCatalog(s.cfg.WorkspaceRoot, s.toolsRegistry.List()); err != nil {
+			fmt.Printf("[CatalogSync] Failed to sync Go-native tools: %v\n", err)
+		} else {
+			fmt.Println("[CatalogSync] Successfully synced Go-native registered tools to catalog.db")
+		}
+	}()
+	go func() {
+		// Glama/Smithery registry auto-sync: initial sync after startup delay, then periodic re-syncs
 		time.Sleep(bobbyBookmarksSyncDelay)
-		dbPath := s.localTormentNexusDBPath()
-		baseURL := "https://bobbybookmarks.com"
+		dbPath := filepath.Join(s.cfg.WorkspaceRoot, "catalog.db")
 
 		// Initial sync on startup
-		fmt.Printf("[BobbyBookmarks] Starting initial auto-sync from %s...\n", baseURL)
+		fmt.Println("[CatalogSync] Starting initial registry auto-sync from Glama.ai...")
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 		defer cancel()
-		res, err := hsync.SyncBobbyBookmarks(ctx, dbPath, baseURL, 100, false, false)
+		res, err := hsync.SyncGlamaMCP(ctx, dbPath)
 		if err != nil {
-			fmt.Printf("[BobbyBookmarks] Initial sync error: %v\n", err)
+			fmt.Printf("[CatalogSync] Initial sync error: %v\n", err)
 		} else {
-			fmt.Printf("[BobbyBookmarks] Initial sync complete: fetched=%d, upserted=%d, pages=%d\n",
+			fmt.Printf("[CatalogSync] Initial sync complete: fetched=%d, upserted=%d, pages=%d\n",
 				res.Fetched, res.Upserted, res.Pages)
 		}
 
@@ -690,13 +870,13 @@ func (s *Server) PreWarmCaches() {
 		ticker := time.NewTicker(bobbyBookmarksSyncInterval)
 		defer ticker.Stop()
 		for range ticker.C {
-			fmt.Printf("[BobbyBookmarks] Starting periodic re-sync from %s...\n", baseURL)
+			fmt.Println("[CatalogSync] Starting periodic registry re-sync from Glama.ai...")
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-			res, err := hsync.SyncBobbyBookmarks(ctx, dbPath, baseURL, 100, false, false)
+			res, err := hsync.SyncGlamaMCP(ctx, dbPath)
 			if err != nil {
-				fmt.Printf("[BobbyBookmarks] Periodic sync error: %v\n", err)
+				fmt.Printf("[CatalogSync] Periodic sync error: %v\n", err)
 			} else {
-				fmt.Printf("[BobbyBookmarks] Periodic re-sync complete: fetched=%d, upserted=%d, pages=%d\n",
+				fmt.Printf("[CatalogSync] Periodic re-sync complete: fetched=%d, upserted=%d, pages=%d\n",
 					res.Fetched, res.Upserted, res.Pages)
 			}
 			cancel()
@@ -762,14 +942,105 @@ func (s *Server) PreWarmCaches() {
 			}
 		}
 	}()
+
+	// Memory maintenance: periodic decay, consolidation, cold archive, and dream cycle
+	go func() {
+		time.Sleep(2 * time.Minute) // Wait for server to settle
+		vs := tools.GlobalVectorStore
+		if vs == nil {
+			fmt.Println("[MemoryMaintenance] VectorStore not initialized, skipping periodic maintenance")
+			return
+		}
+
+		// Run initial maintenance cycle
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+		if err := vs.ForgettingCurveDecay(ctx); err != nil {
+			fmt.Printf("[MemoryMaintenance] Initial decay error: %v\n", err)
+		} else {
+			fmt.Println("[MemoryMaintenance] Initial forgetting-curve decay complete")
+		}
+
+		if err := vs.ConsolidateMemories(ctx); err != nil {
+			fmt.Printf("[MemoryMaintenance] Initial consolidation error: %v\n", err)
+		} else {
+			fmt.Println("[MemoryMaintenance] Initial memory consolidation complete")
+		}
+
+		// Orphan burial
+		limbo, lErr := memorystore.NewLimboVault(vs.DB())
+		if lErr == nil {
+			_ = memorystore.BuryOrphanedMemories(ctx, vs.DB(), limbo)
+		}
+		_ = vs.ApplyDecay(ctx)
+
+		// Dream cycle: auto-review due memories via spaced repetition
+		_ = memorystore.DreamCycle(ctx, vs.DB())
+		cancel()
+
+		// Periodic maintenance every 4 hours
+		ticker := time.NewTicker(4 * time.Hour)
+		defer ticker.Stop()
+		for range ticker.C {
+			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+
+			start := time.Now()
+			if err := vs.ForgettingCurveDecay(ctx); err != nil {
+				fmt.Printf("[MemoryMaintenance] Decay error: %v\n", err)
+			}
+			if err := vs.ConsolidateMemories(ctx); err != nil {
+				fmt.Printf("[MemoryMaintenance] Consolidation error: %v\n", err)
+			}
+			if err := vs.ApplyDecay(ctx); err != nil {
+				fmt.Printf("[MemoryMaintenance] ApplyDecay error: %v\n", err)
+			}
+			limbo, lErr := memorystore.NewLimboVault(vs.DB())
+			if lErr == nil {
+				_ = memorystore.BuryOrphanedMemories(ctx, vs.DB(), limbo)
+			}
+			_ = memorystore.DreamCycle(ctx, vs.DB())
+			cancel()
+			fmt.Printf("[MemoryMaintenance] Cycle complete in %v\n", time.Since(start))
+		}
+	}()
+
+	// Project .memdb sync: scan workspace and import all project memories into global index
+	go func() {
+		time.Sleep(10 * time.Second) // Wait for server to fully initialize
+		vs := tools.GlobalVectorStore
+		if vs == nil {
+			return
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		files, memories, err := memorystore.SyncAllProjectMemDBs(ctx, s.cfg.WorkspaceRoot, vs)
+		cancel()
+		if err != nil {
+			fmt.Printf("[ProjectDB] Initial sync error: %v\n", err)
+		} else {
+			fmt.Printf("[ProjectDB] Initial sync complete: %d files, %d memories imported\n", files, memories)
+		}
+
+		// Rescan periodically (every hour) to pick up new .memdb files from git pulls, clones, etc.
+		ticker := time.NewTicker(1 * time.Hour)
+		defer ticker.Stop()
+		for range ticker.C {
+			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			files, memories, err := memorystore.SyncAllProjectMemDBs(ctx, s.cfg.WorkspaceRoot, vs)
+			cancel()
+			if err != nil {
+				fmt.Printf("[ProjectDB] Periodic sync error: %v\n", err)
+			} else if memories > 0 {
+				fmt.Printf("[ProjectDB] Periodic sync: %d files, %d new memories\n", files, memories)
+			}
+		}
+	}()
 }
 
 func (s *Server) ListenAndServe(ctx context.Context) error {
 	var handler http.Handler = s.mux
 
-	// Wrap with Enterprise Security if enabled
-	if s.enterpriseWrapper != nil {
-		handler = s.enterpriseWrapper.Middleware(handler)
+	// Wrap with Commercial Security if enabled
+	if s.commercialWrapper != nil {
+		handler = s.commercialWrapper.Middleware(handler)
 	}
 
 	httpServer := &http.Server{
@@ -803,14 +1074,27 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/memory/list", s.handleMemoryList)
 	s.mux.HandleFunc("/api/memory/add", s.handleMemoryAdd)
 	s.mux.HandleFunc("/api/memory/add-history", s.handleMemoryAddHistory)
+	s.mux.HandleFunc("/api/memory/relations/add", s.handleMemoryAddRelation)
+	s.mux.HandleFunc("/api/memory/relations/get", s.handleMemoryGetRelations)
+	s.mux.HandleFunc("/api/memory/spaced-repetition/due", s.handleMemorySpacedRepetitionDue)
+	s.mux.HandleFunc("/api/memory/spaced-repetition/review", s.handleMemorySpacedRepetitionReview)
+	s.mux.HandleFunc("/api/memory/sleep-cycle", s.handleMemorySleepCycle)
+	s.mux.HandleFunc("/api/memory/scratchpad/get", s.handleMemoryGetScratchpad)
+	s.mux.HandleFunc("/api/memory/scratchpad/set", s.handleMemorySetScratchpad)
 	s.mux.HandleFunc("/api/code/exec", s.handleCodeExec)
+	s.mux.HandleFunc("/api/gossip/message", s.handleGossipMessage)
 
 	s.mux.HandleFunc("/api/protocol/tormentnexus", s.handleTormentNexusProtocol)
 
 	s.mux.HandleFunc("/health", s.handleHealth)
+	s.mux.HandleFunc("/api/shutdown", s.handleShutdown)
+	s.mux.HandleFunc("/trpc/", s.handleTRPC)
 	s.mux.HandleFunc("/version", s.handleVersion)
 	s.mux.HandleFunc("/.well-known/agent-card", s.handleAgentCard)
 	s.mux.HandleFunc("/api/index", s.handleAPIIndex)
+	s.mux.HandleFunc("/api/backlog/search", s.handleBacklogSearch)
+	s.mux.HandleFunc("/api/backlog/stats", s.handleBacklogStats)
+	s.mux.HandleFunc("/api/backlog/categories", s.handleBacklogCategories)
 	s.mux.HandleFunc("/api/health", s.handleHealth)
 	s.mux.HandleFunc("/api/health/server", s.handleHealth)
 	s.mux.HandleFunc("/api/config/status", s.handleConfigStatus)
@@ -861,6 +1145,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/sessions/supervisor/clear", s.handleSupervisorSessionClear)
 	s.mux.HandleFunc("/api/sessions/supervisor/heartbeat", s.handleSupervisorSessionHeartbeat)
 	s.mux.HandleFunc("/api/sessions/supervisor/restore", s.handleSupervisorSessionRestore)
+	s.mux.HandleFunc("/api/sessions/supervisor/restore-imported", s.handleSupervisorSessionRestoreImported)
 	s.mux.HandleFunc("/api/sessions/imported/list", s.handleImportedSessionList)
 	s.mux.HandleFunc("/api/sessions/imported/get", s.handleImportedSessionGet)
 	s.mux.HandleFunc("/api/sessions/imported/scan", s.handleImportedSessionScan)
@@ -876,7 +1161,22 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/billing/task-routing-rule", s.handleBillingSetTaskRoutingRule)
 	s.mux.HandleFunc("/api/billing/depleted-models", s.handleBillingDepletedModels)
 	s.mux.HandleFunc("/api/billing/fallback-history", s.handleBillingFallbackHistory)
+
+	// Account management
+	s.mux.HandleFunc("/api/account/register", s.handleAccountRegister)
+	s.mux.HandleFunc("/api/account/login", s.handleAccountLogin)
+	s.mux.HandleFunc("/api/account/provision", s.handleAccountProvision)
+	s.mux.HandleFunc("/api/account/status", s.handleAccountStatus)
 	s.mux.HandleFunc("/api/billing/fallback-history/clear", s.handleBillingClearFallbackHistory)
+	s.mux.HandleFunc("/api/config/corporate-settings", s.handleGetCorporateSettings)
+	s.mux.HandleFunc("/api/config/corporate-settings/set", s.handleSetCorporateSettings)
+	s.mux.HandleFunc("/api/billing/stripe/subscribe", s.handleStripeSubscribe)
+	s.mux.HandleFunc("/api/billing/stripe/plans", s.handleStripePlans)
+	s.mux.HandleFunc("/api/billing/stripe/checkout", s.handleStripeCreateCheckout)
+	s.mux.HandleFunc("/api/billing/stripe/portal", s.handleStripeCustomerPortal)
+	s.mux.HandleFunc("/api/billing/stripe/webhook", s.handleStripeWebhook)
+	s.mux.HandleFunc("/api/billing/stripe/subscription", s.handleStripeGetSubscription)
+	s.mux.HandleFunc("/api/billing/webhook", s.handleBillingWebhook)
 	s.mux.HandleFunc("/api/mcp/status", s.handleMCPStatus)
 	s.mux.HandleFunc("/api/system/overview", s.handleSystemOverview)
 	s.mux.HandleFunc("/api/mcp/servers/runtime", s.handleMCPRuntimeServers)
@@ -924,6 +1224,10 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/mcp/decision/catalog/refresh", s.handleDecisionCatalogRefresh)
 	s.mux.HandleFunc("/api/mcp/decision/catalog/save", s.handleDecisionCatalogSave)
 
+	// --- Assimilation Scraper Endpoints ---
+	s.mux.HandleFunc("/api/assimilation/trigger/resources", s.handleAssimilationTriggerResources)
+	s.mux.HandleFunc("/api/assimilation/trigger/servers", s.handleAssimilationTriggerServers)
+
 	// --- Go-native service endpoints ---
 	s.mux.HandleFunc("/api/native/eventbus/publish", s.handleEventBusPublish)
 	s.mux.HandleFunc("/api/native/eventbus/history", s.handleEventBusHistory)
@@ -950,6 +1254,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/native/healer/history", s.handleNativeHealerHistory)
 	s.mux.HandleFunc("/api/native/healer/vault", s.handleNativeHealerVault)
 	s.mux.HandleFunc("/api/native/protocol/tormentnexus", s.handleTormentNexusProtocol)
+	s.mux.HandleFunc("/api/native/protocol/register", s.handleRegisterProtocol)
 	s.mux.HandleFunc("/api/native/harvester/add", s.handleHarvesterAdd)
 	s.mux.HandleFunc("/api/native/harvester/search", s.handleHarvesterSearch)
 	s.mux.HandleFunc("/api/native/harvester/report", s.handleHarvesterReport)
@@ -967,6 +1272,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/mcp/tools/schema", s.handleMCPToolSchema)
 	s.mux.HandleFunc("/api/mcp/preferences", s.handleMCPToolPreferences)
 	s.mux.HandleFunc("/api/mcp/traffic", s.handleMCPTraffic)
+	s.mux.HandleFunc("/api/mcp/traffic/ws", s.handleMCPTrafficWS)
 	s.mux.HandleFunc("/api/mcp/tool-selection-telemetry", s.handleMCPToolSelectionTelemetry)
 	s.mux.HandleFunc("/api/mcp/tool-selection-telemetry/clear", s.handleMCPClearToolSelectionTelemetry)
 	s.mux.HandleFunc("/api/mcp/server-test", s.handleMCPServerTest)
@@ -1200,6 +1506,11 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/settings/environment", s.handleSettingsEnvironment)
 	s.mux.HandleFunc("/api/settings/mcp-servers", s.handleSettingsMCPServers)
 	s.mux.HandleFunc("/api/settings/provider-key", s.handleSettingsProviderKey)
+	s.mux.HandleFunc("/api/commercial/license", s.handleCommercialLicense)
+	s.mux.HandleFunc("/api/commercial/audit", s.handleCommercialAudit)
+	s.mux.HandleFunc("/api/commercial/roles", s.handleCommercialRoles)
+	s.mux.HandleFunc("/api/commercial/sso/update", s.handleCommercialUpdateSSO)
+	s.mux.HandleFunc("/api/commercial/roles/update", s.handleCommercialUpdateRoles)
 	s.mux.HandleFunc("/api/skills/get", s.handleSkillGet)
 	s.mux.HandleFunc("/api/skills/list", s.handleSkillList)
 	s.mux.HandleFunc("/api/skills/search", s.handleSkillSearch)
@@ -1219,6 +1530,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/tools/upsert-batch", s.handleToolsUpsertBatch)
 	s.mux.HandleFunc("/api/tools/delete", s.handleToolsDelete)
 	s.mux.HandleFunc("/api/tools/always-on", s.handleToolsAlwaysOn)
+	s.mux.HandleFunc("/api/tools/native", s.handleToolsNative)
 	s.mux.HandleFunc("/api/tool-sets", s.handleToolSetsList)
 	s.mux.HandleFunc("/api/tool-sets/get", s.handleToolSetsGet)
 	s.mux.HandleFunc("/api/tool-sets/create", s.handleToolSetsCreate)
@@ -1243,6 +1555,18 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/agent/supervisor/evaluate", s.handleAgentSupervisorEvaluate)
 	s.mux.HandleFunc("/api/agent/director/start", s.handleGoDirectorStart)
 	s.mux.HandleFunc("/api/memory/archive-session", s.handleMemoryArchiveSession)
+	s.mux.HandleFunc("/api/memory/fts-search", s.handleMemoryFTSearch)
+	s.mux.HandleFunc("/api/memory/maintenance", s.handleMemoryMaintenance)
+	s.mux.HandleFunc("/api/memory/maintenance-local", s.handleMemoryMaintenanceLocal)
+	s.mux.HandleFunc("/api/memory/project/sync", s.handleProjectSync)
+	s.mux.HandleFunc("/api/memory/project/split", s.handleProjectSplit)
+	s.mux.HandleFunc("/api/memory/cold-archive", s.handleColdArchiveCount)
+	s.mux.HandleFunc("/api/memory/cold-archive/search", s.handleColdArchiveSearch)
+	s.mux.HandleFunc("/api/memory/cold-archive/count", s.handleColdArchiveCount)
+	s.mux.HandleFunc("/api/memory/cold-archive/promote", s.handleColdArchivePromote)
+	s.mux.HandleFunc("/api/memory/limbo/bury", s.handleLimboBury)
+	s.mux.HandleFunc("/api/memory/limbo/search", s.handleLimboSearch)
+	s.mux.HandleFunc("/api/memory/limbo/resurrect", s.handleLimboResurrect)
 	s.mux.HandleFunc("/api/memory/hydrate", s.handleMemoryHydrate)
 	s.mux.HandleFunc("/api/memory/hydration/status", s.handleMemoryHydrationStatus)
 	s.mux.HandleFunc("/api/memory/hydration/query", s.handleMemoryHydrationQuery)
@@ -1326,7 +1650,6 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/catalog/validate", s.handleCatalogValidate)
 	s.mux.HandleFunc("/api/catalog/install", s.handleCatalogInstall)
 	s.mux.HandleFunc("/api/catalog/validate-batch", s.handleCatalogValidateBatch)
-	s.mux.HandleFunc("/api/catalog/stats", s.handleCatalogStats)
 	s.mux.HandleFunc("/api/catalog/linked-servers", s.handleCatalogLinkedServers)
 	s.mux.HandleFunc("/api/oauth/clients/create", s.handleOAuthClientCreate)
 	s.mux.HandleFunc("/api/oauth/clients/get", s.handleOAuthClientGet)
@@ -1459,6 +1782,7 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("/api/repograph/search", s.handleRepoGraphSearch)
 
 	s.mux.HandleFunc("/api/sse", s.handleSSE)
+	s.mux.HandleFunc("/api/sse/message", s.handleSSEMessage)
 	s.mux.HandleFunc("/api/sse/history", s.handleSSEHistory)
 
 	// --- New Go-native handlers (alpha.11+) ---
@@ -1475,6 +1799,18 @@ func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
 	})
 }
 
+func (s *Server) handleShutdown(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true, "message": "Initiating server shutdown..."})
+	go func() {
+		time.Sleep(500 * time.Millisecond)
+		systray.TriggerFullShutdown()
+	}()
+}
+
 func (s *Server) handleVersion(w http.ResponseWriter, _ *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{
 		"version": buildinfo.Version,
@@ -1489,10 +1825,10 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 			BaseURL: s.cfg.BaseURL(),
 			Routes: []RouteInfo{
 				{Path: "/health", Category: "meta", Description: "Basic service health check."},
-				{Path: "/version", Category: "meta", Description: "Build version for the Go sidecar."},
-				{Path: "/api/index", Category: "meta", Description: "Self-describing index of the Go sidecar API surface."},
+				{Path: "/version", Category: "meta", Description: "Build version for the TN Kernel."},
+				{Path: "/api/index", Category: "meta", Description: "Self-describing index of the TN Kernel API surface."},
 				{Path: "/api/health/server", Category: "meta", Description: "Health check alias for API consumers."},
-				{Path: "/api/config/status", Category: "config", Description: "Path and config visibility snapshot for the sidecar and main workspace."},
+				{Path: "/api/config/status", Category: "config", Description: "Path and config visibility snapshot for the kernel and main workspace."},
 				{Path: "/api/config/list", Category: "config", Description: "List config key/value entries through the TypeScript config router."},
 				{Path: "/api/config/get", Category: "config", Description: "Read one config key through the TypeScript config router."},
 				{Path: "/api/config/upsert", Category: "config", Description: "Upsert a config key through the TypeScript config router."},
@@ -1540,6 +1876,7 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/sessions/supervisor/clear", Category: "sessions", Description: "Clear the shared TypeScript session-manager state."},
 				{Path: "/api/sessions/supervisor/heartbeat", Category: "sessions", Description: "Touch the shared TypeScript session-manager heartbeat."},
 				{Path: "/api/sessions/supervisor/restore", Category: "sessions", Description: "Restore supervised sessions through the TypeScript control plane."},
+				{Path: "/api/sessions/supervisor/restore-imported", Category: "sessions", Description: "Restore an imported session into the active supervised workspace."},
 				{Path: "/api/sessions/imported/list", Category: "sessions", Description: "Bridge to imported sessions already processed by the TypeScript control plane."},
 				{Path: "/api/sessions/imported/get", Category: "sessions", Description: "Bridge to a specific imported session record from the TypeScript control plane."},
 				{Path: "/api/sessions/imported/scan", Category: "sessions", Description: "Trigger TypeScript imported-session scanning, import, and memory extraction."},
@@ -1556,6 +1893,13 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/billing/depleted-models", Category: "providers", Description: "Read depleted model state, with a local Go empty-state preview when the TypeScript billing router is unavailable."},
 				{Path: "/api/billing/fallback-history", Category: "providers", Description: "Read provider fallback history, with a local Go empty-state preview when the TypeScript billing router is unavailable."},
 				{Path: "/api/billing/fallback-history/clear", Category: "providers", Description: "Clear provider fallback history, with a local Go no-op when the TypeScript billing router is unavailable."},
+				{Path: "/api/billing/stripe/plans", Category: "providers", Description: "List available Stripe subscription plans."},
+				{Path: "/api/billing/stripe/checkout", Category: "providers", Description: "Create a Stripe Checkout session for subscription."},
+				{Path: "/api/billing/stripe/portal", Category: "providers", Description: "Generate a Stripe Customer Portal session URL."},
+				{Path: "/api/billing/stripe/webhook", Category: "providers", Description: "Receive Stripe webhook events (checkout, subscription, invoice)."},
+				{Path: "/api/billing/stripe/subscription", Category: "providers", Description: "Get current subscription status from Stripe."},
+				{Path: "/api/billing/stripe/subscribe", Category: "providers", Description: "Manually set subscription details (legacy/local)."},
+				{Path: "/api/billing/webhook", Category: "providers", Description: "Handle Stripe billing webhooks locally in the TN Kernel."},
 				{Path: "/api/mcp/status", Category: "mcp", Description: "Bridge to TypeScript MCP runtime status and pool state."},
 				{Path: "/api/mcp/servers/runtime", Category: "mcp", Description: "Bridge to TypeScript runtime MCP server visibility."},
 				{Path: "/api/mcp/servers/configured", Category: "mcp", Description: "Bridge to configured MCP server records managed by the TypeScript control plane."},
@@ -1587,7 +1931,7 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/mcp/lifecycle-modes", Category: "mcp", Description: "Update MCP pool lifecycle modes, with local Go state fallback when the TypeScript MCP router is unavailable."},
 				{Path: "/api/mcp/runtime-servers/add", Category: "mcp", Description: "Add a downstream runtime MCP server through the TypeScript control plane."},
 				{Path: "/api/mcp/runtime-servers/remove", Category: "mcp", Description: "Remove a downstream runtime MCP server through the TypeScript control plane."},
-				{Path: "/api/mcp/config/jsonc", Category: "mcp", Description: "Read or update the TypeScript MCP JSONC config through the sidecar."},
+				{Path: "/api/mcp/config/jsonc", Category: "mcp", Description: "Read or update the TypeScript MCP JSONC config through the TN Kernel."},
 				{Path: "/api/mcp/working-set", Category: "mcp", Description: "Read the MCP working-set snapshot, with a local empty-state fallback when the TypeScript MCP router is unavailable."},
 				{Path: "/api/mcp/working-set/evictions", Category: "mcp", Description: "Read MCP working-set eviction history, with a local empty-state fallback when the TypeScript MCP router is unavailable."},
 				{Path: "/api/mcp/working-set/evictions/clear", Category: "mcp", Description: "Clear MCP working-set eviction history, with a local no-op fallback when the TypeScript MCP router is unavailable."},
@@ -2024,10 +2368,10 @@ func (s *Server) handleAPIIndex(w http.ResponseWriter, _ *http.Request) {
 				{Path: "/api/import/candidates", Category: "imports", Description: "Validated import candidates with metadata."},
 				{Path: "/api/import/manifest", Category: "imports", Description: "Structured manifest of validated import candidates."},
 				{Path: "/api/import/summary", Category: "imports", Description: "Aggregate summary of validated import candidates."},
-				{Path: "/api/runtime/locks", Category: "runtime", Description: "Visibility into main tormentnexus and sidecar lock files."},
+				{Path: "/api/runtime/locks", Category: "runtime", Description: "Visibility into main tormentnexus and kernel lock files."},
 				{Path: "/api/runtime/status", Category: "runtime", Description: "Top-level runtime summary across CLI, imports, providers, memory, and sessions."},
 				{Path: "/api/runtime/imported-instructions", Category: "runtime", Description: "Read-only bridge to imported instructions generated by the main fork."},
-				{Path: "/api/startup/status", Category: "runtime", Description: "Truthful Go-sidecar startup readiness snapshot, including upstream control-plane dependency state."},
+				{Path: "/api/startup/status", Category: "runtime", Description: "Truthful kernel startup readiness snapshot, including upstream control-plane dependency state."},
 				{Path: "/api/mesh/status", Category: "mesh", Description: "Native Go mesh node id plus current known peer count."},
 				{Path: "/api/mesh/peers", Category: "mesh", Description: "Known mesh peers discovered from the Go mesh visibility layer."},
 				{Path: "/api/mesh/capabilities", Category: "mesh", Description: "Combined capability map for the Go node plus upstream-discovered peers."},
@@ -2892,6 +3236,47 @@ func (s *Server) handleMCPCallTool(w http.ResponseWriter, r *http.Request) {
 			},
 		})
 		return
+	}
+
+	// Try native Go tool handlers (tools.Registry) before falling back to meta-tools
+	name, _ := payload["name"].(string)
+	args, _ := payload["args"].(map[string]interface{})
+	if args == nil {
+		if a, ok := payload["arguments"].(map[string]interface{}); ok {
+			args = a
+		}
+	}
+	if name != "" && s.toolsRegistry != nil && s.toolsRegistry.HasTool(name) {
+		cfg := s.loadNativeConfig()
+		val, explicit := cfg[name]
+		isNativeDisabled := explicit && !val
+		if !isNativeDisabled {
+			nativeResult, nativeErr := s.toolsRegistry.Execute(r.Context(), name, args)
+			if s.auditor != nil {
+				status := "SUCCESS"
+				if nativeErr != nil {
+					status = "FAILURE: " + nativeErr.Error()
+				}
+				s.auditor.LogToolExecution("system", name, args, status)
+			}
+			if nativeErr == nil {
+				writeJSON(w, http.StatusOK, map[string]any{
+					"success": true,
+					"data":    nativeResult,
+					"bridge": map[string]any{
+						"source": "go-native-tool",
+						"tool":   name,
+					},
+				})
+				return
+			}
+			writeJSON(w, http.StatusInternalServerError, map[string]any{
+				"success": false,
+				"error":   nativeErr.Error(),
+				"source":  "go-native-tool",
+			})
+			return
+		}
 	}
 
 	fallbackResult, fallbackErr := s.localCallMCPMetaTool(r, payload)
@@ -5843,7 +6228,7 @@ type localObservabilityLog struct {
 }
 
 func (s *Server) localObservabilityLogs(filter localLogsFilter) ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -5961,7 +6346,7 @@ func (s *Server) localObservabilitySummary(filter localLogsFilter) (map[string]a
 }
 
 func (s *Server) clearLocalObservabilityLogs() error {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return err
 	}
@@ -6509,7 +6894,60 @@ func (s *Server) handleToolsDelete(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleToolsAlwaysOn(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	var payload struct {
+		Name     string `json:"name"`
+		AlwaysOn bool   `json:"alwaysOn"`
+	}
+	var bodyBytes []byte
+	if r.Body != nil {
+		var err error
+		bodyBytes, err = io.ReadAll(r.Body)
+		if err == nil {
+			r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+			_ = json.Unmarshal(bodyBytes, &payload)
+		}
+	}
+
+	if payload.Name != "" {
+		alwaysOnMap := s.loadAlwaysOnTools()
+		alwaysOnMap[payload.Name] = payload.AlwaysOn
+		_ = s.saveAlwaysOnTools(alwaysOnMap)
+	}
+
+	if len(bodyBytes) > 0 {
+		r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+	}
 	s.handleTRPCBridgeBodyCall(w, r, "tools.setAlwaysOn")
+}
+
+func (s *Server) handleToolsNative(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	var payload struct {
+		Name   string `json:"name"`
+		Native bool   `json:"native"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON body"})
+		return
+	}
+
+	if payload.Name != "" {
+		nativeMap := s.loadNativeConfig()
+		nativeMap[payload.Name] = payload.Native
+		if err := s.saveNativeConfig(nativeMap); err != nil {
+			writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+			return
+		}
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{"success": true})
 }
 
 func (s *Server) handleToolSetsList(w http.ResponseWriter, r *http.Request) {
@@ -6786,10 +7224,14 @@ func (s *Server) handleAgentRunTool(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// 1. Try native Go tool handlers first (Total Autonomy)
-	if s.toolsRegistry != nil && s.toolsRegistry.HasTool(payload.Name) {
+	// Only disable if the tool is EXPLICITLY set to false in native-tools.json
+	cfg := s.loadNativeConfig()
+	val, explicit := cfg[payload.Name]
+	isNativeDisabled := explicit && !val
+	if s.toolsRegistry != nil && s.toolsRegistry.HasTool(payload.Name) && !isNativeDisabled {
 		result, err := s.toolsRegistry.Execute(r.Context(), payload.Name, payload.Arguments)
 
-		// Audit Tool Execution (Enterprise Tier)
+		// Audit Tool Execution (Commercial Tier)
 		if s.auditor != nil {
 			status := "SUCCESS"
 			if err != nil {
@@ -8121,14 +8563,14 @@ func (s *Server) handleLinksBacklogSync(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", filepath.Join(s.cfg.WorkspaceRoot, "catalog.db"))
 	if err != nil {
 		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
 		return
 	}
 	defer db.Close()
 
-	res, fallbackErr := hsync.SyncBobbyBookmarks(r.Context(), s.localTormentNexusDBPath(), "https://bobbybookmarks.com", 100, false, false)
+	res, fallbackErr := hsync.SyncGlamaMCP(r.Context(), filepath.Join(s.cfg.WorkspaceRoot, "catalog.db"))
 	if fallbackErr != nil {
 		writeJSON(w, http.StatusServiceUnavailable, map[string]any{
 			"success": false,
@@ -8144,7 +8586,7 @@ func (s *Server) handleLinksBacklogSync(w http.ResponseWriter, r *http.Request) 
 		"bridge": map[string]any{
 			"fallback":  "go-local-links-sync",
 			"procedure": "linksBacklog.syncFromBobbyBookmarks",
-			"reason":    "upstream unavailable; executing native Go links backlog sync",
+			"reason":    "upstream unavailable; executing native Go Glama/Smithery registry catalog sync",
 		},
 	})
 }
@@ -9192,7 +9634,103 @@ func (s *Server) handleSessionExport(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleSessionImport(w http.ResponseWriter, r *http.Request) {
-	s.handleTRPCBridgeBodyCall(w, r, "sessionExport.import")
+	// First, let's buffer the request body because we might need to read it twice
+	bodyBytes, err := io.ReadAll(r.Body)
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "failed to read body"})
+		return
+	}
+	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+
+	var result any
+	upstreamBase, err := s.callUpstreamJSON(r.Context(), "sessionExport.import", json.RawMessage(bodyBytes), &result)
+	if err == nil {
+		writeJSON(w, http.StatusOK, map[string]any{
+			"success": true,
+			"data":    result,
+			"bridge": map[string]any{
+				"upstreamBase": upstreamBase,
+				"procedure":    "sessionExport.import",
+			},
+		})
+		return
+	}
+
+	// Local fallback: parse and import using sessionimport package
+	var payload struct {
+		Data  string `json:"data"`
+		Merge bool   `json:"merge"`
+		Dry   bool   `json:"dryRun"`
+	}
+	if err := json.Unmarshal(bodyBytes, &payload); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON body: " + err.Error()})
+		return
+	}
+
+	var pkg struct {
+		Sessions []struct {
+			ID               string         `json:"id"`
+			Name             string         `json:"name"`
+			CLIType          string         `json:"cliType"`
+			WorkingDirectory string         `json:"workingDirectory"`
+			Metadata         map[string]any `json:"metadata"`
+		} `json:"sessions"`
+	}
+	if err := json.Unmarshal([]byte(payload.Data), &pkg); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid package data: " + err.Error()})
+		return
+	}
+
+	imported := 0
+	merged := 0
+	skipped := 0
+	errorsList := []string{}
+
+	dbPath := filepath.Join(s.cfg.WorkspaceRoot, "tormentnexus.db")
+
+	for _, sess := range pkg.Sessions {
+		if payload.Dry {
+			imported++
+			continue
+		}
+
+		transcript := ""
+		if t, ok := sess.Metadata["transcriptSnippet"].(string); ok {
+			transcript = t
+		}
+
+		importedSess := sessionimport.ImportedSession{
+			ID:                sess.ID,
+			SourceTool:        sess.CLIType,
+			SourcePath:        filepath.Join(sess.WorkingDirectory, sess.ID),
+			ExternalSessionID: sess.ID,
+			Title:             sess.Name,
+			SessionFormat:     "tormentnexus-export",
+			Transcript:        transcript,
+		}
+
+		if err := sessionimport.ImportSession(dbPath, importedSess); err != nil {
+			errorsList = append(errorsList, fmt.Sprintf("session %s import failed: %s", sess.ID, err.Error()))
+			skipped++
+		} else {
+			imported++
+		}
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data": map[string]any{
+			"imported": imported,
+			"merged":   merged,
+			"skipped":  skipped,
+			"errors":   errorsList,
+		},
+		"bridge": map[string]any{
+			"fallback":  "go-local-session-export",
+			"procedure": "sessionExport.import",
+			"reason":    "upstream unavailable; processed locally via tormentnexus.db",
+		},
+	})
 }
 
 func (s *Server) handleSessionExportDetectFormat(w http.ResponseWriter, r *http.Request) {
@@ -10655,6 +11193,63 @@ func (s *Server) handleImportSummary(w http.ResponseWriter, _ *http.Request) {
 	})
 }
 
+func (s *Server) handleMemoryProjectSync(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+
+	pdb := memorypkg.NewProjectDB(s.cfg.WorkspaceRoot)
+	data, err := pdb.SyncMemDB()
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data":    data,
+		"bridge": map[string]any{
+			"fallback":  "go-local-memory",
+			"procedure": "memory.project.sync",
+			"reason":    "synced .memdb directly via TN Kernel",
+		},
+	})
+}
+
+func (s *Server) handleMemoryMaintenance(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+
+	var result any
+	upstreamBase, err := s.callUpstreamJSON(r.Context(), "memory.maintenance", nil, &result)
+	if err == nil {
+		writeJSON(w, http.StatusOK, map[string]any{
+			"success": true,
+			"data":    result,
+			"bridge": map[string]any{
+				"upstreamBase": upstreamBase,
+				"procedure":    "memory.maintenance",
+			},
+		})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data": map[string]any{
+			"triggered": true,
+		},
+		"bridge": map[string]any{
+			"fallback":  "go-local-memory",
+			"procedure": "memory.maintenance",
+			"reason":    "upstream unavailable; triggered local Go memory maintenance",
+		},
+	})
+}
+
 func (s *Server) handleMemoryStatus(w http.ResponseWriter, _ *http.Request) {
 	status, err := memorystore.ReadStatus(s.cfg.WorkspaceRoot)
 	if err != nil {
@@ -11222,7 +11817,7 @@ func (s *Server) localTormentNexusDBPath() string {
 }
 
 func (s *Server) localPolicy(uuid string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11266,7 +11861,7 @@ func (s *Server) localPolicy(uuid string) (any, error) {
 }
 
 func (s *Server) localPolicies() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11318,7 +11913,7 @@ func (s *Server) localPolicies() ([]map[string]any, error) {
 }
 
 func (s *Server) localSecrets() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11357,7 +11952,7 @@ func (s *Server) localSecrets() ([]map[string]any, error) {
 }
 
 func (s *Server) localAPIKeys() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11408,7 +12003,7 @@ func (s *Server) localAPIKeys() ([]map[string]any, error) {
 }
 
 func (s *Server) localAPIKey(uuid string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11447,7 +12042,7 @@ func (s *Server) localAPIKey(uuid string) (any, error) {
 }
 
 func (s *Server) localLinksBacklogItem(uuid string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", filepath.Join(s.cfg.WorkspaceRoot, "catalog.db"))
 	if err != nil {
 		return nil, err
 	}
@@ -11472,7 +12067,7 @@ func (s *Server) localLinksBacklogItem(uuid string) (any, error) {
 }
 
 func (s *Server) localLinksBacklogStats() (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", filepath.Join(s.cfg.WorkspaceRoot, "catalog.db"))
 	if err != nil {
 		return nil, err
 	}
@@ -11525,7 +12120,7 @@ func (s *Server) localLinksBacklogList(limit, offset int, search, source, resear
 		offset = 0
 	}
 
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", filepath.Join(s.cfg.WorkspaceRoot, "catalog.db"))
 	if err != nil {
 		return nil, err
 	}
@@ -11547,7 +12142,7 @@ func (s *Server) localLinksBacklogList(limit, offset int, search, source, resear
 }
 
 func (s *Server) localOAuthClient(clientID string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11623,7 +12218,7 @@ func (s *Server) localOAuthClient(clientID string) (any, error) {
 }
 
 func (s *Server) localOAuthSessionByServer(serverUUID string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11673,7 +12268,7 @@ func (s *Server) localOAuthSessionByServer(serverUUID string) (any, error) {
 }
 
 func (s *Server) localCatalogGet(uuid string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11909,7 +12504,7 @@ func (s *Server) localCatalogRuns(serverUUID string, limit int) ([]map[string]an
 		limit = 10
 	}
 
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11944,7 +12539,7 @@ func (s *Server) localCatalogRuns(serverUUID string, limit int) ([]map[string]an
 }
 
 func (s *Server) localCatalogStats() (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -11990,7 +12585,7 @@ func (s *Server) localCatalogStats() (any, error) {
 }
 
 func (s *Server) localCatalogLinkedServers(publishedServerUUID string) ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12030,7 +12625,7 @@ func (s *Server) localCatalogList(limit, offset int, search, status, transport, 
 		offset = 0
 	}
 
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12208,7 +12803,7 @@ func (s *Server) localBrowserHistoryQuery(query string, limit int, since int64, 
 		limit = 50
 	}
 
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12276,7 +12871,7 @@ func (s *Server) localBrowserConsoleLogsQuery(level, search string, limit int) (
 		limit = 100
 	}
 
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12342,7 +12937,7 @@ func (s *Server) localBrowserConsoleLogsQuery(level, search string, limit int) (
 }
 
 func (s *Server) localBrowserControlsStats() (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12406,7 +13001,7 @@ func (s *Server) localBrowserExtensionMemories(search, tag string, limit, offset
 		offset = 0
 	}
 
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12418,7 +13013,7 @@ func (s *Server) localBrowserExtensionMemories(search, tag string, limit, offset
 		ORDER BY saved_at DESC
 	`)
 	if err != nil {
-		if strings.Contains(err.Error(), "no such table: web_memories") {
+		if strings.Contains(err.Error(), "no such table: web_memories") || strings.Contains(err.Error(), "file is not a database") {
 			return map[string]any{
 				"items": []map[string]any{},
 				"total": 0,
@@ -12499,7 +13094,7 @@ func (s *Server) localBrowserExtensionMemories(search, tag string, limit, offset
 }
 
 func (s *Server) localBrowserExtensionStats() (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12510,7 +13105,7 @@ func (s *Server) localBrowserExtensionStats() (any, error) {
 		FROM web_memories
 	`)
 	if err != nil {
-		if strings.Contains(err.Error(), "no such table: web_memories") {
+		if strings.Contains(err.Error(), "no such table: web_memories") || strings.Contains(err.Error(), "file is not a database") {
 			return map[string]any{
 				"totalMemories": 0,
 				"uniqueUrls":    0,
@@ -12692,7 +13287,7 @@ func (s *Server) localUnifiedDirectoryStats() (any, error) {
 }
 
 func (s *Server) localWorkflowCanvases() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -12723,7 +13318,7 @@ func (s *Server) localWorkflowCanvases() ([]map[string]any, error) {
 }
 
 func (s *Server) localWorkflowCanvas(id string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13858,7 +14453,7 @@ func (s *Server) localExecuteSavedScript(targetUUID string) (any, error) {
 }
 
 func (s *Server) localToolSets() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13924,7 +14519,7 @@ func (s *Server) localToolSets() ([]map[string]any, error) {
 }
 
 func (s *Server) localToolChains() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -13936,7 +14531,7 @@ func (s *Server) localToolChains() ([]map[string]any, error) {
 		ORDER BY created_at DESC
 	`)
 	if err != nil {
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return []map[string]any{}, nil
 		}
 		return nil, err
@@ -13979,7 +14574,7 @@ func (s *Server) localToolChains() ([]map[string]any, error) {
 }
 
 func (s *Server) localToolChain(id string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14001,7 +14596,7 @@ func (s *Server) localToolChain(id string) (any, error) {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, nil
 		}
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return nil, nil
 		}
 		return nil, err
@@ -14032,7 +14627,7 @@ func localToolChainSteps(db *sql.DB, chainID string) ([]map[string]any, error) {
 		ORDER BY step_order ASC
 	`, chainID)
 	if err != nil {
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return []map[string]any{}, nil
 		}
 		return nil, err
@@ -14069,7 +14664,7 @@ func localToolChainSteps(db *sql.DB, chainID string) ([]map[string]any, error) {
 }
 
 func (s *Server) localToolAliases() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14081,7 +14676,7 @@ func (s *Server) localToolAliases() ([]map[string]any, error) {
 		ORDER BY created_at DESC
 	`)
 	if err != nil {
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return []map[string]any{}, nil
 		}
 		return nil, err
@@ -14116,7 +14711,7 @@ func (s *Server) localToolAliases() ([]map[string]any, error) {
 }
 
 func (s *Server) localToolAlias(name string) (any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14138,7 +14733,7 @@ func (s *Server) localToolAlias(name string) (any, error) {
 		if errors.Is(err, sql.ErrNoRows) {
 			return map[string]any{"resolved": false}, nil
 		}
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return map[string]any{"resolved": false}, nil
 		}
 		return nil, err
@@ -14200,7 +14795,7 @@ func scanLocalDBTool(scanner localDBToolScanner) (map[string]any, error) {
 }
 
 func (s *Server) localDBTools() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -14213,7 +14808,7 @@ func (s *Server) localDBTools() ([]map[string]any, error) {
 		ORDER BY t.name
 	`)
 	if err != nil {
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return []map[string]any{}, nil
 		}
 		return nil, err
@@ -14833,7 +15428,7 @@ func definitionDescriptionName(id string, description string) string {
 func harnessHomepage(id string) string {
 	switch id {
 	case "tormentnexus":
-		return "https://github.com/NexusSoftMDMA/TormentNexus"
+		return "https://github.com/MDMAtk/TormentNexus"
 	case "aider":
 		return "https://aider.chat/"
 	case "antigravity":
@@ -14870,7 +15465,7 @@ func harnessHomepage(id string) string {
 func harnessDocsURL(id string) string {
 	switch id {
 	case "tormentnexus":
-		return "https://github.com/NexusSoftMDMA/TormentNexus"
+		return "https://github.com/MDMAtk/TormentNexus"
 	case "aider":
 		return "https://aider.chat/docs/"
 	case "antigravity":
@@ -16778,7 +17373,7 @@ func (s *Server) localConfiguredMCPServers() ([]map[string]any, error) {
 }
 
 func (s *Server) localConfiguredMCPServersFromDB() ([]map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -16791,7 +17386,7 @@ func (s *Server) localConfiguredMCPServersFromDB() ([]map[string]any, error) {
 		ORDER BY name ASC
 	`)
 	if err != nil {
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return []map[string]any{}, nil
 		}
 		return nil, err
@@ -16830,7 +17425,7 @@ func (s *Server) localConfiguredMCPServersFromDB() ([]map[string]any, error) {
 }
 
 func (s *Server) localConfiguredMCPServerFromDB(uuid string) (map[string]any, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -16893,7 +17488,7 @@ func (s *Server) localConfiguredMCPServerMetaByName() (map[string]any, error) {
 }
 
 func (s *Server) localWorkspaceSecretEnv() (map[string]string, error) {
-	db, err := sql.Open("sqlite", s.localTormentNexusDBPath())
+	db, err := database.Open("sqlite", s.localTormentNexusDBPath())
 	if err != nil {
 		return nil, err
 	}
@@ -16904,7 +17499,7 @@ func (s *Server) localWorkspaceSecretEnv() (map[string]string, error) {
 		FROM workspace_secrets
 	`)
 	if err != nil {
-		if strings.Contains(strings.ToLower(err.Error()), "no such table") {
+		if strings.Contains(strings.ToLower(err.Error()), "no such table") || strings.Contains(err.Error(), "file is not a database") {
 			return map[string]string{}, nil
 		}
 		return nil, err
@@ -18042,31 +18637,31 @@ func readGzipText(filePath string) (string, error) {
 	return string(decoded), nil
 }
 
-func archivedImportedSessionRecord(sidecar importedSessionArchiveSidecar, metadataPath string) (ImportedSessionRecord, error) {
+func archivedImportedSessionRecord(archive importedSessionArchiveFile, metadataPath string) (ImportedSessionRecord, error) {
 	transcriptPath := strings.TrimSuffix(metadataPath, ".meta.json.gz") + ".txt.gz"
 	transcript, err := readGzipText(transcriptPath)
 	if err != nil {
 		return ImportedSessionRecord{}, err
 	}
 
-	sessionID := strings.TrimSpace(sidecar.SessionID)
+	sessionID := strings.TrimSpace(archive.SessionID)
 	if sessionID == "" {
 		sessionID = "import-" + stableHash(metadataPath)[:16]
 	}
-	transcriptHash := strings.TrimSpace(sidecar.TranscriptHash)
+	transcriptHash := strings.TrimSpace(archive.TranscriptHash)
 	if transcriptHash == "" {
-		transcriptHash = stableHash(sidecar.SourceTool + "\n" + sidecar.SourcePath + "\n" + sidecar.SessionFormat)
+		transcriptHash = stableHash(archive.SourceTool + "\n" + archive.SourcePath + "\n" + archive.SessionFormat)
 	}
 
-	title := sidecar.Title
+	title := archive.Title
 	if title == nil || strings.TrimSpace(*title) == "" {
-		titleText := filepath.Base(sidecar.SourcePath)
+		titleText := filepath.Base(archive.SourcePath)
 		if strings.TrimSpace(titleText) != "" {
 			title = &titleText
 		}
 	}
 
-	excerpt := sidecar.Excerpt
+	excerpt := archive.Excerpt
 	if excerpt == nil && strings.TrimSpace(transcript) != "" {
 		excerptText := transcript
 		if len(excerptText) > 240 {
@@ -18075,7 +18670,7 @@ func archivedImportedSessionRecord(sidecar importedSessionArchiveSidecar, metada
 		excerpt = &excerptText
 	}
 
-	importedAt := sidecar.ArchivedAt
+	importedAt := archive.ArchivedAt
 	if importedAt <= 0 {
 		if stat, statErr := os.Stat(metadataPath); statErr == nil {
 			importedAt = stat.ModTime().UTC().UnixMilli()
@@ -18089,24 +18684,24 @@ func archivedImportedSessionRecord(sidecar importedSessionArchiveSidecar, metada
 	}
 	metadata := map[string]any{
 		"archiveFormat":           "gzip-text-v1",
-		"durableMemoryCount":      sidecar.DurableMemoryCount,
-		"durableInstructionCount": sidecar.DurableInstructionCount,
-		"memoryTags":              sidecar.MemoryTags,
+		"durableMemoryCount":      archive.DurableMemoryCount,
+		"durableInstructionCount": archive.DurableInstructionCount,
+		"memoryTags":              archive.MemoryTags,
 	}
-	if sidecar.RetentionSummary != nil {
-		metadata["retentionSummary"] = sidecar.RetentionSummary
+	if archive.RetentionSummary != nil {
+		metadata["retentionSummary"] = archive.RetentionSummary
 	}
 
 	return ImportedSessionRecord{
 		ID:                sessionID,
-		SourceTool:        sidecar.SourceTool,
-		SourcePath:        sidecar.SourcePath,
+		SourceTool:        archive.SourceTool,
+		SourcePath:        archive.SourcePath,
 		ExternalSessionID: nil,
 		Title:             title,
-		SessionFormat:     sidecar.SessionFormat,
+		SessionFormat:     archive.SessionFormat,
 		Transcript:        transcript,
 		Excerpt:           excerpt,
-		WorkingDirectory:  sidecar.WorkingDirectory,
+		WorkingDirectory:  archive.WorkingDirectory,
 		TranscriptHash:    transcriptHash,
 		NormalizedSession: normalized,
 		Metadata:          metadata,
@@ -18143,11 +18738,11 @@ func (s *Server) loadArchivedImportedSessionRecords() ([]ImportedSessionRecord, 
 			return nil
 		}
 
-		var sidecar importedSessionArchiveSidecar
-		if err := readGzipJSON(path, &sidecar); err != nil {
+		var archive importedSessionArchiveFile
+		if err := readGzipJSON(path, &archive); err != nil {
 			return nil
 		}
-		record, err := archivedImportedSessionRecord(sidecar, path)
+		record, err := archivedImportedSessionRecord(archive, path)
 		if err != nil {
 			return nil
 		}

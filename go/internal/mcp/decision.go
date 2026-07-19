@@ -40,6 +40,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/MDMAtk/TormentNexus/internal/harnesses"
 )
 
 // ---------- Configuration ----------
@@ -123,15 +125,16 @@ type DecisionEvent struct {
 // ---------- Decision System ----------
 
 type DecisionSystem struct {
-	cfg       DecisionConfig
-	mu        sync.RWMutex
-	loaded    map[string]*LoadedTool // keyed by advertised name
-	known     []ToolEntry            // full catalog of known tools
-	events    []DecisionEvent        // circular buffer of observability events
-	agg       *Aggregator            // live MCP connections
-	catalog   []ToolEntry            // persisted catalog loaded from disk
-	eventIdx  int                    // circular buffer write position
-	maxEvents int
+	cfg        DecisionConfig
+	mu         sync.RWMutex
+	loaded     map[string]*LoadedTool // keyed by advertised name
+	known      []ToolEntry            // full catalog of known tools
+	events     []DecisionEvent        // circular buffer of observability events
+	agg        *Aggregator            // live MCP connections
+	catalog    []ToolEntry            // persisted catalog loaded from disk
+	skillTools []ToolEntry            // skills injected from SkillStore for prediction
+	eventIdx   int                    // circular buffer write position
+	maxEvents  int
 }
 
 func NewDecisionSystem(cfg DecisionConfig, agg *Aggregator) *DecisionSystem {
@@ -703,6 +706,34 @@ func (ds *DecisionSystem) evictLRULocked() {
 
 // ---------- Internal Helpers ----------
 
+// InjectSkills loads skill frontmatters from SkillStore and adds them as ToolEntry items
+// so they appear in tool prediction/suggestion alongside MCP tools.
+func (ds *DecisionSystem) InjectSkills(skillStore *harnesses.SkillStore) {
+	ids, err := skillStore.ListSkills()
+	if err != nil {
+		return
+	}
+	ds.mu.Lock()
+	defer ds.mu.Unlock()
+
+	ds.skillTools = make([]ToolEntry, 0, len(ids))
+	for _, id := range ids {
+		skill, err := skillStore.GetSkill(id)
+		if err != nil || skill == nil {
+			continue
+		}
+		toolEntry := ToolEntry{
+			AdvertisedName: "skill:" + id,
+			Description:    truncateStr(skill.Description, 200),
+			AlwaysOn:       false,
+		}
+		if toolEntry.Description == "" {
+			toolEntry.Description = truncateStr(skill.Content, 200)
+		}
+		ds.skillTools = append(ds.skillTools, toolEntry)
+	}
+}
+
 func (ds *DecisionSystem) getAllKnownTools() []ToolEntry {
 	ds.mu.RLock()
 	defer ds.mu.RUnlock()
@@ -734,6 +765,14 @@ func (ds *DecisionSystem) getAllKnownToolsLocked() []ToolEntry {
 		if !seen[t.AdvertisedName] {
 			all = append(all, t)
 			seen[t.AdvertisedName] = true
+		}
+	}
+
+	// Skills (injected from SkillStore — treated as lightweight tools for prediction)
+	for _, s := range ds.skillTools {
+		if !seen[s.AdvertisedName] {
+			all = append(all, s)
+			seen[s.AdvertisedName] = true
 		}
 	}
 

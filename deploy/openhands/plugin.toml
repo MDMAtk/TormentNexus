@@ -1,0 +1,18 @@
+[plugin]
+name = "tormentnexus"
+version = "1.0.0"
+description = "TormentNexus — Persistent AI memory, MCP tools, session import, RBAC"
+author = "TormentNexus"
+type = ["agent", "skill", "mcp", "memory", "tools"]
+
+[agent]
+entrypoint = "tormentnexus_agent.py"
+auto_load = true
+
+[memory]
+provider = "tormentnexus"
+auto_harvest = true
+harvest_on_session_start = true
+
+[mcp]
+servers = ["tormentnexus"]

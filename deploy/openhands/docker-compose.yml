@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  openhands:
+    image: ghcr.io/all-hands-ai/openhands:latest
+    ports:
+      - "3005:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.openhands:/home/openhands/.openhands
+      - ./workspace:/opt/workspace_base
+    environment:
+      - SANDBOX_RUNTIME_CONTAINER_IMAGE=ghcr.io/all-hands-ai/openhands-sandbox
+      - LLM_API_KEY=${OPENAI_API_KEY}
+      - LLM_MODEL=gpt-4o
+      - TORMENTNEXUS_URL=http://tormentnexus:7778
+    depends_on:
+      - tormentnexus
+    restart: always
+
+  tormentnexus:
+    image: tormentnexus-core:latest
+    ports:
+      - "7778:7778"
+    volumes:
+      - tormentnexus_data:/data
+    environment:
+      - TORMENTNEXUS_WORKSPACE_ROOT=/data
+    restart: always
+
+volumes:
+  tormentnexus_data:

@@ -1,0 +1,12 @@
+{
+  "name": "@tormentnexus/docs",
+  "version": "1.0.0-b1",
+  "description": "TormentNexus Documentation — Auto-generated MCP tool catalog, API reference, and integration guides",
+  "main": "index.js",
+  "bin": { "tndocs": "./cli.js" },
+  "scripts": { "install": "node setup.js" },
+  "keywords": ["tormentnexus", "docs", "mcp", "api", "reference", "tools"],
+  "repository": { "type": "git", "url": "git+https://github.com/MDMAtk/TormentNexus.git" },
+  "license": "MIT",
+  "files": ["setup.js", "cli.js", "package.json"]
+}

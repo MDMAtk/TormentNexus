@@ -3,7 +3,7 @@ package vault
 import (
 	"context"
 	"fmt"
-	"github.com/tormentnexushq/tormentnexus-go/internal/orchestration"
+	"github.com/MDMAtk/TormentNexus/internal/orchestration"
 )
 
 // RecordResolution saves a debate or consensus resolution to the L2 Vault.

@@ -24,11 +24,12 @@ export function resolveHttpBaseUrl({ envUrl, defaultPort, defaultPath }: Endpoin
   }
 
   if (typeof window !== 'undefined') {
-    const base = `${window.location.protocol}//${window.location.hostname}:${defaultPort}`;
+    const host = window.location.hostname === 'localhost' ? '127.0.0.1' : window.location.hostname;
+    const base = `${window.location.protocol}//${host}:${defaultPort}`;
     return defaultPath ? `${base}${defaultPath}` : base;
   }
 
-  const base = `http://localhost:${defaultPort}`;
+  const base = `http://127.0.0.1:${defaultPort}`;
   return defaultPath ? `${base}${defaultPath}` : base;
 }
 
@@ -40,11 +41,12 @@ export function resolveWsUrl({ envUrl, defaultPort, defaultPath }: EndpointOptio
 
   if (typeof window !== 'undefined') {
     const scheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const base = `${scheme}://${window.location.hostname}:${defaultPort}`;
+    const host = window.location.hostname === 'localhost' ? '127.0.0.1' : window.location.hostname;
+    const base = `${scheme}://${host}:${defaultPort}`;
     return defaultPath ? `${base}${defaultPath}` : base;
   }
 
-  const base = `ws://localhost:${defaultPort}`;
+  const base = `ws://127.0.0.1:${defaultPort}`;
   return defaultPath ? `${base}${defaultPath}` : base;
 }
 
@@ -55,14 +57,15 @@ export function resolveTrpcHttpUrl(envUrl?: string | null): string {
   }
 
   if (typeof window !== 'undefined') {
-    return `${window.location.origin}/api/trpc`;
+    const host = window.location.hostname === 'localhost' ? '127.0.0.1' : window.location.hostname;
+    return `${window.location.protocol}//${host}:7778/trpc`;
   }
 
-  return 'http://localhost:3000/api/trpc';
+  return 'http://127.0.0.1:7778/trpc';
 }
 
-export function resolveCoreWsUrl(envUrl?: string | null): string {
-  return resolveWsUrl({ envUrl, defaultPort: 3001 });
+export function resolveCoreSseUrl(envUrl?: string | null): string {
+  return resolveHttpBaseUrl({ envUrl, defaultPort: 4300, defaultPath: '/api/sse' });
 }
 
 export function resolveCouncilWsUrl(envUrl?: string | null): string {
@@ -74,5 +77,6 @@ export function resolveTerminalWsUrl(envUrl?: string | null): string {
 }
 
 export function resolveCliApiBaseUrl(envUrl?: string | null): string {
-  return resolveHttpBaseUrl({ envUrl, defaultPort: 3001 });
+  return resolveHttpBaseUrl({ envUrl, defaultPort: 4300 });
 }
+

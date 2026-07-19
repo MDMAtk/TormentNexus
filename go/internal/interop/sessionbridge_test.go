@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/lockfile"
+	"github.com/MDMAtk/TormentNexus/internal/lockfile"
 )
 
 func TestResolveTRPCBasesUsesConfiguredExclusivelyWhenSet(t *testing.T) {
@@ -46,7 +46,7 @@ func TestResolveTRPCBasesUsesLockfileAndDefaultsWhenNoEnv(t *testing.T) {
 	if len(bases) < 2 {
 		t.Fatalf("expected locked + default bases, got %v", bases)
 	}
-	if bases[0] != "http://127.0.0.1:7779/trpc" {
+	if bases[0] != "http://127.0.0.1:4100/trpc" {
 		t.Fatalf("expected locked base first, got %s", bases[0])
 	}
 }

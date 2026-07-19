@@ -14,8 +14,10 @@ import (
 	"strings"
 	"time"
 
-	roottools "github.com/NexusSoftMDMA/TormentNexus/tools"
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcpimpl"
+	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/lockfile"
+	"github.com/MDMAtk/TormentNexus/internal/mcpimpl"
+	roottools "github.com/MDMAtk/TormentNexus/tools"
 )
 
 // ─── Supervisor Settings and Profiles ───
@@ -84,10 +86,10 @@ type SurfaceProfile struct {
 
 var surfaceProfiles = []SurfaceProfile{
 	{
-		ID:           "default",
-		DisplayName:  "Default chat surface",
-		ActionLabels: []string{"Run", "Expand", "Always Allow", "Retry", "Accept all", "Accept", "Allow", "Approve", "Proceed", "Keep"},
-		SubmitKeyChord: "alt+enter",
+		ID:                "default",
+		DisplayName:       "Default chat surface",
+		ActionLabels:      []string{"Run", "Expand", "Always Allow", "Retry", "Accept all", "Accept", "Allow", "Approve", "Proceed", "Keep"},
+		SubmitKeyChord:    "alt+enter",
 		InputControlTypes: []string{"Document", "Edit"},
 		Notes: []string{
 			"Fallback profile when no fork-specific adapter matches",
@@ -95,10 +97,10 @@ var surfaceProfiles = []SurfaceProfile{
 		},
 	},
 	{
-		ID:           "antigravity",
-		DisplayName:  "Antigravity browser chat",
-		ActionLabels: []string{"Run", "Expand", "Always Allow", "Retry", "Accept all", "Accept", "Allow", "Approve", "Proceed", "Keep"},
-		SubmitKeyChord: "alt+enter",
+		ID:                "antigravity",
+		DisplayName:       "Antigravity browser chat",
+		ActionLabels:      []string{"Run", "Expand", "Always Allow", "Retry", "Accept all", "Accept", "Allow", "Approve", "Proceed", "Keep"},
+		SubmitKeyChord:    "alt+enter",
 		InputControlTypes: []string{"Document", "Edit"},
 		Notes: []string{
 			"Optimized for browser-hosted coding chats with approval buttons",
@@ -106,10 +108,10 @@ var surfaceProfiles = []SurfaceProfile{
 		},
 	},
 	{
-		ID:           "claude-web",
-		DisplayName:  "Claude web chat",
-		ActionLabels: []string{"Retry", "Accept", "Allow", "Proceed", "Keep"},
-		SubmitKeyChord: "enter",
+		ID:                "claude-web",
+		DisplayName:       "Claude web chat",
+		ActionLabels:      []string{"Retry", "Accept", "Allow", "Proceed", "Keep"},
+		SubmitKeyChord:    "enter",
 		InputControlTypes: []string{"Document", "Edit"},
 		Notes: []string{
 			"Uses Enter as a safer default unless overridden by settings or tool arguments",
@@ -151,15 +153,15 @@ type ToolDefinition struct {
 
 type InputSchema struct {
 	Type       string                    `json:"type"`
-	Properties map[string]PropertySchema `json:"properties,omitempty"`
+	Properties map[string]PropertySchema `json:"properties"`
 	Required   []string                  `json:"required,omitempty"`
 }
 
 type PropertySchema struct {
-	Type        string `json:"type"`
-	Description string `json:"description"`
-	Items       *any   `json:"items,omitempty"`
-	Default     *any   `json:"default,omitempty"`
+	Type        string      `json:"type"`
+	Description string      `json:"description,omitempty"`
+	Items       interface{} `json:"items,omitempty"`
+	Default     interface{} `json:"default,omitempty"`
 }
 
 type TextContent struct {
@@ -169,19 +171,20 @@ type TextContent struct {
 
 type ToolResult struct {
 	Content []TextContent `json:"content"`
+	IsError bool          `json:"isError,omitempty"`
 }
 
 // ─── MCP Server ───
 
 type MCPServer struct {
-	goSidecarURL string
+	tnKernelURL  string
 	tools        []ToolDefinition
 	rootRegistry *roottools.Registry
 }
 
-func NewMCPServer(goSidecarURL string) *MCPServer {
+func NewMCPServer(tnKernelURL string) *MCPServer {
 	s := &MCPServer{
-		goSidecarURL: goSidecarURL,
+		tnKernelURL:  tnKernelURL,
 		rootRegistry: roottools.NewRegistry(),
 	}
 	s.registerTools()
@@ -189,14 +192,62 @@ func NewMCPServer(goSidecarURL string) *MCPServer {
 }
 
 func (s *MCPServer) registerTools() {
+	emptyProperties := make(map[string]PropertySchema)
 
 	// Core tools (always available)
 	s.tools = []ToolDefinition{
+		// ── Letta Core Memory Scratchpad & Cognee Relation Extraction ──
+		{
+			Name:        "memory_scratchpad_get",
+			Description: "Retrieve a value from the core memory scratchpad (e.g. 'persona' or 'human')",
+			InputSchema: InputSchema{
+				Type: "object",
+				Properties: map[string]PropertySchema{
+					"key": {Type: "string", Description: "Key to retrieve"},
+				},
+				Required: []string{"key"},
+			},
+		},
+		{
+			Name:        "memory_scratchpad_set",
+			Description: "Write/overwrite a value in the core memory scratchpad",
+			InputSchema: InputSchema{
+				Type: "object",
+				Properties: map[string]PropertySchema{
+					"key":   {Type: "string", Description: "Key to set"},
+					"value": {Type: "string", Description: "Content/value to write"},
+				},
+				Required: []string{"key", "value"},
+			},
+		},
+		{
+			Name:        "memory_scratchpad_append",
+			Description: "Append text to an existing core memory scratchpad value",
+			InputSchema: InputSchema{
+				Type: "object",
+				Properties: map[string]PropertySchema{
+					"key":   {Type: "string", Description: "Key to append to"},
+					"value": {Type: "string", Description: "Content/text to append"},
+				},
+				Required: []string{"key", "value"},
+			},
+		},
+		{
+			Name:        "memory_extract_relations",
+			Description: "Extract entities and relationships from a text block and store them in the graph RelationStore",
+			InputSchema: InputSchema{
+				Type: "object",
+				Properties: map[string]PropertySchema{
+					"text": {Type: "string", Description: "Text block to extract relations from"},
+				},
+				Required: []string{"text"},
+			},
+		},
 		// ── Process Management ──
 		{
 			Name:        "list_processes",
 			Description: "List active system processes on Windows",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		{
 			Name:        "kill_process",
@@ -286,7 +337,7 @@ func (s *MCPServer) registerTools() {
 		},
 		{
 			Name:        "click_action_buttons",
-			Description: "Click UI buttons by label text",
+			Description: "Redundant. Use the simpler click_chat_button tool instead.",
 			InputSchema: InputSchema{
 				Type: "object",
 				Properties: map[string]PropertySchema{
@@ -294,6 +345,19 @@ func (s *MCPServer) registerTools() {
 					"windowTitle": {Type: "string", Description: "Optional partial window title"},
 					"processName": {Type: "string", Description: "Optional process name"},
 				},
+			},
+		},
+		{
+			Name:        "click_chat_button",
+			Description: "Click a button on the active chat surface",
+			InputSchema: InputSchema{
+				Type: "object",
+				Properties: map[string]PropertySchema{
+					"label":       {Type: "string", Description: "The label text on the button to click"},
+					"windowTitle": {Type: "string", Description: "Optional partial window title"},
+					"processName": {Type: "string", Description: "Optional process name"},
+				},
+				Required: []string{"label"},
 			},
 		},
 		{
@@ -308,20 +372,20 @@ func (s *MCPServer) registerTools() {
 				},
 			},
 		},
-		// ── Go Sidecar MCP Tools ──
+		// ── TN Kernel MCP Tools ──
 		{
 			Name:        "mcp_list_servers",
-			Description: "List configured MCP servers from the Go sidecar",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			Description: "List configured MCP servers from the TN Kernel",
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		{
 			Name:        "mcp_list_tools",
-			Description: "List available MCP tools from the Go sidecar",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			Description: "List available MCP tools from the TN Kernel",
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		{
 			Name:        "mcp_call_tool",
-			Description: "Call an MCP tool through the Go sidecar",
+			Description: "Call an MCP tool through the TN Kernel",
 			InputSchema: InputSchema{
 				Type: "object",
 				Properties: map[string]PropertySchema{
@@ -334,8 +398,8 @@ func (s *MCPServer) registerTools() {
 		},
 		{
 			Name:        "mcp_status",
-			Description: "Get MCP runtime status from the Go sidecar",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			Description: "Get MCP runtime status from the TN Kernel",
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		{
 			Name:        "mcp_server_test",
@@ -353,23 +417,23 @@ func (s *MCPServer) registerTools() {
 		{
 			Name:        "system_status",
 			Description: "Get overall system health status",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		{
 			Name:        "billing_status",
 			Description: "Get billing and provider status",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		// ── Supervisor Config Parity ──
 		{
 			Name:        "list_surface_profiles",
 			Description: "List known supervisor surface profiles and default configurations",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		{
 			Name:        "get_supervisor_settings",
 			Description: "Get supervisor default settings for autopilot automation",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 		{
 			Name:        "update_supervisor_settings",
@@ -387,7 +451,7 @@ func (s *MCPServer) registerTools() {
 		{
 			Name:        "list_accessory_tools",
 			Description: "List all built-in Go accessory tools",
-			InputSchema: InputSchema{Type: "object", Properties: map[string]PropertySchema{}},
+			InputSchema: InputSchema{Type: "object", Properties: emptyProperties},
 		},
 	}
 
@@ -400,6 +464,9 @@ func (s *MCPServer) registerTools() {
 			}
 			if schema.Type == "" {
 				schema.Type = "object"
+			}
+			if schema.Properties == nil {
+				schema.Properties = make(map[string]PropertySchema)
 			}
 			s.tools = append(s.tools, ToolDefinition{
 				Name:        t.Name,
@@ -420,13 +487,14 @@ func (s *MCPServer) HandleRequest(req MCPRequest) MCPResponse {
 	case "initialize":
 		resp.Result = map[string]any{
 			"protocolVersion": "2024-11-05",
-			"capabilities":    map[string]any{"tools": map[string]any{}},
+			"capabilities":    map[string]any{"tools": map[string]any{"listChanged": false}},
 			"serverInfo":      map[string]any{"name": "tormentnexus", "version": "1.0.0"},
 		}
 	case "notifications/initialized":
 		resp.Result = map[string]any{}
 	case "tools/list":
-		resp.Result = map[string]any{"tools": s.tools}
+		// Allow tools/list even if params is sent but empty or contains token cursors
+		resp.Result = map[string]any{"tools": s.getMergedTools()}
 	case "tools/call":
 		if len(req.Params) == 0 {
 			resp.Error = &MCPError{Code: -32602, Message: "Missing params"}
@@ -434,11 +502,37 @@ func (s *MCPServer) HandleRequest(req MCPRequest) MCPResponse {
 		}
 		var params MCPParams
 		if err := json.Unmarshal(req.Params, &params); err != nil {
-			resp.Error = &MCPError{Code: -32602, Message: fmt.Sprintf("Invalid params: %v", err)}
-			return resp
+			// Try to unmarshal array parameters if client sent them as array wrappers
+			var arrayParams []MCPParams
+			if errArray := json.Unmarshal(req.Params, &arrayParams); errArray == nil && len(arrayParams) > 0 {
+				params = arrayParams[0]
+			} else {
+				resp.Error = &MCPError{Code: -32602, Message: fmt.Sprintf("Invalid params: %v", err)}
+				return resp
+			}
 		}
-		result := s.callTool(params.Name, params.Arguments)
-		resp.Result = result
+
+		// Check if it's one of the Go MCP server's built-in tools
+		isGoBuiltin := false
+		for _, t := range s.tools {
+			if t.Name == params.Name {
+				isGoBuiltin = true
+				break
+			}
+		}
+
+		if isGoBuiltin {
+			result := s.callTool(params.Name, params.Arguments)
+			resp.Result = result
+		} else {
+			log.Printf("[MCP] Forwarding tool %s call to upstream control plane", params.Name)
+			result, err := s.forwardToolCallToUpstream(params.Name, params.Arguments)
+			if err != nil {
+				resp.Error = &MCPError{Code: -32000, Message: fmt.Sprintf("Upstream tool execution failed: %v", err)}
+			} else {
+				resp.Result = result
+			}
+		}
 	default:
 		resp.Error = &MCPError{Code: -32601, Message: fmt.Sprintf("Method not found: %s", req.Method)}
 	}
@@ -472,20 +566,20 @@ func (s *MCPServer) callTool(name string, args map[string]any) ToolResult {
 	case "advance_chat":
 		return advanceChat(args)
 	case "mcp_list_servers":
-		return goSidecarGet(s.goSidecarURL + "/api/mcp/servers")
+		return tnKernelGet(s.tnKernelURL + "/api/mcp/servers")
 	case "mcp_list_tools":
-		return goSidecarGet(s.goSidecarURL + "/api/mcp/tools")
+		return tnKernelGet(s.tnKernelURL + "/api/mcp/tools")
 	case "mcp_call_tool":
-		return goSidecarCallTool(s.goSidecarURL, args)
+		return tnKernelCallTool(s.tnKernelURL, args)
 	case "mcp_status":
-		return goSidecarGet(s.goSidecarURL + "/api/mcp/status")
+		return tnKernelGet(s.tnKernelURL + "/api/mcp/status")
 	case "mcp_server_test":
-		return goSidecarServerTest(s.goSidecarURL, args)
+		return tnKernelServerTest(s.tnKernelURL, args)
 	case "system_status":
-		health, _ := goSidecarGetRaw(s.goSidecarURL + "/health")
+		health, _ := tnKernelGetRaw(s.tnKernelURL + "/health")
 		return ToolResult{Content: []TextContent{{Type: "text", Text: health}}}
 	case "billing_status":
-		return goSidecarGet(s.goSidecarURL + "/api/billing/status")
+		return tnKernelGet(s.tnKernelURL + "/api/billing/status")
 	case "list_surface_profiles":
 		data, _ := json.MarshalIndent(surfaceProfiles, "", "  ")
 		return ToolResult{Content: []TextContent{{Type: "text", Text: string(data)}}}
@@ -528,6 +622,8 @@ func (s *MCPServer) callTool(name string, args map[string]any) ToolResult {
 		}
 		data, _ := json.MarshalIndent(names, "", "  ")
 		return ToolResult{Content: []TextContent{{Type: "text", Text: string(data)}}}
+	case "memory_scratchpad_get", "memory_scratchpad_set", "memory_scratchpad_append", "memory_extract_relations":
+		return tnKernelCallNativeTool(s.tnKernelURL, name, args)
 	default:
 		// 1. Try root registry tools first
 		if s.rootRegistry != nil {
@@ -673,17 +769,17 @@ func advanceChat(args map[string]any) ToolResult {
 	return ToolResult{Content: []TextContent{{Type: "text", Text: fmt.Sprintf("Advance chat: %s", strings.Join(parts, ", "))}}}
 }
 
-// ─── Go Sidecar API Tools ───
+// ─── TN Kernel API Tools ───
 
-func goSidecarGet(url string) ToolResult {
-	body, err := goSidecarGetRaw(url)
+func tnKernelGet(url string) ToolResult {
+	body, err := tnKernelGetRaw(url)
 	if err != nil {
 		return ToolResult{Content: []TextContent{{Type: "text", Text: fmt.Sprintf("Error: %v", err)}}}
 	}
 	return ToolResult{Content: []TextContent{{Type: "text", Text: body}}}
 }
 
-func goSidecarGetRaw(url string) (string, error) {
+func tnKernelGetRaw(url string) (string, error) {
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Get(url)
 	if err != nil {
@@ -694,7 +790,39 @@ func goSidecarGetRaw(url string) (string, error) {
 	return string(data), nil
 }
 
-func goSidecarCallTool(baseURL string, args map[string]any) ToolResult {
+func tnKernelCallNativeTool(baseURL string, name string, args map[string]any) ToolResult {
+	payload := map[string]any{
+		"name":      name,
+		"arguments": args,
+	}
+	body, _ := json.Marshal(payload)
+	client := &http.Client{Timeout: 30 * time.Second}
+	resp, err := client.Post(baseURL+"/api/agent/tool", "application/json", strings.NewReader(string(body)))
+	if err != nil {
+		return ToolResult{Content: []TextContent{{Type: "text", Text: fmt.Sprintf("Error calling native tool: %v", err)}}}
+	}
+	defer resp.Body.Close()
+
+	var result struct {
+		Success bool       `json:"success"`
+		Error   string     `json:"error"`
+		Data    ToolResult `json:"data"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return ToolResult{Content: []TextContent{{Type: "text", Text: fmt.Sprintf("Error decoding response: %v", err)}}}
+	}
+
+	if !result.Success {
+		return ToolResult{
+			Content: []TextContent{{Type: "text", Text: fmt.Sprintf("Tool error: %s", result.Error)}},
+			IsError: true,
+		}
+	}
+
+	return result.Data
+}
+
+func tnKernelCallTool(baseURL string, args map[string]any) ToolResult {
 	serverName, _ := args["serverName"].(string)
 	toolName, _ := args["toolName"].(string)
 	argsStr, _ := args["arguments"].(string)
@@ -721,7 +849,7 @@ func goSidecarCallTool(baseURL string, args map[string]any) ToolResult {
 	return ToolResult{Content: []TextContent{{Type: "text", Text: string(data)}}}
 }
 
-func goSidecarServerTest(baseURL string, args map[string]any) ToolResult {
+func tnKernelServerTest(baseURL string, args map[string]any) ToolResult {
 	serverName, _ := args["serverName"].(string)
 	operation, _ := args["operation"].(string)
 	if operation == "" {
@@ -744,20 +872,160 @@ func goSidecarServerTest(baseURL string, args map[string]any) ToolResult {
 	return ToolResult{Content: []TextContent{{Type: "text", Text: string(data)}}}
 }
 
-// ─── MCP Stdio Runner ───
+func (s *MCPServer) getMergedTools() []ToolDefinition {
+	merged := make([]ToolDefinition, len(s.tools))
+	copy(merged, s.tools)
 
-func cmdMCP(args []string) int {
-	goPort := "7778"
-	for i, a := range args {
-		if a == "--go-port" && i+1 < len(args) {
-			goPort = args[i+1]
+	client := &http.Client{Timeout: 3 * time.Second}
+	resp, err := client.Get(s.tnKernelURL + "/api/mcp/tools")
+	if err != nil {
+		log.Printf("[MCP] Upstream tools unavailable: %v", err)
+		return merged
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("[MCP] Upstream tools returned HTTP status %d", resp.StatusCode)
+		return merged
+	}
+
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Printf("[MCP] Failed to read upstream tools body: %v", err)
+		return merged
+	}
+
+	var tools []ToolDefinition
+
+	// Try flat array format first: { "success": true, "data": [...] }
+	var upstreamRespFlat struct {
+		Success bool             `json:"success"`
+		Data    []ToolDefinition `json:"data"`
+	}
+	if err := json.Unmarshal(bodyBytes, &upstreamRespFlat); err == nil && upstreamRespFlat.Success {
+		tools = upstreamRespFlat.Data
+	} else {
+		// Fallback to nested tools format: { "success": true, "data": { "tools": [...] } }
+		var upstreamRespNested struct {
+			Success bool `json:"success"`
+			Data    struct {
+				Tools []ToolDefinition `json:"tools"`
+			} `json:"data"`
+		}
+		if err := json.Unmarshal(bodyBytes, &upstreamRespNested); err == nil && upstreamRespNested.Success {
+			tools = upstreamRespNested.Data.Tools
+		} else {
+			log.Printf("[MCP] Failed to decode upstream tools: %v", err)
+			return merged
 		}
 	}
 
-	goSidecarURL := fmt.Sprintf("http://127.0.0.1:%s", goPort)
-	log.Printf("[MCP] TormentNexus MCP Server starting (Go sidecar: %s)", goSidecarURL)
+	localNames := make(map[string]bool)
+	for _, t := range merged {
+		localNames[t.Name] = true
+	}
+	for _, ut := range tools {
+		if !localNames[ut.Name] {
+			if ut.InputSchema.Type == "" {
+				ut.InputSchema.Type = "object"
+			}
+			if ut.InputSchema.Properties == nil {
+				ut.InputSchema.Properties = make(map[string]PropertySchema)
+			}
+			merged = append(merged, ut)
+		}
+	}
+	return merged
+}
 
-	server := NewMCPServer(goSidecarURL)
+func (s *MCPServer) forwardToolCallToUpstream(name string, args map[string]any) (ToolResult, error) {
+	payload := map[string]any{
+		"name":      name,
+		"arguments": args,
+	}
+	body, err := json.Marshal(payload)
+	if err != nil {
+		return ToolResult{}, err
+	}
+
+	client := &http.Client{Timeout: 60 * time.Second}
+	resp, err := client.Post(s.tnKernelURL+"/api/mcp/tools/call", "application/json", strings.NewReader(string(body)))
+	if err != nil {
+		return ToolResult{}, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		respBody, _ := io.ReadAll(resp.Body)
+		return ToolResult{}, fmt.Errorf("upstream returned status %d: %s", resp.StatusCode, string(respBody))
+	}
+
+	var apiResp struct {
+		Success bool       `json:"success"`
+		Error   string     `json:"error"`
+		Data    ToolResult `json:"data"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&apiResp); err != nil {
+		return ToolResult{}, err
+	}
+
+	if !apiResp.Success {
+		return ToolResult{}, fmt.Errorf("upstream error: %s", apiResp.Error)
+	}
+
+	return apiResp.Data, nil
+}
+
+// ─── MCP Stdio Runner ───
+
+func cmdMCP(args []string) int {
+	tnKernelURL := ""
+	cfg := config.Default()
+	if record, err := lockfile.Read(cfg.LockPath()); err == nil && record.Port > 0 {
+		tnKernelURL = fmt.Sprintf("http://%s:%d", record.Host, record.Port)
+	} else {
+		goPort := "7778"
+		for i, a := range args {
+			if a == "--go-port" && i+1 < len(args) {
+				goPort = args[i+1]
+			}
+		}
+		tnKernelURL = fmt.Sprintf("http://127.0.0.1:%s", goPort)
+	}
+
+	// Auto-spawn TN Kernel if it is not currently running
+	if _, err := http.Get(tnKernelURL + "/health"); err != nil {
+		execPath, execErr := os.Executable()
+		if execErr == nil {
+			workspaceRoot := os.Getenv("TORMENTNEXUS_WORKSPACE_ROOT")
+			if workspaceRoot == "" {
+				workspaceRoot, _ = os.Getwd()
+			}
+			cmd := exec.Command(execPath, "serve")
+			cmd.Dir = workspaceRoot
+			cmd.Stdout = nil
+			cmd.Stderr = nil
+			if spawnErr := cmd.Start(); spawnErr == nil {
+				log.Printf("[MCP] Spawned TN Kernel serve daemon in background")
+				// Wait for TN Kernel to start and write lockfile
+				for retries := 0; retries < 15; retries++ {
+					time.Sleep(200 * time.Millisecond)
+					if rec, lfErr := lockfile.Read(cfg.LockPath()); lfErr == nil && rec.Port > 0 {
+						tnKernelURL = fmt.Sprintf("http://%s:%d", rec.Host, rec.Port)
+						if resp, hcErr := http.Get(tnKernelURL + "/health"); hcErr == nil {
+							resp.Body.Close()
+							break
+						}
+					}
+				}
+			}
+		}
+	}
+
+	log.SetOutput(os.Stderr)
+	log.Printf("[MCP] TormentNexus MCP Server starting (TN Kernel: %s)", tnKernelURL)
+
+	server := NewMCPServer(tnKernelURL)
 	scanner := bufio.NewScanner(os.Stdin)
 	writer := bufio.NewWriter(os.Stdout)
 
@@ -774,10 +1042,12 @@ func cmdMCP(args []string) int {
 		}
 
 		resp := server.HandleRequest(req)
+		log.Printf("[MCP] Handling Request Method: %s ID: %v", req.Method, req.ID)
 		if req.ID == nil {
 			continue
 		}
 		respBytes, _ := json.Marshal(resp)
+		log.Printf("[MCP] Sending Response: %s", string(respBytes))
 		writer.Write(respBytes)
 		writer.Write([]byte{'\n'})
 		writer.Flush()

@@ -44,7 +44,23 @@ pnpm -C packages/core exec tsc --noEmit
 pnpm -C packages/cli exec tsc --noEmit
 ```
 
-## 6. Autopilot & Encouragement
+## 6. CodeWhale Integration
+
+CodeWhale has a native Rust extension (`crates/tn-extension`) with full Pi extension parity:
+
+- **Lifecycle hooks**: SessionStart, BeforeAgentStart, ToolCall, ToolResult, TurnEnd, Input, UserBash, ModelSelect, SessionCompact — all logged to TN L2 memory
+- **Tools**: 49 MCP tools via `tormentnexus.exe mcp` (memory, file I/O, MCP routing, UI automation, enterprise integrations)
+- **Custom tool reg**: 9 tool definitions, 6 slash commands, 3 keyboard shortcuts
+- **SKILL.md**: at `.codewhale/plugins/tormentnexus/skills/SKILL.md`
+- **REST API**: Sidecar on port 7778 for direct L2 memory operations
+
+When working on CodeWhale integration, verify:
+```bash
+codewhale mcp connect tormentnexus
+codewhale mcp tools | grep mcp_tormentnexus | wc -l  # should be 49
+```
+
+## 7. Autopilot & Encouragement
 - Maintain development momentum. If the user input is missing, use the "Bump Cycle" to encourage progress.
 - Respect `agent:stop_healing` signals for sensitive manual work.
 

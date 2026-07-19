@@ -1,0 +1,13 @@
+{
+  "name": "tormentnexus",
+  "description": "TormentNexus AI control plane — persistent L2 vector memory, semantic tool discovery, imported sessions, skill registry, code search, subagent orchestration",
+  "version": "1.0.0",
+  "author": {
+    "name": "Robert Pelloni",
+    "url": "https://github.com/robertpelloni"
+  },
+  "homepage": "https://github.com/robertpelloni/tormentnexus",
+  "repository": "https://github.com/robertpelloni/tormentnexus",
+  "license": "MIT",
+  "keywords": ["memory", "tools", "search", "sessions", "integration", "orchestration"]
+}

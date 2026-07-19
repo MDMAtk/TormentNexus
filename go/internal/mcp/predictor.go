@@ -6,7 +6,7 @@ package mcp
  *
  * WHAT: Go-native implementation of autonomous tool prediction.
  *
- * WHY: Total Autonomy — Go sidecar should be able to suggest relevant tools
+ * WHY: Total Autonomy — TN Kernel should be able to suggest relevant tools
  * independently of the Node control plane.
  */
 
@@ -15,7 +15,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/ai"
 )
 
 type ToolPredictor struct {

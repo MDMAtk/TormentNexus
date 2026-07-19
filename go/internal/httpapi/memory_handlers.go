@@ -4,6 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
+	"time"
+
+	"github.com/MDMAtk/TormentNexus/internal/gossip"
 )
 
 func (s *Server) handleMemoryList(w http.ResponseWriter, r *http.Request) {
@@ -21,6 +25,22 @@ func (s *Server) handleMemoryAdd(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	s.memoryManager.AddMemory(req.Content)
+
+	// If P2P gossip protocol is active, propagate the newly ingested memory to peer nodes
+	if s.gossipProtocol != nil {
+		nodeID := s.mesh.LocalNodeID()
+		version, _ := s.gossipProtocol.GetStore().IncrementClock(r.Context())
+		entry := gossip.StateEntry{
+			ID:        fmt.Sprintf("mem-%d", time.Now().UnixNano()),
+			Type:      "memory",
+			Version:   version,
+			Origin:    nodeID,
+			Timestamp: time.Now().UnixMilli(),
+			Content:   req.Content,
+		}
+		_ = s.gossipProtocol.BroadcastUpdate(r.Context(), []gossip.StateEntry{entry})
+	}
+
 	w.WriteHeader(http.StatusCreated)
 }
 
@@ -40,3 +60,184 @@ func (s *Server) handleMemoryAddHistory(w http.ResponseWriter, r *http.Request) 
 
 	writeJSON(w, http.StatusOK, map[string]any{"success": true, "count": len(req.History)})
 }
+
+func (s *Server) handleMemoryAddRelation(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if s.memoryReactor == nil || s.memoryReactor.VectorStore() == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "vector store not initialized"})
+		return
+	}
+
+	var req struct {
+		SourceID     string  `json:"source_id"`
+		TargetID     string  `json:"target_id"`
+		RelationType string  `json:"relation_type"`
+		Weight       float64 `json:"weight"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid json body"})
+		return
+	}
+
+	if req.SourceID == "" || req.TargetID == "" || req.RelationType == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "source_id, target_id, and relation_type are required"})
+		return
+	}
+
+	err := s.memoryReactor.VectorStore().AddRelation(r.Context(), req.SourceID, req.TargetID, req.RelationType, req.Weight)
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{"success": true})
+}
+
+func (s *Server) handleMemoryGetRelations(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet && r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if s.memoryReactor == nil || s.memoryReactor.VectorStore() == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "vector store not initialized"})
+		return
+	}
+
+	id := r.URL.Query().Get("id")
+	if id == "" && r.Method == http.MethodPost {
+		var req struct {
+			ID string `json:"id"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&req); err == nil {
+			id = req.ID
+		}
+	}
+
+	if id == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "id parameter is required"})
+		return
+	}
+
+	relations, err := s.memoryReactor.VectorStore().GetRelations(r.Context(), id)
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{"success": true, "relations": relations})
+}
+
+func (s *Server) handleMemorySpacedRepetitionDue(w http.ResponseWriter, r *http.Request) {
+	if s.memoryReactor == nil || s.memoryReactor.VectorStore() == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "vector store not initialized"})
+		return
+	}
+	limit := 20
+	if l := r.URL.Query().Get("limit"); l != "" {
+		if p, err := strconv.Atoi(l); err == nil && p > 0 && p <= 100 {
+			limit = p
+		}
+	}
+	allDue, err := s.memoryReactor.VectorStore().GetDueMemoriesRecords()
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	if limit > 0 && len(allDue) > limit {
+		allDue = allDue[:limit]
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true, "due_records": allDue, "total_due": len(allDue)})
+}
+
+func (s *Server) handleMemorySpacedRepetitionReview(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if s.memoryReactor == nil || s.memoryReactor.VectorStore() == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "vector store not initialized"})
+		return
+	}
+	var req struct {
+		MemoryID string `json:"memory_id"`
+		Quality  int    `json:"quality"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid json body"})
+		return
+	}
+	if req.MemoryID == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "memory_id is required"})
+		return
+	}
+	err := s.memoryReactor.VectorStore().ReviewMemory(req.MemoryID, req.Quality)
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true})
+}
+
+func (s *Server) handleMemorySleepCycle(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if s.memoryManager == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "memory manager not initialized"})
+		return
+	}
+	err := s.memoryManager.TriggerSleepCycle(r.Context())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true})
+}
+
+func (s *Server) handleMemoryGetScratchpad(w http.ResponseWriter, r *http.Request) {
+	if s.memoryManager == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "memory manager not initialized"})
+		return
+	}
+	res, err := s.memoryManager.GetScratchpad(r.Context())
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true, "scratchpad": res})
+}
+
+func (s *Server) handleMemorySetScratchpad(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+	if s.memoryManager == nil {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]any{"success": false, "error": "memory manager not initialized"})
+		return
+	}
+	var req struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid json body"})
+		return
+	}
+	if req.Key == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "key is required"})
+		return
+	}
+	err := s.memoryManager.SetScratchpad(r.Context(), req.Key, req.Value)
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"success": true})
+}
+
+

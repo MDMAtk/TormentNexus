@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/mesh"
+	"github.com/MDMAtk/TormentNexus/internal/mesh"
 )
 
 func (s *Server) handleMeshStatus(w http.ResponseWriter, r *http.Request) {

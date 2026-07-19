@@ -1,6 +1,6 @@
-export const DEFAULT_MAX_RECONNECT_ATTEMPTS = 3;
-export const DEFAULT_RECONNECT_BASE_DELAY_MS = 3000;
-export const DEFAULT_RECONNECT_MAX_DELAY_MS = 15000;
+export const DEFAULT_MAX_RECONNECT_ATTEMPTS = 999;
+export const DEFAULT_RECONNECT_BASE_DELAY_MS = 2000;
+export const DEFAULT_RECONNECT_MAX_DELAY_MS = 10000;
 
 export interface ReconnectPolicy {
   maxAttempts: number;

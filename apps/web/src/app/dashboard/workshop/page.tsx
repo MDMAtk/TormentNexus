@@ -1,5 +1,11 @@
-import { WorkshopPage } from '@tormentnexus/ui';
+'use client';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function Page() {
-    return <WorkshopPage />;
+export default function RedirectPage() {
+    const router = useRouter();
+    useEffect(() => {
+        router.replace('/dashboard?tab=home');
+    }, [router]);
+    return null;
 }

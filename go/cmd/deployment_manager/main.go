@@ -51,7 +51,7 @@ func (d *DeploymentManager) Build(ctx context.Context) error {
 		fmt.Println("[+] TS monorepo build successful.")
 	}
 
-	// Go Sidecar Build
+	// TN Kernel Build
 	goCmd := exec.CommandContext(ctx, "go", "build", "./...")
 	if _, err := os.Stat("go.mod"); err != nil {
 		goCmd.Dir = "go"
@@ -59,7 +59,7 @@ func (d *DeploymentManager) Build(ctx context.Context) error {
 	if output, err := goCmd.CombinedOutput(); err != nil {
 		return fmt.Errorf("Go build failed: %v\nOutput: %s", err, string(output))
 	}
-	fmt.Println("[+] Go sidecar build successful.")
+	fmt.Println("[+] TN Kernel build successful.")
 
 	return nil
 }

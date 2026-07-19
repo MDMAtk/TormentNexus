@@ -1,18 +1,18 @@
 {
   "name": "@tormentnexus/web",
-  "version": "1.0.0-alpha.157",
+  "version": "1.0.0-alpha.255",
   "private": true,
   "scripts": {
     "dev": "node ./scripts/dev.mjs",
     "dev:auto": "node ./scripts/dev-auto.mjs",
-    "build": "node ./scripts/clean-build.mjs && next build",
+    "build": "node ./scripts/clean-build.mjs && next build && node ./scripts/copy-standalone-static.mjs",
+    "build:wails": "pnpm build && node copy-assets.mjs",
     "start": "next start",
     "lint": "echo \"Linting skipped\""
   },
   "dependencies": {
-    "@tormentnexus/core": "workspace:*",
     "@tormentnexus/ui": "workspace:*",
-    "@tormentnexus/enterprise": "workspace:*",
+    "@tormentnexus/commercial": "workspace:*",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",

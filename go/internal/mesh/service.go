@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
-	"github.com/tormentnexushq/tormentnexus-go/internal/interop"
+	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/interop"
 )
 
 var (
@@ -107,7 +107,7 @@ func (s *Service) QueryCapabilities(ctx context.Context, nodeID string, timeoutM
 	if nodeID == s.localNodeID {
 		return CapabilityDetails{
 			Capabilities: append([]string(nil), s.localCapabilities()...),
-			Role:         "go-sidecar",
+			Role:         "tn-kernel",
 			CachedAt:     time.Now().UnixMilli(),
 		}, nil
 	}

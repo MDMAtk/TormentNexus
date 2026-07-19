@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "tormentnexus": {
+      "command": "C:/Users/hyper/workspace/tormentnexus/tormentnexus.exe",
+      "args": ["mcp"],
+      "env": {
+        "TORMENTNEXUS_WORKSPACE_ROOT": "C:/Users/hyper/workspace/tormentnexus"
+      }
+    }
+  }
+}

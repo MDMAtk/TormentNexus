@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcp"
+	"github.com/MDMAtk/TormentNexus/internal/mcp"
 )
 
 type runtimeServerRecord struct {

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/orchestration"
+	"github.com/MDMAtk/TormentNexus/internal/orchestration"
 )
 
 func (s *Server) handleCouncilBaseStatus(w http.ResponseWriter, r *http.Request) {

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcp"
-	"github.com/tormentnexushq/tormentnexus-go/internal/orchestration"
+	"github.com/MDMAtk/TormentNexus/internal/mcp"
+	"github.com/MDMAtk/TormentNexus/internal/orchestration"
 )
 
 type ExpertManager struct {

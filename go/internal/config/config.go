@@ -17,7 +17,7 @@ type Config struct {
 func Default() Config {
 	return Config{
 		Host:          "127.0.0.1",
-		Port:          4300,
+		Port:          7778,
 		ConfigDir:     DefaultConfigDir(),
 		MainConfigDir: DefaultMainConfigDir(),
 		WorkspaceRoot: DefaultWorkspaceRoot(),
@@ -25,21 +25,46 @@ func Default() Config {
 }
 
 func DefaultConfigDir() string {
+	// Check new env var first, then old one for backward compat
+	if configured := os.Getenv("TORMENTNEXUS_CONFIG_DIR"); configured != "" {
+		return configured
+	}
 	if configured := os.Getenv("TORMENTNEXUS_GO_CONFIG_DIR"); configured != "" {
 		return configured
 	}
 
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return ".tormentnexus-go"
+		return ".tormentnexus"
 	}
 
-	return filepath.Join(homeDir, ".tormentnexus-go")
+	// Migrate from old .tormentnexus-go if it exists
+	oldDir := filepath.Join(homeDir, ".tormentnexus-go")
+	newDir := filepath.Join(homeDir, ".tormentnexus")
+	if oldInfo, oldErr := os.Stat(oldDir); oldErr == nil && oldInfo.IsDir() {
+		if newInfo, newErr := os.Stat(newDir); newErr != nil || !newInfo.IsDir() {
+			// Old dir exists, new doesn't — migrate
+			if err := os.Rename(oldDir, newDir); err == nil {
+				fmt.Printf("[Config] Migrated %s → %s\n", oldDir, newDir)
+				return newDir
+			}
+			// Rename failed, try copying
+			fmt.Printf("[Config] Migration rename failed: %v, using old dir\n", err)
+			return oldDir
+		}
+	}
+
+	return newDir
 }
 
 func DefaultMainConfigDir() string {
 	if configured := os.Getenv("TORMENTNEXUS_MAIN_CONFIG_DIR"); configured != "" {
 		return configured
+	}
+
+	// Fallback to legacy env var for backward compatibility
+	if legacy := os.Getenv("TORMENTNEXUS_CONFIG_DIR"); legacy != "" {
+		return legacy
 	}
 
 	homeDir, err := os.UserHomeDir()
@@ -77,6 +102,11 @@ func (c Config) MainLockPath() string {
 
 func (c Config) ImportedInstructionsPath() string {
 	return filepath.Join(c.WorkspaceRoot, ".tormentnexus", "imported_sessions", "docs", "auto-imported-agent-instructions.md")
+}
+
+// AccountDBPath returns the path to the accounts SQLite database.
+func (c Config) AccountDBPath() string {
+	return filepath.Join(c.ConfigDir, "accounts.db")
 }
 
 func browserHost(host string) string {

@@ -1,0 +1,99 @@
+# Template: Research Assistant
+# An AI research assistant with deep memory and web access
+
+name: research-assistant
+description: "AI research assistant with persistent memory and web search"
+version: 1.0.0
+
+memory:
+  l1_session: true
+  l2_hot_store: true
+  l3_cold_archive: true
+  l4_limbo: true
+
+  auto_store:
+    enabled: true
+    triggers:
+      - research_find
+      - bookmark
+      - note_taken
+      - source_added
+
+tools:
+  - name: web_search
+    description: "Search the web for information"
+    config:
+      engines:
+        - google
+        - bing
+        - duckduckgo
+
+  - name: web_browse
+    description: "Browse and extract web content"
+    config:
+      enabled: true
+
+  - name: document_reader
+    description: "Read PDF, DOCX, and other documents"
+    config:
+      supported_formats:
+        - pdf
+        - docx
+        - txt
+        - md
+
+  - name: note_taker
+    description: "Create and organize research notes"
+    config:
+      auto_categorize: true
+      auto_link: true
+
+providers:
+  - name: deepseek
+    model: deepseek-chat
+    priority: 1
+    use_for:
+      - analysis
+      - synthesis
+      - writing
+
+  - name: lmstudio
+    model: local
+    priority: 2
+    use_for:
+      - quick_questions
+      - summarization
+
+system_prompt: |
+  You are a research assistant with persistent memory. You help users:
+  - Find and organize information
+  - Synthesize findings from multiple sources
+  - Build knowledge graphs
+  - Track research progress
+
+  When you find important information, store it in memory with proper citations.
+  Link related findings together to build a knowledge graph.
+
+dashboard:
+  theme: dark
+  layout: research
+  widgets:
+    - memory_explorer
+    - knowledge_graph
+    - source_manager
+    - note_editor
+    - search_history
+
+hooks:
+  on_research_find:
+    - action: store_memory
+      params:
+        type: research_finding
+        auto_cite: true
+        auto_link: true
+
+  on_source_added:
+    - action: store_memory
+      params:
+        type: source
+        extract_metadata: true

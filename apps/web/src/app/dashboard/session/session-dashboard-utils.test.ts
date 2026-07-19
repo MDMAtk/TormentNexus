@@ -13,7 +13,7 @@ describe('session dashboard utils', () => {
     });
 
     it('builds a PowerShell-safe attach command preview', () => {
-        expect(buildAttachCommand("C:\\Users\\hyper\\workspace\\bob's repo", 'claude', ['--model', 'gpt-5', "it's-live"])).toBe(
+        expect(buildAttachCommand("C:\\Users\\hyper\\workspace\\bob's repo", 'claude', ['--model', 'gpt-5', "it's-live"], { shellFamily: "powershell" })).toBe(
             "Set-Location -LiteralPath 'C:\\Users\\hyper\\workspace\\bob''s repo'; & 'claude' '--model' 'gpt-5' 'it''s-live'",
         );
     });

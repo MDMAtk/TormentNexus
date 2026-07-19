@@ -92,7 +92,6 @@ test*.txt
 fix_build*.py
 cleanup_tools.py
 batch_generate.py
-build_watchdog.py
 
 # === Cloned/imported repos ===
 yorck-mcp-src/
@@ -102,7 +101,7 @@ appwrite_utils_temp/
 
 # === Next.js / Turbopack ===
 .next/
-.next-build/
+.next-build*
 .next-dev*/
 **/.next-dev*/
 .turbo/
@@ -253,7 +252,6 @@ akb*
 _llm_*
 *.pid
 *.tar.gz
-watchdog.bat
 run.bat
 go/*.exe~
 finalize_swarm.pid
@@ -265,4 +263,21 @@ binance.go
 bravesearch.go
 ccoreguidelines.go
 *.exe~
-watchdog.py
+
+# Swarm build artifacts
+go/internal/tools/_staging/
+go/internal/tools/_broken/
+# Large local databases â€” excluded from push
+/tormentnexus.db
+/tormentnexus.db-shm
+/tormentnexus.db-wal
+
+# Workspace pi extensions — global copy lives in ~/.pi/agent/
+.pi/extensions/
+*.exe
+tormentnexus-linux
+go/catalog.db
+go/tormentnexus.db
+!go/tormentnexus/
+catalog.db
+tormentnexus-res.syso

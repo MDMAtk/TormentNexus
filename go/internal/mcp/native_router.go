@@ -13,7 +13,7 @@ package mcp
  *   L3 — Working set:      load/unload tools, LRU eviction, hydration
  *   L4 — Runtime proxy:    call the actual MCP tool through the transport
  *
- * WHY: Full Assimilation — the Go sidecar must be able to route MCP
+ * WHY: Full Assimilation — the TN Kernel must be able to route MCP
  * tool calls independently of the TypeScript core. This router replaces
  * the thin progressive_router.go stub with a complete implementation.
  *

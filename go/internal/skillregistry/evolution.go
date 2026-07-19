@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/ai"
 )
 
 // SkillEvolutionRecord tracks the performance of a specific skill version

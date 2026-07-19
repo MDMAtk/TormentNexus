@@ -1,13 +1,13 @@
 package mcp
 
 import (
-	"database/sql"
 	"os"
 	"path/filepath"
 	"testing"
 
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 func TestLoadConfigServersFromJSONC(t *testing.T) {
 	configDir := t.TempDir()
@@ -67,7 +67,7 @@ func TestLoadInventoryFromConfigAndDatabase(t *testing.T) {
 		t.Fatalf("failed to write mcp.json: %v", err)
 	}
 
-	db, err := sql.Open("sqlite", filepath.Join(workspace, "tormentnexus.db"))
+	db, err := database.Open("sqlite", filepath.Join(workspace, "tormentnexus.db"))
 	if err != nil {
 		t.Fatalf("failed to open sqlite db: %v", err)
 	}

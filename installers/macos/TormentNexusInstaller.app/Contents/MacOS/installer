@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# TormentNexus Installer Launcher
+# This script runs when the .app is opened
+
+# Get the app bundle path
+APP_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+INSTALLER_SCRIPT="$APP_DIR/Resources/install-terminal.sh"
+
+# Check if Terminal is available
+if command -v osascript &> /dev/null; then
+    # Use AppleScript to open Terminal with the installer
+    osascript <<EOF
+tell application "Terminal"
+    activate
+    do script "bash '$INSTALLER_SCRIPT'"
+end tell
+EOF
+else
+    # Fallback: run directly
+    bash "$INSTALLER_SCRIPT"
+fi

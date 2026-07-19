@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "description": "AI Control Plane with Persistent Memory - 26,000+ MCP Tools",
+  "homepage": "https://tormentnexus.site",
+  "license": "MIT",
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/MDMAtk/TormentNexus/releases/download/v1.0.0-b4/tormentnexus-windows-amd64.zip",
+      "hash": "PLACEHOLDER_HASH"
+    }
+  },
+  "bin": "tormentnexus.exe",
+  "checkver": {
+    "github": "https://github.com/MDMAtk/TormentNexus"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/MDMAtk/TormentNexus/releases/download/v$version/tormentnexus-windows-amd64.zip"
+      }
+    }
+  },
+  "installer": {
+    "script": [
+      "# Create config directory",
+      "if (!(Test-Path \"$env:USERPROFILE\\.tormentnexus\")) {",
+      "    New-Item -ItemType Directory -Path \"$env:USERPROFILE\\.tormentnexus\" | Out-Null",
+      "}"
+    ]
+  },
+  "notes": [
+    "TormentNexus has been installed!",
+    "",
+    "To start the server:",
+    "  tormentnexus serve",
+    "",
+    "Dashboard will be available at:",
+    "  http://localhost:7778",
+    "",
+    "Configuration directory:",
+    "  $env:USERPROFILE\\.tormentnexus"
+  ]
+}

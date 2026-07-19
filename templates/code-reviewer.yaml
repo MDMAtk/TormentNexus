@@ -1,0 +1,92 @@
+# Template: Code Reviewer
+# An AI code reviewer with persistent memory of patterns and issues
+
+name: code-reviewer
+description: "AI code reviewer that remembers patterns, issues, and best practices"
+version: 1.0.0
+
+memory:
+  l1_session: true
+  l2_hot_store: true
+  l3_cold_archive: true
+  l4_limbo: false
+
+  auto_store:
+    enabled: true
+    triggers:
+      - code_review
+      - issue_found
+      - pattern_detected
+      - fix_applied
+
+tools:
+  - name: code_analysis
+    description: "Analyze code for issues and patterns"
+    config:
+      languages:
+        - javascript
+        - typescript
+        - python
+        - go
+        - rust
+        - java
+        - csharp
+
+  - name: git
+    description: "Git operations for PR review"
+    config:
+      auto_comment: true
+      auto_approve: false
+
+  - name: security_scanner
+    description: "Scan for security vulnerabilities"
+    config:
+      enabled: true
+      severity_levels:
+        - critical
+        - high
+        - medium
+
+providers:
+  - name: deepseek
+    model: deepseek-chat
+    priority: 1
+    use_for:
+      - code_review
+      - security_analysis
+      - pattern_detection
+
+system_prompt: |
+  You are a code reviewer with persistent memory. You:
+  - Review code for bugs, security issues, and style problems
+  - Remember coding patterns and conventions used in the project
+  - Track recurring issues and suggest systematic fixes
+  - Build a knowledge base of best practices
+
+  When you find issues or patterns, store them in memory for future reference.
+  Use past reviews to provide consistent feedback.
+
+dashboard:
+  theme: dark
+  layout: review
+  widgets:
+    - memory_explorer
+    - code_viewer
+    - issue_tracker
+    - pattern_library
+    - review_history
+
+hooks:
+  on_code_review:
+    - action: analyze_code
+      params:
+        check_patterns: true
+        check_security: true
+        check_style: true
+
+  on_issue_found:
+    - action: store_memory
+      params:
+        type: code_issue
+        auto_categorize: true
+        suggest_fix: true

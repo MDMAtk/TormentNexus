@@ -1,13 +1,13 @@
 package ai
 
 import (
-	"database/sql"
 	"os"
 	"path/filepath"
 	"strings"
 
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 const SwarmPromptPlanner = `You are the Swarm Planner. Your goal is to architect a high-level implementation strategy for the task.
 Focus on:
@@ -54,7 +54,7 @@ func getSkillsDBPath() string {
 func GetSwarmPrompt(role string) string {
 	dbPath := getSkillsDBPath()
 	if dbPath != "" {
-		if db, err := sql.Open("sqlite", dbPath); err == nil {
+		if db, err := database.Open("sqlite", dbPath); err == nil {
 			defer db.Close()
 			var content string
 			query := "SELECT content FROM skills WHERE skill_id = ? OR (category = 'prompt' AND name LIKE ?)"

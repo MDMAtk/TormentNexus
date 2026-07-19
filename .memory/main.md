@@ -6,28 +6,27 @@ TormentNexus is a Cognitive Kernel / Universal AI Control Plane for multi-agent 
 
 ## Current State (June 22, 2026)
 
-### Running Services (all 7 ports active)
-- **freellm proxy**: port 4000 — LLM routing for all workers
-- **Go sidecar** (new): port 7778 — Fiber HTTP API server
-- **Dashboard** (Next.js): port 7779 — production mode
-- **TS control plane**: port 4100 — Node.js tRPC bridge
-- **Go sidecar** (legacy): port 4300 — old module
-- **LM Studio**: port 1234 — local AI models
-- **Go sidecar** (old zombie): port 8080 — can't kill (system process)
+### Running Services
+
+- **Go sidecar**: port 7778 — Authoritative native kernel (HTTP API + tRPC, tool routing, L2 memory)
+- **Dashboard** (Next.js): port 7779 — Web observation deck
 
 ### Workers (all running silently via pythonw)
+
 - **Swarm v7**: 5 workers, freellm-only code generation (GEN → REVIEW → FIX pipeline)
 - **Watchdog**: monitors all services, restarts dead workers
 - **BobbyBookmarks sync**: hourly bookmark merge (10,820 bookmarks imported)
 - **Trends analyzer**: 6-hour analysis cycle (uses LM Studio)
 
 ### Data
+
 - **12,201 MCP servers** tracked (1,932 implemented, 10,269 pending)
 - **40,262 rows** imported from bobbybookmarks (bookmarks, atlas, embeddings, etc.)
 - **7,064 Go tool files** (3,815 with real handler implementations)
 - **545 bookmarks** imported from bookmarks_remaining.txt
 
 ### Services Registered (auto-start on boot)
+
 - TormentNexusSidecar
 - TormentNexusDashboard
 - TormentNexusWatchdog

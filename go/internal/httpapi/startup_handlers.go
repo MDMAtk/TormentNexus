@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
-	"github.com/tormentnexushq/tormentnexus-go/internal/interop"
-	"github.com/tormentnexushq/tormentnexus-go/internal/memorystore"
-	"github.com/tormentnexushq/tormentnexus-go/internal/mesh"
-	"github.com/tormentnexushq/tormentnexus-go/internal/cache"
+	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/interop"
+	"github.com/MDMAtk/TormentNexus/internal/memorystore"
+	"github.com/MDMAtk/TormentNexus/internal/mesh"
+	"github.com/MDMAtk/TormentNexus/internal/cache"
 )
 
 type StartupBlockingReason struct {
@@ -110,13 +110,13 @@ func (s *Server) buildStartupStatus(ctx context.Context) (StartupStatus, error) 
 	if !configStatus.WorkspaceRoot.Exists {
 		blockingReasons = append(blockingReasons, StartupBlockingReason{
 			Code:   "workspace_root_missing",
-			Detail: "Workspace root is not available to the Go sidecar.",
+			Detail: "Workspace root is not available to the TN Kernel.",
 		})
 	}
 	if !configStatus.ConfigDir.Exists {
 		blockingReasons = append(blockingReasons, StartupBlockingReason{
 			Code:   "go_config_dir_missing",
-			Detail: "Go sidecar config directory has not been created yet.",
+			Detail: "TN Kernel config directory has not been created yet.",
 		})
 	}
 	if !memoryStatus.Exists {
@@ -125,18 +125,7 @@ func (s *Server) buildStartupStatus(ctx context.Context) (StartupStatus, error) 
 			Detail: "Sectioned memory store is not available yet.",
 		})
 	}
-	if !upstreamReady {
-		blockingReasons = append(blockingReasons, StartupBlockingReason{
-			Code:   "main_control_plane_unreachable",
-			Detail: "The Go sidecar cannot currently reach the main TypeScript control plane.",
-		})
-	}
-	if !supervisorReady {
-		blockingReasons = append(blockingReasons, StartupBlockingReason{
-			Code:   "session_supervisor_bridge_unavailable",
-			Detail: "The supervised-session bridge is not reachable through the main control plane.",
-		})
-	}
+
 
 	summary := "All Go startup checks passed."
 	if len(blockingReasons) > 0 {

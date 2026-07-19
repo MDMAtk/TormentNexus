@@ -273,6 +273,63 @@ func (s Scanner) rules() []discoveryRule {
 			},
 			fileNameHints: []string{"llm", "logs.db", "conversation", "response", "tool_calls", "tool_results"},
 		},
+		{
+			sourceTool: "roo-code",
+			roots: []string{
+				filepath.Join(appData, "Code", "User", "globalStorage", "roovet.roo-cline", "history"),
+				filepath.Join(appData, "Code - Insiders", "User", "globalStorage", "roovet.roo-cline", "history"),
+				filepath.Join(s.HomeDir, ".config", "Code", "User", "globalStorage", "roovet.roo-cline", "history"),
+				filepath.Join(s.HomeDir, "Library", "Application Support", "Code", "User", "globalStorage", "roovet.roo-cline", "history"),
+			},
+			fileNameHints: []string{"history", "chat", "session", "roo"},
+		},
+		{
+			sourceTool: "cline",
+			roots: []string{
+				filepath.Join(appData, "Code", "User", "globalStorage", "saoudrizwan.claude-dev", "history"),
+				filepath.Join(appData, "Code - Insiders", "User", "globalStorage", "saoudrizwan.claude-dev", "history"),
+				filepath.Join(s.HomeDir, ".config", "Code", "User", "globalStorage", "saoudrizwan.claude-dev", "history"),
+				filepath.Join(s.HomeDir, "Library", "Application Support", "Code", "User", "globalStorage", "saoudrizwan.claude-dev", "history"),
+			},
+			fileNameHints: []string{"history", "chat", "session", "cline"},
+		},
+		{
+			sourceTool: "continue",
+			roots: []string{
+				filepath.Join(s.HomeDir, ".continue", "dev_data", "sessions"),
+				filepath.Join(s.WorkspaceRoot, ".continue", "dev_data", "sessions"),
+			},
+			fileNameHints: []string{"session", "chat", "history"},
+		},
+		{
+			sourceTool: "pearai",
+			roots: []string{
+				filepath.Join(appData, "PearAI", "User", "workspaceStorage"),
+				filepath.Join(localAppData, "PearAI", "User", "workspaceStorage"),
+				filepath.Join(s.HomeDir, ".pearai"),
+			},
+			fileNameHints: []string{"pearai", "chat", "session", "history"},
+		},
+		{
+			sourceTool: "zed",
+			roots: []string{
+				filepath.Join(s.HomeDir, ".config", "zed", "conversations"),
+				filepath.Join(s.HomeDir, ".local", "share", "zed", "conversations"),
+				filepath.Join(s.HomeDir, "Library", "Application Support", "zed", "conversations"),
+				filepath.Join(appData, "zed", "conversations"),
+				filepath.Join(localAppData, "zed", "conversations"),
+			},
+			fileNameHints: []string{"conversation", "chat", "session", "zed"},
+		},
+		{
+			sourceTool: "anthropic-workbench",
+			roots: []string{
+				filepath.Join(s.WorkspaceRoot, ".anthropic"),
+				filepath.Join(s.HomeDir, "Downloads"),
+				filepath.Join(s.HomeDir, "Documents"),
+			},
+			fileNameHints: []string{"workbench-export", "anthropic-workbench", "workbench_export"},
+		},
 	}
 }
 

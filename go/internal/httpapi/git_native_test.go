@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/config"
 )
 
 func TestSubmoduleUpdateAllFallsBackToNativeGitReport(t *testing.T) {
@@ -37,6 +37,7 @@ func TestSubmoduleUpdateAllFallsBackToNativeGitReport(t *testing.T) {
 	cfg.ConfigDir = filepath.Join(workspace, ".tormentnexus-go")
 	cfg.MainConfigDir = filepath.Join(workspace, ".tormentnexus")
 	server := New(cfg, stubDetector{})
+	defer server.Close()
 
 	req := httptest.NewRequest(http.MethodPost, "/api/submodules/update-all", bytes.NewBufferString(`{}`))
 	req.Header.Set("Content-Type", "application/json")

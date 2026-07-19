@@ -1,0 +1,10 @@
+{
+  "tagline": "The open-source control plane for all your AI agents.",
+  "description": "Meet TormentNexus, the first open-source AI control plane designed to give developers and power users complete command over their AI agents. With a catalog of over 26,000 MCP servers, you can instantly connect your agents to the tools and data they need\u2014from databases to APIs to custom services. No more cobbling together brittle integrations or losing context when your agents restart.\n\nBuilt on a high-performance Go backend and delivered as a single binary, TormentNexus is lightweight, fast, and deploys anywhere. It features persistent memory for your AI agents, so they remember conversations, preferences, and workflows across sessions. Whether you're running local LLMs for privacy or cloud models for scale, the unified dashboard gives you real-time visibility and control over every agent's behavior, memory, and tool usage.",
+  "features": [
+    "26,000+ MCP Servers Catalog: Browse, install, and connect your agents to a massive ecosystem of ready-to-use tools and data sources with zero configuration.",
+    "Persistent Memory for AI Agents: Agents retain context, user preferences, and task history across sessions\u2014no more starting from scratch every time.",
+    "Local LLM Support & Single Binary: Run fully offline with local models, all powered by a Go backend that deploys as a single, dependency-free binary."
+  ],
+  "maker_comment": "We built TormentNexus because we were tired of AI agents feeling like amnesiacs\u2014forgetting everything the moment you turned away. By combining persistent memory with the largest open catalog of MCP servers, we're giving developers a single pane of glass to manage, monitor, and scale their AI agents. The Go backend means you can run it on a Raspberry Pi or a production cluster. We'd love your feedback on what features you need next!"
+}

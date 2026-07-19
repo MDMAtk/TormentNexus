@@ -1,0 +1,16 @@
+<idea-plugin>
+  <id>com.tormentnexus.jetbrains</id>
+  <name>TormentNexus AI Control Plane</name>
+  <version>1.0.0</version>
+  <vendor>TormentNexus</vendor>
+  <description>Universal AI control plane: persistent memory, MCP tools, session import, enterprise RBAC</description>
+  <depends>com.intellij.modules.platform</depends>
+  <actions>
+    <action id="TN.Store" class="com.tormentnexus.actions.StoreAction" text="TN: Store Memory"/>
+    <action id="TN.Search" class="com.tormentnexus.actions.SearchAction" text="TN: Search Memory"/>
+    <action id="TN.Status" class="com.tormentnexus.actions.StatusAction" text="TN: Status"/>
+  </actions>
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="TormentNexus" anchor="right" icon="/icons/tn.svg" factoryClass="com.tormentnexus.ToolWindowFactory"/>
+  </extensions>
+</idea-plugin>

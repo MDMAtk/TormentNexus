@@ -1,0 +1,18 @@
+# TormentNexus Goose Extension
+#
+# Goose uses MCP as its extension mechanism. Add this to
+# ~/.config/goose/config.yaml under the `extensions:` block.
+#
+# Or install via: goose configure → Add extension → Built-in
+
+extensions:
+  tormentnexus:
+    type: stdio
+    command: C:\Users\hyper\workspace\tormentnexus\tormentnexus.exe
+    args:
+      - mcp
+    env:
+      TORMENTNEXUS_WORKSPACE_ROOT: C:\Users\hyper\workspace\tormentnexus
+    description: TormentNexus AI control plane — L2 memory, tool discovery, session import
+    timeout: 30
+    enabled: true

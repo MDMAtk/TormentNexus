@@ -1,0 +1,19 @@
+{
+  "name": "tormentnexus",
+  "displayName": "TormentNexus",
+  "description": "AI control plane — L2 memory, tool discovery, session import",
+  "version": "1.0.0",
+  "publisher": "robertpelloni",
+  "license": "MIT",
+  "engines": { "vscode": "^1.94.0" },
+  "categories": ["AI", "Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "tormentnexus.tnStore", "title": "TormentNexus: Store in memory" },
+      { "command": "tormentnexus.tnSearch", "title": "TormentNexus: Search memory" },
+      { "command": "tormentnexus.tnStatus", "title": "TormentNexus: Check status" }
+    ]
+  }
+}

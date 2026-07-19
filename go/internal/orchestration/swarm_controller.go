@@ -7,7 +7,7 @@ package orchestration
  * WHAT: Go-native implementation of the Multi-Model Swarm Orchestration system.
  * Coordinates a team of LLMs on a shared goal with a shared transcript.
  *
- * WHY: Total Autonomy — The Go sidecar should be capable of managing 
+ * WHY: Total Autonomy — The TN Kernel should be capable of managing 
  * complex multi-model workflows independently of the Node control plane.
  */
 
@@ -18,7 +18,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/ai"
 )
 
 type SwarmRole string

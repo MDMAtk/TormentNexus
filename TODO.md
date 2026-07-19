@@ -1,45 +1,166 @@
-# TODO
+# TODO — TormentNexus
 
-_Last updated: 2026-06-17, version 1.0.0-alpha.132_
-
-## P0 — Must do now (Stability, Testing & Validation)
-- [x] **Track A: MCP Discovery**: Execute discovery script to rank top 500 MCP servers and seed state DB. (14,250 rows in assimilation_state.db)
-- [x] **Track B: Skill Registry**: Verify 3-tier loading with comprehensive unit tests. (Completed alpha.128)
-- [x] **Track B: Bulk Skill Assimilation**: Assimilated 3,229 unique skills from 7 harness ecosystems. (Completed alpha.128)
-- [x] **Track D: Prompt Migration**: Migrate hardcoded prompts to SQLite. (Completed alpha.127)
-- [x] **Branch Merge**: Intelligently merged `jules/baseline-128-hardened` into `main`, fast-forwarded `assimilation-pipeline` and `assimilation-final`. (Completed alpha.132)
-- [x] **README Rewrite**: Comprehensive 657-line README with full architecture, capabilities, and roadmap. (Completed alpha.132)
-- [x] **Data Integrity**: 14,250 total / 10,796 done / 10 pending / 9 processing (swarm actively finishing). (alpha.134)
-- [x] **Swarm Output**: Swarm running persistently with 7-model pool. Generated 34 new Go tool stubs. (alpha.134)
-- [x] **Go Build Verification**: Root build passes clean (4,042 tool files). (alpha.134)
-
-## P1 — Should do next (Integrations)
-- [x] **Harness Integration**: Integrate Tabby, Warp, Hyper, Hyperharness, Hermes Agent, and Pi-Mono. (Verified alpha.127)
-- [x] **A2A Skill Registry**: Map assimilated skills into FreeLLM A2A registry. (Completed alpha.128)
-- [x] **Skill HTTP API**: Wire skill store into Go sidecar HTTP endpoints. (Completed alpha.130)
-- [x] **Browser Automation MCP**: Finalize tests and add optional args. (Completed alpha.129)
-- [x] **ChunkHound / Probe Integration**: Implement remaining assimilated MCP search tools as native handlers.
-- [x] **Bobbybookmarks Sync**: Configure automatic sync call triggers for catalog scraping. (Blocked by DNS failure — use Smithery.ai or Glama.ai)
-- [x] **New Native Tools**: Implement `browser-use` and `browsermcp` specialized logic if needed (currently aliased to playwright).
-- [x] **Session Import**: Format resolved — wraps JSONL in ExportPackage format (228 sessions detected). Orchestrator POST endpoint missing for actual restoration.
-- [x] **Git LFS**: Consider tracking large `.db` files (provider_metrics.db 145MB, tormentnexus.db 34MB) with Git LFS to avoid repo bloat.
-- [x] **.out Cleanup**: `swarm_*.out` and `*.pid` added to `.gitignore`. (alpha.133)
-
-## P2 — Enterprise Readiness & Security
-- [x] **License Validation**: Implement Ed25519 license token validation in Go sidecar. (Verified alpha.127)
-- [x] **Compliance Boundary**: Separate SSO/RBAC/Audit logic into enterprise wrapper.
-- [x] **Enterprise Security**: SSO/RBAC middleware and JSONL auditing added from jules merge. (alpha.132)
-- [x] **Autonomous CI/CD**: `deployment_manager`, `health_monitor`, `repository_healer` added from jules merge. (alpha.132)
-
-## P3 — Future Enhancements
-- [x] **Skill Evolution**: With ~3,000+ skills loaded, implement win-rate tracking, auto-retirement of low-performing skills, and `/evolve` command.
-- [x] **Catalog DB Sync**: Index new skills into `catalog.db` for unified search.
-- [x] **Submodule Removal**: Systematic removal of redundant submodules after native reimplementation.
-- [x] **P2P Memory**: Implement gossip protocol for decentralized context sharing.
-- [ ] **L3 Cold Archive**: Implement long-term compressed memory tier for infinite context.
-- [ ] **Fleet-Wide Intelligence**: Cross-machine memory sharing via encrypted mesh.
-- [ ] **Wails Native Runtime**: Replace Electron with Go-native desktop shell.
-- [ ] **Deep Link Protocol**: Expand `tormentnexus://` protocol for browser-to-kernel attachment.
+> **Last Updated:** 2026-07-14
+> **Current Version:** 1.0.0-alpha.257
+> **Status:** Pre-launch, building distribution channels
 
 ---
-*Keep the party going. Never stop. Don't stop the party!!!*
+
+## 🔥 Critical Path (This Week)
+
+### Distribution & Discovery
+
+- [ ] **Docker Image** — Push to Docker Hub as `tormentnexus/tormentnexus`
+- [ ] **npm Package** — Publish as `tormentnexus` on npmjs.com
+- [ ] **Homebrew Formula** — For Mac users
+- [ ] **One-Click Templates** — 3 templates: cursor-killer, research-assistant, code-reviewer
+- [ ] **Getting Started Tutorial** — 5-minute quickstart guide
+
+### Marketing Launch
+
+- [ ] **Product Hunt Launch** — Target #1 Product of the Day
+- [ ] **Reddit Post** — r/MachineLearning, r/LocalLLaMA
+- [ ] **Hacker News** — Show HN post
+- [ ] **Twitter Thread** — Viral thread about AI memory
+- [ ] **YouTube Video** — "Build Your Own AI Assistant in 10 Minutes"
+
+### Automation
+
+- [ ] **CDP Posting Script** — Auto-post to Reddit, HN, Product Hunt, Twitter
+- [ ] **DeepSeek Content Generator** — AI-written posts for each platform
+- [ ] **Analytics Dashboard** — Track stars, installs, traffic
+
+---
+
+## 📈 Growth Phase (Next 2 Weeks)
+
+### Technical
+
+- [ ] **VS Code Extension** — Sidebar with TN memory, catalog search
+- [ ] **Cursor Integration** — Deep integration with Cursor features
+- [ ] **API Documentation** — OpenAPI/Swagger spec
+- [ ] **Test Coverage → 80%** — Unit, integration, E2E tests
+- [ ] **Performance Benchmarks** — Publish speed comparisons
+
+### Community
+
+- [ **Community Marketplace** — Web UI for sharing MCP configs
+- [ ] **Discord Server** — Community chat and support
+- [ ] **GitHub Discussions** — Enable in repo settings
+- [ ] **Contributing Guide** — How to contribute
+- [ ] **Code of Conduct** — Community standards
+
+### Content
+
+- [ ] **Blog Series** — "Why AI Needs Memory" (5 posts)
+- [ ] **Video Tutorials** — YouTube series
+- [ ] **Case Studies** — Real-world usage examples
+- [ ] **Architecture Docs** — Deep dives on memory system
+
+---
+
+## 🚀 Scale Phase (This Month)
+
+### Product
+
+- [ ] **AI-Powered Onboarding** — Auto-configure based on workflow
+- [ ] **Smart Suggestions** — "People who use X also use Y"
+- [ ] **Hosted SaaS** — cloud.tormentnexus.site
+- [ ] **Enterprise Features** — SSO, audit logs, RBAC
+- [ ] **Mobile App** — iOS/Android companion
+
+### Partnerships
+
+- [ ] **DeepSeek Partnership** — Official integration
+- [ ] **Ollama Collaboration** — Featured in Ollama ecosystem
+- [ ] **LM Studio Integration** — Deep integration
+- [ ] **GitHub Copilot** — Feed TN context to Copilot
+- [ ] **Notion/Obsidian** — Sync knowledge bases
+
+### Monetization
+
+- [ ] **Pricing Page** — Free, Pro ($19/mo), Team ($49/mo)
+- [ ] **Stripe Integration** — Already wired, need checkout flow
+- [ ] **Enterprise Sales** — Outreach to companies
+- [ ] **Training Program** — Online course and certification
+
+---
+
+## ✅ Completed
+
+### Infrastructure (Done)
+
+- [x] Go sidecar (TN Kernel) on port 7778
+- [x] Next.js dashboard on port 7779
+- [x] 26,180 catalog entries searchable via API
+- [x] 11,709 entries enriched with DeepSeek
+- [x] Wildcard SSL for *.hypernexus.site
+- [x] Stripe checkout wired
+- [x] Blog with 5 SEO posts
+- [x] Sitemap and robots.txt
+- [x] Google/Bing verification files
+- [x] Marketing post drafts (Reddit, HN)
+- [x] Graphical installer scripts (Windows, Linux, Mac)
+- [x] NSIS installer script
+- [x] Catalog search API
+- [x] CatalogBrowser component integrated in dashboard
+
+### Memory System (Done)
+
+- [x] L1 Session Memory
+- [x] L2 Hot Vector Store
+- [x] L3 Cold Archive
+- [x] L4 Limbo Vault
+- [x] GraphRAG relations
+- [x] Spaced repetition
+
+### MCP Catalog (Done)
+
+- [x] 26,180 entries indexed
+- [x] Full-text search with FTS5
+- [x] Category filtering
+- [x] Source deduplication
+- [x] DeepSeek enrichment (45% complete)
+
+---
+
+## 📊 Metrics to Track
+
+| Metric | Current | Target |
+|--------|---------|--------|
+| GitHub Stars | 6 | 100 |
+| npm Downloads | 0 | 1,000/week |
+| Docker Pulls | 0 | 500/week |
+| Dashboard Users | ~5 | 100 |
+| Catalog Entries | 26,180 | 50,000 |
+| Enriched Entries | 11,709 | 26,180 |
+| Test Coverage | ~20% | 80% |
+| Contributors | 4 | 20 |
+
+---
+
+## 🎯 Success Criteria
+
+**Launch Success (This Week):**
+
+- [ ] 50+ GitHub stars
+- [ ] 10+ npm downloads
+- [ ] 5+ Docker pulls
+- [ ] Featured on HN front page
+- [ ] 100+ visitors to tormentnexus.site
+
+**Growth Success (This Month):**
+
+- [ ] 500+ GitHub stars
+- [ ] 1,000+ npm downloads
+- [ ] 50+ community members
+- [ ] 3+ contributors
+- [ ] 10+ case studies
+
+**Scale Success (This Quarter):**
+
+- [ ] 5,000+ GitHub stars
+- [ ] 10,000+ npm downloads
+- [ ] 500+ community members
+- [ ] 20+ contributors
+- [ ] Revenue from SaaS

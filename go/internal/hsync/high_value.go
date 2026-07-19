@@ -10,15 +10,15 @@ package hsync
 
 import (
 	"context"
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"strings"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
-	"github.com/tormentnexushq/tormentnexus-go/internal/harnesses"
-	mcp_pkg "github.com/tormentnexushq/tormentnexus-go/internal/mcp"
-)
+	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/harnesses"
+	mcp_pkg "github.com/MDMAtk/TormentNexus/internal/mcp"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 type HighValueIngestor struct {
 	dbPath     string
@@ -35,7 +35,7 @@ func NewHighValueIngestor(dbPath string, skillStore *harnesses.SkillStore, mcpCo
 }
 
 func (i *HighValueIngestor) ProcessHighValueQueue(ctx context.Context, limit int) error {
-	db, err := sql.Open("sqlite", i.dbPath)
+	db, err := database.Open("sqlite", i.dbPath)
 	if err != nil {
 		return err
 	}

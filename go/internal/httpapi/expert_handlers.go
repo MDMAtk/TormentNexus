@@ -3,7 +3,7 @@ package httpapi
 import (
 	"encoding/json"
 	"net/http"
-	"github.com/tormentnexushq/tormentnexus-go/internal/ctxharvester"
+	"github.com/MDMAtk/TormentNexus/internal/ctxharvester"
 )
 
 func (s *Server) handleExpertPredict(w http.ResponseWriter, r *http.Request) {

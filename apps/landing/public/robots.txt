@@ -1,0 +1,16 @@
+# TormentNexus - AI Control Plane
+# Website: https://tormentnexus.site
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://tormentnexus.site/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow admin/API endpoints
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/

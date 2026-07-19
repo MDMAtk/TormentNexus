@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
-	"github.com/tormentnexushq/tormentnexus-go/internal/lockfile"
+	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/lockfile"
 )
 
 // sharedTRPCClient returns a singleton HTTP client with connection pooling
@@ -31,7 +31,7 @@ func sharedTRPCClient() *http.Client {
 			IdleConnTimeout:     30 * time.Second,
 		}
 		sharedClientInst = &http.Client{
-			Timeout:   30 * time.Second,
+			Timeout:   2 * time.Second,
 			Transport: transport,
 		}
 	})
@@ -39,6 +39,7 @@ func sharedTRPCClient() *http.Client {
 }
 
 var defaultTRPCBases = []string{
+	"http://127.0.0.1:7787/trpc",
 	"http://127.0.0.1:7779/trpc",
 	"http://127.0.0.1:4000/trpc",
 	"http://127.0.0.1:3847/trpc",

@@ -1,0 +1,19 @@
+[plugin]
+name = "tormentnexus"
+description = "TormentNexus AI control plane — L2 memory, tool discovery, session import, skill registry, code search, subagent orchestration"
+version = "1.0.0"
+author = "TormentNexus"
+
+[skills]
+path = "skills"
+
+[mcp_servers.tormentnexus]
+command = "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe"
+args = ["mcp"]
+
+[mcp_servers.tormentnexus.env]
+TORMENTNEXUS_WORKSPACE_ROOT = "C:\\Users\\hyper\\workspace\\tormentnexus"
+
+[when]
+os = ["windows"]
+binaries = ["tormentnexus.exe"]

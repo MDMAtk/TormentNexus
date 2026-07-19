@@ -21,7 +21,7 @@ import { useTerminalAvailable } from '@/hooks/use-terminal-available';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from './ui/resizable';
 import { CouncilDashboard } from './council-dashboard';
 import { SessionKeeperManager } from './session-keeper-manager';
-import { EnterpriseView } from './enterprise/EnterpriseView';
+import { CommercialView } from './commercial/CommercialView';
 
 export function AppLayout() {
   const { client, clearApiKey } = useJules();
@@ -29,7 +29,7 @@ export function AppLayout() {
   const router = useRouter();
   const { isAvailable: terminalAvailable } = useTerminalAvailable();
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
-  const [view, setView] = useState<'sessions' | 'analytics' | 'templates' | 'council' | 'enterprise'>('sessions');
+  const [view, setView] = useState<'sessions' | 'analytics' | 'templates' | 'council' | 'commercial'>('sessions');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -236,11 +236,11 @@ export function AppLayout() {
             <Button
               variant="ghost"
               size="sm"
-              className={`h-8 px-3 hover:bg-white/5 ${view === 'enterprise' ? 'text-white' : 'text-white/60'}`}
-              onClick={() => setView('enterprise')}
+              className={`h-8 px-3 hover:bg-white/5 ${view === 'commercial' ? 'text-white' : 'text-white/60'}`}
+              onClick={() => setView('commercial')}
             >
               <ShieldCheck className="h-3.5 w-3.5 mr-1.5" />
-              <span className="text-[10px] font-mono uppercase tracking-wider">Enterprise</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider">Commercial</span>
             </Button>
 
             {terminalAvailable && (
@@ -349,10 +349,10 @@ export function AppLayout() {
                       <TemplatesPage onStartSession={handleStartSessionFromTemplate} />
                     ) : view === 'council' ? (
                       <CouncilDashboard />
-                    ) : view === 'enterprise' ? (
+                    ) : view === 'commercial' ? (
                       <div className="flex-1 overflow-auto bg-black">
                         <div className="p-6">
-                           <EnterpriseView />
+                           <CommercialView />
                         </div>
                       </div>
                     ) : selectedSession ? (

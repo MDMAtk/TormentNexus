@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TormentNexus Blog</title>
+    <link>https://tormentnexus.site/blog/</link>
+    <description>Insights on AI, memory systems, and the future of human-AI collaboration</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Jul 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://tormentnexus.site/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    
+    <item>
+      <title>Why Your AI Needs a Memory System</title>
+      <link>https://tormentnexus.site/blog/give-ai-a-memory.html</link>
+      <description>Traditional AI assistants forget everything between sessions. Learn how persistent memory transforms AI from a tool into a partner.</description>
+      <pubDate>Mon, 14 Jul 2026 00:00:00 GMT</pubDate>
+      <guid>https://tormentnexus.site/blog/give-ai-a-memory.html</guid>
+    </item>
+    
+    <item>
+      <title>MCP Explained: The Protocol Connecting AI to Everything</title>
+      <link>https://tormentnexus.site/blog/mcp-explained.html</link>
+      <description>Model Context Protocol (MCP) is revolutionizing how AI agents interact with external tools and data sources.</description>
+      <pubDate>Sun, 13 Jul 2026 00:00:00 GMT</pubDate>
+      <guid>https://tormentnexus.site/blog/mcp-explained.html</guid>
+    </item>
+    
+    <item>
+      <title>How to Actually Work With AI Agents</title>
+      <link>https://tormentnexus.site/blog/work-with-ai-agents.html</link>
+      <description>Best practices for collaborating with AI agents effectively, from prompt engineering to context management.</description>
+      <pubDate>Sat, 12 Jul 2026 00:00:00 GMT</pubDate>
+      <guid>https://tormentnexus.site/blog/work-with-ai-agents.html</guid>
+    </item>
+    
+    <item>
+      <title>Running LLMs Locally: A Complete Guide</title>
+      <link>https://tormentnexus.site/blog/run-llms-locally.html</link>
+      <description>How to run large language models on your own hardware for privacy, cost savings, and offline capability.</description>
+      <pubDate>Fri, 11 Jul 2026 00:00:00 GMT</pubDate>
+      <guid>https://tormentnexus.site/blog/run-llms-locally.html</guid>
+    </item>
+    
+    <item>
+      <title>The AI Coding Workflow That Actually Works</title>
+      <link>https://tormentnexus.site/blog/ai-coding-workflow.html</link>
+      <description>A practical framework for integrating AI into your development workflow without losing control.</description>
+      <pubDate>Thu, 10 Jul 2026 00:00:00 GMT</pubDate>
+      <guid>https://tormentnexus.site/blog/ai-coding-workflow.html</guid>
+    </item>
+  </channel>
+</rss>

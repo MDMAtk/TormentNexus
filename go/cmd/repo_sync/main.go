@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/sync"
+	"github.com/MDMAtk/TormentNexus/internal/sync"
 )
 
 func main() {

@@ -1,0 +1,38 @@
+{
+  "name": "tormentnexus",
+  "displayName": "TormentNexus",
+  "description": "AI control plane with L2 memory, tool discovery, session import, and skill registry",
+  "version": "1.0.0",
+  "publisher": "robertpelloni",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": ["AI", "Other"],
+  "keywords": ["tormentnexus", "mcp", "memory", "tools"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tormentnexus.tnStore",
+        "title": "TormentNexus: Store in memory"
+      },
+      {
+        "command": "tormentnexus.tnSearch",
+        "title": "TormentNexus: Search memory"
+      },
+      {
+        "command": "tormentnexus.tnStatus",
+        "title": "TormentNexus: Check status"
+      }
+    ],
+    "mcpServers": {
+      "tormentnexus": {
+        "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+        "args": ["mcp"]
+      }
+    }
+  },
+  "icon": "icon.png"
+}

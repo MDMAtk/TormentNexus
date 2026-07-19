@@ -1,0 +1,31 @@
+{
+  "installed": [
+    {
+      "name": "@tormentnexus/control-plane",
+      "version": "1.0.0",
+      "description": "TormentNexus AI control plane — L2 memory, tool discovery, session import, skill registry, code search",
+      "tools": [
+        "mcp_tormentnexus_memory_scratchpad_get",
+        "mcp_tormentnexus_memory_scratchpad_set",
+        "mcp_tormentnexus_memory_scratchpad_append",
+        "mcp_tormentnexus_mcp_list_tools",
+        "mcp_tormentnexus_mcp_call_tool",
+        "mcp_tormentnexus_bash",
+        "mcp_tormentnexus_read",
+        "mcp_tormentnexus_write",
+        "mcp_tormentnexus_edit",
+        "mcp_tormentnexus_grep",
+        "mcp_tormentnexus_find",
+        "mcp_tormentnexus_ls",
+        "mcp_tormentnexus_repomap",
+        "mcp_tormentnexus_system_status"
+      ],
+      "context": "TormentNexus is a local AI control plane running on port 7778 with persistent L2 vector memory, semantic tool discovery, imported sessions, and a skill registry.\n\n## Best Practices\n1. Use mcp_tormentnexus_memory_scratchpad_get before significant work\n2. Use mcp_tormentnexus_memory_scratchpad_set after key decisions\n3. Use mcp_tormentnexus_mcp_list_tools for tool discovery\n4. Route complex tasks through mcp_tormentnexus_mcp_call_tool\n5. Use mcp_tormentnexus_repomap for codebase orientation",
+      "triggers": {
+        "onSessionStart": true,
+        "onUserPrompt": true,
+        "commands": ["tn-store", "tn-search", "tn-status"]
+      }
+    }
+  ]
+}

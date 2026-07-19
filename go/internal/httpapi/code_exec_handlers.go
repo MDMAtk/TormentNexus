@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/codeexec"
-	"github.com/tormentnexushq/tormentnexus-go/internal/enterprise"
+	"github.com/MDMAtk/TormentNexus/internal/codeexec"
+	"github.com/MDMAtk/TormentNexus/internal/commercial"
 )
 
 // handleCodeExec runs code in the process-based sandbox.
@@ -43,13 +43,13 @@ func (s *Server) handleCodeExec(w http.ResponseWriter, r *http.Request) {
 		Timeout:  timeout,
 	})
 
-	// Audit Code Execution (Enterprise Tier)
+	// Audit Code Execution (Commercial Tier)
 	if s.auditor != nil {
 		status := "SUCCESS"
 		if err != nil {
 			status = "FAILURE: " + err.Error()
 		}
-		s.auditor.Log(enterprise.AuditEvent{
+		s.auditor.Log(commercial.AuditEvent{
 			UserID:   "system",
 			Action:   "EXECUTE_CODE",
 			Resource: req.Language,
@@ -114,13 +114,13 @@ func (s *Server) handleWASMExec(w http.ResponseWriter, r *http.Request) {
 
 	result, err := sandbox.Execute(r.Context(), req.Code)
 
-	// Audit WASM Execution (Enterprise Tier)
+	// Audit WASM Execution (Commercial Tier)
 	if s.auditor != nil {
 		status := "SUCCESS"
 		if err != nil {
 			status = "FAILURE: " + err.Error()
 		}
-		s.auditor.Log(enterprise.AuditEvent{
+		s.auditor.Log(commercial.AuditEvent{
 			UserID:   "system",
 			Action:   "EXECUTE_WASM",
 			Resource: "go",

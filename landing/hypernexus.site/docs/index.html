@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TormentNexus — Universal AI Control Plane</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #0a0a0f;
+        color: #e0e0e0;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 60px 20px;
+      }
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #7c3aed, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .tagline {
+        font-size: 1.3rem;
+        color: #94a3b8;
+        margin-bottom: 2rem;
+      }
+      .cta {
+        display: inline-block;
+        background: linear-gradient(135deg, #7c3aed, #3b82f6);
+        color: #fff;
+        padding: 16px 36px;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-decoration: none;
+        margin-right: 16px;
+        transition: opacity 0.2s;
+      }
+      .cta:hover {
+        opacity: 0.9;
+      }
+      .cta-secondary {
+        background: #1e1e2e;
+        border: 1px solid #333;
+      }
+      pre {
+        background: #1a1a2e;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+        border: 1px solid #2d2d4a;
+      }
+      code {
+        color: #a78bfa;
+        font-size: 1.05rem;
+      }
+      h2 {
+        font-size: 1.8rem;
+        margin: 2.5rem 0 1rem;
+        color: #c4b5fd;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 1.5rem 0;
+      }
+      .card {
+        background: #14142a;
+        border: 1px solid #2a2a4a;
+        border-radius: 10px;
+        padding: 24px;
+      }
+      .card h3 {
+        color: #a78bfa;
+        margin-bottom: 8px;
+      }
+      .card p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+      .emoji {
+        font-size: 1.5rem;
+        margin-right: 8px;
+      }
+      a {
+        color: #a78bfa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>TormentNexus</h1>
+      <p class="tagline">
+        Universal AI Control Plane — Persistent memory, 20,000+ MCP tools, and
+        multi-agent orchestration. Local-first. Open source.
+      </p>
+
+      <a href="https://github.com/MDMAtk/TormentNexus" class="cta">⭐ GitHub</a>
+      <a
+        href="https://www.npmjs.com/search?q=%40tormentnexus"
+        class="cta cta-secondary"
+        >📦 npm</a
+      >
+
+      <h2>One Command</h2>
+      <pre><code>npx @tormentnexus/install</code></pre>
+      <p>
+        Detects and configures <strong>38+ AI coding agents</strong> — Claude,
+        Gemini, Cursor, Windsurf, OpenHands, Aider, CodeWhale, and more. Each
+        gets MCP wiring, skills, slash commands, and memory hooks.
+      </p>
+
+      <h2>What It Does</h2>
+      <div class="grid">
+        <div class="card">
+          <h3><span class="emoji">🧠</span> Infinite Memory</h3>
+          <p>
+            Multi-tier L1/L2/L3 persistent memory. Every session searches past
+            decisions. Store patterns, bugs, and architecture decisions.
+          </p>
+        </div>
+        <div class="card">
+          <h3><span class="emoji">🔧</span> 20,000+ MCP Tools</h3>
+          <p>
+            Largest local MCP registry. Progressive semantic routing — only
+            relevant tools enter the LLM context window.
+          </p>
+        </div>
+        <div class="card">
+          <h3><span class="emoji">🤖</span> Multi-Agent Swarm</h3>
+          <p>
+            A2A protocol with role rotation. Agents debate, bid on tasks, share
+            context, and reach consensus autonomously.
+          </p>
+        </div>
+        <div class="card">
+          <h3><span class="emoji">🏢</span> Corporate Ready</h3>
+          <p>
+            Stripe billing, tenant Docker isolation, SSO/OIDC, RBAC, audit
+            logging. Production deployment with live payments.
+          </p>
+        </div>
+        <div class="card">
+          <h3><span class="emoji">🛡️</span> Self-Healing</h3>
+          <p>
+            Autonomous Diagnose→Fix→Verify→Retry loop. Errors are captured,
+            diagnosed, and remediated.
+          </p>
+        </div>
+        <div class="card">
+          <h3><span class="emoji">🌊</span> LLM Waterfall</h3>
+          <p>
+            Cascading failover: NVIDIA NIM → OpenRouter → Local Ollama. Never
+            blocked by rate limits or outages.
+          </p>
+        </div>
+      </div>
+
+      <h2>Install</h2>
+      <pre><code>npx @tormentnexus/install          # One-command 38-client setup
+npm install -g @tormentnexus/cli   # CLI tools
+tn search "your topic"             # Search memory
+tn status                          # System health</code></pre>
+
+      <h2>Open Source</h2>
+      <p>
+        MIT licensed.
+        <a href="https://github.com/MDMAtk/TormentNexus">GitHub</a> ·
+        <a href="https://www.npmjs.com/search?q=%40tormentnexus">npm</a>
+      </p>
+
+      <p style="margin-top: 3rem; color: #555; font-size: 0.85rem">
+        TormentNexus v1.0.0-b1
+      </p>
+    </div>
+  </body>
+</html>

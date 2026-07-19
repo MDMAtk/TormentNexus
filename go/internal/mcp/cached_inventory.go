@@ -321,7 +321,7 @@ func buildConfigSnapshot() *CachedInventorySnapshot {
 func buildDatabaseSnapshot() (*CachedInventorySnapshot, error) {
 	// In a full implementation, this queries the SQLite database.
 	// For now, return a nil snapshot to let the config source handle it.
-	return nil, fmt.Errorf("database snapshot not yet implemented in Go sidecar")
+	return nil, fmt.Errorf("database snapshot not yet implemented in TN Kernel")
 }
 
 func firstNonEmpty(vals ...string) string {

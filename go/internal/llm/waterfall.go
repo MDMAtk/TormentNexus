@@ -68,6 +68,15 @@ func (p *HTTPProvider) Chat(ctx context.Context, req ChatRequest) (*ChatResponse
 	return nil, &ProviderError{ProviderID: p.config.ID, StatusCode: resp.StatusCode, Body: string(body), Retryable: retryable}
 }
 
+// isContentFiltered checks if the response was filtered by the provider's content policy.
+// If so, we treat it as retryable so the waterfall can try the next provider.
+func isContentFiltered(resp *ChatResponse) bool {
+	if resp == nil || len(resp.Choices) == 0 {
+		return false
+	}
+	return resp.Choices[0].FinishReason == "content_filter"
+}
+
 type tierProvider struct {
 	priority int
 	provider *HTTPProvider
@@ -105,6 +114,17 @@ func (r *WaterfallRouter) Chat(ctx context.Context, req ChatRequest) (*ChatRespo
 		attempts++
 		resp, err := tp.provider.Chat(ctx, req)
 		if err == nil {
+			// If the provider returned a content_filter finish_reason, treat as retryable
+			if isContentFiltered(resp) {
+				lastErr = &ProviderError{
+					ProviderID: resp.ProviderID,
+					StatusCode: 200,
+					Body:       "Provider finish_reason: content_filter",
+					Retryable:  true,
+				}
+				r.totalFallbacks.Add(1)
+				continue
+			}
 			resp.Attempts = attempts
 			return resp, nil
 		}

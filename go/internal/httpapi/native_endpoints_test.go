@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
-	"github.com/tormentnexushq/tormentnexus-go/internal/workflow"
+	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/workflow"
 )
 
 func newNativeTestServer(t *testing.T) (*Server, string) {
@@ -188,6 +188,7 @@ func TestNativeSessionExportEndpoint(t *testing.T) {
 
 func TestSystemOverviewHandlerReturnsGoNativeData(t *testing.T) {
 	server, _ := newNativeTestServer(t)
+	defer server.Close()
 	req := httptest.NewRequest(http.MethodGet, "/api/system/overview", nil)
 	rec := httptest.NewRecorder()
 	server.handleSystemOverview(rec, req)

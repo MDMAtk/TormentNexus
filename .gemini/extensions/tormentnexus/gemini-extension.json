@@ -1,0 +1,34 @@
+{
+  "name": "tormentnexus",
+  "version": "1.0.0",
+  "description": "TormentNexus AI control plane — L2 memory, tool search, session import, skill registry, code search, subagent orchestration",
+  "icon": "",
+  "tools": [
+    {
+      "name": "tn_memory_store",
+      "description": "Save important decisions, patterns, and facts with tags to TormentNexus L2 memory. Use tags with project:, failure:, pattern:, convention: prefixes.",
+      "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+      "args": ["mcp"]
+    },
+    {
+      "name": "tn_memory_search",
+      "description": "Find past TormentNexus memories by keyword, tag, or category",
+      "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+      "args": ["mcp"]
+    },
+    {
+      "name": "tn_context_harvest",
+      "description": "Manually trigger context harvesting from TormentNexus L2 memory",
+      "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+      "args": ["mcp"]
+    }
+  ],
+  "hooks": {
+    "systemPrompt": [
+      {
+        "id": "tn-guidance",
+        "text": "\n## TormentNexus Integration\n\nYou have access to TormentNexus — a local AI control plane running on port 7778 with persistent L2 vector memory, semantic tool discovery, imported sessions, and a skill registry.\n\n### Memory Tools\n- `tn_memory_store` — Save important decisions, patterns, and facts with tags\n- `tn_memory_search` — Find past memories by keyword, tag, or category\n- `tn_memory_vector_search` — Semantic vector search for conceptually related memories\n\n### Discovery Tools\n- `tn_tool_search` — Describe what you need, TN finds the best tool across 20+ servers\n- `tn_session_search` — Browse 542+ imported sessions\n- `tn_skill_manage` — Access 5,776 reusable skill modules\n- `tn_code_search` — Search code via AST-grep rules, deepcontext, or file pattern\n- `tn_context_harvest` — Manual trigger for context harvesting from TN L2\n\n### Best Practices\n1. Use `tn_memory_search` before significant tasks to recall past context\n2. Store key decisions with `tn_memory_store` using descriptive tags\n3. Use `tn_context_harvest` at the start of complex tasks\n"
+      }
+    ]
+  }
+}

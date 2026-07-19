@@ -1,0 +1,36 @@
+{
+  "name": "tormentnexus",
+  "version": "1.1.0",
+  "hooks": "./hooks.json",
+  "description": "TormentNexus AI control plane — persistent L2 vector memory, semantic tool discovery, imported sessions, skill registry, code search, subagent orchestration",
+  "author": {
+    "name": "TormentNexus",
+    "url": "http://127.0.0.1:7778"
+  },
+  "keywords": [
+    "tormentnexus",
+    "memory",
+    "mcp",
+    "ai-control-plane",
+    "tools",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "TormentNexus",
+    "shortDescription": "TormentNexus AI control plane with L2 memory, tool discovery, and code search",
+    "longDescription": "TormentNexus is a local AI control plane running on port 7778 with persistent L2 vector memory, semantic tool discovery across 20+ MCP servers, imported sessions, and a skill registry. Connect via MCP stdio to access memory tools, tool routing, and code intelligence."
+  },
+  "tools": {
+    "mcpServers": {
+      "tormentnexus": {
+        "command": "C:\\Users\\hyper\\workspace\\tormentnexus\\tormentnexus.exe",
+        "args": ["mcp"],
+        "env": {
+          "TORMENTNEXUS_WORKSPACE_ROOT": "C:\\Users\\hyper\\workspace\\tormentnexus"
+        }
+      }
+    }
+  }
+}
+

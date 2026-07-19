@@ -5,11 +5,13 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcp"
-	"github.com/tormentnexushq/tormentnexus-go/internal/cache"
+	"github.com/MDMAtk/TormentNexus/internal/cache"
+	"github.com/MDMAtk/TormentNexus/internal/mcp"
+	roottools "github.com/MDMAtk/TormentNexus/tools"
 )
 
 func (s *Server) handleMCPStatus(w http.ResponseWriter, r *http.Request) {
@@ -30,10 +32,10 @@ func (s *Server) buildMCPStatus(ctx context.Context) (map[string]any, error) {
 	if err == nil {
 		return map[string]any{
 			"success": true,
-			"data": result,
+			"data":    result,
 			"bridge": map[string]any{
 				"upstreamBase": upstreamBase,
-				"procedure": "mcp.getStatus",
+				"procedure":    "mcp.getStatus",
 			},
 		}, nil
 	}
@@ -44,20 +46,20 @@ func (s *Server) buildMCPStatus(ctx context.Context) (map[string]any, error) {
 	return map[string]any{
 		"success": true,
 		"data": map[string]any{
-			"initialized": true,
-			"connected": summary.SourceBackedHarnessCount > 0,
-			"toolCount": summary.SourceBackedToolCount,
-			"serverCount": summary.InstalledHarnessCount,
-			"connectedCount": summary.SourceBackedHarnessCount,
+			"initialized":              true,
+			"connected":                summary.SourceBackedHarnessCount > 0,
+			"toolCount":                summary.SourceBackedToolCount,
+			"serverCount":              summary.InstalledHarnessCount,
+			"connectedCount":           summary.SourceBackedHarnessCount,
 			"sourceBackedHarnessCount": summary.SourceBackedHarnessCount,
-			"source": "source-backed-local-summary",
-			"lazySessionMode": false,
-			"singleActiveServerMode": false,
+			"source":                   "source-backed-local-summary",
+			"lazySessionMode":          false,
+			"singleActiveServerMode":   false,
 		},
 		"bridge": map[string]any{
-			"fallback": "go-local-mcp",
+			"fallback":  "go-local-mcp",
 			"procedure": "mcp.getStatus",
-			"reason": "upstream unavailable; using local MCP harness summary",
+			"reason":    "upstream unavailable; using local MCP harness summary",
 		},
 	}, nil
 }
@@ -66,6 +68,15 @@ func (s *Server) handleMCPTools(w http.ResponseWriter, r *http.Request) {
 	var result any
 	upstreamBase, err := s.callUpstreamJSON(r.Context(), "mcp.listTools", nil, &result)
 	if err == nil {
+		var toolsList []map[string]any
+		if bytes, errMar := json.Marshal(result); errMar == nil {
+			_ = json.Unmarshal(bytes, &toolsList)
+		}
+		toolsList = s.mergeAccessoryTools(toolsList)
+		if len(toolsList) > 0 {
+			toolsList = s.injectAlwaysOnStatus(toolsList)
+			result = toolsList
+		}
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,
 			"data":    result,
@@ -87,9 +98,10 @@ func (s *Server) handleMCPTools(w http.ResponseWriter, r *http.Request) {
 		for key, value := range inventoryBridgeMeta(view) {
 			bridge[key] = value
 		}
+		mergedTools := s.mergeAccessoryTools(fallbackMCPInventoryTools(view))
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,
-			"data":    fallbackMCPInventoryTools(view),
+			"data":    s.injectAlwaysOnStatus(mergedTools),
 			"bridge":  bridge,
 		})
 		return
@@ -109,17 +121,19 @@ func (s *Server) handleMCPTools(w http.ResponseWriter, r *http.Request) {
 		for key, value := range inventoryBridgeMeta(view) {
 			bridge[key] = value
 		}
+		mergedTools := s.mergeAccessoryTools([]map[string]any{})
 		writeJSON(w, http.StatusOK, map[string]any{
 			"success": true,
-			"data":    []map[string]any{},
+			"data":    s.injectAlwaysOnStatus(mergedTools),
 			"bridge":  bridge,
 		})
 		return
 	}
 
+	mergedTools := s.mergeAccessoryTools(fallbackMCPTools(summary.InstalledHarnesses))
 	writeJSON(w, http.StatusOK, map[string]any{
 		"success": true,
-		"data":    fallbackMCPTools(summary.InstalledHarnesses),
+		"data":    s.injectAlwaysOnStatus(mergedTools),
 		"bridge": map[string]any{
 			"fallback":  "go-local-mcp",
 			"procedure": "mcp.listTools",
@@ -348,10 +362,10 @@ func (s *Server) buildMCPServersList(ctx context.Context) (map[string]any, error
 	if err == nil {
 		return map[string]any{
 			"success": true,
-			"data": result,
+			"data":    result,
 			"bridge": map[string]any{
 				"upstreamBase": upstreamBase,
-				"procedure": "mcp.listServers",
+				"procedure":    "mcp.listServers",
 			},
 		}, nil
 	}
@@ -360,9 +374,9 @@ func (s *Server) buildMCPServersList(ctx context.Context) (map[string]any, error
 	_, cliSummary, _ := s.localMCPSummary(ctx)
 
 	type serverEntry struct {
-		Name string `json:"name"`
-		Status string `json:"status"`
-		ToolCount int `json:"toolCount"`
+		Name      string `json:"name"`
+		Status    string `json:"status"`
+		ToolCount int    `json:"toolCount"`
 	}
 
 	var servers []serverEntry
@@ -379,8 +393,8 @@ func (s *Server) buildMCPServersList(ctx context.Context) (map[string]any, error
 				status = "connected"
 			}
 			servers = append(servers, serverEntry{
-				Name: srv.Name,
-				Status: status,
+				Name:      srv.Name,
+				Status:    status,
 				ToolCount: srv.ToolCount,
 			})
 		}
@@ -394,8 +408,8 @@ func (s *Server) buildMCPServersList(ctx context.Context) (map[string]any, error
 				status = "connected"
 			}
 			servers = append(servers, serverEntry{
-				Name: srv.Name,
-				Status: status,
+				Name:      srv.Name,
+				Status:    status,
 				ToolCount: srv.ToolCount,
 			})
 		}
@@ -407,27 +421,28 @@ func (s *Server) buildMCPServersList(ctx context.Context) (map[string]any, error
 		}
 		seen[h.ID] = true
 		servers = append(servers, serverEntry{
-			Name: h.ID,
+			Name:   h.ID,
 			Status: "available",
 		})
 	}
 
 	return map[string]any{
 		"success": true,
-		"data": servers,
+		"data":    servers,
 		"bridge": map[string]any{
-			"fallback": "go-local-mcp",
+			"fallback":  "go-local-mcp",
 			"procedure": "mcp.listServers",
-			"reason": "upstream unavailable; using local MCP inventory",
+			"reason":    "upstream unavailable; using local MCP inventory",
 		},
 	}, nil
 }
 
-// handleMCPPredictConversational is the primary sidecar endpoint called by the
+// handleMCPPredictConversational is the primary kernel endpoint called by the
 // TypeScript ConversationalToolInjector before falling back to cloud LLMs.
 //
 // Request:  POST /api/mcp/tools/predict-conversational
-//           { "prompt": "...", "systemPrompt": "..." }
+//
+//	{ "prompt": "...", "systemPrompt": "..." }
 //
 // Response: { "success": true, "data": { "tools": ["tool_name_1", ...] } }
 func (s *Server) handleMCPPredictConversational(w http.ResponseWriter, r *http.Request) {
@@ -480,7 +495,8 @@ func (s *Server) handleMCPPredictConversational(w http.ResponseWriter, r *http.R
 // to build its own window independently for preemptive advertisement.
 //
 // Request:  POST /api/mcp/conversation/append
-//           { "role": "user"|"assistant"|"tool", "text": "..." }
+//
+//	{ "role": "user"|"assistant"|"tool", "text": "..." }
 //
 // Response: { "success": true }
 func (s *Server) handleMCPConversationAppend(w http.ResponseWriter, r *http.Request) {
@@ -536,3 +552,274 @@ func (s *Server) handleMCPConversationWindow(w http.ResponseWriter, r *http.Requ
 	})
 }
 
+type AlwaysOnConfig struct {
+	Tools map[string]bool `json:"tools"`
+}
+
+type NativeConfig struct {
+	Tools map[string]bool `json:"tools"`
+}
+
+func (s *Server) loadAlwaysOnTools() map[string]bool {
+	path := filepath.Join(s.cfg.WorkspaceRoot, "data", "always-on-tools.json")
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return map[string]bool{}
+	}
+	var config AlwaysOnConfig
+	if err := json.Unmarshal(data, &config); err != nil {
+		return map[string]bool{}
+	}
+	return config.Tools
+}
+
+func (s *Server) saveAlwaysOnTools(tools map[string]bool) error {
+	path := filepath.Join(s.cfg.WorkspaceRoot, "data", "always-on-tools.json")
+	config := AlwaysOnConfig{Tools: tools}
+	data, err := json.MarshalIndent(config, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(path, data, 0644)
+}
+
+func (s *Server) loadNativeConfig() map[string]bool {
+	path := filepath.Join(s.cfg.WorkspaceRoot, "data", "native-tools.json")
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return map[string]bool{}
+	}
+	var config NativeConfig
+	if err := json.Unmarshal(data, &config); err != nil {
+		return map[string]bool{}
+	}
+	return config.Tools
+}
+
+func (s *Server) saveNativeConfig(tools map[string]bool) error {
+	path := filepath.Join(s.cfg.WorkspaceRoot, "data", "native-tools.json")
+	config := NativeConfig{Tools: tools}
+	data, err := json.MarshalIndent(config, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(path, data, 0644)
+}
+
+func (s *Server) injectAlwaysOnStatus(tools []map[string]any) []map[string]any {
+	alwaysOnMap := s.loadAlwaysOnTools()
+	nativeMap := s.loadNativeConfig()
+
+	// List of high-value tools and tools native to other harnesses that must always be always-on by default
+	parityTools := map[string]bool{
+		// ── High-Value Chat Automation / Process Tools ──
+		"list_processes":       true,
+		"kill_process":         true,
+		"set_chat_input":       true,
+		"submit_chat_input":    true,
+		"click_chat_button":    true,
+		"advance_chat":         true,
+		"mcp_list_servers":     true,
+		"mcp_list_tools":       true,
+		"mcp_call_tool":        true,
+		"mcp_status":           true,
+		"mcp_server_test":      true,
+		"system_status":        true,
+		"billing_status":       true,
+		"list_accessory_tools": true,
+
+		// ── Tools Native to Other Harnesses (Pi, Aider, Confluence, etc.) ──
+		"read":                     true,
+		"write":                    true,
+		"edit":                     true,
+		"bash":                     true,
+		"grep":                     true,
+		"find":                     true,
+		"ls":                       true,
+		"apply_search_replace":     true,
+		"code_interpreter":         true,
+		"cloud_troubleshoot":       true,
+		"generate_devops_pipeline": true,
+		"jira_create_issue":        true,
+		"confluence_search":        true,
+		"add_bookmark":             true,
+		"launch_webview":           true,
+		"get_system_stats":         true,
+		"download_llamafile":       true,
+	}
+
+	for _, tool := range tools {
+		name, _ := tool["name"].(string)
+		isAlwaysOn := parityTools[name] || alwaysOnMap[name]
+		tool["alwaysOn"] = isAlwaysOn
+		tool["alwaysShow"] = isAlwaysOn
+
+		// Determine if native status is active
+		isGoNative := s.toolsRegistry != nil && s.toolsRegistry.HasTool(name)
+		isNativeDisabled := nativeMap[name] == false
+		tool["native"] = isGoNative && !isNativeDisabled
+	}
+	return tools
+}
+
+func (s *Server) mergeAccessoryTools(toolsList []map[string]any) []map[string]any {
+	seen := make(map[string]bool)
+	var uniqueTools []map[string]any
+	for _, t := range toolsList {
+		if name, ok := t["name"].(string); ok {
+			if seen[name] {
+				continue
+			}
+			seen[name] = true
+			uniqueTools = append(uniqueTools, t)
+		} else {
+			uniqueTools = append(uniqueTools, t)
+		}
+	}
+	toolsList = uniqueTools
+
+	// 1. Merge accessory tools from the root registry
+	registry := roottools.NewRegistry()
+	if registry != nil {
+		for _, t := range registry.Tools {
+			if seen[t.Name] {
+				continue
+			}
+			seen[t.Name] = true
+			var inputSchema map[string]any
+			if len(t.Parameters) > 0 {
+				_ = json.Unmarshal(t.Parameters, &inputSchema)
+			}
+			if inputSchema == nil {
+				inputSchema = map[string]any{
+					"type":       "object",
+					"properties": map[string]any{},
+				}
+			}
+			toolMap := map[string]any{
+				"name":        t.Name,
+				"description": t.Description,
+				"inputSchema": inputSchema,
+				"alwaysOn":    false,
+				"alwaysShow":  false,
+				"source":      "built-in",
+			}
+			toolsList = append(toolsList, toolMap)
+		}
+	}
+
+	// 2. Merge Go-native internal tools
+	if s.toolsRegistry != nil {
+		for _, name := range s.toolsRegistry.List() {
+			if seen[name] {
+				continue
+			}
+			seen[name] = true
+
+			desc := "Go-native built-in tool"
+			properties := map[string]any{}
+			required := []string{}
+
+			switch name {
+			case "read_file":
+				desc = "Read the contents of a file"
+				properties["path"] = map[string]any{"type": "string", "description": "Absolute path to the file"}
+				required = []string{"path"}
+			case "write_file":
+				desc = "Create or overwrite a file with contents"
+				properties["path"] = map[string]any{"type": "string", "description": "Absolute path to the file"}
+				properties["content"] = map[string]any{"type": "string", "description": "Content to write"}
+				required = []string{"path", "content"}
+			case "list_dir":
+				desc = "List files and subdirectories"
+				properties["path"] = map[string]any{"type": "string", "description": "Absolute path to the directory"}
+				required = []string{"path"}
+			case "delete_file":
+				desc = "Remove a file from filesystem"
+				properties["path"] = map[string]any{"type": "string", "description": "Absolute path to the file"}
+				required = []string{"path"}
+			case "ripgrep", "search_text":
+				desc = "Search for exact text or pattern in workspace files"
+				properties["query"] = map[string]any{"type": "string", "description": "Search term or regex pattern"}
+				properties["path"] = map[string]any{"type": "string", "description": "Optional search directory"}
+				required = []string{"query"}
+			case "search_web":
+				desc = "Perform a web search for a query"
+				properties["query"] = map[string]any{"type": "string", "description": "Search query"}
+				required = []string{"query"}
+			case "probe":
+				desc = "Send a HTTP GET request to check URL status"
+				properties["url"] = map[string]any{"type": "string", "description": "Target URL to probe"}
+				required = []string{"url"}
+			case "code_research":
+				desc = "Analyze codebase structure and find matching code elements"
+				properties["query"] = map[string]any{"type": "string", "description": "Code component or search string"}
+				required = []string{"query"}
+			case "search_semantic":
+				desc = "Perform semantic search across vectorized workspace memories"
+				properties["query"] = map[string]any{"type": "string", "description": "Search query"}
+				required = []string{"query"}
+			case "search_regex":
+				desc = "Run regex search on workspace files"
+				properties["query"] = map[string]any{"type": "string", "description": "Regex pattern"}
+				required = []string{"query"}
+			case "fetch", "get":
+				desc = "Fetch content from a URL via GET request"
+				properties["url"] = map[string]any{"type": "string", "description": "URL to fetch"}
+				required = []string{"url"}
+			case "post":
+				desc = "Send a POST request with body to a URL"
+				properties["url"] = map[string]any{"type": "string", "description": "URL to send POST to"}
+				properties["body"] = map[string]any{"type": "string", "description": "Optional raw request body"}
+				required = []string{"url"}
+			case "browser_action":
+				desc = "Interact with headless browser"
+				properties["action"] = map[string]any{"type": "string", "description": "Browser action (goto, click, fill, type, content)"}
+				properties["url"] = map[string]any{"type": "string", "description": "Optional URL target"}
+				required = []string{"action"}
+			case "evolve":
+				desc = "Analyze tool usage telemetry and propose code repairs"
+			case "run_dag":
+				desc = "Execute a structured DAG task flow"
+			case "memory_scratchpad_get":
+				desc = "Retrieve a value from the core memory scratchpad (e.g. 'persona' or 'human')"
+				properties["key"] = map[string]any{"type": "string", "description": "Key to retrieve"}
+				required = []string{"key"}
+			case "memory_scratchpad_set":
+				desc = "Write/overwrite a value in the core memory scratchpad"
+				properties["key"] = map[string]any{"type": "string", "description": "Key to set"}
+				properties["value"] = map[string]any{"type": "string", "description": "Content/value to write"}
+				required = []string{"key", "value"}
+			case "memory_scratchpad_append":
+				desc = "Append text to an existing core memory scratchpad value"
+				properties["key"] = map[string]any{"type": "string", "description": "Key to append to"}
+				properties["value"] = map[string]any{"type": "string", "description": "Content/text to append"}
+				required = []string{"key", "value"}
+			case "memory_extract_relations":
+				desc = "Extract entities and relationships from a text block and store them in the graph RelationStore"
+				properties["text"] = map[string]any{"type": "string", "description": "Text block to extract relations from"}
+				required = []string{"text"}
+			}
+
+			inputSchema := map[string]any{
+				"type":       "object",
+				"properties": properties,
+			}
+			if len(required) > 0 {
+				inputSchema["required"] = required
+			}
+
+			toolMap := map[string]any{
+				"name":        name,
+				"description": desc,
+				"inputSchema": inputSchema,
+				"alwaysOn":    false,
+				"alwaysShow":  false,
+				"source":      "native",
+			}
+			toolsList = append(toolsList, toolMap)
+		}
+	}
+
+	return toolsList
+}

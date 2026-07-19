@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HyperNexus Cloud — Login</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0a1a 0%,
+          #1a1a3e 50%,
+          #0a0a1a 100%
+        );
+        color: #e0e0ff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .login-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2rem;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        color: #8888bb;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+      }
+      label {
+        display: block;
+        text-align: left;
+        color: #8888cc;
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+      }
+      input {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        color: #e0e0ff;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        transition: border-color 0.2s;
+      }
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      .error {
+        color: #ff4466;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+      .links {
+        margin-top: 1.5rem;
+        font-size: 0.8rem;
+        color: #666699;
+      }
+      .links a {
+        color: #667eea;
+        margin: 0 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <h1>HyperNexus Cloud</h1>
+      <p>Sign in to your organization's control plane.</p>
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@company.com" required />
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Your password"
+          required
+        />
+        <button type="submit">Sign In</button>
+        <div class="error" id="error"></div>
+      </form>
+      <div class="links">
+        <a href="https://hypernexus.site">Home</a>
+        <a href="https://hypernexus.site#pricing">Sign Up</a>
+      </div>
+    </div>
+
+    <script>
+      var API = "https://hypernexus.site/api";
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          var email = document.getElementById("email").value.trim();
+          var password = document.getElementById("password").value;
+          var err = document.getElementById("error");
+          if (!email || !password) {
+            err.textContent = "Enter email and password.";
+            err.style.display = "block";
+            return;
+          }
+          fetch(API + "/account/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email, password: password }),
+          })
+            .then(function (r) {
+              return r.json();
+            })
+            .then(function (d) {
+              if (d.error) {
+                err.textContent = d.error;
+                err.style.display = "block";
+                return;
+              }
+              localStorage.setItem("hn_token", d.token);
+              window.location.href =
+                d.dashboard ||
+                "https://" + d.account.subdomain + ".hypernexus.site";
+            })
+            .catch(function () {
+              err.textContent = "Connection error. Server may be down.";
+              err.style.display = "block";
+            });
+        });
+    </script>
+  </body>
+</html>

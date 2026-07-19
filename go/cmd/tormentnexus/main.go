@@ -14,13 +14,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/buildinfo"
-	"github.com/tormentnexushq/tormentnexus-go/internal/config"
-	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
-	"github.com/tormentnexushq/tormentnexus-go/internal/httpapi"
-	"github.com/tormentnexushq/tormentnexus-go/internal/license"
-	"github.com/tormentnexushq/tormentnexus-go/internal/lockfile"
-	"github.com/tormentnexushq/tormentnexus-go/internal/sessionimport"
+	"github.com/MDMAtk/TormentNexus/internal/buildinfo"
+	"github.com/MDMAtk/TormentNexus/internal/config"
+	"github.com/MDMAtk/TormentNexus/internal/controlplane"
+	"github.com/MDMAtk/TormentNexus/internal/httpapi"
+	"github.com/MDMAtk/TormentNexus/internal/license"
+	"github.com/MDMAtk/TormentNexus/internal/lockfile"
+	"github.com/MDMAtk/TormentNexus/internal/protocol"
+	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
 	"path/filepath"
 )
 
@@ -35,7 +36,7 @@ func run(args []string) int {
 			return runDeepLink(args[0])
 		}
 		switch args[0] {
-		case "serve", "version", "start", "stop", "status", "mcp":
+		case "serve", "version", "start", "stop", "status", "mcp", "register-protocol":
 			command = args[0]
 			args = args[1:]
 		}
@@ -55,17 +56,29 @@ func run(args []string) int {
 		return cmdStatus(args)
 	case "mcp":
 		return cmdMCP(args)
+	case "register-protocol":
+		return cmdRegisterProtocol(args)
 	default:
 		log.Printf("unknown command %q", command)
 		return 1
 	}
 }
 
+func cmdRegisterProtocol(args []string) int {
+	log.Printf("Registering tormentnexus:// protocol handler...")
+	if err := protocol.RegisterProtocol(); err != nil {
+		log.Printf("[ERROR] failed to register protocol handler: %v", err)
+		return 1
+	}
+	log.Printf("Successfully registered tormentnexus:// protocol handler in Windows registry.")
+	return 0
+}
+
 func runDeepLink(deepLink string) int {
 	cfg := config.Default()
 	record, err := lockfile.Read(cfg.LockPath())
 	if err != nil {
-		log.Printf("TormentNexus sidecar server is not currently running. Please start it using 'tormentnexus serve' first.")
+		log.Printf("TormentNexus TN Kernel is not currently running. Please start it using 'tormentnexus serve' first.")
 		return 1
 	}
 

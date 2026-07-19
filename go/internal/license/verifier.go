@@ -13,7 +13,7 @@ import (
 )
 
 // Hardcoded public key for Ed25519 license verification
-const licensePublicKeyHex = "9a9d5d9cc7acebbbf80adfe9005586c3f6496e82e7fa300920b831397c1cb763"
+const licensePublicKeyHex = "1b6a5303ef631175a56c3564aacf016e43a8c78e2328cbd333d962b8befb58f1"
 
 // License represents the decrypted and validated license properties
 type License struct {

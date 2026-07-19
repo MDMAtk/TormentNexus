@@ -1,0 +1,53 @@
+{
+  "name": "@tormentnexus/vscode-extension",
+  "displayName": "TormentNexus",
+  "description": "AI Operations Control Plane: MCP routing, memory management, and provider fallback.",
+  "version": "1.0.0-alpha.257",
+  "publisher": "TormentNexus",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Programming Languages"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "tormentnexus",
+          "title": "TormentNexus",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "tormentnexus": [
+        {
+          "type": "webview",
+          "id": "tormentnexus.sidebar",
+          "name": "Mission Control"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "tormentnexus.searchMemory",
+        "title": "TormentNexus: Search Memory"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.0.0"
+  }
+}

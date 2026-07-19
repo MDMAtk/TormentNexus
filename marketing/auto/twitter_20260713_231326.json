@@ -1,0 +1,11 @@
+{
+  "tweets": [
+    "\ud83e\uddf5 Thread: Why AI needs persistent memory (1/7)",
+    "Current AI assistants lose context between sessions. You explain your project, close the laptop, and start over. Sound familiar?",
+    "TormentNexus fixes this with a tiered memory system: L1 (session) \u2192 L2 (hot vector) \u2192 L3 (cold archive) \u2192 L4 (limbo). Your AI remembers.",
+    "It also has 26,000+ MCP servers indexed and searchable. Databases, filesystems, browsers, APIs - one click to install.",
+    "Works with local LLMs (LM Studio, Ollama, DeepSeek). No data leaves your machine unless you want it to.",
+    "Built in Go. Single binary. Fast startup. Low resource usage.",
+    "Open source: https://github.com/MDMAtk/TormentNexus\n\nTry it now: https://tormentnexus.site"
+  ]
+}

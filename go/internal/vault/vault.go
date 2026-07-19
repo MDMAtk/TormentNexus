@@ -11,8 +11,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 type EmbedFunc func(text string) ([]float32, error)
 
@@ -25,7 +26,7 @@ type Vault struct {
 }
 
 func OpenVault(path string) (*Vault, error) {
-	db, err := sql.Open("sqlite", path)
+	db, err := database.Open("sqlite", path)
 	if err != nil { return nil, fmt.Errorf("open vault %s: %w", path, err) }
 	db.Exec("PRAGMA journal_mode=WAL")
 	db.Exec("PRAGMA synchronous=NORMAL")

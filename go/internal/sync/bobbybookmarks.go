@@ -2,7 +2,6 @@ package sync
 
 import (
 	"context"
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -12,8 +11,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 type Bookmark struct {
 	ID              int         `json:"id"`
@@ -74,7 +74,7 @@ func SyncBobbyBookmarks(ctx context.Context, dbPath string, baseURL string, perP
 		Errors:  []string{},
 	}
 
-	db, err := sql.Open("sqlite", dbPath)
+	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}
@@ -154,7 +154,7 @@ func SyncBobbyBookmarks(ctx context.Context, dbPath string, baseURL string, perP
 				page_title, page_description, favicon_url, cluster_id, 
 				bobbybookmarks_bookmark_id, import_session_id, synced_at, created_at, updated_at
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-			ON CONFLICT(url) DO UPDATE SET
+			ON CONFLICT(normalized_url) DO UPDATE SET
 				normalized_url = excluded.normalized_url,
 				title = coalesce(excluded.title, links_backlog.title),
 				description = coalesce(excluded.description, links_backlog.description),

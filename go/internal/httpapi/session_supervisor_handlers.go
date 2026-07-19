@@ -10,7 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/supervisor"
+	"github.com/MDMAtk/TormentNexus/internal/sessionimport"
+	"github.com/MDMAtk/TormentNexus/internal/supervisor"
 )
 
 func (s *Server) handleSupervisorSessionList(w http.ResponseWriter, r *http.Request) {
@@ -738,3 +739,85 @@ func localMaxInt(a, b int) int {
 	}
 	return b
 }
+
+func (s *Server) handleSupervisorSessionRestoreImported(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]any{"success": false, "error": "method not allowed"})
+		return
+	}
+
+	var payload struct {
+		ID string `json:"id"`
+	}
+	if err := decodeJSONBody(r, &payload); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "invalid JSON body: " + err.Error()})
+		return
+	}
+
+	sessionID := strings.TrimSpace(payload.ID)
+	if sessionID == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]any{"success": false, "error": "missing session id"})
+		return
+	}
+
+	// Read record from imported sessions
+	store := sessionimport.NewImportedSessionStore(s.cfg.WorkspaceRoot)
+	record, err := store.GetImportedSession(r.Context(), sessionID)
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, map[string]any{"success": false, "error": "failed to query database: " + err.Error()})
+		return
+	}
+	if record == nil {
+		writeJSON(w, http.StatusNotFound, map[string]any{"success": false, "error": "imported session not found"})
+		return
+	}
+
+	// Prepare supervisor options
+	cliType := strings.TrimSpace(record.SourceTool)
+	if cliType == "" {
+		cliType = "unknown-tool"
+	}
+	workingDir := s.cfg.WorkspaceRoot
+	if record.WorkingDirectory != nil && strings.TrimSpace(*record.WorkingDirectory) != "" {
+		workingDir = strings.TrimSpace(*record.WorkingDirectory)
+	}
+
+	name := "Imported Session"
+	if record.Title != nil && strings.TrimSpace(*record.Title) != "" {
+		name = strings.TrimSpace(*record.Title)
+	}
+
+	extSessionID := record.ID
+	if record.ExternalSessionID != nil && strings.TrimSpace(*record.ExternalSessionID) != "" {
+		extSessionID = strings.TrimSpace(*record.ExternalSessionID)
+	}
+
+	command, args := defaultLocalSessionCommand(cliType, nil)
+
+	session, createErr := s.supervisorManager.CreateSessionWithOptions(supervisor.CreateSessionOptions{
+		ID:                  extSessionID,
+		Name:                name,
+		CliType:             cliType,
+		Command:             command,
+		Args:                args,
+		RequestedWorkingDir: workingDir,
+		WorkingDirectory:    workingDir,
+		AutoRestart:         false,
+		Metadata:            record.Metadata,
+	})
+	if createErr != nil {
+		writeJSON(w, http.StatusConflict, map[string]any{"success": false, "error": createErr.Error()})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{
+		"success": true,
+		"data":    session,
+		"bridge": map[string]any{
+			"fallback":  "go-local-supervisor",
+			"procedure": "session.restoreImported",
+			"reason":    "restored imported database session into active supervised memory space",
+		},
+	})
+}
+

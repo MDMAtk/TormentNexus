@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/mcp"
+	"github.com/MDMAtk/TormentNexus/internal/mcp"
 )
 
 // handleNativeRouterSearch searches the Go-native MCP router (L1+L2).

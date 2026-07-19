@@ -6,8 +6,8 @@ import (
 
 func TestDefaultServiceDiscovery(t *testing.T) {
 	sd := DefaultServiceDiscovery()
-	if sd.GoSidecarPort != 4300 {
-		t.Errorf("expected GoSidecarPort=4300, got %d", sd.GoSidecarPort)
+	if sd.KernelPort != 4300 {
+		t.Errorf("expected KernelPort=4300, got %d", sd.KernelPort)
 	}
 	if sd.BridgePort != 3001 {
 		t.Errorf("expected BridgePort=3001, got %d", sd.BridgePort)
@@ -15,8 +15,8 @@ func TestDefaultServiceDiscovery(t *testing.T) {
 	if sd.DashboardPort != 3000 {
 		t.Errorf("expected DashboardPort=3000, got %d", sd.DashboardPort)
 	}
-	if len(sd.TRPCUpstreamURLs) != 3 {
-		t.Errorf("expected 3 default tRPC URLs, got %d", len(sd.TRPCUpstreamURLs))
+	if len(sd.TRPCUpstreamURLs) != 4 {
+		t.Errorf("expected 4 default tRPC URLs, got %d", len(sd.TRPCUpstreamURLs))
 	}
 }
 
@@ -28,8 +28,8 @@ func TestServiceDiscoveryFromEnv(t *testing.T) {
 
 	sd := DefaultServiceDiscovery()
 
-	if sd.GoSidecarPort != 5500 {
-		t.Errorf("expected GoSidecarPort=5500, got %d", sd.GoSidecarPort)
+	if sd.KernelPort != 5500 {
+		t.Errorf("expected KernelPort=5500, got %d", sd.KernelPort)
 	}
 	if sd.BridgePort != 4001 {
 		t.Errorf("expected BridgePort=4001, got %d", sd.BridgePort)
@@ -60,10 +60,10 @@ func TestServiceDiscoveryDedupTRPCURLs(t *testing.T) {
 
 func TestServiceDiscoveryBaseURLs(t *testing.T) {
 	sd := ServiceDiscovery{
-		DashboardHost:  "myhost",
-		DashboardPort:  3000,
-		BridgePort:     3001,
-		GoSidecarPort:  4300,
+		DashboardHost: "myhost",
+		DashboardPort: 3000,
+		BridgePort:    3001,
+		KernelPort:    4300,
 	}
 
 	if sd.DashboardBaseURL() != "http://myhost:3000" {
@@ -72,8 +72,8 @@ func TestServiceDiscoveryBaseURLs(t *testing.T) {
 	if sd.BridgeBaseURL() != "http://127.0.0.1:3001" {
 		t.Errorf("expected http://127.0.0.1:3001, got %s", sd.BridgeBaseURL())
 	}
-	if sd.GoSidecarBaseURL() != "http://127.0.0.1:4300" {
-		t.Errorf("expected http://127.0.0.1:4300, got %s", sd.GoSidecarBaseURL())
+	if sd.KernelBaseURL() != "http://127.0.0.1:4300" {
+		t.Errorf("expected http://127.0.0.1:4300, got %s", sd.KernelBaseURL())
 	}
 }
 
@@ -82,8 +82,8 @@ func TestServiceDiscoveryInvalidEnvPort(t *testing.T) {
 	sd := DefaultServiceDiscovery()
 
 	// Should fall back to default
-	if sd.GoSidecarPort != 4300 {
-		t.Errorf("expected default GoSidecarPort=4300, got %d", sd.GoSidecarPort)
+	if sd.KernelPort != 4300 {
+		t.Errorf("expected default KernelPort=4300, got %d", sd.KernelPort)
 	}
 }
 

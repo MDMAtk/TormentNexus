@@ -15,7 +15,7 @@ echo ""
 # ── 1. Build Go Sidecar ──────────────────────────
 if command -v go &>/dev/null; then
 	echo "[1/5] Building Go sidecar..."
-	(cd go && go build -ldflags "-s -w -X github.com/tormentnexushq/tormentnexus-go/internal/buildinfo.Version=${VER}" -buildvcs=false -o ../bin/tormentnexus ./cmd/tormentnexus 2>/dev/null) && echo "      ✓ bin/tormentnexus built" || echo "      [WARN] Go build failed"
+	(cd go && go build -ldflags "-s -w -X github.com/MDMAtk/TormentNexus/internal/buildinfo.Version=${VER}" -buildvcs=false -o ../bin/tormentnexus ./cmd/tormentnexus 2>/dev/null) && echo "      ✓ bin/tormentnexus built" || echo "      [WARN] Go build failed"
 else
 	echo "[1/5] Go not found — skipping sidecar build."
 fi
@@ -63,7 +63,7 @@ echo ""
 echo "  ✓ tRPC:     http://0.0.0.0:${TORMENTNEXUS_PORT}/trpc"
 echo "  ✓ REST:     http://0.0.0.0:${TORMENTNEXUS_PORT}/api"
 echo "  ✓ Go:       http://127.0.0.1:4300/api/index"
-echo "  ✓ Dashboard: http://localhost:3000/dashboard"
+echo "  ✓ Dashboard: http://localhost:7779/dashboard"
 echo ""
 echo "  Press Ctrl+C to stop all services."
 echo ""

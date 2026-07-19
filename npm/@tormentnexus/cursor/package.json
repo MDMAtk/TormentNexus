@@ -1,0 +1,10 @@
+{
+  "name": "@tormentnexus/cursor",
+  "version": "1.0.0-b1",
+  "description": "TormentNexus for Cursor — AI memory, MCP tools, and context harvesting in the Cursor editor",
+  "main": "index.js",
+  "keywords": ["tormentnexus", "cursor", "mcp", "ai-memory", "cursor-ide"],
+  "repository": "github:MDMAtk/TormentNexus",
+  "license": "MIT",
+  "files": ["index.js", "package.json"]
+}

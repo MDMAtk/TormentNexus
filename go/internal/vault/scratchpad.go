@@ -8,8 +8,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	_ "modernc.org/sqlite"
-)
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 type Scratchpad struct {
 	db        *sql.DB
@@ -21,7 +22,7 @@ type Scratchpad struct {
 }
 
 func NewScratchpad() (*Scratchpad, error) {
-	db, err := sql.Open("sqlite", ":memory:")
+	db, err := database.Open("sqlite", ":memory:")
 	if err != nil { return nil, fmt.Errorf("open L1: %w", err) }
 	if err := InitL1Schema(db); err != nil { db.Close(); return nil, fmt.Errorf("init L1: %w", err) }
 	sp := &Scratchpad{db: db}

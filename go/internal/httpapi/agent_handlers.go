@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
-	"github.com/tormentnexushq/tormentnexus-go/internal/orchestration"
+	"github.com/MDMAtk/TormentNexus/internal/ai"
+	"github.com/MDMAtk/TormentNexus/internal/orchestration"
 )
 
 func (s *Server) handleAgentChat(w http.ResponseWriter, r *http.Request) {

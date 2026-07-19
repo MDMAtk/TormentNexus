@@ -13,10 +13,13 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 	"time"
 
+	_ "github.com/glebarez/go-sqlite"
 	"github.com/google/uuid"
-	_ "modernc.org/sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database"
 )
 
 type ImportedSessionMemoryKind string
@@ -101,7 +104,7 @@ type ImportedInstructionDoc struct {
 	Size      int64  `json:"size"`
 }
 
-type importedSessionArchiveSidecar struct {
+type importedSessionArchiveFile struct {
 	SessionID               string         `json:"sessionId"`
 	SourceTool              string         `json:"sourceTool"`
 	SourcePath              string         `json:"sourcePath"`
@@ -119,9 +122,10 @@ type importedSessionArchiveSidecar struct {
 }
 
 type ImportedSessionStore struct {
-	dbPath      string
-	archiveRoot string
-	docsDir     string
+	dbPath        string
+	archiveRoot   string
+	docsDir       string
+	warnedMissing sync.Map
 }
 
 func NewImportedSessionStore(workspaceRoot string) *ImportedSessionStore {
@@ -489,7 +493,7 @@ func (s *ImportedSessionStore) writeTranscriptArchive(sessionID string, input Im
 	if err := writeGzipFile(transcriptPath, []byte(input.Transcript)); err != nil {
 		return nil, err
 	}
-	sidecar := importedSessionArchiveSidecar{
+	archive := importedSessionArchiveFile{
 		SessionID:               sessionID,
 		SourceTool:              input.SourceTool,
 		SourcePath:              input.SourcePath,
@@ -505,7 +509,7 @@ func (s *ImportedSessionStore) writeTranscriptArchive(sessionID string, input Im
 		RetentionSummary:        mapValue(input.Metadata, "retentionSummary"),
 		ArchivedAt:              archivedAt,
 	}
-	payload, err := json.MarshalIndent(sidecar, "", "  ")
+	payload, err := json.MarshalIndent(archive, "", "  ")
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +525,7 @@ func (s *ImportedSessionStore) writeTranscriptArchive(sessionID string, input Im
 }
 
 func (s *ImportedSessionStore) open(ctx context.Context) (*sql.DB, error) {
-	db, err := sql.Open("sqlite", s.dbPath)
+	db, err := database.Open("sqlite", s.dbPath)
 	if err != nil {
 		return nil, err
 	}
@@ -616,7 +620,7 @@ func (s *ImportedSessionStore) scanImportedSessionRow(ctx context.Context, db *s
 		transcriptStoredBytes         sql.NullInt64
 		discoveredAt                  int64
 		importedAt                    int64
-		lastModifiedAt                sql.NullInt64
+		lastModifiedAtFloat           sql.NullFloat64
 		createdAt                     int64
 		updatedAt                     int64
 	)
@@ -624,20 +628,28 @@ func (s *ImportedSessionStore) scanImportedSessionRow(ctx context.Context, db *s
 		&id, &sourceTool, &sourcePath, &externalSessionID, &title, &sessionFormat, &transcriptInline, &excerpt,
 		&workingDirectory, &transcriptHash, &normalizedSessionRaw, &metadataRaw, &transcriptArchivePath,
 		&transcriptMetadataArchivePath, &transcriptArchiveFormat, &transcriptStoredBytes,
-		&discoveredAt, &importedAt, &lastModifiedAt, &createdAt, &updatedAt,
+		&discoveredAt, &importedAt, &lastModifiedAtFloat, &createdAt, &updatedAt,
 	); err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
 		}
 		return nil, err
 	}
+	lastModifiedAt := sql.NullInt64{
+		Int64: int64(lastModifiedAtFloat.Float64),
+		Valid: lastModifiedAtFloat.Valid,
+	}
 	transcript := transcriptInline
 	if strings.TrimSpace(transcript) == "" && transcriptArchivePath.Valid {
 		archived, err := readGzipFile(filepath.Join(s.archiveRoot, filepath.FromSlash(transcriptArchivePath.String)))
 		if err != nil {
-			return nil, err
+			if _, loaded := s.warnedMissing.LoadOrStore(transcriptArchivePath.String, true); !loaded {
+				fmt.Printf("[SessionImport] Warning: missing transcript archive file at %s: %v\n", transcriptArchivePath.String, err)
+			}
+			transcript = "[Error: Transcript archive file missing from storage]"
+		} else {
+			transcript = string(archived)
 		}
-		transcript = string(archived)
 	}
 	memories, err := s.listParsedMemories(ctx, db, id)
 	if err != nil {

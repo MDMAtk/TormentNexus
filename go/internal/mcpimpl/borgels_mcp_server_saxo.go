@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func HandleGetAccounts_borgels_mcp_server_saxo(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
+func HandleGetAccounts_tormentnexusels_mcp_server_saxo(ctx context.Context, args map[string]interface{}) (ToolResponse, error) {
 	token, _ :=getString(args, "accessToken")
 	req, e := http.NewRequestWithContext(ctx, "GET", "https://gateway.saxobank.com/sim/openapi/port/v1/accounts/me", nil)
 	if e != nil {

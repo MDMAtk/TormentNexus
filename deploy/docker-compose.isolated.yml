@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Isolated web dashboard portal per account group
+  web-isolated:
+    image: tormentnexus-web:latest
+    build:
+      context: .
+      target: web
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://sidecar-isolated:7778
+    ports:
+      # Port mapped dynamically per tenant by the cloud orchestrator
+      - "${TENANT_PORT:-3001}:7779"
+    depends_on:
+      - sidecar-isolated
+    networks:
+      - tenant-network
+    restart: on-failure:5
+
+  # Go native sidecar daemon per account group
+  sidecar-isolated:
+    image: tormentnexus-sidecar:latest
+    build:
+      context: .
+      target: sidecar
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      - TORMENTNEXUS_GOSSIP_SHARED_KEY=${CLOUDMCP_SSE_AUTH_TOKEN:-}
+    volumes:
+      - tenant-data:/root/.tormentnexus
+    networks:
+      - tenant-network
+    restart: on-failure:5
+
+volumes:
+  tenant-data:
+
+networks:
+  tenant-network:
+    internal: false

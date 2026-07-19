@@ -227,6 +227,10 @@ func (p *Protocol) PeerCount() int {
 	return p.peers.Size()
 }
 
+func (p *Protocol) GetStore() StateStore {
+	return p.store
+}
+
 // BroadcastUpdate pushes a state update to all peers.
 func (p *Protocol) BroadcastUpdate(ctx context.Context, entries []StateEntry) error {
 	payload, err := json.Marshal(StateUpdatePayload{Entries: entries})

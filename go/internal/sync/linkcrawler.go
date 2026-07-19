@@ -12,9 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/ai"
-	_ "modernc.org/sqlite"
-)
+	"github.com/MDMAtk/TormentNexus/internal/ai"
+	_ "github.com/glebarez/go-sqlite"
+
+	"github.com/MDMAtk/TormentNexus/internal/database")
 
 var (
 	scriptTagRegex   = regexp.MustCompile(`(?is)<script[^>]*>.*?</script>`)
@@ -64,7 +65,7 @@ func CrawlPendingLinks(ctx context.Context, dbPath string, opts LinkCrawlerOptio
 		httpClient = &http.Client{Timeout: 15 * time.Second}
 	}
 
-	db, err := sql.Open("sqlite", dbPath)
+	db, err := database.Open("sqlite", dbPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
 	}

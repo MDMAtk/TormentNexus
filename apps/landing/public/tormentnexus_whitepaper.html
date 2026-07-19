@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      TormentNexus: A Local-First Cognitive Control Plane — Technical Whitepaper
+    </title>
+    <style>
+      @page {
+        size: A4;
+        margin: 2.5cm;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        line-height: 1.6;
+        color: #1a1a1a;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background: #fff;
+      }
+      @media print {
+        body {
+          padding: 0;
+          max-width: none;
+        }
+        .no-print {
+          display: none;
+        }
+      }
+
+      /* Header */
+      .paper-header {
+        text-align: center;
+        border-bottom: 3px double #333;
+        padding-bottom: 30px;
+        margin-bottom: 40px;
+      }
+      .paper-header h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+      .paper-header .subtitle {
+        font-size: 18px;
+        color: #555;
+        font-style: italic;
+        margin-bottom: 20px;
+      }
+      .paper-header .authors {
+        font-size: 14px;
+        color: #666;
+      }
+      .paper-header .date {
+        font-size: 12px;
+        color: #888;
+        margin-top: 10px;
+      }
+
+      /* Abstract */
+      .abstract {
+        background: #f5f5f5;
+        border-left: 4px solid #333;
+        padding: 20px;
+        margin: 30px 0;
+        font-style: italic;
+      }
+      .abstract h2 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        font-style: normal;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* Sections */
+      h2 {
+        font-size: 20px;
+        margin: 40px 0 15px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #ddd;
+        color: #222;
+      }
+      h3 {
+        font-size: 16px;
+        margin: 25px 0 10px;
+        color: #333;
+      }
+      p {
+        margin-bottom: 15px;
+        text-align: justify;
+      }
+
+      /* Lists */
+      ul,
+      ol {
+        margin: 15px 0;
+        padding-left: 30px;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+
+      /* Tables */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background: #f0f0f0;
+        font-weight: bold;
+      }
+
+      /* Code */
+      code {
+        font-family: "Courier New", monospace;
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 13px;
+      }
+      pre {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        margin: 15px 0;
+        font-size: 13px;
+      }
+
+      /* Footer */
+      .paper-footer {
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 3px double #333;
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+      }
+
+      /* Navigation */
+      .nav {
+        background: #09090b;
+        color: #fff;
+        padding: 15px 20px;
+        margin: -40px -20px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav a {
+        color: #22c55e;
+        text-decoration: none;
+      }
+
+      /* Keywords */
+      .keywords {
+        margin: 20px 0;
+        font-size: 13px;
+      }
+      .keywords strong {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Math/Science notation */
+      .equation {
+        text-align: center;
+        margin: 20px 0;
+        font-style: italic;
+      }
+
+      /* References */
+      .references {
+        font-size: 13px;
+      }
+      .references li {
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav no-print">
+      <a href="https://tormentnexus.site">← TormentNexus</a>
+      <a href="https://github.com/MDMAtk/TormentNexus">GitHub</a>
+    </nav>
+
+    <header class="paper-header">
+      <h1>TormentNexus: A Local-First Cognitive Control Plane</h1>
+      <div class="subtitle">
+        Technical Whitepaper — Architecture, Memory Hierarchy, and MCP
+        Assimilation
+      </div>
+      <div class="authors">TormentNexus Research Team</div>
+      <div class="date">Version 1.0 — July 2026</div>
+    </header>
+
+    <section class="abstract">
+      <h2>Abstract</h2>
+      <p>
+        TormentNexus is a high-performance "Go-Powered Modular Monolith"
+        designed for sophisticated AI orchestration. It functions as a
+        local-first cognitive control plane that bridges the gap between
+        high-level AI agents and low-level infrastructure, including tools,
+        providers, and data. By separating high-level user interaction
+        (TypeScript/React) from low-level control, tool execution, and state
+        management (Go), the system achieves high efficiency and resilient
+        performance.
+      </p>
+      <p>
+        This whitepaper presents the architectural design, cognitive memory
+        hierarchy, Model Context Protocol (MCP) assimilation strategy, and
+        autonomous supervision mechanisms that enable TormentNexus to serve as a
+        comprehensive AI orchestration platform.
+      </p>
+    </section>
+
+    <div class="keywords">
+      <strong>Keywords:</strong> AI Orchestration, Model Context Protocol,
+      Persistent Memory, Cognitive Architecture, Local-First AI, Multi-Agent
+      Systems, MCP Assimilation
+    </div>
+
+    <h2>1. Executive Summary</h2>
+
+    <p>
+      The primary objective of TormentNexus is the "assimilation" of the AI
+      ecosystem—moving away from merely wrapping external tools toward native,
+      high-performance implementations. The architecture is centered on a
+      Go-native kernel that manages event buses, Model Context Protocol (MCP)
+      tool routing, and a multi-tiered cognitive memory system.
+    </p>
+
+    <h3>Critical Takeaways</h3>
+    <ul>
+      <li>
+        <strong>Architectural Shift:</strong> The project is currently
+        transitioning to a "Go-Primary" state, where the Go runtime owns the
+        control plane, lifecycle management, and core logic, while TypeScript is
+        reduced to UI and compatibility roles.
+      </li>
+      <li>
+        <strong>MCP Assimilation:</strong> The system has natively assimilated
+        50+ MCP servers into Go, eliminating external npx/uvx runtime
+        dependencies.
+      </li>
+      <li>
+        <strong>Cognitive Memory:</strong> A four-tier memory hierarchy (L1-L4)
+        ensures instant retrieval, semantic indexing, and long-term archival.
+      </li>
+      <li>
+        <strong>Verification & Truth:</strong> A unique "Evidence Lock" system
+        ensures tool parity across various AI platforms (Cursor, Claude Code,
+        Copilot, etc.) through formal verification levels (L0-L3).
+      </li>
+      <li>
+        <strong>Autonomous Momentum:</strong> The "TormentNexus Supervisor" uses
+        intelligent "bump" cycles and autopilot features to maintain development
+        momentum without human intervention.
+      </li>
+    </ul>
+
+    <h2>2. High-Performance Core Architecture</h2>
+
+    <p>
+      TormentNexus is structured as a modular monolith. It utilizes a
+      specialized Go Sidecar for performance-critical operations and a
+      Next.js-based dashboard for operator observability.
+    </p>
+
+    <h3>2.1 Core Components</h3>
+
+    <table>
+      <tr>
+        <th>Component</th>
+        <th>Technology</th>
+        <th>Primary Responsibility</th>
+      </tr>
+      <tr>
+        <td>Control Plane (Go)</td>
+        <td>Go (Port 4300)</td>
+        <td>
+          Authoritative engine: SkillStore, EventBus, PairOrchestrator, and
+          Vault.
+        </td>
+      </tr>
+      <tr>
+        <td>Node.js Bridge</td>
+        <td>Node.js (Port 4100)</td>
+        <td>
+          Middleware connecting UI to Go sidecar via tRPC routers and
+          ResilientStream.
+        </td>
+      </tr>
+      <tr>
+        <td>Frontend Dashboard</td>
+        <td>Next.js 16 / React 19</td>
+        <td>
+          Reactive management interface featuring a Swarm Visualizer and
+          KnowledgeGraph.
+        </td>
+      </tr>
+      <tr>
+        <td>Supervisor</td>
+        <td>PowerShell / UI Automation</td>
+        <td>
+          Watchdog agent that interacts with external AI surfaces and implements
+          Autopilot.
+        </td>
+      </tr>
+    </table>
+
+    <h3>2.2 The Go-Primary Migration</h3>
+
+    <p>
+      The system is moving toward an "authoritative target state" where Go owns:
+    </p>
+    <ul>
+      <li>Startup, lifecycle, and port ownership.</li>
+      <li>MCP inventory and routing.</li>
+      <li>Session persistence and memory extraction.</li>
+      <li>Background workers and ingestion daemons.</li>
+    </ul>
+
+    <h2>3. Model Context Protocol (MCP) Assimilation</h2>
+
+    <p>
+      A central feature of TormentNexus is its aggressive "assimilation"
+      strategy. Rather than relying on external scripts, the system implements
+      MCP servers natively in Go to ensure speed and reliability.
+    </p>
+
+    <h3>3.1 Native Go MCP Implementations</h3>
+
+    <p>
+      The system currently features 50 native Go implementations, including:
+    </p>
+    <ul>
+      <li>
+        <strong>Search & Data:</strong> <code>exa.go</code>,
+        <code>arxiv.go</code>, <code>ddg_search.go</code>,
+        <code>serena.go</code>.
+      </li>
+      <li>
+        <strong>Browser & Automation:</strong>
+        <code>playwright_browser.go</code>, <code>chrome_devtools.go</code>,
+        <code>desktop_commander.go</code>.
+      </li>
+      <li>
+        <strong>Infrastructure:</strong> <code>github_copilot.go</code>,
+        <code>supabase.go</code>, <code>vercel.go</code>,
+        <code>sqlite.go</code>, <code>filesystem.go</code>.
+      </li>
+      <li>
+        <strong>Intelligence & Memory:</strong> <code>mem0.go</code>,
+        <code>chroma.go</code>, <code>huggingface.go</code>,
+        <code>supermemory.go</code>.
+      </li>
+    </ul>
+
+    <h3>3.2 Tool Routing and Selection</h3>
+
+    <p>
+      The SkillStore manages Just-In-Time (JIT) skill and tool disclosure using:
+    </p>
+    <ul>
+      <li><strong>BM25 Ranking:</strong> For high-relevance tool discovery.</li>
+      <li>
+        <strong>LRU Eviction:</strong> To manage memory by removing
+        least-recently-used tools from the active set.
+      </li>
+      <li>
+        <strong>Tool Trust (Evidence Lock):</strong> A verification layer tracks
+        "Truth" levels (L0-L3) for tool parity across AI platforms.
+      </li>
+    </ul>
+
+    <h2>4. Cognitive Memory Hierarchy (Hippocampus)</h2>
+
+    <p>
+      TormentNexus implements a tiered memory strategy to provide agents with
+      context-aware recall and long-term continuity.
+    </p>
+
+    <table>
+      <tr>
+        <th>Tier</th>
+        <th>Name</th>
+        <th>Characteristics</th>
+      </tr>
+      <tr>
+        <td>L1</td>
+        <td>Session Memory</td>
+        <td>In-memory, short-term session context for immediate continuity.</td>
+      </tr>
+      <tr>
+        <td>L2</td>
+        <td>Working Memory</td>
+        <td>
+          Semantically indexed active notes and facts, stored via SQLite-vec in
+          the Go Vault.
+        </td>
+      </tr>
+      <tr>
+        <td>L3</td>
+        <td>Cold Archive</td>
+        <td>
+          Long-term semantic retrieval across historical data (utilizing LanceDB
+          for vector storage).
+        </td>
+      </tr>
+      <tr>
+        <td>L4</td>
+        <td>Limbo</td>
+        <td>
+          A vault for discarded memories, allowing for user-guided
+          "resurrection" if needed.
+        </td>
+      </tr>
+    </table>
+
+    <p>
+      <strong>TrafficObserver:</strong> A passive fact-extraction system that
+      derives memories from system traffic.
+    </p>
+
+    <h2>5. Swarm Intelligence and Pair Orchestration</h2>
+
+    <p>
+      The system enables complex agent collaboration through structured cycles
+      and consensus mechanisms.
+    </p>
+
+    <h3>5.1 PairOrchestrator</h3>
+
+    <p>
+      The system enforces a "Planner → Implementer → Tester → Critic"
+      collaboration cycle. This state machine ensures that every operation is
+      planned, executed, verified, and critiqued before completion.
+    </p>
+
+    <h3>5.2 Consensus Modes</h3>
+
+    <p>
+      To manage multi-agent decision-making, TormentNexus supports various
+      consensus models:
+    </p>
+    <ul>
+      <li><strong>Simple Majority:</strong> >50% approval.</li>
+      <li><strong>Supermajority:</strong> ≥67% approval.</li>
+      <li>
+        <strong>CEO-Override:</strong> The lead supervisor possesses final
+        authority.
+      </li>
+      <li>
+        <strong>Weighted Voting:</strong> Confidence-based voting where agent
+        weight impacts the outcome.
+      </li>
+      <li>
+        <strong>Ranked Choice:</strong> Preference-based voting for complex
+        selection tasks.
+      </li>
+    </ul>
+
+    <h2>6. Supervisor and Autopilot Functionality</h2>
+
+    <p>
+      The TormentNexus Supervisor acts as an automation agent and watchdog to
+      maintain system momentum.
+    </p>
+
+    <ul>
+      <li>
+        <strong>Autopilot:</strong> Implements an "intelligent bump cycle" to
+        re-engage agents and maintain development speed.
+      </li>
+      <li>
+        <strong>External Interaction:</strong> Uses Windows UI Automation to
+        interact with external chat surfaces like Gemini, Claude, and
+        Antigravity.
+      </li>
+      <li>
+        <strong>Supervisor Nudges:</strong> Direct, context-aware prompts (under
+        20 words) used to re-engage inactive agents or redirect those stuck in
+        error loops.
+      </li>
+      <li>
+        <strong>Immune System Healers:</strong> Diagnostic indicators that
+        identify and fix regressions autonomously.
+      </li>
+    </ul>
+
+    <h2>7. Verification and Governance</h2>
+
+    <p>
+      Security and truthfulness are maintained through a rigorous verification
+      layer and local-first data ownership.
+    </p>
+
+    <h3>7.1 The Evidence Lock (Built-in Tool Parity)</h3>
+
+    <p>The system tracks the reliability of tools across platforms:</p>
+    <ul>
+      <li>
+        <strong>L3 (Locked):</strong> Version-pinned and fixtures validated
+        (e.g., OpenCode).
+      </li>
+      <li>
+        <strong>L2 (Ready):</strong> First-party documentation and "golden
+        fixtures" present (e.g., Cursor, Claude Code).
+      </li>
+      <li>
+        <strong>L1 (Archive):</strong> Integration evidence present but awaiting
+        first-party docs.
+      </li>
+      <li><strong>L0 (Unverified):</strong> No evidence; research required.</li>
+    </ul>
+
+    <h3>7.2 Governance Features</h3>
+    <ul>
+      <li>
+        <strong>License Validation:</strong> Implements Ed25519 license token
+        validation in the Go sidecar.
+      </li>
+      <li>
+        <strong>Corporate Boundary:</strong> Features like SSO, Role-Based
+        Access Control (RBAC), and JSONL auditing are separated into a
+        corporate-grade wrapper.
+      </li>
+      <li>
+        <strong>Worktree Isolation:</strong> Every agent operation uses a
+        worktree-based isolation model to contain failures and ensure the "state
+        of the world" remains truthful.
+      </li>
+    </ul>
+
+    <h2>8. Future Roadmap and Evolution</h2>
+
+    <p>
+      The project aims to move from its current "Phase B" status toward an
+      "Absolute Ideal" cognitive state.
+    </p>
+
+    <table>
+      <tr>
+        <th>Dimension</th>
+        <th>Future Objective</th>
+      </tr>
+      <tr>
+        <td>Tool Trust</td>
+        <td>
+          <strong>Cryptographic Attestation:</strong> Every tool output carries
+          a signed provenance record.
+        </td>
+      </tr>
+      <tr>
+        <td>Discovery</td>
+        <td>
+          <strong>Registry Intelligence:</strong> Autonomous ingestion and
+          auto-certification of all public MCP servers.
+        </td>
+      </tr>
+      <tr>
+        <td>Autonomy</td>
+        <td>
+          <strong>Self-Healing Swarms:</strong> Agents that detect tool drift
+          and auto-repair their own configurations.
+        </td>
+      </tr>
+      <tr>
+        <td>Recall</td>
+        <td>
+          <strong>Cognitive Graph:</strong> Zero-latency recall where memory is
+          as fluid as local CPU cache.
+        </td>
+      </tr>
+      <tr>
+        <td>Interface</td>
+        <td>
+          <strong>Wails Native Runtime:</strong> Replacing Electron with a
+          high-performance Go-native desktop shell.
+        </td>
+      </tr>
+    </table>
+
+    <h2>9. Conclusion</h2>
+
+    <p>
+      TormentNexus represents a paradigm shift in AI orchestration. By combining
+      a high-performance Go kernel with a sophisticated cognitive memory
+      hierarchy and aggressive MCP assimilation, it provides a robust foundation
+      for building truly intelligent, autonomous AI systems.
+    </p>
+
+    <p>
+      The local-first architecture ensures data sovereignty while the tiered
+      memory system enables unprecedented context persistence. As the project
+      continues to evolve toward its "Absolute Ideal" state, TormentNexus is
+      positioned to become the standard cognitive control plane for
+      next-generation AI applications.
+    </p>
+
+    <footer class="paper-footer">
+      <p>
+        <strong>TormentNexus: A Local-First Cognitive Control Plane</strong>
+      </p>
+      <p>Version 1.0 — July 2026</p>
+      <p>© 2026 TormentNexus. Open Source under MIT License.</p>
+      <p>
+        <a href="https://github.com/MDMAtk/TormentNexus"
+          >https://github.com/MDMAtk/TormentNexus</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>

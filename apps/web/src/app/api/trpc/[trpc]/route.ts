@@ -2,7 +2,7 @@ import { getCacheTTL, getCached, setCached } from "../cache";
 
 export const runtime = "nodejs";
 
-const DEFAULT_UPSTREAM_TRPC_URL = "http://127.0.0.1:7779/trpc";
+const DEFAULT_UPSTREAM_TRPC_URL = "http://127.0.0.1:7778/trpc";
 const DEFAULT_GO_API_BASE = "http://127.0.0.1:7778";
 
 function resolveUpstreamBase(): string {
@@ -112,6 +112,15 @@ function getCompatRoute(procedurePath: string, input: unknown): string | null {
 				: 20;
 		return `/api/billing/fallback-history?limit=${normalizedLimit}`;
 	}
+	if (procedurePath === "billing.getCorporateSettings") {
+		return "/api/config/corporate-settings";
+	}
+	if (procedurePath === "billing.setCorporateSettings") {
+		return "/api/config/corporate-settings/set";
+	}
+	if (procedurePath === "billing.stripeSubscribe") {
+		return "/api/billing/stripe/subscribe";
+	}
 	// ── Director (Go-native with local fallback) ──
 	if (procedurePath === "director.status") {
 		return "/api/director/status";
@@ -177,12 +186,114 @@ function getCompatRoute(procedurePath: string, input: unknown): string | null {
 		return `/api/memory/session-summaries/recent?${params.toString()}`;
 	}
 
+	// ── Health ──
+	if (procedurePath === "health") {
+		return "/api/health";
+	}
+
+	// ── Git (Go-native with local fallback) ──
+	if (procedurePath === "git.getLog") {
+		const limit = (input as any)?.limit ?? 10;
+		return `/api/git/log?limit=${limit}`;
+	}
+	if (procedurePath === "git.getStatus") {
+		return "/api/git/status";
+	}
+	if (procedurePath === "git.getModules") {
+		return "/api/git/modules";
+	}
+	if (procedurePath === "git.revert") {
+		return "/api/git/revert";
+	}
+
+	// ── Graph (Go-native with local fallback) ──
+	if (procedurePath === "graph.getSymbolsGraph" || procedurePath === "graph.getSymbols") {
+		return "/api/graph/symbols";
+	}
+	if (procedurePath === "graph.get") {
+		return "/api/graph";
+	}
+
+	// ── Knowledge (Go-native with local fallback) ──
+	if (procedurePath === "knowledge.ingest") {
+		return "/api/knowledge/ingest";
+	}
+	if (procedurePath === "knowledge.getResources") {
+		return "/api/knowledge/resources";
+	}
+	if (procedurePath === "knowledge.graph") {
+		return "/api/knowledge/graph";
+	}
+	if (procedurePath === "knowledge.stats") {
+		return "/api/knowledge/stats";
+	}
+
+	// ── LSP (Go-native with local fallback) ──
+	if (procedurePath === "lsp.getSymbols") {
+		const filePath = (input as any)?.filePath || "";
+		return `/api/lsp/symbols?filePath=${encodeURIComponent(filePath)}`;
+	}
+	if (procedurePath === "lsp.findSymbol") {
+		const filePath = (input as any)?.filePath || "";
+		const symbolName = (input as any)?.symbolName || "";
+		return `/api/lsp/find-symbol?filePath=${encodeURIComponent(filePath)}&symbolName=${encodeURIComponent(symbolName)}`;
+	}
+	if (procedurePath === "lsp.findReferences") {
+		const filePath = (input as any)?.filePath || "";
+		const line = (input as any)?.line || 0;
+		const character = (input as any)?.character || 0;
+		return `/api/lsp/find-references?filePath=${encodeURIComponent(filePath)}&line=${line}&character=${character}`;
+	}
+	if (procedurePath === "lsp.searchSymbols") {
+		const query = (input as any)?.query || "";
+		return `/api/lsp/search?query=${encodeURIComponent(query)}`;
+	}
+	if (procedurePath === "lsp.indexProject") {
+		return "/api/lsp/index";
+	}
+
+	// ── Memory Queries (Go-native with local fallback) ──
+	if (procedurePath === "memory.query" || procedurePath === "memory.searchAgentMemory") {
+		const query = (input as any)?.query || "";
+		const limit = (input as any)?.limit || 10;
+		return `/api/memory/search?query=${encodeURIComponent(query)}&limit=${limit}`;
+	}
+	if (procedurePath === "memory.searchObservations") {
+		const query = (input as any)?.query || "";
+		const limit = (input as any)?.limit || 10;
+		return `/api/memory/observations/search?query=${encodeURIComponent(query)}&limit=${limit}`;
+	}
+	if (procedurePath === "memory.searchUserPrompts") {
+		const query = (input as any)?.query || "";
+		const limit = (input as any)?.limit || 10;
+		return `/api/memory/user-prompts/search?query=${encodeURIComponent(query)}&limit=${limit}`;
+	}
+	if (procedurePath === "memory.searchMemoryPivot") {
+		const query = (input as any)?.query || "";
+		const limit = (input as any)?.limit || 10;
+		return `/api/memory/pivot/search?query=${encodeURIComponent(query)}&limit=${limit}`;
+	}
+	if (procedurePath === "memory.searchSessionSummaries") {
+		const query = (input as any)?.query || "";
+		const limit = (input as any)?.limit || 10;
+		return `/api/memory/session-summaries/search?query=${encodeURIComponent(query)}&limit=${limit}`;
+	}
+
 	return null;
 }
+
+const MUTATION_PROCEDURES = new Set([
+	"billing.setCorporateSettings",
+	"billing.stripeSubscribe",
+	"git.revert",
+	"lsp.indexProject",
+	"knowledge.ingest",
+]);
 
 async function getCompatPayload(
 	procedurePath: string,
 	input: unknown,
+	method: string = "GET",
 ): Promise<unknown | null> {
 	const compatRoute = getCompatRoute(procedurePath, input);
 	if (!compatRoute) {
@@ -192,7 +303,13 @@ async function getCompatPayload(
 	const goApiBase = resolveGoApiBase().replace(/\/$/, "");
 
 	try {
-		const compatResponse = await fetch(`${goApiBase}${compatRoute}`);
+		const isMutation = MUTATION_PROCEDURES.has(procedurePath) || method === "POST";
+		const fetchOptions: RequestInit = {
+			method: isMutation ? "POST" : "GET",
+			headers: isMutation ? { "Content-Type": "application/json" } : undefined,
+			body: isMutation ? JSON.stringify(input ?? {}) : undefined,
+		};
+		const compatResponse = await fetch(`${goApiBase}${compatRoute}`, fetchOptions);
 		if (!compatResponse.ok) {
 			return null;
 		}
@@ -257,8 +374,29 @@ async function tryCompatFallback(
 	req: Request,
 	procedurePath: string,
 ): Promise<Response | null> {
+	const hasBody = req.method !== "GET" && req.method !== "HEAD";
+	let bodyInput: any = {};
+	let postInputs: any = {};
+	if (hasBody) {
+		try {
+			const text = await req.clone().text();
+			const parsed = JSON.parse(text);
+			if (parsed && typeof parsed === "object") {
+				postInputs = parsed;
+				if ("0" in parsed) {
+					bodyInput = parsed["0"];
+				} else if (Array.isArray(parsed)) {
+					bodyInput = parsed[0];
+				} else {
+					bodyInput = parsed;
+				}
+			}
+		} catch {}
+	}
+
 	if (!procedurePath.includes(",")) {
-		const compatPayload = await getCompatPayload(procedurePath, {});
+		const input = hasBody ? bodyInput : {};
+		const compatPayload = await getCompatPayload(procedurePath, input, req.method);
 		if (compatPayload === null) {
 			return null;
 		}
@@ -277,12 +415,15 @@ async function tryCompatFallback(
 		return null;
 	}
 
-	const batchInput = parseBatchInput(req);
+	const batchInput = hasBody ? postInputs : parseBatchInput(req);
 	const entries = [];
 	for (const [index, procedure] of procedures.entries()) {
+		const input = hasBody
+			? (Array.isArray(batchInput) ? batchInput[index] : batchInput[String(index)])
+			: (batchInput[String(index)] ?? {});
 		const entry = await fetchSingleProcedureEntry(
 			procedure,
-			batchInput[String(index)] ?? {},
+			input,
 		);
 		if (!entry) {
 			return null;
@@ -299,13 +440,18 @@ async function tryCompatFallback(
 
 /**
  * Procedures that have fast Go-native implementations.
- * These are served directly from the Go sidecar (<5ms) instead of
+ * These are served directly from the TN Kernel (<5ms) instead of
  * proxying through the TS Core tRPC server (~100-300ms).
  */
 const GO_NATIVE_PROCEDURES = new Set([
+	"health",
+	"startupStatus",
 	"mcp.getStatus",
 	"mcp.listServers",
 	"mcp.getToolSelectionTelemetry",
+	"mcp.clearToolSelectionTelemetry",
+	"mcp.runServerTest",
+	"session.list",
 	"session.importedMaintenanceStats",
 	"billing.getProviderQuotas",
 	"billing.getModelPricing",
@@ -314,24 +460,110 @@ const GO_NATIVE_PROCEDURES = new Set([
 	"billing.getFallbackHistory",
 	"billing.getFallbackChain",
 	"billing.getTaskRoutingRules",
+	"billing.getCostHistory",
 	"director.status",
 	"directorConfig.get",
+	"llm.generate",
+	"git.getLog",
+	"git.getStatus",
+	"git.getModules",
+	"git.revert",
+	"graph.getSymbolsGraph",
+	"graph.getSymbols",
+	"graph.get",
+	"knowledge.ingest",
+	"knowledge.getResources",
+	"knowledge.graph",
+	"knowledge.stats",
+	"lsp.getSymbols",
+	"lsp.findSymbol",
+	"lsp.findReferences",
+	"lsp.searchSymbols",
+	"lsp.indexProject",
+	"memory.query",
+	"memory.searchAgentMemory",
+	"memory.searchObservations",
+	"memory.searchUserPrompts",
+	"memory.searchMemoryPivot",
+	"memory.searchSessionSummaries",
+	"billing.getCorporateSettings",
+	"billing.setCorporateSettings",
+	"billing.stripeSubscribe",
+	"memory.getRecentObservations",
+	"memory.getRecentUserPrompts",
+	"memory.getRecentSessionSummaries",
 ]);
 
 async function handler(req: Request): Promise<Response> {
 	const procedurePath = getProcedurePath(req);
+	const hasBody = req.method !== "GET" && req.method !== "HEAD";
+	let bodyText = "";
+	let postInputs: any = {};
+	if (hasBody) {
+		try {
+			bodyText = await req.clone().text();
+			const parsed = JSON.parse(bodyText);
+			if (parsed && typeof parsed === "object") {
+				postInputs = parsed;
+			}
+		} catch {}
+	}
 
-	// Go-native fast path: serve from Go sidecar first (<5ms),
-	// fall back to tRPC upstream if Go sidecar is unavailable.
-	// Only use Go-native fast path for single-procedure requests
-	// (batch requests need all procedures to go through the same path)
 	const isBatch = procedurePath.includes(",");
+	if (isBatch) {
+		const procedures = procedurePath
+			.split(",")
+			.map((entry) => entry.trim())
+			.filter(Boolean);
+		const allNative = procedures.length > 0 && procedures.every((proc) => GO_NATIVE_PROCEDURES.has(proc));
+		if (allNative) {
+			const batchInput = hasBody ? postInputs : parseBatchInput(req);
+			const entries = [];
+			let allSuccessful = true;
+			for (const [index, procedure] of procedures.entries()) {
+				const input = hasBody
+					? (Array.isArray(batchInput) ? batchInput[index] : batchInput[String(index)])
+					: (batchInput[String(index)] ?? {});
+				const compatPayload = await getCompatPayload(
+					procedure,
+					input,
+					req.method,
+				);
+				if (compatPayload !== null) {
+					entries.push({ result: { data: compatPayload } });
+				} else {
+					allSuccessful = false;
+					break;
+				}
+			}
+			if (allSuccessful) {
+				return new Response(JSON.stringify(entries), {
+					status: 200,
+					headers: { "content-type": "application/json" },
+				});
+			}
+		}
+	}
+
 	const firstProc = isBatch ? "" : (procedurePath.trim() ?? "");
 	if (firstProc && GO_NATIVE_PROCEDURES.has(firstProc)) {
-		const batchInput = parseBatchInput(req);
+		let input: any = {};
+		if (hasBody) {
+			if ("0" in postInputs) {
+				input = postInputs["0"];
+			} else if (Array.isArray(postInputs)) {
+				input = postInputs[0];
+			} else {
+				input = postInputs;
+			}
+		} else {
+			const batchInput = parseBatchInput(req);
+			input = batchInput["0"] ?? {};
+		}
 		const compatPayload = await getCompatPayload(
 			firstProc,
-			batchInput["0"] ?? {},
+			input,
+			req.method,
 		);
 		if (compatPayload !== null) {
 			return new Response(
@@ -339,13 +571,12 @@ async function handler(req: Request): Promise<Response> {
 				{ status: 200, headers: { "content-type": "application/json" } },
 			);
 		}
-		// Go sidecar unavailable; fall through to tRPC upstream
+		// TN Kernel unavailable; fall through to tRPC upstream
 	}
 
 	const upstreamUrl = buildUpstreamUrl(req);
 	const headers = cloneHeaders(req);
-	const hasBody = req.method !== "GET" && req.method !== "HEAD";
-	const body = hasBody ? await req.text() : undefined;
+	const body = hasBody ? bodyText : undefined;
 
 	// Check tRPC response cache for frequently-polled procedures
 	const cacheTTL = getCacheTTL(procedurePath);
@@ -362,11 +593,15 @@ async function handler(req: Request): Promise<Response> {
 
 	let upstreamResponse: Response;
 	try {
+		const controller = new AbortController();
+		const timeout = setTimeout(() => controller.abort(), 3000);
 		upstreamResponse = await fetch(upstreamUrl, {
 			method: req.method,
 			headers,
 			body,
+			signal: controller.signal,
 		});
+		clearTimeout(timeout);
 	} catch (error) {
 		const compatFallback = await tryCompatFallback(req, procedurePath);
 		if (compatFallback) {
@@ -376,6 +611,18 @@ async function handler(req: Request): Promise<Response> {
 			return compatFallback;
 		}
 		const message = error instanceof Error ? error.message : String(error);
+		if (error.name === 'AbortError') {
+		    console.error(`[TRPC-Proxy] Upstream fetch timed out: ${message}`);
+		    return new Response(
+			    JSON.stringify({
+				    error: "TRPC_UPSTREAM_TIMEOUT",
+				    message: "The TN Kernel upstream timed out.",
+				    upstream: upstreamUrl.toString(),
+			    }),
+			    { status: 504, headers: { "content-type": "application/json" } },
+		    );
+        }
+
 		console.error(`[TRPC-Proxy] Upstream fetch failed: ${message}`);
 		return new Response(
 			JSON.stringify({

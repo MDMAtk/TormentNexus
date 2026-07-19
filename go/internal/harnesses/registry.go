@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"sort"
 
-	"github.com/tormentnexushq/tormentnexus-go/internal/controlplane"
+	"github.com/MDMAtk/TormentNexus/internal/controlplane"
 )
 
 type Definition struct {
@@ -64,7 +64,7 @@ func List(workspaceRoot string, tools []controlplane.Tool) []Definition {
 			Maturity:            "Experimental",
 			Primary:             true,
 			SubmodulePath:       "submodules/tormentnexus",
-			Upstream:            "https://github.com/NexusSoftMDMA/TormentNexus",
+			Upstream:            "https://github.com/MDMAtk/TormentNexus",
 			Runtime:             "Go / Cobra / TUI",
 			LaunchCommand:       "go run .",
 			Capabilities:        []string{"repl", "pipe", "tormentnexus-adapter", "tool-registry"},
