@@ -140,17 +140,31 @@ HyperNexus is a **decision system and universal bridge** — not just an aggrega
 
 ## 🚀 One-Command Install
 
+**npm (recommended):**
+
 ```bash
 npx @hypernexus/install
 ```
 
-That's it. Detects and configures HyperNexus for **38+ AI coding agents** including Claude, Gemini, Cursor, Windsurf, Aider, CodeWhale, and more. Each gets MCP config, skills, hooks, and commands.
+**curl (Linux/Mac):**
+
+```bash
+curl -fsSL https://hypernexus.site/install.sh | bash
+```
+
+**Windows:**
+
+```powershell
+irm https://hypernexus.site/install.ps1 | iex
+```
+
+That's it. Downloads the installer, sets up HyperNexus, and configures **38+ AI coding agents** including Claude, Gemini, Cursor, Windsurf, Aider, CodeWhale, and more.
 
 ```bash
 # CLI tools
 npm install -g @hypernexus/cli
-tn search "your topic"
-tn status
+hn search "your topic"
+hn status
 
 # OpenHands integration
 npx @hypernexus/openhands
