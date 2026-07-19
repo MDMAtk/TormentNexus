@@ -1,90 +1,49 @@
-# HyperNexus — Universal AI Control Plane
+🚀 TormentNexus — Universal AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory
 
-> **One-command install:** `npx @hypernexus/install`
->
-> Local-first, **100% open-source** AI control plane with persistent multi-tier memory, semantic MCP tool routing across 20,000+ servers, autonomous healing agents, and multi-agent swarm coordination.
->
-> **📄 [Read the Technical Whitepaper](https://hypernexus.site/hypernexus_whitepaper.html)** | **💬 [Join Discord](https://discord.gg/Hj9P3GbVxR)** | **☁️ [Try Cloud](https://cloud.hypernexus.site)**
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                     ██╗   ██╗███╗   ██╗██████╗ ███████╗██████╗              ║
+║                     ██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗             ║
+║                     ██║   ██║██╔██╗ ██║██║  ██║█████╗  ██████╔╝             ║
+║                     ██║   ██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗             ║
+║                     ╚██████╔╝██║ ╚████║██████╔╝███████╗██║  ██║             ║
+║                      ╚═════╝ ╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝             ║
+║                                                                              ║
+║                     ██████╗ ██████╗ ███╗   ██╗███████╗████████╗██████╗      ║
+║                    ██╔════╝██╔═══██╗████╗  ██║██╔════╝╚══██╔══╝██╔══██╗     ║
+║                    ██║     ██║   ██║██╔██╗ ██║███████╗   ██║   ██████╔╝     ║
+║                    ██║     ██║   ██║██║╚██╗██║╚════██║   ██║   ██╔══██╗     ║
+║                    ╚██████╗╚██████╔╝██║ ╚████║███████║   ██║   ██║  ██║     ║
+║                     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝     ║
+║                                                                              ║
+║                     █████╗ ██╗     ██████╗ ██╗  ██╗ █████╗                  ║
+║                    ██╔══██╗██║     ██╔══██╗██║  ██║██╔══██╗                 ║
+║                    ███████║██║     ██████╔╝███████║███████║                 ║
+║                    ██╔══██║██║     ██╔═══╝ ██╔══██║██╔══██║                 ║
+║                    ██║  ██║███████╗██║     ██║  ██║██║  ██║                 ║
+║                    ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝                 ║
+║                                                                              ║
+║                    ╔══════════════════════════════════════╗                  ║
+║                    ║     🧠  PRODUCTION READY  🧠           ║                  ║
+║                    ║  PERSISTENT MEMORY & 20,000+ TOOLS     ║                  ║
+║                    ║  WORKS WITH 38+ AI AGENTS       ║                  ║
+║                    ╚══════════════════════════════════════╝                  ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
 
----
+# TormentNexus: The Cognitive Kernel — Universal AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory
 
-## 💰 Pricing
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![Go](https://img.shields.io/badge/Go-1.23+-00ADD8?logo=go)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=next.js)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![License](https://img.shields.io/badge/license-Enterprise%2FOSS-orange)
 
-| | **HyperNexus Professional** |
-|---|---|
-| **Price** | **$50/seat/year** |
-| **What's Included** | Local license + cloud hosting |
-| **Local License** | ✅ Lifetime (yours forever) |
-| **Cloud Hosting** | ✅ 1 year included |
-| **Renewal** | $25/year for cloud (optional) |
-| **Memory** | Unlimited (L1/L2/L3) |
-| **MCP Tools** | 20,000+ included |
-| **Support** | Priority email |
-| **Updates** | All 1.x updates free |
-
-> **One price. Everything included.**
-> Local license never expires. Cloud renewal is optional.
-
-**[Get Started →](https://cloud.hypernexus.site)** | **[View Pricing Page](https://hypernexus.site/pricing.html)**
-
----
-
-## 🏢 Corporate & Enterprise Deployments (HyperNexus Cloud)
-
-For professional, corporate, and enterprise deployments, **[HyperNexus](https://hypernexus.site)** serves as the official licensed, certified, authoritative cloud-hosted corporate installation of the project. It extends the open-source core with:
-
-- **Certified Cloud Hosting**: Managed high-availability infrastructure with automated deployment gates.
-- **Tenant Isolation**: Automated provisioning scripts to spin up per-tenant containers with isolated volumes and resource limits.
-- **Enterprise-Grade Security**: Full Single Sign-On (SSO/OIDC) integration and fine-grained Role-Based Access Control (RBAC).
-- **Air-Gapped & VPC Support**: Native support for secure, private on-premises corporate infrastructure.
-- **Stripe Billing & Seats Management**: Turnkey integration for teams, volume-based seat licensing, and corporate billing.
-
----
-
-## ⚡ High-Value Development Features
-
-HyperNexus is engineered to give your AI coding agents the context, tools, and resilience they need to operate at peak efficiency. Here are the core development features running out of the box:
-
-### 1. Dual-Tier Memory Architecture (L1 / L2)
-
-Context windows are finite; memory must be infinite.
-
-- **L1 — Ephemeral Scratchpad**: Lighting-fast in-memory context tied to active agent turns.
-- **L2 — Semantic Vault**: Permanent memory storage powered by SQLite and `sqlite-vec`. Saves exact transcripts, heuristics, and agent insights.
-- **Context Harvesting**: Agents autonomously query the L2 Vault to pull in relevant historical heuristics based on prompt similarity, avoiding cold-starts.
-
-### 2. Semantic MCP Tool Routing
-
-Models shouldn't be drowned in a 50,000-token tool schema dump.
-
-- **Top-K Vector Matching**: HyperNexus dynamically embeds and queries its catalog of **20,000+ MCP servers** to inject only the most relevant tool definitions.
-- **Universal Client Parity**: Standardized, byte-for-byte identical tool signatures across **38+ supported AI agents** (Claude Code, Gemini, Cursor, Windsurf, Aider, etc.).
-
-### 3. Autonomous Immune System & Code Healer
-
-No more broken builds or stuck agents.
-
-- **HealerService**: Executes a tight `Diagnose → Fix → Verify → Retry` loop using native compilers and test runners (`tsc`, `vitest`, `go test`).
-- **Knowledge Persistence**: Successfully solved pathogens are stored in the L2 memory vault to immunize future sessions.
-
-### 4. Multi-Agent Swarms & Consensus Engine
-
-Run specialized models in collaborative, peer-to-peer developer councils.
-
-- **A2A Protocol**: Standardized communication protocol for agent-to-agent coordination.
-- **Role Rotation**: Dynamic state machine assigning tasks to Planner, Implementer, Tester, and Critic roles.
-- **Debate & Scoring**: Interactive consensus voting to select the most optimal implementation before executing code.
-
-### 5. Resilient LLM Waterfall
-
-Never fail a build due to API rate limits or outages.
-
-- **Prioritized Failover**: Seamless cascading fallback routing (e.g., Primary NIM APIs → OpenRouter Aggregator → Local LM Studio / Ollama).
-- **Graceful Error Recovery**: Out-of-the-box handling of `429` (Rate Limits) and `5xx` (Server Errors).
-
-### 6. Native Browser Automation
-
-- **chromedp Handlers**: Provides agents with native headless browser automation to navigate, screenshot, click, fill forms, and scrape web applications.
+> **TormentNexus** is the ultimate local-first control plane for multi-agent workflows, Model Context Protocol (MCP) tooling, provider routing, session continuity, and operator observability. It is the substrate where a single local system seamlessly coordinates tools, models, sessions, context, subagents, and full visibility across the entire AI-driven software development stack.
 
 ---
 
@@ -102,7 +61,7 @@ Never fail a build due to API rate limits or outages.
 - [API Surface](#api-surface)
 - [Quick Start](#quick-start)
 - [What's Planned](#whats-planned)
-- [Roadmap](ROADMAP.md)
+- [Roadmap](#roadmap)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -111,86 +70,52 @@ Never fail a build due to API rate limits or outages.
 
 ## What It Does
 
-HyperNexus is a **decision system and universal bridge** — not just an aggregator. It runs locally as a modular monolith that unifies the chaotic landscape of AI tools, models, and agents into a single, coherent operating system for AI-driven development.
+TormentNexus is a **decision system and universal bridge** — not just an aggregator. It runs locally as a modular monolith that unifies the chaotic landscape of AI tools, models, and agents into a single, coherent operating system for AI-driven development.
 
-### Current Capabilities (v1.0.0-b1)
+### Current Capabilities (v1.0.0-alpha.132)
 
 | Capability | Status | Details |
 |------------|--------|---------|
-| **MCP Registry** | Stable | Infinite tracked MCP servers, unlimited populated in SQLite catalog, infinite verified servers, unlimited verified tools |
-| **Native Go Tools** | Beta | Unlimited native Go tool implementations replacing external MCP servers (filesystem, Slack, SQLite, DuckDuckGo, Ollama, TTS, Vercel, NWS, DexPaprika, Firecrawl, Exa, arXiv, Semantic Scholar, Mem0, Alpaca, Alpha Vantage, Hugging Face, Semgrep, Octagon, Browser Automation, ChromaDB, Basic Memory, MindsDB, Serena, AST-grep, PAL, Thoughtbox, and more) |
+| **MCP Registry** | Stable | 14,250+ tracked MCP servers, 11,024+ populated in SQLite catalog, 600+ verified servers, 11,000+ verified tools |
+| **Native Go Tools** | Beta | 3,900+ native Go tool implementations replacing external MCP servers (filesystem, Slack, SQLite, DuckDuckGo, Ollama, TTS, Vercel, NWS, DexPaprika, Firecrawl, Exa, arXiv, Semantic Scholar, Mem0, Alpaca, Alpha Vantage, Hugging Face, Semgrep, Octagon, Browser Automation, ChromaDB, Basic Memory, MindsDB, Serena, AST-grep, PAL, Thoughtbox, and more) |
 | **Progressive Tool Routing** | Stable | Semantic vector search + BM25 ranking injects only the most relevant tools into LLM context windows |
 | **Dual-Tier Memory** | Stable | L1 (session scratchpad) + L2 (semantic SQLite vault) with heat-score lifecycle and autonomous context harvesting |
 | **LLM Waterfall** | Stable | Cascading failover: NVIDIA NIM → OpenRouter → Local LM Studio / Ollama with 429/5xx handling |
 | **Multi-Agent Swarm** | Beta | A2A protocol coordination, role rotation (Planner→Implementer→Tester→Critic), consensus engine |
 | **Autonomous Healer** | Stable | `Diagnose → Fix → Verify → Retry` loop with native code execution (tsc, vitest, go test) and L2 vault persistence |
 | **Browser Automation** | Beta | Native chromedp handlers: navigate, screenshot, evaluate, click, fill, get HTML |
-| **Skill Registry** | Stable | Unlimited assimilated skills from multiple harness ecosystems (Aider, Agent, CCS, Hermes, Pi, etc.) with Jaccard deduplication |
-| **CodeWhale Extension** | Stable | Native Rust extension with full Pi extension parity — infinite MCP tools, unlimited custom tools, infinite slash commands, unlimited shortcuts, L2 memory hooks, RBAC, @memory:key expansion, per-turn context harvesting, session compaction |
+| **Skill Registry** | Stable | 3,229+ assimilated skills from 7 harness ecosystems (Aider, Agent, CCS, Hermes, Pi, etc.) with Jaccard deduplication |
 | **Dashboard** | Stable | Next.js 16 + React 19 + Tailwind CSS 4 with real-time telemetry, knowledge graph, healer view, swarm visualizer |
-| **npm Packages** | Published | `@hypernexus/install`, `@hypernexus/core`, `@hypernexus/cli`, `@hypernexus/openhands`, `@hypernexus/vscode`, `@hypernexus/cursor` |
-| **tRPC Bridge** | Stable | Type-safe API layer (port 7778) connecting UI to Go sidecar |
+| **tRPC Bridge** | Stable | Type-safe API layer (port 4100) connecting UI to Go sidecar |
 | **Session Import** | Beta | Automatic ingestion of Claude, Aider, and other harness session artifacts |
 | **Enterprise Licensing** | Experimental | Ed25519-signed license token validation with offline verification |
 | **Supervisor Nudge** | Stable | Autonomous Windows UI automation to maintain development momentum across AI chat surfaces |
-| **Deep Link Protocol** | Beta | `hypernexus://attach?session=ID` and `hypernexus://create?cliType=aider` URI handling |
+| **Deep Link Protocol** | Beta | `tormentnexus://attach?session=ID` and `tormentnexus://create?cliType=aider` URI handling |
 | **Provider Metrics** | Stable | Real-time telemetry tracking for all LLM providers with latency and cost analysis |
-
----
-
-## 🚀 One-Command Install
-
-**npm (recommended):**
-
-```bash
-npx @hypernexus/install
-```
-
-**curl (Linux/Mac):**
-
-```bash
-curl -fsSL https://hypernexus.site/install.sh | bash
-```
-
-**Windows:**
-
-```powershell
-irm https://hypernexus.site/install.ps1 | iex
-```
-
-That's it. Downloads the installer, sets up HyperNexus, and configures **38+ AI coding agents** including Claude, Gemini, Cursor, Windsurf, Aider, CodeWhale, and more.
-
-```bash
-# CLI tools
-npm install -g @hypernexus/cli
-hn search "your topic"
-hn status
-
-# OpenHands integration
-npx @hypernexus/openhands
-
-# Core kernel
-npx @hypernexus/core
-```
 
 ---
 
 ## Architecture
 
-HyperNexus is a **high-performance Go modular monolith** with a **TypeScript/Next.js frontend**, operating as a local-first control plane.
+TormentNexus is a **high-performance Go modular monolith** with a **TypeScript/Next.js frontend**, operating as a local-first control plane.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  OPERATOR LAYER                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐       │
 │  │  Web Dash   │  │  CLI (TS)   │  │  VS Code    │       │
-│  │  Port 7779  │  │  hypernexus│  │  Extension  │       │
+│  │  Port 3000  │  │  tormentnexus│  │  Extension  │       │
 │  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘       │
 │         │                │                │                 │
 │         └────────────────┴────────────────┘                 │
 │                          │                                │
 │  ┌───────────────────────┴───────────────────────┐        │
-│  │  GO SIDECAR (Port 7778) — The Authoritative Kernel    │
+│  │  TYPESCRIPT CONTROL PLANE (Port 4100)        │        │
+│  │  tRPC routers · NativeSidecarDaemon · ResilientStream  │
+│  └───────────────────────┬───────────────────────┘        │
+│                          │                                │
+│  ┌───────────────────────┴───────────────────────┐        │
+│  │  GO SIDECAR (Port 4300) — The Authoritative Kernel    │
 │  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐     │
 │  │  │ SkillStore│ │ EventBus │ │  Vault  │ │ Healer  │     │
 │  │  │ (BM25)  │ │ (Swarm) │ │(sqlite) │ │(Immune) │     │
@@ -213,8 +138,9 @@ HyperNexus is a **high-performance Go modular monolith** with a **TypeScript/Nex
 
 | Service | Port | Purpose |
 |---------|------|---------|
-| Go Sidecar | 7778 | Authoritative native kernel (HTTP API + tRPC) |
-| Next.js Dashboard | 7779 | Web observation deck |
+| Next.js Dashboard | 3000 | Web observation deck |
+| tRPC Bridge | 4100 | TypeScript Control Plane API |
+| Go Sidecar | 4300 | Authoritative native kernel |
 
 ---
 
@@ -222,9 +148,9 @@ HyperNexus is a **high-performance Go modular monolith** with a **TypeScript/Nex
 
 ### 1. Progressive MCP Tool Routing & Parity
 
-Models should never be overwhelmed with a 50,000-token tool dump. HyperNexus employs a multi-layered, progressive disclosure system:
+Models should never be overwhelmed with a 50,000-token tool dump. TormentNexus employs a multi-layered, progressive disclosure system:
 
-- **Semantic Search**: Local vector embeddings match the active prompt against a global MCP directory of infinite servers.
+- **Semantic Search**: Local vector embeddings match the active prompt against a global MCP directory of 14,250+ servers.
 - **The Router**: Only the top highly relevant tool schemas are injected into the active LLM context.
 - **Universal Parity**: Byte-for-byte identical tool signatures for Claude Code, Codex, Gemini CLI, Cursor, and Windsurf.
 
@@ -239,7 +165,7 @@ Context is finite; memory must be infinite.
 
 ### 3. The Resilient LLM Waterfall
 
-Uptime is non-negotiable. HyperNexus's inference client natively catches 429s (Rate Limits) and 5xx (Server Errors), seamlessly cascading the exact payload down a prioritized chain without crashing:
+Uptime is non-negotiable. TormentNexus's inference client natively catches 429s (Rate Limits) and 5xx (Server Errors), seamlessly cascading the exact payload down a prioritized chain without crashing:
 
 1. **NVIDIA NIM** / Primary APIs
 2. **OpenRouter** (Secondary aggregator fallback)
@@ -247,7 +173,7 @@ Uptime is non-negotiable. HyperNexus's inference client natively catches 429s (R
 
 ### 4. Multi-Agent Swarm & P2P Mesh
 
-HyperNexus coordinates specialized models inside shared chatrooms via the Agent-to-Agent (A2A) protocol.
+TormentNexus coordinates specialized models inside shared chatrooms via the Agent-to-Agent (A2A) protocol.
 
 - **Role Rotation**: Models take turns acting as Planner, Implementer, Tester, and Critic.
 - **Consensus & Debate**: Agents autonomously bid on tasks, share context via a neural transcript, and debate implementations until consensus is reached.
@@ -255,7 +181,7 @@ HyperNexus coordinates specialized models inside shared chatrooms via the Agent-
 
 ### 5. Truth Over Hype Dashboards
 
-HyperNexus's dashboards reflect actual SQLite database rows and active Go goroutine states. No mocked UI scaffolds. Monitor telemetry, traffic inspection, working-set capacity, and LLM routing histories in real-time.
+TormentNexus's dashboards reflect actual SQLite database rows and active Go goroutine states. No mocked UI scaffolds. Monitor telemetry, traffic inspection, working-set capacity, and LLM routing histories in real-time.
 
 ### 6. Autonomous Immune System
 
@@ -269,22 +195,22 @@ Every failure is an opportunity for diagnosis, remediation, and verification.
 
 ## Monorepo Structure
 
-HyperNexus is a **pnpm monorepo** with four major layers:
+TormentNexus is a **pnpm monorepo** with four major layers:
 
 ```
-hypernexus/
+tormentnexus/
 ├─ apps/                          # Operator-facing applications
 │  ├─ web/                        # Next.js 16 dashboard (primary browser UI)
 │  ├─ maestro/                    # Electron desktop shell
 │  ├─ maestro-go/                 # Go-adjacent desktop lane (experimental)
 │  ├─ vscode/                     # VS Code extension
-│  ├─ hypernexus-extension/      # Browser extension
+│  ├─ tormentnexus-extension/      # Browser extension
 │  ├─ cloud-orchestrator/          # Nested cloud stack (mini-monorepo)
-│  └─ hypernexus-extension/              # Tormentnexus extension
+│  └─ borg-extension/              # Borg extension
 │
 ├─ packages/                       # Shared libraries & TypeScript control plane
 │  ├─ core/                        # Main TS control plane, tRPC routers, orchestration
-│  ├─ cli/                         # CLI entrypoint (`hypernexus` command)
+│  ├─ cli/                         # CLI entrypoint (`tormentnexus` command)
 │  ├─ ui/                          # Shared React UI components (Radix + Tailwind)
 │  ├─ ai/                          # Model/provider SDK integration layer
 │  ├─ memory/                      # Memory storage, retrieval, embeddings, vector DB
@@ -295,7 +221,7 @@ hypernexus/
 │  ├─ agents/                      # Agent-related logic and adapters
 │  ├─ adk/                         # Agent Development Kit layer
 │  ├─ search/                      # Search and indexing support
-│  ├─ hypernexus-supervisor/      # Windows supervisor bridge (UI automation)
+│  ├─ tormentnexus-supervisor/      # Windows supervisor bridge (UI automation)
 │  ├─ browser/                     # Legacy browser support
 │  ├─ browser-extension/          # Shared browser-extension package
 │  ├─ enterprise/                  # Enterprise features (SSO, RBAC stubs)
@@ -304,7 +230,7 @@ hypernexus/
 │  └─ tsconfig/                   # Shared TypeScript configuration
 │
 ├─ go/                             # Go modular monolith (authoritative kernel)
-│  ├─ cmd/hypernexus/            # Go entrypoint
+│  ├─ cmd/tormentnexus/            # Go entrypoint
 │  ├─ internal/
 │  │  ├─ httpapi/                  # HTTP API server (600+ endpoints, 18K+ lines)
 │  │  ├─ tools/                    # 3,900+ native Go tool implementations
@@ -375,12 +301,12 @@ hypernexus/
 │  └─ [20+ more scripts]          # Validation, indexing, pruning
 │
 ├─ submodules/                     # External upstream assimilations
-│  ├─ hypernexus/                # External CLI harness upstream
-│  └─ hypernexus-mcp/            # External MCP reference lane
+│  ├─ tormentnexus/                # External CLI harness upstream
+│  └─ tormentnexus-mcp/            # External MCP reference lane
 │
 ├─ swarm.py, swarm_v7.py          # Automated Go tool generation swarm
-├─ hypernexus.db               # Main registry (MCP servers, tools, sessions)
-├─ catalog.db                    # unlimited populated MCP server catalog
+├─ tormentnexus.db               # Main registry (MCP servers, tools, sessions)
+├─ catalog.db                    # 11,024+ populated MCP server catalog
 ├─ provider_metrics.db           # Provider telemetry database
 ├─ README.md                     # This file
 ├─ ROADMAP.md                    # Active development roadmap
@@ -397,7 +323,7 @@ hypernexus/
 
 ## The Go Sidecar
 
-The Go sidecar is the **authoritative execution kernel** of HyperNexus. It is a high-performance modular monolith with dozens of internal packages and unlimited native tool implementations.
+The Go sidecar is the **authoritative execution kernel** of TormentNexus. It is a high-performance modular monolith with 40+ internal packages and 3,900+ native tool implementations.
 
 ### Why Go?
 
@@ -408,19 +334,22 @@ The Go sidecar is the **authoritative execution kernel** of HyperNexus. It is a 
 
 ### Native Go Tool Categories
 
-| Category | Example Integrations |
-|----------|---------------------|
-| Web Search & Scraping | DuckDuckGo, Firecrawl, Exa |
-| Academic & Research | arXiv, Semantic Scholar, PubMed, Open Library |
-| Finance & Markets | Alpaca, Alpha Vantage, CoinGecko, Yahoo Finance |
-| Science & Space | NASA (APOD, NEO, Mars Weather, EPIC), Open-Meteo |
-| Entertainment | PokéAPI, TVMaze, JokeAPI |
-| Reference | World Bank, Nobel Prize, Open Library |
-| AI & LLM | Ollama, Hugging Face, MindsDB |
-| Security | Semgrep, AST-grep |
-| Communication | Slack |
-| Cloud & DevOps | Vercel, Filesystem |
-| Memory | Basic Memory, ChromaDB, Mem0 |
+| Category | Native Tools | Example Implementations |
+|----------|-------------|------------------------|
+| Web Search & Scraping | DuckDuckGo, Firecrawl, Exa | `ddg_search.go`, `firecrawl.go`, `exa.go` |
+| Academic & Research | arXiv, Semantic Scholar | `arxiv.go`, `semantic_scholar.go` |
+| Databases & Storage | SQLite, ChromaDB, Mem0 | `sqlite_mcp.go`, `chroma.go`, `mem0.go` |
+| Finance & Markets | Alpaca, Alpha Vantage, DexPaprika | `alpaca.go`, `alpha_vantage.go`, `dexpaprika.go` |
+| Cloud & DevOps | Vercel, Filesystem | `vercel.go`, `filesystem.go` |
+| AI & LLM | Ollama, Hugging Face, MindsDB | `ollama.go`, `huggingface.go`, `mindsdb.go` |
+| Security | Semgrep, AST-grep | `semgrep.go`, `ast_grep.go` |
+| Code Intelligence | Serena, GitIngest, ripgrep | `serena.go`, `gitingest.go`, `ripgrep_search.go` |
+| Communication | Slack | `slack.go` |
+| Media | TTS, Browser Automation | `tts.go`, `browser_automation.go` |
+| Provider Abstraction | PAL (multi-model routing) | `pal.go` |
+| Memory | Basic Memory, Thoughtbox | `basic_memory.go`, `thoughtbox.go` |
+| System | codemod, anyquery | `codemod.go`, `anyquery.go` |
+| Weather | NWS (National Weather Service) | `nws_weather.go` |
 
 ### Swarm Tool Generation
 
@@ -435,7 +364,7 @@ The project includes an automated **swarm pipeline** (`swarm.py` / `swarm_v7.py`
 
 ## The Dashboard
 
-The **HyperNexus Dashboard** (`apps/web`) is a rich Next.js 16 / React 19 / Tailwind CSS 4 operator interface providing real-time observability and control over the entire system.
+The **TormentNexus Dashboard** (`apps/web`) is a rich Next.js 16 / React 19 / Tailwind CSS 4 operator interface providing real-time observability and control over the entire system.
 
 ### Dashboard Pages
 
@@ -478,13 +407,15 @@ The **HyperNexus Dashboard** (`apps/web`) is a rich Next.js 16 / React 19 / Tail
 
 ## MCP Ecosystem
 
-HyperNexus is the world's largest local MCP registry and the only system with **native Go assimilation** at scale.
+TormentNexus is the world's largest local MCP registry and the only system with **native Go assimilation** at scale.
 
 ### Registry Scale
 
-- **20,000+** total tracked MCP servers (`assimilation_state.db`)
-- **Thousands** verified individual tools
-- **Continuous native Go reimplementation** eliminating external dependencies
+- **14,250+** total tracked MCP servers (`assimilation_state.db`)
+- **11,024+** populated with verified metadata (`catalog.db`)
+- **600+** verified and registered in production (`tormentnexus.db`)
+- **11,000+** verified individual tools
+- **3,900+** reimplemented as native Go handlers (eliminating external dependencies)
 
 ### Progressive Disclosure Pipeline
 
@@ -557,7 +488,7 @@ A passive fact extraction layer that monitors all system traffic (tool calls, LL
 
 ### A2A Protocol Coordination
 
-HyperNexus implements the **Agent-to-Agent (A2A)** protocol for multi-agent coordination inside shared chatrooms.
+TormentNexus implements the **Agent-to-Agent (A2A)** protocol for multi-agent coordination inside shared chatrooms.
 
 ### Role Rotation State Machine
 
@@ -622,16 +553,22 @@ All API endpoints return a standardized envelope:
 ### Installation
 
 ```bash
-# 1. One-command setup (recommended)
-npx @hypernexus/install
+# 1. Clone the repository
+git clone https://github.com/NexusSoftMDMA/TormentNexus.git
+cd tormentnexus
 
-# 2. Or clone and build from source
-git clone https://gitlab.com/robertpelloni/HyperNexus.git
-cd hypernexus
-pnpm install && pnpm rebuild better-sqlite3
-cd go && go build -buildvcs=false ./cmd/hypernexus && cd ..
+# 2. Install dependencies & rebuild SQLite bindings
+pnpm install
+pnpm rebuild better-sqlite3
+
+# 3. Build the Go sidecar
+cd go && go build -buildvcs=false ./cmd/tormentnexus && cd ..
+
+# 4. Start the TormentNexus Control Plane
 pnpm run dev
 ```
+
+The Next.js dashboard will automatically open at `http://localhost:3000/dashboard` once the TypeScript Control Plane (port 4100) and Go Sidecar (port 4300) are successfully locked and humming.
 
 ### Development Scripts
 
@@ -661,7 +598,7 @@ pnpm run dev
 ### Phase 7: Session Continuity & Deep Linking (In Progress)
 
 - **Session Import Pipeline**: Automatic ingestion of Claude, Aider, and harness artifacts (49 candidates discovered, 586 imported sessions)
-- **`hypernexus://` Protocol**: Browser-to-kernel deep linking for seamless IDE attachment
+- **`tormentnexus://` Protocol**: Browser-to-kernel deep linking for seamless IDE attachment
 - **Wails Native Runtime**: Replacing Electron with a Go-native desktop shell
 
 ### Phase 8: Predictive Intelligence (Vision)
@@ -672,7 +609,7 @@ pnpm run dev
 
 ### Long-Term Vision
 
-- **The AI HyperNexus**: The operating system for AI models, abstracting all provider complexity
+- **The AI TormentNexus**: The operating system for AI models, abstracting all provider complexity
 - **Models as Compute**: Ephemeral resources managed by allocation, fallback routing, and token budgets
 - **Tools as Drivers**: MCP servers as "device drivers" for the AI OS
 - **Biological Memory**: L1/L2/L3 tiers with heat-based mechanics
@@ -698,11 +635,11 @@ See [ROADMAP.md](ROADMAP.md) for the detailed path to v1.0.0 stable, including:
 | Document | Purpose |
 |----------|---------|
 | [AGENTS.md](AGENTS.md) | Multi-agent coordination and handoff protocol |
-| [VISION.md](docs/VISION.md) | North star and philosophical pillars |
+| [VISION.md](VISION.md) | North star and philosophical pillars |
 | [ROADMAP.md](ROADMAP.md) | Active development roadmap and milestones |
-| [CHANGELOG.md](CHANGELOG.md) | Detailed version history |
-| [MEMORY.md](docs/MEMORY.md) | Accumulated multi-agent insights and gotchas |
-| [HANDOFF.md](docs/HANDOFF.md) | Session handoff protocol for agent continuity |
+| [CHANGELOG.md](CHANGELOG.md) | Detailed version history (400+ entries) |
+| [MEMORY.md](MEMORY.md) | Accumulated multi-agent insights and gotchas |
+| [HANDOFF.md](HANDOFF.md) | Session handoff protocol for agent continuity |
 | [docs/API_ENDPOINTS.md](docs/API_ENDPOINTS.md) | Complete 600+ endpoint reference |
 | [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) | Full module dependency diagram |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Architecture deep dive |
@@ -716,7 +653,7 @@ See [ROADMAP.md](ROADMAP.md) for the detailed path to v1.0.0 stable, including:
 
 ## Contributing
 
-HyperNexus is built by a **multi-agent swarm** of specialized AI models (Gemini, Claude, GPT) coordinated through the [AGENTS.md](AGENTS.md) protocol. Human operators supervise and validate.
+TormentNexus is built by a **multi-agent swarm** of specialized AI models (Gemini, Claude, GPT) coordinated through the [AGENTS.md](AGENTS.md) protocol. Human operators supervise and validate.
 
 ### Model Specializations
 
@@ -735,73 +672,13 @@ HyperNexus is built by a **multi-agent swarm** of specialized AI models (Gemini,
 5. **Commit** small, incremental, verifiable changes
 6. **Update** `HANDOFF.md`, `MEMORY.md`, and `CHANGELOG.md`
 7. **Bump** `VERSION` and sync with `node scripts/sync-versions.mjs`
-8. **Push** to `origin` and `hypernexus-upstream`
-
----
-
-## Community
-
-### pi Extension (npm)
-
-```bash
-pi install npm:hypernexus
-```
-
-Connects pi to the HyperNexus control plane — persistent L2 memory, tool search, session import, skill registry, code search, subagent orchestration, enterprise RBAC. Full source at `packages/hypernexus/`.
-
-**CodeWhale now has equivalent functionality through a native Rust extension** — see below.
-
-### CodeWhale Integration
-
-CodeWhale has **full Pi extension parity** through two integration layers:
-
-#### Layer 1: Native Rust Extension (tn-extension)
-
-A native Rust crate at `crates/tn-extension` compiled into the CodeWhale binary. Hooks fire automatically on every lifecycle event:
-
-| Hook | What it does |
-|------|-------------|
-| **SessionStart** | Logs session to TN L2 memory |
-| **BeforeAgentStart** | Injects TN system prompt + searches L2 for relevant context per turn |
-| **ToolCall** | Logs tool + args; checks 6 dangerous patterns against RBAC |
-| **ToolResult** | Auto-stores substantial results from key tools to L2 |
-| **TurnEnd** | Logs tool usage summary per turn |
-| **Input** | Expands `@memory:key` inline with L2 content |
-| **UserBash** | Audit-logs shell commands to TN enterprise audit |
-| **ModelSelect** | Tracks model changes to L2 |
-| **SessionCompact** | Preserves memory across compaction |
-
-Also registers: 9 custom tools, 6 slash commands, 3 keyboard shortcuts, auto-registers the MCP server.
-
-#### Layer 2: CodeWhale Skill (SKILL.md)
-
-Tracked at `.codewhale/plugins/hypernexus/skills/SKILL.md`, auto-installed to `~/.codewhale/skills/hypernexus/`. Contains 49 MCP tools, REST API reference, slash command handling, best practices, security notes.
-
-#### Installation
-
-```bash
-scripts\install_codewhale.bat
-```
-
-Verify:
-
-```bash
-codewhale mcp connect hypernexus
-codewhale mcp tools | findstr mcp_hypernexus | find /c /v ""
-curl http://127.0.0.1:7778/api/health
-```
-
-Build from `~/codewhale-source`:
-
-```bash
-cargo build --release -p codewhale-cli
-```
+8. **Push** to `origin` and `tormentnexus-upstream`
 
 ---
 
 ## License
 
-HyperNexus uses a **dual-licensing model**:
+TormentNexus uses a **dual-licensing model**:
 
 - **Open Source**: Core kernel and tool implementations available under a permissive open-source license
 - **Enterprise**: Ed25519-signed license tokens for advanced features (SSO, RBAC, fleet management, cross-machine mesh)
