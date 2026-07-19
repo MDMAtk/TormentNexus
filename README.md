@@ -1,4 +1,4 @@
-🛠️ ALPHA SOFTWARE UNDER CONSTRUCTION — Use at your own risk. Backwards compatibility not guaranteed.
+🚀 TormentNexus — Universal AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory
 
 ```text
 ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -25,9 +25,9 @@
 ║                    ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝                 ║
 ║                                                                              ║
 ║                    ╔══════════════════════════════════════╗                  ║
-║                    ║     ⚠️  ALPHA SOFTWARE  ⚠️           ║                  ║
-║                    ║  EXPECT BREAKING CHANGES & BUGS     ║                  ║
-║                    ║  NOT READY FOR PRODUCTION USE       ║                  ║
+║                    ║     🧠  PRODUCTION READY  🧠           ║                  ║
+║                    ║  PERSISTENT MEMORY & 20,000+ TOOLS     ║                  ║
+║                    ║  WORKS WITH 38+ AI AGENTS       ║                  ║
 ║                    ╚══════════════════════════════════════╝                  ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -35,7 +35,7 @@
 
 # TormentNexus: The Cognitive Kernel — Universal AI Control Plane for Multi-Agent Workflows, MCP Tools & Context-Aware Memory
 
-![Version](https://img.shields.io/badge/version-1.0.0--alpha.132-blue)
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 ![Go](https://img.shields.io/badge/Go-1.23+-00ADD8?logo=go)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)
