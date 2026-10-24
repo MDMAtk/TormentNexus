@@ -1,0 +1,5 @@
+{
+  "on_session_start": "hypernexus_context_harvest",
+  "on_tool_error": "hypernexus_add_fact",
+  "on_decision": "hypernexus_add_fact"
+}
