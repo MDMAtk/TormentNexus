@@ -1050,7 +1050,15 @@ export function DashboardHomeView({
                                 TormentNexus 1.0 control plane
                             </span>
                             <div className="space-y-2">
-                                <h1 className="text-3xl font-semibold tracking-tight text-white">Operator dashboard</h1>
+                                <div className="flex items-center gap-2">
+                                    <h1 className="text-3xl font-semibold tracking-tight text-white">Operator dashboard</h1>
+                                    <span
+                                        className="cursor-help text-base text-cyan-400"
+                                        title="💡 Consolidated Unified Control Plane: High-density operations view combining router telemetry, provider quotas, supervised autonomous agent sessions, and self-healing immune systems without requiring subpage fragmentation."
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="max-w-3xl text-sm text-slate-300">
                                     One page to see whether the MCP router is alive, which providers can take traffic, and what your supervised CLI sessions are doing.
                                 </p>
@@ -1073,8 +1081,16 @@ export function DashboardHomeView({
 
                     <div className="mt-6 grid gap-4 md:grid-cols-3">
                         {overviewMetrics.map((metric) => (
-                            <div key={metric.label} className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{metric.label}</p>
+                            <div key={metric.label} className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 transition hover:border-slate-700">
+                                <div className="flex items-center justify-between">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{metric.label}</p>
+                                    <span
+                                        className="cursor-help text-xs text-slate-500 hover:text-cyan-300"
+                                        title={`💡 ${metric.label}: ${metric.detail}`}
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="mt-2 text-3xl font-semibold text-white">{metric.value}</p>
                                 <p className="mt-2 text-sm text-slate-400">{metric.detail}</p>
                             </div>
@@ -1084,7 +1100,15 @@ export function DashboardHomeView({
                     <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
                         <div className="flex items-start justify-between gap-4">
                             <div>
-                                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Operator alerts</h2>
+                                <div className="flex items-center gap-2">
+                                    <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Operator alerts</h2>
+                                    <span
+                                        className="cursor-help text-xs text-cyan-400"
+                                        title="💡 Cross-system alerts highlight degraded MCP routes, depleted LLM quotas, or unhealthy harness sessions."
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="mt-1 text-sm text-slate-500">Cross-panel issues that deserve attention before you start driving the swarm.</p>
                             </div>
                             <span className="rounded-full border border-slate-700 bg-slate-900/70 px-3 py-1 text-xs font-medium text-slate-200">
@@ -1133,7 +1157,15 @@ export function DashboardHomeView({
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Overview</p>
-                                <h2 className="mt-2 text-xl font-semibold text-white">Router posture</h2>
+                                <div className="mt-2 flex items-center gap-2">
+                                    <h2 className="text-xl font-semibold text-white">Router posture</h2>
+                                    <span
+                                        className="cursor-help text-sm text-cyan-400"
+                                        title="💡 Router Posture reports the readiness of the native Go sidecar and proxy aggregator, verifying tools and active client sync."
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="mt-2 text-sm text-slate-400">Quick health readout for first-time operators.</p>
                             </div>
                             <div className={`rounded-full border px-3 py-1 text-xs font-medium ${routerStatusTone}`}>
@@ -1313,7 +1345,15 @@ export function DashboardHomeView({
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">MCP Router</p>
-                                <h2 className="mt-2 text-xl font-semibold text-white">Server health and traffic</h2>
+                                <div className="mt-2 flex items-center gap-2">
+                                    <h2 className="text-xl font-semibold text-white">Server health and traffic</h2>
+                                    <span
+                                        className="cursor-help text-sm text-cyan-400"
+                                        title="💡 Server Health tracks aggregated tool definitions, stdio/SSE connections, and traffic latencies across all registered agents."
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="mt-2 text-sm text-slate-400">Live server posture plus the latest router activity.</p>
                             </div>
                             <Link
@@ -1395,7 +1435,15 @@ export function DashboardHomeView({
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Sessions</p>
-                                <h2 className="mt-2 text-xl font-semibold text-white">Supervised CLI runtime</h2>
+                                <div className="mt-2 flex items-center gap-2">
+                                    <h2 className="text-xl font-semibold text-white">Supervised CLI runtime</h2>
+                                    <span
+                                        className="cursor-help text-sm text-cyan-400"
+                                        title="💡 Supervised CLI Runtime manages autonomous CLI/TUI agents (Opencode, Claude Code, Aider, Tabby, Hermes). Use Start/Stop/Restart buttons to control execution."
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="mt-2 text-sm text-slate-400">Inspect live session state, recent output, and restart posture.</p>
                             </div>
                             <span className="rounded-full border border-slate-700 bg-slate-950/70 px-3 py-1 text-xs font-medium text-slate-200">
@@ -1499,7 +1547,15 @@ export function DashboardHomeView({
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Providers</p>
-                                <h2 className="mt-2 text-xl font-semibold text-white">Quota and fallback posture</h2>
+                                <div className="mt-2 flex items-center gap-2">
+                                    <h2 className="text-xl font-semibold text-white">Quota and fallback posture</h2>
+                                    <span
+                                        className="cursor-help text-sm text-cyan-400"
+                                        title="💡 Quota & Fallback routes incoming completions seamlessly to backup providers when primary quotas (OpenAI, Anthropic, Gemini, DeepSeek) expire."
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="mt-2 text-sm text-slate-400">Which providers are configured, how much headroom remains, and where fallback will go next.</p>
                             </div>
                             <Link
@@ -1580,7 +1636,15 @@ export function DashboardHomeView({
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Immune System</p>
-                                <h2 className="mt-2 text-xl font-semibold text-white">Autonomous healer status</h2>
+                                <div className="mt-2 flex items-center gap-2">
+                                    <h2 className="text-xl font-semibold text-white">Autonomous healer status</h2>
+                                    <span
+                                        className="cursor-help text-sm text-cyan-400"
+                                        title="💡 The Autonomous Healer inspects kernel crashes and tool failures, auto-remediating issues and archiving cures into L2 Vault storage."
+                                    >
+                                        💡
+                                    </span>
+                                </div>
                                 <p className="mt-2 text-sm text-slate-400">Real-time pathogen detection, auto-neutralization efficacy, and L2 Vault memory from the Go HealerService.</p>
                             </div>
                             <Link href="/dashboard/healer" title="Open the full Immune System dashboard with live healing stream and persistent vault records" aria-label="Open detailed healer dashboard" className="text-sm font-medium text-cyan-200 transition hover:text-cyan-100">

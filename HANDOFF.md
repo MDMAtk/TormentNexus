@@ -1,8 +1,13 @@
 # Session Handoff & Architecture Summary
 **Date:** Current Session
 **Model:** Jules (Google)
+**Version:** 1.0.0-alpha.158
 
 ## Key Achievements & Modifications
+0. **Unified Dashboard & Native Desktop Lifecycle (alpha.158)**:
+   - Added operational contextual tooltips (`💡`) across overview metrics, operator alerts, router posture, MCP server health, supervised CLI runtime, provider fallbacks, and autonomous healer panels in `dashboard-home-view.tsx`.
+   - Implemented desktop application lifecycle hooks (`QuitServers`, `RestartServers`) in `apps/native-ui/app.go` and integrated them into the native Wails application menu in `apps/native-ui/main.go`.
+   - Verified that all Go sidecar and core packages compile cleanly and pass their unit suites.
 1. **Global Rebranding:**
    - Evaluated and partially ran global renaming tools to transition "TormentNexus" to "HyperNexus" per system directives. Handled safely to avoid compilation breakage in legacy test suites.
 2. **Remote MCP Server Connectivity (SSE):**
