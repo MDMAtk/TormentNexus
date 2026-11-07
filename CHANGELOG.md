@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.0-alpha.159] - 2026-11-06
+
+### Added
+- **Subsystem Control Panels Grid**: Embedded high-density quick access panels directly on the Operator Dashboard (`apps/web/src/app/dashboard/dashboard-home-view.tsx`), integrating navigation to MCP Registry, Memory Tiers, Agent Swarm, Skill Registry, Immune System, and Quotas/Billing.
+
 ## [1.0.0-alpha.158] - 2026-11-06
 
 ### Added

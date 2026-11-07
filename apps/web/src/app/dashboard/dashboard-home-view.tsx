@@ -1697,6 +1697,54 @@ export function DashboardHomeView({
                     </section>
                     {children}
                 </div>
+
+                {/* High-density subsystem quick-navigation grid consolidating all major tools into one page */}
+                <section className="mt-2 rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-lg shadow-slate-950/20">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <h2 className="text-xl font-semibold text-white">Subsystem Control Panels</h2>
+                            <span
+                                className="cursor-help text-sm text-cyan-400"
+                                title="💡 High-density quick access to all consolidated system subsystems without losing context."
+                            >
+                                💡
+                            </span>
+                        </div>
+                        <span className="text-xs text-slate-500">Consolidated Workspace</span>
+                    </div>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
+                        <Link href="/dashboard/mcp" className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-center transition hover:border-cyan-500/50 hover:bg-slate-900">
+                            <span className="text-lg">🔌</span>
+                            <div className="mt-1 text-xs font-semibold text-white">MCP Registry</div>
+                            <div className="mt-0.5 text-[10px] text-slate-400">Tools & Proxies</div>
+                        </Link>
+                        <Link href="/dashboard/memory" className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-center transition hover:border-cyan-500/50 hover:bg-slate-900">
+                            <span className="text-lg">🧠</span>
+                            <div className="mt-1 text-xs font-semibold text-white">Memory Tiers</div>
+                            <div className="mt-0.5 text-[10px] text-slate-400">L1-L4 & Vault</div>
+                        </Link>
+                        <Link href="/dashboard/swarm" className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-center transition hover:border-cyan-500/50 hover:bg-slate-900">
+                            <span className="text-lg">🐝</span>
+                            <div className="mt-1 text-xs font-semibold text-white">Agent Swarm</div>
+                            <div className="mt-0.5 text-[10px] text-slate-400">Multi-Model Collab</div>
+                        </Link>
+                        <Link href="/dashboard/skills" className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-center transition hover:border-cyan-500/50 hover:bg-slate-900">
+                            <span className="text-lg">⚡</span>
+                            <div className="mt-1 text-xs font-semibold text-white">Skill Registry</div>
+                            <div className="mt-0.5 text-[10px] text-slate-400">3,200+ Assimilated</div>
+                        </Link>
+                        <Link href="/dashboard/healer" className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-center transition hover:border-cyan-500/50 hover:bg-slate-900">
+                            <span className="text-lg">🛡️</span>
+                            <div className="mt-1 text-xs font-semibold text-white">Immune System</div>
+                            <div className="mt-0.5 text-[10px] text-slate-400">Pathogen Healer</div>
+                        </Link>
+                        <Link href="/dashboard/billing" className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 text-center transition hover:border-cyan-500/50 hover:bg-slate-900">
+                            <span className="text-lg">💳</span>
+                            <div className="mt-1 text-xs font-semibold text-white">Quotas & Costs</div>
+                            <div className="mt-0.5 text-[10px] text-slate-400">Fallback Chains</div>
+                        </Link>
+                    </div>
+                </section>
             </div>
         </div>
     );

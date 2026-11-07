@@ -1,10 +1,13 @@
 # Session Handoff & Architecture Summary
 **Date:** Current Session
 **Model:** Jules (Google)
-**Version:** 1.0.0-alpha.158
+**Version:** 1.0.0-alpha.159
 
 ## Key Achievements & Modifications
-0. **Unified Dashboard & Native Desktop Lifecycle (alpha.158)**:
+0. **Subsystem Control Panels Grid (alpha.159)**:
+   - Added a high-density "Subsystem Control Panels" grid directly to the base of the unified Operator Dashboard (`dashboard-home-view.tsx`), consolidating access to MCP Registry, Memory Tiers, Agent Swarm, Skill Registry, Immune System, and Quotas/Billing without fragmentation.
+   - Verified styling via Playwright screenshot capture (`/home/jules/verification/subsystem_grid_preview.png`).
+1. **Unified Dashboard & Native Desktop Lifecycle (alpha.158)**:
    - Added operational contextual tooltips (`💡`) across overview metrics, operator alerts, router posture, MCP server health, supervised CLI runtime, provider fallbacks, and autonomous healer panels in `dashboard-home-view.tsx`.
    - Implemented desktop application lifecycle hooks (`QuitServers`, `RestartServers`) in `apps/native-ui/app.go` and integrated them into the native Wails application menu in `apps/native-ui/main.go`.
    - Verified that all Go sidecar and core packages compile cleanly and pass their unit suites.

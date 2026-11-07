@@ -55,7 +55,7 @@ _Last updated: 2026-06-17, version 1.0.0-alpha.135_
 - **Universal Rebrand**: Case-insensitive refactoring across all source modules.
 - **Catalog SQLite Storage**: 11,024 populated MCP servers in `tormentnexus.db`.
 
-## Completed (v1.0.0-alpha.135)
+## Completed (v1.0.0-alpha.158)
 - **High-Density Dashboard Guidance**: Added operational contextual tooltips (`💡`) across overview metrics, operator alerts, router posture, MCP server health, supervised CLI runtime, provider fallbacks, and autonomous healer panels.
 - **Native Desktop Lifecycle Controls**: Implemented server quit and restart hooks in Wails native UI (`QuitServers`, `RestartServers`) with system application menu integration.
 
