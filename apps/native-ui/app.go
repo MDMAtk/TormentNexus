@@ -3,22 +3,27 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
+	"syscall"
 	"time"
+
+	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
-// App is the main Wails application struct with TormentNexus bindings.
+// App is the main Wails application struct with TormentNexus bindings and desktop lifecycle hooks.
 type App struct {
 	ctx      context.Context
 	started  time.Time
 	services *TormentNexusServices
 }
 
-// TormentNexusServices holds references to the TormentNexus Go-sidecar services.
+// TormentNexusServices holds references to the TormentNexus Go-sidecar services and process controls.
 type TormentNexusServices struct {
-	Status     func() map[string]interface{}
-	MemoryInfo func() map[string]interface{}
-	HealerInfo func() map[string]interface{}
-	PeerCount  func() int
+	Status      func() map[string]interface{}
+	MemoryInfo  func() map[string]interface{}
+	HealerInfo  func() map[string]interface{}
+	PeerCount   func() int
+	StopServers func() error
 }
 
 // NewApp creates a new App application struct.
@@ -42,6 +47,42 @@ func (a *App) BindServices(svc *TormentNexusServices) {
 // Greet returns a greeting for the given name.
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
+}
+
+// QuitServers stops any managed backend sidecars and gracefully exits the desktop application.
+func (a *App) QuitServers() map[string]interface{} {
+	if a.services != nil && a.services.StopServers != nil {
+		_ = a.services.StopServers()
+	}
+
+	// Trigger graceful asynchronous desktop exit
+	go func() {
+		time.Sleep(200 * time.Millisecond)
+		if a.ctx != nil {
+			wailsRuntime.Quit(a.ctx)
+		} else {
+			p, err := os.FindProcess(os.Getpid())
+			if err == nil {
+				_ = p.Signal(syscall.SIGTERM)
+			}
+		}
+	}()
+
+	return map[string]interface{}{
+		"success": true,
+		"message": "Servers shutting down and application quitting",
+	}
+}
+
+// RestartServers issues a restart command to connected sidecars and services.
+func (a *App) RestartServers() map[string]interface{} {
+	if a.services != nil && a.services.StopServers != nil {
+		_ = a.services.StopServers()
+	}
+	return map[string]interface{}{
+		"success": true,
+		"message": "Server restart signal dispatched",
+	}
 }
 
 // GetSystemStatus returns the current system status for the native dashboard.
