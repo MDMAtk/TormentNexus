@@ -4,6 +4,7 @@ import (
 	"embed"
 
 	"github.com/wailsapp/wails/v2"
+	"github.com/wailsapp/wails/v2/pkg/menu"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 )
@@ -15,6 +16,17 @@ func main() {
 	// Create an instance of the app structure
 	app := NewApp()
 
+	// Construct system tray and application menus
+	appMenu := menu.NewMenu()
+	fileMenu := appMenu.AddSubmenu("File")
+	fileMenu.AddText("Restart Servers", nil, func(_ *menu.CallbackData) {
+		app.RestartServers()
+	})
+	fileMenu.AddSeparator()
+	fileMenu.AddText("Quit TormentNexus", nil, func(_ *menu.CallbackData) {
+		app.QuitServers()
+	})
+
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "TormentNexus",
@@ -23,9 +35,9 @@ func main() {
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		// BackgroundColour: &options.BackgroundColour{R: 27, G: 38, B: 54, A: 1},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.startup,
+		Menu:             appMenu,
 		Bind: []interface{}{
 			app,
 		},

@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0-alpha.159] - 2026-11-06
+
+### Added
+- **Subsystem Control Panels Grid**: Embedded high-density quick access panels directly on the Operator Dashboard (`apps/web/src/app/dashboard/dashboard-home-view.tsx`), integrating navigation to MCP Registry, Memory Tiers, Agent Swarm, Skill Registry, Immune System, and Quotas/Billing.
+
+## [1.0.0-alpha.158] - 2026-11-06
+
+### Added
+- **Dashboard UI Operational Guidance**: Added explanatory tooltips (`💡`) across overview metrics, operator alerts, router posture, MCP server health, supervised CLI runtime, provider fallback configurations, and autonomous healer status.
+- **Native Wails Desktop Hooks**: Implemented `QuitServers` and `RestartServers` lifecycle methods in `apps/native-ui/app.go` and wired them into application menus in `apps/native-ui/main.go`.
+
 ## [1.0.0-alpha.157] - 2026-06-25
 
 ### Changed

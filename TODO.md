@@ -1,6 +1,6 @@
 # TODO
 
-_Last updated: 2026-06-17, version 1.0.0-alpha.132_
+_Last updated: 2026-06-17, version 1.0.0-alpha.135_
 
 ## P0 — Must do now (Stability, Testing & Validation)
 - [x] **Track A: MCP Discovery**: Execute discovery script to rank top 500 MCP servers and seed state DB. (14,250 rows in assimilation_state.db)
@@ -38,7 +38,7 @@ _Last updated: 2026-06-17, version 1.0.0-alpha.132_
 - [x] **P2P Memory**: Implement gossip protocol for decentralized context sharing.
 - [ ] **L3 Cold Archive**: Implement long-term compressed memory tier for infinite context.
 - [ ] **Fleet-Wide Intelligence**: Cross-machine memory sharing via encrypted mesh.
-- [ ] **Wails Native Runtime**: Replace Electron with Go-native desktop shell.
+- [x] **Wails Native Runtime**: Replace Electron with Go-native desktop shell (Wails app with QuitServers & RestartServers lifecycle hooks).
 - [ ] **Deep Link Protocol**: Expand `tormentnexus://` protocol for browser-to-kernel attachment.
 
 ---
